@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~
+  ~    Copyright (c) 2022 - 2023.
+  ~    Haixing Hu, Qubit Ltd.
+  ~
+  ~    All rights reserved.
+  ~
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<schools>
+  <school>
+    <name>南京大学</name>
+    <type>university</type>
+    <city>
+      <country>CN</country>
+      <province>江苏</province>
+      <name>南京</name>
+    </city>
+    <famous>true</famous>
+  </school>
+  <school>
+    <name>安徽大学</name>
+    <type>university</type>
+    <city>
+      <country>CN</country>
+      <province>安徽</province>
+      <name>合肥</name>
+    </city>
+    <famous>false</famous>
+  </school>
+</schools>

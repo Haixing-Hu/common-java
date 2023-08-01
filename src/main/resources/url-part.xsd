@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~
+  ~    Copyright (c) 2022 - 2023.
+  ~    Haixing Hu, Qubit Ltd.
+  ~
+  ~    All rights reserved.
+  ~
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<!--
+  Document   : path-part.xsd
+  Description: This document defines the XML category of the
+               URL part enumeration.
+  See        : ai.cell.commons.net.UrlPart.java
+ -->
+<xsd:schema
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://www.njzhyl.cn"
+  elementFormDefault="qualified">
+
+  <xsd:simpleType name="path-part">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="path" />
+      <xsd:enumeration value="protocol" />
+      <xsd:enumeration value="user-info" />
+      <xsd:enumeration value="host" />
+      <xsd:enumeration value="domain" />
+      <xsd:enumeration value="port" />
+      <xsd:enumeration value="path" />
+      <xsd:enumeration value="query" />
+      <xsd:enumeration value="fragment" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+</xsd:schema>

@@ -1,0 +1,74 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
+//
+//    All rights reserved.
+//
+////////////////////////////////////////////////////////////////////////////////
+package ltd.qubit.commons.config.impl;
+
+import ltd.qubit.commons.io.serialize.XmlSerializer;
+import ltd.qubit.commons.text.xml.XmlException;
+import ltd.qubit.commons.text.xml.XmlSerializationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import java.util.List;
+import javax.annotation.concurrent.Immutable;
+
+import static ltd.qubit.commons.text.xml.DomUtils.checkNode;
+import static ltd.qubit.commons.text.xml.DomUtils.getChildren;
+
+/**
+ * The {@link XmlSerializer} for the {@link DefaultConfig} class.
+ *
+ * @author Haixing Hu
+ */
+@Immutable
+public final class DefaultConfigXmlSerializer implements XmlSerializer {
+
+  public static final String ROOT_NODE = "configuration";
+
+  public static final DefaultConfigXmlSerializer INSTANCE = new DefaultConfigXmlSerializer();
+
+  @Override
+  public String getRootNodeName() {
+    return ROOT_NODE;
+  }
+
+  @Override
+  public DefaultConfig deserialize(final Element root) throws XmlException {
+    checkNode(root, ROOT_NODE);
+    final DefaultConfig result = new DefaultConfig();
+    final List<Element> propNodeList = getChildren(root, null);
+    if ((propNodeList == null) || propNodeList.isEmpty()) {
+      return result;
+    }
+    final DefaultPropertyXmlSerializer propSerializer = DefaultPropertyXmlSerializer.INSTANCE;
+    for (final Element propNode : propNodeList) {
+      final DefaultProperty prop = propSerializer.deserialize(propNode);
+      result.properties.put(prop.getName(), prop);
+    }
+    return result;
+  }
+
+  @Override
+  public Element serialize(final Document doc, final Object obj) throws XmlException {
+    final DefaultConfig config;
+    try {
+      config = (DefaultConfig) obj;
+    } catch (final ClassCastException e) {
+      throw new XmlSerializationException(e);
+    }
+    final DefaultPropertyXmlSerializer propSerializer = DefaultPropertyXmlSerializer.INSTANCE;
+    final Element root = doc.createElement(ROOT_NODE);
+    for (final DefaultProperty prop : config.properties.values()) {
+      final Element node = propSerializer.serialize(doc, prop);
+      root.appendChild(node);
+    }
+    return root;
+  }
+
+}

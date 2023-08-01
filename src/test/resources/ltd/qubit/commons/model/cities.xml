@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~
+  ~    Copyright (c) 2022 - 2023.
+  ~    Haixing Hu, Qubit Ltd.
+  ~
+  ~    All rights reserved.
+  ~
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<cities>
+  <city>
+    <country>中国</country>
+    <province>江苏</province>
+    <name>南京</name>
+    <level>2</level>
+  </city>
+  <city>
+    <country>中国</country>
+    <name>上海</name>
+    <code>SHA</code>
+    <level>1</level>
+  </city>
+  <city>
+    <country>中国</country>
+    <name>北京</name>
+    <level>1</level>
+  </city>
+  <city>
+    <country>中国</country>
+    <name>天津</name>
+    <level>2</level>
+  </city>
+  <city>
+    <country>中国</country>
+    <name>重庆</name>
+    <level>2</level>
+  </city>
+  <city>
+    <country>中国</country>
+    <province>广东</province>
+    <name>广州</name>
+    <level>1</level>
+  </city>
+  <city>
+    <country>中国</country>
+    <province>广东</province>
+    <name>深圳</name>
+    <level>1</level>
+  </city>
+  <city>
+    <country>中国</country>
+    <province>山东</province>
+    <name>济南</name>
+    <level>3</level>
+  </city>
+  <city>
+    <country>美国</country>
+    <province>纽约</province>
+    <name>纽约</name>
+    <level>1</level>
+  </city>
+</cities>

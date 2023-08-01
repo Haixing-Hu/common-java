@@ -1,0 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
+//
+//    All rights reserved.
+//
+////////////////////////////////////////////////////////////////////////////////
+package ltd.qubit.commons.reflect.testbed;
+
+public class MyIntegerList extends IntegerList {
+
+  private static final long serialVersionUID = -5733620338532872557L;
+
+  //  empty
+}

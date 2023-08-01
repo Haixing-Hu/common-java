@@ -1,0 +1,51 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
+//
+//    All rights reserved.
+//
+////////////////////////////////////////////////////////////////////////////////
+package ltd.qubit.commons.io.serialize.predefined;
+
+import ltd.qubit.commons.io.error.SerializationException;
+import ltd.qubit.commons.io.serialize.BinarySerializer;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
+
+import static ltd.qubit.commons.io.InputUtils.readIntArray;
+import static ltd.qubit.commons.io.OutputUtils.writeIntArray;
+
+/**
+ * The {@link BinarySerializer} for {@code int[]} class.
+ *
+ * @author Haixing Hu
+ */
+@Immutable
+public final class IntArrayBinarySerializer implements BinarySerializer {
+
+  public static final IntArrayBinarySerializer INSTANCE = new IntArrayBinarySerializer();
+
+  @Override
+  public int[] deserialize(final InputStream in, final boolean allowNull)
+      throws IOException {
+    return readIntArray(in, allowNull, null);
+  }
+
+  @Override
+  public void serialize(final OutputStream out, @Nullable final Object obj)
+      throws IOException {
+    final int[] value;
+    try {
+      value = (int[]) obj;
+    } catch (final ClassCastException e) {
+      throw new SerializationException(e);
+    }
+    writeIntArray(out, value);
+  }
+
+}

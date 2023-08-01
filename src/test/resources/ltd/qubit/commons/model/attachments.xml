@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~
+  ~    Copyright (c) 2022 - 2023.
+  ~    Haixing Hu, Qubit Ltd.
+  ~
+  ~    All rights reserved.
+  ~
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<attachments>
+  <attachment>
+    <type>image</type>
+    <title>image1</title>
+    <file>
+      <url>image/image1.jpg</url>
+    </file>
+  </attachment>
+  <attachment>
+    <type>video</type>
+    <file>
+      <url>video/video1.mp4</url>
+    </file>
+  </attachment>
+</attachments>

@@ -1,0 +1,49 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
+//
+//    All rights reserved.
+//
+////////////////////////////////////////////////////////////////////////////////
+package ltd.qubit.commons.text.html;
+
+import ltd.qubit.commons.lang.CloneableEx;
+
+import java.util.Collection;
+import java.util.HashSet;
+
+/**
+ * A set of {@link HyperLink} objects.
+ * <p>
+ * This class is presented to simplified the serialization of set of hyper
+ * links.
+ * </p>
+ *
+ * @author Haixing Hu
+ */
+public final class HyperLinkSet extends HashSet<HyperLink> implements
+        CloneableEx<HyperLinkSet> {
+
+  private static final long serialVersionUID = 4345600463485787291L;
+
+  public HyperLinkSet() {
+  }
+
+  public HyperLinkSet(final Collection<HyperLink> c) {
+    super(c);
+  }
+
+  public HyperLinkSet(final int initialCapacity, final float loadFactor) {
+    super(initialCapacity, loadFactor);
+  }
+
+  public HyperLinkSet(final int initialCapacity) {
+    super(initialCapacity);
+  }
+
+  @Override
+  public HyperLinkSet clone() {
+    return new HyperLinkSet(this);
+  }
+}

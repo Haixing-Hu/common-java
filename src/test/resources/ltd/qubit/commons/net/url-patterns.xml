@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~
+  ~    Copyright (c) 2022 - 2023.
+  ~    Haixing Hu, Qubit Ltd.
+  ~
+  ~    All rights reserved.
+  ~
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<url-patterns>
+    <url-pattern>
+        <part>PATH</part>
+        <pattern type="PREFIX">http://www.sina.com.cn/news/</pattern>
+    </url-pattern>
+
+    <url-pattern>
+        <pattern type="GLOB">http://www.sina.com.cn/*</pattern>
+    </url-pattern>
+
+    <url-pattern>
+        <pattern type="SUFFIX">news.html</pattern>
+    </url-pattern>
+
+    <url-pattern>
+        <part>HOSTNAME</part>
+        <pattern type="REGEX">.*\.com$</pattern>
+    </url-pattern>
+
+    <url-pattern>
+        <part>HOSTNAME</part>
+        <pattern type="GLOB">*.com</pattern>
+    </url-pattern>
+
+    <url-pattern>
+        <part>SCHEME</part>
+        <pattern type="LITERAL">http</pattern>
+    </url-pattern>
+
+    <url-pattern>
+        <part>SCHEME</part>
+        <pattern>https</pattern>
+    </url-pattern>
+</url-patterns>

@@ -1,0 +1,120 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
+//
+//    All rights reserved.
+//
+////////////////////////////////////////////////////////////////////////////////
+package ltd.qubit.commons.util.pair;
+
+import ltd.qubit.commons.lang.Assignable;
+import ltd.qubit.commons.lang.CloneableEx;
+import ltd.qubit.commons.lang.Equality;
+import ltd.qubit.commons.lang.Hash;
+import ltd.qubit.commons.lang.ObjectUtils;
+
+import java.io.Serializable;
+import javax.annotation.Nullable;
+
+/**
+ * 此模型表示简单的字符串键值对。
+ *
+ * @author 胡海星
+ */
+public class KeyValuePair implements Serializable, CloneableEx<KeyValuePair>,
+        Assignable<KeyValuePair> {
+
+  private static final long serialVersionUID = -509702675803272160L;
+
+  /**
+   * 主键。
+   */
+  private String key;
+
+  /**
+   * 取值。
+   */
+  @Nullable
+  private String value;
+
+  public KeyValuePair() {}
+
+  public KeyValuePair(final KeyValuePair other) {
+    assign(other);
+  }
+
+  public KeyValuePair(final String key) {
+    this.key = key;
+    value = null;
+  }
+
+  public KeyValuePair(final String key, final Object value) {
+    this.key = key;
+    this.value = ObjectUtils.toString(value, null);
+  }
+
+  public <E extends Enum<E>> KeyValuePair(final E key, final Object value) {
+    this.key = key.name().toLowerCase();
+    this.value = ObjectUtils.toString(value, null);
+  }
+
+  @Override
+  public void assign(final KeyValuePair other) {
+    key = other.key;
+    value = other.value;
+  }
+
+  @Override
+  public KeyValuePair clone() {
+    return new KeyValuePair(this);
+  }
+
+  public final String getKey() {
+    return key;
+  }
+
+  public final void setKey(final String key) {
+    this.key = key;
+  }
+
+  @Nullable
+  public final String getValue() {
+    return value;
+  }
+
+  public final void setValue(@Nullable final String value) {
+    this.value = value;
+  }
+
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if ((o == null) || (getClass() != o.getClass())) {
+      return false;
+    }
+    final KeyValuePair other = (KeyValuePair) o;
+    return Equality.equals(key, other.key)
+        && Equality.equals(value, other.value);
+  }
+
+  @Override
+  public int hashCode() {
+    final int multiplier = 7;
+    int result = 3;
+    result = Hash.combine(result, multiplier, key);
+    result = Hash.combine(result, multiplier, value);
+    return result;
+  }
+
+  @Override
+  public String toString() {
+    final StringBuilder builder = new StringBuilder();
+    builder.append(key)
+           .append(" = ")
+           .append(value);
+    return builder.toString();
+  }
+}

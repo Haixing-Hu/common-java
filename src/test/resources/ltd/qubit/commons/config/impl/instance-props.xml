@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~
+  ~    Copyright (c) 2022 - 2023.
+  ~    Haixing Hu, Qubit Ltd.
+  ~
+  ~    All rights reserved.
+  ~
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<configuration>
+
+  <property name="prop1" type="class">
+    <description>description 1</description>
+    <value>ltd.qubit.commons.config.impl.DefaultConfig</value>
+  </property>
+
+  <property type="class" name="prop2" final="true">
+    <description>description 2</description>
+  </property>
+
+  <property name="prop3" final="false" type="class">
+    <value>ltd.qubit.commons.config.impl.MyConfigurableClass</value>
+    <value>ltd.qubit.commons.config.Configured</value>
+  </property>
+
+
+</configuration>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~
+  ~    Copyright (c) 2022 - 2023.
+  ~    Haixing Hu, Qubit Ltd.
+  ~
+  ~    All rights reserved.
+  ~
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<configuration>
+
+  <property name="prop1" type="class">
+    <description>description 1</description>
+    <value>ltd.qubit.commons.config.impl.DefaultConfig</value>
+  </property>
+
+  <property name="prop2" type="class" final="true">
+    <description>description 2</description>
+    <value>ltd.qubit.commons.config.impl.DefaultConfig</value>
+    <value>ltd.qubit.commons.config.impl.DefaultProperty</value>
+  </property>
+
+  <property name="prop3" type="class" final="false">
+    <value>java.lang.String</value>
+    <value>java.lang.Integer</value>
+    <value>java.lang.Float</value>
+    <value>ltd.qubit.commons.config.impl.DefaultConfig</value>
+    <value>ltd.qubit.commons.config.impl.DefaultProperty</value>
+  </property>
+
+  <property type="class" name="prop4">
+    <description>description 4</description>
+  </property>
+
+  <property name="prop5" type="class" final="false">
+    <value>java.lang.String</value>
+  </property>
+
+</configuration>

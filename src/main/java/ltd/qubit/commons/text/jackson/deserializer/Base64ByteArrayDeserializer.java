@@ -1,0 +1,32 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
+//
+//    All rights reserved.
+//
+////////////////////////////////////////////////////////////////////////////////
+package ltd.qubit.commons.text.jackson.deserializer;
+
+import ltd.qubit.commons.util.codec.Base64Codec;
+
+import javax.annotation.concurrent.Immutable;
+
+/**
+ * The JSON deserializer of a {@code byte[]} object, which deserialize the
+ * {@code byte[]} from the string encoded in the BASE-64 format.
+ *
+ * @author Haixing Hu
+ */
+@Immutable
+public class Base64ByteArrayDeserializer extends DecoderDeserializer<byte[]> {
+
+  private static final long serialVersionUID = 4060958725438976043L;
+
+  public static final Base64ByteArrayDeserializer INSTANCE =
+      new Base64ByteArrayDeserializer();
+
+  public Base64ByteArrayDeserializer() {
+    super(byte[].class, Base64Codec.INSTANCE);
+  }
+}

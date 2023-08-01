@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~
+  ~    Copyright (c) 2022 - 2023.
+  ~    Haixing Hu, Qubit Ltd.
+  ~
+  ~    All rights reserved.
+  ~
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<configuration>
+
+  <property name="prop1" type="bool">
+    <description>description 1</description>
+    <value>true</value>
+  </property>
+
+  <property name="prop2" type="bool" final="true">
+    <description>description 2</description>
+    <value> FAlse</value>
+    <value>TRUE</value>
+  </property>
+
+  <property name="prop3" type="bool" final="false">
+    <value>true</value>
+    <value>false</value>
+    <value>TRue</value>
+    <value>  falsE   </value>
+  </property>
+
+  <property type="bool" name="prop4">
+    <description>description 4</description>
+  </property>
+
+
+</configuration>

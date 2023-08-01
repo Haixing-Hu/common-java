@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~
+  ~    Copyright (c) 2022 - 2023.
+  ~    Haixing Hu, Qubit Ltd.
+  ~
+  ~    All rights reserved.
+  ~
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<!--
+  Document   : pattern-category.xsd
+  Description: This document defines the XML serialization format
+               of the Pattern class, which represents a generic
+               pattern of strings.
+  See        : ai.cell.commons.text.Pattern.java
+ -->
+<xsd:schema xmlns:this="http://www.njzhyl.cn"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://www.njzhyl.cn"
+  elementFormDefault="qualified">
+
+  <xsd:include schemaLocation="pattern-type.xsd" />
+
+  <xsd:element name="pattern" type="this:pattern" />
+
+  <xsd:complexType name="pattern">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <!-- 模式的具体类型，可选，默认为"literal" -->
+        <xsd:attribute name="type" type="this:pattern-type" default="literal" />
+        <!-- 是否忽略大小写，可选，默认否 -->
+        <xsd:attribute name="case-insensitive" type="xsd:boolean" default="false" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+</xsd:schema>

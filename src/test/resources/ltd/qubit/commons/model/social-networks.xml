@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~
+  ~    Copyright (c) 2022 - 2023.
+  ~    Haixing Hu, Qubit Ltd.
+  ~
+  ~    All rights reserved.
+  ~
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<social-networks>
+  <social-network>
+    <id>qq</id>
+    <name>腾讯QQ</name>
+    <url>http://www.qq.com</url>
+  </social-network>
+  <social-network>
+    <id>weixin</id>
+    <name>腾讯微信</name>
+    <url>http://www.weixin.com</url>
+  </social-network>
+  <social-network>
+    <id>weibo</id>
+    <name>新浪微博</name>
+    <url>http://www.weibo.com</url>
+  </social-network>
+  <social-network>
+    <id>twitter</id>
+    <name>Twitter</name>
+    <url>http://www.twitter.com</url>
+  </social-network>
+  <social-network>
+    <id>facebook</id>
+    <name>Facebook</name>
+    <url>http://www.facebook.com</url>
+    <predefined>false</predefined>
+  </social-network>
+  <social-network>
+    <id>google+</id>
+    <name>Google Plus</name>
+    <url>http://plus.google.com</url>
+    <predefined>true</predefined>
+  </social-network>
+</social-networks>

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~
+  ~    Copyright (c) 2022 - 2023.
+  ~    Haixing Hu, Qubit Ltd.
+  ~
+  ~    All rights reserved.
+  ~
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<configuration>
+
+  <property name="ltd.qubit.oghma.crawler.web.protocol.http.HttpProtocol">
+    <description>The HttpProtocol supports HTTP and HTTPS protocols.</description>
+    <value>http</value>
+    <value>https</value>
+  </property>
+
+<!--
+  <property name="ltd.qubit.oghma.crawler.app.protocol.ftp.FtpProtocol">
+    <description>The FtpProtocol supports the FTP protocol.</description>
+    <value>ftp</value>
+  </property>
+-->
+
+</configuration>

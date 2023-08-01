@@ -1,0 +1,21 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
+//
+//    All rights reserved.
+//
+////////////////////////////////////////////////////////////////////////////////
+package ltd.qubit.commons.lang;
+
+/**
+ * This interface defines the contract that an object could be "cleared" to its
+ * initial state or empty state.
+ *
+ * @author Haixing Hu
+ */
+public interface Clearable {
+
+  void clear();
+
+}
