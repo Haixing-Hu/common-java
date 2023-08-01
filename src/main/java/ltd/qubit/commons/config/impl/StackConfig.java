@@ -8,11 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.config.impl;
 
-import ltd.qubit.commons.config.AbstractConfig;
-import ltd.qubit.commons.config.Config;
-import ltd.qubit.commons.config.Property;
-import ltd.qubit.commons.lang.Argument;
-
 import java.util.Collection;
 import java.util.EmptyStackException;
 import java.util.HashMap;
@@ -20,6 +15,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
+
+import ltd.qubit.commons.config.AbstractConfig;
+import ltd.qubit.commons.config.Config;
+import ltd.qubit.commons.config.Property;
+import ltd.qubit.commons.lang.Argument;
 
 /**
  * An implementation of {@link Config} interface which get property values from

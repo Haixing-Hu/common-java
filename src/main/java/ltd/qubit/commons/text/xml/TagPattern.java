@@ -8,6 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.xml;
 
+import java.io.Serializable;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.io.serialize.BinarySerialization;
 import ltd.qubit.commons.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.CloneableEx;
@@ -17,9 +21,6 @@ import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-
-import java.io.Serializable;
-import javax.annotation.Nullable;
 
 /**
  * The {@link TagPattern} object represent a pattern applied to an XML tag.

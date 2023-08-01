@@ -8,17 +8,24 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.GenericArrayType;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.lang.reflect.WildcardType;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
+
 import jakarta.validation.constraints.NotNull;
+
 import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-import java.lang.reflect.*;
-import java.util.HashMap;
-import java.util.Map;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 

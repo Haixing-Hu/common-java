@@ -8,17 +8,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.filter.string;
 
-import ltd.qubit.commons.lang.StringUtils;
-import ltd.qubit.commons.text.Glob;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+
+import ltd.qubit.commons.lang.StringUtils;
+import ltd.qubit.commons.text.Glob;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The base for {@link GlobWhiteListStringFilter} and

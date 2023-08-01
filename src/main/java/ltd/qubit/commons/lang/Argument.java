@@ -8,12 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
+import java.util.Collection;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.math.MathEx;
 import ltd.qubit.commons.text.Joiner;
 import ltd.qubit.commons.text.Unicode;
-
-import java.util.Collection;
-import javax.annotation.Nullable;
 
 /**
  * Provides common arg checking functions.

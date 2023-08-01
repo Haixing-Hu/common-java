@@ -8,6 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.datastructure.list.primitive.BooleanList;
 import ltd.qubit.commons.datastructure.list.primitive.BooleanListIterator;
 import ltd.qubit.commons.datastructure.list.primitive.ByteList;
@@ -33,15 +43,6 @@ import ltd.qubit.commons.lang.IntUtils;
 import ltd.qubit.commons.lang.LongUtils;
 import ltd.qubit.commons.lang.ObjectUtils;
 import ltd.qubit.commons.lang.ShortUtils;
-
-import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import javax.annotation.Nullable;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.lang.StringUtils.EMPTY;

@@ -8,10 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.codec;
 
-import ltd.qubit.commons.text.Stripper;
-
 import java.math.BigInteger;
+
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.text.Stripper;
 
 /**
  * The codec of the {@link BigInteger} class.

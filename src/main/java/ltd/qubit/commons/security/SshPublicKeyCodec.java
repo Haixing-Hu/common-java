@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.security;
 
+import java.security.PublicKey;
+
 import ltd.qubit.commons.util.codec.DecodingException;
 import ltd.qubit.commons.util.codec.EncodingException;
-
-import java.security.PublicKey;
 
 /**
  * The {@link PublicKeyCodec} which encode/decode between {@link PublicKey}s and

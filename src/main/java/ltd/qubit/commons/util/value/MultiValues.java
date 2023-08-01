@@ -8,6 +8,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.value;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Collection;
+import java.util.Date;
+import java.util.NoSuchElementException;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.datastructure.list.primitive.BooleanCollection;
 import ltd.qubit.commons.datastructure.list.primitive.ByteCollection;
 import ltd.qubit.commons.datastructure.list.primitive.CharCollection;
@@ -24,16 +35,6 @@ import ltd.qubit.commons.text.xml.XmlException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Collection;
-import java.util.Date;
-import java.util.NoSuchElementException;
-import javax.annotation.Nullable;
 
 /**
  * A {@link MultiValues} object represents one or more values of values of

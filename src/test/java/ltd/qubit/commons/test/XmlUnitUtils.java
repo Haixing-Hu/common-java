@@ -8,11 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.test;
 
+import javax.annotation.Nullable;
+
 import org.xmlunit.assertj.XmlAssert;
 import org.xmlunit.matchers.EvaluateXPathMatcher;
 import org.xmlunit.matchers.HasXPathMatcher;
-
-import javax.annotation.Nullable;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;

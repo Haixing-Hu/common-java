@@ -8,10 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
-import ltd.qubit.commons.util.codec.LocalTimeCodec;
-
 import java.time.LocalTime;
+
 import javax.annotation.Nullable;
+
+import ltd.qubit.commons.util.codec.LocalTimeCodec;
 
 /**
  * This class provides operations on {@link LocalTime} objects.

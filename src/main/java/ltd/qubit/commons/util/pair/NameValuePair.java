@@ -8,17 +8,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.pair;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import jakarta.validation.constraints.NotNull;
+
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Comparison;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * A name-value pair.

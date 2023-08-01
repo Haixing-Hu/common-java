@@ -8,23 +8,24 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.security;
 
-import ltd.qubit.commons.error.DigestMessageException;
-import ltd.qubit.commons.text.jackson.JsonMapperUtils;
-
-import com.fasterxml.jackson.databind.json.JsonMapper;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
+
 import javax.crypto.KeyGenerator;
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 
-import static ltd.qubit.commons.lang.Argument.requireNonNull;
+import ltd.qubit.commons.error.DigestMessageException;
+import ltd.qubit.commons.text.jackson.JsonMapperUtils;
+
+import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+
+import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
  * The class of objects used to digest messages with Mac (Message Authentication Code).

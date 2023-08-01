@@ -8,6 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
+import java.io.Serializable;
+import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.annotation.concurrent.NotThreadSafe;
+
 import ltd.qubit.commons.error.TypeMismatchException;
 import ltd.qubit.commons.io.serialize.BinarySerialization;
 import ltd.qubit.commons.io.serialize.XmlSerialization;
@@ -17,12 +24,6 @@ import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.io.Serializable;
-import java.util.Stack;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.annotation.concurrent.NotThreadSafe;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 

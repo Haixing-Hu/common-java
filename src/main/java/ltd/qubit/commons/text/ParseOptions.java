@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
+import java.io.Serializable;
+
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.io.Serializable;
 
 /**
  * A {@link ParseOptions} object stores the options for parsing text.

@@ -8,14 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
+import java.util.Collection;
+import java.util.Map;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.reflect.BeanInfo;
 import ltd.qubit.commons.reflect.Property;
-
-import java.util.Collection;
-import java.util.Map;
-import javax.annotation.Nullable;
 
 /**
  * 此接口表示实体类可被正则化。

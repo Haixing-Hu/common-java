@@ -8,13 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.xml;
 
+import java.util.Stack;
+
 import ltd.qubit.commons.lang.Argument;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import java.util.Stack;
 
 /**
  * A utility class that iterates through the element nodes of a DOM tree.

@@ -8,6 +8,23 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Nullable;
+
+import jakarta.validation.constraints.NotNull;
+
+import ltd.qubit.commons.text.Replacer;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
@@ -18,21 +35,9 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
-import jakarta.validation.constraints.NotNull;
-import ltd.qubit.commons.text.Replacer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nullable;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.URL;
-import java.util.List;
-import java.util.Map;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+
 import static ltd.qubit.commons.text.jackson.CustomizeJacksonUtils.getNormalizedConfig;
 import static ltd.qubit.commons.text.jackson.JacksonUtils.getRootName;
 import static ltd.qubit.commons.text.jackson.JacksonUtils.getRootWrapperName;

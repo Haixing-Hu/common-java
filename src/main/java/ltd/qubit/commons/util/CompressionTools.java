@@ -8,13 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util;
 
-import ltd.qubit.commons.lang.ArrayUtils;
-import ltd.qubit.commons.lang.StringUtils;
-
 import java.io.ByteArrayOutputStream;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
+
+import ltd.qubit.commons.lang.ArrayUtils;
+import ltd.qubit.commons.lang.StringUtils;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 

@@ -8,12 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson;
 
+import java.io.IOException;
+import java.io.Writer;
+
 import ltd.qubit.commons.text.CharArrayWrapper;
 import ltd.qubit.commons.text.EscapeUtils;
 import ltd.qubit.commons.text.translate.CharSequenceTranslator;
-
-import java.io.IOException;
-import java.io.Writer;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 

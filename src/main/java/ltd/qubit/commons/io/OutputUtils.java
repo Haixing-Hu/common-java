@@ -8,6 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.io;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Map;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.datastructure.list.primitive.BooleanCollection;
 import ltd.qubit.commons.datastructure.list.primitive.BooleanIterator;
 import ltd.qubit.commons.datastructure.list.primitive.ByteCollection;
@@ -29,15 +39,6 @@ import ltd.qubit.commons.io.serialize.NoBinarySerializerRegisteredException;
 import ltd.qubit.commons.util.buffer.ByteBuffer;
 
 import com.google.common.collect.Multimap;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Map;
-import javax.annotation.Nullable;
 
 import static ltd.qubit.commons.io.serialize.BinarySerialization.getSerializer;
 

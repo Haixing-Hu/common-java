@@ -8,15 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.translate;
 
-import ltd.qubit.commons.lang.Equality;
-import ltd.qubit.commons.lang.Hash;
-import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
+
+import ltd.qubit.commons.lang.Equality;
+import ltd.qubit.commons.lang.Hash;
+import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
  * Executes a sequence of translators one after the other.

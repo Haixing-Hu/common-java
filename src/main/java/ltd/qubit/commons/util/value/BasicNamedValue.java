@@ -8,16 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.value;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Date;
+
 import ltd.qubit.commons.lang.Argument;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.lang.Type;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Date;
 
 /**
  * The basic implementation of the {@link NamedValue} interface.

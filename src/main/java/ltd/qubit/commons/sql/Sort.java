@@ -8,11 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
+import java.io.Serializable;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.io.Serializable;
 
 /**
  * Stores the sorting conditions.

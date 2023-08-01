@@ -8,20 +8,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list.primitive.impl;
 
-import ltd.qubit.commons.datastructure.list.primitive.ByteCollection;
-import ltd.qubit.commons.datastructure.list.primitive.ByteIterator;
-import ltd.qubit.commons.datastructure.list.primitive.ByteList;
-import ltd.qubit.commons.datastructure.list.primitive.RandomAccessByteList;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
 
-import static ltd.qubit.commons.lang.Argument.requireIndexInCloseRange;
-import static ltd.qubit.commons.lang.Argument.requireIndexInRightOpenRange;
+import ltd.qubit.commons.datastructure.list.primitive.ByteCollection;
+import ltd.qubit.commons.datastructure.list.primitive.ByteIterator;
+import ltd.qubit.commons.datastructure.list.primitive.ByteList;
+import ltd.qubit.commons.datastructure.list.primitive.RandomAccessByteList;
 
 import static java.lang.System.arraycopy;
+
+import static ltd.qubit.commons.lang.Argument.requireIndexInCloseRange;
+import static ltd.qubit.commons.lang.Argument.requireIndexInRightOpenRange;
 
 /**
  * An {@link ByteList} backed by an array of {@code byte}s. This implementation

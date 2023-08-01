@@ -8,18 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect;
 
-import jakarta.validation.constraints.Size;
-import ltd.qubit.commons.annotation.*;
-import ltd.qubit.commons.lang.Equality;
-import ltd.qubit.commons.lang.Hash;
-import ltd.qubit.commons.reflect.impl.GetterMethod;
-import ltd.qubit.commons.text.tostring.ToStringBuilder;
-import ltd.qubit.commons.util.range.CloseRange;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -27,6 +15,25 @@ import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
+
+import jakarta.validation.constraints.Size;
+
+import ltd.qubit.commons.annotation.Computed;
+import ltd.qubit.commons.annotation.Identifier;
+import ltd.qubit.commons.annotation.KeyIndex;
+import ltd.qubit.commons.annotation.Reference;
+import ltd.qubit.commons.annotation.Unique;
+import ltd.qubit.commons.lang.Equality;
+import ltd.qubit.commons.lang.Hash;
+import ltd.qubit.commons.reflect.impl.GetterMethod;
+import ltd.qubit.commons.text.tostring.ToStringBuilder;
+import ltd.qubit.commons.util.range.CloseRange;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static ltd.qubit.commons.lang.Argument.requireNonEmpty;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;

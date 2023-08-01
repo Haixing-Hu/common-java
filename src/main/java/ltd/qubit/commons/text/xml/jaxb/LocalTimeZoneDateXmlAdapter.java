@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.xml.jaxb;
 
-import ltd.qubit.commons.util.codec.DateCodec;
-
 import java.time.ZoneId;
 import java.util.Date;
+
+import ltd.qubit.commons.util.codec.DateCodec;
 
 /**
  * The customized JAXB data type adaptor for the {@link Date} type with local

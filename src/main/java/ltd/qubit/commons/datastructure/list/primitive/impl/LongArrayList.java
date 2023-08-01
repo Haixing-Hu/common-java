@@ -8,20 +8,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list.primitive.impl;
 
-import ltd.qubit.commons.datastructure.list.primitive.LongCollection;
-import ltd.qubit.commons.datastructure.list.primitive.LongIterator;
-import ltd.qubit.commons.datastructure.list.primitive.LongList;
-import ltd.qubit.commons.datastructure.list.primitive.RandomAccessLongList;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
 
-import static ltd.qubit.commons.lang.Argument.requireIndexInCloseRange;
-import static ltd.qubit.commons.lang.Argument.requireIndexInRightOpenRange;
+import ltd.qubit.commons.datastructure.list.primitive.LongCollection;
+import ltd.qubit.commons.datastructure.list.primitive.LongIterator;
+import ltd.qubit.commons.datastructure.list.primitive.LongList;
+import ltd.qubit.commons.datastructure.list.primitive.RandomAccessLongList;
 
 import static java.lang.System.arraycopy;
+
+import static ltd.qubit.commons.lang.Argument.requireIndexInCloseRange;
+import static ltd.qubit.commons.lang.Argument.requireIndexInRightOpenRange;
 
 /**
  * An {@link LongList} backed by an array of {@code long}s. This implementation

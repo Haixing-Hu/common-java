@@ -11,10 +11,11 @@ package ltd.qubit.commons.error;
 import ltd.qubit.commons.text.jackson.CustomizedXmlMapper;
 import ltd.qubit.commons.util.pair.KeyValuePairList;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.junit.jupiter.api.Test;
 import org.xmlunit.assertj.XmlAssert;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 public class ErrorInfoTest {
 

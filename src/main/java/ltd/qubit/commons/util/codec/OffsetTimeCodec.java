@@ -8,12 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.codec;
 
-import ltd.qubit.commons.text.Stripper;
-
 import java.time.DateTimeException;
 import java.time.OffsetTime;
 import java.time.format.DateTimeFormatter;
+
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.text.Stripper;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.lang.StringUtils.isEmpty;

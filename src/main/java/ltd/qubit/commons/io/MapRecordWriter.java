@@ -8,11 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.io;
 
-import ltd.qubit.commons.lang.Argument;
-
 import java.util.Map;
+
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
+
+import ltd.qubit.commons.lang.Argument;
 
 /**
  * A RecordWriter which writes records into a map.

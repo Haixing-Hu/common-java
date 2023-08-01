@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
+import java.util.Locale;
+
 import ltd.qubit.commons.error.UnsupportedContentTypeException;
 import ltd.qubit.commons.lang.EnumUtils;
-
-import java.util.Locale;
 
 import static ltd.qubit.commons.lang.EnumUtils.registerLocalizedNames;
 

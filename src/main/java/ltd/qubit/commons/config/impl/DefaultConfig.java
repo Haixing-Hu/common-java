@@ -8,6 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.config.impl;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.config.AbstractConfig;
 import ltd.qubit.commons.config.Config;
 import ltd.qubit.commons.config.MergingPolicy;
@@ -29,15 +39,6 @@ import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import javax.annotation.Nullable;
 
 /**
  * The {@link DefaultConfig} class is the default implementation of the {@link

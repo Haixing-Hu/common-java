@@ -8,23 +8,24 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
-import ltd.qubit.commons.text.Remover;
-import ltd.qubit.commons.util.filter.character.WhitespaceCharFilter;
-
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.concurrent.ThreadSafe;
+
+import ltd.qubit.commons.text.Remover;
+import ltd.qubit.commons.util.filter.character.WhitespaceCharFilter;
+
+import static java.util.Map.entry;
 
 import static ltd.qubit.commons.datastructure.map.MapUtils.invertAsUnmodifiable;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.lang.ArrayUtils.EMPTY_CLASS_ARRAY;
 import static ltd.qubit.commons.lang.ArrayUtils.isSameLength;
 import static ltd.qubit.commons.lang.ObjectUtils.defaultIfNull;
-
-import static java.util.Map.entry;
 
 /**
  * This class provides operations on {@link Class} objects.

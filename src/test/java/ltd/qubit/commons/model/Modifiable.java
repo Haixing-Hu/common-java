@@ -9,6 +9,7 @@
 package ltd.qubit.commons.model;
 
 import java.time.Instant;
+
 import javax.annotation.Nullable;
 
 /**

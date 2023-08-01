@@ -8,11 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.codec;
 
-import ltd.qubit.commons.text.Stripper;
-
 import java.time.MonthDay;
 import java.time.format.DateTimeParseException;
+
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.text.Stripper;
 
 @Immutable
 public class MonthDayCodec implements Codec<MonthDay, String> {

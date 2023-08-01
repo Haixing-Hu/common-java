@@ -8,18 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.io.serialize;
 
-import ltd.qubit.commons.io.IoUtils;
-import ltd.qubit.commons.lang.ClassKey;
-import ltd.qubit.commons.net.Url;
-import ltd.qubit.commons.text.xml.XmlException;
-import ltd.qubit.commons.text.xml.XmlSerializationException;
-import ltd.qubit.commons.text.xml.XmlUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -36,9 +24,21 @@ import java.net.URL;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static ltd.qubit.commons.lang.Argument.requireNonNull;
+import ltd.qubit.commons.io.IoUtils;
+import ltd.qubit.commons.lang.ClassKey;
+import ltd.qubit.commons.net.Url;
+import ltd.qubit.commons.text.xml.XmlException;
+import ltd.qubit.commons.text.xml.XmlSerializationException;
+import ltd.qubit.commons.text.xml.XmlUtils;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+
+import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
  * Provides functions to manager {@link XmlSerializer}s, as well as functions to

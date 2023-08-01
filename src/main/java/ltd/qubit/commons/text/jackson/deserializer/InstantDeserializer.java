@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
-import ltd.qubit.commons.util.codec.Decoder;
-
 import java.time.Instant;
+
+import ltd.qubit.commons.util.codec.Decoder;
 
 /**
  * The JSON deserializer of a {@link Instant} object.

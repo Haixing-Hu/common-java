@@ -8,18 +8,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
+import java.util.regex.Pattern;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.util.regex.Pattern;
-
-import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 import static java.util.regex.Pattern.CANON_EQ;
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 import static java.util.regex.Pattern.MULTILINE;
 import static java.util.regex.Pattern.UNICODE_CASE;
+
+import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
  * 表示SQL语法支持的LIKE字符串匹配模式。

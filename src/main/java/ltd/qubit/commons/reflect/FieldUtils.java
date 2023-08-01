@@ -8,10 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect;
 
-import ltd.qubit.commons.lang.ArrayUtils;
-import ltd.qubit.commons.reflect.impl.GetterMethod;
-import ltd.qubit.commons.reflect.impl.SetterMethod;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -26,8 +22,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
+
+import ltd.qubit.commons.lang.ArrayUtils;
+import ltd.qubit.commons.reflect.impl.GetterMethod;
+import ltd.qubit.commons.reflect.impl.SetterMethod;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.lang.StringUtils.isEmpty;

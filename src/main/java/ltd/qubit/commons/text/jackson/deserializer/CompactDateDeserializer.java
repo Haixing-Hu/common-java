@@ -8,10 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
-import ltd.qubit.commons.util.codec.CompactDateCodec;
-
 import java.time.LocalDate;
+
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.util.codec.CompactDateCodec;
 
 /**
  * 本地日期类 {@link LocalDate} 的 JSON 反序列化器，该反序列器将编码为

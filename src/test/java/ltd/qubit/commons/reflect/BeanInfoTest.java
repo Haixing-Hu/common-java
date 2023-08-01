@@ -8,18 +8,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+
 import ltd.qubit.commons.reflect.testbed.ChildBean;
 import ltd.qubit.commons.reflect.testbed.Info;
 import ltd.qubit.commons.reflect.testbed.ParentBean;
 import ltd.qubit.commons.util.range.CloseRange;
 
 import org.junit.jupiter.api.Test;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
 
 import static ltd.qubit.commons.reflect.FieldUtils.getField;
 import static ltd.qubit.commons.reflect.FieldUtils.getReadMethod;
@@ -28,9 +28,11 @@ import static ltd.qubit.commons.reflect.Option.BEAN_FIELD;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Unit test of the {@link BeanInfo}.
@@ -57,10 +59,10 @@ public class BeanInfoTest {
     assertEquals(getIdMethod, p1.getReadMethod());
     assertEquals(setIdMethod, p1.getWriteMethod());
     assertSame(Long.class, p1.getType());
-    assertEquals(false, p1.isReadonly());
-    assertEquals(true, p1.isIdentifier());
-    assertEquals(false, p1.isNullable());
-    assertEquals(true, p1.isUnique());
+    assertFalse(p1.isReadonly());
+    assertTrue(p1.isIdentifier());
+    assertFalse(p1.isNullable());
+    assertTrue(p1.isUnique());
     assertNull(p1.getUniqueRespectTo());
     assertNull(p1.getSizeRange());
 
@@ -73,10 +75,10 @@ public class BeanInfoTest {
     assertEquals(getClassMethod, p2.getReadMethod());
     assertNull(p2.getWriteMethod());
     assertSame(Class.class, p2.getType());
-    assertEquals(true, p2.isReadonly());
-    assertEquals(false, p2.isIdentifier());
-    assertEquals(false, p2.isNullable());
-    assertEquals(false, p2.isUnique());
+    assertTrue(p2.isReadonly());
+    assertFalse(p2.isIdentifier());
+    assertFalse(p2.isNullable());
+    assertFalse(p2.isUnique());
     assertNull(p2.getUniqueRespectTo());
     assertNull(p2.getSizeRange());
 
@@ -93,10 +95,10 @@ public class BeanInfoTest {
     assertEquals(getNumberMethod, p3.getReadMethod());
     assertEquals(setNumberMethod, p3.getWriteMethod());
     assertSame(Number.class, p3.getType());
-    assertEquals(false, p3.isReadonly());
-    assertEquals(false, p3.isIdentifier());
-    assertEquals(false, p3.isNullable());
-    assertEquals(false, p3.isUnique());
+    assertFalse(p3.isReadonly());
+    assertFalse(p3.isIdentifier());
+    assertFalse(p3.isNullable());
+    assertFalse(p3.isUnique());
     assertNull(p3.getUniqueRespectTo());
     assertNull(p3.getSizeRange());
   }
@@ -121,10 +123,10 @@ public class BeanInfoTest {
     assertEquals(getIdMethod, p1.getReadMethod());
     assertEquals(setIdMethod, p1.getWriteMethod());
     assertSame(Long.class, p1.getType());
-    assertEquals(false, p1.isReadonly());
-    assertEquals(true, p1.isIdentifier());
-    assertEquals(false, p1.isNullable());
-    assertEquals(true, p1.isUnique());
+    assertFalse(p1.isReadonly());
+    assertTrue(p1.isIdentifier());
+    assertFalse(p1.isNullable());
+    assertTrue(p1.isUnique());
     assertNull(p1.getUniqueRespectTo());
     assertNull(p1.getSizeRange());
 
@@ -141,10 +143,10 @@ public class BeanInfoTest {
     assertEquals(getCodeMethod, p2.getReadMethod());
     assertEquals(setCodeMethod, p2.getWriteMethod());
     assertSame(String.class, p2.getType());
-    assertEquals(false, p2.isReadonly());
-    assertEquals(false, p2.isIdentifier());
-    assertEquals(false, p2.isNullable());
-    assertEquals(true, p2.isUnique());
+    assertFalse(p2.isReadonly());
+    assertFalse(p2.isIdentifier());
+    assertFalse(p2.isNullable());
+    assertTrue(p2.isUnique());
     assertNull(p2.getUniqueRespectTo());
     assertEquals(new CloseRange<>(1, 64), p2.getSizeRange());
 
@@ -161,10 +163,10 @@ public class BeanInfoTest {
     assertEquals(getNameMethod, p3.getReadMethod());
     assertEquals(setNameMethod, p3.getWriteMethod());
     assertSame(String.class, p3.getType());
-    assertEquals(false, p3.isReadonly());
-    assertEquals(false, p3.isIdentifier());
-    assertEquals(false, p3.isNullable());
-    assertEquals(true, p3.isUnique());
+    assertFalse(p3.isReadonly());
+    assertFalse(p3.isIdentifier());
+    assertFalse(p3.isNullable());
+    assertTrue(p3.isUnique());
     assertArrayEquals(new String[]{ "parentId" }, p3.getUniqueRespectTo());
     assertEquals(new CloseRange<>(1, 128), p3.getSizeRange());
 
@@ -181,10 +183,10 @@ public class BeanInfoTest {
     assertEquals(getDescriptionMethod, p4.getReadMethod());
     assertEquals(setDescriptionMethod, p4.getWriteMethod());
     assertSame(String.class, p4.getType());
-    assertEquals(false, p4.isReadonly());
-    assertEquals(false, p4.isIdentifier());
-    assertEquals(true, p4.isNullable());
-    assertEquals(false, p4.isUnique());
+    assertFalse(p4.isReadonly());
+    assertFalse(p4.isIdentifier());
+    assertTrue(p4.isNullable());
+    assertFalse(p4.isUnique());
     assertNull(p4.getUniqueRespectTo());
     assertEquals(new CloseRange<>(0, 1024), p4.getSizeRange());
 
@@ -201,10 +203,10 @@ public class BeanInfoTest {
     assertEquals(getParentIdMethod, p5.getReadMethod());
     assertEquals(setParentIdMethod, p5.getWriteMethod());
     assertSame(Long.class, p5.getType());
-    assertEquals(false, p5.isReadonly());
-    assertEquals(false, p5.isIdentifier());
-    assertEquals(true, p5.isNullable());
-    assertEquals(false, p5.isUnique());
+    assertFalse(p5.isReadonly());
+    assertFalse(p5.isIdentifier());
+    assertTrue(p5.isNullable());
+    assertFalse(p5.isUnique());
     assertNull(p5.getUniqueRespectTo());
     assertNull(p5.getSizeRange());
 
@@ -221,10 +223,10 @@ public class BeanInfoTest {
     assertEquals(isDeletedMethod, p6.getReadMethod());
     assertEquals(setDeletedMethod, p6.getWriteMethod());
     assertSame(boolean.class, p6.getType());
-    assertEquals(false, p6.isReadonly());
-    assertEquals(false, p6.isIdentifier());
-    assertEquals(false, p6.isNullable());
-    assertEquals(false, p6.isUnique());
+    assertFalse(p6.isReadonly());
+    assertFalse(p6.isIdentifier());
+    assertFalse(p6.isNullable());
+    assertFalse(p6.isUnique());
     assertNull(p6.getUniqueRespectTo());
     assertNull(p6.getSizeRange());
 
@@ -237,10 +239,10 @@ public class BeanInfoTest {
     assertEquals(getInfoMethod, p7.getReadMethod());
     assertNull(p7.getWriteMethod());
     assertSame(Info.class, p7.getType());
-    assertEquals(true, p7.isReadonly());
-    assertEquals(false, p7.isIdentifier());
-    assertEquals(false, p7.isNullable());
-    assertEquals(false, p7.isUnique());
+    assertTrue(p7.isReadonly());
+    assertFalse(p7.isIdentifier());
+    assertFalse(p7.isNullable());
+    assertFalse(p7.isUnique());
     assertNull(p7.getUniqueRespectTo());
     assertNull(p7.getSizeRange());
 
@@ -253,10 +255,10 @@ public class BeanInfoTest {
     assertEquals(getClassMethod, p8.getReadMethod());
     assertNull(p8.getWriteMethod());
     assertSame(Class.class, p8.getType());
-    assertEquals(true, p8.isReadonly());
-    assertEquals(false, p8.isIdentifier());
-    assertEquals(false, p8.isNullable());
-    assertEquals(false, p8.isUnique());
+    assertTrue(p8.isReadonly());
+    assertFalse(p8.isIdentifier());
+    assertFalse(p8.isNullable());
+    assertFalse(p8.isUnique());
     assertNull(p8.getUniqueRespectTo());
     assertNull(p8.getSizeRange());
 
@@ -273,10 +275,10 @@ public class BeanInfoTest {
     assertEquals(getNumberMethod, p9.getReadMethod());
     assertEquals(setNumberMethod, p9.getWriteMethod());
     assertSame(Long.class, p9.getType());
-    assertEquals(false, p9.isReadonly());
-    assertEquals(false, p9.isIdentifier());
-    assertEquals(false, p9.isNullable());
-    assertEquals(false, p9.isUnique());
+    assertFalse(p9.isReadonly());
+    assertFalse(p9.isIdentifier());
+    assertFalse(p9.isNullable());
+    assertFalse(p9.isUnique());
     assertNull(p9.getUniqueRespectTo());
     assertNull(p9.getSizeRange());
   }

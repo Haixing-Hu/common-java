@@ -8,10 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql.mybatis;
 
-import org.apache.ibatis.type.BaseTypeHandler;
-import org.apache.ibatis.type.JdbcType;
-import org.apache.ibatis.type.MappedTypes;
-
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,6 +18,10 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import org.apache.ibatis.type.BaseTypeHandler;
+import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.MappedTypes;
 
 /**
  * The MyBatis type handler for the {@link Instant} class.

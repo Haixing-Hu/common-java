@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.error;
 
-import ltd.qubit.commons.util.pair.KeyValuePair;
-
 import java.io.IOException;
+
+import ltd.qubit.commons.util.pair.KeyValuePair;
 
 /**
  * Thrown to indicate a server side I/O error.

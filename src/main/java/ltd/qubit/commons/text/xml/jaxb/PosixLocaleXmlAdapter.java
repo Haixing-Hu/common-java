@@ -8,11 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.xml.jaxb;
 
-import ltd.qubit.commons.util.LocaleUtils;
+import java.util.Locale;
 
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
-import java.util.Locale;
+import ltd.qubit.commons.util.LocaleUtils;
 
 /**
  * The customized JAXB data type adaptor for the {@link Locale} type.

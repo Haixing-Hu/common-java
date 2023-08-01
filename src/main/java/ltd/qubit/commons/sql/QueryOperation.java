@@ -14,11 +14,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ltd.qubit.commons.lang.Argument.requireNonNull;
-
 import static java.sql.ResultSet.CLOSE_CURSORS_AT_COMMIT;
 import static java.sql.ResultSet.CONCUR_READ_ONLY;
 import static java.sql.ResultSet.TYPE_FORWARD_ONLY;
+
+import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
  * A JDBC operation which performs a simple SQL query.

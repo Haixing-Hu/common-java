@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.xml.jaxb;
 
-import ltd.qubit.commons.util.codec.IsoInstantCodec;
-
 import java.time.Instant;
+
+import ltd.qubit.commons.util.codec.IsoInstantCodec;
 
 /**
  * The customized JAXB data type adaptor for the {@link Instant} type.

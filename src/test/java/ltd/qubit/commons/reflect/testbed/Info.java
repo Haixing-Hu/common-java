@@ -8,13 +8,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect.testbed;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
+
 import ltd.qubit.commons.annotation.Identifier;
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.Equality;
@@ -23,10 +28,8 @@ import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import ltd.qubit.commons.util.pair.KeyValuePair;
 
-import javax.annotation.Nullable;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
@@ -241,7 +244,7 @@ public class Info implements Identifiable, WithCode, WithName, Deletable,
       return true;
     }
     // 注意：允许Info的trivial子类和Info进行比较
-    if ((o == null) || (! (o instanceof Info other))) {
+    if ((o == null) || (! (o instanceof final Info other))) {
       return false;
     }
       return Equality.equals(id, other.id)

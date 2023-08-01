@@ -8,12 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.translate;
 
+import java.io.IOException;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.Unicode;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.io.IOException;
 
 import static ltd.qubit.commons.lang.Argument.requireGreaterEqual;
 import static ltd.qubit.commons.lang.Argument.requireValidUnicode;

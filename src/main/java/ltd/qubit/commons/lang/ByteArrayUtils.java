@@ -8,15 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
-import ltd.qubit.commons.error.UnsupportedByteOrderException;
-import ltd.qubit.commons.util.codec.HexCodec;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.ByteOrder;
 import java.util.Date;
+
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
+
+import ltd.qubit.commons.error.UnsupportedByteOrderException;
+import ltd.qubit.commons.util.codec.HexCodec;
 
 /**
  * This class provides operations on byte arrays.

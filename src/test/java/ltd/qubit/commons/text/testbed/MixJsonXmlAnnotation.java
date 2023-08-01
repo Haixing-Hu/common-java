@@ -8,15 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.testbed;
 
+import java.time.Instant;
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.Nullable;
+
+import ltd.qubit.commons.annotation.Indexed;
+import ltd.qubit.commons.annotation.Precision;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-import ltd.qubit.commons.annotation.Indexed;
-import ltd.qubit.commons.annotation.Precision;
-
-import java.time.Instant;
-import java.util.concurrent.TimeUnit;
-import javax.annotation.Nullable;
 
 public class MixJsonXmlAnnotation {
 

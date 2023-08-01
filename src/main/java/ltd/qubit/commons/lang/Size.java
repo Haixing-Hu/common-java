@@ -9,6 +9,7 @@
 package ltd.qubit.commons.lang;
 
 import java.util.LinkedList;
+
 import javax.annotation.Nullable;
 
 /**

@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.codec;
 
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.datastructure.list.primitive.impl.ByteArrayList;
 import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.lang.ByteUtils;
@@ -15,8 +17,6 @@ import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.lang.SystemUtils;
 import ltd.qubit.commons.math.ByteBit;
 import ltd.qubit.commons.text.ParsingPosition;
-
-import javax.annotation.Nullable;
 
 import static ltd.qubit.commons.lang.Argument.requireGreater;
 import static ltd.qubit.commons.lang.Argument.requireIndexInCloseRange;

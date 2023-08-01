@@ -8,14 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
-import com.google.common.collect.ImmutableSet;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.Set;
+
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
+
+import com.google.common.collect.ImmutableSet;
 
 import static ltd.qubit.commons.text.NumberFormat.DECIMAL_RADIX;
 import static ltd.qubit.commons.text.NumberFormatSymbols.DEFAULT_UPPERCASE_DIGITS;

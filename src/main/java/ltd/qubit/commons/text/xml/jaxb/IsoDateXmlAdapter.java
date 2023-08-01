@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.xml.jaxb;
 
-import ltd.qubit.commons.util.codec.IsoDateCodec;
-
 import java.util.Date;
+
+import ltd.qubit.commons.util.codec.IsoDateCodec;
 
 /**
  * The customized JAXB data type adaptor for the {@link Date} type.

@@ -8,13 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
+import java.sql.ParameterMetaData;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.sql.error.UnsupportedSqlTypeException;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.sql.ParameterMetaData;
 
 import static ltd.qubit.commons.lang.Argument.requireInEnum;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;

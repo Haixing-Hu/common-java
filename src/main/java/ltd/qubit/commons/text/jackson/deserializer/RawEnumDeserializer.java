@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.reflect.ClassUtils;
 import ltd.qubit.commons.util.codec.RawEnumCodec;
 
@@ -17,8 +19,6 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
-
-import javax.annotation.concurrent.Immutable;
 
 /**
  * The deserializer of the enum objects.

@@ -8,10 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
-import ltd.qubit.commons.util.codec.ZoneIdCodec;
-
 import java.time.ZoneId;
+
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.util.codec.ZoneIdCodec;
 
 @Immutable
 public class ZoneIdDeserializer extends DecoderDeserializer<ZoneId> {

@@ -8,14 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
+import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.annotation.Scale;
 import ltd.qubit.commons.util.codec.DoubleCodec;
+
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
-import ltd.qubit.commons.annotation.Scale;
-
-import javax.annotation.concurrent.Immutable;
 
 /**
  * The JSON deserializer of a {@link Double} object.

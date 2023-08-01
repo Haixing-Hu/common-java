@@ -8,12 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
-import ltd.qubit.commons.lang.Hash;
-import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
 import java.util.Collections;
 import java.util.List;
+
 import javax.annotation.Nullable;
+
+import ltd.qubit.commons.lang.Hash;
+import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNegative;
 import static ltd.qubit.commons.lang.Argument.requirePositive;

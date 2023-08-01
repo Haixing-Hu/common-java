@@ -8,11 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.net;
 
+import java.io.Serializable;
+
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.io.Serializable;
-import javax.annotation.concurrent.Immutable;
 
 /**
  * This class represents the last part of the host name, which is operated by

@@ -8,8 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.map;
 
-import ltd.qubit.commons.lang.Equality;
-
 import java.util.AbstractCollection;
 import java.util.AbstractSet;
 import java.util.Collection;
@@ -19,7 +17,10 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
+
 import javax.annotation.concurrent.NotThreadSafe;
+
+import ltd.qubit.commons.lang.Equality;
 
 /**
  * An implementation of map using an abstract list to store the keys and

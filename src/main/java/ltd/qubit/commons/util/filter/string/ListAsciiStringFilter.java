@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.filter.string;
 
-import ltd.qubit.commons.text.AsciiTrie;
-
 import java.util.List;
+
+import ltd.qubit.commons.text.AsciiTrie;
 
 /**
  * The base class for {@link BlackListAsciiStringFilter} and

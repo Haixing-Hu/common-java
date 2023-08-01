@@ -8,14 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list;
 
-import ltd.qubit.commons.lang.ArrayUtils;
-import ltd.qubit.commons.util.expand.DoubleExpansionPolicy;
-import ltd.qubit.commons.util.expand.ExpansionPolicy;
-import ltd.qubit.commons.util.expand.JustFitExpansionPolicy;
-import ltd.qubit.commons.util.expand.MemorySavingExpansionPolicy;
-
-import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -25,10 +17,21 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
+import ltd.qubit.commons.lang.ArrayUtils;
+import ltd.qubit.commons.util.expand.DoubleExpansionPolicy;
+import ltd.qubit.commons.util.expand.ExpansionPolicy;
+import ltd.qubit.commons.util.expand.JustFitExpansionPolicy;
+import ltd.qubit.commons.util.expand.MemorySavingExpansionPolicy;
+
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 /**
@@ -308,22 +311,22 @@ public class ArrayLinkedListTest {
   public void testIsEmpty() {
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
     assertEquals(0, list.size());
-    assertEquals(true, list.isEmpty());
+    assertTrue(list.isEmpty());
     list.add(1);
     assertEquals(1, list.size());
-    assertEquals(false, list.isEmpty());
+    assertFalse(list.isEmpty());
     list.add(2);
     assertEquals(2, list.size());
-    assertEquals(false, list.isEmpty());
+    assertFalse(list.isEmpty());
     list.add(3);
     assertEquals(3, list.size());
-    assertEquals(false, list.isEmpty());
+    assertFalse(list.isEmpty());
     list.poll();
     assertEquals(2, list.size());
-    assertEquals(false, list.isEmpty());
+    assertFalse(list.isEmpty());
     list.clear();
     assertEquals(0, list.size());
-    assertEquals(true, list.isEmpty());
+    assertTrue(list.isEmpty());
   }
 
   /**
@@ -333,38 +336,38 @@ public class ArrayLinkedListTest {
   public void testClear() {
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
     assertEquals(0, list.size());
-    assertEquals(true, list.isEmpty());
+    assertTrue(list.isEmpty());
     list.add(1);
     assertEquals(1, list.size());
-    assertEquals(false, list.isEmpty());
+    assertFalse(list.isEmpty());
     list.add(2);
     assertEquals(2, list.size());
-    assertEquals(false, list.isEmpty());
+    assertFalse(list.isEmpty());
     list.add(3);
     assertEquals(3, list.size());
-    assertEquals(false, list.isEmpty());
+    assertFalse(list.isEmpty());
     list.poll();
     assertEquals(2, list.size());
-    assertEquals(false, list.isEmpty());
+    assertFalse(list.isEmpty());
     list.clear();
     assertEquals(0, list.size());
-    assertEquals(true, list.isEmpty());
+    assertTrue(list.isEmpty());
 
     list.add(1);
     assertEquals(1, list.size());
-    assertEquals(false, list.isEmpty());
+    assertFalse(list.isEmpty());
     list.add(2);
     assertEquals(2, list.size());
-    assertEquals(false, list.isEmpty());
+    assertFalse(list.isEmpty());
     list.add(3);
     assertEquals(3, list.size());
-    assertEquals(false, list.isEmpty());
+    assertFalse(list.isEmpty());
     list.poll();
     assertEquals(2, list.size());
-    assertEquals(false, list.isEmpty());
+    assertFalse(list.isEmpty());
     list.clear();
     assertEquals(0, list.size());
-    assertEquals(true, list.isEmpty());
+    assertTrue(list.isEmpty());
   }
 
   /**
@@ -373,23 +376,23 @@ public class ArrayLinkedListTest {
   @Test
   public void testContainsObject() {
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
-    assertEquals(false, list.contains(Integer.valueOf(0)));
+    assertFalse(list.contains(Integer.valueOf(0)));
 
     // fill the list
     for (int i = 0; i < 100; ++i) {
       list.add(i);
     }
 
-    assertEquals(true, list.contains(Integer.valueOf(0)));
-    assertEquals(true, list.contains(Integer.valueOf(1)));
-    assertEquals(true, list.contains(Integer.valueOf(10)));
-    assertEquals(true, list.contains(Integer.valueOf(99)));
-    assertEquals(false, list.contains(Integer.valueOf(100)));
-    assertEquals(false, list.contains(Integer.valueOf(-10)));
+    assertTrue(list.contains(Integer.valueOf(0)));
+    assertTrue(list.contains(Integer.valueOf(1)));
+    assertTrue(list.contains(Integer.valueOf(10)));
+    assertTrue(list.contains(Integer.valueOf(99)));
+    assertFalse(list.contains(Integer.valueOf(100)));
+    assertFalse(list.contains(Integer.valueOf(-10)));
 
-    assertEquals(false, list.contains(null));
+    assertFalse(list.contains(null));
     list.addFirst(null);
-    assertEquals(true, list.contains(null));
+    assertTrue(list.contains(null));
   }
 
 
@@ -405,14 +408,14 @@ public class ArrayLinkedListTest {
   public void testIterator() {
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
     Iterator<Integer> iter = list.iterator();
-    assertEquals(false, iter.hasNext());
+    assertFalse(iter.hasNext());
 
     for (int i = 0; i < 100; ++i) {
       list.add(i);
     }
     iter = list.listIterator();
     for (int i = 0; i < 100; ++i) {
-      assertEquals(true, iter.hasNext());
+      assertTrue(iter.hasNext());
       assertEquals(Integer.valueOf(i), iter.next());
     }
   }
@@ -439,7 +442,7 @@ public class ArrayLinkedListTest {
 
     list.add(null);
     assertEquals(4, list.size());
-    assertEquals(null, list.getLast());
+    assertNull(list.getLast());
 
     assertArrayEquals(new Object[]{1, 2, 3, null}, list.toArray());
 
@@ -460,56 +463,56 @@ public class ArrayLinkedListTest {
   @Test
   public void testRemoveObject() {
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
-    assertEquals(false, list.remove(Integer.valueOf(0)));
-    assertEquals(false, list.remove(null));
+    assertFalse(list.remove(Integer.valueOf(0)));
+    assertFalse(list.remove(null));
 
     Integer[] array = {0, null, 0, 1, 1, 2, 3, null, 3, 0};
     list.addAll(Arrays.asList(array));
 
-    assertEquals(false, list.remove(Integer.valueOf(10)));
+    assertFalse(list.remove(Integer.valueOf(10)));
     assertEquals(array.length, list.size());
 
-    assertEquals(true, list.remove(Integer.valueOf(0)));
+    assertTrue(list.remove(Integer.valueOf(0)));
     array = new Integer[]{null, 0, 1, 1, 2, 3, null, 3, 0};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.remove(Integer.valueOf(0)));
+    assertTrue(list.remove(Integer.valueOf(0)));
     array = new Integer[]{null, 1, 1, 2, 3, null, 3, 0};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.remove(null));
+    assertTrue(list.remove(null));
     array = new Integer[]{1, 1, 2, 3, null, 3, 0};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.remove(null));
+    assertTrue(list.remove(null));
     array = new Integer[]{1, 1, 2, 3, 3, 0};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(false, list.remove(null));
+    assertFalse(list.remove(null));
     array = new Integer[]{1, 1, 2, 3, 3, 0};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.remove(Integer.valueOf(0)));
+    assertTrue(list.remove(Integer.valueOf(0)));
     array = new Integer[]{1, 1, 2, 3, 3};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.remove(Integer.valueOf(2)));
+    assertTrue(list.remove(Integer.valueOf(2)));
     array = new Integer[]{1, 1, 3, 3};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.remove(Integer.valueOf(3)));
+    assertTrue(list.remove(Integer.valueOf(3)));
     array = new Integer[]{1, 1, 3};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.remove(Integer.valueOf(1)));
+    assertTrue(list.remove(Integer.valueOf(1)));
     array = new Integer[]{1, 3};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.remove(Integer.valueOf(3)));
+    assertTrue(list.remove(Integer.valueOf(3)));
     array = new Integer[]{1};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.remove(Integer.valueOf(1)));
+    assertTrue(list.remove(Integer.valueOf(1)));
     array = new Integer[]{};
     assertArrayEquals(array, list.toArray());
 
@@ -523,29 +526,29 @@ public class ArrayLinkedListTest {
     final Collection<Integer> col = new LinkedList<>();
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
 
-    assertEquals(true, list.containsAll(col));
+    assertTrue(list.containsAll(col));
     col.add(1);
-    assertEquals(false, list.containsAll(col));
+    assertFalse(list.containsAll(col));
 
     // fill the list
     for (int i = 0; i < 100; ++i) {
       list.add(i);
     }
 
-    assertEquals(true, list.containsAll(col));
+    assertTrue(list.containsAll(col));
     col.clear();
-    assertEquals(true, list.containsAll(col));
+    assertTrue(list.containsAll(col));
 
     col.add(1);
     col.add(-1);
-    assertEquals(false, list.containsAll(col));
+    assertFalse(list.containsAll(col));
 
     col.clear();
     for (int i = 100; i > 0; --i) {
       col.add(i - 1);
     }
-    assertEquals(true, list.containsAll(col));
-    assertEquals(false, list.equals(col));
+    assertTrue(list.containsAll(col));
+    assertFalse(list.equals(col));
   }
 
   /**
@@ -655,7 +658,7 @@ public class ArrayLinkedListTest {
 
     list.add(null);
     assertEquals(4, list.size());
-    assertEquals(null, list.get(3));
+    assertNull(list.get(3));
 
     assertArrayEquals(new Object[]{1, 2, 3, null}, list.toArray());
 
@@ -723,9 +726,9 @@ public class ArrayLinkedListTest {
 
     list.add(null);
     assertEquals(4, list.size());
-    assertEquals(null, list.get(3));
+    assertNull(list.get(3));
     list.set(3, null);
-    assertEquals(null, list.get(3));
+    assertNull(list.get(3));
 
     assertArrayEquals(new Object[]{-1, -2, -3, null}, list.toArray());
 
@@ -895,8 +898,8 @@ public class ArrayLinkedListTest {
   public void testListIterator() {
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
     ListIterator<Integer> iter = list.listIterator();
-    assertEquals(false, iter.hasNext());
-    assertEquals(false, iter.hasPrevious());
+    assertFalse(iter.hasNext());
+    assertFalse(iter.hasPrevious());
     assertEquals(0, iter.nextIndex());
     assertEquals(-1, iter.previousIndex());
 
@@ -908,17 +911,17 @@ public class ArrayLinkedListTest {
     assertEquals(0, iter.nextIndex());
     assertEquals(-1, iter.previousIndex());
     for (int i = 0; i < 100; ++i) {
-      assertEquals(true, iter.hasNext());
+      assertTrue(iter.hasNext());
       assertEquals(Integer.valueOf(i), iter.next());
     }
 
-    assertEquals(false, iter.hasNext());
+    assertFalse(iter.hasNext());
     for (int i = 99; i >= 0; --i) {
-      assertEquals(true, iter.hasPrevious());
+      assertTrue(iter.hasPrevious());
       assertEquals(Integer.valueOf(i), iter.previous());
     }
 
-    assertEquals(false, iter.hasPrevious());
+    assertFalse(iter.hasPrevious());
     assertEquals(0, iter.nextIndex());
     assertEquals(-1, iter.previousIndex());
   }
@@ -936,8 +939,8 @@ public class ArrayLinkedListTest {
   public void testListIteratorInt() {
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
     ListIterator<Integer> iter = list.listIterator(0);
-    assertEquals(false, iter.hasNext());
-    assertEquals(false, iter.hasPrevious());
+    assertFalse(iter.hasNext());
+    assertFalse(iter.hasPrevious());
     assertEquals(0, iter.nextIndex());
     assertEquals(-1, iter.previousIndex());
 
@@ -949,29 +952,29 @@ public class ArrayLinkedListTest {
     assertEquals(0, iter.nextIndex());
     assertEquals(-1, iter.previousIndex());
     for (int i = 0; i < 100; ++i) {
-      assertEquals(true, iter.hasNext());
+      assertTrue(iter.hasNext());
       assertEquals(Integer.valueOf(i), iter.next());
     }
-    assertEquals(false, iter.hasNext());
+    assertFalse(iter.hasNext());
     for (int i = 99; i >= 0; --i) {
-      assertEquals(true, iter.hasPrevious());
+      assertTrue(iter.hasPrevious());
       assertEquals(Integer.valueOf(i), iter.previous());
     }
-    assertEquals(false, iter.hasPrevious());
+    assertFalse(iter.hasPrevious());
 
     iter = list.listIterator(50);
     assertEquals(50, iter.nextIndex());
     assertEquals(49, iter.previousIndex());
     for (int i = 50; i < 100; ++i) {
-      assertEquals(true, iter.hasNext());
+      assertTrue(iter.hasNext());
       assertEquals(Integer.valueOf(i), iter.next());
     }
-    assertEquals(false, iter.hasNext());
+    assertFalse(iter.hasNext());
     for (int i = 99; i >= 50; --i) {
-      assertEquals(true, iter.hasPrevious());
+      assertTrue(iter.hasPrevious());
       assertEquals(Integer.valueOf(i), iter.previous());
     }
-    assertEquals(true, iter.hasPrevious());
+    assertTrue(iter.hasPrevious());
     assertEquals(50, iter.nextIndex());
     assertEquals(49, iter.previousIndex());
   }
@@ -998,7 +1001,7 @@ public class ArrayLinkedListTest {
 
     list.addFirst(null);
     assertEquals(4, list.size());
-    assertEquals(null, list.getFirst());
+    assertNull(list.getFirst());
 
     assertArrayEquals(new Object[]{null, 3, 2, 1}, list.toArray());
 
@@ -1035,7 +1038,7 @@ public class ArrayLinkedListTest {
 
     list.addLast(null);
     assertEquals(4, list.size());
-    assertEquals(null, list.getLast());
+    assertNull(list.getLast());
 
     assertArrayEquals(new Object[]{1, 2, 3, null}, list.toArray());
 
@@ -1059,24 +1062,24 @@ public class ArrayLinkedListTest {
     assertEquals(0, list.size());
 
     boolean ret = list.offerFirst(1);
-    assertEquals(true, ret);
+    assertTrue(ret);
     assertEquals(1, list.size());
     assertEquals(Integer.valueOf(1), list.getFirst());
 
     ret = list.offerFirst(2);
-    assertEquals(true, ret);
+    assertTrue(ret);
     assertEquals(2, list.size());
     assertEquals(Integer.valueOf(2), list.getFirst());
 
     ret = list.offerFirst(3);
-    assertEquals(true, ret);
+    assertTrue(ret);
     assertEquals(3, list.size());
     assertEquals(Integer.valueOf(3), list.getFirst());
 
     ret = list.offerFirst(null);
-    assertEquals(true, ret);
+    assertTrue(ret);
     assertEquals(4, list.size());
-    assertEquals(null, list.getFirst());
+    assertNull(list.getFirst());
 
     assertArrayEquals(new Object[]{null, 3, 2, 1}, list.toArray());
 
@@ -1101,24 +1104,24 @@ public class ArrayLinkedListTest {
     assertEquals(0, list.size());
 
     boolean ret = list.offerLast(1);
-    assertEquals(true, ret);
+    assertTrue(ret);
     assertEquals(1, list.size());
     assertEquals(Integer.valueOf(1), list.getLast());
 
     ret = list.offerLast(2);
-    assertEquals(true, ret);
+    assertTrue(ret);
     assertEquals(2, list.size());
     assertEquals(Integer.valueOf(2), list.getLast());
 
     ret = list.offerLast(3);
-    assertEquals(true, ret);
+    assertTrue(ret);
     assertEquals(3, list.size());
     assertEquals(Integer.valueOf(3), list.getLast());
 
     ret = list.offerLast(null);
-    assertEquals(true, ret);
+    assertTrue(ret);
     assertEquals(4, list.size());
-    assertEquals(null, list.getLast());
+    assertNull(list.getLast());
 
     assertArrayEquals(new Object[]{1, 2, 3, null}, list.toArray());
 
@@ -1161,11 +1164,11 @@ public class ArrayLinkedListTest {
 
     list.addFirst(null);
     assertEquals(4, list.size());
-    assertEquals(null, list.getFirst());
+    assertNull(list.getFirst());
 
     assertArrayEquals(new Object[]{null, 3, 2, 1}, list.toArray());
 
-    assertEquals(null, list.removeFirst());
+    assertNull(list.removeFirst());
     assertEquals(3, list.size());
     assertEquals(Integer.valueOf(3), list.removeFirst());
     assertEquals(2, list.size());
@@ -1233,11 +1236,11 @@ public class ArrayLinkedListTest {
 
     list.addLast(null);
     assertEquals(4, list.size());
-    assertEquals(null, list.getLast());
+    assertNull(list.getLast());
 
     assertArrayEquals(new Object[]{1, 2, 3, null}, list.toArray());
 
-    assertEquals(null, list.removeLast());
+    assertNull(list.removeLast());
     assertEquals(3, list.size());
     assertEquals(Integer.valueOf(3), list.removeLast());
     assertEquals(2, list.size());
@@ -1284,7 +1287,7 @@ public class ArrayLinkedListTest {
   public void testPollFirst() {
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
     assertEquals(0, list.size());
-    assertEquals(null, list.pollFirst());
+    assertNull(list.pollFirst());
 
     list.addFirst(1);
     assertEquals(1, list.size());
@@ -1300,11 +1303,11 @@ public class ArrayLinkedListTest {
 
     list.addFirst(null);
     assertEquals(4, list.size());
-    assertEquals(null, list.getFirst());
+    assertNull(list.getFirst());
 
     assertArrayEquals(new Object[]{null, 3, 2, 1}, list.toArray());
 
-    assertEquals(null, list.pollFirst());
+    assertNull(list.pollFirst());
     assertEquals(3, list.size());
     assertEquals(Integer.valueOf(3), list.pollFirst());
     assertEquals(2, list.size());
@@ -1315,7 +1318,7 @@ public class ArrayLinkedListTest {
 
     list.clear();
     assertEquals(0, list.size());
-    assertEquals(null, list.pollFirst());
+    assertNull(list.pollFirst());
 
     final LinkedList<Integer> expected = new LinkedList<>();
     for (int i = 0; i <= ExpansionPolicy.getInitialCapacity(); ++i) {
@@ -1331,7 +1334,7 @@ public class ArrayLinkedListTest {
     }
 
     assertEquals(0, list.size());
-    assertEquals(null, list.pollFirst());
+    assertNull(list.pollFirst());
   }
 
   /**
@@ -1341,7 +1344,7 @@ public class ArrayLinkedListTest {
   public void testPollLast() {
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
     assertEquals(0, list.size());
-    assertEquals(null, list.pollLast());
+    assertNull(list.pollLast());
 
     list.addLast(1);
     assertEquals(1, list.size());
@@ -1357,11 +1360,11 @@ public class ArrayLinkedListTest {
 
     list.addLast(null);
     assertEquals(4, list.size());
-    assertEquals(null, list.getLast());
+    assertNull(list.getLast());
 
     assertArrayEquals(new Object[]{1, 2, 3, null}, list.toArray());
 
-    assertEquals(null, list.pollLast());
+    assertNull(list.pollLast());
     assertEquals(3, list.size());
     assertEquals(Integer.valueOf(3), list.pollLast());
     assertEquals(2, list.size());
@@ -1372,7 +1375,7 @@ public class ArrayLinkedListTest {
 
     list.clear();
     assertEquals(0, list.size());
-    assertEquals(null, list.pollLast());
+    assertNull(list.pollLast());
 
     final LinkedList<Integer> expected = new LinkedList<>();
     for (int i = 0; i <= ExpansionPolicy.getInitialCapacity(); ++i) {
@@ -1388,7 +1391,7 @@ public class ArrayLinkedListTest {
     }
 
     assertEquals(0, list.size());
-    assertEquals(null, list.pollLast());
+    assertNull(list.pollLast());
   }
 
   /**
@@ -1419,7 +1422,7 @@ public class ArrayLinkedListTest {
 
     list.addFirst(null);
     assertEquals(4, list.size());
-    assertEquals(null, list.getFirst());
+    assertNull(list.getFirst());
 
     assertArrayEquals(new Object[]{null, 3, 2, 1}, list.toArray());
 
@@ -1470,7 +1473,7 @@ public class ArrayLinkedListTest {
 
     list.addLast(null);
     assertEquals(4, list.size());
-    assertEquals(null, list.getLast());
+    assertNull(list.getLast());
 
     assertArrayEquals(new Object[]{1, 2, 3, null}, list.toArray());
 
@@ -1500,7 +1503,7 @@ public class ArrayLinkedListTest {
   public void testPeekFirst() {
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
     assertEquals(0, list.size());
-    assertEquals(null, list.peekFirst());
+    assertNull(list.peekFirst());
 
     list.addFirst(1);
     assertEquals(1, list.size());
@@ -1516,13 +1519,13 @@ public class ArrayLinkedListTest {
 
     list.addFirst(null);
     assertEquals(4, list.size());
-    assertEquals(null, list.peekFirst());
+    assertNull(list.peekFirst());
 
     assertArrayEquals(new Object[]{null, 3, 2, 1}, list.toArray());
 
     list.clear();
     assertEquals(0, list.size());
-    assertEquals(null, list.peekFirst());
+    assertNull(list.peekFirst());
 
     final LinkedList<Integer> expected = new LinkedList<>();
     for (int i = 0; i <= ExpansionPolicy.getInitialCapacity(); ++i) {
@@ -1541,7 +1544,7 @@ public class ArrayLinkedListTest {
   public void testPeekLast() {
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
     assertEquals(0, list.size());
-    assertEquals(null, list.peekLast());
+    assertNull(list.peekLast());
 
     list.addLast(1);
     assertEquals(1, list.size());
@@ -1557,13 +1560,13 @@ public class ArrayLinkedListTest {
 
     list.addLast(null);
     assertEquals(4, list.size());
-    assertEquals(null, list.peekLast());
+    assertNull(list.peekLast());
 
     assertArrayEquals(new Object[]{1, 2, 3, null}, list.toArray());
 
     list.clear();
     assertEquals(0, list.size());
-    assertEquals(null, list.peekLast());
+    assertNull(list.peekLast());
 
     final LinkedList<Integer> expected = new LinkedList<>();
     for (int i = 0; i <= ExpansionPolicy.getInitialCapacity(); ++i) {
@@ -1581,56 +1584,56 @@ public class ArrayLinkedListTest {
   @Test
   public void testRemoveFirstOccurrence() {
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
-    assertEquals(false, list.removeFirstOccurrence(Integer.valueOf(0)));
-    assertEquals(false, list.removeFirstOccurrence(null));
+    assertFalse(list.removeFirstOccurrence(Integer.valueOf(0)));
+    assertFalse(list.removeFirstOccurrence(null));
 
     Integer[] array = {0, null, 0, 1, 1, 2, 3, null, 3, 0};
     list.addAll(Arrays.asList(array));
 
-    assertEquals(false, list.removeFirstOccurrence(Integer.valueOf(10)));
+    assertFalse(list.removeFirstOccurrence(Integer.valueOf(10)));
     assertEquals(array.length, list.size());
 
-    assertEquals(true, list.removeFirstOccurrence(Integer.valueOf(0)));
+    assertTrue(list.removeFirstOccurrence(Integer.valueOf(0)));
     array = new Integer[]{null, 0, 1, 1, 2, 3, null, 3, 0};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.removeFirstOccurrence(Integer.valueOf(0)));
+    assertTrue(list.removeFirstOccurrence(Integer.valueOf(0)));
     array = new Integer[]{null, 1, 1, 2, 3, null, 3, 0};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.removeFirstOccurrence(null));
+    assertTrue(list.removeFirstOccurrence(null));
     array = new Integer[]{1, 1, 2, 3, null, 3, 0};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.removeFirstOccurrence(null));
+    assertTrue(list.removeFirstOccurrence(null));
     array = new Integer[]{1, 1, 2, 3, 3, 0};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(false, list.removeFirstOccurrence(null));
+    assertFalse(list.removeFirstOccurrence(null));
     array = new Integer[]{1, 1, 2, 3, 3, 0};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.removeFirstOccurrence(Integer.valueOf(0)));
+    assertTrue(list.removeFirstOccurrence(Integer.valueOf(0)));
     array = new Integer[]{1, 1, 2, 3, 3};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.removeFirstOccurrence(Integer.valueOf(2)));
+    assertTrue(list.removeFirstOccurrence(Integer.valueOf(2)));
     array = new Integer[]{1, 1, 3, 3};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.removeFirstOccurrence(Integer.valueOf(3)));
+    assertTrue(list.removeFirstOccurrence(Integer.valueOf(3)));
     array = new Integer[]{1, 1, 3};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.removeFirstOccurrence(Integer.valueOf(1)));
+    assertTrue(list.removeFirstOccurrence(Integer.valueOf(1)));
     array = new Integer[]{1, 3};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.removeFirstOccurrence(Integer.valueOf(3)));
+    assertTrue(list.removeFirstOccurrence(Integer.valueOf(3)));
     array = new Integer[]{1};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.removeFirstOccurrence(Integer.valueOf(1)));
+    assertTrue(list.removeFirstOccurrence(Integer.valueOf(1)));
     array = new Integer[]{};
     assertArrayEquals(array, list.toArray());
 
@@ -1642,56 +1645,56 @@ public class ArrayLinkedListTest {
   @Test
   public void testRemoveLastOccurrence() {
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
-    assertEquals(false, list.removeLastOccurrence(Integer.valueOf(0)));
-    assertEquals(false, list.removeLastOccurrence(null));
+    assertFalse(list.removeLastOccurrence(Integer.valueOf(0)));
+    assertFalse(list.removeLastOccurrence(null));
 
     Integer[] array = {0, null, 0, 1, 1, 2, 3, null, 3, 0};
     list.addAll(Arrays.asList(array));
 
-    assertEquals(false, list.removeLastOccurrence(Integer.valueOf(10)));
+    assertFalse(list.removeLastOccurrence(Integer.valueOf(10)));
     assertEquals(array.length, list.size());
 
-    assertEquals(true, list.removeLastOccurrence(Integer.valueOf(0)));
+    assertTrue(list.removeLastOccurrence(Integer.valueOf(0)));
     array = new Integer[]{0, null, 0, 1, 1, 2, 3, null, 3};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.removeLastOccurrence(Integer.valueOf(0)));
+    assertTrue(list.removeLastOccurrence(Integer.valueOf(0)));
     array = new Integer[]{0, null, 1, 1, 2, 3, null, 3};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.removeLastOccurrence(null));
+    assertTrue(list.removeLastOccurrence(null));
     array = new Integer[]{0, null, 1, 1, 2, 3, 3};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.removeLastOccurrence(null));
+    assertTrue(list.removeLastOccurrence(null));
     array = new Integer[]{0, 1, 1, 2, 3, 3};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(false, list.removeLastOccurrence(null));
+    assertFalse(list.removeLastOccurrence(null));
     array = new Integer[]{0, 1, 1, 2, 3, 3};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.removeLastOccurrence(Integer.valueOf(0)));
+    assertTrue(list.removeLastOccurrence(Integer.valueOf(0)));
     array = new Integer[]{1, 1, 2, 3, 3};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.removeLastOccurrence(Integer.valueOf(2)));
+    assertTrue(list.removeLastOccurrence(Integer.valueOf(2)));
     array = new Integer[]{1, 1, 3, 3};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.removeLastOccurrence(Integer.valueOf(3)));
+    assertTrue(list.removeLastOccurrence(Integer.valueOf(3)));
     array = new Integer[]{1, 1, 3};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.removeLastOccurrence(Integer.valueOf(1)));
+    assertTrue(list.removeLastOccurrence(Integer.valueOf(1)));
     array = new Integer[]{1, 3};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.removeLastOccurrence(Integer.valueOf(3)));
+    assertTrue(list.removeLastOccurrence(Integer.valueOf(3)));
     array = new Integer[]{1};
     assertArrayEquals(array, list.toArray());
 
-    assertEquals(true, list.removeLastOccurrence(Integer.valueOf(1)));
+    assertTrue(list.removeLastOccurrence(Integer.valueOf(1)));
     array = new Integer[]{};
     assertArrayEquals(array, list.toArray());
   }
@@ -1705,24 +1708,24 @@ public class ArrayLinkedListTest {
     assertEquals(0, list.size());
 
     boolean ret = list.offer(1);
-    assertEquals(true, ret);
+    assertTrue(ret);
     assertEquals(1, list.size());
     assertEquals(Integer.valueOf(1), list.getLast());
 
     ret = list.offer(2);
-    assertEquals(true, ret);
+    assertTrue(ret);
     assertEquals(2, list.size());
     assertEquals(Integer.valueOf(2), list.getLast());
 
     ret = list.offer(3);
-    assertEquals(true, ret);
+    assertTrue(ret);
     assertEquals(3, list.size());
     assertEquals(Integer.valueOf(3), list.getLast());
 
     ret = list.offer(null);
-    assertEquals(true, ret);
+    assertTrue(ret);
     assertEquals(4, list.size());
-    assertEquals(null, list.getLast());
+    assertNull(list.getLast());
 
     assertArrayEquals(new Object[]{1, 2, 3, null}, list.toArray());
 
@@ -1765,11 +1768,11 @@ public class ArrayLinkedListTest {
 
     list.addFirst(null);
     assertEquals(4, list.size());
-    assertEquals(null, list.getFirst());
+    assertNull(list.getFirst());
 
     assertArrayEquals(new Object[]{null, 3, 2, 1}, list.toArray());
 
-    assertEquals(null, list.remove());
+    assertNull(list.remove());
     assertEquals(3, list.size());
     assertEquals(Integer.valueOf(3), list.remove());
     assertEquals(2, list.size());
@@ -1816,7 +1819,7 @@ public class ArrayLinkedListTest {
   public void testPoll() {
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
     assertEquals(0, list.size());
-    assertEquals(null, list.poll());
+    assertNull(list.poll());
 
     list.addFirst(1);
     assertEquals(1, list.size());
@@ -1832,11 +1835,11 @@ public class ArrayLinkedListTest {
 
     list.addFirst(null);
     assertEquals(4, list.size());
-    assertEquals(null, list.getFirst());
+    assertNull(list.getFirst());
 
     assertArrayEquals(new Object[]{null, 3, 2, 1}, list.toArray());
 
-    assertEquals(null, list.poll());
+    assertNull(list.poll());
     assertEquals(3, list.size());
     assertEquals(Integer.valueOf(3), list.poll());
     assertEquals(2, list.size());
@@ -1847,7 +1850,7 @@ public class ArrayLinkedListTest {
 
     list.clear();
     assertEquals(0, list.size());
-    assertEquals(null, list.poll());
+    assertNull(list.poll());
 
     final LinkedList<Integer> expected = new LinkedList<>();
     for (int i = 0; i <= ExpansionPolicy.getInitialCapacity(); ++i) {
@@ -1863,7 +1866,7 @@ public class ArrayLinkedListTest {
     }
 
     assertEquals(0, list.size());
-    assertEquals(null, list.poll());
+    assertNull(list.poll());
   }
 
   /**
@@ -1894,7 +1897,7 @@ public class ArrayLinkedListTest {
 
     list.addFirst(null);
     assertEquals(4, list.size());
-    assertEquals(null, list.element());
+    assertNull(list.element());
 
     assertArrayEquals(new Object[]{null, 3, 2, 1}, list.toArray());
 
@@ -1924,7 +1927,7 @@ public class ArrayLinkedListTest {
   public void testPeek() {
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
     assertEquals(0, list.size());
-    assertEquals(null, list.peek());
+    assertNull(list.peek());
 
     list.addFirst(1);
     assertEquals(1, list.size());
@@ -1940,13 +1943,13 @@ public class ArrayLinkedListTest {
 
     list.addFirst(null);
     assertEquals(4, list.size());
-    assertEquals(null, list.peek());
+    assertNull(list.peek());
 
     assertArrayEquals(new Object[]{null, 3, 2, 1}, list.toArray());
 
     list.clear();
     assertEquals(0, list.size());
-    assertEquals(null, list.peek());
+    assertNull(list.peek());
 
     final LinkedList<Integer> expected = new LinkedList<>();
     for (int i = 0; i <= ExpansionPolicy.getInitialCapacity(); ++i) {
@@ -1980,7 +1983,7 @@ public class ArrayLinkedListTest {
 
     list.push(null);
     assertEquals(4, list.size());
-    assertEquals(null, list.getFirst());
+    assertNull(list.getFirst());
 
     assertArrayEquals(new Object[]{null, 3, 2, 1}, list.toArray());
 
@@ -2023,11 +2026,11 @@ public class ArrayLinkedListTest {
 
     list.addFirst(null);
     assertEquals(4, list.size());
-    assertEquals(null, list.getFirst());
+    assertNull(list.getFirst());
 
     assertArrayEquals(new Object[]{null, 3, 2, 1}, list.toArray());
 
-    assertEquals(null, list.pop());
+    assertNull(list.pop());
     assertEquals(3, list.size());
     assertEquals(Integer.valueOf(3), list.pop());
     assertEquals(2, list.size());
@@ -2074,14 +2077,14 @@ public class ArrayLinkedListTest {
   public void testDescendingIterator() {
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
     Iterator<Integer> iter = list.descendingIterator();
-    assertEquals(false, iter.hasNext());
+    assertFalse(iter.hasNext());
 
     final Integer[] array = {0, 1, 2, null, 4, 5, null, 7, 8, null, 10};
     list.addAll(Arrays.asList(array));
     iter = list.descendingIterator();
 
     for (int i = array.length - 1; i >= 0; --i) {
-      assertEquals(true, iter.hasNext());
+      assertTrue(iter.hasNext());
       assertEquals(array[i], iter.next());
     }
   }
@@ -2094,26 +2097,26 @@ public class ArrayLinkedListTest {
     Collection<Integer> col = Collections.emptyList();
     Integer[] array = null;
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
-    assertEquals(false, list.removeAll(col));
+    assertFalse(list.removeAll(col));
 
     array = new Integer[]{3, 0, 1, 2, null, 1, 4, null, 2, 2, null, 4};
     list.clear();
     list.addAll(Arrays.asList(array));
     col = Collections.emptyList();
-    assertEquals(false, list.removeAll(col));
+    assertFalse(list.removeAll(col));
     assertArrayEquals(array, list.toArray());
 
     col = Arrays.asList(3, null, 1, 4, null, 1);
-    assertEquals(true, list.removeAll(col));
+    assertTrue(list.removeAll(col));
     array = new Integer[]{0, 2, 2, 2};
     assertArrayEquals(array, list.toArray());
 
-    col = Arrays.asList(100);
-    assertEquals(false, list.removeAll(col));
+    col = List.of(100);
+    assertFalse(list.removeAll(col));
     assertArrayEquals(array, list.toArray());
 
     col = Arrays.asList(0, 0, 100);
-    assertEquals(true, list.removeAll(col));
+    assertTrue(list.removeAll(col));
     array = new Integer[]{2, 2, 2};
     assertArrayEquals(array, list.toArray());
 
@@ -2121,7 +2124,7 @@ public class ArrayLinkedListTest {
     col = Arrays.asList(array);
     list.clear();
     list.addAll(col);
-    assertEquals(true, list.removeAll(col));
+    assertTrue(list.removeAll(col));
     assertEquals(0, list.size());
   }
 
@@ -2132,31 +2135,31 @@ public class ArrayLinkedListTest {
   public void testRetainAll() {
     Collection<Integer> col = Collections.emptyList();
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
-    assertEquals(false, list.retainAll(col));
+    assertFalse(list.retainAll(col));
 
     Integer[] array = {0, 1, 2, null, 1, 4, null, 2, 2, null, 4};
     list.addAll(Arrays.asList(array));
-    assertEquals(true, list.retainAll(col));
+    assertTrue(list.retainAll(col));
     assertEquals(0, list.size());
 
     list.addAll(Arrays.asList(array));
     col = Arrays.asList(4, null, 1, 1, 1, 1, null);
-    assertEquals(true, list.retainAll(col));
+    assertTrue(list.retainAll(col));
     array = new Integer[]{1, null, 1, 4, null, null, 4};
     assertArrayEquals(array, list.toArray());
 
     col = Arrays.asList(null, null, 1, 100, 11);
-    assertEquals(true, list.retainAll(col));
+    assertTrue(list.retainAll(col));
     array = new Integer[]{1, null, 1, null, null};
     assertArrayEquals(array, list.toArray());
 
     col = Arrays.asList(1, 11, 100);
-    assertEquals(true, list.retainAll(col));
+    assertTrue(list.retainAll(col));
     array = new Integer[]{1, 1};
     assertArrayEquals(array, list.toArray());
 
     col = Arrays.asList(11, 100);
-    assertEquals(true, list.retainAll(col));
+    assertTrue(list.retainAll(col));
     array = new Integer[]{};
     assertArrayEquals(array, list.toArray());
   }

@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.io.error;
 
-import ltd.qubit.commons.io.OpenOption;
-
 import java.io.IOException;
+
+import ltd.qubit.commons.io.OpenOption;
 
 /**
  * Thrown to indicate an open option is not supported by a function.

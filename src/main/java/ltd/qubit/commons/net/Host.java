@@ -8,6 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.net;
 
+import java.io.Serializable;
+import java.net.URI;
+import java.net.URL;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.io.serialize.BinarySerialization;
 import ltd.qubit.commons.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.CloneableEx;
@@ -16,13 +24,6 @@ import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.text.NumberFormat;
-
-import java.io.Serializable;
-import java.net.URI;
-import java.net.URL;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
 
 import static ltd.qubit.commons.lang.ObjectUtils.defaultIfNull;
 

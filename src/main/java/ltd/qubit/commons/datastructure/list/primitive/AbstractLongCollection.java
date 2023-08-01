@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list.primitive;
 
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.lang.Comparison;
 import ltd.qubit.commons.lang.Hash;
-
-import javax.annotation.Nullable;
 
 /**
  * Abstract base class for {@link LongCollection}s.

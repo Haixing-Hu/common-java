@@ -12,10 +12,11 @@ import ltd.qubit.commons.text.jackson.CustomizedJsonMapper;
 import ltd.qubit.commons.text.jackson.CustomizedXmlMapper;
 import ltd.qubit.commons.util.pair.KeyValuePairList;
 
+import org.junit.jupiter.api.Test;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

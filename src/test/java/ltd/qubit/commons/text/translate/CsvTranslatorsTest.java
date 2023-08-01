@@ -8,12 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.translate;
 
-import com.google.common.base.Ascii;
-import org.junit.jupiter.api.Test;
-
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+
+import org.junit.jupiter.api.Test;
+
+import com.google.common.base.Ascii;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

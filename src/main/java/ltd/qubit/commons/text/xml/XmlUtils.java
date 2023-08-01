@@ -8,19 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.xml;
 
-import ltd.qubit.commons.io.IoUtils;
-import ltd.qubit.commons.lang.StringUtils;
-import ltd.qubit.commons.lang.SystemUtils;
-import ltd.qubit.commons.net.Url;
-import ltd.qubit.commons.net.UrlUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -34,6 +21,7 @@ import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+
 import javax.annotation.concurrent.ThreadSafe;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -49,6 +37,19 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+
+import ltd.qubit.commons.io.IoUtils;
+import ltd.qubit.commons.lang.StringUtils;
+import ltd.qubit.commons.lang.SystemUtils;
+import ltd.qubit.commons.net.Url;
+import ltd.qubit.commons.net.UrlUtils;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 

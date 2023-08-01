@@ -8,12 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
-import ltd.qubit.commons.lang.DateUtils;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import ltd.qubit.commons.lang.DateUtils;
 
 import static ltd.qubit.commons.lang.Argument.requireIndexInCloseRange;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;

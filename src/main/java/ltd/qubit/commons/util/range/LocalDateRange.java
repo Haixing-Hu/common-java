@@ -8,15 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.range;
 
+import java.io.Serializable;
+import java.time.LocalDate;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.io.Serializable;
-import java.time.LocalDate;
-import javax.annotation.Nullable;
 
 /**
  * 此模型表示日期范围（前闭后开区间）。

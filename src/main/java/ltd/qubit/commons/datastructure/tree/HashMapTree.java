@@ -10,6 +10,7 @@ package ltd.qubit.commons.datastructure.tree;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.annotation.concurrent.NotThreadSafe;
 
 /**

@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.filter.string;
 
-import ltd.qubit.commons.text.Trie;
-
 import java.util.Collection;
+
+import ltd.qubit.commons.text.Trie;
 
 /**
  * The base class for {@link BlackListStringFilter} and

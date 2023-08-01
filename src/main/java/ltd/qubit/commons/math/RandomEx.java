@@ -8,11 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.math;
 
-import ltd.qubit.commons.lang.ArrayUtils;
-import ltd.qubit.commons.text.Ascii;
-import ltd.qubit.commons.util.range.CloseRange;
-import ltd.qubit.commons.util.range.UnmodifiableCloseRange;
-
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,7 +20,13 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+
 import javax.annotation.concurrent.ThreadSafe;
+
+import ltd.qubit.commons.lang.ArrayUtils;
+import ltd.qubit.commons.text.Ascii;
+import ltd.qubit.commons.util.range.CloseRange;
+import ltd.qubit.commons.util.range.UnmodifiableCloseRange;
 
 import static ltd.qubit.commons.lang.ArrayUtils.createArrayOfSameElementType;
 

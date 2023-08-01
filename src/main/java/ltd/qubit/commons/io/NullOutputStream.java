@@ -9,6 +9,7 @@
 package ltd.qubit.commons.io;
 
 import java.io.OutputStream;
+
 import javax.annotation.concurrent.Immutable;
 
 /**

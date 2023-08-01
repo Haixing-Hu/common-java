@@ -8,16 +8,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.io;
 
-import ltd.qubit.commons.io.error.AlreadyClosedException;
-import ltd.qubit.commons.lang.SystemUtils;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileChannel.MapMode;
+
 import javax.annotation.concurrent.NotThreadSafe;
+
+import ltd.qubit.commons.io.error.AlreadyClosedException;
+import ltd.qubit.commons.lang.SystemUtils;
 
 import static ltd.qubit.commons.lang.Argument.requirePositive;
 

@@ -8,10 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
-import ltd.qubit.commons.math.IntBit;
-
 import java.util.Collection;
+
 import javax.annotation.concurrent.ThreadSafe;
+
+import ltd.qubit.commons.math.IntBit;
 
 /**
  * This class provides functions for calculating the hash code.

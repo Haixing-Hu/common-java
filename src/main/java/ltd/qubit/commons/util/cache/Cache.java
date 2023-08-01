@@ -8,12 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.cache;
 
-import ltd.qubit.commons.io.Openable;
-
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Set;
+
+import ltd.qubit.commons.io.Openable;
 
 /**
  * The interface of a cache.

@@ -8,6 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.security;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.Signature;
+
 import ltd.qubit.commons.error.SignMessageException;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
@@ -18,18 +26,10 @@ import ltd.qubit.commons.util.codec.Base64Codec;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.security.GeneralSecurityException;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.Signature;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 import static ltd.qubit.commons.io.IoUtils.BUFFER_SIZE;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * The class of objects used to sign digital signature of messages.

@@ -8,14 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.security;
 
-import ltd.qubit.commons.util.codec.DecodingException;
-import ltd.qubit.commons.util.codec.EncodingException;
-
 import java.security.GeneralSecurityException;
 import java.security.KeyFactory;
 import java.security.PublicKey;
 import java.security.spec.EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+
+import ltd.qubit.commons.util.codec.DecodingException;
+import ltd.qubit.commons.util.codec.EncodingException;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 

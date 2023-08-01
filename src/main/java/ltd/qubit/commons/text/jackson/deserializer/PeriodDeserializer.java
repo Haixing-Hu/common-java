@@ -8,11 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
+import java.time.Period;
+
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.util.codec.Decoder;
 import ltd.qubit.commons.util.codec.PeriodCodec;
-
-import java.time.Period;
-import javax.annotation.concurrent.Immutable;
 
 /**
  * The JSON deserializer of a {@link Period} object.

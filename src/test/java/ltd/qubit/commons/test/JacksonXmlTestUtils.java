@@ -8,21 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.test;
 
-import ltd.qubit.commons.io.IoUtils;
-import ltd.qubit.commons.reflect.ClassUtils;
-import ltd.qubit.commons.text.jackson.CustomizedXmlMapper;
-import ltd.qubit.commons.text.jackson.TypeRegistrationModule;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.PropertyName;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import jakarta.xml.bind.annotation.XmlTransient;
-import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -31,7 +16,25 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.List;
+
 import javax.annotation.Nullable;
+
+import jakarta.xml.bind.annotation.XmlTransient;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import ltd.qubit.commons.io.IoUtils;
+import ltd.qubit.commons.reflect.ClassUtils;
+import ltd.qubit.commons.text.jackson.CustomizedXmlMapper;
+import ltd.qubit.commons.text.jackson.TypeRegistrationModule;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.PropertyName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import static ltd.qubit.commons.reflect.AccessibleUtils.withAccessibleObject;
 import static ltd.qubit.commons.reflect.FieldUtils.getAllFields;

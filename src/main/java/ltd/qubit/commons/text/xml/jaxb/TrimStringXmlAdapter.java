@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.xml.jaxb;
 
-import ltd.qubit.commons.text.Stripper;
-
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
+
+import ltd.qubit.commons.text.Stripper;
 
 /**
  * The XML adapter used to trim strings.

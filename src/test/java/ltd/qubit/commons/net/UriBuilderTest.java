@@ -8,11 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.net;
 
-import ltd.qubit.commons.util.pair.NameValuePair;
-
-import org.hamcrest.CoreMatchers;
-import org.junit.jupiter.api.Test;
-
 import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
@@ -20,11 +15,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import ltd.qubit.commons.util.pair.NameValuePair;
+
+import org.hamcrest.CoreMatchers;
+import org.junit.jupiter.api.Test;
 
 import static java.nio.charset.StandardCharsets.ISO_8859_1;
 import static java.nio.charset.StandardCharsets.UTF_8;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UriBuilderTest {
 

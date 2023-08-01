@@ -8,6 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+
 import ltd.qubit.commons.datastructure.list.primitive.impl.BooleanArrayList;
 import ltd.qubit.commons.datastructure.list.primitive.impl.ByteArrayList;
 import ltd.qubit.commons.datastructure.list.primitive.impl.CharArrayList;
@@ -18,12 +24,6 @@ import ltd.qubit.commons.datastructure.list.primitive.impl.LongArrayList;
 import ltd.qubit.commons.datastructure.list.primitive.impl.ShortArrayList;
 
 import org.junit.jupiter.api.Test;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

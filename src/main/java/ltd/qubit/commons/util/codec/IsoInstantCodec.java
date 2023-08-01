@@ -8,10 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.codec;
 
-import ltd.qubit.commons.lang.DateUtils;
-
 import java.time.Instant;
+
 import javax.annotation.Nullable;
+
+import ltd.qubit.commons.lang.DateUtils;
 
 /**
  * 符合 ISO-8601 的时间戳编码器，其编码格式为 "uuuu-mm-dd'T'HH:mm:ss.SSS'Z'"。

@@ -8,16 +8,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.tostring;
 
-import ltd.qubit.commons.lang.Argument;
-import ltd.qubit.commons.lang.DateUtils;
-
-import jakarta.xml.bind.DatatypeConverter;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
+
+import jakarta.xml.bind.DatatypeConverter;
+
+import ltd.qubit.commons.lang.Argument;
+import ltd.qubit.commons.lang.DateUtils;
 
 /**
  * This class assists in implementing {@link Object#toString()} methods.

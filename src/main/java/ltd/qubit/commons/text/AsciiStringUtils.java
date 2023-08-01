@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
-import ltd.qubit.commons.lang.StringUtils;
-
 import javax.annotation.concurrent.ThreadSafe;
+
+import ltd.qubit.commons.lang.StringUtils;
 
 /**
  * Provides functions for manipulating the ASCII strings (represented by a

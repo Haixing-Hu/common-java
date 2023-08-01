@@ -8,10 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util;
 
-import ltd.qubit.commons.lang.StringUtils;
-
 import java.util.Locale;
+
 import javax.annotation.Nullable;
+
+import ltd.qubit.commons.lang.StringUtils;
 
 /**
  * Provide utilities functions deal with locale.

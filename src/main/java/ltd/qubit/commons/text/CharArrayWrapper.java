@@ -9,9 +9,12 @@
 package ltd.qubit.commons.text;
 
 import jakarta.validation.constraints.NotNull;
+
 import ltd.qubit.commons.lang.Hash;
 
-import static ltd.qubit.commons.lang.Argument.*;
+import static ltd.qubit.commons.lang.Argument.requireInCloseRange;
+import static ltd.qubit.commons.lang.Argument.requireNonNegative;
+import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
  * A simple wrapper class which wraps a character array to a {@link CharSequence}.

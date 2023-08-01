@@ -8,14 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.cache;
 
-import ltd.qubit.commons.io.error.AlreadyOpenedException;
-import ltd.qubit.commons.io.error.NotOpenedException;
-
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import ltd.qubit.commons.io.error.AlreadyOpenedException;
+import ltd.qubit.commons.io.error.NotOpenedException;
 
 /**
  * The abstract base class for implementing the {@link Cache} interface.

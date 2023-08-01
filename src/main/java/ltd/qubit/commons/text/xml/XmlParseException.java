@@ -8,13 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.xml;
 
-import ltd.qubit.commons.net.Url;
-
 import java.io.File;
 import java.io.InputStream;
 import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
+
+import ltd.qubit.commons.net.Url;
 
 /**
  * Thrown to indicate an error occurred while parsing the XML.

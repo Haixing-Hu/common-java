@@ -8,11 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
+import java.time.LocalDateTime;
+
 import ltd.qubit.commons.util.codec.Encoder;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-
-import java.time.LocalDateTime;
 
 /**
  * The JSON serializer of a {@link LocalDateTime} object.

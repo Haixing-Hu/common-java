@@ -8,13 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.security;
 
-import jakarta.validation.constraints.NotNull;
-
-import javax.annotation.Nullable;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+
+import javax.annotation.Nullable;
+
+import jakarta.validation.constraints.NotNull;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 

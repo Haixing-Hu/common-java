@@ -8,15 +8,27 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list;
 
+import java.io.Serializable;
+import java.util.AbstractSequentialList;
+import java.util.Collection;
+import java.util.ConcurrentModificationException;
+import java.util.Deque;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.NoSuchElementException;
+
+import javax.annotation.Nullable;
+
 import jakarta.validation.constraints.NotNull;
+
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.util.expand.ExpansionPolicy;
 
-import javax.annotation.Nullable;
-import java.io.Serializable;
-import java.util.*;
-
-import static ltd.qubit.commons.lang.Argument.*;
+import static ltd.qubit.commons.lang.Argument.requireGreater;
+import static ltd.qubit.commons.lang.Argument.requireIndexInCloseRange;
+import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
  * An implementation of {@link List} which use an internal array buffer to store

@@ -8,12 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.error;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import ltd.qubit.commons.reflect.FieldUtils;
 import ltd.qubit.commons.reflect.impl.GetterMethod;
 import ltd.qubit.commons.util.pair.KeyValuePair;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * The exception thrown to indicate that the format of a field is invalid.

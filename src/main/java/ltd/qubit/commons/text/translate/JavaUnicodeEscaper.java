@@ -8,11 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.translate;
 
+import java.io.IOException;
+
 import ltd.qubit.commons.text.Unicode;
 import ltd.qubit.commons.text.Utf16;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.io.IOException;
 
 /**
  * Translates code points to their Unicode escaped value suitable for Java source.

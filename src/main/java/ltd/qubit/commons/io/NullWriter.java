@@ -9,6 +9,7 @@
 package ltd.qubit.commons.io;
 
 import java.io.Writer;
+
 import javax.annotation.concurrent.Immutable;
 
 /**

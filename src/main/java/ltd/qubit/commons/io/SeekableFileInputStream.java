@@ -8,13 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.io;
 
-import ltd.qubit.commons.io.error.AlreadyClosedException;
-import ltd.qubit.commons.lang.SystemUtils;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+
 import javax.annotation.concurrent.NotThreadSafe;
+
+import ltd.qubit.commons.io.error.AlreadyClosedException;
+import ltd.qubit.commons.lang.SystemUtils;
 
 /**
  * A {@link SeekableInputStream} which reads data from a file.

@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
-import ltd.qubit.commons.util.codec.StandardBooleanCodec;
-
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.util.codec.StandardBooleanCodec;
 
 /**
  * 布尔类 {@link Boolean} 的 JSON 反序列化器，此反序列化器将字符串 "false" 和

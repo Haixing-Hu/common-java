@@ -8,20 +8,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
-import ltd.qubit.commons.sql.error.NoDataSourceException;
-
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import javax.sql.DataSource;
 
-import static ltd.qubit.commons.lang.Argument.requireNonNull;
+import ltd.qubit.commons.sql.error.NoDataSourceException;
 
 import static java.sql.ResultSet.CLOSE_CURSORS_AT_COMMIT;
 import static java.sql.ResultSet.CONCUR_READ_ONLY;
 import static java.sql.ResultSet.TYPE_FORWARD_ONLY;
+
+import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
  * A simple template class for performing JDBC operations.

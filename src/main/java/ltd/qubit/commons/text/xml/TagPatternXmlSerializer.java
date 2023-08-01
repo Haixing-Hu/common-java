@@ -8,12 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.xml;
 
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.io.serialize.XmlSerializer;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import javax.annotation.concurrent.Immutable;
 
 import static ltd.qubit.commons.text.xml.DomUtils.appendOptStringChild;
 import static ltd.qubit.commons.text.xml.DomUtils.checkNode;

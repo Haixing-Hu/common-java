@@ -8,6 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.net;
 
+import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.CommonsConfig;
 import ltd.qubit.commons.config.Config;
 import ltd.qubit.commons.lang.SystemUtils;
@@ -19,12 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.annotation.concurrent.Immutable;
 
 /**
  * A {@link DefaultPorts} object stores a map between the scheme and its

@@ -8,14 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
+import java.io.Serializable;
+
 import jakarta.validation.constraints.Size;
+
 import ltd.qubit.commons.lang.Argument;
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.io.Serializable;
 
 /**
  * 此模型表示媒体信息。

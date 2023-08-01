@@ -9,6 +9,7 @@
 package ltd.qubit.commons.text.translate;
 
 import java.io.IOException;
+
 import javax.annotation.concurrent.Immutable;
 
 /**

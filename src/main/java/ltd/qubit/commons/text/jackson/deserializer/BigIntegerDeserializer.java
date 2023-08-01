@@ -8,10 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
-import ltd.qubit.commons.util.codec.BigIntegerCodec;
-
 import java.math.BigInteger;
+
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.util.codec.BigIntegerCodec;
 
 /**
  * The JSON deserializer of a {@link BigInteger} object.

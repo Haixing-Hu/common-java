@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.config.impl;
 
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.io.serialize.XmlSerializer;
 import ltd.qubit.commons.lang.Type;
 import ltd.qubit.commons.text.xml.XmlException;
@@ -16,8 +18,6 @@ import ltd.qubit.commons.util.value.MultiValues;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import javax.annotation.concurrent.Immutable;
 
 import static ltd.qubit.commons.text.xml.DomUtils.appendOptStringChild;
 import static ltd.qubit.commons.text.xml.DomUtils.checkNode;

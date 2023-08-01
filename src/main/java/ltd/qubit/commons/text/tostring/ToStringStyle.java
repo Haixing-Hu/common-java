@@ -8,20 +8,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.tostring;
 
+import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Stack;
+
+import javax.annotation.concurrent.GuardedBy;
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.CommonsConfig;
 import ltd.qubit.commons.config.Config;
 import ltd.qubit.commons.lang.ClassUtils;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.lang.ObjectUtils;
-
-import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Stack;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.Immutable;
 
 import static ltd.qubit.commons.lang.CharUtils.toHexString;
 import static ltd.qubit.commons.lang.ObjectUtils.defaultIfNull;

@@ -8,13 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
+import java.time.Period;
+
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.util.codec.Encoder;
 import ltd.qubit.commons.util.codec.PeriodCodec;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-
-import java.time.Period;
-import javax.annotation.concurrent.Immutable;
 
 /**
  * The JSON serializer of a {@link Period} object.

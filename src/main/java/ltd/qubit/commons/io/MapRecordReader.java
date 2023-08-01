@@ -8,12 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.io;
 
-import ltd.qubit.commons.reflect.ConstructorUtils;
-import ltd.qubit.commons.reflect.ReflectionException;
-
 import java.util.Iterator;
 import java.util.Map;
+
 import javax.annotation.concurrent.NotThreadSafe;
+
+import ltd.qubit.commons.reflect.ConstructorUtils;
+import ltd.qubit.commons.reflect.ReflectionException;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 

@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect;
 
-import ltd.qubit.commons.lang.ClassUtils;
-
 import java.lang.reflect.Member;
 import java.lang.reflect.Modifier;
+
+import ltd.qubit.commons.lang.ClassUtils;
 
 /**
  * Contains common code for working with Methods/Constructors, extracted and

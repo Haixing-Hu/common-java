@@ -8,12 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.xml.jaxb;
 
-import ltd.qubit.commons.util.codec.BigDecimalCodec;
-import ltd.qubit.commons.util.codec.Codec;
+import java.math.BigDecimal;
 
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
-import java.math.BigDecimal;
+import ltd.qubit.commons.util.codec.BigDecimalCodec;
+import ltd.qubit.commons.util.codec.Codec;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 

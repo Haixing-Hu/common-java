@@ -8,20 +8,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list.primitive.impl;
 
-import ltd.qubit.commons.datastructure.list.primitive.RandomAccessShortList;
-import ltd.qubit.commons.datastructure.list.primitive.ShortCollection;
-import ltd.qubit.commons.datastructure.list.primitive.ShortIterator;
-import ltd.qubit.commons.datastructure.list.primitive.ShortList;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
 
-import static ltd.qubit.commons.lang.Argument.requireIndexInCloseRange;
-import static ltd.qubit.commons.lang.Argument.requireIndexInRightOpenRange;
+import ltd.qubit.commons.datastructure.list.primitive.RandomAccessShortList;
+import ltd.qubit.commons.datastructure.list.primitive.ShortCollection;
+import ltd.qubit.commons.datastructure.list.primitive.ShortIterator;
+import ltd.qubit.commons.datastructure.list.primitive.ShortList;
 
 import static java.lang.System.arraycopy;
+
+import static ltd.qubit.commons.lang.Argument.requireIndexInCloseRange;
+import static ltd.qubit.commons.lang.Argument.requireIndexInRightOpenRange;
 
 /**
  * An {@link ShortList} backed by an array of {@code short}s. This

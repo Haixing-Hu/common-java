@@ -8,6 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.value;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.error.UnsupportedDataTypeException;
 import ltd.qubit.commons.io.OutputUtils;
 import ltd.qubit.commons.io.error.SerializationException;
@@ -15,12 +22,6 @@ import ltd.qubit.commons.io.error.UnexpectedNullValueException;
 import ltd.qubit.commons.io.serialize.BinarySerializer;
 import ltd.qubit.commons.lang.Type;
 import ltd.qubit.commons.lang.TypeUtils;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
 
 import static ltd.qubit.commons.io.InputUtils.readEnum;
 import static ltd.qubit.commons.io.InputUtils.readNullMark;

@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
-import ltd.qubit.commons.lang.EnumUtils;
-
 import java.util.Locale;
+
+import ltd.qubit.commons.lang.EnumUtils;
 
 import static ltd.qubit.commons.lang.EnumUtils.registerLocalizedNames;
 

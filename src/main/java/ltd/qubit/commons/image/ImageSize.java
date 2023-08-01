@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.image;
 
-import ltd.qubit.commons.lang.CloneableEx;
-
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
+
+import ltd.qubit.commons.lang.CloneableEx;
 
 /**
  * The model of sizes of images.

@@ -8,18 +8,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.security;
 
+import java.io.Serializable;
+import java.util.regex.Pattern;
+
+import javax.annotation.Nullable;
+import javax.annotation.RegEx;
+
+import jakarta.xml.bind.annotation.XmlAnyElement;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
-import jakarta.xml.bind.annotation.XmlAnyElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.Serializable;
-import java.util.regex.Pattern;
-import javax.annotation.Nullable;
-import javax.annotation.RegEx;
 
 /**
  * 此模型表示带数字签名的消息。

@@ -8,12 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.net;
 
-import ltd.qubit.commons.io.FileUtils;
-import ltd.qubit.commons.io.IoUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,8 +23,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
+
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
+
+import ltd.qubit.commons.io.FileUtils;
+import ltd.qubit.commons.io.IoUtils;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static ltd.qubit.commons.net.InetAddressUtils.isIPv4Address;
 

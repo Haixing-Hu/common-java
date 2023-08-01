@@ -8,6 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.html;
 
+import java.net.MalformedURLException;
+
+import javax.annotation.concurrent.ThreadSafe;
+
 import ltd.qubit.commons.io.serialize.XmlSerializer;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.net.Url;
@@ -18,9 +22,6 @@ import ltd.qubit.commons.text.xml.XmlSerializationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import java.net.MalformedURLException;
-import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * The {@link XmlSerializer} for the {@link HyperLink} class.

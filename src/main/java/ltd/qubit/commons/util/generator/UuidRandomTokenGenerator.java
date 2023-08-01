@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.generator;
 
-import ltd.qubit.commons.util.UuidUtils;
-
 import java.util.UUID;
+
+import ltd.qubit.commons.util.UuidUtils;
 
 /**
  * An implementation of the {@link TokenGenerator} using the UUID.

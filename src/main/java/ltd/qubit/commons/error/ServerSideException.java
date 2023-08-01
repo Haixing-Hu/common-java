@@ -8,11 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.error;
 
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.util.pair.KeyValuePair;
 
 import org.springframework.dao.DataAccessException;
-
-import javax.annotation.Nullable;
 
 import static ltd.qubit.commons.lang.ThrowableUtils.getRootCauseMessage;
 import static ltd.qubit.commons.text.CaseFormat.LOWER_CAMEL;

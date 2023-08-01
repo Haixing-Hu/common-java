@@ -8,10 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
-import ltd.qubit.commons.util.codec.IsoInstantCodec;
-
 import java.time.Instant;
+
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.util.codec.IsoInstantCodec;
 
 /**
  * 符合 ISO-8601 的时间戳类 {@link Instant} 的 JSON 序列化器，其编码格式为

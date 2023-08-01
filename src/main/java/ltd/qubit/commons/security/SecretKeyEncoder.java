@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.security;
 
-import ltd.qubit.commons.util.codec.Encoder;
-
 import javax.crypto.SecretKey;
+
+import ltd.qubit.commons.util.codec.Encoder;
 
 /**
  * The interface for encoding {@link SecretKey}s into byte arrays.

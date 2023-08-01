@@ -8,6 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect.impl;
 
+import java.lang.reflect.Method;
+import java.util.concurrent.atomic.AtomicReference;
+
 import ltd.qubit.commons.reflect.MethodUtils;
 import ltd.qubit.commons.reflect.ReflectionException;
 
@@ -18,9 +21,6 @@ import net.bytebuddy.implementation.MethodDelegation;
 import net.bytebuddy.implementation.bind.annotation.FieldValue;
 import net.bytebuddy.implementation.bind.annotation.Origin;
 import net.bytebuddy.implementation.bind.annotation.RuntimeType;
-
-import java.lang.reflect.Method;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static ltd.qubit.commons.lang.ClassUtils.getDefaultValueObject;
 

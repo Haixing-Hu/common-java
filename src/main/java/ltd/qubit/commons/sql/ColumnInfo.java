@@ -8,14 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
+import java.io.Serializable;
+import java.sql.ResultSetMetaData;
+import java.sql.Types;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.io.Serializable;
-import java.sql.ResultSetMetaData;
-import java.sql.Types;
 
 import static ltd.qubit.commons.lang.Argument.requireGreaterEqual;
 import static ltd.qubit.commons.lang.Argument.requireInEnum;

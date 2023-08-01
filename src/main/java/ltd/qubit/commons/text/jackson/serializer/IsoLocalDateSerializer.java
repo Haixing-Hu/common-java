@@ -8,10 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
-import ltd.qubit.commons.util.codec.IsoLocalDateCodec;
-
 import java.time.LocalDate;
+
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.util.codec.IsoLocalDateCodec;
 
 /**
  * 符合 ISO-8601 的本地日期类 {@link LocalDate} 的 JSON 序列化器，其编码格式为

@@ -8,13 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
-import com.google.common.collect.ImmutableSet;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.Set;
+
 import javax.annotation.Nullable;
+
+import com.google.common.collect.ImmutableSet;
 
 import static ltd.qubit.commons.lang.ArrayUtils.EMPTY_BYTE_ARRAY;
 

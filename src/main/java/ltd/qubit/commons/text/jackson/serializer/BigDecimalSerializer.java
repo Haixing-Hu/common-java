@@ -8,18 +8,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
+import java.math.BigDecimal;
+
+import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.annotation.Money;
+import ltd.qubit.commons.annotation.Round;
+import ltd.qubit.commons.annotation.Scale;
 import ltd.qubit.commons.util.codec.BigDecimalCodec;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
-import ltd.qubit.commons.annotation.Money;
-import ltd.qubit.commons.annotation.Round;
-import ltd.qubit.commons.annotation.Scale;
-
-import java.math.BigDecimal;
-import javax.annotation.concurrent.Immutable;
 
 /**
  * The JSON serializer of a {@link BigDecimal} object.

@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.error;
 
-import ltd.qubit.commons.util.pair.KeyValuePair;
-
 import javax.annotation.Nullable;
+
+import ltd.qubit.commons.util.pair.KeyValuePair;
 
 /**
  * The exception to thrown if the user has no privilege to perform the

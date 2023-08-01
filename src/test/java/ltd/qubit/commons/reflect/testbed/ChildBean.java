@@ -8,13 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect.testbed;
 
+import javax.annotation.Nullable;
+
 import jakarta.validation.constraints.Size;
+
 import ltd.qubit.commons.annotation.Unique;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import javax.annotation.Nullable;
 
 public class ChildBean extends ParentBean {
 

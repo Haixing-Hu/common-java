@@ -12,8 +12,9 @@ import ltd.qubit.commons.math.RandomEx;
 import ltd.qubit.commons.util.pair.KeyValuePair;
 import ltd.qubit.commons.util.pair.KeyValuePairList;
 
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.junit.jupiter.api.Test;
+
+import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -8,14 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
+import java.sql.SQLSyntaxErrorException;
+import java.util.Arrays;
+import java.util.List;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import ltd.qubit.commons.util.LogicRelation;
-
-import java.sql.SQLSyntaxErrorException;
-import java.util.Arrays;
-import java.util.List;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 

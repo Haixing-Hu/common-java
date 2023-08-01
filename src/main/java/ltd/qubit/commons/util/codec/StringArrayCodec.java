@@ -8,12 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.codec;
 
+import java.util.Arrays;
+
 import ltd.qubit.commons.text.Stripper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-
-import java.util.Arrays;
 
 import static ltd.qubit.commons.lang.ArrayUtils.EMPTY_STRING_ARRAY;
 

@@ -10,6 +10,7 @@ package ltd.qubit.commons.io;
 
 import java.io.Closeable;
 import java.io.IOException;
+
 import javax.annotation.Nullable;
 
 /**

@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
-import ltd.qubit.commons.util.codec.AlphabetBooleanCodec;
-
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.util.codec.AlphabetBooleanCodec;
 
 /**
  * 布尔类{@link Boolean}的JSON反序列化器，此反序列化器将字符串"N"和"Y"分别映射到

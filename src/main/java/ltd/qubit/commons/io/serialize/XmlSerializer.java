@@ -8,12 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.io.serialize;
 
+import javax.annotation.concurrent.ThreadSafe;
+
 import ltd.qubit.commons.text.xml.XmlException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * A {@link XmlSerializer} provides interface to serialize and deserialize

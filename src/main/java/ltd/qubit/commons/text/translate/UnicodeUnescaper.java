@@ -8,10 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.translate;
 
-import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
 import java.io.IOException;
+
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
  * Translates escaped Unicode values of the form \\u+\d\d\d\d back to Unicode.

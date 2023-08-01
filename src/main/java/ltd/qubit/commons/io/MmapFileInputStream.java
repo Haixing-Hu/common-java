@@ -8,16 +8,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.io;
 
-import ltd.qubit.commons.io.error.AlreadyClosedException;
-import ltd.qubit.commons.io.error.InvalidSeekPositionException;
-import ltd.qubit.commons.lang.SystemUtils;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel.MapMode;
+
 import javax.annotation.concurrent.NotThreadSafe;
+
+import ltd.qubit.commons.io.error.AlreadyClosedException;
+import ltd.qubit.commons.io.error.InvalidSeekPositionException;
+import ltd.qubit.commons.lang.SystemUtils;
 
 /**
  * A {@link SeekableInputStream} to read data from a file using a mmap.

@@ -8,11 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.net;
 
-import org.junit.jupiter.api.Test;
-
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

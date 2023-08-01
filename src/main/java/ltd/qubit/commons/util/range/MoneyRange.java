@@ -8,13 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.range;
 
+import java.math.BigDecimal;
+
+import javax.annotation.Nullable;
+
+import ltd.qubit.commons.annotation.Money;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-import ltd.qubit.commons.annotation.Money;
-
-import java.math.BigDecimal;
-import javax.annotation.Nullable;
 
 /**
  * 此模型表示金钱范围（前闭后开区间）。

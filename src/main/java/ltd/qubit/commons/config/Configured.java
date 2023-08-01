@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.config;
 
-import ltd.qubit.commons.config.impl.DefaultConfig;
-
 import javax.annotation.concurrent.NotThreadSafe;
+
+import ltd.qubit.commons.config.impl.DefaultConfig;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 

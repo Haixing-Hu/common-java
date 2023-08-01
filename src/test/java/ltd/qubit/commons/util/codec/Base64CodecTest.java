@@ -10,11 +10,11 @@ package ltd.qubit.commons.util.codec;
 
 import org.junit.jupiter.api.Test;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class Base64CodecTest {
 

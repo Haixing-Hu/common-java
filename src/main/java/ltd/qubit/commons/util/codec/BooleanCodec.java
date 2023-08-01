@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.codec;
 
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.text.Stripper;
-
-import javax.annotation.Nullable;
 
 /**
  * The codec which decode/encode booleans from/to strings.

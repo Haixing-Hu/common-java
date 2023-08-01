@@ -8,7 +8,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.net;
 
+import java.net.URI;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.BitSet;
+import java.util.Collections;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import jakarta.validation.constraints.NotNull;
+
 import ltd.qubit.commons.lang.Argument;
 import ltd.qubit.commons.lang.CharUtils;
 import ltd.qubit.commons.text.ParserCursor;
@@ -16,13 +28,8 @@ import ltd.qubit.commons.text.TokenParser;
 import ltd.qubit.commons.util.buffer.CharBuffer;
 import ltd.qubit.commons.util.pair.NameValuePair;
 
-import javax.annotation.Nullable;
-import java.net.URI;
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
-import java.util.*;
-
 import static java.nio.charset.StandardCharsets.UTF_8;
+
 import static ltd.qubit.commons.lang.ObjectUtils.defaultIfNull;
 
 public class UrlEncodingUtils {

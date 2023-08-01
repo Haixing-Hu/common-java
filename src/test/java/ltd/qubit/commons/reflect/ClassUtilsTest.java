@@ -8,11 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect;
 
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.reflect.testbed.Foo;
 
 import org.junit.jupiter.api.Test;
-
-import javax.annotation.Nullable;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

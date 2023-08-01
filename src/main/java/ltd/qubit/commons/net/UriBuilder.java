@@ -8,16 +8,22 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.net;
 
-import jakarta.validation.constraints.NotNull;
-import ltd.qubit.commons.lang.StringUtils;
-import ltd.qubit.commons.util.pair.NameValuePair;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import jakarta.validation.constraints.NotNull;
+
+import ltd.qubit.commons.lang.StringUtils;
+import ltd.qubit.commons.util.pair.NameValuePair;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+
 import static ltd.qubit.commons.lang.ObjectUtils.defaultIfNull;
 
 /**

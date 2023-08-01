@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
-import ltd.qubit.commons.error.ErrorCode;
-
 import jakarta.xml.bind.annotation.XmlRootElement;
+
+import ltd.qubit.commons.error.ErrorCode;
 
 /**
  * 此枚举表示实体类型的状态。

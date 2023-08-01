@@ -8,11 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
+import java.util.Date;
+
 import ltd.qubit.commons.util.codec.Encoder;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-
-import java.util.Date;
 
 /**
  * The JSON serializer of a {@link Date} object.

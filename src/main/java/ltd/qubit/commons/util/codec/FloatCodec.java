@@ -8,13 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.codec;
 
-import ltd.qubit.commons.text.Stripper;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+
 import javax.annotation.Nullable;
+
+import ltd.qubit.commons.text.Stripper;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNegative;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;

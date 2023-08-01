@@ -8,6 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.net;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.CommonsConfig;
 import ltd.qubit.commons.config.Config;
 import ltd.qubit.commons.lang.StringUtils;
@@ -20,12 +27,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import javax.annotation.concurrent.Immutable;
 
 import static ltd.qubit.commons.net.TopLevelDomain.Type.GENERIC;
 import static ltd.qubit.commons.net.TopLevelDomain.Type.INFRASTRUCTURE;

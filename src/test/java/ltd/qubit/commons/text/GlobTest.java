@@ -8,15 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
+import java.io.IOException;
+import java.util.regex.Pattern;
+
 import ltd.qubit.commons.io.error.InvalidFormatException;
 import ltd.qubit.commons.io.serialize.BinarySerialization;
 import ltd.qubit.commons.io.serialize.XmlSerialization;
 import ltd.qubit.commons.text.xml.XmlException;
 
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;

@@ -8,16 +8,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
+import java.time.Instant;
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.Nullable;
+
+import ltd.qubit.commons.annotation.Precision;
 import ltd.qubit.commons.lang.Argument;
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-import ltd.qubit.commons.annotation.Precision;
-
-import java.time.Instant;
-import java.util.concurrent.TimeUnit;
-import javax.annotation.Nullable;
 
 /**
  * 此模型表示授权记录。

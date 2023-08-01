@@ -8,15 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.value;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Date;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.FloatUtils;
 import ltd.qubit.commons.lang.Type;
 
 import org.junit.jupiter.api.Test;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
+import java.io.IOException;
+
 import ltd.qubit.commons.reflect.WriteMethodReference;
 import ltd.qubit.commons.util.codec.Encoder;
 import ltd.qubit.commons.util.codec.EncodingException;
@@ -16,8 +18,6 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-
-import java.io.IOException;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 

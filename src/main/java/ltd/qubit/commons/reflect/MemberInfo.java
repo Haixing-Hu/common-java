@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect;
 
-import ltd.qubit.commons.lang.Argument;
-
 import java.lang.reflect.Member;
+
+import ltd.qubit.commons.lang.Argument;
 
 /**
  * Stores the information of member.

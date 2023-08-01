@@ -8,13 +8,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
-import jakarta.validation.constraints.Size;
-import ltd.qubit.commons.annotation.Reference;
-import ltd.qubit.commons.lang.*;
-import ltd.qubit.commons.text.tostring.ToStringBuilder;
+import java.io.Serializable;
 
 import javax.annotation.Nullable;
-import java.io.Serializable;
+
+import jakarta.validation.constraints.Size;
+
+import ltd.qubit.commons.annotation.Reference;
+import ltd.qubit.commons.lang.Argument;
+import ltd.qubit.commons.lang.Assignable;
+import ltd.qubit.commons.lang.Assignment;
+import ltd.qubit.commons.lang.Equality;
+import ltd.qubit.commons.lang.Hash;
+import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
  * 此模型表示地址。

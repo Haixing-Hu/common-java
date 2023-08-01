@@ -8,12 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
-import ltd.qubit.commons.reflect.impl.GetterMethod;
-import ltd.qubit.commons.util.LogicRelation;
-
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.Nullable;
+
+import ltd.qubit.commons.reflect.impl.GetterMethod;
+import ltd.qubit.commons.util.LogicRelation;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.sql.ComparisonOperator.EQUAL;

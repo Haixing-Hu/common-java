@@ -8,15 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.io.OutputUtils;
 import ltd.qubit.commons.io.error.SerializationException;
 import ltd.qubit.commons.io.error.UnexpectedNullValueException;
 import ltd.qubit.commons.io.serialize.BinarySerializer;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import javax.annotation.concurrent.Immutable;
 
 import static ltd.qubit.commons.io.InputUtils.readNullMark;
 import static ltd.qubit.commons.io.InputUtils.readString;

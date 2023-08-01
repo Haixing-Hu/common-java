@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.range;
 
+import java.util.ArrayList;
+
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.Assignment;
-
-import java.util.ArrayList;
 
 /**
  * 此模型表示时间范围集合。

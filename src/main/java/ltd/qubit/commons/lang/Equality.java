@@ -8,6 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
+
+import javax.annotation.Nullable;
+import javax.annotation.concurrent.ThreadSafe;
+
 import ltd.qubit.commons.datastructure.list.primitive.BooleanCollection;
 import ltd.qubit.commons.datastructure.list.primitive.BooleanIterator;
 import ltd.qubit.commons.datastructure.list.primitive.ByteCollection;
@@ -24,14 +33,6 @@ import ltd.qubit.commons.datastructure.list.primitive.LongCollection;
 import ltd.qubit.commons.datastructure.list.primitive.LongIterator;
 import ltd.qubit.commons.datastructure.list.primitive.ShortCollection;
 import ltd.qubit.commons.datastructure.list.primitive.ShortIterator;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * This class provides functions to test the equality between objects.

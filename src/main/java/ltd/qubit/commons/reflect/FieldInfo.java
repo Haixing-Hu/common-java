@@ -8,17 +8,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect;
 
-import ltd.qubit.commons.lang.Assignment;
-import ltd.qubit.commons.lang.Equality;
-import ltd.qubit.commons.lang.Hash;
-import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.lang.Assignment;
+import ltd.qubit.commons.lang.Equality;
+import ltd.qubit.commons.lang.Hash;
+import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNegative;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;

@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.error;
 
-import ltd.qubit.commons.util.pair.KeyValuePair;
-
 import javax.annotation.Nullable;
+
+import ltd.qubit.commons.util.pair.KeyValuePair;
 
 /**
  * An exception thrown to indicate the permission of the operation was denied.

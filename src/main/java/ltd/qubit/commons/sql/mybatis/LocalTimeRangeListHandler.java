@@ -8,18 +8,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql.mybatis;
 
-import ltd.qubit.commons.util.range.LocalTimeRange;
-import ltd.qubit.commons.util.range.LocalTimeRangeList;
-
-import org.apache.ibatis.type.BaseTypeHandler;
-import org.apache.ibatis.type.JdbcType;
-
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.stream.Collectors;
+
+import ltd.qubit.commons.util.range.LocalTimeRange;
+import ltd.qubit.commons.util.range.LocalTimeRangeList;
+
+import org.apache.ibatis.type.BaseTypeHandler;
+import org.apache.ibatis.type.JdbcType;
 
 /**
  * The MyBatis type handler for {@link LocalTimeRange} of List.

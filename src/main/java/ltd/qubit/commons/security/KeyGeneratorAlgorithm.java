@@ -10,6 +10,7 @@ package ltd.qubit.commons.security;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.crypto.KeyGenerator;
 
 /**

@@ -8,12 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.pair;
 
-import ltd.qubit.commons.lang.Hash;
-import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
 import java.io.Serializable;
+
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
+
+import ltd.qubit.commons.lang.Hash;
+import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
  * This class is used to represent a pair of {@code short} values.

@@ -8,6 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.security;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.Signature;
+
 import ltd.qubit.commons.error.SignMessageException;
 import ltd.qubit.commons.error.VerifyMessageException;
 import ltd.qubit.commons.error.VerifySignatureException;
@@ -18,23 +26,16 @@ import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import ltd.qubit.commons.util.codec.Base64Codec;
 import ltd.qubit.commons.util.codec.DecodingException;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.security.GeneralSecurityException;
-import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
-import java.security.Signature;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 import static ltd.qubit.commons.io.IoUtils.BUFFER_SIZE;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * The class of objects used to verify digital signature of messages.

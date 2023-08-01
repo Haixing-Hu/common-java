@@ -8,10 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
-import ltd.qubit.commons.util.codec.PosixLocaleCodec;
-
 import java.util.Locale;
+
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.util.codec.PosixLocaleCodec;
 
 @Immutable
 public class PosixLocaleDeserializer extends DecoderDeserializer<Locale> {

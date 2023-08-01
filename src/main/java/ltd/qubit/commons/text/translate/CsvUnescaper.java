@@ -8,11 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.translate;
 
+import java.io.IOException;
+
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.text.Replacer;
 import ltd.qubit.commons.text.Searcher;
-
-import java.io.IOException;
-import javax.annotation.concurrent.Immutable;
 
 /**
  * Translator for unescaping escaped Comma Separated Value (CSV) entries.

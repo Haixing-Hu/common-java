@@ -8,15 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.codec;
 
-import ltd.qubit.commons.lang.Equality;
-import ltd.qubit.commons.lang.Hash;
-import ltd.qubit.commons.text.Stripper;
-import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+
+import ltd.qubit.commons.lang.Equality;
+import ltd.qubit.commons.lang.Hash;
+import ltd.qubit.commons.text.Stripper;
+import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNegative;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;

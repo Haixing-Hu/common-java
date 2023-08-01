@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.util.codec.Decoder;
 import ltd.qubit.commons.util.codec.LongCodec;
-
-import javax.annotation.concurrent.Immutable;
 
 /**
  * The JSON deserializer which decodes {@link Long} values from strings.

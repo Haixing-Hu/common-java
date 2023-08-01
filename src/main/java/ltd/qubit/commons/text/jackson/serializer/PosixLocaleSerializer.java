@@ -8,12 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
+import java.util.Locale;
+
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.util.codec.PosixLocaleCodec;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-
-import java.util.Locale;
-import javax.annotation.concurrent.Immutable;
 
 @Immutable
 public class PosixLocaleSerializer extends EncoderSerializer<Locale> {

@@ -8,17 +8,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
+import java.text.DecimalFormatSymbols;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.annotation.concurrent.GuardedBy;
+
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.CharUtils;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.text.DecimalFormatSymbols;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import javax.annotation.concurrent.GuardedBy;
 
 import static ltd.qubit.commons.lang.Argument.requireLengthAtLeast;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;

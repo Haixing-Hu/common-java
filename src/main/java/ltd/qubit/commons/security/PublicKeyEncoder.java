@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.security;
 
-import ltd.qubit.commons.util.codec.Encoder;
-
 import java.security.PublicKey;
+
+import ltd.qubit.commons.util.codec.Encoder;
 
 /**
  * The interface for encoding {@link PublicKey}s into byte arrays.

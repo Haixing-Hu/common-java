@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.codec;
 
-import ltd.qubit.commons.text.Stripper;
-
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.text.Stripper;
 
 import static ltd.qubit.commons.lang.StringUtils.isEmpty;
 

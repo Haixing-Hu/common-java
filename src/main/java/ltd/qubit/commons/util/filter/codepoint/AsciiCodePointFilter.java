@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.filter.codepoint;
 
-import ltd.qubit.commons.text.Ascii;
-
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.text.Ascii;
 
 /**
  * A code point filter which accepts only ASCII characters.

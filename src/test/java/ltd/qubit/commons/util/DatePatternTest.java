@@ -8,14 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
 import ltd.qubit.commons.io.serialize.XmlSerialization;
 import ltd.qubit.commons.text.xml.XmlException;
 
 import org.junit.jupiter.api.Test;
-
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

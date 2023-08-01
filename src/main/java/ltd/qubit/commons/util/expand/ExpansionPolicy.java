@@ -8,12 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.expand;
 
-import ltd.qubit.commons.CommonsConfig;
-import ltd.qubit.commons.config.Config;
-
 import java.lang.reflect.Array;
+
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
+
+import ltd.qubit.commons.CommonsConfig;
+import ltd.qubit.commons.config.Config;
 
 /**
  * The {@link ExpansionPolicy} is used to calculate the capacity while expanding

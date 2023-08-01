@@ -8,17 +8,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list;
 
-import ltd.qubit.commons.lang.ArrayUtils;
-
-import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
+import ltd.qubit.commons.lang.ArrayUtils;
+
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 /**
@@ -88,15 +90,15 @@ public class ArrayLinkedListListIterTest {
   private void testHasNext(final Integer[] array) {
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
     ListIterator<Integer> iter = list.listIterator();
-    assertEquals(false, iter.hasNext());
+    assertFalse(iter.hasNext());
 
     list.addAll(Arrays.asList(array));
     iter = list.listIterator();
     for (int i = 0; i < array.length; ++i) {
-      assertEquals(true, iter.hasNext());
+      assertTrue(iter.hasNext());
       iter.next();
     }
-    assertEquals(false, iter.hasNext());
+    assertFalse(iter.hasNext());
   }
 
   /**
@@ -112,7 +114,7 @@ public class ArrayLinkedListListIterTest {
   private void testNext(final Integer[] array) {
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
     ListIterator<Integer> iter = list.listIterator();
-    assertEquals(false, iter.hasNext());
+    assertFalse(iter.hasNext());
     try {
       iter.next();
       fail("should throw NoSuchElementException");
@@ -122,11 +124,11 @@ public class ArrayLinkedListListIterTest {
     list.addAll(Arrays.asList(array));
     iter = list.listIterator();
     for (int i = 0; i < array.length; ++i) {
-      assertEquals(true, iter.hasNext());
+      assertTrue(iter.hasNext());
       final Integer obj = iter.next();
       assertEquals(array[i], obj);
     }
-    assertEquals(false, iter.hasNext());
+    assertFalse(iter.hasNext());
     try {
       iter.next();
       fail("should throw NoSuchElementException");
@@ -156,15 +158,15 @@ public class ArrayLinkedListListIterTest {
   private void testHasPrevious(final Integer[] array) {
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
     ListIterator<Integer> iter = list.listIterator();
-    assertEquals(false, iter.hasPrevious());
+    assertFalse(iter.hasPrevious());
 
     list.addAll(Arrays.asList(array));
     iter = list.listIterator(list.size());
     for (int i = 0; i < array.length; ++i) {
-      assertEquals(true, iter.hasPrevious());
+      assertTrue(iter.hasPrevious());
       iter.previous();
     }
-    assertEquals(false, iter.hasPrevious());
+    assertFalse(iter.hasPrevious());
   }
 
   /**
@@ -180,7 +182,7 @@ public class ArrayLinkedListListIterTest {
   private void testPrevious(final Integer[] array) {
     final ArrayLinkedList<Integer> list = new ArrayLinkedList<>();
     ListIterator<Integer> iter = list.listIterator();
-    assertEquals(false, iter.hasPrevious());
+    assertFalse(iter.hasPrevious());
     try {
       iter.previous();
       fail("should throw NoSuchElementException");
@@ -191,11 +193,11 @@ public class ArrayLinkedListListIterTest {
     list.addAll(Arrays.asList(array));
     iter = list.listIterator(list.size());
     for (int i = array.length - 1; i >= 0; --i) {
-      assertEquals(true, iter.hasPrevious());
+      assertTrue(iter.hasPrevious());
       final Integer obj = iter.previous();
       assertEquals(array[i], obj);
     }
-    assertEquals(false, iter.hasPrevious());
+    assertFalse(iter.hasPrevious());
     try {
       iter.previous();
       fail("should throw NoSuchElementException");
@@ -230,11 +232,11 @@ public class ArrayLinkedListListIterTest {
     list.addAll(Arrays.asList(array));
     iter = list.listIterator();
     for (int i = 0; i < array.length; ++i) {
-      assertEquals(true, iter.hasNext());
+      assertTrue(iter.hasNext());
       assertEquals(i, iter.nextIndex());
       iter.next();
     }
-    assertEquals(false, iter.hasNext());
+    assertFalse(iter.hasNext());
     assertEquals(list.size(), iter.nextIndex());
   }
 
@@ -256,11 +258,11 @@ public class ArrayLinkedListListIterTest {
     list.addAll(Arrays.asList(array));
     iter = list.listIterator(array.length);
     for (int i = array.length - 1; i >= 0; --i) {
-      assertEquals(true, iter.hasPrevious());
+      assertTrue(iter.hasPrevious());
       assertEquals(i, iter.previousIndex());
       iter.previous();
     }
-    assertEquals(false, iter.hasPrevious());
+    assertFalse(iter.hasPrevious());
     assertEquals(-1, iter.previousIndex());
   }
 
@@ -290,7 +292,7 @@ public class ArrayLinkedListListIterTest {
 
     // test the remove() after calling next()
     for (int i = 0; i < array.length; ++i) {
-      assertEquals(true, iter.hasNext());
+      assertTrue(iter.hasNext());
       assertEquals(i, iter.nextIndex());
       final Integer obj = iter.next();
       assertEquals(i + 1, iter.nextIndex());
@@ -318,12 +320,12 @@ public class ArrayLinkedListListIterTest {
         // pass
       }
     }
-    assertEquals(false, iter.hasNext());
+    assertFalse(iter.hasNext());
     assertEquals(array.length, iter.nextIndex());
 
     // test the remove() after calling previous()
     for (int i = array.length - 1; i >= 0; --i) {
-      assertEquals(true, iter.hasPrevious());
+      assertTrue(iter.hasPrevious());
       assertEquals(i, iter.previousIndex());
       final Integer obj = iter.previous();
       assertEquals(i - 1, iter.previousIndex());
@@ -397,7 +399,7 @@ public class ArrayLinkedListListIterTest {
 
     // test the set() after calling next()
     for (int i = 0; i < array.length; ++i) {
-      assertEquals(true, iter.hasNext());
+      assertTrue(iter.hasNext());
       final Integer obj = iter.next();
       assertEquals(array[i], obj);
       iter.set(null);
@@ -410,7 +412,7 @@ public class ArrayLinkedListListIterTest {
     }
     // test the set() after calling previous()
     for (int i = array.length - 1; i >= 0; --i) {
-      assertEquals(true, iter.hasPrevious());
+      assertTrue(iter.hasPrevious());
       final Integer obj = iter.previous();
       assertEquals(array[i], obj);
       iter.set(Integer.valueOf(i));
@@ -452,8 +454,8 @@ public class ArrayLinkedListListIterTest {
 
     assertEquals(0, iter.nextIndex());
     assertEquals(-1, iter.previousIndex());
-    assertEquals(false, iter.hasNext());
-    assertEquals(false, iter.hasPrevious());
+    assertFalse(iter.hasNext());
+    assertFalse(iter.hasPrevious());
     assertEquals(0, list.size());
     Integer[] array = new Integer[]{};
     assertArrayEquals(array, list.toArray());
@@ -463,8 +465,8 @@ public class ArrayLinkedListListIterTest {
 
     assertEquals(1, iter.nextIndex());
     assertEquals(0, iter.previousIndex());
-    assertEquals(false, iter.hasNext());
-    assertEquals(true, iter.hasPrevious());
+    assertFalse(iter.hasNext());
+    assertTrue(iter.hasPrevious());
     assertEquals(1, list.size());
     array = new Integer[]{0};
     assertArrayEquals(array, list.toArray());
@@ -474,8 +476,8 @@ public class ArrayLinkedListListIterTest {
 
     assertEquals(2, iter.nextIndex());
     assertEquals(1, iter.previousIndex());
-    assertEquals(false, iter.hasNext());
-    assertEquals(true, iter.hasPrevious());
+    assertFalse(iter.hasNext());
+    assertTrue(iter.hasPrevious());
     assertEquals(2, list.size());
     array = new Integer[]{0, 1};
     assertArrayEquals(array, list.toArray());
@@ -484,15 +486,15 @@ public class ArrayLinkedListListIterTest {
     iter.previous();
     assertEquals(1, iter.nextIndex());
     assertEquals(0, iter.previousIndex());
-    assertEquals(true, iter.hasNext());
-    assertEquals(true, iter.hasPrevious());
+    assertTrue(iter.hasNext());
+    assertTrue(iter.hasPrevious());
 
     iter.add(null);
 
     assertEquals(2, iter.nextIndex());
     assertEquals(1, iter.previousIndex());
-    assertEquals(true, iter.hasNext());
-    assertEquals(true, iter.hasPrevious());
+    assertTrue(iter.hasNext());
+    assertTrue(iter.hasPrevious());
     assertEquals(3, list.size());
     array = new Integer[]{0, null, 1};
     assertArrayEquals(array, list.toArray());
@@ -502,14 +504,14 @@ public class ArrayLinkedListListIterTest {
     iter.previous();
     assertEquals(0, iter.nextIndex());
     assertEquals(-1, iter.previousIndex());
-    assertEquals(true, iter.hasNext());
-    assertEquals(false, iter.hasPrevious());
+    assertTrue(iter.hasNext());
+    assertFalse(iter.hasPrevious());
 
     iter.add(Integer.valueOf(3));
     assertEquals(1, iter.nextIndex());
     assertEquals(0, iter.previousIndex());
-    assertEquals(true, iter.hasNext());
-    assertEquals(true, iter.hasPrevious());
+    assertTrue(iter.hasNext());
+    assertTrue(iter.hasPrevious());
     assertEquals(4, list.size());
     array = new Integer[]{3, 0, null, 1};
     assertArrayEquals(array, list.toArray());

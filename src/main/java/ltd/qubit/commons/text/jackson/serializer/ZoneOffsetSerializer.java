@@ -8,12 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
+import java.time.ZoneOffset;
+
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.util.codec.ZoneOffsetCodec;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-
-import java.time.ZoneOffset;
-import javax.annotation.concurrent.Immutable;
 
 @Immutable
 public class ZoneOffsetSerializer extends EncoderSerializer<ZoneOffset> {

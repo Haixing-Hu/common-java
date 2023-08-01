@@ -8,6 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
+import java.util.Map;
+
+import javax.annotation.concurrent.ThreadSafe;
+
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.text.translate.AggregateTranslator;
 import ltd.qubit.commons.text.translate.CharSequenceTranslator;
@@ -22,9 +26,6 @@ import ltd.qubit.commons.text.translate.OctalUnescaper;
 import ltd.qubit.commons.text.translate.UnicodeUnescaper;
 import ltd.qubit.commons.text.translate.UnicodeUnpairedSurrogateRemover;
 import ltd.qubit.commons.text.translate.XsiUnescaper;
-
-import java.util.Map;
-import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Escapes and unescapes {@code String}s for Java, Java Script, HTML and XML.

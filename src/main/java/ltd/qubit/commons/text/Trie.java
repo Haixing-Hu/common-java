@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
-import ltd.qubit.commons.util.expand.ExpansionPolicy;
-
 import javax.annotation.concurrent.NotThreadSafe;
+
+import ltd.qubit.commons.util.expand.ExpansionPolicy;
 
 /**
  * A tree based trie for Unicode strings.

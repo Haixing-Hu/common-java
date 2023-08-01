@@ -8,6 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
+import java.sql.SQLSyntaxErrorException;
+import java.time.Instant;
+
 import ltd.qubit.commons.model.Address;
 import ltd.qubit.commons.model.Contact;
 import ltd.qubit.commons.model.Device;
@@ -19,9 +22,6 @@ import ltd.qubit.commons.model.State;
 import ltd.qubit.commons.model.StatefulInfo;
 
 import org.junit.jupiter.api.Test;
-
-import java.sql.SQLSyntaxErrorException;
-import java.time.Instant;
 
 import static ltd.qubit.commons.util.LogicRelation.AND;
 

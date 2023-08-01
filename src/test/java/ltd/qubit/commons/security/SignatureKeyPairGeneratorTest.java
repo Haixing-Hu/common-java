@@ -8,16 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.security;
 
+import java.security.KeyPair;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+
 import ltd.qubit.commons.util.codec.Base64Codec;
 import ltd.qubit.commons.util.codec.EncodingException;
 import ltd.qubit.commons.util.codec.HexCodec;
 
 import org.junit.jupiter.api.Test;
-
-import java.security.KeyPair;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 

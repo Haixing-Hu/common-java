@@ -8,15 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.value;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Date;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.lang.Type;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Date;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 

@@ -8,15 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
-import ltd.qubit.commons.lang.StringUtils;
-import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
+
 import javax.annotation.Nullable;
+
+import ltd.qubit.commons.lang.StringUtils;
+import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 

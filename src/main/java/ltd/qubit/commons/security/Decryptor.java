@@ -8,13 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.security;
 
-import ltd.qubit.commons.error.DecryptException;
-import ltd.qubit.commons.error.EncryptException;
-import ltd.qubit.commons.text.jackson.JsonMapperUtils;
-import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import com.fasterxml.jackson.databind.json.JsonMapper;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -23,15 +16,23 @@ import java.security.AlgorithmParameters;
 import java.security.GeneralSecurityException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
+
 import javax.annotation.Nullable;
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
 import javax.crypto.NoSuchPaddingException;
 
-import static ltd.qubit.commons.lang.Argument.requireNonNull;
+import ltd.qubit.commons.error.DecryptException;
+import ltd.qubit.commons.error.EncryptException;
+import ltd.qubit.commons.text.jackson.JsonMapperUtils;
+import ltd.qubit.commons.text.tostring.ToStringBuilder;
+
+import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+
+import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
  * A class of objects used to decrypt messages.

@@ -8,11 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect;
 
-import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+
 import javax.annotation.Nullable;
+
+import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
  * The signature of an annotation.

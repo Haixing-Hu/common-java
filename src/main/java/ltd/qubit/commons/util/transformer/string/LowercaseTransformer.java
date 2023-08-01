@@ -8,11 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.transformer.string;
 
+import java.util.Locale;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.util.Locale;
 
 /**
  * A {@link LowercaseTransformer} transform a string to its lowercase form.

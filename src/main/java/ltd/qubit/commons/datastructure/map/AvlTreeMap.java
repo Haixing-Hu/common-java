@@ -8,10 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.map;
 
-import ltd.qubit.commons.lang.Argument;
-import ltd.qubit.commons.lang.Equality;
-import ltd.qubit.commons.util.pair.Pair;
-
 import java.util.AbstractCollection;
 import java.util.AbstractSet;
 import java.util.Collection;
@@ -21,8 +17,13 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
+
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
+
+import ltd.qubit.commons.lang.Argument;
+import ltd.qubit.commons.lang.Equality;
+import ltd.qubit.commons.util.pair.Pair;
 
 /**
  * A binary search tree implemented using the AVL tree.

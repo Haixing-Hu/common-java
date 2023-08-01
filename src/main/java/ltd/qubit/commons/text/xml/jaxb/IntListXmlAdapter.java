@@ -8,13 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.xml.jaxb;
 
-import ltd.qubit.commons.text.Joiner;
-import ltd.qubit.commons.text.Splitter;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
+import ltd.qubit.commons.text.Joiner;
+import ltd.qubit.commons.text.Splitter;
 
 /**
  * The customized JAXB data type adaptor for the {@code List<Integer>} type.

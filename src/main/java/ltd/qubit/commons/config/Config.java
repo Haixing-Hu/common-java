@@ -8,18 +8,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.config;
 
-import ltd.qubit.commons.config.error.ConfigurationError;
-import ltd.qubit.commons.config.impl.DefaultConfig;
-import ltd.qubit.commons.lang.CloneableEx;
-import ltd.qubit.commons.lang.Type;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
 import java.util.regex.Pattern;
+
 import javax.annotation.Nullable;
+
+import ltd.qubit.commons.config.error.ConfigurationError;
+import ltd.qubit.commons.config.impl.DefaultConfig;
+import ltd.qubit.commons.lang.CloneableEx;
+import ltd.qubit.commons.lang.Type;
 
 /**
  * A {@link Config} is a container of {@link Property}s.

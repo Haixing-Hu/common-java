@@ -8,14 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.impl;
 
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.lang.CharUtils;
 import ltd.qubit.commons.text.Splitter;
 import ltd.qubit.commons.text.Stripper;
 import ltd.qubit.commons.util.filter.character.CharFilter;
 import ltd.qubit.commons.util.filter.codepoint.CodePointFilter;
-
-import java.util.List;
-import javax.annotation.Nullable;
 
 import static ltd.qubit.commons.lang.StringUtils.EMPTY;
 import static ltd.qubit.commons.lang.StringUtils.isEmpty;

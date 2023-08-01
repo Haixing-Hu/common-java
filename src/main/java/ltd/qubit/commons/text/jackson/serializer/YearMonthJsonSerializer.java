@@ -8,13 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
+import java.time.YearMonth;
+
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.util.codec.Encoder;
 import ltd.qubit.commons.util.codec.YearMonthCodec;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-
-import java.time.YearMonth;
-import javax.annotation.concurrent.Immutable;
 
 /**
  * The JSON serializer of a {@link YearMonth} object.

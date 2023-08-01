@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect;
 
-import ltd.qubit.commons.text.Joiner;
-
 import java.lang.reflect.Method;
+
+import ltd.qubit.commons.text.Joiner;
 
 /**
  * Thrown to indicate the invoking of a method failed.

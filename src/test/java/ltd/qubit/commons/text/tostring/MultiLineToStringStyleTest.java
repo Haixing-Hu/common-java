@@ -8,12 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.tostring;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import ltd.qubit.commons.lang.SystemUtils;
 
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

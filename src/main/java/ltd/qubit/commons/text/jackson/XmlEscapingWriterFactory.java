@@ -8,13 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson;
 
-import org.codehaus.stax2.io.EscapingWriterFactory;
-
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+
 import javax.annotation.concurrent.Immutable;
+
+import org.codehaus.stax2.io.EscapingWriterFactory;
 
 /**
  * 用于实现XML转义的{@link Writer}的工厂方法。

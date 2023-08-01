@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.codec;
 
-import ltd.qubit.commons.annotation.Money;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+
+import ltd.qubit.commons.annotation.Money;
 
 /**
  * The codec of money values, which are represented with {@link BigDecimal}

@@ -8,6 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.value;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Date;
+import java.util.NoSuchElementException;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.error.TypeConvertException;
 import ltd.qubit.commons.error.TypeMismatchException;
 import ltd.qubit.commons.lang.CloneableEx;
@@ -16,15 +26,6 @@ import ltd.qubit.commons.text.xml.XmlException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Date;
-import java.util.NoSuchElementException;
-import javax.annotation.Nullable;
 
 /**
  * A {@link Value} object represents a value of common types.

@@ -8,26 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
-import ltd.qubit.commons.lang.BigDecimalUtils;
-import ltd.qubit.commons.lang.BigIntegerUtils;
-import ltd.qubit.commons.lang.BooleanUtils;
-import ltd.qubit.commons.lang.ByteUtils;
-import ltd.qubit.commons.lang.CharUtils;
-import ltd.qubit.commons.lang.DoubleUtils;
-import ltd.qubit.commons.lang.EnumUtils;
-import ltd.qubit.commons.lang.FloatUtils;
-import ltd.qubit.commons.lang.InstantUtils;
-import ltd.qubit.commons.lang.IntUtils;
-import ltd.qubit.commons.lang.LocalDateUtils;
-import ltd.qubit.commons.lang.LocalTimeUtils;
-import ltd.qubit.commons.lang.LongUtils;
-import ltd.qubit.commons.lang.ShortUtils;
-import ltd.qubit.commons.lang.StringUtils;
-import ltd.qubit.commons.model.Foo;
-import ltd.qubit.commons.model.Gender;
-
-import org.junit.jupiter.api.Test;
-
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -48,6 +28,26 @@ import java.util.SortedSet;
 import java.util.Stack;
 import java.util.TimeZone;
 import java.util.Vector;
+
+import ltd.qubit.commons.lang.BigDecimalUtils;
+import ltd.qubit.commons.lang.BigIntegerUtils;
+import ltd.qubit.commons.lang.BooleanUtils;
+import ltd.qubit.commons.lang.ByteUtils;
+import ltd.qubit.commons.lang.CharUtils;
+import ltd.qubit.commons.lang.DoubleUtils;
+import ltd.qubit.commons.lang.EnumUtils;
+import ltd.qubit.commons.lang.FloatUtils;
+import ltd.qubit.commons.lang.InstantUtils;
+import ltd.qubit.commons.lang.IntUtils;
+import ltd.qubit.commons.lang.LocalDateUtils;
+import ltd.qubit.commons.lang.LocalTimeUtils;
+import ltd.qubit.commons.lang.LongUtils;
+import ltd.qubit.commons.lang.ShortUtils;
+import ltd.qubit.commons.lang.StringUtils;
+import ltd.qubit.commons.model.Foo;
+import ltd.qubit.commons.model.Gender;
+
+import org.junit.jupiter.api.Test;
 
 import static ltd.qubit.commons.lang.ArrayUtils.excludeAll;
 import static ltd.qubit.commons.lang.DateUtils.BEIJING;

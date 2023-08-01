@@ -8,6 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Locale;
+
 import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.ByteUtils;
@@ -15,10 +19,6 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.lang.IntUtils;
 import ltd.qubit.commons.lang.ShortUtils;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Locale;
 
 import static ltd.qubit.commons.lang.Argument.requireIndexInCloseRange;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;

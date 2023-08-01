@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.compare;
 
+import java.util.Comparator;
+
 import ltd.qubit.commons.lang.Comparison;
 import ltd.qubit.commons.util.pair.Pair;
-
-import java.util.Comparator;
 
 /**
  * A comparator used to compare pairs according to their second parts.

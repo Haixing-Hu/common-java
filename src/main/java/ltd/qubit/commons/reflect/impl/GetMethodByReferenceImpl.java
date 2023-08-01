@@ -8,12 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect.impl;
 
+import java.lang.reflect.Method;
+
 import ltd.qubit.commons.reflect.ConstructorUtils;
 import ltd.qubit.commons.reflect.FieldUtils;
 import ltd.qubit.commons.reflect.Option;
 import ltd.qubit.commons.reflect.ReflectionException;
-
-import java.lang.reflect.Method;
 
 public class GetMethodByReferenceImpl {
 

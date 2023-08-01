@@ -8,15 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson;
 
-import ltd.qubit.commons.text.testbed.Organization;
-import ltd.qubit.commons.text.testbed.Person;
-
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import org.junit.jupiter.api.Test;
-
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+
+import ltd.qubit.commons.text.testbed.Organization;
+import ltd.qubit.commons.text.testbed.Person;
+
+import org.junit.jupiter.api.Test;
+
+import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -8,10 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.translate;
 
-import ltd.qubit.commons.text.Searcher;
-
 import java.io.IOException;
+
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.text.Searcher;
 
 /**
  * Translator object for unescaping backslash escaped entries.

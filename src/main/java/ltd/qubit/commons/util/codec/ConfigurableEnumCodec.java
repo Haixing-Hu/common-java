@@ -8,6 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.codec;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Nonnull;
+
 import ltd.qubit.commons.lang.ClassUtils;
 import ltd.qubit.commons.lang.EnumUtils;
 import ltd.qubit.commons.text.Stripper;
@@ -15,11 +21,6 @@ import ltd.qubit.commons.text.jackson.XmlMapperUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import javax.annotation.Nonnull;
 
 public class ConfigurableEnumCodec<T extends Enum<T>> implements
         Encoder<T, String>, Decoder<String, T> {

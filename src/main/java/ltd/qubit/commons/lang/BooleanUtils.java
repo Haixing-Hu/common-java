@@ -8,18 +8,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
-import ltd.qubit.commons.datastructure.list.primitive.BooleanCollection;
-import ltd.qubit.commons.datastructure.list.primitive.BooleanIterator;
-
-import com.google.common.collect.ImmutableSet;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
+
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
+
+import ltd.qubit.commons.datastructure.list.primitive.BooleanCollection;
+import ltd.qubit.commons.datastructure.list.primitive.BooleanIterator;
+
+import com.google.common.collect.ImmutableSet;
 
 /**
  * This class provides operations on {@code boolean} primitives and {@link

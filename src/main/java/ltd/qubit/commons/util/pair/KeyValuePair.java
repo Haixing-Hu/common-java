@@ -8,14 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.pair;
 
+import java.io.Serializable;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.lang.ObjectUtils;
-
-import java.io.Serializable;
-import javax.annotation.Nullable;
 
 /**
  * 此模型表示简单的字符串键值对。

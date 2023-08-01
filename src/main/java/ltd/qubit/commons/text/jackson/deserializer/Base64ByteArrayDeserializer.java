@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
-import ltd.qubit.commons.util.codec.Base64Codec;
-
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.util.codec.Base64Codec;
 
 /**
  * The JSON deserializer of a {@code byte[]} object, which deserialize the

@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.transformer.string;
 
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.text.Stripper;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import javax.annotation.concurrent.Immutable;
 
 /**
  * A {@link StripStartTransformer} transform a string by stripping the

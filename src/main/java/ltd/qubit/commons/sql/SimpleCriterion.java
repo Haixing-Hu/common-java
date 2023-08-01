@@ -8,14 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
+import java.sql.SQLSyntaxErrorException;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.SqlLikePattern;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.sql.SQLSyntaxErrorException;
-import javax.annotation.Nullable;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.reflect.ObjectGraphUtils.getPropertyType;

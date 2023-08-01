@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.util.filter.character.AcceptSpecifiedCharFilter;
 import ltd.qubit.commons.util.filter.character.CharFilter;
 import ltd.qubit.commons.util.filter.character.InRangeCharFilter;
@@ -18,8 +20,6 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies.LowerCamelCaseStr
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.UpperCamelCaseStrategy;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.UpperSnakeCaseStrategy;
-
-import javax.annotation.Nullable;
 
 import static java.util.Objects.requireNonNull;
 

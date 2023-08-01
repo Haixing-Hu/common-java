@@ -8,14 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 import ltd.qubit.commons.reflect.testbed.ChildBean;
 import ltd.qubit.commons.reflect.testbed.Info;
 import ltd.qubit.commons.util.range.CloseRange;
 
 import org.junit.jupiter.api.Test;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
 import static ltd.qubit.commons.reflect.FieldUtils.getField;
 import static ltd.qubit.commons.reflect.FieldUtils.getReadMethod;

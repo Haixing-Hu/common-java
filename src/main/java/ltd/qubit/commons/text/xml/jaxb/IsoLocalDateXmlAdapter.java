@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.xml.jaxb;
 
-import ltd.qubit.commons.util.codec.IsoLocalDateCodec;
-
 import java.time.LocalDate;
+
+import ltd.qubit.commons.util.codec.IsoLocalDateCodec;
 
 /**
  * The customized JAXB data type adaptor for the {@link LocalDate} type.

@@ -8,11 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.impl;
 
+import java.io.IOException;
+
 import ltd.qubit.commons.text.Replacer;
 import ltd.qubit.commons.util.filter.character.CharFilter;
 import ltd.qubit.commons.util.filter.codepoint.CodePointFilter;
-
-import java.io.IOException;
 
 import static ltd.qubit.commons.text.impl.SearcherImpl.firstIndexOf;
 

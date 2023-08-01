@@ -8,12 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
-import ltd.qubit.commons.reflect.impl.GetterMethod;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import ltd.qubit.commons.reflect.impl.GetterMethod;
 
 import static ltd.qubit.commons.sql.ComparisonOperator.EQUAL;
 import static ltd.qubit.commons.sql.ComparisonOperator.GREATER;

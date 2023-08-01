@@ -8,12 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.xml.jaxb;
 
+import java.io.IOException;
+import java.net.URL;
+
 import ltd.qubit.commons.text.jackson.XmlMapperUtils;
 
 import org.springframework.core.io.Resource;
-
-import java.io.IOException;
-import java.net.URL;
 
 /**
  * A factory object used to create the XML deserializable objects.

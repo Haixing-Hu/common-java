@@ -8,17 +8,43 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
-import jakarta.validation.constraints.NotNull;
-import ltd.qubit.commons.lang.CharUtils;
-import ltd.qubit.commons.util.filter.character.*;
-import ltd.qubit.commons.util.filter.codepoint.*;
-
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
+import jakarta.validation.constraints.NotNull;
+
+import ltd.qubit.commons.lang.CharUtils;
+import ltd.qubit.commons.util.filter.character.AcceptAllCharFilter;
+import ltd.qubit.commons.util.filter.character.AcceptSpecifiedCharFilter;
+import ltd.qubit.commons.util.filter.character.CharFilter;
+import ltd.qubit.commons.util.filter.character.InArrayCharFilter;
+import ltd.qubit.commons.util.filter.character.InStringCharFilter;
+import ltd.qubit.commons.util.filter.character.NotInArrayCharFilter;
+import ltd.qubit.commons.util.filter.character.NotInStringCharFilter;
+import ltd.qubit.commons.util.filter.character.RejectAllCharFilter;
+import ltd.qubit.commons.util.filter.character.RejectSpecifiedCharFilter;
+import ltd.qubit.commons.util.filter.codepoint.AcceptAllCodePointFilter;
+import ltd.qubit.commons.util.filter.codepoint.AcceptSpecifiedCodePointFilter;
+import ltd.qubit.commons.util.filter.codepoint.BlankCodePointFilter;
+import ltd.qubit.commons.util.filter.codepoint.CodePointFilter;
+import ltd.qubit.commons.util.filter.codepoint.InArrayCodePointFilter;
+import ltd.qubit.commons.util.filter.codepoint.InStringCodePointFilter;
+import ltd.qubit.commons.util.filter.codepoint.NotInArrayCodePointFilter;
+import ltd.qubit.commons.util.filter.codepoint.NotInStringCodePointFilter;
+import ltd.qubit.commons.util.filter.codepoint.RejectAllCodePointFilter;
+import ltd.qubit.commons.util.filter.codepoint.RejectSpecifiedCodePointFilter;
+import ltd.qubit.commons.util.filter.codepoint.WhitespaceCodePointFilter;
+
 import static ltd.qubit.commons.lang.StringUtils.nullToEmpty;
-import static ltd.qubit.commons.text.impl.SplitterImpl.*;
+import static ltd.qubit.commons.text.impl.SplitterImpl.splitByChar;
+import static ltd.qubit.commons.text.impl.SplitterImpl.splitByCharType;
+import static ltd.qubit.commons.text.impl.SplitterImpl.splitByCodePoint;
+import static ltd.qubit.commons.text.impl.SplitterImpl.splitBySubstring;
+import static ltd.qubit.commons.text.impl.SplitterImpl.splitEachChar;
+import static ltd.qubit.commons.text.impl.SplitterImpl.splitEachCodePoint;
+import static ltd.qubit.commons.text.impl.SplitterImpl.splitLines;
 
 /**
  * A class used to split strings.

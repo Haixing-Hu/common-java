@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.filter.character;
 
-import ltd.qubit.commons.text.Ascii;
-
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.text.Ascii;
 
 /**
  * A character filter which accepts only ASCII characters.

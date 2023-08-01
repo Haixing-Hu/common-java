@@ -8,6 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.buffer;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Comparison;
@@ -17,18 +23,13 @@ import ltd.qubit.commons.lang.Size;
 import ltd.qubit.commons.lang.Swappable;
 import ltd.qubit.commons.util.expand.ExpansionPolicy;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
-import javax.annotation.Nullable;
+import static java.lang.System.arraycopy;
 
 import static ltd.qubit.commons.io.serialize.BinarySerialization.register;
 import static ltd.qubit.commons.lang.Argument.checkBounds;
 import static ltd.qubit.commons.lang.Argument.requireGreaterEqual;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.lang.ArrayUtils.EMPTY_BYTE_ARRAY;
-
-import static java.lang.System.arraycopy;
 
 /**
  * A simple auto-expansion buffer of {@code byte} values.

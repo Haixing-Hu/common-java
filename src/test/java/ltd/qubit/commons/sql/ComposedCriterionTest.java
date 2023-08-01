@@ -8,12 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
+import java.sql.SQLSyntaxErrorException;
+import java.util.Arrays;
+
 import ltd.qubit.commons.reflect.testbed.Foo;
 
 import org.junit.jupiter.api.Test;
-
-import java.sql.SQLSyntaxErrorException;
-import java.util.Arrays;
 
 import static ltd.qubit.commons.sql.ComparisonOperator.EQUAL;
 import static ltd.qubit.commons.sql.ComparisonOperator.IN;

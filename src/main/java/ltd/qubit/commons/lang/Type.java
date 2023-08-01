@@ -16,9 +16,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Map;
 
-import static ltd.qubit.commons.datastructure.map.MapUtils.invertAsUnmodifiable;
-
 import static java.util.Map.entry;
+
+import static ltd.qubit.commons.datastructure.map.MapUtils.invertAsUnmodifiable;
 
 /**
  * The enumeration of common data types.

@@ -8,6 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.util.filter.character.AcceptAllCharFilter;
 import ltd.qubit.commons.util.filter.character.AcceptSpecifiedCharFilter;
 import ltd.qubit.commons.util.filter.character.CharFilter;
@@ -27,10 +32,6 @@ import ltd.qubit.commons.util.filter.codepoint.NotInStringCodePointFilter;
 import ltd.qubit.commons.util.filter.codepoint.RejectAllCodePointFilter;
 import ltd.qubit.commons.util.filter.codepoint.RejectSpecifiedCodePointFilter;
 import ltd.qubit.commons.util.filter.codepoint.WhitespaceCodePointFilter;
-
-import java.io.IOException;
-import java.io.UncheckedIOException;
-import javax.annotation.Nullable;
 
 import static ltd.qubit.commons.lang.StringUtils.EMPTY;
 import static ltd.qubit.commons.lang.StringUtils.isEmpty;

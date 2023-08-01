@@ -8,6 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.net;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
 import ltd.qubit.commons.io.IoUtils;
 import ltd.qubit.commons.io.error.InvalidFormatException;
 import ltd.qubit.commons.io.serialize.BinarySerialization;
@@ -16,13 +21,9 @@ import ltd.qubit.commons.text.Pattern;
 import ltd.qubit.commons.text.PatternType;
 import ltd.qubit.commons.text.jackson.CustomizedXmlMapper;
 
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.junit.jupiter.api.Test;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import static ltd.qubit.commons.test.JacksonXmlTestUtils.assertXmlDeserializeEquals;
 import static ltd.qubit.commons.test.JacksonXmlTestUtils.assertXmlSerializeEquals;

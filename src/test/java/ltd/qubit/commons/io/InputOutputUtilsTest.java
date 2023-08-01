@@ -8,13 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.io;
 
-import ltd.qubit.commons.io.error.InvalidFormatException;
-import ltd.qubit.commons.lang.Type;
-import ltd.qubit.commons.net.UrlPart;
-import ltd.qubit.commons.text.PatternType;
-
-import org.junit.jupiter.api.Test;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -24,6 +17,13 @@ import java.math.BigInteger;
 import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
+import ltd.qubit.commons.io.error.InvalidFormatException;
+import ltd.qubit.commons.lang.Type;
+import ltd.qubit.commons.net.UrlPart;
+import ltd.qubit.commons.text.PatternType;
+
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;

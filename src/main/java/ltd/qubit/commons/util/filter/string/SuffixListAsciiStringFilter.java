@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.filter.string;
 
+import java.util.List;
+
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.text.AsciiTrie;
-
-import java.util.List;
 
 /**
  * The base for {@link SuffixBlackListAsciiStringFilter} and

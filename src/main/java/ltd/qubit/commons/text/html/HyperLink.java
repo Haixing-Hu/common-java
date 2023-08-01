@@ -8,6 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.html;
 
+import java.io.Serializable;
+
+import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.io.serialize.BinarySerialization;
 import ltd.qubit.commons.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.CloneableEx;
@@ -16,10 +21,6 @@ import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.net.Url;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.io.Serializable;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
 
 /**
  * The {@link HyperLink} class represents a hyper link in HTML pages.

@@ -8,6 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.net;
 
+import java.io.Serializable;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.io.serialize.BinarySerialization;
 import ltd.qubit.commons.lang.Argument;
 import ltd.qubit.commons.lang.CloneableEx;
@@ -16,9 +20,6 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.lang.ObjectUtils;
 import ltd.qubit.commons.text.Pattern;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.io.Serializable;
-import javax.annotation.Nullable;
 
 /**
  * A {@link UrlPattern} represents a rule of pattern used to matches URLs.

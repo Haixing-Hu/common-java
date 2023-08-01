@@ -8,13 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.codec;
 
+import java.io.IOException;
+
 import ltd.qubit.commons.text.Stripper;
 import ltd.qubit.commons.util.pair.KeyValuePairList;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-
-import java.io.IOException;
 
 public class KeyValuePairListCodec implements Codec<KeyValuePairList, String> {
 

@@ -8,15 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.keydeserializer;
 
+import java.io.IOException;
+
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.text.Stripper;
 import ltd.qubit.commons.util.codec.Decoder;
 import ltd.qubit.commons.util.codec.DecodingException;
 
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.KeyDeserializer;
-
-import java.io.IOException;
-import javax.annotation.concurrent.Immutable;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.lang.StringUtils.isEmpty;

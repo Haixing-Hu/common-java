@@ -11,6 +11,7 @@ package ltd.qubit.commons.datastructure.tree;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+
 import javax.annotation.concurrent.NotThreadSafe;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;

@@ -8,12 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
-import ltd.qubit.commons.reflect.ConstructorUtils;
-
 import java.io.Serializable;
 import java.util.Collection;
+
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
+
+import ltd.qubit.commons.reflect.ConstructorUtils;
 
 /**
  * This class provides operations on {@code Object}.

@@ -8,11 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.translate;
 
-import ltd.qubit.commons.util.transformer.string.StringTransformer;
-
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.UncheckedIOException;
+
+import ltd.qubit.commons.util.transformer.string.StringTransformer;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 

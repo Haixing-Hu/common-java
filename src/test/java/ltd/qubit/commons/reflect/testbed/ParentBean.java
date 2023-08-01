@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect.testbed;
 
+import ltd.qubit.commons.annotation.Identifier;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-import ltd.qubit.commons.annotation.Identifier;
 
 public class ParentBean extends AbstractIdentifiable<Long, ParentBean> {
 

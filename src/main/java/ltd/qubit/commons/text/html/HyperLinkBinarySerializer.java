@@ -8,17 +8,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.html;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import javax.annotation.concurrent.ThreadSafe;
+
 import ltd.qubit.commons.io.OutputUtils;
 import ltd.qubit.commons.io.error.SerializationException;
 import ltd.qubit.commons.io.error.UnexpectedNullValueException;
 import ltd.qubit.commons.io.serialize.BinarySerializer;
 import ltd.qubit.commons.net.Url;
 import ltd.qubit.commons.net.UrlBinarySerializer;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import javax.annotation.concurrent.ThreadSafe;
 
 import static ltd.qubit.commons.io.InputUtils.readNullMark;
 import static ltd.qubit.commons.io.InputUtils.readString;

@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.filter.codepoint;
 
-import ltd.qubit.commons.lang.CharUtils;
-
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.lang.CharUtils;
 
 /**
  * A CharFilter that accept any character that is a non-graph character.

@@ -8,14 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import ltd.qubit.commons.lang.CharUtils;
 import ltd.qubit.commons.util.filter.codepoint.UpperCaseCodePointFilter;
 
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

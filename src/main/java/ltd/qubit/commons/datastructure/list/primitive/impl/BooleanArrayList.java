@@ -8,19 +8,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list.primitive.impl;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import ltd.qubit.commons.datastructure.list.primitive.BooleanCollection;
 import ltd.qubit.commons.datastructure.list.primitive.BooleanIterator;
 import ltd.qubit.commons.datastructure.list.primitive.BooleanList;
 import ltd.qubit.commons.datastructure.list.primitive.RandomAccessBooleanList;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import static java.lang.System.arraycopy;
 
 import static ltd.qubit.commons.lang.Argument.requireIndexInCloseRange;
 import static ltd.qubit.commons.lang.Argument.requireIndexInRightOpenRange;
-
-import static java.lang.System.arraycopy;
 
 /**
  * An {@link BooleanList} backed by an array of {@code boolean}s. This

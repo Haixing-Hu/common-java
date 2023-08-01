@@ -8,6 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect.testbed;
 
+import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import ltd.qubit.commons.util.codec.DecodingException;
 
 import org.apache.ibatis.type.BaseTypeHandler;
@@ -15,11 +20,6 @@ import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.sql.CallableStatement;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * The MyBatis type handler for the {@link Phone} class.

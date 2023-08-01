@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.xml;
 
+import java.util.Stack;
+
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import java.util.Stack;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 

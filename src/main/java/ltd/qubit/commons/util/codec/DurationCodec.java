@@ -8,11 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.codec;
 
-import ltd.qubit.commons.text.Stripper;
-
 import java.time.Duration;
 import java.time.format.DateTimeParseException;
+
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.text.Stripper;
 
 /**
  * The codec which encode/decode {@link Duration} objects to/from strings.

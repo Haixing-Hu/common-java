@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.net;
 
+import java.lang.reflect.Array;
+
 import ltd.qubit.commons.text.Pattern;
 import ltd.qubit.commons.text.PatternMap;
-
-import java.lang.reflect.Array;
 
 /**
  * The {@link PatternMap} maps a {@link Url} to an object according to

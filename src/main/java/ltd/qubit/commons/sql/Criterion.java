@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
-import ltd.qubit.commons.util.filter.Filter;
-
 import java.sql.SQLSyntaxErrorException;
+
+import ltd.qubit.commons.util.filter.Filter;
 
 /**
  * 此接口表示执行数据库查询时过滤实体的条件。

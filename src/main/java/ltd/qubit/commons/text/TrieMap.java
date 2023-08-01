@@ -8,11 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
-import ltd.qubit.commons.lang.Argument;
-import ltd.qubit.commons.util.expand.ExpansionPolicy;
-
 import java.lang.reflect.Array;
 import java.util.Map;
+
+import ltd.qubit.commons.lang.Argument;
+import ltd.qubit.commons.util.expand.ExpansionPolicy;
 
 /**
  * The {@link TrieMap} implements a {@link Map} using a trie.

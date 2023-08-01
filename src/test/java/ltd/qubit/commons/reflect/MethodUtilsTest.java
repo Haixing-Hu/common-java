@@ -8,6 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect;
 
+import java.io.Serializable;
+import java.lang.reflect.Method;
+import java.time.Instant;
+import java.util.List;
+
 import ltd.qubit.commons.lang.SystemUtils;
 import ltd.qubit.commons.reflect.testbed.ChildBean;
 import ltd.qubit.commons.reflect.testbed.Country;
@@ -21,11 +26,6 @@ import ltd.qubit.commons.reflect.testbed.ParentBean;
 import ltd.qubit.commons.reflect.testbed.WithInfo;
 
 import org.junit.jupiter.api.Test;
-
-import java.io.Serializable;
-import java.lang.reflect.Method;
-import java.time.Instant;
-import java.util.List;
 
 import static ltd.qubit.commons.reflect.MethodUtils.getAllMethods;
 import static ltd.qubit.commons.reflect.MethodUtils.getFullyQualifiedMethodName;

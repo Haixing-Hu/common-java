@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.error;
 
-import org.springframework.dao.NonTransientDataAccessException;
-
 import javax.annotation.Nullable;
+
+import org.springframework.dao.NonTransientDataAccessException;
 
 import static ltd.qubit.commons.error.ServerSideException.getTableName;
 

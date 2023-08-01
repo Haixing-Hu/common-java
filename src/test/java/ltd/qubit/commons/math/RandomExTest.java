@@ -8,12 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.math;
 
+import java.util.Arrays;
+
 import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.util.range.CloseRange;
 
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;

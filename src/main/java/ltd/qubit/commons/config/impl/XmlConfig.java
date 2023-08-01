@@ -8,13 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.config.impl;
 
-import ltd.qubit.commons.config.Config;
-import ltd.qubit.commons.config.error.ConfigurationError;
-import ltd.qubit.commons.io.serialize.XmlSerialization;
-import ltd.qubit.commons.lang.SystemUtils;
-import ltd.qubit.commons.net.Url;
-import ltd.qubit.commons.text.xml.XmlException;
-
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -23,6 +16,13 @@ import java.io.Reader;
 import java.io.Writer;
 import java.net.URI;
 import java.net.URL;
+
+import ltd.qubit.commons.config.Config;
+import ltd.qubit.commons.config.error.ConfigurationError;
+import ltd.qubit.commons.io.serialize.XmlSerialization;
+import ltd.qubit.commons.lang.SystemUtils;
+import ltd.qubit.commons.net.Url;
+import ltd.qubit.commons.text.xml.XmlException;
 
 /**
  * A {@link Config} object which loads/stores configurations from/to XML files.

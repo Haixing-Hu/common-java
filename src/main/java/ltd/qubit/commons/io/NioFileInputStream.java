@@ -8,13 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.io;
 
-import ltd.qubit.commons.io.error.AlreadyClosedException;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+
+import ltd.qubit.commons.io.error.AlreadyClosedException;
 
 /**
  * A {@link SeekableInputStream} which reads data from a file using the

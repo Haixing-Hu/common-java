@@ -8,9 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
-import ltd.qubit.commons.text.tostring.SimpleToStringStyle;
-import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
 import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
@@ -26,8 +23,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
+
+import ltd.qubit.commons.text.tostring.SimpleToStringStyle;
+import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
  * This class provides operations on arrays, primitive arrays (like

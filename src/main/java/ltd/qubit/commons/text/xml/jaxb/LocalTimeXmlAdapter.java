@@ -8,12 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.xml.jaxb;
 
-import ltd.qubit.commons.util.codec.Codec;
-import ltd.qubit.commons.util.codec.LocalTimeCodec;
+import java.time.LocalTime;
 
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
-import java.time.LocalTime;
+import ltd.qubit.commons.util.codec.Codec;
+import ltd.qubit.commons.util.codec.LocalTimeCodec;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 

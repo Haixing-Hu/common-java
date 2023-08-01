@@ -8,13 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.io;
 
-import ltd.qubit.commons.lang.ArrayUtils;
-import ltd.qubit.commons.lang.SystemUtils;
-import ltd.qubit.commons.util.expand.ExpansionPolicy;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -37,8 +30,16 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
+
+import ltd.qubit.commons.lang.ArrayUtils;
+import ltd.qubit.commons.lang.SystemUtils;
+import ltd.qubit.commons.util.expand.ExpansionPolicy;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static ltd.qubit.commons.lang.Argument.requirePositive;
 import static ltd.qubit.commons.lang.SystemUtils.LINE_SEPARATOR;

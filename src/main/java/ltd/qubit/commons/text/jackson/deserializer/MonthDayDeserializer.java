@@ -8,11 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
+import java.time.MonthDay;
+
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.util.codec.Decoder;
 import ltd.qubit.commons.util.codec.MonthDayCodec;
-
-import java.time.MonthDay;
-import javax.annotation.concurrent.Immutable;
 
 /**
  * The JSON deserializer of a {@link MonthDay} object.

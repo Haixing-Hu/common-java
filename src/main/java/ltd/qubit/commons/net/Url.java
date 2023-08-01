@@ -8,14 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.net;
 
-import ltd.qubit.commons.io.serialize.BinarySerialization;
-import ltd.qubit.commons.io.serialize.XmlSerialization;
-import ltd.qubit.commons.lang.CloneableEx;
-import ltd.qubit.commons.lang.Equality;
-import ltd.qubit.commons.text.NumberFormat;
-import ltd.qubit.commons.text.Splitter;
-import ltd.qubit.commons.text.Stripper;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -28,8 +20,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.io.serialize.BinarySerialization;
+import ltd.qubit.commons.io.serialize.XmlSerialization;
+import ltd.qubit.commons.lang.CloneableEx;
+import ltd.qubit.commons.lang.Equality;
+import ltd.qubit.commons.text.NumberFormat;
+import ltd.qubit.commons.text.Splitter;
+import ltd.qubit.commons.text.Stripper;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.lang.ObjectUtils.defaultIfNull;

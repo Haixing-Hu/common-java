@@ -8,21 +8,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list.primitive.impl;
 
-import ltd.qubit.commons.datastructure.list.primitive.IntCollection;
-import ltd.qubit.commons.datastructure.list.primitive.IntIterator;
-import ltd.qubit.commons.datastructure.list.primitive.IntList;
-import ltd.qubit.commons.datastructure.list.primitive.RandomAccessIntList;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Arrays;
 
-import static ltd.qubit.commons.lang.Argument.requireIndexInCloseRange;
-import static ltd.qubit.commons.lang.Argument.requireIndexInRightOpenRange;
+import ltd.qubit.commons.datastructure.list.primitive.IntCollection;
+import ltd.qubit.commons.datastructure.list.primitive.IntIterator;
+import ltd.qubit.commons.datastructure.list.primitive.IntList;
+import ltd.qubit.commons.datastructure.list.primitive.RandomAccessIntList;
 
 import static java.lang.System.arraycopy;
+
+import static ltd.qubit.commons.lang.Argument.requireIndexInCloseRange;
+import static ltd.qubit.commons.lang.Argument.requireIndexInRightOpenRange;
 
 /**
  * An {@link IntList} backed by an array of {@code int}s. This implementation

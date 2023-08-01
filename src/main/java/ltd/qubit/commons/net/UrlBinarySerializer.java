@@ -8,16 +8,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.net;
 
-import ltd.qubit.commons.io.OutputUtils;
-import ltd.qubit.commons.io.error.InvalidFormatException;
-import ltd.qubit.commons.io.error.SerializationException;
-import ltd.qubit.commons.io.serialize.BinarySerializer;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
+
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.io.OutputUtils;
+import ltd.qubit.commons.io.error.InvalidFormatException;
+import ltd.qubit.commons.io.error.SerializationException;
+import ltd.qubit.commons.io.serialize.BinarySerializer;
 
 import static ltd.qubit.commons.io.InputUtils.readString;
 

@@ -8,13 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.codec;
 
-import ltd.qubit.commons.lang.DateUtils;
-import ltd.qubit.commons.lang.StringUtils;
-import ltd.qubit.commons.text.Stripper;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,8 +18,16 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.TimeZone;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import ltd.qubit.commons.lang.DateUtils;
+import ltd.qubit.commons.lang.StringUtils;
+import ltd.qubit.commons.text.Stripper;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.lang.DateUtils.getDate;

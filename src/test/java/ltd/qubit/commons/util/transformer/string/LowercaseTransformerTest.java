@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.transformer.string;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.Locale;
+
+import org.junit.jupiter.api.Test;
 
 import static ltd.qubit.commons.test.JacksonXmlTestUtils.assertXmlDeserializeEquals;
 import static ltd.qubit.commons.test.JacksonXmlTestUtils.assertXmlSerializeEquals;

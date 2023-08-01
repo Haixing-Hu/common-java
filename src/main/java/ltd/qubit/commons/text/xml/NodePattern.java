@@ -8,6 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.xml;
 
+import java.io.Serializable;
+
+import javax.annotation.concurrent.NotThreadSafe;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+
 import ltd.qubit.commons.error.InitializationError;
 import ltd.qubit.commons.io.serialize.BinarySerialization;
 import ltd.qubit.commons.io.serialize.XmlSerialization;
@@ -18,12 +25,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import java.io.Serializable;
-import javax.annotation.concurrent.NotThreadSafe;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 

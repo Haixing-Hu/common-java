@@ -8,14 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson;
 
+import java.math.BigDecimal;
+
+import ltd.qubit.commons.annotation.Scale;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import ltd.qubit.commons.annotation.Scale;
+
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

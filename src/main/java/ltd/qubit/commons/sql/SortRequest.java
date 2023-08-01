@@ -8,17 +8,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
+import java.io.Serializable;
+import java.util.Comparator;
+import java.util.List;
+
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.reflect.FieldNotExistException;
 import ltd.qubit.commons.reflect.FieldUtils;
 import ltd.qubit.commons.reflect.impl.GetterMethod;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.io.Serializable;
-import java.util.Comparator;
-import java.util.List;
-import javax.annotation.concurrent.Immutable;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.reflect.ObjectGraphUtils.getPropertyType;

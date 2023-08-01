@@ -8,11 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
-import ltd.qubit.commons.lang.ArrayUtils;
-import ltd.qubit.commons.sql.error.UnexpectedColumnValueException;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import ltd.qubit.commons.lang.ArrayUtils;
+import ltd.qubit.commons.sql.error.UnexpectedColumnValueException;
 
 /**
  * A {@link RowMapper} which maps a row of a {@link ResultSet} to a

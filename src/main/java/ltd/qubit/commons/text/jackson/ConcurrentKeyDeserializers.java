@@ -8,6 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentSkipListMap;
+
 import ltd.qubit.commons.lang.ClassKey;
 
 import com.fasterxml.jackson.databind.BeanDescription;
@@ -16,9 +19,6 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.KeyDeserializer;
 import com.fasterxml.jackson.databind.deser.KeyDeserializers;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentSkipListMap;
 
 import static ltd.qubit.commons.datastructure.map.MapUtils.findTypeMapping;
 

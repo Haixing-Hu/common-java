@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
-import ltd.qubit.commons.util.buffer.CharBuffer;
-
 import java.util.BitSet;
+
+import ltd.qubit.commons.util.buffer.CharBuffer;
 
 public class TokenParser {
 

@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.tostring;
 
-import ltd.qubit.commons.lang.StringUtils;
-
 import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.lang.StringUtils;
 
 /**
  * The simple {@code toString()} style.

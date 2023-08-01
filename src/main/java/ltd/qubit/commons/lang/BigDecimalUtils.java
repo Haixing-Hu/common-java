@@ -8,23 +8,24 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
-import ltd.qubit.commons.util.codec.MoneyCodec;
-
-import com.google.common.collect.ImmutableSet;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.Date;
 import java.util.Set;
+
 import javax.annotation.Nullable;
+
+import ltd.qubit.commons.util.codec.MoneyCodec;
+
+import com.google.common.collect.ImmutableSet;
+
+import static java.lang.System.arraycopy;
+import static java.math.BigDecimal.ZERO;
 
 import static ltd.qubit.commons.lang.ArrayUtils.EMPTY_BYTE_ARRAY;
 import static ltd.qubit.commons.lang.ByteArrayUtils.DEFAULT_BYTE_ORDER;
 import static ltd.qubit.commons.lang.ObjectUtils.defaultIfNull;
-
-import static java.lang.System.arraycopy;
-import static java.math.BigDecimal.ZERO;
 
 /**
  * This class provides operations on {@link BigDecimal} objects.

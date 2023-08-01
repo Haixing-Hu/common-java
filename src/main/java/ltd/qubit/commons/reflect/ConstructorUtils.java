@@ -8,12 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect;
 
-import ltd.qubit.commons.io.IoUtils;
-import ltd.qubit.commons.lang.ClassUtils;
-import ltd.qubit.commons.lang.Equality;
-
-import org.objenesis.ObjenesisHelper;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -26,8 +20,15 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
+
+import ltd.qubit.commons.io.IoUtils;
+import ltd.qubit.commons.lang.ClassUtils;
+import ltd.qubit.commons.lang.Equality;
+
+import org.objenesis.ObjenesisHelper;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.lang.ArrayUtils.EMPTY_CLASS_ARRAY;

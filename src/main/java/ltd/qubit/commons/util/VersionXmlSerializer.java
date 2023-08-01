@@ -8,6 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util;
 
+import java.text.ParseException;
+
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.io.serialize.XmlSerializer;
 import ltd.qubit.commons.text.xml.DomUtils;
 import ltd.qubit.commons.text.xml.InvalidXmlNodeContentException;
@@ -16,9 +20,6 @@ import ltd.qubit.commons.text.xml.XmlSerializationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import java.text.ParseException;
-import javax.annotation.concurrent.Immutable;
 
 /**
  * The {@link XmlSerializer} for the {@link Version} class.

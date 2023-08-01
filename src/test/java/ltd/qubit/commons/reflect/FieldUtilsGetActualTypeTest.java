@@ -8,11 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect;
 
-import org.junit.jupiter.api.Test;
-
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+
+import org.junit.jupiter.api.Test;
 
 import static ltd.qubit.commons.reflect.FieldUtils.getActualType;
 

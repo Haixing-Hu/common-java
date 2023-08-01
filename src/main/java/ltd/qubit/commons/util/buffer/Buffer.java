@@ -8,14 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.buffer;
 
+import java.io.Serializable;
+import java.lang.reflect.Array;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.lang.Argument;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.util.expand.ExpansionPolicy;
-
-import java.io.Serializable;
-import java.lang.reflect.Array;
-import javax.annotation.Nullable;
 
 import static ltd.qubit.commons.lang.Argument.requireGreaterEqual;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;

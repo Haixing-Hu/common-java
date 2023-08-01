@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.Date;
+
+import org.junit.jupiter.api.Test;
 
 import static ltd.qubit.commons.lang.ArrayUtils.EMPTY_BOOLEAN_ARRAY;
 import static ltd.qubit.commons.lang.ArrayUtils.EMPTY_BOOLEAN_OBJECT_ARRAY;

@@ -8,8 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
-import org.junit.jupiter.api.Test;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.ByteOrder;
@@ -18,14 +16,16 @@ import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.jupiter.api.Test;
+
+import static java.time.ZoneOffset.UTC;
+
 import static ltd.qubit.commons.lang.DateUtils.getUtcDate;
 import static ltd.qubit.commons.lang.DateUtils.getUtcDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
-
-import static java.time.ZoneOffset.UTC;
 
 public class DateUtilsTest {
 

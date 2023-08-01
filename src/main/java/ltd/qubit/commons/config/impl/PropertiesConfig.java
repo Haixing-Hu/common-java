@@ -8,12 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.config.impl;
 
-import ltd.qubit.commons.config.Config;
-import ltd.qubit.commons.config.error.ConfigurationError;
-import ltd.qubit.commons.io.IoUtils;
-import ltd.qubit.commons.net.Url;
-import ltd.qubit.commons.util.PropertiesUtils;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,9 +22,15 @@ import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.Properties;
 
-import static ltd.qubit.commons.lang.Argument.requireNonNull;
+import ltd.qubit.commons.config.Config;
+import ltd.qubit.commons.config.error.ConfigurationError;
+import ltd.qubit.commons.io.IoUtils;
+import ltd.qubit.commons.net.Url;
+import ltd.qubit.commons.util.PropertiesUtils;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+
+import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
  * A {@link Config} object which loads/stores configurations from/to Java

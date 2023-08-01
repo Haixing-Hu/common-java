@@ -8,6 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.config;
 
+import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Date;
+import java.util.NoSuchElementException;
+import java.util.regex.Matcher;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.config.error.ConfigurationError;
 import ltd.qubit.commons.config.error.PropertyHasNoValueError;
 import ltd.qubit.commons.config.error.PropertyNotExistError;
@@ -21,15 +31,6 @@ import ltd.qubit.commons.text.Replacer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Date;
-import java.util.NoSuchElementException;
-import java.util.regex.Matcher;
-import javax.annotation.Nullable;
 
 /**
  * An {@link AbstractConfig} is an abstract base class for classes implementing

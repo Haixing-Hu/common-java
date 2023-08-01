@@ -10,6 +10,7 @@ package ltd.qubit.commons.lang;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+
 import javax.annotation.Nullable;
 
 public class NumericUtils {

@@ -8,15 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
-import ltd.qubit.commons.util.codec.InstantCodec;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.ByteOrder;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+
 import javax.annotation.Nullable;
+
+import ltd.qubit.commons.util.codec.InstantCodec;
 
 import static ltd.qubit.commons.lang.ByteArrayUtils.DEFAULT_BYTE_ORDER;
 

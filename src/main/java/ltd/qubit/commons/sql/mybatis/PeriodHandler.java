@@ -8,6 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql.mybatis;
 
+import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.Period;
+
 import ltd.qubit.commons.util.codec.Codec;
 import ltd.qubit.commons.util.codec.DecodingException;
 import ltd.qubit.commons.util.codec.EncodingException;
@@ -16,12 +22,6 @@ import ltd.qubit.commons.util.codec.PeriodCodec;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
-
-import java.sql.CallableStatement;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.Period;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 

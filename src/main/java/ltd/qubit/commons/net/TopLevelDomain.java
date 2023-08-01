@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.net;
 
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import javax.annotation.concurrent.Immutable;
 
 /**
  * A top-level domain (TLD) is the last part of an Internet domain name; that

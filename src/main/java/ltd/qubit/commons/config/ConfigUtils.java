@@ -8,6 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.config;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Date;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.config.error.ConfigurationError;
 import ltd.qubit.commons.config.impl.DefaultConfig;
 import ltd.qubit.commons.io.serialize.XmlSerialization;
@@ -16,11 +22,6 @@ import ltd.qubit.commons.text.xml.XmlException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Date;
-import javax.annotation.Nullable;
 
 /**
  * Provides utility functions about the {@link Config} objects.

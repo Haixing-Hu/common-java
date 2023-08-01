@@ -8,13 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.converter;
 
+import java.time.LocalTime;
+
 import ltd.qubit.commons.util.codec.DecodingException;
 import ltd.qubit.commons.util.codec.IsoLocalTimeCodec;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalTime;
 
 @Component
 @CustomizedConverter

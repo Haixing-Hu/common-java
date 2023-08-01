@@ -8,6 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.config.impl;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Date;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.config.Property;
 import ltd.qubit.commons.io.serialize.BinarySerialization;
 import ltd.qubit.commons.io.serialize.XmlSerialization;
@@ -19,11 +25,6 @@ import ltd.qubit.commons.util.value.BasicNamedMultiValues;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Date;
-import javax.annotation.Nullable;
 
 /**
  * The default implementation of the {@link Property} interface.

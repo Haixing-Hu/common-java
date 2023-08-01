@@ -10,6 +10,7 @@ package ltd.qubit.commons.datastructure.tree;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import javax.annotation.concurrent.NotThreadSafe;
 
 /**

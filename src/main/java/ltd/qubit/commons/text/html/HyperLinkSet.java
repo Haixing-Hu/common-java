@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.html;
 
-import ltd.qubit.commons.lang.CloneableEx;
-
 import java.util.Collection;
 import java.util.HashSet;
+
+import ltd.qubit.commons.lang.CloneableEx;
 
 /**
  * A set of {@link HyperLink} objects.

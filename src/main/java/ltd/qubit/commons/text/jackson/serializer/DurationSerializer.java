@@ -8,13 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
+import java.time.Duration;
+
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.util.codec.DurationCodec;
 import ltd.qubit.commons.util.codec.Encoder;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-
-import java.time.Duration;
-import javax.annotation.concurrent.Immutable;
 
 /**
  * The JSON serializer of a {@link Duration} object.

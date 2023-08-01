@@ -8,18 +8,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.config.impl;
 
-import ltd.qubit.commons.lang.Type;
-
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import ltd.qubit.commons.lang.Type;
+
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Unit test for the {@link StackConfig} class.
@@ -32,9 +34,9 @@ public class StackConfigTest {
     final StackConfig config = new StackConfig();
     final DefaultConfig config1 = new DefaultConfig();
 
-    assertEquals(true, config.isStackEmpty());
+    assertTrue(config.isStackEmpty());
     config.push(config1);
-    assertEquals(false, config.isStackEmpty());
+    assertFalse(config.isStackEmpty());
   }
 
   public void testStackSize() {
@@ -58,16 +60,16 @@ public class StackConfigTest {
     final DefaultConfig config2 = new DefaultConfig();
     final DefaultConfig config3 = new DefaultConfig();
 
-    assertEquals(true, config.isEmpty());
+    assertTrue(config.isEmpty());
     config.push(config1);
-    assertEquals(true, config.isEmpty());
+    assertTrue(config.isEmpty());
     config.push(config2);
-    assertEquals(true, config.isEmpty());
+    assertTrue(config.isEmpty());
     config.push(config3);
-    assertEquals(true, config.isEmpty());
+    assertTrue(config.isEmpty());
 
     config1.add("prop1", Type.INT);
-    assertEquals(false, config.isEmpty());
+    assertFalse(config.isEmpty());
   }
 
   public void testSize() {

@@ -8,8 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.clock;
 
-import ltd.qubit.commons.lang.DateUtils;
-
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -19,6 +17,8 @@ import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
+
+import ltd.qubit.commons.lang.DateUtils;
 
 import static ltd.qubit.commons.lang.DateUtils.MILLISECONDS_PER_SECOND;
 

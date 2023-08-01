@@ -8,17 +8,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.range;
 
+import java.time.Instant;
+
 import ltd.qubit.commons.math.RandomEx;
 import ltd.qubit.commons.text.jackson.CustomizedJsonMapper;
 import ltd.qubit.commons.text.jackson.CustomizedXmlMapper;
 import ltd.qubit.commons.text.xml.jaxb.IsoInstantXmlAdapter;
 import ltd.qubit.commons.util.codec.IsoInstantCodec;
 
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.junit.jupiter.api.Test;
 
-import java.time.Instant;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import static ltd.qubit.commons.test.JsonUnitUtils.assertJsonNodeEquals;
 import static ltd.qubit.commons.test.XmlUnitUtils.assertXPathEquals;

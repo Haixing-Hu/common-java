@@ -8,17 +8,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
-import com.google.common.collect.ImmutableSet;
-import org.springframework.context.NoSuchMessageException;
-import org.springframework.context.support.ResourceBundleMessageSource;
-
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
+
 import javax.annotation.Nullable;
+
+import org.springframework.context.NoSuchMessageException;
+import org.springframework.context.support.ResourceBundleMessageSource;
+
+import com.google.common.collect.ImmutableSet;
 
 /**
  * Provides utilities functions for {@link Enum}.

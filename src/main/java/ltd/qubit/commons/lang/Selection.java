@@ -8,10 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
-import ltd.qubit.commons.error.NullArgumentException;
-
 import java.util.Iterator;
+
 import javax.annotation.concurrent.ThreadSafe;
+
+import ltd.qubit.commons.error.NullArgumentException;
 
 /**
  * This class provides the selection related algorithms.

@@ -8,6 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.pair;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.Assignment;
 import ltd.qubit.commons.lang.Equality;
@@ -15,11 +21,6 @@ import ltd.qubit.commons.lang.ObjectUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.annotation.Nullable;
 
 /**
  * 此模型表示键值对列表。

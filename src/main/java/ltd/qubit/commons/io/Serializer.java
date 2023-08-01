@@ -8,9 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.io;
 
-import ltd.qubit.commons.io.error.SerializationException;
-import ltd.qubit.commons.lang.Argument;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
@@ -25,6 +22,9 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.URL;
+
+import ltd.qubit.commons.io.error.SerializationException;
+import ltd.qubit.commons.lang.Argument;
 
 /**
  * Assists with the serialization process and performs additional functionality

@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.xml.jaxb;
 
-import jakarta.xml.bind.annotation.XmlAnyElement;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import jakarta.xml.bind.annotation.XmlAnyElement;
 
 /**
  * A wrapper class for serialize/deserialize list of object with JAXB.

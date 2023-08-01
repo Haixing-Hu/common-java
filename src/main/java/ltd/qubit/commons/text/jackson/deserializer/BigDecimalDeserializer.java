@@ -8,22 +8,24 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+
+import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.annotation.Money;
+import ltd.qubit.commons.annotation.Round;
+import ltd.qubit.commons.annotation.Scale;
 import ltd.qubit.commons.text.Stripper;
 import ltd.qubit.commons.util.codec.BigDecimalCodec;
 import ltd.qubit.commons.util.codec.DecodingException;
+
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import ltd.qubit.commons.annotation.Money;
-import ltd.qubit.commons.annotation.Round;
-import ltd.qubit.commons.annotation.Scale;
-
-import java.io.IOException;
-import java.math.BigDecimal;
-import javax.annotation.concurrent.Immutable;
 
 import static ltd.qubit.commons.lang.StringUtils.isEmpty;
 

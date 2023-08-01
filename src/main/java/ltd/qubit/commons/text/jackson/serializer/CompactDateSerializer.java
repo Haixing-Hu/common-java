@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
-import ltd.qubit.commons.util.codec.CompactDateCodec;
-
 import java.time.LocalDate;
+
+import ltd.qubit.commons.util.codec.CompactDateCodec;
 
 /**
  * 本地日期类 {@link LocalDate} 的 JSON 反序列化器，该反序列器将{@link LocalDate} 对象

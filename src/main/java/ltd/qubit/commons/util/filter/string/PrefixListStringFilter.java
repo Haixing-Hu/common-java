@@ -8,10 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.filter.string;
 
-import ltd.qubit.commons.text.Trie;
-
 import java.util.List;
+
 import javax.annotation.concurrent.NotThreadSafe;
+
+import ltd.qubit.commons.text.Trie;
 
 /**
  * The base class for {@link PrefixBlackListStringFilter} and

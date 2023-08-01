@@ -8,18 +8,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
-import ltd.qubit.commons.error.UnsupportedByteOrderException;
-import ltd.qubit.commons.text.Ascii;
-
-import com.google.common.collect.ImmutableSet;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.ByteOrder;
 import java.util.Date;
 import java.util.Set;
+
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
+
+import ltd.qubit.commons.error.UnsupportedByteOrderException;
+import ltd.qubit.commons.text.Ascii;
+
+import com.google.common.collect.ImmutableSet;
 
 import static ltd.qubit.commons.lang.ByteArrayUtils.DEFAULT_BYTE_ORDER;
 import static ltd.qubit.commons.text.NumberFormatSymbols.DEFAULT_UPPERCASE_DIGITS;

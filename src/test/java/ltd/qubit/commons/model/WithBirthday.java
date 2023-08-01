@@ -8,11 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
-import ltd.qubit.commons.annotation.Computed;
-
 import java.time.LocalDate;
 import java.time.Period;
+
 import javax.annotation.Nullable;
+
+import ltd.qubit.commons.annotation.Computed;
 
 /**
  * 此接口表示实体类具有出生日期属性。

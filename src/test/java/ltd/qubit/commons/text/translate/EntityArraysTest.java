@@ -8,11 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.translate;
 
-import org.junit.jupiter.api.Test;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Map;
+
+import org.junit.jupiter.api.Test;
 
 import static ltd.qubit.commons.text.translate.EntityArrays.APOS_ESCAPE;
 import static ltd.qubit.commons.text.translate.EntityArrays.APOS_UNESCAPE;

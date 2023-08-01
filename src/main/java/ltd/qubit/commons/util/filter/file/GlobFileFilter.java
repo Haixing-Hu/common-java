@@ -8,16 +8,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.filter.file;
 
-import ltd.qubit.commons.lang.Equality;
-import ltd.qubit.commons.lang.Hash;
-import ltd.qubit.commons.text.Glob;
-import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
+
 import javax.annotation.concurrent.NotThreadSafe;
+
+import ltd.qubit.commons.lang.Equality;
+import ltd.qubit.commons.lang.Hash;
+import ltd.qubit.commons.text.Glob;
+import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
  * A {@link GlobFileFilter} filters files using the supplied glob patterns.

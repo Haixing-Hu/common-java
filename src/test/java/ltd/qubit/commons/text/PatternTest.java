@@ -8,13 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
+import java.io.IOException;
+
 import ltd.qubit.commons.io.error.InvalidFormatException;
 import ltd.qubit.commons.io.serialize.BinarySerialization;
 import ltd.qubit.commons.lang.StringUtils;
 
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
 
 import static ltd.qubit.commons.test.JacksonXmlTestUtils.assertXmlDeserializeEquals;
 import static ltd.qubit.commons.test.JacksonXmlTestUtils.assertXmlSerializeEquals;

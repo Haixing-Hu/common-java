@@ -8,12 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.test;
 
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import net.javacrumbs.jsonunit.assertj.JsonAssert;
-
 import java.math.BigDecimal;
 import java.util.List;
+
 import javax.annotation.Nullable;
+
+import com.fasterxml.jackson.databind.json.JsonMapper;
+
+import net.javacrumbs.jsonunit.assertj.JsonAssert;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 

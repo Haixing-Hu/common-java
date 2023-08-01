@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.filter.file;
 
-import ltd.qubit.commons.util.filter.Filter;
-
 import java.io.File;
+
+import ltd.qubit.commons.util.filter.Filter;
 
 /**
  * An implementation of {@link FileFilter} interface is a filter used to filter

@@ -8,13 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.map;
 
-import ltd.qubit.commons.lang.ClassKey;
-
-import com.fasterxml.jackson.databind.util.ClassUtil;
-
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+
+import ltd.qubit.commons.lang.ClassKey;
+
+import com.fasterxml.jackson.databind.util.ClassUtil;
 
 /**
  * Provides the utility functions about the {@link Map}.

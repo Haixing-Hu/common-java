@@ -10,8 +10,9 @@ package ltd.qubit.commons.text.jackson.serializer;
 
 import ltd.qubit.commons.text.jackson.CustomizedJsonMapper;
 
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.junit.jupiter.api.Test;
+
+import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import static net.javacrumbs.jsonunit.JsonAssert.assertJsonEquals;
 

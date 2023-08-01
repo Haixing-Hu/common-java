@@ -13,9 +13,10 @@ import ltd.qubit.commons.text.jackson.CustomizedJsonMapper;
 import ltd.qubit.commons.util.codec.DoubleCodec;
 import ltd.qubit.commons.util.codec.IsoInstantCodec;
 
+import org.junit.jupiter.api.Test;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-import org.junit.jupiter.api.Test;
 
 import static ltd.qubit.commons.test.JsonUnitUtils.assertJsonNodeEquals;
 

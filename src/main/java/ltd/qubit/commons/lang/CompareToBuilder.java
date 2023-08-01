@@ -8,15 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
-import ltd.qubit.commons.datastructure.list.primitive.BooleanCollection;
-import ltd.qubit.commons.datastructure.list.primitive.ByteCollection;
-import ltd.qubit.commons.datastructure.list.primitive.CharCollection;
-import ltd.qubit.commons.datastructure.list.primitive.DoubleCollection;
-import ltd.qubit.commons.datastructure.list.primitive.FloatCollection;
-import ltd.qubit.commons.datastructure.list.primitive.IntCollection;
-import ltd.qubit.commons.datastructure.list.primitive.LongCollection;
-import ltd.qubit.commons.datastructure.list.primitive.ShortCollection;
-
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -30,7 +21,17 @@ import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
+
 import javax.annotation.Nullable;
+
+import ltd.qubit.commons.datastructure.list.primitive.BooleanCollection;
+import ltd.qubit.commons.datastructure.list.primitive.ByteCollection;
+import ltd.qubit.commons.datastructure.list.primitive.CharCollection;
+import ltd.qubit.commons.datastructure.list.primitive.DoubleCollection;
+import ltd.qubit.commons.datastructure.list.primitive.FloatCollection;
+import ltd.qubit.commons.datastructure.list.primitive.IntCollection;
+import ltd.qubit.commons.datastructure.list.primitive.LongCollection;
+import ltd.qubit.commons.datastructure.list.primitive.ShortCollection;
 
 /**
  * A builder used to build the {@link Comparable#compareTo(Object)} functions.

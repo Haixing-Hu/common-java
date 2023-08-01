@@ -8,15 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.annotation.concurrent.GuardedBy;
+
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import javax.annotation.concurrent.GuardedBy;
 
 import static ltd.qubit.commons.lang.Argument.requireLengthBe;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;

@@ -8,6 +8,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Nullable;
+import javax.annotation.concurrent.ThreadSafe;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.reflect.impl.NonVoidMethod0;
 import ltd.qubit.commons.reflect.impl.NonVoidMethod1;
@@ -30,18 +43,6 @@ import ltd.qubit.commons.reflect.impl.VoidMethod6;
 import ltd.qubit.commons.reflect.impl.VoidMethod7;
 import ltd.qubit.commons.reflect.impl.VoidMethod8;
 import ltd.qubit.commons.reflect.impl.VoidMethod9;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.lang.reflect.Type;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.ThreadSafe;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.lang.ArrayUtils.EMPTY_CLASS_ARRAY;

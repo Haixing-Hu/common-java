@@ -8,12 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
+import java.io.Serializable;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.io.Serializable;
-import javax.annotation.Nullable;
 
 import static ltd.qubit.commons.lang.Argument.requireGreater;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;

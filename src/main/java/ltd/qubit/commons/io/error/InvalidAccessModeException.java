@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.io.error;
 
+import java.io.IOException;
+
 import ltd.qubit.commons.io.AccessMode;
 import ltd.qubit.commons.io.OpenOption;
-
-import java.io.IOException;
 
 /**
  * Thrown to indicate an invalid access mode.

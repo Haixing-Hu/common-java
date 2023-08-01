@@ -8,22 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util;
 
-import ltd.qubit.commons.config.error.ConfigurationError;
-import ltd.qubit.commons.config.error.InvalidPropertyValueError;
-import ltd.qubit.commons.config.error.PropertyNotExistError;
-import ltd.qubit.commons.io.IoUtils;
-import ltd.qubit.commons.lang.ArrayUtils;
-import ltd.qubit.commons.lang.EnumUtils;
-import ltd.qubit.commons.lang.SystemUtils;
-import ltd.qubit.commons.net.Url;
-import ltd.qubit.commons.net.UrlUtils;
-import ltd.qubit.commons.text.BooleanFormat;
-import ltd.qubit.commons.text.NumberFormat;
-import ltd.qubit.commons.text.Splitter;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -41,7 +25,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
 import javax.annotation.Nullable;
+
+import ltd.qubit.commons.config.error.ConfigurationError;
+import ltd.qubit.commons.config.error.InvalidPropertyValueError;
+import ltd.qubit.commons.config.error.PropertyNotExistError;
+import ltd.qubit.commons.io.IoUtils;
+import ltd.qubit.commons.lang.ArrayUtils;
+import ltd.qubit.commons.lang.EnumUtils;
+import ltd.qubit.commons.lang.SystemUtils;
+import ltd.qubit.commons.net.Url;
+import ltd.qubit.commons.net.UrlUtils;
+import ltd.qubit.commons.text.BooleanFormat;
+import ltd.qubit.commons.text.NumberFormat;
+import ltd.qubit.commons.text.Splitter;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provides functions dealing with the {@link Properties} class.

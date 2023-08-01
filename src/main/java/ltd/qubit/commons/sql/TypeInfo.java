@@ -8,19 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import javax.annotation.Nullable;
-
-import static ltd.qubit.commons.lang.Argument.requireGreaterEqual;
-import static ltd.qubit.commons.lang.Argument.requireInEnum;
-import static ltd.qubit.commons.lang.Argument.requireNonNull;
-import static ltd.qubit.commons.text.NumberFormat.DECIMAL_RADIX;
 
 import static java.sql.DatabaseMetaData.typeNoNulls;
 import static java.sql.DatabaseMetaData.typeNullable;
@@ -64,6 +60,11 @@ import static java.sql.Types.TIMESTAMP;
 import static java.sql.Types.TINYINT;
 import static java.sql.Types.VARBINARY;
 import static java.sql.Types.VARCHAR;
+
+import static ltd.qubit.commons.lang.Argument.requireGreaterEqual;
+import static ltd.qubit.commons.lang.Argument.requireInEnum;
+import static ltd.qubit.commons.lang.Argument.requireNonNull;
+import static ltd.qubit.commons.text.NumberFormat.DECIMAL_RADIX;
 
 /**
  * Stores the information about a type in the database.

@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.config;
 
-import ltd.qubit.commons.util.value.NamedMultiValues;
-
 import javax.annotation.Nullable;
+
+import ltd.qubit.commons.util.value.NamedMultiValues;
 
 /**
  * A {@link Property} object represents a property, which has the following

@@ -8,11 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
 
 import static ltd.qubit.commons.lang.SplitOption.CAMEL_CASE;
 import static ltd.qubit.commons.lang.SplitOption.IGNORE_EMPTY;

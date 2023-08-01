@@ -8,20 +8,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list.primitive.impl;
 
-import ltd.qubit.commons.datastructure.list.primitive.FloatCollection;
-import ltd.qubit.commons.datastructure.list.primitive.FloatIterator;
-import ltd.qubit.commons.datastructure.list.primitive.FloatList;
-import ltd.qubit.commons.datastructure.list.primitive.RandomAccessFloatList;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
 
-import static ltd.qubit.commons.lang.Argument.requireIndexInCloseRange;
-import static ltd.qubit.commons.lang.Argument.requireIndexInRightOpenRange;
+import ltd.qubit.commons.datastructure.list.primitive.FloatCollection;
+import ltd.qubit.commons.datastructure.list.primitive.FloatIterator;
+import ltd.qubit.commons.datastructure.list.primitive.FloatList;
+import ltd.qubit.commons.datastructure.list.primitive.RandomAccessFloatList;
 
 import static java.lang.System.arraycopy;
+
+import static ltd.qubit.commons.lang.Argument.requireIndexInCloseRange;
+import static ltd.qubit.commons.lang.Argument.requireIndexInRightOpenRange;
 
 /**
  * An {@link FloatList} backed by an array of {@code float}s. This

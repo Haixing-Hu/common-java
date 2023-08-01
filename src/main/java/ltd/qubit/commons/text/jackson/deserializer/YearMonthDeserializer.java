@@ -8,11 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
+import java.time.YearMonth;
+
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.util.codec.Decoder;
 import ltd.qubit.commons.util.codec.YearMonthCodec;
-
-import java.time.YearMonth;
-import javax.annotation.concurrent.Immutable;
 
 /**
  * The JSON deserializer of a {@link YearMonth} object.
