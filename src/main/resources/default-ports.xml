@@ -8,9 +8,9 @@
   ~
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
-<default-ports xmlns="http://www.njzhyl.cn"
+<default-ports xmlns="http://www.qubit.ltd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.njzhyl.cn default-ports.xsd ">
+  xsi:schemaLocation="http://www.qubit.ltd default-ports.xsd ">
 	<default-port>
 		<scheme>ftp</scheme>
 		<port>21</port>

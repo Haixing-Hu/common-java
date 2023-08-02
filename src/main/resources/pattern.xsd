@@ -15,9 +15,9 @@
                pattern of strings.
   See        : ai.cell.commons.text.Pattern.java
  -->
-<xsd:schema xmlns:this="http://www.njzhyl.cn"
+<xsd:schema xmlns:this="http://www.qubit.ltd"
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-  targetNamespace="http://www.njzhyl.cn"
+  targetNamespace="http://www.qubit.ltd"
   elementFormDefault="qualified">
 
   <xsd:include schemaLocation="pattern-type.xsd" />

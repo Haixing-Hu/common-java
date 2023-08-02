@@ -60,9 +60,9 @@
   http://www.neuhaus.com/domaincheck/domain_list.htm
 -->
 
-<domains xmlns="http://www.njzhyl.cn"
+<domains xmlns="http://www.qubit.ltd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.njzhyl.cn domain-suffixes.xsd">
+  xsi:schemaLocation="http://www.qubit.ltd domain-suffixes.xsd">
 
   <tlds>
     <!--  Infrastructure Top Level Domains -->

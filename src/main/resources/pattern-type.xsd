@@ -16,7 +16,7 @@
  -->
 <xsd:schema
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-  targetNamespace="http://www.njzhyl.cn"
+  targetNamespace="http://www.qubit.ltd"
   elementFormDefault="qualified">
 
   <xsd:simpleType name="pattern-type">

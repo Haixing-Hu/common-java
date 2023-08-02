@@ -8,9 +8,9 @@
   ~
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
-<xsd:schema xmlns="http://www.njzhyl.cn/config"
+<xsd:schema xmlns="http://www.qubit.ltd/config"
         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-		targetNamespace="http://www.njzhyl.cn/config"
+		targetNamespace="http://www.qubit.ltd/config"
 		elementFormDefault="qualified">
 
 	<xsd:element name="configuration">
