@@ -21,6 +21,8 @@ public class AnnotationUtils {
    *     the name of the attribute.
    * @return
    *     the value of the attribute.
+   * @throws RuntimeException
+   *     if any error occurs.
    */
   @SuppressWarnings("unchecked")
   public static <T> T getAttribute(final Annotation annotation, final String name) {
@@ -28,6 +30,26 @@ public class AnnotationUtils {
       return (T) annotation.annotationType().getMethod(name).invoke(annotation);
     } catch (final Exception e) {
       throw new RuntimeException(e);
+    }
+  }
+
+  /**
+   * Gets the value of an attribute of an annotation.
+   *
+   * @param annotation
+   *     the annotation object.
+   * @param name
+   *     the name of the attribute.
+   * @return
+   *     the value of the attribute, or {@code null} if the attribute does not
+   *     exist.
+   */
+  @SuppressWarnings("unchecked")
+  public static <T> T getAttributeOrNull(final Annotation annotation, final String name) {
+    try {
+      return (T) annotation.annotationType().getMethod(name).invoke(annotation);
+    } catch (final Exception e) {
+      return null;
     }
   }
 }
