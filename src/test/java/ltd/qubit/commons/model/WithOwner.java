@@ -11,7 +11,7 @@ package ltd.qubit.commons.model;
 /**
  * 此接口表示实体类具有所有者（另一个实体对象）属性。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public interface WithOwner {
 

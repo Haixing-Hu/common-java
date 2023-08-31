@@ -8,25 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import ltd.qubit.commons.reflect.impl.GetterMethod;
 import ltd.qubit.commons.util.LogicRelation;
 
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
-import static ltd.qubit.commons.sql.ComparisonOperator.EQUAL;
-import static ltd.qubit.commons.sql.ComparisonOperator.GREATER;
-import static ltd.qubit.commons.sql.ComparisonOperator.GREATER_EQUAL;
-import static ltd.qubit.commons.sql.ComparisonOperator.IN;
-import static ltd.qubit.commons.sql.ComparisonOperator.LESS;
-import static ltd.qubit.commons.sql.ComparisonOperator.LESS_EQUAL;
-import static ltd.qubit.commons.sql.ComparisonOperator.LIKE;
-import static ltd.qubit.commons.sql.ComparisonOperator.NOT_EQUAL;
-import static ltd.qubit.commons.sql.ComparisonOperator.NOT_IN;
-import static ltd.qubit.commons.sql.ComparisonOperator.NOT_LIKE;
+import static ltd.qubit.commons.sql.ComparisonOperator.*;
 import static ltd.qubit.commons.sql.impl.CriterionImplUtils.getProperty;
 
 /**
@@ -48,7 +38,7 @@ import static ltd.qubit.commons.sql.impl.CriterionImplUtils.getProperty;
  *             .build();
  * </code></pre>
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class ComposedCriterionBuilder<T> {
 

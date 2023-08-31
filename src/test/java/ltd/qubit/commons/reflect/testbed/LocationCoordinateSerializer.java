@@ -13,7 +13,7 @@ import ltd.qubit.commons.text.jackson.serializer.BigDecimalSerializer;
 /**
  * 地理位置坐标的JSON序列化器。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class LocationCoordinateSerializer extends BigDecimalSerializer {
 

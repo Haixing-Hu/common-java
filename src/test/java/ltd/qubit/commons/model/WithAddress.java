@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 /**
  * 此接口表示实体类具有地址属性。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public interface WithAddress {
 

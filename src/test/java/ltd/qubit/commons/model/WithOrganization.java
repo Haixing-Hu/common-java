@@ -11,7 +11,7 @@ package ltd.qubit.commons.model;
 /**
  * 此接口表示实体类属于某个机构。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public interface WithOrganization {
 

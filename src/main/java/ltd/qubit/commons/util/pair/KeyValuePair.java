@@ -8,20 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.pair;
 
-import java.io.Serializable;
+import ltd.qubit.commons.lang.*;
 
 import javax.annotation.Nullable;
-
-import ltd.qubit.commons.lang.Assignable;
-import ltd.qubit.commons.lang.CloneableEx;
-import ltd.qubit.commons.lang.Equality;
-import ltd.qubit.commons.lang.Hash;
-import ltd.qubit.commons.lang.ObjectUtils;
+import java.io.Serializable;
 
 /**
  * 此模型表示简单的字符串键值对。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class KeyValuePair implements Serializable, CloneableEx<KeyValuePair>,
         Assignable<KeyValuePair> {
@@ -112,10 +107,9 @@ public class KeyValuePair implements Serializable, CloneableEx<KeyValuePair>,
 
   @Override
   public String toString() {
-    final StringBuilder builder = new StringBuilder();
-    builder.append(key)
-           .append(" = ")
-           .append(value);
-    return builder.toString();
+    String builder = key +
+            " = " +
+            value;
+    return builder;
   }
 }

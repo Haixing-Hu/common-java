@@ -13,7 +13,7 @@ package ltd.qubit.commons.model;
  *
  * <p>简单按照 ABO 血型分类。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public enum Blood {
 

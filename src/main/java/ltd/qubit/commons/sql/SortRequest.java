@@ -8,12 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
-import java.io.Serializable;
-import java.util.Comparator;
-import java.util.List;
-
-import javax.annotation.concurrent.Immutable;
-
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.reflect.FieldNotExistException;
@@ -21,13 +15,14 @@ import ltd.qubit.commons.reflect.FieldUtils;
 import ltd.qubit.commons.reflect.impl.GetterMethod;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
+import javax.annotation.concurrent.Immutable;
+import java.io.Serializable;
+import java.util.Comparator;
+import java.util.List;
+
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
-import static ltd.qubit.commons.reflect.ObjectGraphUtils.getPropertyType;
-import static ltd.qubit.commons.reflect.ObjectGraphUtils.getPropertyValue;
-import static ltd.qubit.commons.reflect.ObjectGraphUtils.hasProperty;
-import static ltd.qubit.commons.sql.impl.CriterionImplUtils.isPartialOrderComparable;
-import static ltd.qubit.commons.sql.impl.CriterionImplUtils.isSupportedDataType;
-import static ltd.qubit.commons.sql.impl.CriterionImplUtils.toComparableValue;
+import static ltd.qubit.commons.reflect.ObjectGraphUtils.*;
+import static ltd.qubit.commons.sql.impl.CriterionImplUtils.*;
 import static ltd.qubit.commons.text.NamingStyleUtils.propertyPathToDatabaseField;
 
 /**
@@ -35,7 +30,7 @@ import static ltd.qubit.commons.text.NamingStyleUtils.propertyPathToDatabaseFiel
  *
  * @param <T>
  *     待排序的实体的类型。
- * @author 胡海星
+ * @author Haixing Hu
  */
 @Immutable
 public class SortRequest<T> implements Serializable {

@@ -3914,9 +3914,7 @@ public class StringUtils {
    * @param str
    *     the string to remove characters from, may be null
    * @return the stripped String, {@code null} if null String input
-   * @deprecated use {@link Stripper#strip(CharSequence)}
    */
-  @Deprecated
   public static String strip(@Nullable final CharSequence str) {
     return new Stripper()
         .ofBlank()
@@ -3924,7 +3922,6 @@ public class StringUtils {
         .strip(str);
   }
 
-  @Deprecated
   public static void strip(@Nullable final CharSequence str,
       final Appendable output) throws IOException {
     new Stripper()

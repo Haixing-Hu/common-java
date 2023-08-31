@@ -13,7 +13,7 @@ import ltd.qubit.commons.lang.CloneableEx;
 /**
  * 此接口表示实体类可进行脱敏操作。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public interface Desensitizable<T> extends CloneableEx<T> {
 

@@ -13,7 +13,7 @@ import ltd.qubit.commons.text.Inflector;
 /**
  * 将英文单词的单数形式转换为复数形式。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class SingularToPluralTransformer extends AbstractStringTransformer {
 

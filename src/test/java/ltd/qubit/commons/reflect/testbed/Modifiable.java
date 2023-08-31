@@ -8,14 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect.testbed;
 
-import java.time.Instant;
-
 import javax.annotation.Nullable;
+import java.time.Instant;
 
 /**
  * 此接口表示实体类记录了最后一次修改时间。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public interface Modifiable {
 

@@ -13,7 +13,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 /**
  * 此枚举表示实体类型的状态。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 @XmlRootElement(name = "state")
 public enum State {

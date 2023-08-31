@@ -8,29 +8,26 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
-import javax.annotation.Nullable;
-
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
-
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonInclude;
-
-import static ltd.qubit.commons.text.CaseFormat.UPPER_CAMEL;
-import static ltd.qubit.commons.text.CaseFormat.UPPER_UNDERSCORE;
+import javax.annotation.Nullable;
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
+import static ltd.qubit.commons.text.CaseFormat.UPPER_CAMEL;
+import static ltd.qubit.commons.text.CaseFormat.UPPER_UNDERSCORE;
 
 /**
  * 此模型表示属于某个实体的可删除对象的基本信息。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 @XmlRootElement(name = "info-with-entity")
 @XmlAccessorType(XmlAccessType.FIELD)

@@ -8,18 +8,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.net;
 
+import jakarta.validation.constraints.NotNull;
+import ltd.qubit.commons.math.RandomEx;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import jakarta.validation.constraints.NotNull;
-
-import ltd.qubit.commons.math.RandomEx;
-
 /**
  * 产生随机的 User Agent.
  *
- * @author 胡海星
+ * @author Haixing Hu
  * @see <a href="https://github.com/mkstayalive/random-user-agent-java">random-user-agent-java</a>
  */
 public class RandomUserAgent {

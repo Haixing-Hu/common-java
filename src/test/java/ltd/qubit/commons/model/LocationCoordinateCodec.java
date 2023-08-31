@@ -13,7 +13,7 @@ import ltd.qubit.commons.util.codec.BigDecimalCodec;
 /**
  * 地理位置坐标编码器。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public final class LocationCoordinateCodec extends BigDecimalCodec {
 

@@ -13,7 +13,7 @@ package ltd.qubit.commons.reflect.testbed;
  *
  * @param <T>
  *     实体类
- * @author 胡海星
+ * @author Haixing Hu
  */
 public interface Normalizable<T> {
 

@@ -13,7 +13,7 @@ import ltd.qubit.commons.util.pair.KeyValuePair;
 /**
  * 此错误表示服务器内部错误。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class ServerInternalException extends ServerSideException {
 

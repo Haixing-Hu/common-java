@@ -8,17 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
-import java.time.LocalDateTime;
+import ltd.qubit.commons.util.codec.IsoLocalDateTimeCodec;
 
 import javax.annotation.concurrent.Immutable;
-
-import ltd.qubit.commons.util.codec.IsoLocalDateTimeCodec;
+import java.time.LocalDateTime;
 
 /**
  * 符合 ISO-8601 的本地日期时间类 {@link LocalDateTime} 的 JSON 序列化器，其编码格
  * 式为 "yyyy-mm-dd HH:mm:ss"。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 @Immutable
 public class IsoLocalDateTimeSerializer extends LocalDateTimeSerializer {

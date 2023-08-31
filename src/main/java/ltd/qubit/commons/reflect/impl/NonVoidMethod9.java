@@ -33,7 +33,7 @@ package ltd.qubit.commons.reflect.impl;
  *     方法的第8个参数的类型。
  * @param <P9>
  *     方法的第9个参数的类型。
- * @author 胡海星
+ * @author Haixing Hu
  */
 @FunctionalInterface
 public interface NonVoidMethod9<T, R, P1, P2, P3, P4, P5, P6, P7, P8, P9>

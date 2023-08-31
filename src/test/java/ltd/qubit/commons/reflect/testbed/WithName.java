@@ -11,7 +11,7 @@ package ltd.qubit.commons.reflect.testbed;
 /**
  * 此接口表示实体类具有名称属性。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public interface WithName {
 

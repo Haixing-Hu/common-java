@@ -8,30 +8,26 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect.testbed;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-
-import javax.annotation.Nullable;
-
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
-
 import ltd.qubit.commons.annotation.Scale;
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-import static ltd.qubit.commons.lang.BigDecimalUtils.limitPrecision;
+import javax.annotation.Nullable;
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
+import static ltd.qubit.commons.lang.BigDecimalUtils.limitPrecision;
 
 /**
  * 此模型表示地理位置坐标。
@@ -49,7 +45,7 @@ import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
  * <li>1度 = 60分</li>
  * </ul>
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 @XmlRootElement(name = "location")
 @XmlAccessorType(XmlAccessType.FIELD)

@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 /**
  * 此接口表示实体具有证件信息。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public interface WithCredential {
 

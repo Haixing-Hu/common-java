@@ -8,13 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
-import java.time.Instant;
-import java.util.concurrent.TimeUnit;
-
-import javax.annotation.Nullable;
-
 import jakarta.validation.constraints.Size;
-
 import ltd.qubit.commons.annotation.Identifier;
 import ltd.qubit.commons.annotation.Precision;
 import ltd.qubit.commons.annotation.Reference;
@@ -25,12 +19,16 @@ import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
+import javax.annotation.Nullable;
+import java.time.Instant;
+import java.util.concurrent.TimeUnit;
+
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
  * 此模型表示第三方应用。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class App implements HasStatefulInfo, WithOrganization, WithCategory,
     WithToken, WithSecurityKey, WithComment, Predefinable, Desensitizable<App>,

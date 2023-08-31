@@ -8,24 +8,22 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.pair;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.Assignment;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.ObjectUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.Nullable;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 此模型表示键值对列表。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class KeyValuePairList extends ArrayList<KeyValuePair> implements
     Serializable, Assignable<KeyValuePairList> {

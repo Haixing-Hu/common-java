@@ -8,27 +8,24 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.security;
 
-import java.io.Serializable;
-import java.util.regex.Pattern;
-
-import javax.annotation.Nullable;
-import javax.annotation.RegEx;
-
 import jakarta.xml.bind.annotation.XmlAnyElement;
-
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.Nullable;
+import javax.annotation.RegEx;
+import java.io.Serializable;
+import java.util.regex.Pattern;
 
 /**
  * 此模型表示带数字签名的消息。
  *
  * @param <T>
  *     消息体的数据
- * @author 胡海星
+ * @author Haixing Hu
  * @see SignatureAlgorithm
  * @see SignatureSigner
  * @see SignatureVerifier

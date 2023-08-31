@@ -11,7 +11,7 @@ package ltd.qubit.commons.model;
 /**
  * 此枚举表示政治面貌。
  *
- * @author 胡海星
+ * @author Haixing Hu
  * @see "《GB/T 4762-1984 政治面貌代码》"
  */
 public enum Politics {

@@ -11,7 +11,7 @@ package ltd.qubit.commons.model;
 /**
  * 此接口表示实体类具有可见性属性。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public interface WithVisibility {
 

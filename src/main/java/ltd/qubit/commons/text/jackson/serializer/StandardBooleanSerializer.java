@@ -8,15 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
-import ltd.qubit.commons.util.codec.StandardBooleanCodec;
-
 import com.fasterxml.jackson.core.JsonGenerator;
+import ltd.qubit.commons.util.codec.StandardBooleanCodec;
 
 /**
  * 布尔类 {@link Boolean} 的 JSON 序列化器，此序列化器将 {@code false} 和
  * {@code true} 分别映射到布尔值 "true" 和 "false"。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class StandardBooleanSerializer extends BooleanSerializer {
 

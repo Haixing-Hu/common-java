@@ -8,23 +8,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
-import java.util.regex.Pattern;
-
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
-import static java.util.regex.Pattern.CANON_EQ;
-import static java.util.regex.Pattern.CASE_INSENSITIVE;
-import static java.util.regex.Pattern.MULTILINE;
-import static java.util.regex.Pattern.UNICODE_CASE;
+import java.util.regex.Pattern;
 
+import static java.util.regex.Pattern.*;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
  * 表示SQL语法支持的LIKE字符串匹配模式。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class SqlLikePattern {
 
@@ -37,8 +33,8 @@ public class SqlLikePattern {
 
   public SqlLikePattern(final String sql) {
     this.sql = requireNonNull("sql", sql);
-    this.regex = "^" + Pattern.quote(sql).replace('_', '.').replace("%", ".*") + "$";
-    this.pattern = Pattern.compile(regex, FLAGS);
+    this.regex = "^" + quote(sql).replace('_', '.').replace("%", ".*") + "$";
+    this.pattern = compile(regex, FLAGS);
   }
 
   public final String getSql() {

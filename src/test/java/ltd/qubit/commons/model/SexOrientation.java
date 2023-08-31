@@ -11,7 +11,7 @@ package ltd.qubit.commons.model;
 /**
  * 此枚举表示性取向。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public enum SexOrientation {
 

@@ -19,7 +19,7 @@ package ltd.qubit.commons.reflect.impl;
  *     方法的第1个参数的类型。
  * @param <P2>
  *     方法的第2个参数的类型。
- * @author 胡海星
+ * @author Haixing Hu
  */
 @FunctionalInterface
 public interface NonVoidMethod2<T, R, P1, P2> extends MethodReference<T> {

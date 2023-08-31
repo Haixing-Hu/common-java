@@ -8,15 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
-import java.time.LocalDateTime;
-
 import ltd.qubit.commons.util.codec.CompactDateTimeCodec;
+
+import java.time.LocalDateTime;
 
 /**
  * 本地日期类 {@link LocalDateTime} 的 JSON 反序列化器，该反序列器将
  * {@link LocalDateTime} 对象编码为"yyyyMMddHHmmss"形式的日期。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class CompactDateTimeSerializer extends LocalDateTimeSerializer {
 

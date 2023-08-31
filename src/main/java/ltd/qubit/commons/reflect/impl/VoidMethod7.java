@@ -27,7 +27,7 @@ package ltd.qubit.commons.reflect.impl;
  *     方法的第6个参数的类型。
  * @param <P7>
  *     方法的第7个参数的类型。
- * @author 胡海星
+ * @author Haixing Hu
  */
 @FunctionalInterface
 public interface VoidMethod7<T, P1, P2, P3, P4, P5, P6, P7> extends MethodReference<T>  {

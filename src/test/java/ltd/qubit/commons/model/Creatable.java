@@ -13,7 +13,7 @@ import java.time.Instant;
 /**
  * 此接口表示实体类记录了创建时间。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public interface Creatable {
 

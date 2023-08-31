@@ -11,7 +11,7 @@ package ltd.qubit.commons.net;
 /**
  * HTTP协议方法名称枚举。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public enum HttpMethod {
 

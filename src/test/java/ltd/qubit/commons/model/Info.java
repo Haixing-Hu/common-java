@@ -8,18 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nullable;
-
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
-
 import ltd.qubit.commons.annotation.Identifier;
 import ltd.qubit.commons.annotation.Unique;
 import ltd.qubit.commons.lang.Assignable;
@@ -28,8 +23,10 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import ltd.qubit.commons.util.pair.KeyValuePair;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import javax.annotation.Nullable;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
@@ -37,7 +34,7 @@ import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
 /**
  * 此模型表示可删除对象的基本信息。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 @XmlRootElement(name = "info")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -247,7 +244,7 @@ public class Info implements Identifiable, WithCode, WithName, Deletable,
       return true;
     }
     // 注意：允许Info的trivial子类和Info进行比较
-    if ((o == null) || (! (o instanceof Info other))) {
+    if ((o == null) || (! (o instanceof final Info other))) {
       return false;
     }
       return Equality.equals(id, other.id)

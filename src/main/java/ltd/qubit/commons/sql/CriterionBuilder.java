@@ -8,32 +8,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
+import ltd.qubit.commons.reflect.impl.GetterMethod;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import ltd.qubit.commons.reflect.impl.GetterMethod;
-
-import static ltd.qubit.commons.sql.ComparisonOperator.EQUAL;
-import static ltd.qubit.commons.sql.ComparisonOperator.GREATER;
-import static ltd.qubit.commons.sql.ComparisonOperator.GREATER_EQUAL;
-import static ltd.qubit.commons.sql.ComparisonOperator.IN;
-import static ltd.qubit.commons.sql.ComparisonOperator.LESS;
-import static ltd.qubit.commons.sql.ComparisonOperator.LESS_EQUAL;
-import static ltd.qubit.commons.sql.ComparisonOperator.LIKE;
-import static ltd.qubit.commons.sql.ComparisonOperator.NOT_EQUAL;
-import static ltd.qubit.commons.sql.ComparisonOperator.NOT_IN;
-import static ltd.qubit.commons.sql.ComparisonOperator.NOT_LIKE;
+import static ltd.qubit.commons.sql.ComparisonOperator.*;
 import static ltd.qubit.commons.sql.impl.CriterionImplUtils.getProperty;
-import static ltd.qubit.commons.util.LogicRelation.AND;
-import static ltd.qubit.commons.util.LogicRelation.NOT;
-import static ltd.qubit.commons.util.LogicRelation.OR;
+import static ltd.qubit.commons.util.LogicRelation.*;
 
 /**
  * 提供工具函数辅助构造{@link Criterion}对象。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class CriterionBuilder {
 

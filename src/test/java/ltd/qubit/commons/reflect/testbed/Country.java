@@ -8,12 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect.testbed;
 
-import java.time.Instant;
-
-import javax.annotation.Nullable;
-
 import jakarta.validation.constraints.Size;
-
 import ltd.qubit.commons.annotation.Unique;
 import ltd.qubit.commons.lang.Argument;
 import ltd.qubit.commons.lang.Assignable;
@@ -21,10 +16,13 @@ import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
+import javax.annotation.Nullable;
+import java.time.Instant;
+
 /**
  * 此模型表示国家。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class Country implements Identifiable, WithInfo, Assignable<Country>,
     Creatable, Modifiable, Deletable {

@@ -8,12 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.error;
 
-import java.io.Serializable;
-
-import javax.annotation.Nullable;
-
 import jakarta.validation.constraints.Size;
-
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.Assignment;
 import ltd.qubit.commons.lang.Equality;
@@ -21,10 +16,13 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import ltd.qubit.commons.util.pair.KeyValuePairList;
 
+import javax.annotation.Nullable;
+import java.io.Serializable;
+
 /**
  * 此模型表示错误信息。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class ErrorInfo implements Serializable, Assignable<ErrorInfo> {
 

@@ -15,7 +15,7 @@ package ltd.qubit.commons.reflect.impl;
  *     方法所属的类的类型。
  * @param <P>
  *     方法的参数的类型。
- * @author 胡海星
+ * @author Haixing Hu
  */
 @FunctionalInterface
 public interface SetterMethod<T, P> extends VoidMethod1<T, P> {

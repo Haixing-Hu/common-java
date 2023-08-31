@@ -8,17 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.codec;
 
-import java.util.Base64;
-
-import javax.annotation.concurrent.Immutable;
-
 import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.text.Stripper;
+
+import javax.annotation.concurrent.Immutable;
+import java.util.Base64;
 
 /**
  * 对字节数组进行 BASE-64 编码解码的编码解码器。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 @Immutable
 public class Base64Codec implements Codec<byte[], String> {

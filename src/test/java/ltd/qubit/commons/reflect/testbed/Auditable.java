@@ -16,7 +16,7 @@ package ltd.qubit.commons.reflect.testbed;
  *   <li>标记删除时间；</li>
  * </ul>
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public interface Auditable extends Creatable, Modifiable, Deletable {
     // empty

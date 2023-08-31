@@ -21,7 +21,7 @@ package ltd.qubit.commons.reflect.impl;
  *     方法的第3个参数的类型。
  * @param <P4>
  *     方法的第4个参数的类型。
- * @author 胡海星
+ * @author Haixing Hu
  */
 @FunctionalInterface
 public interface VoidMethod4<T, P1, P2, P3, P4> extends MethodReference<T>  {

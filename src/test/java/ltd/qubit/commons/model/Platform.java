@@ -13,7 +13,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 /**
  * 此枚举表示操作系统平台。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 @XmlRootElement(name = "platform")
 public enum Platform {

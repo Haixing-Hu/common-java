@@ -8,23 +8,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect.testbed;
 
-import java.io.Serializable;
-import java.time.Instant;
-
-import javax.annotation.Nullable;
-
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
 import ltd.qubit.commons.annotation.Unique;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
+import javax.annotation.Nullable;
+import java.io.Serializable;
+import java.time.Instant;
+
 /**
  * 此模型表示第三方应用。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class App implements Serializable {
 

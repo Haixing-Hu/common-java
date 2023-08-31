@@ -17,7 +17,7 @@ import static ltd.qubit.commons.sql.impl.CriterionImplUtils.getProperty;
 /**
  * 提供工具函数辅助构造{@link SortRequest}对象。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class SortBuilder {
 

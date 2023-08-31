@@ -8,75 +8,24 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.MonthDay;
-import java.time.OffsetTime;
-import java.time.Period;
-import java.time.Year;
-import java.time.YearMonth;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.util.Date;
-import java.util.Locale;
-
-import javax.annotation.Nullable;
-
-import ltd.qubit.commons.text.jackson.deserializer.Base64ByteArrayDeserializer;
-import ltd.qubit.commons.text.jackson.deserializer.BigDecimalDeserializer;
-import ltd.qubit.commons.text.jackson.deserializer.BigIntegerDeserializer;
-import ltd.qubit.commons.text.jackson.deserializer.DoubleDeserializer;
-import ltd.qubit.commons.text.jackson.deserializer.DurationDeserializer;
-import ltd.qubit.commons.text.jackson.deserializer.FloatDeserializer;
-import ltd.qubit.commons.text.jackson.deserializer.IsoDateDeserializer;
-import ltd.qubit.commons.text.jackson.deserializer.IsoInstantDeserializer;
-import ltd.qubit.commons.text.jackson.deserializer.IsoLocalDateDeserializer;
-import ltd.qubit.commons.text.jackson.deserializer.IsoLocalDateTimeDeserializer;
-import ltd.qubit.commons.text.jackson.deserializer.IsoLocalTimeDeserializer;
-import ltd.qubit.commons.text.jackson.deserializer.IsoOffsetTimeJsonDeserializer;
-import ltd.qubit.commons.text.jackson.deserializer.MonthDayDeserializer;
-import ltd.qubit.commons.text.jackson.deserializer.PeriodDeserializer;
-import ltd.qubit.commons.text.jackson.deserializer.PosixLocaleDeserializer;
-import ltd.qubit.commons.text.jackson.deserializer.RawEnumDeserializer;
-import ltd.qubit.commons.text.jackson.deserializer.YearDeserializer;
-import ltd.qubit.commons.text.jackson.deserializer.YearMonthDeserializer;
-import ltd.qubit.commons.text.jackson.deserializer.ZoneIdDeserializer;
-import ltd.qubit.commons.text.jackson.deserializer.ZoneOffsetDeserializer;
-import ltd.qubit.commons.text.jackson.serializer.Base64ByteArraySerializer;
-import ltd.qubit.commons.text.jackson.serializer.BigDecimalSerializer;
-import ltd.qubit.commons.text.jackson.serializer.BigIntegerJsonSerializer;
-import ltd.qubit.commons.text.jackson.serializer.DoubleSerializer;
-import ltd.qubit.commons.text.jackson.serializer.DurationSerializer;
-import ltd.qubit.commons.text.jackson.serializer.FloatSerializer;
-import ltd.qubit.commons.text.jackson.serializer.IsoDateSerializer;
-import ltd.qubit.commons.text.jackson.serializer.IsoInstantSerializer;
-import ltd.qubit.commons.text.jackson.serializer.IsoLocalDateSerializer;
-import ltd.qubit.commons.text.jackson.serializer.IsoLocalDateTimeSerializer;
-import ltd.qubit.commons.text.jackson.serializer.IsoLocalTimeSerializer;
-import ltd.qubit.commons.text.jackson.serializer.IsoOffsetTimeJsonSerializer;
-import ltd.qubit.commons.text.jackson.serializer.MonthDaySerializer;
-import ltd.qubit.commons.text.jackson.serializer.PeriodSerializer;
-import ltd.qubit.commons.text.jackson.serializer.PosixLocaleSerializer;
-import ltd.qubit.commons.text.jackson.serializer.RawEnumSerializer;
-import ltd.qubit.commons.text.jackson.serializer.YearMonthJsonSerializer;
-import ltd.qubit.commons.text.jackson.serializer.YearSerializer;
-import ltd.qubit.commons.text.jackson.serializer.ZoneIdSerializer;
-import ltd.qubit.commons.text.jackson.serializer.ZoneOffsetSerializer;
-
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.KeyDeserializer;
+import ltd.qubit.commons.text.jackson.deserializer.*;
+import ltd.qubit.commons.text.jackson.serializer.*;
+
+import javax.annotation.Nullable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.*;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * 自定义的Jackson模块，支持自定义的序列化和反序列化器。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class TypeRegistrationModule extends com.fasterxml.jackson.databind.Module {
 

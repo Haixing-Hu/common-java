@@ -8,15 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
-import javax.annotation.concurrent.Immutable;
-
 import ltd.qubit.commons.util.codec.AlphabetBooleanCodec;
+
+import javax.annotation.concurrent.Immutable;
 
 /**
  * 布尔类{@link Boolean}的JSON反序列化器，此反序列化器将字符串"N"和"Y"分别映射到
  * {@code false}和{@code true}。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 @Immutable
 public class AlphabetBooleanDeserializer extends BooleanDeserializer {

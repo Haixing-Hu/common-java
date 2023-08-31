@@ -8,11 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.codec;
 
-import ltd.qubit.commons.datastructure.list.StringList;
-import ltd.qubit.commons.text.Stripper;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import ltd.qubit.commons.datastructure.list.StringList;
+import ltd.qubit.commons.text.Stripper;
 
 /**
  * {@link StringList}类的编码解码器。
@@ -20,7 +19,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
  * <p>此编码解码器将字符串列表以JSON方式进行编码和解码，从而可将字符串列表存入数据库的某个
  * 单独字段中。</p>
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class StringListCodec implements Codec<StringList, String> {
 

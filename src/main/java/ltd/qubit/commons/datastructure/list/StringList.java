@@ -8,19 +8,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import ltd.qubit.commons.annotation.TypeCodec;
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.util.codec.Codec;
 import ltd.qubit.commons.util.codec.StringListCodec;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 /**
  * 此模型表示字符串列表，继承了JDK的原生{@link ArrayList}，但提供了自定义的{@link Codec}
  * 和MyBatis Type Handler，并实现了{@link Assignable}接口。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 @TypeCodec(StringListCodec.class)
 public class StringList extends ArrayList<String> implements Assignable<StringList> {

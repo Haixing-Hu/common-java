@@ -8,13 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+import ltd.qubit.commons.lang.EnumUtils;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-
-import jakarta.xml.bind.annotation.XmlRootElement;
-
-import ltd.qubit.commons.lang.EnumUtils;
 
 import static ltd.qubit.commons.lang.EnumUtils.registerLocalizedNames;
 
@@ -29,7 +28,7 @@ import static ltd.qubit.commons.lang.EnumUtils.registerLocalizedNames;
  *   类别代码</a></li>
  * </ul>
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 @XmlRootElement(name = "credential-type")
 public enum CredentialType {

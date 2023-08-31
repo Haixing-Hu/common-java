@@ -8,15 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
-import ltd.qubit.commons.util.codec.AlphabetBooleanCodec;
-
 import com.fasterxml.jackson.core.JsonGenerator;
+import ltd.qubit.commons.util.codec.AlphabetBooleanCodec;
 
 /**
  * 布尔类 {@link Boolean} 的 JSON 序列化器，此序列化器将 {@code false} 和
  * {@code true} 分别映射到字符串 "N" 和 "Y"。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class AlphabetBooleanSerializer extends BooleanSerializer {
 

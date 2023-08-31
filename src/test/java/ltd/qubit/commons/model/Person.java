@@ -8,29 +8,23 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.concurrent.TimeUnit;
-
-import javax.annotation.Nullable;
-
 import jakarta.validation.constraints.Size;
-
 import ltd.qubit.commons.annotation.Computed;
 import ltd.qubit.commons.annotation.Identifier;
 import ltd.qubit.commons.annotation.Precision;
 import ltd.qubit.commons.annotation.Reference;
-import ltd.qubit.commons.lang.Argument;
-import ltd.qubit.commons.lang.Assignable;
-import ltd.qubit.commons.lang.Assignment;
-import ltd.qubit.commons.lang.Equality;
-import ltd.qubit.commons.lang.Hash;
+import ltd.qubit.commons.lang.*;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
+
+import javax.annotation.Nullable;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 此模型表示人的具体信息。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class Person implements Identifiable, WithName, WithCredential,
     WithBirthday, WithContact, WithComment, Auditable, Emptyful, Normalizable,

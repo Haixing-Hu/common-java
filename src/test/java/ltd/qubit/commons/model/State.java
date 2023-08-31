@@ -9,13 +9,12 @@
 package ltd.qubit.commons.model;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
-
 import ltd.qubit.commons.error.ErrorCode;
 
 /**
  * 此枚举表示实体类型的状态。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 @XmlRootElement(name = "state")
 public enum State {

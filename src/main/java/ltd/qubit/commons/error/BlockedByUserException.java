@@ -11,7 +11,7 @@ package ltd.qubit.commons.error;
 /**
  * 此错误表示当前用户被另一个用户所屏蔽。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class BlockedByUserException extends BusinessLogicException {
 

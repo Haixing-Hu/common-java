@@ -8,16 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.range;
 
-import javax.annotation.Nullable;
-
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
+import javax.annotation.Nullable;
+
 /**
  * 此模型表示长整数范围（前闭后开区间）。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class LongRange {
 

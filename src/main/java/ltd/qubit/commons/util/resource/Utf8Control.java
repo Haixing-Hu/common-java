@@ -22,7 +22,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 /**
  * 支持UTF-8编码的 .properties 文件的 {@code ResourceBundle.Control}.
  *
- * @author 胡海星
+ * @author Haixing Hu
  * @see <a href="https://gist.github.com/DemkaAge/8999236">ResourceBundle UTF-8 Control class</a>
  */
 public class Utf8Control extends ResourceBundle.Control {

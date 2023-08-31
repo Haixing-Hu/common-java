@@ -8,25 +8,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
-import java.time.LocalDate;
-
-import javax.annotation.Nullable;
-
 import jakarta.validation.constraints.Size;
-
 import ltd.qubit.commons.annotation.Computed;
 import ltd.qubit.commons.annotation.Identifier;
-import ltd.qubit.commons.lang.Argument;
-import ltd.qubit.commons.lang.Assignable;
-import ltd.qubit.commons.lang.Assignment;
-import ltd.qubit.commons.lang.Equality;
-import ltd.qubit.commons.lang.Hash;
+import ltd.qubit.commons.lang.*;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
+
+import javax.annotation.Nullable;
+import java.time.LocalDate;
 
 /**
  * 此模型表示一个人的基本信息。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class PersonInfo implements Identifiable, WithName, WithBirthday,
     Emptyful, Normalizable, Assignable<PersonInfo> {

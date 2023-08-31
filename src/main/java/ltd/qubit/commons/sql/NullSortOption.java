@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 /**
  * 此枚举表示排序时对NULL值得处理方式。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public enum NullSortOption {
 

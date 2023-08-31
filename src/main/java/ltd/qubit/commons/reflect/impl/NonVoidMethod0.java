@@ -15,7 +15,7 @@ package ltd.qubit.commons.reflect.impl;
  *     方法所属的类的类型。
  * @param <R>
  *     方法的返回值的类型。
- * @author 胡海星
+ * @author Haixing Hu
  */
 @FunctionalInterface
 public interface NonVoidMethod0<T, R> extends MethodReference<T> {

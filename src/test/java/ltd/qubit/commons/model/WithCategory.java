@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 /**
  * 此接口表示实体类属于某个分类。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public interface WithCategory {
 

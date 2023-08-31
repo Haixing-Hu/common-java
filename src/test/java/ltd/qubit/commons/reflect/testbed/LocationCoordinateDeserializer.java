@@ -13,7 +13,7 @@ import ltd.qubit.commons.text.jackson.deserializer.BigDecimalDeserializer;
 /**
  * 地理位置坐标的JSON反序列化器。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class LocationCoordinateDeserializer extends BigDecimalDeserializer {
 

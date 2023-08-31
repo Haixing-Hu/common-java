@@ -8,17 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
-import java.time.LocalDate;
+import ltd.qubit.commons.util.codec.IsoLocalDateCodec;
 
 import javax.annotation.concurrent.Immutable;
-
-import ltd.qubit.commons.util.codec.IsoLocalDateCodec;
+import java.time.LocalDate;
 
 /**
  * 符合 ISO-8601 的本地日期类 {@link LocalDate} 的 JSON 反序列化器，其编码格式为
  * "yyyy-mm-dd"。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 @Immutable
 public class IsoLocalDateDeserializer extends LocalDateDeserializer {

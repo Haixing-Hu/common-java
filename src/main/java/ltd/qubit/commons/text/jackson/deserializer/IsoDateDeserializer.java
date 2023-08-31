@@ -8,17 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
-import java.util.Date;
+import ltd.qubit.commons.util.codec.IsoDateCodec;
 
 import javax.annotation.concurrent.Immutable;
-
-import ltd.qubit.commons.util.codec.IsoDateCodec;
+import java.util.Date;
 
 /**
  * 符合 ISO-8601 的时间戳类 {@link Date} 的 JSON 反序列化器，其编码格式为
  * "yyyy-MM-dd'T'HH:mm:ss'Z'"。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 @Immutable
 public class IsoDateDeserializer extends DateDeserializer {

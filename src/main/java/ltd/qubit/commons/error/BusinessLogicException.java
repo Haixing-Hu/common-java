@@ -13,7 +13,7 @@ import ltd.qubit.commons.util.pair.KeyValuePair;
 /**
  * 此异常类是所有服务器端业务逻辑错误异常类的基类。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class BusinessLogicException extends ServerSideException {
 

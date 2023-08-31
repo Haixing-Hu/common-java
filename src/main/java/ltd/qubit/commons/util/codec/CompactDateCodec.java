@@ -11,7 +11,7 @@ package ltd.qubit.commons.util.codec;
 /**
  * 压缩格式的日期格式的日期编码器，该编码器将日期编码为"yyyyMMdd"的形式。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class CompactDateCodec extends LocalDateCodec {
 

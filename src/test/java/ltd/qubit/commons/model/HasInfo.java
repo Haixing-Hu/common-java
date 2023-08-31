@@ -13,7 +13,7 @@ import ltd.qubit.commons.annotation.Computed;
 /**
  * 此接口表示实体类具有基本信息。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public interface HasInfo extends Identifiable, WithCode, WithName {
 

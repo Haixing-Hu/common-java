@@ -8,16 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
-import java.time.Instant;
+import ltd.qubit.commons.annotation.Computed;
 
 import javax.annotation.Nullable;
-
-import ltd.qubit.commons.annotation.Computed;
+import java.time.Instant;
 
 /**
  * 此接口表示实体类记录了标记删除时间。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public interface Deletable {
 

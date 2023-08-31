@@ -13,7 +13,7 @@ import ltd.qubit.commons.annotation.Computed;
 /**
  * 此接口表示实体类具有带entity类别的基本信息。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public interface HasInfoWithEntity extends HasInfo, WithEntity {
 

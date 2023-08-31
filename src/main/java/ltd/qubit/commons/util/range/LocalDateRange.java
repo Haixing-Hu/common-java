@@ -8,21 +8,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.range;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-
-import javax.annotation.Nullable;
-
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
+import javax.annotation.Nullable;
+import java.io.Serializable;
+import java.time.LocalDate;
+
 /**
  * 此模型表示日期范围（前闭后开区间）。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class LocalDateRange implements Serializable, CloneableEx<LocalDateRange>,
         Assignable<LocalDateRange> {

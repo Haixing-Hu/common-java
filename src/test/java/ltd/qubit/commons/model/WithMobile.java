@@ -11,7 +11,7 @@ package ltd.qubit.commons.model;
 /**
  * 此接口表示实体类具有手机号码属性。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public interface WithMobile {
 

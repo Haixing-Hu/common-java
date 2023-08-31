@@ -13,7 +13,7 @@ import ltd.qubit.commons.util.pair.KeyValuePair;
 /**
  * 此错误表示对消息签名验证时失败。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class VerifySignatureException extends ServerInternalException {
 

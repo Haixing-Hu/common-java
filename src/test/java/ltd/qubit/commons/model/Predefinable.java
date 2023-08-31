@@ -11,7 +11,7 @@ package ltd.qubit.commons.model;
 /**
  * 此接口表示模型可被预定义。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public interface Predefinable {
 

@@ -8,12 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson;
 
-import ltd.qubit.commons.text.CaseFormat;
-
 import com.fasterxml.jackson.databind.SerializationConfig;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import ltd.qubit.commons.text.CaseFormat;
 
 import static ltd.qubit.commons.text.jackson.CustomizeJacksonUtils.customizeFeature;
 import static ltd.qubit.commons.text.jackson.CustomizeJacksonUtils.getNormalizedConfig;
@@ -21,7 +20,7 @@ import static ltd.qubit.commons.text.jackson.CustomizeJacksonUtils.getNormalized
 /**
  * 自定义的 Jackson JSON ObjectMapper。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class CustomizedJsonMapper extends JsonMapper {
 

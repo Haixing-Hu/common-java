@@ -15,7 +15,7 @@ package ltd.qubit.commons.reflect.impl;
  *     方法所属的类的类型。
  * @param <P1>
  *     方法的第一个参数的类型。
- * @author 胡海星
+ * @author Haixing Hu
  */
 @FunctionalInterface
 public interface VoidMethod1<T, P1> extends MethodReference<T>  {

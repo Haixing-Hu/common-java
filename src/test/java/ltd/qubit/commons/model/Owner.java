@@ -8,12 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
-import java.io.Serializable;
-
-import javax.annotation.Nullable;
-
 import jakarta.validation.constraints.Size;
-
 import ltd.qubit.commons.annotation.KeyIndex;
 import ltd.qubit.commons.lang.Argument;
 import ltd.qubit.commons.lang.Assignable;
@@ -21,14 +16,15 @@ import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
-import static ltd.qubit.commons.text.CaseFormat.LOWER_CAMEL;
-import static ltd.qubit.commons.text.CaseFormat.UPPER_CAMEL;
-import static ltd.qubit.commons.text.CaseFormat.UPPER_UNDERSCORE;
+import javax.annotation.Nullable;
+import java.io.Serializable;
+
+import static ltd.qubit.commons.text.CaseFormat.*;
 
 /**
  * 此模型表示对象所关联的所有者的信息。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class Owner implements Serializable, Emptyful, Normalizable, Assignable<Owner> {
 

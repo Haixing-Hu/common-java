@@ -8,17 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
-import java.time.LocalDateTime;
+import ltd.qubit.commons.util.codec.CompactDateTimeCodec;
 
 import javax.annotation.concurrent.Immutable;
-
-import ltd.qubit.commons.util.codec.CompactDateTimeCodec;
+import java.time.LocalDateTime;
 
 /**
  * 本地日期类 {@link LocalDateTime} 的 JSON 反序列化器，该反序列器将编码为
  *  "yyyyMMddHHmmss"形式的日期转换为  {@link LocalDateTime} 对象。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 @Immutable
 public class CompactDateTimeDeserializer extends LocalDateTimeDeserializer {

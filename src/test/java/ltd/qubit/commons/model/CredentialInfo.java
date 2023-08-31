@@ -8,22 +8,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
-import javax.annotation.Nullable;
-
 import jakarta.validation.constraints.Size;
-
 import ltd.qubit.commons.annotation.Identifier;
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
+import javax.annotation.Nullable;
+
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
  * 此模型表示各种证件、执照的基本信息。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class CredentialInfo implements Identifiable, Emptyful, Normalizable,
     Assignable<CredentialInfo> {

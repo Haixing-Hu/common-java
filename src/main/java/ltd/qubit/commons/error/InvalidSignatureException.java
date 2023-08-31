@@ -13,7 +13,7 @@ import ltd.qubit.commons.util.pair.KeyValuePair;
 /**
  * 此错误表示消息的数字签名错误。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class InvalidSignatureException extends BusinessLogicException {
 

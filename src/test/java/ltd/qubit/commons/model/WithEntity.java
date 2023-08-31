@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 /**
  * 此接口表示实体类具有所属实体类的属性。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public interface WithEntity {
 

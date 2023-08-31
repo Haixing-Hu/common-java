@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 /**
  * 此接口表示实体类具有令牌属性。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public interface WithToken {
 

@@ -13,7 +13,7 @@ import java.io.Serializable;
 /**
  * 此接口表示实体类具有ID属性。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public interface Identifiable extends Serializable {
 

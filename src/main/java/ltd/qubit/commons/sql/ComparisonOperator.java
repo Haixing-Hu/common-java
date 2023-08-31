@@ -11,7 +11,7 @@ package ltd.qubit.commons.sql;
 /**
  * 此枚举表示表达式左右之间的比较操作符。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public enum ComparisonOperator {
   /**

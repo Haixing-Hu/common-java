@@ -25,7 +25,7 @@ package ltd.qubit.commons.reflect.impl;
  *     方法的第4个参数的类型。
  * @param <P5>
  *     方法的第5个参数的类型。
- * @author 胡海星
+ * @author Haixing Hu
  */
 @FunctionalInterface
 public interface NonVoidMethod5<T, R, P1, P2, P3, P4, P5> extends MethodReference<T> {

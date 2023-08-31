@@ -8,17 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.Nullable;
-
 /**
  * 提供{@link List}相关的辅助函数。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class ListUtils {
 

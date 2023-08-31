@@ -8,11 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson;
 
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlElements;
-
-import ltd.qubit.commons.util.transformer.string.PluralToSingularTransformer;
-
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import com.fasterxml.jackson.databind.PropertyName;
@@ -20,13 +15,16 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies.NamingBase;
 import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.fasterxml.jackson.databind.introspect.AnnotatedClass;
 import com.fasterxml.jackson.databind.introspect.AnnotatedField;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElements;
+import ltd.qubit.commons.util.transformer.string.PluralToSingularTransformer;
 
 import static ltd.qubit.commons.text.jackson.JacksonUtils.JAXB_DEFAULT_VALUE;
 
 /**
  * 此 {@link AnnotationIntrospector} 用于根据指定的命名策略转换根元素名称，并且自动处理 集合类属性内部元素名称。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class XmlNameConversionIntrospector extends AnnotationIntrospector {
 

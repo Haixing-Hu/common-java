@@ -8,18 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson;
 
-import javax.xml.stream.XMLOutputFactory;
-
-import ltd.qubit.commons.text.CaseFormat;
-
-import org.codehaus.stax2.XMLOutputFactory2;
-
 import com.fasterxml.jackson.databind.SerializationConfig;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.module.jakarta.xmlbind.JakartaXmlBindAnnotationIntrospector;
+import ltd.qubit.commons.text.CaseFormat;
+import org.codehaus.stax2.XMLOutputFactory2;
+
+import javax.xml.stream.XMLOutputFactory;
 
 import static ltd.qubit.commons.text.jackson.CustomizeJacksonUtils.customizeFeature;
 import static ltd.qubit.commons.text.jackson.CustomizeJacksonUtils.getNormalizedConfig;
@@ -27,7 +25,7 @@ import static ltd.qubit.commons.text.jackson.CustomizeJacksonUtils.getNormalized
 /**
  * 自定义的 Jackson XmlMapper。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public class CustomizedXmlMapper extends XmlMapper {
 

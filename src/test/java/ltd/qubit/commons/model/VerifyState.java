@@ -13,7 +13,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 /**
  * 此枚举表示验证状态。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 @XmlRootElement(name = "verify-state")
 public enum VerifyState {

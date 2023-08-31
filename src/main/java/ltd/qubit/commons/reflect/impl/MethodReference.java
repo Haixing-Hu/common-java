@@ -13,7 +13,7 @@ package ltd.qubit.commons.reflect.impl;
  *
  * @param <T>
  *     方法所属的类的类型。
- * @author 胡海星
+ * @author Haixing Hu
  */
 public interface MethodReference<T> {
   //  empty

@@ -8,17 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
-import java.time.LocalTime;
+import ltd.qubit.commons.util.codec.IsoLocalTimeCodec;
 
 import javax.annotation.concurrent.Immutable;
-
-import ltd.qubit.commons.util.codec.IsoLocalTimeCodec;
+import java.time.LocalTime;
 
 /**
  * 符合 ISO-8601 的本地时间类 {@link LocalTime} 的 JSON 反序列化器，其编
  * 码格式为 "HH:mm:ss"。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 @Immutable
 public class IsoLocalTimeDeserializer extends LocalTimeDeserializer {

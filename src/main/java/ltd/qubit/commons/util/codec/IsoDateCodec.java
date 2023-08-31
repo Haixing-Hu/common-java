@@ -13,7 +13,7 @@ import ltd.qubit.commons.lang.DateUtils;
 /**
  * 符合 ISO-8601 的时间戳编码器，其编码格式为 "uuuu-mm-dd'T'HH:mm:ss.SSS'Z'"。
  *
- * @author 胡海星
+ * @author Haixing Hu
  * @see <a href="https://stackoverflow.com/questions/29014225/what-is-the-difference-between-year-and-year-of-era">
  * What is the difference between year and year-of-era?</a>
  */

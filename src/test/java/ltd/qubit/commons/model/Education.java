@@ -11,7 +11,7 @@ package ltd.qubit.commons.model;
 /**
  * 此枚举表示文化程度。
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
 public enum Education {
 
