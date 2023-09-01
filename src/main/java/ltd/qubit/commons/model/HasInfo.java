@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
+import java.time.Instant;
+
 import ltd.qubit.commons.annotation.Computed;
 
 /**
@@ -15,7 +17,7 @@ import ltd.qubit.commons.annotation.Computed;
  *
  * @author Haixing Hu
  */
-public interface HasInfo extends Identifiable, WithCode, WithName {
+public interface HasInfo extends Identifiable {
 
   /**
    * Get the basic information of this object.
@@ -25,6 +27,10 @@ public interface HasInfo extends Identifiable, WithCode, WithName {
    */
   @Computed({"id", "code", "name"})
   default Info getInfo() {
-    return new Info(getId(), getCode(), getName());
+    final Long id = this.getId();
+    final String code = ((this instanceof WithCode) ? ((WithCode) this).getCode() : null);
+    final String name = ((this instanceof WithName) ? ((WithName) this).getName() : null);
+    final Instant deleteTime = ((this instanceof Deletable) ? ((Deletable) this).getDeleteTime() : null);
+    return new Info(id, code, name, deleteTime);
   }
 }

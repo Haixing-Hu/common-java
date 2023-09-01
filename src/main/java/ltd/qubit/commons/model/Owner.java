@@ -27,8 +27,8 @@ import static ltd.qubit.commons.text.CaseFormat.UPPER_CAMEL;
 import static ltd.qubit.commons.text.CaseFormat.UPPER_UNDERSCORE;
 
 /**
- * This model represents the information about the owner that the object is
- * associated with.
+ * This model represents the information about the owner that an object belongs
+ * to.
  *
  * @author Haixing
  */
@@ -38,23 +38,28 @@ public class Owner implements Serializable, Assignable<Owner> {
   private static final long serialVersionUID = 5222045589841495742L;
 
   /**
-   * The name of the entity object&#39;s type.
+   * The name of the type of the owners.
+   * <p>
+   * It is usually in the uppercase-underscore form. For example, if the owner
+   * is an object of the class `MyOwnerClass`, the name of the type of the owner
+   * is `MY_OWNER_CLASS`.
    */
   @Size(min = 1, max = 64)
   @KeyIndex(0)
   private String type;
 
   /**
-   * The unique identifier of the entity object.
+   * The unique identifier of the owner.
    */
   @KeyIndex(1)
   private Long id;
 
   /**
-   * The name of the property of the entity object.
+   * The name of the property of the owner.
    */
   @Size(min = 1, max = 64)
   @KeyIndex(2)
+  @Nullable
   private String property;
 
   public Owner(final Class<?> cls, final Long id) {
@@ -111,11 +116,12 @@ public class Owner implements Serializable, Assignable<Owner> {
     this.id = id;
   }
 
+  @Nullable
   public String getProperty() {
     return property;
   }
 
-  public void setProperty(final String property) {
+  public void setProperty(@Nullable final String property) {
     this.property = property;
   }
 
