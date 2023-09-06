@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
+import java.time.Instant;
+
 import ltd.qubit.commons.annotation.Computed;
 
 /**
@@ -16,7 +18,7 @@ import ltd.qubit.commons.annotation.Computed;
  *
  * @author Haixing Hu
  */
-public interface HasStatefulInfo extends HasInfo, Stateful {
+public interface HasStatefulInfo extends Identifiable, Stateful, WithInfo<StatefulInfo> {
 
   /**
    * Get the basic information of this object.
@@ -27,6 +29,11 @@ public interface HasStatefulInfo extends HasInfo, Stateful {
   @Computed({"id", "code", "name", "state"})
   @Override
   default StatefulInfo getInfo() {
-    return new StatefulInfo(getId(), getCode(), getName(), getState());
+    final Long id = this.getId();
+    final String code = ((this instanceof WithCode) ? ((WithCode) this).getCode() : null);
+    final String name = ((this instanceof WithName) ? ((WithName) this).getName() : null);
+    final Instant deleteTime = ((this instanceof Deletable) ? ((Deletable) this).getDeleteTime() : null);
+    final State state = this.getState();
+    return new StatefulInfo(id, code, name, state);
   }
 }

@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
+import java.time.Instant;
+
 import ltd.qubit.commons.annotation.Computed;
 
 /**
@@ -27,6 +29,12 @@ public interface HasStatefulInfoWithToken extends HasStatefulInfo, WithToken {
   @Computed({"id", "code", "name", "state", "token"})
   @Override
   default StatefulInfoWithToken getInfo() {
-    return new StatefulInfoWithToken(getId(), getCode(), getName(), getState(), getToken());
+    final Long id = this.getId();
+    final String code = ((this instanceof WithCode) ? ((WithCode) this).getCode() : null);
+    final String name = ((this instanceof WithName) ? ((WithName) this).getName() : null);
+    final Instant deleteTime = ((this instanceof Deletable) ? ((Deletable) this).getDeleteTime() : null);
+    final State state = this.getState();
+    final Token token = this.getToken();
+    return new StatefulInfoWithToken(id, code, name, state, token);
   }
 }

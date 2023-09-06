@@ -26,7 +26,7 @@ import static ltd.qubit.commons.text.CaseFormat.UPPER_UNDERSCORE;
  *
  * @author Haixing Hu
  */
-public class InfoWithEntity extends Info implements HasInfoWithEntity {
+public class InfoWithEntity extends Info implements WithEntity {
 
   @Serial
   private static final long serialVersionUID = 7281371900014761423L;

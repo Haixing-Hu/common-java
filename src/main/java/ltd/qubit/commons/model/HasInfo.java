@@ -17,7 +17,7 @@ import ltd.qubit.commons.annotation.Computed;
  *
  * @author Haixing Hu
  */
-public interface HasInfo extends Identifiable {
+public interface HasInfo extends Identifiable, WithInfo<Info> {
 
   /**
    * Get the basic information of this object.
@@ -26,6 +26,7 @@ public interface HasInfo extends Identifiable {
    *     Basic information about this object.
    */
   @Computed({"id", "code", "name"})
+  @Override
   default Info getInfo() {
     final Long id = this.getId();
     final String code = ((this instanceof WithCode) ? ((WithCode) this).getCode() : null);

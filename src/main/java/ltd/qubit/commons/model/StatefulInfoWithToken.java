@@ -17,7 +17,7 @@ import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
-public class StatefulInfoWithToken extends StatefulInfo implements HasStatefulInfoWithToken {
+public class StatefulInfoWithToken extends StatefulInfo implements WithToken {
 
   @Serial
   private static final long serialVersionUID = -634198626515479152L;

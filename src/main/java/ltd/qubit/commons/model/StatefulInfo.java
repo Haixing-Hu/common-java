@@ -19,7 +19,7 @@ import ltd.qubit.commons.text.tostring.ToStringBuilder;
  *
  * @author Haixing Hu
  */
-public class StatefulInfo extends Info implements HasStatefulInfo {
+public class StatefulInfo extends Info implements Stateful {
 
   @Serial
   private static final long serialVersionUID = 2919962686331957698L;

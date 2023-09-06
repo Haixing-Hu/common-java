@@ -9,6 +9,7 @@
 package ltd.qubit.commons.model;
 
 import java.io.Serial;
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +32,8 @@ import ltd.qubit.commons.util.pair.KeyValuePair;
  *
  * @author Haixing Hu
  */
-public class Info implements HasInfo, Deletable, Emptyful, Normalizable,
-    Assignable<Info> {
+public class Info implements Serializable, Identifiable, Deletable, Emptyful,
+    Normalizable, Assignable<Info> {
 
   @Serial
   private static final long serialVersionUID = 7281371900014761423L;
@@ -258,22 +259,18 @@ public class Info implements HasInfo, Deletable, Emptyful, Normalizable,
     this.id = id;
   }
 
-  @Override
   public String getCode() {
     return code;
   }
 
-  @Override
   public void setCode(final String code) {
     this.code = code;
   }
 
-  @Override
   public String getName() {
     return name;
   }
 
-  @Override
   public void setName(final String name) {
     this.name = name;
   }
