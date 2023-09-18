@@ -45,7 +45,6 @@ import ltd.qubit.commons.lang.LongUtils;
 import ltd.qubit.commons.lang.ShortUtils;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.model.Foo;
-import ltd.qubit.commons.model.Gender;
 
 import org.junit.jupiter.api.Test;
 
@@ -123,7 +122,7 @@ public class CriterionImplUtilsTest {
     assertEquals("-123", valueToSql((byte) -123));
     assertEquals("123", valueToSql((short) +123));
     assertEquals("12345", valueToSql(12345));
-    assertEquals("1234567890", valueToSql(1234567890l));
+    assertEquals("1234567890", valueToSql(1234567890L));
     assertEquals("123.45", valueToSql(123.45f));
     assertEquals("123.45", valueToSql(123.45));
     assertEquals("12345678901234567890",

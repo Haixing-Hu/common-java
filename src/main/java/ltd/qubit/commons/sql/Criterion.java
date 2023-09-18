@@ -10,11 +10,14 @@ package ltd.qubit.commons.sql;
 
 import java.sql.SQLSyntaxErrorException;
 
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.util.filter.Filter;
 
 /**
  * 此接口表示执行数据库查询时过滤实体的条件。
  */
+@Immutable
 public interface Criterion<T> extends Filter<T> {
 
   /**

@@ -8,14 +8,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
+import java.sql.SQLSyntaxErrorException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import ltd.qubit.commons.util.LogicRelation;
-
-import java.sql.SQLSyntaxErrorException;
-import java.util.Arrays;
-import java.util.List;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
@@ -31,6 +34,7 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
  *     待过滤的实体的类。
  * @author Haixing Hu
  */
+@Immutable
 public class ComposedCriterion<T> implements Criterion<T> {
 
   private final Class<T> entityClass;
@@ -66,7 +70,7 @@ public class ComposedCriterion<T> implements Criterion<T> {
   }
 
   public final List<SimpleCriterion<T>> getCriteria() {
-    return criteria;
+    return Collections.unmodifiableList(criteria);
   }
 
   @Override

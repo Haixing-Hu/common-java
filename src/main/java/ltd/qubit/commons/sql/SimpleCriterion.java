@@ -8,20 +8,29 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
+import java.sql.SQLSyntaxErrorException;
+
+import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
+
 import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.SqlLikePattern;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
-import javax.annotation.Nullable;
-import java.sql.SQLSyntaxErrorException;
-
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
-import static ltd.qubit.commons.reflect.ObjectGraphUtils.*;
+import static ltd.qubit.commons.reflect.ObjectGraphUtils.getPropertyType;
+import static ltd.qubit.commons.reflect.ObjectGraphUtils.getPropertyValue;
+import static ltd.qubit.commons.reflect.ObjectGraphUtils.hasProperty;
 import static ltd.qubit.commons.sql.ComparisonOperator.EQUAL;
 import static ltd.qubit.commons.sql.ComparisonOperator.NOT_EQUAL;
-import static ltd.qubit.commons.sql.impl.CriterionImplUtils.*;
+import static ltd.qubit.commons.sql.impl.CriterionImplUtils.arrayToSql;
+import static ltd.qubit.commons.sql.impl.CriterionImplUtils.fieldToSql;
+import static ltd.qubit.commons.sql.impl.CriterionImplUtils.isComparable;
+import static ltd.qubit.commons.sql.impl.CriterionImplUtils.isSupportedDataType;
+import static ltd.qubit.commons.sql.impl.CriterionImplUtils.toComparableValue;
+import static ltd.qubit.commons.sql.impl.CriterionImplUtils.valueToSql;
 import static ltd.qubit.commons.text.NamingStyleUtils.propertyPathToDatabaseField;
 
 /**
@@ -29,6 +38,7 @@ import static ltd.qubit.commons.text.NamingStyleUtils.propertyPathToDatabaseFiel
  *
  * @author Haixing Hu
  */
+@Immutable
 public class SimpleCriterion<T> implements Criterion<T> {
 
   /**
