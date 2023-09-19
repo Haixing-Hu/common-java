@@ -45,6 +45,7 @@ import ltd.qubit.commons.lang.LongUtils;
 import ltd.qubit.commons.lang.ShortUtils;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.model.Foo;
+import ltd.qubit.commons.model.Gender;
 
 import org.junit.jupiter.api.Test;
 
