@@ -27,11 +27,6 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import ltd.qubit.commons.reflect.ConstructorUtils;
-import ltd.qubit.commons.text.Remover;
-import ltd.qubit.commons.util.transformer.string.PluralToSingularTransformer;
-import ltd.qubit.commons.util.transformer.string.SingularToPluralTransformer;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.core.JsonFactory;
@@ -64,6 +59,11 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
+
+import ltd.qubit.commons.reflect.ConstructorUtils;
+import ltd.qubit.commons.text.Remover;
+import ltd.qubit.commons.util.transformer.string.PluralToSingularTransformer;
+import ltd.qubit.commons.util.transformer.string.SingularToPluralTransformer;
 
 import static ltd.qubit.commons.lang.StringUtils.defaultToNull;
 import static ltd.qubit.commons.reflect.FieldUtils.getAnnotation;
@@ -536,8 +536,9 @@ public class JacksonUtils {
     // com.fasterxml.jackson.databind.introspect.POJOPropertyBuilder._rawTypeOf()
     // AnnotatedMethod always returns type, but for setters we
     // actually need argument type
-    if (member instanceof AnnotatedMethod method) {
-        if (method.getParameterCount() > 0) {
+    if (member instanceof AnnotatedMethod) {
+      final AnnotatedMethod method = (AnnotatedMethod) member;
+      if (method.getParameterCount() > 0) {
         // note: get raw type FROM full type since only that resolves
         // generic types
         return method.getParameterType(0).getRawClass();

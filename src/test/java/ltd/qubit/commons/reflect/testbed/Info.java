@@ -8,13 +8,22 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect.testbed;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import ltd.qubit.commons.annotation.Identifier;
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.Equality;
@@ -22,11 +31,6 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import ltd.qubit.commons.util.pair.KeyValuePair;
-
-import javax.annotation.Nullable;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
@@ -42,7 +46,7 @@ import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
                 getterVisibility = NONE,
                 isGetterVisibility = NONE,
                 setterVisibility = NONE)
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(Include.NON_NULL)
 public class Info implements Identifiable, WithCode, WithName, Deletable,
     Assignable<Info> {
 
@@ -235,22 +239,20 @@ public class Info implements Identifiable, WithCode, WithName, Deletable,
     return params.toArray(new KeyValuePair[0]);
   }
 
-  @Override
   public boolean equals(final Object o) {
     if (this == o) {
       return true;
     }
-    // 注意：允许Info的trivial子类和Info进行比较
-    if ((o == null) || (! (o instanceof final Info other))) {
+    if ((o == null) || (getClass() != o.getClass())) {
       return false;
     }
-      return Equality.equals(id, other.id)
-            && Equality.equals(code, other.code)
-            && Equality.equals(name, other.name)
-            && Equality.equals(deleteTime, other.deleteTime);
+    final Info other = (Info) o;
+    return Equality.equals(id, other.id)
+        && Equality.equals(code, other.code)
+        && Equality.equals(name, other.name)
+        && Equality.equals(deleteTime, other.deleteTime);
   }
 
-  @Override
   public int hashCode() {
     final int multiplier = 7;
     int result = 3;
@@ -261,13 +263,12 @@ public class Info implements Identifiable, WithCode, WithName, Deletable,
     return result;
   }
 
-  @Override
   public String toString() {
     return new ToStringBuilder(this)
-            .append("id", id)
-            .append("code", code)
-            .append("name", name)
-            .append("deleteTime", deleteTime)
-            .toString();
+        .append("id", id)
+        .append("code", code)
+        .append("name", name)
+        .append("deleteTime", deleteTime)
+        .toString();
   }
 }
