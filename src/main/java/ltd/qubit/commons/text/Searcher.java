@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
-//    Haixing Hu, Qubit Co. Ltd.
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -33,7 +33,6 @@ import ltd.qubit.commons.util.filter.codepoint.RejectAllCodePointFilter;
 import ltd.qubit.commons.util.filter.codepoint.RejectSpecifiedCodePointFilter;
 
 import static ltd.qubit.commons.lang.ArrayUtils.EMPTY_INT_ARRAY;
-import static ltd.qubit.commons.lang.StringUtils.EMPTY;
 import static ltd.qubit.commons.text.impl.SearcherImpl.countMatchesOfAnySubstring;
 import static ltd.qubit.commons.text.impl.SearcherImpl.countMatchesOfChar;
 import static ltd.qubit.commons.text.impl.SearcherImpl.countMatchesOfCodePoint;
@@ -49,7 +48,7 @@ import static ltd.qubit.commons.text.impl.SearcherImpl.getOccurrencesOfChar;
 import static ltd.qubit.commons.text.impl.SearcherImpl.getOccurrencesOfCodePoint;
 import static ltd.qubit.commons.text.impl.SearcherImpl.getOccurrencesOfSubstring;
 import static ltd.qubit.commons.text.impl.SearcherImpl.lastIndexOf;
-import static ltd.qubit.commons.text.impl.SearcherImpl.lastIndexOfAny;
+import static ltd.qubit.commons.text.impl.SearcherImpl.lastIndexOfAnySubstring;
 import static ltd.qubit.commons.text.impl.SearcherImpl.startsWithAnySubstring;
 import static ltd.qubit.commons.text.impl.SearcherImpl.startsWithChar;
 import static ltd.qubit.commons.text.impl.SearcherImpl.startsWithCodePoint;
@@ -62,22 +61,30 @@ import static ltd.qubit.commons.text.impl.SearcherImpl.startsWithSubstring;
  */
 public class Searcher {
 
+  private enum Target {
+    CHAR,
+    CODE_POINT,
+    SUBSTRING,
+    SUBSTRINGS,
+  }
+
   private CharFilter charFilter;
   private CodePointFilter codePointFilter;
   private CharSequence substring;
   private CharSequence[] substrings;
-  private boolean nullSubstring = false;
   private int startIndex = 0;
   private int endIndex = Integer.MAX_VALUE;
   private boolean ignoreCase = false;
+  private Target target = null;
 
   public Searcher() {}
 
   private void clearStrategies() {
-    this.charFilter = null;
-    this.codePointFilter = null;
-    this.substring = null;
-    this.substrings = null;
+    charFilter = null;
+    codePointFilter = null;
+    substring = null;
+    substrings = null;
+    target = null;
   }
 
   /**
@@ -91,6 +98,7 @@ public class Searcher {
   public Searcher forChar(final char ch) {
     this.clearStrategies();
     this.charFilter = new AcceptSpecifiedCharFilter(ch);
+    this.target = Target.CHAR;
     return this;
   }
 
@@ -106,6 +114,7 @@ public class Searcher {
   public Searcher forCharsNotEqual(final char ch) {
     this.clearStrategies();
     this.charFilter = new RejectSpecifiedCharFilter(ch);
+    this.target = Target.CHAR;
     return this;
   }
 
@@ -125,6 +134,7 @@ public class Searcher {
     } else {
       this.charFilter = new InArrayCharFilter(chars);
     }
+    this.target = Target.CHAR;
     return this;
   }
 
@@ -144,6 +154,7 @@ public class Searcher {
     } else {
       this.charFilter = new InStringCharFilter(chars);
     }
+    this.target = Target.CHAR;
     return this;
   }
 
@@ -164,6 +175,7 @@ public class Searcher {
     } else {
       this.charFilter = new NotInArrayCharFilter(chars);
     }
+    this.target = Target.CHAR;
     return this;
   }
 
@@ -184,6 +196,7 @@ public class Searcher {
     } else {
       this.charFilter = new NotInStringCharFilter(chars);
     }
+    this.target = Target.CHAR;
     return this;
   }
 
@@ -203,6 +216,7 @@ public class Searcher {
     } else {
       this.charFilter = filter;
     }
+    this.target = Target.CHAR;
     return this;
   }
 
@@ -222,6 +236,7 @@ public class Searcher {
     } else {
       this.charFilter = CharFilter.not(filter);
     }
+    this.target = Target.CHAR;
     return this;
   }
 
@@ -236,6 +251,7 @@ public class Searcher {
   public Searcher forCodePoint(final int codePoint) {
     this.clearStrategies();
     this.codePointFilter = new AcceptSpecifiedCodePointFilter(codePoint);
+    this.target = Target.CODE_POINT;
     return this;
   }
 
@@ -256,6 +272,7 @@ public class Searcher {
     } else {
       this.codePointFilter = new AcceptSpecifiedCodePointFilter(codePoint);
     }
+    this.target = Target.CODE_POINT;
     return this;
   }
 
@@ -271,6 +288,7 @@ public class Searcher {
   public Searcher forCodePointsNotEqual(final int codePoint) {
     this.clearStrategies();
     this.codePointFilter = new RejectSpecifiedCodePointFilter(codePoint);
+    this.target = Target.CODE_POINT;
     return this;
   }
 
@@ -292,6 +310,7 @@ public class Searcher {
     } else {
       this.codePointFilter = new RejectSpecifiedCodePointFilter(codePoint);
     }
+    this.target = Target.CODE_POINT;
     return this;
   }
 
@@ -312,6 +331,7 @@ public class Searcher {
     } else {
       this.codePointFilter = new InArrayCodePointFilter(codePoints);
     }
+    this.target = Target.CODE_POINT;
     return this;
   }
 
@@ -332,6 +352,7 @@ public class Searcher {
     } else {
       this.codePointFilter = new InStringCodePointFilter(codePoints);
     }
+    this.target = Target.CODE_POINT;
     return this;
   }
 
@@ -353,6 +374,7 @@ public class Searcher {
     } else {
       this.codePointFilter = new NotInArrayCodePointFilter(codePoints);
     }
+    this.target = Target.CODE_POINT;
     return this;
   }
 
@@ -373,6 +395,7 @@ public class Searcher {
     } else {
       this.codePointFilter = new NotInStringCodePointFilter(codePoints);
     }
+    this.target = Target.CODE_POINT;
     return this;
   }
 
@@ -392,6 +415,7 @@ public class Searcher {
     } else {
       this.codePointFilter = filter;
     }
+    this.target = Target.CODE_POINT;
     return this;
   }
 
@@ -411,6 +435,7 @@ public class Searcher {
     } else {
       this.codePointFilter = CodePointFilter.not(filter);
     }
+    this.target = Target.CODE_POINT;
     return this;
   }
 
@@ -425,13 +450,8 @@ public class Searcher {
    */
   public Searcher forSubstring(@Nullable final CharSequence substring) {
     this.clearStrategies();
-    if (substring == null) {
-      this.substring = EMPTY;
-      this.nullSubstring = true;
-    } else {
-      this.substring = substring;
-      this.nullSubstring = false;
-    }
+    this.substring = substring;
+    this.target = Target.SUBSTRING;
     return this;
   }
 
@@ -447,6 +467,7 @@ public class Searcher {
   public Searcher forSubstringsIn(@Nullable final CharSequence... substrings) {
     this.clearStrategies();
     this.substrings = ArrayUtils.nullToEmpty(substrings);
+    this.target = Target.SUBSTRINGS;
     return this;
   }
 
@@ -512,19 +533,24 @@ public class Searcher {
     final int start = Math.max(0, startIndex);
     final int end = Math.min(strLen, endIndex);
     final int result;
-    if (charFilter != null) {
-      result = firstIndexOf(str, start, end, charFilter);
-    } else if (codePointFilter != null) {
-      result = firstIndexOf(str, start, end, codePointFilter);
-    } else if (substring != null) {
-      if (nullSubstring) {
-        return -1;
-      }
-      result = firstIndexOf(str, start, end, substring, ignoreCase);
-    } else if (substrings != null) {
-      result = firstIndexOfAnySubstring(str, start, end, substrings, ignoreCase);
-    } else {
-      throw new IllegalStateException("No search target was specified.");
+    switch (target) {
+      case CHAR:
+        result = firstIndexOf(str, start, end, charFilter);
+        break;
+      case CODE_POINT:
+        result = firstIndexOf(str, start, end, codePointFilter);
+        break;
+      case SUBSTRING:
+        if (substring == null) {
+          return -1;
+        }
+        result = firstIndexOf(str, start, end, substring, ignoreCase);
+        break;
+      case SUBSTRINGS:
+        result = firstIndexOfAnySubstring(str, start, end, substrings, ignoreCase);
+        break;
+      default:
+        throw new IllegalStateException("No searching strategy was specified.");
     }
     return (result < end ? result : -1);
   }
@@ -541,19 +567,24 @@ public class Searcher {
     final int start = Math.max(0, startIndex);
     final int end = Math.min(strLen, endIndex);
     final int result;
-    if (charFilter != null) {
-      result = lastIndexOf(str, start, end, charFilter);
-    } else if (codePointFilter != null) {
-      result = lastIndexOf(str, start, end, codePointFilter);
-    } else if (substring != null) {
-      if (nullSubstring) {
-        return -1;
-      }
-      result = lastIndexOf(str, start, end, substring, ignoreCase);
-    } else if (substrings != null) {
-      result = lastIndexOfAny(str, start, end, substrings, ignoreCase);
-    } else {
-      throw new IllegalStateException("No search target was specified.");
+    switch (target) {
+      case CHAR:
+        result = lastIndexOf(str, start, end, charFilter);
+        break;
+      case CODE_POINT:
+        result = lastIndexOf(str, start, end, codePointFilter);
+        break;
+      case SUBSTRING:
+        if (substring == null) {
+          return -1;
+        }
+        result = lastIndexOf(str, start, end, substring, ignoreCase);
+        break;
+      case SUBSTRINGS:
+        result = lastIndexOfAnySubstring(str, start, end, substrings, ignoreCase);
+        break;
+      default:
+        throw new IllegalStateException("No searching strategy was specified.");
     }
     return (result >= start ? result : -1);
   }
@@ -613,20 +644,20 @@ public class Searcher {
     }
     final int start = Math.max(0, startIndex);
     final int end = Math.min(strLen, endIndex);
-    final int result;
-    if (charFilter != null) {
-      return countMatchesOfChar(str, start, end, charFilter);
-    } else if (codePointFilter != null) {
-      return countMatchesOfCodePoint(str, start, end, codePointFilter);
-    } else if (substring != null) {
-      if (nullSubstring) {
-        return 0;
-      }
-      return countMatchesOfSubstring(str, start, end, substring, ignoreCase);
-    } else if (substrings != null) {
-      return countMatchesOfAnySubstring(str, start, end, substrings, ignoreCase);
-    } else {
-      throw new IllegalStateException("No search target was specified.");
+    switch (target) {
+      case CHAR:
+        return countMatchesOfChar(str, start, end, charFilter);
+      case CODE_POINT:
+        return countMatchesOfCodePoint(str, start, end, codePointFilter);
+      case SUBSTRING:
+        if (substring == null || substring.length() == 0) {
+          return 0;
+        }
+        return countMatchesOfSubstring(str, start, end, substring, ignoreCase);
+      case SUBSTRINGS:
+        return countMatchesOfAnySubstring(str, start, end, substrings, ignoreCase);
+      default:
+        throw new IllegalStateException("No searching strategy was specified.");
     }
   }
 
@@ -654,19 +685,24 @@ public class Searcher {
     final int start = Math.max(0, startIndex);
     final int end = Math.min(strLen, endIndex);
     final IntList result = new IntArrayList();
-    if (charFilter != null) {
-      getOccurrencesOfChar(str, start, end, charFilter, result);
-    } else if (codePointFilter != null) {
-      getOccurrencesOfCodePoint(str, start, end, codePointFilter, result);
-    } else if (substring != null) {
-      if (nullSubstring) {
-        return EMPTY_INT_ARRAY;
-      }
-      getOccurrencesOfSubstring(str, start, end, substring, ignoreCase, result);
-    } else if (substrings != null) {
-      getOccurrencesOfAnySubstring(str, start, end, substrings, ignoreCase, result);
-    } else {
-      throw new IllegalStateException("No search target was specified.");
+    switch (target) {
+      case CHAR:
+        getOccurrencesOfChar(str, start, end, charFilter, result);
+        break;
+      case CODE_POINT:
+        getOccurrencesOfCodePoint(str, start, end, codePointFilter, result);
+        break;
+      case SUBSTRING:
+        if (substring == null) {
+          return EMPTY_INT_ARRAY;
+        }
+        getOccurrencesOfSubstring(str, start, end, substring, ignoreCase, result);
+        break;
+      case SUBSTRINGS:
+        getOccurrencesOfAnySubstring(str, start, end, substrings, ignoreCase, result);
+        break;
+      default:
+        throw new IllegalStateException("No searching strategy was specified.");
     }
     return result.toArray();
   }
@@ -704,19 +740,24 @@ public class Searcher {
     }
     final int start = Math.max(0, startIndex);
     final int end = Math.min(strLen, endIndex);
-    if (charFilter != null) {
-      getOccurrencesOfChar(str, start, end, charFilter, result);
-    } else if (codePointFilter != null) {
-      getOccurrencesOfCodePoint(str, start, end, codePointFilter, result);
-    } else if (substring != null) {
-      if (nullSubstring) {
-        return result;
-      }
-      getOccurrencesOfSubstring(str, start, end, substring, ignoreCase, result);
-    } else if (substrings != null) {
-      getOccurrencesOfAnySubstring(str, start, end, substrings, ignoreCase, result);
-    } else {
-      throw new IllegalStateException("No search target was specified.");
+    switch (target) {
+      case CHAR:
+        getOccurrencesOfChar(str, start, end, charFilter, result);
+        break;
+      case CODE_POINT:
+        getOccurrencesOfCodePoint(str, start, end, codePointFilter, result);
+        break;
+      case SUBSTRING:
+        if (substring == null) {
+          return result;
+        }
+        getOccurrencesOfSubstring(str, start, end, substring, ignoreCase, result);
+        break;
+      case SUBSTRINGS:
+        getOccurrencesOfAnySubstring(str, start, end, substrings, ignoreCase, result);
+        break;
+      default:
+        throw new IllegalStateException("No searching strategy was specified.");
     }
     return result;
   }
@@ -732,28 +773,42 @@ public class Searcher {
    *     whether the specified string starts with the specified target.
    */
   public boolean isAtStartOf(@Nullable final CharSequence str) {
-    if ((str == null)
-        || (startIndex > str.length())
-        || (endIndex < 0)
-        || (startIndex > endIndex)) {
+    if (str == null) {
+      return ((target == Target.SUBSTRING) && (substring == null));
+    }
+    final int strLen = str.length();
+    if (strLen == 0) {
+      switch (target) {
+        case CHAR:
+        case CODE_POINT:
+          return false;
+        case SUBSTRING:
+          return (substring != null) && (substring.length() == 0);
+        case SUBSTRINGS:
+          return ArrayUtils.containsIf(substrings, (s) -> (s != null && s.length() == 0));
+        default:
+          throw new IllegalStateException("No searching strategy was specified.");
+      }
+    }
+    if ((startIndex >= strLen) || (endIndex <= 0) || (startIndex >= endIndex)) {
       return false;
     }
     final int start = Math.max(0, startIndex);
-    final int end = Math.min(str.length(), endIndex);
-    final int result;
-    if (charFilter != null) {
-      return startsWithChar(str, start, end, charFilter);
-    } else if (codePointFilter != null) {
-      return startsWithCodePoint(str, start, end, codePointFilter);
-    } else if (substring != null) {
-      if (nullSubstring) {
-        return false;
-      }
-      return startsWithSubstring(str, start, end, substring, ignoreCase);
-    } else if (substrings != null) {
-      return startsWithAnySubstring(str, start, end, substrings, ignoreCase);
-    } else {
-      throw new IllegalStateException("No split strategy was specified.");
+    final int end = Math.min(strLen, endIndex);
+    switch (target) {
+      case CHAR:
+        return startsWithChar(str, start, end, charFilter);
+      case CODE_POINT:
+        return startsWithCodePoint(str, start, end, codePointFilter);
+      case SUBSTRING:
+        if (substring == null) {
+          return false;
+        }
+        return startsWithSubstring(str, start, end, substring, ignoreCase);
+      case SUBSTRINGS:
+        return startsWithAnySubstring(str, start, end, substrings, ignoreCase);
+      default:
+        throw new IllegalStateException("No searching strategy was specified.");
     }
   }
 
@@ -768,28 +823,42 @@ public class Searcher {
    *     whether the specified string ends with the specified target.
    */
   public boolean isAtEndOf(@Nullable final CharSequence str) {
-    if ((str == null)
-        || (startIndex > str.length())
-        || (endIndex < 0)
-        || (startIndex > endIndex)) {
+    if (str == null) {
+      return ((target == Target.SUBSTRING) && (substring == null));
+    }
+    final int strLen = str.length();
+    if (strLen == 0) {
+      switch (target) {
+        case CHAR:
+        case CODE_POINT:
+          return false;
+        case SUBSTRING:
+          return (substring != null) && (substring.length() == 0);
+        case SUBSTRINGS:
+          return ArrayUtils.containsIf(substrings, (s) -> (s != null && s.length() == 0));
+        default:
+          throw new IllegalStateException("No searching strategy was specified.");
+      }
+    }
+    if ((startIndex >= strLen) || (endIndex <= 0) || (startIndex >= endIndex)) {
       return false;
     }
     final int start = Math.max(0, startIndex);
-    final int end = Math.min(str.length(), endIndex);
-    final int result;
-    if (charFilter != null) {
-      return endsWithChar(str, start, end, charFilter);
-    } else if (codePointFilter != null) {
-      return endsWithCodePoint(str, start, end, codePointFilter);
-    } else if (substring != null) {
-      if (nullSubstring) {
-        return false;
-      }
-      return endsWithSubstring(str, start, end, substring, ignoreCase);
-    } else if (substrings != null) {
-      return endsWithAnySubstring(str, start, end, substrings, ignoreCase);
-    } else {
-      throw new IllegalStateException("No split strategy was specified.");
+    final int end = Math.min(strLen, endIndex);
+    switch (target) {
+      case CHAR:
+        return endsWithChar(str, start, end, charFilter);
+      case CODE_POINT:
+        return endsWithCodePoint(str, start, end, codePointFilter);
+      case SUBSTRING:
+        if (substring == null) {
+          return false;
+        }
+        return endsWithSubstring(str, start, end, substring, ignoreCase);
+      case SUBSTRINGS:
+        return endsWithAnySubstring(str, start, end, substrings, ignoreCase);
+      default:
+        throw new IllegalStateException("No searching strategy was specified.");
     }
   }
 
@@ -805,32 +874,46 @@ public class Searcher {
    *     target.
    */
   public boolean isAtStartOrEndOf(@Nullable final CharSequence str) {
-    if ((str == null)
-        || (startIndex > str.length())
-        || (endIndex < 0)
-        || (startIndex > endIndex)) {
+    if (str == null) {
+      return ((target == Target.SUBSTRING) && (substring == null));
+    }
+    final int strLen = str.length();
+    if (strLen == 0) {
+      switch (target) {
+        case CHAR:
+        case CODE_POINT:
+          return false;
+        case SUBSTRING:
+          return (substring != null) && (substring.length() == 0);
+        case SUBSTRINGS:
+          return ArrayUtils.containsIf(substrings, (s) -> (s != null && s.length() == 0));
+        default:
+          throw new IllegalStateException("No searching strategy was specified.");
+      }
+    }
+    if ((startIndex >= strLen) || (endIndex <= 0) || (startIndex >= endIndex)) {
       return false;
     }
     final int start = Math.max(0, startIndex);
-    final int end = Math.min(str.length(), endIndex);
-    final int result;
-    if (charFilter != null) {
-      return startsWithChar(str, start, end, charFilter)
-          || endsWithChar(str, start, end, charFilter);
-    } else if (codePointFilter != null) {
-      return startsWithCodePoint(str, start, end, codePointFilter)
-          || endsWithCodePoint(str, start, end, codePointFilter);
-    } else if (substring != null) {
-      if (nullSubstring) {
-        return false;
-      }
-      return startsWithSubstring(str, start, end, substring, ignoreCase)
-          || endsWithSubstring(str, start, end, substring, ignoreCase);
-    } else if (substrings != null) {
-      return startsWithAnySubstring(str, start, end, substrings, ignoreCase)
-          || endsWithAnySubstring(str, start, end, substrings, ignoreCase);
-    } else {
-      throw new IllegalStateException("No split strategy was specified.");
+    final int end = Math.min(strLen, endIndex);
+    switch (target) {
+      case CHAR:
+        return startsWithChar(str, start, end, charFilter)
+            || endsWithChar(str, start, end, charFilter);
+      case CODE_POINT:
+        return startsWithCodePoint(str, start, end, codePointFilter)
+            || endsWithCodePoint(str, start, end, codePointFilter);
+      case SUBSTRING:
+        if (substring == null) {
+          return false;
+        }
+        return startsWithSubstring(str, start, end, substring, ignoreCase)
+            || endsWithSubstring(str, start, end, substring, ignoreCase);
+      case SUBSTRINGS:
+        return startsWithAnySubstring(str, start, end, substrings, ignoreCase)
+            || endsWithAnySubstring(str, start, end, substrings, ignoreCase);
+      default:
+        throw new IllegalStateException("No searching strategy was specified.");
     }
   }
 
@@ -847,32 +930,46 @@ public class Searcher {
    *     specified target.
    */
   public boolean isAtStartAndEndOf(@Nullable final CharSequence str) {
-    if ((str == null)
-        || (startIndex > str.length())
-        || (endIndex < 0)
-        || (startIndex > endIndex)) {
+    if (str == null) {
+      return ((target == Target.SUBSTRING) && (substring == null));
+    }
+    final int strLen = str.length();
+    if (strLen == 0) {
+      switch (target) {
+        case CHAR:
+        case CODE_POINT:
+          return false;
+        case SUBSTRING:
+          return (substring != null) && (substring.length() == 0);
+        case SUBSTRINGS:
+          return ArrayUtils.containsIf(substrings, (s) -> (s != null && s.length() == 0));
+        default:
+          throw new IllegalStateException("No searching strategy was specified.");
+      }
+    }
+    if ((startIndex >= strLen) || (endIndex <= 0) || (startIndex >= endIndex)) {
       return false;
     }
     final int start = Math.max(0, startIndex);
-    final int end = Math.min(str.length(), endIndex);
-    final int result;
-    if (charFilter != null) {
-      return startsWithChar(str, start, end, charFilter)
-          && endsWithChar(str, start, end, charFilter);
-    } else if (codePointFilter != null) {
-      return startsWithCodePoint(str, start, end, codePointFilter)
-          && endsWithCodePoint(str, start, end, codePointFilter);
-    } else if (substring != null) {
-      if (nullSubstring) {
-        return false;
-      }
-      return startsWithSubstring(str, start, end, substring, ignoreCase)
-          && endsWithSubstring(str, start, end, substring, ignoreCase);
-    } else if (substrings != null) {
-      return startsWithAnySubstring(str, start, end, substrings, ignoreCase)
-          && endsWithAnySubstring(str, start, end, substrings, ignoreCase);
-    } else {
-      throw new IllegalStateException("No split strategy was specified.");
+    final int end = Math.min(strLen, endIndex);
+    switch (target) {
+      case CHAR:
+        return startsWithChar(str, start, end, charFilter)
+            && endsWithChar(str, start, end, charFilter);
+      case CODE_POINT:
+        return startsWithCodePoint(str, start, end, codePointFilter)
+            && endsWithCodePoint(str, start, end, codePointFilter);
+      case SUBSTRING:
+        if (substring == null) {
+          return false;
+        }
+        return startsWithSubstring(str, start, end, substring, ignoreCase)
+            && endsWithSubstring(str, start, end, substring, ignoreCase);
+      case SUBSTRINGS:
+        return startsWithAnySubstring(str, start, end, substrings, ignoreCase)
+            && endsWithAnySubstring(str, start, end, substrings, ignoreCase);
+      default:
+        throw new IllegalStateException("No searching strategy was specified.");
     }
   }
 }

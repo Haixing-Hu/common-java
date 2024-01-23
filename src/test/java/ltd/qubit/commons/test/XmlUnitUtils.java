@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -26,7 +26,7 @@ import static org.hamcrest.Matchers.not;
 public class XmlUnitUtils {
 
   public static void assertXPathEquals(final String xml, final String xpath,
-          @Nullable final Object value) {
+      @Nullable final Object value) {
     if (value == null) {
       assertThat(xml, not(HasXPathMatcher.hasXPath(xpath)));
     } else {
@@ -57,12 +57,12 @@ public class XmlUnitUtils {
     }
   }
 
-  public static void assertXmlEqual(final Object obj, final String expected, final String actual) {
+  public static void assertXmlEqual(final String expected, final String actual) {
     XmlAssert.assertThat(actual).and(expected)
-        .ignoreComments()
-        .ignoreChildNodesOrder()
-        .ignoreWhitespace()
-        .ignoreElementContentWhitespace()
-        .areIdentical();
+             .ignoreComments()
+             .ignoreChildNodesOrder()
+             .ignoreWhitespace()
+             .ignoreElementContentWhitespace()
+             .areIdentical();
   }
 }

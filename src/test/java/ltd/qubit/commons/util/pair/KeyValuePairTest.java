@@ -1,26 +1,27 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
-//    Haixing Hu, Qubit Co. Ltd.
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
 //
 //    All rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.pair;
 
-import ltd.qubit.commons.math.RandomEx;
-import ltd.qubit.commons.text.jackson.CustomizedJsonMapper;
-import ltd.qubit.commons.text.jackson.CustomizedXmlMapper;
-
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
-import static ltd.qubit.commons.test.JsonUnitUtils.assertJsonNodeEquals;
-import static ltd.qubit.commons.test.XmlUnitUtils.assertXPathEquals;
+import ltd.qubit.commons.math.RandomEx;
+import ltd.qubit.commons.text.Stripper;
+import ltd.qubit.commons.text.jackson.CustomizedJsonMapper;
+import ltd.qubit.commons.text.jackson.CustomizedXmlMapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static ltd.qubit.commons.test.JsonUnitUtils.assertJsonNodeEquals;
+import static ltd.qubit.commons.test.XmlUnitUtils.assertXPathEquals;
 
 /**
  * Unit test of the {@link KeyValuePair} class.
@@ -37,9 +38,11 @@ public class KeyValuePairTest {
 
   private final XmlMapper xmlMapper = new CustomizedXmlMapper();
 
+  private final Stripper stripper = new Stripper().ofBlank().fromBothSide();
+
   private KeyValuePair createKeyValuePair() {
-    final String key = random.nextString().strip();
-    final String value = random.nextString().strip();
+    final String key = stripper.strip(random.nextString());
+    final String value = stripper.strip(random.nextString());
     return new KeyValuePair(key, value);
   }
 
@@ -49,7 +52,7 @@ public class KeyValuePairTest {
       final KeyValuePair obj = createKeyValuePair();
       System.out.println(obj);
       final String json = jsonMapper.writerWithDefaultPrettyPrinter()
-                                .writeValueAsString(obj);
+                                    .writeValueAsString(obj);
       System.out.println(json);
       assertJsonNodeEquals(json, "key", obj.getKey());
       assertJsonNodeEquals(json, "value", obj.getValue());

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,11 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
+import org.junit.jupiter.api.Test;
+
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.util.filter.character.CharFilter;
 import ltd.qubit.commons.util.filter.character.InStringCharFilter;
-
-import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -1288,8 +1288,10 @@ public class SearcherTest {
         new Searcher().forChar('b').endBefore(100).findLastIndexIn("aabaabaa"));
     assertEquals(-1,
         new Searcher().forChar('b').endBefore(-1).findLastIndexIn("aabaabaa"));
-    assertEquals(0,
+    assertEquals(-1,
         new Searcher().forChar('a').endBefore(0).findLastIndexIn("aabaabaa"));
+    assertEquals(0,
+        new Searcher().forChar('a').endBefore(1).findLastIndexIn("aabaabaa"));
   }
 
   @Test
@@ -1444,153 +1446,153 @@ public class SearcherTest {
 
     assertEquals(0, new Searcher()
         .forCharsSatisfy(CharFilter.not(new InStringCharFilter("")))
-        .startFrom(0)
+        .endBefore(1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsSatisfy(CharFilter.not(new InStringCharFilter("")))
-        .startFrom(-1)
+        .endBefore(0)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(9, new Searcher()
         .forCharsSatisfy(CharFilter.not(new InStringCharFilter("")))
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("zzabyycdxx"));
 
     assertEquals(0, new Searcher()
         .forCharsSatisfy(new InStringCharFilter("zax"))
-        .startFrom(0)
+        .endBefore(1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsSatisfy(new InStringCharFilter("zax"))
-        .startFrom(-1)
+        .endBefore(0)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(9, new Searcher()
         .forCharsSatisfy(new InStringCharFilter("zax"))
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(1, new Searcher()
         .forCharsSatisfy(new InStringCharFilter("zax"))
-        .startFrom(1)
+        .endBefore(2)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(2, new Searcher()
         .forCharsSatisfy(new InStringCharFilter("zax"))
-        .startFrom(2)
+        .endBefore(3)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(2, new Searcher()
         .forCharsSatisfy(new InStringCharFilter("zax"))
-        .startFrom(3)
+        .endBefore(4)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(2, new Searcher()
         .forCharsSatisfy(new InStringCharFilter("zax"))
-        .startFrom(7)
+        .endBefore(8)
         .findLastIndexIn("zzabyycdxx"));
 
     assertEquals(-1, new Searcher()
         .forCharsSatisfy(CharFilter.not(new InStringCharFilter("zax")))
-        .startFrom(0)
+        .endBefore(0)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsSatisfy(CharFilter.not(new InStringCharFilter("zax")))
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(7, new Searcher()
         .forCharsSatisfy(CharFilter.not(new InStringCharFilter("zax")))
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsSatisfy(CharFilter.not(new InStringCharFilter("zax")))
-        .startFrom(1)
+        .endBefore(2)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsSatisfy(CharFilter.not(new InStringCharFilter("zax")))
-        .startFrom(2)
+        .endBefore(3)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(3, new Searcher()
         .forCharsSatisfy(CharFilter.not(new InStringCharFilter("zax")))
-        .startFrom(3)
+        .endBefore(4)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(7, new Searcher()
         .forCharsSatisfy(CharFilter.not(new InStringCharFilter("zax")))
-        .startFrom(9)
+        .endBefore(9)
         .findLastIndexIn("zzabyycdxx"));
 
     assertEquals(-1, new Searcher()
         .forCharsSatisfy(new InStringCharFilter("byx"))
-        .startFrom(0)
+        .endBefore(0)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsSatisfy(new InStringCharFilter("byx"))
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(9, new Searcher()
         .forCharsSatisfy(new InStringCharFilter("byx"))
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsSatisfy(new InStringCharFilter("byx"))
-        .startFrom(1)
+        .endBefore(1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(4, new Searcher()
         .forCharsSatisfy(new InStringCharFilter("byx"))
-        .startFrom(4)
+        .endBefore(5)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(5, new Searcher()
         .forCharsSatisfy(new InStringCharFilter("byx"))
-        .startFrom(6)
+        .endBefore(6)
         .findLastIndexIn("zzabyycdxx"));
 
     assertEquals(0, new Searcher()
         .forCharsSatisfy(CharFilter.not(new InStringCharFilter("byx")))
-        .startFrom(0)
+        .endBefore(1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsSatisfy(CharFilter.not(new InStringCharFilter("byx")))
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(7, new Searcher()
         .forCharsSatisfy(CharFilter.not(new InStringCharFilter("byx")))
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(1, new Searcher()
         .forCharsSatisfy(CharFilter.not(new InStringCharFilter("byx")))
-        .startFrom(1)
+        .endBefore(2)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(2, new Searcher()
         .forCharsSatisfy(CharFilter.not(new InStringCharFilter("byx")))
-        .startFrom(4)
+        .endBefore(4)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(7, new Searcher()
         .forCharsSatisfy(CharFilter.not(new InStringCharFilter("byx")))
-        .startFrom(7)
+        .endBefore(8)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(7, new Searcher()
         .forCharsSatisfy(CharFilter.not(new InStringCharFilter("byx")))
-        .startFrom(8)
+        .endBefore(8)
         .findLastIndexIn("zzabyycdxx"));
 
     assertEquals(-1, new Searcher()
         .forCharsSatisfy(new InStringCharFilter("zx"))
-        .startFrom(0)
+        .endBefore(0)
         .findLastIndexIn("ab"));
     assertEquals(-1, new Searcher()
         .forCharsSatisfy(new InStringCharFilter("zx"))
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn("ab"));
     assertEquals(-1, new Searcher()
         .forCharsSatisfy(new InStringCharFilter("zx"))
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("ab"));
 
     assertEquals(0, new Searcher()
         .forCharsSatisfy(CharFilter.not(new InStringCharFilter("zx")))
-        .startFrom(0)
+        .endBefore(1)
         .findLastIndexIn("ab"));
     assertEquals(-1, new Searcher()
         .forCharsSatisfy(CharFilter.not(new InStringCharFilter("zx")))
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn("ab"));
     assertEquals(1, new Searcher()
         .forCharsSatisfy(CharFilter.not(new InStringCharFilter("zx")))
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("ab"));
   }
 
@@ -1697,69 +1699,69 @@ public class SearcherTest {
 
     assertEquals(0, new Searcher()
         .forCharsIn('z', 'a', 'x')
-        .startFrom(0)
+        .endBefore(1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsIn('z', 'a', 'x')
-        .startFrom(-1)
+        .endBefore(0)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(9, new Searcher()
         .forCharsIn('z', 'a', 'x')
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(1, new Searcher()
         .forCharsIn('z', 'a', 'x')
-        .startFrom(1)
+        .endBefore(2)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(2, new Searcher()
         .forCharsIn('z', 'a', 'x')
-        .startFrom(2)
+        .endBefore(3)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(2, new Searcher()
         .forCharsIn('z', 'a', 'x')
-        .startFrom(3)
+        .endBefore(3)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(9, new Searcher()
         .forCharsIn('z', 'a', 'x')
-        .startFrom(9)
+        .endBefore(10)
         .findLastIndexIn("zzabyycdxx"));
 
     assertEquals(-1, new Searcher()
         .forCharsIn('b', 'y', 'x')
-        .startFrom(0)
+        .endBefore(0)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsIn('b', 'y', 'x')
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(9, new Searcher()
         .forCharsIn('b', 'y', 'x')
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsIn('b', 'y', 'x')
-        .startFrom(1)
+        .endBefore(1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(4, new Searcher()
         .forCharsIn('b', 'y', 'x')
-        .startFrom(4)
+        .endBefore(5)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(5, new Searcher()
         .forCharsIn('b', 'y', 'x')
-        .startFrom(6)
+        .endBefore(6)
         .findLastIndexIn("zzabyycdxx"));
 
     assertEquals(-1, new Searcher()
         .forCharsIn('z')
-        .startFrom(0)
+        .endBefore(0)
         .findLastIndexIn("ab"));
     assertEquals(-1, new Searcher()
         .forCharsIn('z')
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn("ab"));
     assertEquals(-1, new Searcher()
         .forCharsIn('z')
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("ab"));
   }
 
@@ -1767,311 +1769,347 @@ public class SearcherTest {
   public void testFindLastIndexOfCharsInCharSequence() {
     assertEquals(-1, new Searcher()
         .forCharsIn((String) null)
-        .startFrom(0)
+        .endBefore(100)
         .findLastIndexIn(null));
     assertEquals(-1, new Searcher()
         .forCharsIn((String) null)
-        .startFrom(-1)
+        .endBefore(10)
         .findLastIndexIn(null));
     assertEquals(-1, new Searcher()
         .forCharsIn((String) null)
-        .startFrom(100)
+        .endBefore(0)
         .findLastIndexIn(null));
     assertEquals(-1,
-        new Searcher().forCharsIn("").startFrom(0).findLastIndexIn(null));
+        new Searcher()
+            .forCharsIn("")
+            .endBefore(100)
+            .findLastIndexIn(null));
     assertEquals(-1,
-        new Searcher().forCharsIn("").startFrom(-1).findLastIndexIn(null));
+        new Searcher()
+            .forCharsIn("")
+            .endBefore(100)
+            .findLastIndexIn(null));
     assertEquals(-1,
-        new Searcher().forCharsIn("").startFrom(100).findLastIndexIn(null));
+        new Searcher()
+            .forCharsIn("")
+            .endBefore(100)
+            .findLastIndexIn(null));
     assertEquals(-1,
-        new Searcher().forCharsIn("ab").startFrom(0).findLastIndexIn(null));
+        new Searcher()
+            .forCharsIn("ab")
+            .endBefore(100)
+            .findLastIndexIn(null));
     assertEquals(-1,
-        new Searcher().forCharsIn("ab").startFrom(-1).findLastIndexIn(null));
+        new Searcher()
+            .forCharsIn("ab")
+            .endBefore(100)
+            .findLastIndexIn(null));
     assertEquals(-1,
-        new Searcher().forCharsIn("ab").startFrom(100).findLastIndexIn(null));
+        new Searcher()
+            .forCharsIn("ab")
+            .endBefore(100)
+            .findLastIndexIn(null));
 
     assertEquals(-1, new Searcher()
         .forCharsIn((String) null)
-        .startFrom(0)
+        .endBefore(100)
         .findLastIndexIn(""));
     assertEquals(-1, new Searcher()
         .forCharsIn((String) null)
-        .startFrom(-1)
+        .endBefore(0)
         .findLastIndexIn(""));
     assertEquals(-1, new Searcher()
         .forCharsIn((String) null)
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn(""));
     assertEquals(-1,
-        new Searcher().forCharsIn("").startFrom(0).findLastIndexIn(""));
+        new Searcher()
+            .forCharsIn("")
+            .endBefore(0)
+            .findLastIndexIn(""));
     assertEquals(-1,
-        new Searcher().forCharsIn("").startFrom(-1).findLastIndexIn(""));
+        new Searcher()
+            .forCharsIn("")
+            .endBefore(-1)
+            .findLastIndexIn(""));
     assertEquals(-1,
-        new Searcher().forCharsIn("").startFrom(100).findLastIndexIn(""));
+        new Searcher()
+            .forCharsIn("")
+            .endBefore(100)
+            .findLastIndexIn(""));
     assertEquals(-1,
-        new Searcher().forCharsIn("ab").startFrom(0).findLastIndexIn(""));
+        new Searcher()
+            .forCharsIn("ab")
+            .endBefore(0)
+            .findLastIndexIn(""));
     assertEquals(-1,
-        new Searcher().forCharsIn("ab").startFrom(-1).findLastIndexIn(""));
+        new Searcher()
+            .forCharsIn("ab")
+            .endBefore(-1)
+            .findLastIndexIn(""));
     assertEquals(-1,
-        new Searcher().forCharsIn("ab").startFrom(100).findLastIndexIn(""));
+        new Searcher()
+            .forCharsIn("ab")
+            .endBefore(100)
+            .findLastIndexIn(""));
 
     assertEquals(-1, new Searcher()
         .forCharsIn((String) null)
-        .startFrom(0)
+        .endBefore(0)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsIn((String) null)
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsIn((String) null)
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsIn("")
-        .startFrom(0)
+        .endBefore(0)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsIn("")
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsIn("")
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("zzabyycdxx"));
 
     assertEquals(0, new Searcher()
         .forCharsIn("zax")
-        .startFrom(0)
+        .endBefore(1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsIn("zax")
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(9, new Searcher()
         .forCharsIn("zax")
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(1, new Searcher()
         .forCharsIn("zax")
-        .startFrom(1)
+        .endBefore(2)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(2, new Searcher()
         .forCharsIn("zax")
-        .startFrom(2)
+        .endBefore(3)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(2, new Searcher()
         .forCharsIn("zax")
-        .startFrom(3)
+        .endBefore(3)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(2, new Searcher()
         .forCharsIn("zax")
-        .startFrom(7)
+        .endBefore(7)
         .findLastIndexIn("zzabyycdxx"));
 
     assertEquals(-1, new Searcher()
         .forCharsIn("byx")
-        .startFrom(0)
+        .endBefore(0)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsIn("byx")
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(9, new Searcher()
         .forCharsIn("byx")
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsIn("byx")
-        .startFrom(1)
+        .endBefore(1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(4, new Searcher()
         .forCharsIn("byx")
-        .startFrom(4)
+        .endBefore(5)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(5, new Searcher()
         .forCharsIn("byx")
-        .startFrom(6)
+        .endBefore(6)
         .findLastIndexIn("zzabyycdxx"));
 
     assertEquals(-1,
-        new Searcher().forCharsIn("zx").startFrom(0).findLastIndexIn("ab"));
+        new Searcher().forCharsIn("zx").endBefore(0).findLastIndexIn("ab"));
     assertEquals(-1,
-        new Searcher().forCharsIn("zx").startFrom(-1).findLastIndexIn("ab"));
+        new Searcher().forCharsIn("zx").endBefore(-1).findLastIndexIn("ab"));
     assertEquals(-1,
-        new Searcher().forCharsIn("zx").startFrom(100).findLastIndexIn("ab"));
+        new Searcher().forCharsIn("zx").endBefore(100).findLastIndexIn("ab"));
   }
 
   @Test
   public void testFindLastIndexOfCharsNotInArray() {
     assertEquals(-1, new Searcher()
         .forCharsNotIn((char[]) null)
-        .startFrom(0)
+        .endBefore(0)
         .findLastIndexIn(null));
     assertEquals(-1, new Searcher()
         .forCharsNotIn((char[]) null)
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn(null));
     assertEquals(-1, new Searcher()
         .forCharsNotIn((char[]) null)
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn(null));
     assertEquals(-1, new Searcher()
         .forCharsNotIn()
-        .startFrom(0)
+        .endBefore(0)
         .findLastIndexIn(null));
     assertEquals(-1, new Searcher()
         .forCharsNotIn()
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn(null));
     assertEquals(-1, new Searcher()
         .forCharsNotIn()
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn(null));
     assertEquals(-1, new Searcher()
         .forCharsNotIn('a', 'b')
-        .startFrom(0)
+        .endBefore(0)
         .findLastIndexIn(null));
     assertEquals(-1, new Searcher()
         .forCharsNotIn('a', 'b')
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn(null));
     assertEquals(-1, new Searcher()
         .forCharsNotIn('a', 'b')
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn(null));
 
     assertEquals(-1, new Searcher()
         .forCharsNotIn((char[]) null)
-        .startFrom(0)
+        .endBefore(0)
         .findLastIndexIn(""));
     assertEquals(-1, new Searcher()
         .forCharsNotIn((char[]) null)
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn(""));
     assertEquals(-1, new Searcher()
         .forCharsNotIn((char[]) null)
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn(""));
     assertEquals(-1, new Searcher()
         .forCharsNotIn()
-        .startFrom(0)
+        .endBefore(0)
         .findLastIndexIn(""));
     assertEquals(-1, new Searcher()
         .forCharsNotIn()
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn(""));
     assertEquals(-1, new Searcher()
         .forCharsNotIn()
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn(""));
     assertEquals(-1, new Searcher()
         .forCharsNotIn('a', 'b')
-        .startFrom(0)
+        .endBefore(0)
         .findLastIndexIn(""));
     assertEquals(-1, new Searcher()
         .forCharsNotIn('a', 'b')
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn(""));
     assertEquals(-1, new Searcher()
         .forCharsNotIn('a', 'b')
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn(""));
 
     assertEquals(0, new Searcher()
         .forCharsNotIn((char[]) null)
-        .startFrom(0)
+        .endBefore(1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsNotIn((char[]) null)
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(9, new Searcher()
         .forCharsNotIn((char[]) null)
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(0, new Searcher()
         .forCharsNotIn()
-        .startFrom(0)
+        .endBefore(1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(1, new Searcher()
         .forCharsNotIn()
-        .startFrom(1)
+        .endBefore(2)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsNotIn()
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(9, new Searcher()
         .forCharsNotIn()
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("zzabyycdxx"));
 
     assertEquals(-1, new Searcher()
         .forCharsNotIn('z', 'a', 'x')
-        .startFrom(0)
+        .endBefore(0)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsNotIn('z', 'a', 'x')
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(7, new Searcher()
         .forCharsNotIn('z', 'a', 'x')
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsNotIn('z', 'a', 'x')
-        .startFrom(1)
+        .endBefore(1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsNotIn('z', 'a', 'x')
-        .startFrom(2)
+        .endBefore(2)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(3, new Searcher()
         .forCharsNotIn('z', 'a', 'x')
-        .startFrom(3)
+        .endBefore(4)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(7, new Searcher()
         .forCharsNotIn('z', 'a', 'x')
-        .startFrom(9)
+        .endBefore(9)
         .findLastIndexIn("zzabyycdxx"));
 
     assertEquals(0, new Searcher()
         .forCharsNotIn('b', 'y', 'x')
-        .startFrom(0)
+        .endBefore(1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsNotIn('b', 'y', 'x')
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(7, new Searcher()
         .forCharsNotIn('b', 'y', 'x')
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(1, new Searcher()
         .forCharsNotIn('b', 'y', 'x')
-        .startFrom(1)
+        .endBefore(2)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(2, new Searcher()
         .forCharsNotIn('b', 'y', 'x')
-        .startFrom(4)
+        .endBefore(4)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(6, new Searcher()
         .forCharsNotIn('b', 'y', 'x')
-        .startFrom(6)
+        .endBefore(7)
         .findLastIndexIn("zzabyycdxx"));
 
     assertEquals(0, new Searcher()
         .forCharsNotIn('z')
-        .startFrom(0)
+        .endBefore(1)
         .findLastIndexIn("ab"));
     assertEquals(-1, new Searcher()
         .forCharsNotIn('z')
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn("ab"));
     assertEquals(1, new Searcher()
         .forCharsNotIn('z')
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("ab"));
   }
 
@@ -2131,94 +2169,100 @@ public class SearcherTest {
 
     assertEquals(0, new Searcher()
         .forCharsNotIn((String) null)
-        .startFrom(0)
+        .endBefore(1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsNotIn((String) null)
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(9, new Searcher()
         .forCharsNotIn((String) null)
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(0, new Searcher()
         .forCharsNotIn("")
-        .startFrom(0)
+        .endBefore(1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(1, new Searcher()
         .forCharsNotIn("")
-        .startFrom(1)
+        .endBefore(2)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsNotIn("")
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(9, new Searcher()
         .forCharsNotIn("")
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("zzabyycdxx"));
 
     assertEquals(-1, new Searcher()
         .forCharsNotIn("zax")
-        .startFrom(0)
+        .endBefore(0)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsNotIn("zax")
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(7, new Searcher()
         .forCharsNotIn("zax")
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsNotIn("zax")
-        .startFrom(1)
+        .endBefore(1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsNotIn("zax")
-        .startFrom(2)
+        .endBefore(2)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(3, new Searcher()
         .forCharsNotIn("zax")
-        .startFrom(3)
+        .endBefore(4)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(7, new Searcher()
         .forCharsNotIn("zax")
-        .startFrom(9)
+        .endBefore(9)
         .findLastIndexIn("zzabyycdxx"));
 
     assertEquals(0, new Searcher()
         .forCharsNotIn("byx")
-        .startFrom(0)
+        .endBefore(1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(-1, new Searcher()
         .forCharsNotIn("byx")
-        .startFrom(-1)
+        .endBefore(-1)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(7, new Searcher()
         .forCharsNotIn("byx")
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(1, new Searcher()
         .forCharsNotIn("byx")
-        .startFrom(1)
+        .endBefore(2)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(2, new Searcher()
         .forCharsNotIn("byx")
-        .startFrom(4)
+        .endBefore(4)
         .findLastIndexIn("zzabyycdxx"));
     assertEquals(6, new Searcher()
         .forCharsNotIn("byx")
-        .startFrom(6)
+        .endBefore(7)
         .findLastIndexIn("zzabyycdxx"));
 
     assertEquals(0,
-        new Searcher().forCharsNotIn("zx").startFrom(0).findLastIndexIn("ab"));
+        new Searcher()
+            .forCharsNotIn("zx")
+            .endBefore(1)
+            .findLastIndexIn("ab"));
     assertEquals(-1,
-        new Searcher().forCharsNotIn("zx").startFrom(-1).findLastIndexIn("ab"));
+        new Searcher()
+            .forCharsNotIn("zx")
+            .endBefore(0)
+            .findLastIndexIn("ab"));
     assertEquals(1, new Searcher()
         .forCharsNotIn("zx")
-        .startFrom(100)
+        .endBefore(100)
         .findLastIndexIn("ab"));
   }
 
@@ -2274,90 +2318,90 @@ public class SearcherTest {
 
     assertEquals(0, new Searcher()
         .forSubstring("a")
-        .startFrom(0)
+        .endBefore(1)
         .ignoreCase(false)
         .findLastIndexIn("aabaabaa"));
     assertEquals(-1, new Searcher()
         .forSubstring("a")
-        .startFrom(-1)
+        .endBefore(0)
         .ignoreCase(false)
         .findLastIndexIn("aabaabaa"));
     assertEquals(7, new Searcher()
         .forSubstring("a")
-        .startFrom(100)
+        .endBefore(100)
         .ignoreCase(false)
         .findLastIndexIn("aabaabaa"));
     assertEquals(1, new Searcher()
         .forSubstring("a")
-        .startFrom(1)
+        .endBefore(2)
         .ignoreCase(false)
         .findLastIndexIn("aabaabaa"));
     assertEquals(1, new Searcher()
         .forSubstring("a")
-        .startFrom(2)
+        .endBefore(2)
         .ignoreCase(false)
         .findLastIndexIn("aabaabaa"));
 
     assertEquals(-1, new Searcher()
         .forSubstring("b")
-        .startFrom(0)
+        .endBefore(0)
         .ignoreCase(false)
         .findLastIndexIn("aabaabaa"));
     assertEquals(-1, new Searcher()
         .forSubstring("b")
-        .startFrom(-1)
+        .endBefore(-1)
         .ignoreCase(false)
         .findLastIndexIn("aabaabaa"));
     assertEquals(5, new Searcher()
         .forSubstring("b")
-        .startFrom(100)
+        .endBefore(100)
         .ignoreCase(false)
         .findLastIndexIn("aabaabaa"));
     assertEquals(2, new Searcher()
         .forSubstring("b")
-        .startFrom(3)
+        .endBefore(3)
         .ignoreCase(false)
         .findLastIndexIn("aabaabaa"));
 
     assertEquals(-1, new Searcher()
         .forSubstring("ab")
-        .startFrom(0)
+        .endBefore(0)
         .ignoreCase(false)
         .findLastIndexIn("aabaabaa"));
     assertEquals(-1, new Searcher()
         .forSubstring("ab")
-        .startFrom(-1)
+        .endBefore(-1)
         .ignoreCase(false)
         .findLastIndexIn("aabaabaa"));
     assertEquals(4, new Searcher()
         .forSubstring("ab")
-        .startFrom(100)
+        .endBefore(100)
         .ignoreCase(false)
         .findLastIndexIn("aabaabaa"));
     assertEquals(1, new Searcher()
         .forSubstring("ab")
-        .startFrom(3)
+        .endBefore(3)
         .ignoreCase(false)
         .findLastIndexIn("aabaabaa"));
 
     assertEquals(0, new Searcher()
         .forSubstring("")
-        .startFrom(0)
+        .endBefore(1)
         .ignoreCase(false)
         .findLastIndexIn("aabaabaa"));
     assertEquals(-1, new Searcher()
         .forSubstring("")
-        .startFrom(-1)
+        .endBefore(-1)
         .ignoreCase(false)
         .findLastIndexIn("aabaabaa"));
     assertEquals(7, new Searcher()
         .forSubstring("")
-        .startFrom(100)
+        .endBefore(100)
         .ignoreCase(false)
         .findLastIndexIn("aabaabaa"));
     assertEquals(4, new Searcher()
         .forSubstring("")
-        .startFrom(4)
+        .endBefore(5)
         .ignoreCase(false)
         .findLastIndexIn("aabaabaa"));
   }
@@ -2382,101 +2426,101 @@ public class SearcherTest {
 
     assertEquals(-1, new Searcher()
         .forSubstringsIn("ob", "ba")
-        .startFrom(0)
+        .endBefore(0)
         .ignoreCase(false)
         .findLastIndexIn("foobar"));
     assertEquals(-1, new Searcher()
         .forSubstringsIn("ob", "ba")
-        .startFrom(-1)
+        .endBefore(-1)
         .ignoreCase(false)
         .findLastIndexIn("foobar"));
     assertEquals(3, new Searcher()
         .forSubstringsIn("ob", "ba")
-        .startFrom(100)
+        .endBefore(100)
         .ignoreCase(false)
         .findLastIndexIn("foobar"));
-    assertEquals(3, new Searcher()
+    assertEquals(2, new Searcher()
         .forSubstringsIn("ob", "ba")
-        .startFrom(3)
+        .endBefore(4)
         .ignoreCase(false)
         .findLastIndexIn("foobar"));
 
     assertEquals(-1, new Searcher()
         .forSubstringsIn()
-        .startFrom(0)
+        .endBefore(0)
         .ignoreCase(false)
         .findLastIndexIn("foobar"));
     assertEquals(-1, new Searcher()
         .forSubstringsIn()
-        .startFrom(0)
+        .endBefore(10)
         .ignoreCase(false)
         .findLastIndexIn(null));
     assertEquals(-1, new Searcher()
         .forSubstringsIn()
-        .startFrom(0)
+        .endBefore(20)
         .ignoreCase(false)
         .findLastIndexIn(""));
     assertEquals(-1, new Searcher()
         .forSubstringsIn("llll")
-        .startFrom(0)
+        .endBefore(100)
         .ignoreCase(false)
         .findLastIndexIn("foobar"));
 
     assertEquals(0, new Searcher()
         .forSubstringsIn("")
-        .startFrom(0)
+        .endBefore(1)
         .ignoreCase(false)
         .findLastIndexIn("foobar"));
     assertEquals(-1, new Searcher()
         .forSubstringsIn("")
-        .startFrom(-1)
+        .endBefore(-1)
         .ignoreCase(false)
         .findLastIndexIn("foobar"));
     assertEquals(5, new Searcher()
         .forSubstringsIn("")
-        .startFrom(100)
+        .endBefore(100)
         .ignoreCase(false)
         .findLastIndexIn("foobar"));
     assertEquals(4, new Searcher()
         .forSubstringsIn("")
-        .startFrom(4)
+        .endBefore(5)
         .ignoreCase(false)
         .findLastIndexIn("foobar"));
 
     assertEquals(-1, new Searcher()
         .forSubstringsIn("")
-        .startFrom(0)
+        .endBefore(0)
         .ignoreCase(false)
         .findLastIndexIn(""));
     assertEquals(-1, new Searcher()
         .forSubstringsIn("a")
-        .startFrom(0)
+        .endBefore(0)
         .ignoreCase(false)
         .findLastIndexIn(""));
     assertEquals(-1, new Searcher()
         .forSubstringsIn((String) null)
-        .startFrom(0)
+        .endBefore(0)
         .ignoreCase(false)
         .findLastIndexIn(""));
     assertEquals(-1, new Searcher()
         .forSubstringsIn((String) null)
-        .startFrom(0)
+        .endBefore(0)
         .ignoreCase(false)
         .findLastIndexIn("foobar"));
     assertEquals(5, new Searcher()
         .forSubstringsIn(null, "")
-        .startFrom(100)
+        .endBefore(100)
         .ignoreCase(false)
         .findLastIndexIn("foobar"));
     assertEquals(-1, new Searcher()
         .forSubstringsIn((String) null)
-        .startFrom(0)
+        .endBefore(0)
         .ignoreCase(false)
         .findLastIndexIn(null));
 
     assertEquals(2, new Searcher()
         .forSubstringsIn("ob", null)
-        .startFrom(100)
+        .endBefore(100)
         .ignoreCase(false)
         .findLastIndexIn("foobar"));
   }

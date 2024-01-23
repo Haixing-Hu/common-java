@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
-//    Haixing Hu, Qubit Co. Ltd.
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -203,7 +203,7 @@ public class SearcherImpl {
     return start - 1; // not found
   }
 
-  public static int lastIndexOfAny(final CharSequence str, final int start,
+  public static int lastIndexOfAnySubstring(final CharSequence str, final int start,
       final int end, final CharSequence[] substrings, final boolean ignoreCase) {
     assert (str != null
         && start >= 0
@@ -393,6 +393,9 @@ public class SearcherImpl {
         && end <= str.length()
         && substring != null);
     // FIXME: use the KMP algorithm for large strings
+    if (start >= end) {
+      return false;
+    }
     final int substringLen = substring.length();
     if (substringLen == 0) {
       return true;
@@ -416,6 +419,9 @@ public class SearcherImpl {
         && start <= end
         && end <= str.length()
         && substrings != null);
+    if (start >= end) {
+      return false;
+    }
     for (final CharSequence substring : substrings) {
       if ((substring != null)
           && startsWithSubstring(str, start, end, substring, ignoreCase)) {
@@ -471,6 +477,9 @@ public class SearcherImpl {
         && end <= str.length()
         && substring != null);
     // FIXME: use the KMP algorithm for large strings
+    if (start >= end) {
+      return false;
+    }
     final int substringLen = substring.length();
     if (substringLen == 0) {
       return true;
@@ -494,6 +503,9 @@ public class SearcherImpl {
         && start <= end
         && end <= str.length()
         && substrings != null);
+    if (start >= end) {
+      return false;
+    }
     for (final CharSequence substring : substrings) {
       if ((substring != null)
           && endsWithSubstring(str, start, end, substring, ignoreCase)) {

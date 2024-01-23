@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,15 +8,25 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
+import org.junit.jupiter.api.Test;
+
 import ltd.qubit.commons.util.filter.character.CharFilter;
 import ltd.qubit.commons.util.filter.character.InStringCharFilter;
 
-import org.junit.jupiter.api.Test;
-
-import static ltd.qubit.commons.lang.StringUtils.indexOfChar;
-import static ltd.qubit.commons.lang.StringUtils.lastIndexOfChar;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static ltd.qubit.commons.lang.StringUtils.containsOnly;
+import static ltd.qubit.commons.lang.StringUtils.countMatches;
+import static ltd.qubit.commons.lang.StringUtils.indexOf;
+import static ltd.qubit.commons.lang.StringUtils.indexOfAny;
+import static ltd.qubit.commons.lang.StringUtils.indexOfAnyChar;
+import static ltd.qubit.commons.lang.StringUtils.indexOfAnyCharBut;
+import static ltd.qubit.commons.lang.StringUtils.indexOfChar;
+import static ltd.qubit.commons.lang.StringUtils.lastIndexOf;
+import static ltd.qubit.commons.lang.StringUtils.lastIndexOfAny;
+import static ltd.qubit.commons.lang.StringUtils.lastIndexOfAnyChar;
+import static ltd.qubit.commons.lang.StringUtils.lastIndexOfAnyCharBut;
+import static ltd.qubit.commons.lang.StringUtils.lastIndexOfChar;
 
 /**
  * Unit test for the indexOfXXXX() functions of the Strings class.
@@ -82,73 +92,42 @@ public class StringUtilsLocationTest {
 
     assertEquals(-1, indexOfChar("zzabyycdxx", new InStringCharFilter(""), 0));
     assertEquals(-1, indexOfChar("zzabyycdxx", new InStringCharFilter(""), -1));
-    assertEquals(-1,
-        indexOfChar("zzabyycdxx", new InStringCharFilter(""), 100));
+    assertEquals(-1, indexOfChar("zzabyycdxx", new InStringCharFilter(""), 100));
 
-    assertEquals(0,
-        indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("")), 0));
-    assertEquals(0,
-        indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("")), -1));
-    assertEquals(-1,
-        indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("")), 100));
+    assertEquals(0, indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("")), 0));
+    assertEquals(0, indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("")), -1));
+    assertEquals(-1, indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("")), 100));
 
-    assertEquals(0,
-        indexOfChar("zzabyycdxx", new InStringCharFilter("zax"), 0));
-    assertEquals(0,
-        indexOfChar("zzabyycdxx", new InStringCharFilter("zax"), -1));
-    assertEquals(-1,
-        indexOfChar("zzabyycdxx", new InStringCharFilter("zax"), 100));
-    assertEquals(1,
-        indexOfChar("zzabyycdxx", new InStringCharFilter("zax"), 1));
-    assertEquals(2,
-        indexOfChar("zzabyycdxx", new InStringCharFilter("zax"), 2));
-    assertEquals(8,
-        indexOfChar("zzabyycdxx", new InStringCharFilter("zax"), 3));
-    assertEquals(9,
-        indexOfChar("zzabyycdxx", new InStringCharFilter("zax"), 9));
+    assertEquals(0, indexOfChar("zzabyycdxx", new InStringCharFilter("zax"), 0));
+    assertEquals(0, indexOfChar("zzabyycdxx", new InStringCharFilter("zax"), -1));
+    assertEquals(-1, indexOfChar("zzabyycdxx", new InStringCharFilter("zax"), 100));
+    assertEquals(1, indexOfChar("zzabyycdxx", new InStringCharFilter("zax"), 1));
+    assertEquals(2, indexOfChar("zzabyycdxx", new InStringCharFilter("zax"), 2));
+    assertEquals(8, indexOfChar("zzabyycdxx", new InStringCharFilter("zax"), 3));
+    assertEquals(9, indexOfChar("zzabyycdxx", new InStringCharFilter("zax"), 9));
 
-    assertEquals(3,
-        indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("zax")), 0));
-    assertEquals(3,
-        indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("zax")), -1));
-    assertEquals(-1,
-        indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("zax")), 100));
-    assertEquals(3,
-        indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("zax")), 1));
-    assertEquals(3,
-        indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("zax")), 2));
-    assertEquals(3,
-        indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("zax")), 3));
-    assertEquals(-1,
-        indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("zax")), 9));
+    assertEquals(3, indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("zax")), 0));
+    assertEquals(3, indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("zax")), -1));
+    assertEquals(-1, indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("zax")), 100));
+    assertEquals(3, indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("zax")), 1));
+    assertEquals(3, indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("zax")), 2));
+    assertEquals(3, indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("zax")), 3));
+    assertEquals(-1, indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("zax")), 9));
 
-    assertEquals(3,
-        indexOfChar("zzabyycdxx", new InStringCharFilter("byx"), 0));
-    assertEquals(3,
-        indexOfChar("zzabyycdxx", new InStringCharFilter("byx"), -1));
-    assertEquals(-1,
-        indexOfChar("zzabyycdxx", new InStringCharFilter("byx"), 100));
-    assertEquals(3,
-        indexOfChar("zzabyycdxx", new InStringCharFilter("byx"), 1));
-    assertEquals(4,
-        indexOfChar("zzabyycdxx", new InStringCharFilter("byx"), 4));
-    assertEquals(8,
-        indexOfChar("zzabyycdxx", new InStringCharFilter("byx"), 6));
+    assertEquals(3, indexOfChar("zzabyycdxx", new InStringCharFilter("byx"), 0));
+    assertEquals(3, indexOfChar("zzabyycdxx", new InStringCharFilter("byx"), -1));
+    assertEquals(-1, indexOfChar("zzabyycdxx", new InStringCharFilter("byx"), 100));
+    assertEquals(3, indexOfChar("zzabyycdxx", new InStringCharFilter("byx"), 1));
+    assertEquals(4, indexOfChar("zzabyycdxx", new InStringCharFilter("byx"), 4));
+    assertEquals(8, indexOfChar("zzabyycdxx", new InStringCharFilter("byx"), 6));
 
-    assertEquals(0,
-        indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("byx")), 0));
-    assertEquals(0,
-        indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("byx")), -1));
-    assertEquals(-1,
-        indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("byx")), 100));
-    assertEquals(1,
-        indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("byx")), 1));
-    assertEquals(6,
-        indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("byx")), 4));
-    assertEquals(7,
-        indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("byx")), 7));
-    assertEquals(-1,
-        indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("byx")), 8));
+    assertEquals(0, indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("byx")), 0));
+    assertEquals(0, indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("byx")), -1));
+    assertEquals(-1, indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("byx")), 100));
+    assertEquals(1, indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("byx")), 1));
+    assertEquals(6, indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("byx")), 4));
+    assertEquals(7, indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("byx")), 7));
+    assertEquals(-1, indexOfChar("zzabyycdxx", CharFilter.not(new InStringCharFilter("byx")), 8));
 
     assertEquals(-1, indexOfChar("ab", new InStringCharFilter("zx"), 0));
     assertEquals(-1, indexOfChar("ab", new InStringCharFilter("zx"), -1));
@@ -162,337 +141,272 @@ public class StringUtilsLocationTest {
 
   @Test
   public void testIndexOfAnyChar_String_CharArray_int() {
-    assertEquals(-1, StringUtils.indexOfAnyChar(null, (char[]) null, 0));
-    assertEquals(-1, StringUtils.indexOfAnyChar(null, (char[]) null, -1));
-    assertEquals(-1, StringUtils.indexOfAnyChar(null, (char[]) null, 100));
-    assertEquals(-1, StringUtils.indexOfAnyChar(null, new char[0], 0));
-    assertEquals(-1, StringUtils.indexOfAnyChar(null, new char[0], -1));
-    assertEquals(-1, StringUtils.indexOfAnyChar(null, new char[0], 100));
-    assertEquals(-1, StringUtils.indexOfAnyChar(null, new char[]{'a', 'b'}, 0));
-    assertEquals(-1,
-        StringUtils.indexOfAnyChar(null, new char[]{'a', 'b'}, -1));
-    assertEquals(-1,
-        StringUtils.indexOfAnyChar(null, new char[]{'a', 'b'}, 100));
+    assertEquals(-1, indexOfAnyChar(null, (char[]) null, 0));
+    assertEquals(-1, indexOfAnyChar(null, (char[]) null, -1));
+    assertEquals(-1, indexOfAnyChar(null, (char[]) null, 100));
+    assertEquals(-1, indexOfAnyChar(null, new char[0], 0));
+    assertEquals(-1, indexOfAnyChar(null, new char[0], -1));
+    assertEquals(-1, indexOfAnyChar(null, new char[0], 100));
+    assertEquals(-1, indexOfAnyChar(null, new char[]{'a', 'b'}, 0));
+    assertEquals(-1, indexOfAnyChar(null, new char[]{'a', 'b'}, -1));
+    assertEquals(-1, indexOfAnyChar(null, new char[]{'a', 'b'}, 100));
 
-    assertEquals(-1, StringUtils.indexOfAnyChar("", (char[]) null, 0));
-    assertEquals(-1, StringUtils.indexOfAnyChar("", (char[]) null, -1));
-    assertEquals(-1, StringUtils.indexOfAnyChar("", (char[]) null, 100));
-    assertEquals(-1, StringUtils.indexOfAnyChar("", new char[0], 0));
-    assertEquals(-1, StringUtils.indexOfAnyChar("", new char[0], -1));
-    assertEquals(-1, StringUtils.indexOfAnyChar("", new char[0], 100));
-    assertEquals(-1, StringUtils.indexOfAnyChar("", new char[]{'a', 'b'}, 0));
-    assertEquals(-1, StringUtils.indexOfAnyChar("", new char[]{'a', 'b'}, -1));
-    assertEquals(-1, StringUtils.indexOfAnyChar("", new char[]{'a', 'b'}, 100));
+    assertEquals(-1, indexOfAnyChar("", (char[]) null, 0));
+    assertEquals(-1, indexOfAnyChar("", (char[]) null, -1));
+    assertEquals(-1, indexOfAnyChar("", (char[]) null, 100));
+    assertEquals(-1, indexOfAnyChar("", new char[0], 0));
+    assertEquals(-1, indexOfAnyChar("", new char[0], -1));
+    assertEquals(-1, indexOfAnyChar("", new char[0], 100));
+    assertEquals(-1, indexOfAnyChar("", new char[]{'a', 'b'}, 0));
+    assertEquals(-1, indexOfAnyChar("", new char[]{'a', 'b'}, -1));
+    assertEquals(-1, indexOfAnyChar("", new char[]{'a', 'b'}, 100));
 
-    assertEquals(-1,
-        StringUtils.indexOfAnyChar("zzabyycdxx", (char[]) null, 0));
-    assertEquals(-1,
-        StringUtils.indexOfAnyChar("zzabyycdxx", (char[]) null, -1));
-    assertEquals(-1,
-        StringUtils.indexOfAnyChar("zzabyycdxx", (char[]) null, 100));
-    assertEquals(-1, StringUtils.indexOfAnyChar("zzabyycdxx", new char[0], 0));
-    assertEquals(-1, StringUtils.indexOfAnyChar("zzabyycdxx", new char[0], -1));
-    assertEquals(-1,
-        StringUtils.indexOfAnyChar("zzabyycdxx", new char[0], 100));
+    assertEquals(-1, indexOfAnyChar("zzabyycdxx", (char[]) null, 0));
+    assertEquals(-1, indexOfAnyChar("zzabyycdxx", (char[]) null, -1));
+    assertEquals(-1, indexOfAnyChar("zzabyycdxx", (char[]) null, 100));
+    assertEquals(-1, indexOfAnyChar("zzabyycdxx", new char[0], 0));
+    assertEquals(-1, indexOfAnyChar("zzabyycdxx", new char[0], -1));
+    assertEquals(-1, indexOfAnyChar("zzabyycdxx", new char[0], 100));
 
-    assertEquals(0, StringUtils
-        .indexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 0));
-    assertEquals(0, StringUtils
-        .indexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, -1));
-    assertEquals(-1, StringUtils
-        .indexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 100));
-    assertEquals(1, StringUtils
-        .indexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 1));
-    assertEquals(2, StringUtils
-        .indexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 2));
-    assertEquals(8, StringUtils
-        .indexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 3));
-    assertEquals(9, StringUtils
-        .indexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 9));
+    assertEquals(0, indexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 0));
+    assertEquals(0, indexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, -1));
+    assertEquals(-1, indexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 100));
+    assertEquals(1, indexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 1));
+    assertEquals(2, indexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 2));
+    assertEquals(8, indexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 3));
+    assertEquals(9, indexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 9));
 
-    assertEquals(3, StringUtils
-        .indexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, 0));
-    assertEquals(3, StringUtils
-        .indexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, -1));
-    assertEquals(-1, StringUtils
-        .indexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, 100));
-    assertEquals(3, StringUtils
-        .indexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, 1));
-    assertEquals(4, StringUtils
-        .indexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, 4));
-    assertEquals(8, StringUtils
-        .indexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, 6));
+    assertEquals(3, indexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, 0));
+    assertEquals(3, indexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, -1));
+    assertEquals(-1, indexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, 100));
+    assertEquals(3, indexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, 1));
+    assertEquals(4, indexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, 4));
+    assertEquals(8, indexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, 6));
 
-    assertEquals(-1, StringUtils.indexOfAnyChar("ab", new char[]{'z'}, 0));
-    assertEquals(-1, StringUtils.indexOfAnyChar("ab", new char[]{'z'}, -1));
-    assertEquals(-1, StringUtils.indexOfAnyChar("ab", new char[]{'z'}, 100));
+    assertEquals(-1, indexOfAnyChar("ab", new char[]{'z'}, 0));
+    assertEquals(-1, indexOfAnyChar("ab", new char[]{'z'}, -1));
+    assertEquals(-1, indexOfAnyChar("ab", new char[]{'z'}, 100));
 
   }
 
   @Test
   public void testIndexOfAnyChar_String_String_int() {
-    assertEquals(-1, StringUtils.indexOfAnyChar(null, (String) null, 0));
-    assertEquals(-1, StringUtils.indexOfAnyChar(null, (String) null, -1));
-    assertEquals(-1, StringUtils.indexOfAnyChar(null, (String) null, 100));
-    assertEquals(-1, StringUtils.indexOfAnyChar(null, "", 0));
-    assertEquals(-1, StringUtils.indexOfAnyChar(null, "", -1));
-    assertEquals(-1, StringUtils.indexOfAnyChar(null, "", 100));
-    assertEquals(-1, StringUtils.indexOfAnyChar(null, "ab", 0));
-    assertEquals(-1, StringUtils.indexOfAnyChar(null, "ab", -1));
-    assertEquals(-1, StringUtils.indexOfAnyChar(null, "ab", 100));
+    assertEquals(-1, indexOfAnyChar(null, (String) null, 0));
+    assertEquals(-1, indexOfAnyChar(null, (String) null, -1));
+    assertEquals(-1, indexOfAnyChar(null, (String) null, 100));
+    assertEquals(-1, indexOfAnyChar(null, "", 0));
+    assertEquals(-1, indexOfAnyChar(null, "", -1));
+    assertEquals(-1, indexOfAnyChar(null, "", 100));
+    assertEquals(-1, indexOfAnyChar(null, "ab", 0));
+    assertEquals(-1, indexOfAnyChar(null, "ab", -1));
+    assertEquals(-1, indexOfAnyChar(null, "ab", 100));
 
-    assertEquals(-1, StringUtils.indexOfAnyChar("", (String) null, 0));
-    assertEquals(-1, StringUtils.indexOfAnyChar("", (String) null, -1));
-    assertEquals(-1, StringUtils.indexOfAnyChar("", (String) null, 100));
-    assertEquals(-1, StringUtils.indexOfAnyChar("", "", 0));
-    assertEquals(-1, StringUtils.indexOfAnyChar("", "", -1));
-    assertEquals(-1, StringUtils.indexOfAnyChar("", "", 100));
-    assertEquals(-1, StringUtils.indexOfAnyChar("", "ab", 0));
-    assertEquals(-1, StringUtils.indexOfAnyChar("", "ab", -1));
-    assertEquals(-1, StringUtils.indexOfAnyChar("", "ab", 100));
+    assertEquals(-1, indexOfAnyChar("", (String) null, 0));
+    assertEquals(-1, indexOfAnyChar("", (String) null, -1));
+    assertEquals(-1, indexOfAnyChar("", (String) null, 100));
+    assertEquals(-1, indexOfAnyChar("", "", 0));
+    assertEquals(-1, indexOfAnyChar("", "", -1));
+    assertEquals(-1, indexOfAnyChar("", "", 100));
+    assertEquals(-1, indexOfAnyChar("", "ab", 0));
+    assertEquals(-1, indexOfAnyChar("", "ab", -1));
+    assertEquals(-1, indexOfAnyChar("", "ab", 100));
 
-    assertEquals(-1,
-        StringUtils.indexOfAnyChar("zzabyycdxx", (String) null, 0));
-    assertEquals(-1,
-        StringUtils.indexOfAnyChar("zzabyycdxx", (String) null, -1));
-    assertEquals(-1,
-        StringUtils.indexOfAnyChar("zzabyycdxx", (String) null, 100));
-    assertEquals(-1, StringUtils.indexOfAnyChar("zzabyycdxx", "", 0));
-    assertEquals(-1, StringUtils.indexOfAnyChar("zzabyycdxx", "", -1));
-    assertEquals(-1, StringUtils.indexOfAnyChar("zzabyycdxx", "", 100));
+    assertEquals(-1, indexOfAnyChar("zzabyycdxx", (String) null, 0));
+    assertEquals(-1, indexOfAnyChar("zzabyycdxx", (String) null, -1));
+    assertEquals(-1, indexOfAnyChar("zzabyycdxx", (String) null, 100));
+    assertEquals(-1, indexOfAnyChar("zzabyycdxx", "", 0));
+    assertEquals(-1, indexOfAnyChar("zzabyycdxx", "", -1));
+    assertEquals(-1, indexOfAnyChar("zzabyycdxx", "", 100));
 
-    assertEquals(0, StringUtils.indexOfAnyChar("zzabyycdxx", "zax", 0));
-    assertEquals(0, StringUtils.indexOfAnyChar("zzabyycdxx", "zax", -1));
-    assertEquals(-1, StringUtils.indexOfAnyChar("zzabyycdxx", "zax", 100));
-    assertEquals(1, StringUtils.indexOfAnyChar("zzabyycdxx", "zax", 1));
-    assertEquals(2, StringUtils.indexOfAnyChar("zzabyycdxx", "zax", 2));
-    assertEquals(8, StringUtils.indexOfAnyChar("zzabyycdxx", "zax", 3));
-    assertEquals(9, StringUtils.indexOfAnyChar("zzabyycdxx", "zax", 9));
+    assertEquals(0, indexOfAnyChar("zzabyycdxx", "zax", 0));
+    assertEquals(0, indexOfAnyChar("zzabyycdxx", "zax", -1));
+    assertEquals(-1, indexOfAnyChar("zzabyycdxx", "zax", 100));
+    assertEquals(1, indexOfAnyChar("zzabyycdxx", "zax", 1));
+    assertEquals(2, indexOfAnyChar("zzabyycdxx", "zax", 2));
+    assertEquals(8, indexOfAnyChar("zzabyycdxx", "zax", 3));
+    assertEquals(9, indexOfAnyChar("zzabyycdxx", "zax", 9));
 
-    assertEquals(3, StringUtils.indexOfAnyChar("zzabyycdxx", "byx", 0));
-    assertEquals(3, StringUtils.indexOfAnyChar("zzabyycdxx", "byx", -1));
-    assertEquals(-1, StringUtils.indexOfAnyChar("zzabyycdxx", "byx", 100));
-    assertEquals(3, StringUtils.indexOfAnyChar("zzabyycdxx", "byx", 1));
-    assertEquals(4, StringUtils.indexOfAnyChar("zzabyycdxx", "byx", 4));
-    assertEquals(8, StringUtils.indexOfAnyChar("zzabyycdxx", "byx", 6));
+    assertEquals(3, indexOfAnyChar("zzabyycdxx", "byx", 0));
+    assertEquals(3, indexOfAnyChar("zzabyycdxx", "byx", -1));
+    assertEquals(-1, indexOfAnyChar("zzabyycdxx", "byx", 100));
+    assertEquals(3, indexOfAnyChar("zzabyycdxx", "byx", 1));
+    assertEquals(4, indexOfAnyChar("zzabyycdxx", "byx", 4));
+    assertEquals(8, indexOfAnyChar("zzabyycdxx", "byx", 6));
 
-    assertEquals(-1, StringUtils.indexOfAnyChar("ab", "zx", 0));
-    assertEquals(-1, StringUtils.indexOfAnyChar("ab", "zx", -1));
-    assertEquals(-1, StringUtils.indexOfAnyChar("ab", "zx", 100));
+    assertEquals(-1, indexOfAnyChar("ab", "zx", 0));
+    assertEquals(-1, indexOfAnyChar("ab", "zx", -1));
+    assertEquals(-1, indexOfAnyChar("ab", "zx", 100));
   }
 
   @Test
   public void testIndexOfAnyCharBut_String_CharArray_int() {
-    assertEquals(-1, StringUtils.indexOfAnyCharBut(null, (char[]) null, 0));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut(null, (char[]) null, -1));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut(null, (char[]) null, 100));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut(null, new char[0], 0));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut(null, new char[0], -1));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut(null, new char[0], 100));
-    assertEquals(-1,
-        StringUtils.indexOfAnyCharBut(null, new char[]{'a', 'b'}, 0));
-    assertEquals(-1,
-        StringUtils.indexOfAnyCharBut(null, new char[]{'a', 'b'}, -1));
-    assertEquals(-1, StringUtils
-        .indexOfAnyCharBut(null, new char[]{'a', 'b'}, 100));
+    assertEquals(-1, indexOfAnyCharBut(null, (char[]) null, 0));
+    assertEquals(-1, indexOfAnyCharBut(null, (char[]) null, -1));
+    assertEquals(-1, indexOfAnyCharBut(null, (char[]) null, 100));
+    assertEquals(-1, indexOfAnyCharBut(null, new char[0], 0));
+    assertEquals(-1, indexOfAnyCharBut(null, new char[0], -1));
+    assertEquals(-1, indexOfAnyCharBut(null, new char[0], 100));
+    assertEquals(-1, indexOfAnyCharBut(null, new char[]{'a', 'b'}, 0));
+    assertEquals(-1, indexOfAnyCharBut(null, new char[]{'a', 'b'}, -1));
+    assertEquals(-1, indexOfAnyCharBut(null, new char[]{'a', 'b'}, 100));
 
-    assertEquals(-1, StringUtils.indexOfAnyCharBut("", (char[]) null, 0));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut("", (char[]) null, -1));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut("", (char[]) null, 100));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut("", new char[0], 0));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut("", new char[0], -1));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut("", new char[0], 100));
-    assertEquals(-1,
-        StringUtils.indexOfAnyCharBut("", new char[]{'a', 'b'}, 0));
-    assertEquals(-1,
-        StringUtils.indexOfAnyCharBut("", new char[]{'a', 'b'}, -1));
-    assertEquals(-1,
-        StringUtils.indexOfAnyCharBut("", new char[]{'a', 'b'}, 100));
+    assertEquals(-1, indexOfAnyCharBut("", (char[]) null, 0));
+    assertEquals(-1, indexOfAnyCharBut("", (char[]) null, -1));
+    assertEquals(-1, indexOfAnyCharBut("", (char[]) null, 100));
+    assertEquals(-1, indexOfAnyCharBut("", new char[0], 0));
+    assertEquals(-1, indexOfAnyCharBut("", new char[0], -1));
+    assertEquals(-1, indexOfAnyCharBut("", new char[0], 100));
+    assertEquals(-1, indexOfAnyCharBut("", new char[]{'a', 'b'}, 0));
+    assertEquals(-1, indexOfAnyCharBut("", new char[]{'a', 'b'}, -1));
+    assertEquals(-1, indexOfAnyCharBut("", new char[]{'a', 'b'}, 100));
 
-    assertEquals(0,
-        StringUtils.indexOfAnyCharBut("zzabyycdxx", (char[]) null, 0));
-    assertEquals(0,
-        StringUtils.indexOfAnyCharBut("zzabyycdxx", (char[]) null, -1));
-    assertEquals(-1, StringUtils
-        .indexOfAnyCharBut("zzabyycdxx", (char[]) null, 100));
-    assertEquals(0,
-        StringUtils.indexOfAnyCharBut("zzabyycdxx", new char[0], 0));
-    assertEquals(1,
-        StringUtils.indexOfAnyCharBut("zzabyycdxx", new char[0], 1));
-    assertEquals(0,
-        StringUtils.indexOfAnyCharBut("zzabyycdxx", new char[0], -1));
-    assertEquals(-1, StringUtils
-        .indexOfAnyCharBut("zzabyycdxx", new char[0], 100));
+    assertEquals(0, indexOfAnyCharBut("zzabyycdxx", (char[]) null, 0));
+    assertEquals(0, indexOfAnyCharBut("zzabyycdxx", (char[]) null, -1));
+    assertEquals(-1, indexOfAnyCharBut("zzabyycdxx", (char[]) null, 100));
+    assertEquals(0, indexOfAnyCharBut("zzabyycdxx", new char[0], 0));
+    assertEquals(1, indexOfAnyCharBut("zzabyycdxx", new char[0], 1));
+    assertEquals(0, indexOfAnyCharBut("zzabyycdxx", new char[0], -1));
+    assertEquals(-1, indexOfAnyCharBut("zzabyycdxx", new char[0], 100));
 
-    assertEquals(3, StringUtils
-        .indexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 0));
-    assertEquals(3, StringUtils
-        .indexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, -1));
-    assertEquals(-1, StringUtils
-        .indexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 100));
-    assertEquals(3, StringUtils
-        .indexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 1));
-    assertEquals(3, StringUtils
-        .indexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 2));
-    assertEquals(3, StringUtils
-        .indexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 3));
-    assertEquals(-1, StringUtils
-        .indexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 9));
+    assertEquals(3, indexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 0));
+    assertEquals(3, indexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, -1));
+    assertEquals(-1, indexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 100));
+    assertEquals(3, indexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 1));
+    assertEquals(3, indexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 2));
+    assertEquals(3, indexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 3));
+    assertEquals(-1, indexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 9));
 
-    assertEquals(0, StringUtils
-        .indexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, 0));
-    assertEquals(0, StringUtils
-        .indexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, -1));
-    assertEquals(-1, StringUtils
-        .indexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, 100));
-    assertEquals(1, StringUtils
-        .indexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, 1));
-    assertEquals(6, StringUtils
-        .indexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, 4));
-    assertEquals(6, StringUtils
-        .indexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, 6));
+    assertEquals(0, indexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, 0));
+    assertEquals(0, indexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, -1));
+    assertEquals(-1, indexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, 100));
+    assertEquals(1, indexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, 1));
+    assertEquals(6, indexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, 4));
+    assertEquals(6, indexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, 6));
 
-    assertEquals(0, StringUtils.indexOfAnyCharBut("ab", new char[]{'z'}, 0));
-    assertEquals(0, StringUtils.indexOfAnyCharBut("ab", new char[]{'z'}, -1));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut("ab", new char[]{'z'}, 100));
+    assertEquals(0, indexOfAnyCharBut("ab", new char[]{'z'}, 0));
+    assertEquals(0, indexOfAnyCharBut("ab", new char[]{'z'}, -1));
+    assertEquals(-1, indexOfAnyCharBut("ab", new char[]{'z'}, 100));
 
   }
 
   @Test
   public void testIndexOfAnyCharBut_String_String_int() {
-    assertEquals(-1, StringUtils.indexOfAnyCharBut(null, (String) null, 0));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut(null, (String) null, -1));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut(null, (String) null, 100));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut(null, "", 0));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut(null, "", -1));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut(null, "", 100));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut(null, "ab", 0));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut(null, "ab", -1));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut(null, "ab", 100));
+    assertEquals(-1, indexOfAnyCharBut(null, (String) null, 0));
+    assertEquals(-1, indexOfAnyCharBut(null, (String) null, -1));
+    assertEquals(-1, indexOfAnyCharBut(null, (String) null, 100));
+    assertEquals(-1, indexOfAnyCharBut(null, "", 0));
+    assertEquals(-1, indexOfAnyCharBut(null, "", -1));
+    assertEquals(-1, indexOfAnyCharBut(null, "", 100));
+    assertEquals(-1, indexOfAnyCharBut(null, "ab", 0));
+    assertEquals(-1, indexOfAnyCharBut(null, "ab", -1));
+    assertEquals(-1, indexOfAnyCharBut(null, "ab", 100));
 
-    assertEquals(-1, StringUtils.indexOfAnyCharBut("", (String) null, 0));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut("", (String) null, -1));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut("", (String) null, 100));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut("", "", 0));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut("", "", -1));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut("", "", 100));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut("", "ab", 0));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut("", "ab", -1));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut("", "ab", 100));
+    assertEquals(-1, indexOfAnyCharBut("", (String) null, 0));
+    assertEquals(-1, indexOfAnyCharBut("", (String) null, -1));
+    assertEquals(-1, indexOfAnyCharBut("", (String) null, 100));
+    assertEquals(-1, indexOfAnyCharBut("", "", 0));
+    assertEquals(-1, indexOfAnyCharBut("", "", -1));
+    assertEquals(-1, indexOfAnyCharBut("", "", 100));
+    assertEquals(-1, indexOfAnyCharBut("", "ab", 0));
+    assertEquals(-1, indexOfAnyCharBut("", "ab", -1));
+    assertEquals(-1, indexOfAnyCharBut("", "ab", 100));
 
-    assertEquals(0,
-        StringUtils.indexOfAnyCharBut("zzabyycdxx", (String) null, 0));
-    assertEquals(0,
-        StringUtils.indexOfAnyCharBut("zzabyycdxx", (String) null, -1));
-    assertEquals(-1, StringUtils
-        .indexOfAnyCharBut("zzabyycdxx", (String) null, 100));
-    assertEquals(0, StringUtils.indexOfAnyCharBut("zzabyycdxx", "", 0));
-    assertEquals(0, StringUtils.indexOfAnyCharBut("zzabyycdxx", "", -1));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut("zzabyycdxx", "", 100));
+    assertEquals(0, indexOfAnyCharBut("zzabyycdxx", (String) null, 0));
+    assertEquals(0, indexOfAnyCharBut("zzabyycdxx", (String) null, -1));
+    assertEquals(-1, indexOfAnyCharBut("zzabyycdxx", (String) null, 100));
+    assertEquals(0, indexOfAnyCharBut("zzabyycdxx", "", 0));
+    assertEquals(0, indexOfAnyCharBut("zzabyycdxx", "", -1));
+    assertEquals(-1, indexOfAnyCharBut("zzabyycdxx", "", 100));
 
-    assertEquals(3, StringUtils.indexOfAnyCharBut("zzabyycdxx", "zax", 0));
-    assertEquals(3, StringUtils.indexOfAnyCharBut("zzabyycdxx", "zax", -1));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut("zzabyycdxx", "zax", 100));
-    assertEquals(3, StringUtils.indexOfAnyCharBut("zzabyycdxx", "zax", 1));
-    assertEquals(3, StringUtils.indexOfAnyCharBut("zzabyycdxx", "zax", 2));
-    assertEquals(3, StringUtils.indexOfAnyCharBut("zzabyycdxx", "zax", 3));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut("zzabyycdxx", "zax", 9));
+    assertEquals(3, indexOfAnyCharBut("zzabyycdxx", "zax", 0));
+    assertEquals(3, indexOfAnyCharBut("zzabyycdxx", "zax", -1));
+    assertEquals(-1, indexOfAnyCharBut("zzabyycdxx", "zax", 100));
+    assertEquals(3, indexOfAnyCharBut("zzabyycdxx", "zax", 1));
+    assertEquals(3, indexOfAnyCharBut("zzabyycdxx", "zax", 2));
+    assertEquals(3, indexOfAnyCharBut("zzabyycdxx", "zax", 3));
+    assertEquals(-1, indexOfAnyCharBut("zzabyycdxx", "zax", 9));
 
-    assertEquals(0, StringUtils.indexOfAnyCharBut("zzabyycdxx", "byx", 0));
-    assertEquals(0, StringUtils.indexOfAnyCharBut("zzabyycdxx", "byx", -1));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut("zzabyycdxx", "byx", 100));
-    assertEquals(1, StringUtils.indexOfAnyCharBut("zzabyycdxx", "byx", 1));
-    assertEquals(6, StringUtils.indexOfAnyCharBut("zzabyycdxx", "byx", 4));
-    assertEquals(6, StringUtils.indexOfAnyCharBut("zzabyycdxx", "byx", 6));
+    assertEquals(0, indexOfAnyCharBut("zzabyycdxx", "byx", 0));
+    assertEquals(0, indexOfAnyCharBut("zzabyycdxx", "byx", -1));
+    assertEquals(-1, indexOfAnyCharBut("zzabyycdxx", "byx", 100));
+    assertEquals(1, indexOfAnyCharBut("zzabyycdxx", "byx", 1));
+    assertEquals(6, indexOfAnyCharBut("zzabyycdxx", "byx", 4));
+    assertEquals(6, indexOfAnyCharBut("zzabyycdxx", "byx", 6));
 
-    assertEquals(0, StringUtils.indexOfAnyCharBut("ab", "zx", 0));
-    assertEquals(0, StringUtils.indexOfAnyCharBut("ab", "zx", -1));
-    assertEquals(-1, StringUtils.indexOfAnyCharBut("ab", "zx", 100));
+    assertEquals(0, indexOfAnyCharBut("ab", "zx", 0));
+    assertEquals(0, indexOfAnyCharBut("ab", "zx", -1));
+    assertEquals(-1, indexOfAnyCharBut("ab", "zx", 100));
   }
 
   @Test
   public void testIndexOf() {
-    assertEquals(-1, StringUtils.indexOf(null, null, 0, false));
-    assertEquals(-1, StringUtils.indexOf(null, null, -1, false));
-    assertEquals(-1, StringUtils.indexOf(null, null, 100, false));
+    assertEquals(-1, indexOf(null, null, 0, false));
+    assertEquals(-1, indexOf(null, null, -1, false));
+    assertEquals(-1, indexOf(null, null, 100, false));
 
-    assertEquals(-1, StringUtils.indexOf("", null, 0, false));
-    assertEquals(-1, StringUtils.indexOf("", null, -1, false));
-    assertEquals(-1, StringUtils.indexOf("", null, 100, false));
+    assertEquals(-1, indexOf("", null, 0, false));
+    assertEquals(-1, indexOf("", null, -1, false));
+    assertEquals(-1, indexOf("", null, 100, false));
 
-    assertEquals(-1, StringUtils.indexOf("", "", 0, false));
-    assertEquals(-1, StringUtils.indexOf("", "", -1, false));
-    assertEquals(-1, StringUtils.indexOf("", "", 100, false));
+    assertEquals(-1, indexOf("", "", 0, false));
+    assertEquals(-1, indexOf("", "", -1, false));
+    assertEquals(-1, indexOf("", "", 100, false));
 
-    assertEquals(0, StringUtils.indexOf("aabaabaa", "a", 0, false));
-    assertEquals(0, StringUtils.indexOf("aabaabaa", "a", -1, false));
-    assertEquals(-1, StringUtils.indexOf("aabaabaa", "a", 100, false));
-    assertEquals(1, StringUtils.indexOf("aabaabaa", "a", 1, false));
-    assertEquals(3, StringUtils.indexOf("aabaabaa", "a", 2, false));
+    assertEquals(0, indexOf("aabaabaa", "a", 0, false));
+    assertEquals(0, indexOf("aabaabaa", "a", -1, false));
+    assertEquals(-1, indexOf("aabaabaa", "a", 100, false));
+    assertEquals(1, indexOf("aabaabaa", "a", 1, false));
+    assertEquals(3, indexOf("aabaabaa", "a", 2, false));
 
-    assertEquals(2, StringUtils.indexOf("aabaabaa", "b", 0, false));
-    assertEquals(2, StringUtils.indexOf("aabaabaa", "b", -1, false));
-    assertEquals(-1, StringUtils.indexOf("aabaabaa", "b", 100, false));
-    assertEquals(5, StringUtils.indexOf("aabaabaa", "b", 3, false));
+    assertEquals(2, indexOf("aabaabaa", "b", 0, false));
+    assertEquals(2, indexOf("aabaabaa", "b", -1, false));
+    assertEquals(-1, indexOf("aabaabaa", "b", 100, false));
+    assertEquals(5, indexOf("aabaabaa", "b", 3, false));
 
-    assertEquals(-1, StringUtils.indexOf("aabaabaa", "Ab", 0, false));
-    assertEquals(1, StringUtils.indexOf("aabaabaa", "Ab", 0, true));
-    assertEquals(-1, StringUtils.indexOf("aabaabaa", "aB", -1, false));
-    assertEquals(1, StringUtils.indexOf("aabaabaa", "aB", -1, true));
-    assertEquals(-1, StringUtils.indexOf("aabaabaa", "ab", 100, false));
-    assertEquals(-1, StringUtils.indexOf("aabaabaa", "ab", 100, true));
-    assertEquals(-1, StringUtils.indexOf("aabaabaa", "AB", 2, false));
-    assertEquals(4, StringUtils.indexOf("aabaabaa", "AB", 2, true));
+    assertEquals(-1, indexOf("aabaabaa", "Ab", 0, false));
+    assertEquals(1, indexOf("aabaabaa", "Ab", 0, true));
+    assertEquals(-1, indexOf("aabaabaa", "aB", -1, false));
+    assertEquals(1, indexOf("aabaabaa", "aB", -1, true));
+    assertEquals(-1, indexOf("aabaabaa", "ab", 100, false));
+    assertEquals(-1, indexOf("aabaabaa", "ab", 100, true));
+    assertEquals(-1, indexOf("aabaabaa", "AB", 2, false));
+    assertEquals(4, indexOf("aabaabaa", "AB", 2, true));
 
-    assertEquals(0, StringUtils.indexOf("aabaabaa", "", 0, false));
-    assertEquals(0, StringUtils.indexOf("aabaabaa", "", -1, false));
-    assertEquals(-1, StringUtils.indexOf("aabaabaa", "", 100, false));
-    assertEquals(4, StringUtils.indexOf("aabaabaa", "", 4, false));
+    assertEquals(0, indexOf("aabaabaa", "", 0, false));
+    assertEquals(0, indexOf("aabaabaa", "", -1, false));
+    assertEquals(-1, indexOf("aabaabaa", "", 100, false));
+    assertEquals(4, indexOf("aabaabaa", "", 4, false));
   }
 
   @Test
   public void testIndexOfAny_String() {
-    assertEquals(-1, StringUtils.indexOfAny(null, null, 0, false));
-    assertEquals(-1, StringUtils
-        .indexOfAny(null, new String[]{"ob", "ba"}, 0, false));
-    assertEquals(-1, StringUtils.indexOfAny("foobar", null, 0, false));
+    assertEquals(-1, indexOfAny(null, null, 0, false));
+    assertEquals(-1, indexOfAny(null, new String[]{"ob", "ba"}, 0, false));
+    assertEquals(-1, indexOfAny("foobar", null, 0, false));
 
-    assertEquals(2, StringUtils
-        .indexOfAny("foobar", new String[]{"ob", "ba"}, 0, false));
-    assertEquals(2, StringUtils
-        .indexOfAny("foobar", new String[]{"ob", "ba"}, -1, false));
-    assertEquals(-1, StringUtils
-        .indexOfAny("foobar", new String[]{"ob", "ba"}, 100, false));
-    assertEquals(3, StringUtils
-        .indexOfAny("foobar", new String[]{"ob", "ba"}, 3, false));
+    assertEquals(2, indexOfAny("foobar", new String[]{"ob", "ba"}, 0, false));
+    assertEquals(2, indexOfAny("foobar", new String[]{"ob", "ba"}, -1, false));
+    assertEquals(-1, indexOfAny("foobar", new String[]{"ob", "ba"}, 100, false));
+    assertEquals(3, indexOfAny("foobar", new String[]{"ob", "ba"}, 3, false));
 
-    assertEquals(-1, StringUtils.indexOfAny("foobar", new String[0], 0, false));
-    assertEquals(-1, StringUtils.indexOfAny(null, new String[0], 0, false));
-    assertEquals(-1, StringUtils.indexOfAny("", new String[0], 0, false));
-    assertEquals(-1, StringUtils
-        .indexOfAny("foobar", new String[]{"llll"}, 0, false));
+    assertEquals(-1, indexOfAny("foobar", new String[0], 0, false));
+    assertEquals(-1, indexOfAny(null, new String[0], 0, false));
+    assertEquals(-1, indexOfAny("", new String[0], 0, false));
+    assertEquals(-1, indexOfAny("foobar", new String[]{"llll"}, 0, false));
 
-    assertEquals(0,
-        StringUtils.indexOfAny("foobar", new String[]{""}, 0, false));
-    assertEquals(0, StringUtils
-        .indexOfAny("foobar", new String[]{""}, -1, false));
-    assertEquals(-1, StringUtils
-        .indexOfAny("foobar", new String[]{""}, 100, false));
-    assertEquals(4,
-        StringUtils.indexOfAny("foobar", new String[]{""}, 4, false));
+    assertEquals(0, indexOfAny("foobar", new String[]{""}, 0, false));
+    assertEquals(0, indexOfAny("foobar", new String[]{""}, -1, false));
+    assertEquals(-1, indexOfAny("foobar", new String[]{""}, 100, false));
+    assertEquals(4, indexOfAny("foobar", new String[]{""}, 4, false));
 
-    assertEquals(-1, StringUtils.indexOfAny("", new String[]{""}, 0, false));
-    assertEquals(-1, StringUtils.indexOfAny("", new String[]{"a"}, 0, false));
-    assertEquals(-1, StringUtils.indexOfAny("", new String[]{null}, 0, false));
-    assertEquals(-1, StringUtils
-        .indexOfAny("foobar", new String[]{null}, 0, false));
-    assertEquals(0, StringUtils
-        .indexOfAny("foobar", new String[]{null, ""}, 0, false));
-    assertEquals(-1,
-        StringUtils.indexOfAny(null, new String[]{null}, 0, false));
+    assertEquals(-1, indexOfAny("", new String[]{""}, 0, false));
+    assertEquals(-1, indexOfAny("", new String[]{"a"}, 0, false));
+    assertEquals(-1, indexOfAny("", new String[]{null}, 0, false));
+    assertEquals(-1, indexOfAny("foobar", new String[]{null}, 0, false));
+    assertEquals(0, indexOfAny("foobar", new String[]{null, ""}, 0, false));
+    assertEquals(-1, indexOfAny(null, new String[]{null}, 0, false));
 
-    assertEquals(2, StringUtils
-        .indexOfAny("foobar", new String[]{"ob", null}, -1, false));
+    assertEquals(2, indexOfAny("foobar", new String[]{"ob", null}, -1, false));
   }
 
   @Test
@@ -503,8 +417,7 @@ public class StringUtilsLocationTest {
     assertEquals(-1, lastIndexOfChar("", ' ', -1));
 
     assertEquals(7, lastIndexOfChar("aabaabaa", 'a', 8));
-    assertEquals(7,
-        lastIndexOfChar("aabaabaa", 'a', Integer.MAX_VALUE));
+    assertEquals(7, lastIndexOfChar("aabaabaa", 'a', Integer.MAX_VALUE));
     assertEquals(5, lastIndexOfChar("aabaabaa", 'b', 8));
     assertEquals(2, lastIndexOfChar("aabaabaa", 'b', 3));
     assertEquals(5, lastIndexOfChar("aabaabaa", 'b', 9));
@@ -643,356 +556,273 @@ public class StringUtilsLocationTest {
 
   @Test
   public void testLastIndexOfAnyChar_String_CharArray_int() {
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar(null, (char[]) null, 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar(null, (char[]) null, -1));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar(null, (char[]) null, 100));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar(null, new char[0], 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar(null, new char[0], -1));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar(null, new char[0], 100));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyChar(null, new char[]{'a', 'b'}, 0));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyChar(null, new char[]{'a', 'b'}, -1));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyChar(null, new char[]{'a', 'b'}, 100));
+    assertEquals(-1, lastIndexOfAnyChar(null, (char[]) null, 0));
+    assertEquals(-1, lastIndexOfAnyChar(null, (char[]) null, -1));
+    assertEquals(-1, lastIndexOfAnyChar(null, (char[]) null, 100));
+    assertEquals(-1, lastIndexOfAnyChar(null, new char[0], 0));
+    assertEquals(-1, lastIndexOfAnyChar(null, new char[0], -1));
+    assertEquals(-1, lastIndexOfAnyChar(null, new char[0], 100));
+    assertEquals(-1, lastIndexOfAnyChar(null, new char[]{'a', 'b'}, 0));
+    assertEquals(-1, lastIndexOfAnyChar(null, new char[]{'a', 'b'}, -1));
+    assertEquals(-1, lastIndexOfAnyChar(null, new char[]{'a', 'b'}, 100));
 
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("", (char[]) null, 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("", (char[]) null, -1));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("", (char[]) null, 100));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("", new char[0], 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("", new char[0], -1));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("", new char[0], 100));
+    assertEquals(-1, lastIndexOfAnyChar("", (char[]) null, 0));
+    assertEquals(-1, lastIndexOfAnyChar("", (char[]) null, -1));
+    assertEquals(-1, lastIndexOfAnyChar("", (char[]) null, 100));
+    assertEquals(-1, lastIndexOfAnyChar("", new char[0], 0));
+    assertEquals(-1, lastIndexOfAnyChar("", new char[0], -1));
+    assertEquals(-1, lastIndexOfAnyChar("", new char[0], 100));
     assertEquals(-1,
-        StringUtils.lastIndexOfAnyChar("", new char[]{'a', 'b'}, 0));
+        lastIndexOfAnyChar("", new char[]{'a', 'b'}, 0));
     assertEquals(-1,
-        StringUtils.lastIndexOfAnyChar("", new char[]{'a', 'b'}, -1));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyChar("", new char[]{'a', 'b'}, 100));
+        lastIndexOfAnyChar("", new char[]{'a', 'b'}, -1));
+    assertEquals(-1, lastIndexOfAnyChar("", new char[]{'a', 'b'}, 100));
 
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyChar("zzabyycdxx", (char[]) null, 0));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyChar("zzabyycdxx", (char[]) null, -1));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyChar("zzabyycdxx", (char[]) null, 100));
+    assertEquals(-1, lastIndexOfAnyChar("zzabyycdxx", (char[]) null, 0));
+    assertEquals(-1, lastIndexOfAnyChar("zzabyycdxx", (char[]) null, -1));
+    assertEquals(-1, lastIndexOfAnyChar("zzabyycdxx", (char[]) null, 100));
     assertEquals(-1,
-        StringUtils.lastIndexOfAnyChar("zzabyycdxx", new char[0], 0));
+        lastIndexOfAnyChar("zzabyycdxx", new char[0], 0));
     assertEquals(-1,
-        StringUtils.lastIndexOfAnyChar("zzabyycdxx", new char[0], -1));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyChar("zzabyycdxx", new char[0], 100));
+        lastIndexOfAnyChar("zzabyycdxx", new char[0], -1));
+    assertEquals(-1, lastIndexOfAnyChar("zzabyycdxx", new char[0], 100));
 
-    assertEquals(0, StringUtils
-        .lastIndexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 0));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, -1));
-    assertEquals(9, StringUtils
-        .lastIndexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 100));
-    assertEquals(1, StringUtils
-        .lastIndexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 1));
-    assertEquals(2, StringUtils
-        .lastIndexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 2));
-    assertEquals(2, StringUtils
-        .lastIndexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 3));
-    assertEquals(9, StringUtils
-        .lastIndexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 9));
+    assertEquals(0, lastIndexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 0));
+    assertEquals(-1, lastIndexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, -1));
+    assertEquals(9, lastIndexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 100));
+    assertEquals(1, lastIndexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 1));
+    assertEquals(2, lastIndexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 2));
+    assertEquals(2, lastIndexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 3));
+    assertEquals(9, lastIndexOfAnyChar("zzabyycdxx", new char[]{'z', 'a', 'x'}, 9));
 
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, 0));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, -1));
-    assertEquals(9, StringUtils
-        .lastIndexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, 100));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, 1));
-    assertEquals(4, StringUtils
-        .lastIndexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, 4));
-    assertEquals(5, StringUtils
-        .lastIndexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, 6));
+    assertEquals(-1, lastIndexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, 0));
+    assertEquals(-1, lastIndexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, -1));
+    assertEquals(9, lastIndexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, 100));
+    assertEquals(-1, lastIndexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, 1));
+    assertEquals(4, lastIndexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, 4));
+    assertEquals(5, lastIndexOfAnyChar("zzabyycdxx", new char[]{'b', 'y', 'x'}, 6));
 
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("ab", new char[]{'z'}, 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("ab", new char[]{'z'}, -1));
+    assertEquals(-1, lastIndexOfAnyChar("ab", new char[]{'z'}, 0));
+    assertEquals(-1, lastIndexOfAnyChar("ab", new char[]{'z'}, -1));
     assertEquals(-1,
-        StringUtils.lastIndexOfAnyChar("ab", new char[]{'z'}, 100));
+        lastIndexOfAnyChar("ab", new char[]{'z'}, 100));
   }
 
   @Test
   public void testLastIndexOfAnyChar_String_String_int() {
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar(null, (String) null, 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar(null, (String) null, -1));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar(null, (String) null, 100));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar(null, "", 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar(null, "", -1));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar(null, "", 100));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar(null, "ab", 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar(null, "ab", -1));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar(null, "ab", 100));
+    assertEquals(-1, lastIndexOfAnyChar(null, (String) null, 0));
+    assertEquals(-1, lastIndexOfAnyChar(null, (String) null, -1));
+    assertEquals(-1, lastIndexOfAnyChar(null, (String) null, 100));
+    assertEquals(-1, lastIndexOfAnyChar(null, "", 0));
+    assertEquals(-1, lastIndexOfAnyChar(null, "", -1));
+    assertEquals(-1, lastIndexOfAnyChar(null, "", 100));
+    assertEquals(-1, lastIndexOfAnyChar(null, "ab", 0));
+    assertEquals(-1, lastIndexOfAnyChar(null, "ab", -1));
+    assertEquals(-1, lastIndexOfAnyChar(null, "ab", 100));
 
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("", (String) null, 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("", (String) null, -1));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("", (String) null, 100));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("", "", 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("", "", -1));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("", "", 100));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("", "ab", 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("", "ab", -1));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("", "ab", 100));
+    assertEquals(-1, lastIndexOfAnyChar("", (String) null, 0));
+    assertEquals(-1, lastIndexOfAnyChar("", (String) null, -1));
+    assertEquals(-1, lastIndexOfAnyChar("", (String) null, 100));
+    assertEquals(-1, lastIndexOfAnyChar("", "", 0));
+    assertEquals(-1, lastIndexOfAnyChar("", "", -1));
+    assertEquals(-1, lastIndexOfAnyChar("", "", 100));
+    assertEquals(-1, lastIndexOfAnyChar("", "ab", 0));
+    assertEquals(-1, lastIndexOfAnyChar("", "ab", -1));
+    assertEquals(-1, lastIndexOfAnyChar("", "ab", 100));
 
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyChar("zzabyycdxx", (String) null, 0));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyChar("zzabyycdxx", (String) null, -1));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyChar("zzabyycdxx", (String) null, 100));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("zzabyycdxx", "", 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("zzabyycdxx", "", -1));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("zzabyycdxx", "", 100));
+    assertEquals(-1, lastIndexOfAnyChar("zzabyycdxx", (String) null, 0));
+    assertEquals(-1, lastIndexOfAnyChar("zzabyycdxx", (String) null, -1));
+    assertEquals(-1, lastIndexOfAnyChar("zzabyycdxx", (String) null, 100));
+    assertEquals(-1, lastIndexOfAnyChar("zzabyycdxx", "", 0));
+    assertEquals(-1, lastIndexOfAnyChar("zzabyycdxx", "", -1));
+    assertEquals(-1, lastIndexOfAnyChar("zzabyycdxx", "", 100));
 
-    assertEquals(9, StringUtils.lastIndexOfAnyChar("zzabyycdxx", "zax", 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("zzabyycdxx", "zax", -1));
-    assertEquals(9, StringUtils.lastIndexOfAnyChar("zzabyycdxx", "zax", 100));
-    assertEquals(1, StringUtils.lastIndexOfAnyChar("zzabyycdxx", "zax", 1));
-    assertEquals(2, StringUtils.lastIndexOfAnyChar("zzabyycdxx", "zax", 2));
-    assertEquals(2, StringUtils.lastIndexOfAnyChar("zzabyycdxx", "zax", 3));
-    assertEquals(2, StringUtils.lastIndexOfAnyChar("zzabyycdxx", "zax", 7));
+    assertEquals(0, lastIndexOfAnyChar("zzabyycdxx", "zax", 0));
+    assertEquals(-1, lastIndexOfAnyChar("zzabyycdxx", "zax", -1));
+    assertEquals(9, lastIndexOfAnyChar("zzabyycdxx", "zax", 100));
+    assertEquals(1, lastIndexOfAnyChar("zzabyycdxx", "zax", 1));
+    assertEquals(2, lastIndexOfAnyChar("zzabyycdxx", "zax", 2));
+    assertEquals(2, lastIndexOfAnyChar("zzabyycdxx", "zax", 3));
+    assertEquals(2, lastIndexOfAnyChar("zzabyycdxx", "zax", 7));
 
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("zzabyycdxx", "byx", 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("zzabyycdxx", "byx", -1));
-    assertEquals(9, StringUtils.lastIndexOfAnyChar("zzabyycdxx", "byx", 100));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("zzabyycdxx", "byx", 1));
-    assertEquals(4, StringUtils.lastIndexOfAnyChar("zzabyycdxx", "byx", 4));
-    assertEquals(5, StringUtils.lastIndexOfAnyChar("zzabyycdxx", "byx", 6));
+    assertEquals(-1, lastIndexOfAnyChar("zzabyycdxx", "byx", 0));
+    assertEquals(-1, lastIndexOfAnyChar("zzabyycdxx", "byx", -1));
+    assertEquals(9, lastIndexOfAnyChar("zzabyycdxx", "byx", 100));
+    assertEquals(-1, lastIndexOfAnyChar("zzabyycdxx", "byx", 1));
+    assertEquals(4, lastIndexOfAnyChar("zzabyycdxx", "byx", 4));
+    assertEquals(5, lastIndexOfAnyChar("zzabyycdxx", "byx", 6));
 
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("ab", "zx", 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("ab", "zx", -1));
-    assertEquals(-1, StringUtils.lastIndexOfAnyChar("ab", "zx", 100));
+    assertEquals(-1, lastIndexOfAnyChar("ab", "zx", 0));
+    assertEquals(-1, lastIndexOfAnyChar("ab", "zx", -1));
+    assertEquals(-1, lastIndexOfAnyChar("ab", "zx", 100));
   }
 
   @Test
   public void testLastIndexOfAnyCharBut_String_CharArray_int() {
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut(null, (char[]) null, 0));
-    assertEquals(-1,
-        StringUtils.lastIndexOfAnyCharBut(null, (char[]) null, -1));
-    assertEquals(-1,
-        StringUtils.lastIndexOfAnyCharBut(null, (char[]) null, 100));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut(null, new char[0], 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut(null, new char[0], -1));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut(null, new char[0], 100));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyCharBut(null, new char[]{'a', 'b'}, 0));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyCharBut(null, new char[]{'a', 'b'}, -1));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyCharBut(null, new char[]{'a', 'b'}, 100));
+    assertEquals(-1, lastIndexOfAnyCharBut(null, (char[]) null, 0));
+    assertEquals(-1, lastIndexOfAnyCharBut(null, (char[]) null, -1));
+    assertEquals(-1, lastIndexOfAnyCharBut(null, (char[]) null, 100));
+    assertEquals(-1, lastIndexOfAnyCharBut(null, new char[0], 0));
+    assertEquals(-1, lastIndexOfAnyCharBut(null, new char[0], -1));
+    assertEquals(-1, lastIndexOfAnyCharBut(null, new char[0], 100));
+    assertEquals(-1, lastIndexOfAnyCharBut(null, new char[]{'a', 'b'}, 0));
+    assertEquals(-1, lastIndexOfAnyCharBut(null, new char[]{'a', 'b'}, -1));
+    assertEquals(-1, lastIndexOfAnyCharBut(null, new char[]{'a', 'b'}, 100));
 
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut("", (char[]) null, 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut("", (char[]) null, -1));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut("", (char[]) null, 100));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut("", new char[0], 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut("", new char[0], -1));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut("", new char[0], 100));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyCharBut("", new char[]{'a', 'b'}, 0));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyCharBut("", new char[]{'a', 'b'}, -1));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyCharBut("", new char[]{'a', 'b'}, 100));
+    assertEquals(-1, lastIndexOfAnyCharBut("", (char[]) null, 0));
+    assertEquals(-1, lastIndexOfAnyCharBut("", (char[]) null, -1));
+    assertEquals(-1, lastIndexOfAnyCharBut("", (char[]) null, 100));
+    assertEquals(-1, lastIndexOfAnyCharBut("", new char[0], 0));
+    assertEquals(-1, lastIndexOfAnyCharBut("", new char[0], -1));
+    assertEquals(-1, lastIndexOfAnyCharBut("", new char[0], 100));
+    assertEquals(-1, lastIndexOfAnyCharBut("", new char[]{'a', 'b'}, 0));
+    assertEquals(-1, lastIndexOfAnyCharBut("", new char[]{'a', 'b'}, -1));
+    assertEquals(-1, lastIndexOfAnyCharBut("", new char[]{'a', 'b'}, 100));
 
-    assertEquals(0, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", (char[]) null, 0));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", (char[]) null, -1));
-    assertEquals(9, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", (char[]) null, 100));
-    assertEquals(0, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", new char[0], 0));
-    assertEquals(1, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", new char[0], 1));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", new char[0], -1));
-    assertEquals(9, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", new char[0], 100));
+    assertEquals(0, lastIndexOfAnyCharBut("zzabyycdxx", (char[]) null, 0));
+    assertEquals(-1, lastIndexOfAnyCharBut("zzabyycdxx", (char[]) null, -1));
+    assertEquals(9, lastIndexOfAnyCharBut("zzabyycdxx", (char[]) null, 100));
+    assertEquals(0, lastIndexOfAnyCharBut("zzabyycdxx", new char[0], 0));
+    assertEquals(1, lastIndexOfAnyCharBut("zzabyycdxx", new char[0], 1));
+    assertEquals(-1, lastIndexOfAnyCharBut("zzabyycdxx", new char[0], -1));
+    assertEquals(9, lastIndexOfAnyCharBut("zzabyycdxx", new char[0], 100));
 
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 0));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, -1));
-    assertEquals(7, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 100));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 1));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 2));
-    assertEquals(3, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 3));
-    assertEquals(7, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 9));
+    assertEquals(-1, lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 0));
+    assertEquals(-1, lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, -1));
+    assertEquals(7, lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 100));
+    assertEquals(-1, lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 1));
+    assertEquals(-1, lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 2));
+    assertEquals(3, lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 3));
+    assertEquals(7, lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'z', 'a', 'x'}, 9));
 
-    assertEquals(0, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, 0));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, -1));
-    assertEquals(7, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, 100));
-    assertEquals(1, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, 1));
-    assertEquals(2, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, 4));
-    assertEquals(6, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, 6));
+    assertEquals(0, lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, 0));
+    assertEquals(-1, lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, -1));
+    assertEquals(7, lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, 100));
+    assertEquals(1, lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, 1));
+    assertEquals(2, lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, 4));
+    assertEquals(6, lastIndexOfAnyCharBut("zzabyycdxx", new char[]{'b', 'y', 'x'}, 6));
 
-    assertEquals(0,
-        StringUtils.lastIndexOfAnyCharBut("ab", new char[]{'z'}, 0));
-    assertEquals(-1,
-        StringUtils.lastIndexOfAnyCharBut("ab", new char[]{'z'}, -1));
-    assertEquals(1, StringUtils
-        .lastIndexOfAnyCharBut("ab", new char[]{'z'}, 100));
+    assertEquals(0, lastIndexOfAnyCharBut("ab", new char[]{'z'}, 0));
+    assertEquals(-1, lastIndexOfAnyCharBut("ab", new char[]{'z'}, -1));
+    assertEquals(1, lastIndexOfAnyCharBut("ab", new char[]{'z'}, 100));
 
   }
 
   @Test
   public void testLastIndexOfAnyCharBut_String_String_int() {
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut(null, (String) null, 0));
-    assertEquals(-1,
-        StringUtils.lastIndexOfAnyCharBut(null, (String) null, -1));
-    assertEquals(-1,
-        StringUtils.lastIndexOfAnyCharBut(null, (String) null, 100));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut(null, "", 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut(null, "", -1));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut(null, "", 100));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut(null, "ab", 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut(null, "ab", -1));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut(null, "ab", 100));
+    assertEquals(-1, lastIndexOfAnyCharBut(null, (String) null, 0));
+    assertEquals(-1, lastIndexOfAnyCharBut(null, (String) null, -1));
+    assertEquals(-1, lastIndexOfAnyCharBut(null, (String) null, 100));
+    assertEquals(-1, lastIndexOfAnyCharBut(null, "", 0));
+    assertEquals(-1, lastIndexOfAnyCharBut(null, "", -1));
+    assertEquals(-1, lastIndexOfAnyCharBut(null, "", 100));
+    assertEquals(-1, lastIndexOfAnyCharBut(null, "ab", 0));
+    assertEquals(-1, lastIndexOfAnyCharBut(null, "ab", -1));
+    assertEquals(-1, lastIndexOfAnyCharBut(null, "ab", 100));
 
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut("", (String) null, 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut("", (String) null, -1));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut("", (String) null, 100));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut("", "", 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut("", "", -1));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut("", "", 100));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut("", "ab", 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut("", "ab", -1));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut("", "ab", 100));
+    assertEquals(-1, lastIndexOfAnyCharBut("", (String) null, 0));
+    assertEquals(-1, lastIndexOfAnyCharBut("", (String) null, -1));
+    assertEquals(-1, lastIndexOfAnyCharBut("", (String) null, 100));
+    assertEquals(-1, lastIndexOfAnyCharBut("", "", 0));
+    assertEquals(-1, lastIndexOfAnyCharBut("", "", -1));
+    assertEquals(-1, lastIndexOfAnyCharBut("", "", 100));
+    assertEquals(-1, lastIndexOfAnyCharBut("", "ab", 0));
+    assertEquals(-1, lastIndexOfAnyCharBut("", "ab", -1));
+    assertEquals(-1, lastIndexOfAnyCharBut("", "ab", 100));
 
-    assertEquals(0, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", (String) null, 0));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", (String) null, -1));
-    assertEquals(9, StringUtils
-        .lastIndexOfAnyCharBut("zzabyycdxx", (String) null, 100));
-    assertEquals(0, StringUtils.lastIndexOfAnyCharBut("zzabyycdxx", "", 0));
-    assertEquals(1, StringUtils.lastIndexOfAnyCharBut("zzabyycdxx", "", 1));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut("zzabyycdxx", "", -1));
-    assertEquals(9, StringUtils.lastIndexOfAnyCharBut("zzabyycdxx", "", 100));
+    assertEquals(0, lastIndexOfAnyCharBut("zzabyycdxx", (String) null, 0));
+    assertEquals(-1, lastIndexOfAnyCharBut("zzabyycdxx", (String) null, -1));
+    assertEquals(9, lastIndexOfAnyCharBut("zzabyycdxx", (String) null, 100));
+    assertEquals(0, lastIndexOfAnyCharBut("zzabyycdxx", "", 0));
+    assertEquals(1, lastIndexOfAnyCharBut("zzabyycdxx", "", 1));
+    assertEquals(-1, lastIndexOfAnyCharBut("zzabyycdxx", "", -1));
+    assertEquals(9, lastIndexOfAnyCharBut("zzabyycdxx", "", 100));
 
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut("zzabyycdxx", "zax", 0));
-    assertEquals(-1,
-        StringUtils.lastIndexOfAnyCharBut("zzabyycdxx", "zax", -1));
-    assertEquals(7,
-        StringUtils.lastIndexOfAnyCharBut("zzabyycdxx", "zax", 100));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut("zzabyycdxx", "zax", 1));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut("zzabyycdxx", "zax", 2));
-    assertEquals(3, StringUtils.lastIndexOfAnyCharBut("zzabyycdxx", "zax", 3));
-    assertEquals(7, StringUtils.lastIndexOfAnyCharBut("zzabyycdxx", "zax", 9));
+    assertEquals(-1, lastIndexOfAnyCharBut("zzabyycdxx", "zax", 0));
+    assertEquals(-1, lastIndexOfAnyCharBut("zzabyycdxx", "zax", -1));
+    assertEquals(7, lastIndexOfAnyCharBut("zzabyycdxx", "zax", 100));
+    assertEquals(-1, lastIndexOfAnyCharBut("zzabyycdxx", "zax", 1));
+    assertEquals(-1, lastIndexOfAnyCharBut("zzabyycdxx", "zax", 2));
+    assertEquals(3, lastIndexOfAnyCharBut("zzabyycdxx", "zax", 3));
+    assertEquals(7, lastIndexOfAnyCharBut("zzabyycdxx", "zax", 9));
 
-    assertEquals(0, StringUtils.lastIndexOfAnyCharBut("zzabyycdxx", "byx", 0));
-    assertEquals(-1,
-        StringUtils.lastIndexOfAnyCharBut("zzabyycdxx", "byx", -1));
-    assertEquals(7,
-        StringUtils.lastIndexOfAnyCharBut("zzabyycdxx", "byx", 100));
-    assertEquals(1, StringUtils.lastIndexOfAnyCharBut("zzabyycdxx", "byx", 1));
-    assertEquals(2, StringUtils.lastIndexOfAnyCharBut("zzabyycdxx", "byx", 4));
-    assertEquals(6, StringUtils.lastIndexOfAnyCharBut("zzabyycdxx", "byx", 6));
+    assertEquals(0, lastIndexOfAnyCharBut("zzabyycdxx", "byx", 0));
+    assertEquals(-1, lastIndexOfAnyCharBut("zzabyycdxx", "byx", -1));
+    assertEquals(7, lastIndexOfAnyCharBut("zzabyycdxx", "byx", 100));
+    assertEquals(1, lastIndexOfAnyCharBut("zzabyycdxx", "byx", 1));
+    assertEquals(2, lastIndexOfAnyCharBut("zzabyycdxx", "byx", 4));
+    assertEquals(6, lastIndexOfAnyCharBut("zzabyycdxx", "byx", 6));
 
-    assertEquals(0, StringUtils.lastIndexOfAnyCharBut("ab", "zx", 0));
-    assertEquals(-1, StringUtils.lastIndexOfAnyCharBut("ab", "zx", -1));
-    assertEquals(1, StringUtils.lastIndexOfAnyCharBut("ab", "zx", 100));
+    assertEquals(0, lastIndexOfAnyCharBut("ab", "zx", 0));
+    assertEquals(-1, lastIndexOfAnyCharBut("ab", "zx", -1));
+    assertEquals(1, lastIndexOfAnyCharBut("ab", "zx", 100));
   }
 
   @Test
   public void testLastIndexOf() {
-    assertEquals(-1, StringUtils.lastIndexOf(null, null, 0, false));
-    assertEquals(-1, StringUtils.lastIndexOf(null, null, -1, false));
-    assertEquals(-1, StringUtils.lastIndexOf(null, null, 100, false));
+    assertEquals(-1, lastIndexOf(null, null, 0, false));
+    assertEquals(-1, lastIndexOf(null, null, -1, false));
+    assertEquals(-1, lastIndexOf(null, null, 100, false));
 
-    assertEquals(-1, StringUtils.lastIndexOf("", null, 0, false));
-    assertEquals(-1, StringUtils.lastIndexOf("", null, -1, false));
-    assertEquals(-1, StringUtils.lastIndexOf("", null, 100, false));
+    assertEquals(-1, lastIndexOf("", null, 0, false));
+    assertEquals(-1, lastIndexOf("", null, -1, false));
+    assertEquals(-1, lastIndexOf("", null, 100, false));
 
-    assertEquals(-1, StringUtils.lastIndexOf("", "", 0, false));
-    assertEquals(-1, StringUtils.lastIndexOf("", "", -1, false));
-    assertEquals(-1, StringUtils.lastIndexOf("", "", 100, false));
+    assertEquals(-1, lastIndexOf("", "", 0, false));
+    assertEquals(-1, lastIndexOf("", "", -1, false));
+    assertEquals(-1, lastIndexOf("", "", 100, false));
 
-    assertEquals(0, StringUtils.lastIndexOf("aabaabaa", "a", 0, false));
-    assertEquals(-1, StringUtils.lastIndexOf("aabaabaa", "a", -1, false));
-    assertEquals(7, StringUtils.lastIndexOf("aabaabaa", "a", 100, false));
-    assertEquals(1, StringUtils.lastIndexOf("aabaabaa", "a", 1, false));
-    assertEquals(1, StringUtils.lastIndexOf("aabaabaa", "a", 2, false));
+    assertEquals(0, lastIndexOf("aabaabaa", "a", 0, false));
+    assertEquals(-1, lastIndexOf("aabaabaa", "a", -1, false));
+    assertEquals(7, lastIndexOf("aabaabaa", "a", 100, false));
+    assertEquals(1, lastIndexOf("aabaabaa", "a", 1, false));
+    assertEquals(1, lastIndexOf("aabaabaa", "a", 2, false));
 
-    assertEquals(-1, StringUtils.lastIndexOf("aabaabaa", "b", 0, false));
-    assertEquals(-1, StringUtils.lastIndexOf("aabaabaa", "b", -1, false));
-    assertEquals(5, StringUtils.lastIndexOf("aabaabaa", "b", 100, false));
-    assertEquals(2, StringUtils.lastIndexOf("aabaabaa", "b", 3, false));
+    assertEquals(-1, lastIndexOf("aabaabaa", "b", 0, false));
+    assertEquals(-1, lastIndexOf("aabaabaa", "b", -1, false));
+    assertEquals(5, lastIndexOf("aabaabaa", "b", 100, false));
+    assertEquals(2, lastIndexOf("aabaabaa", "b", 3, false));
 
-    assertEquals(-1, StringUtils.lastIndexOf("aabaabaa", "ab", 0, false));
-    assertEquals(-1, StringUtils.lastIndexOf("aabaabaa", "ab", -1, false));
-    assertEquals(4, StringUtils.lastIndexOf("aabaabaa", "ab", 100, false));
-    assertEquals(1, StringUtils.lastIndexOf("aabaabaa", "ab", 3, false));
+    assertEquals(-1, lastIndexOf("aabaabaa", "ab", 0, false));
+    assertEquals(-1, lastIndexOf("aabaabaa", "ab", -1, false));
+    assertEquals(4, lastIndexOf("aabaabaa", "ab", 100, false));
+    assertEquals(1, lastIndexOf("aabaabaa", "ab", 3, false));
 
-    assertEquals(0, StringUtils.lastIndexOf("aabaabaa", "", 0, false));
-    assertEquals(-1, StringUtils.lastIndexOf("aabaabaa", "", -1, false));
-    assertEquals(7, StringUtils.lastIndexOf("aabaabaa", "", 100, false));
-    assertEquals(4, StringUtils.lastIndexOf("aabaabaa", "", 4, false));
+    assertEquals(0, lastIndexOf("aabaabaa", "", 0, false));
+    assertEquals(-1, lastIndexOf("aabaabaa", "", -1, false));
+    assertEquals(7, lastIndexOf("aabaabaa", "", 100, false));
+    assertEquals(4, lastIndexOf("aabaabaa", "", 4, false));
   }
 
   @Test
   public void testLastIndexOfAny() {
-    assertEquals(-1, StringUtils.lastIndexOfAny(null, null, 0, false));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAny(null, new String[]{"ob", "ba"}, 0, false));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAny("foobar", null, 0, false));
+    assertEquals(-1, lastIndexOfAny(null, null, 0, false));
+    assertEquals(-1, lastIndexOfAny(null, new String[]{"ob", "ba"}, 0, false));
+    assertEquals(-1, lastIndexOfAny("foobar", null, 0, false));
 
-    assertEquals(-1, StringUtils
-        .lastIndexOfAny("foobar", new String[]{"ob", "ba"}, 0, false));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAny("foobar", new String[]{"ob", "ba"}, -1, false));
-    assertEquals(3, StringUtils
-        .lastIndexOfAny("foobar", new String[]{"ob", "ba"}, 100, false));
-    assertEquals(3, StringUtils
-        .lastIndexOfAny("foobar", new String[]{"ob", "ba"}, 3, false));
+    assertEquals(-1, lastIndexOfAny("foobar", new String[]{"ob", "ba"}, 0, false));
+    assertEquals(-1, lastIndexOfAny("foobar", new String[]{"ob", "ba"}, -1, false));
+    assertEquals(3, lastIndexOfAny("foobar", new String[]{"ob", "ba"}, 100, false));
+    assertEquals(2, lastIndexOfAny("foobar", new String[]{"ob", "ba"}, 3, false));
 
-    assertEquals(-1, StringUtils
-        .lastIndexOfAny("foobar", new String[0], 0, false));
-    assertEquals(-1, StringUtils.lastIndexOfAny(null, new String[0], 0, false));
-    assertEquals(-1, StringUtils.lastIndexOfAny("", new String[0], 0, false));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAny("foobar", new String[]{"llll"}, 0, false));
+    assertEquals(-1, lastIndexOfAny("foobar", new String[0], 0, false));
+    assertEquals(-1, lastIndexOfAny(null, new String[0], 0, false));
+    assertEquals(-1, lastIndexOfAny("", new String[0], 0, false));
+    assertEquals(-1, lastIndexOfAny("foobar", new String[]{"llll"}, 0, false));
 
-    assertEquals(0, StringUtils
-        .lastIndexOfAny("foobar", new String[]{""}, 0, false));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAny("foobar", new String[]{""}, -1, false));
-    assertEquals(5, StringUtils
-        .lastIndexOfAny("foobar", new String[]{""}, 100, false));
-    assertEquals(4, StringUtils
-        .lastIndexOfAny("foobar", new String[]{""}, 4, false));
+    assertEquals(0, lastIndexOfAny("foobar", new String[]{""}, 0, false));
+    assertEquals(-1, lastIndexOfAny("foobar", new String[]{""}, -1, false));
+    assertEquals(5, lastIndexOfAny("foobar", new String[]{""}, 100, false));
+    assertEquals(4, lastIndexOfAny("foobar", new String[]{""}, 4, false));
 
-    assertEquals(-1,
-        StringUtils.lastIndexOfAny("", new String[]{""}, 0, false));
-    assertEquals(-1,
-        StringUtils.lastIndexOfAny("", new String[]{"a"}, 0, false));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAny("", new String[]{null}, 0, false));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAny("foobar", new String[]{null}, 0, false));
-    assertEquals(5, StringUtils
-        .lastIndexOfAny("foobar", new String[]{null, ""}, 100, false));
-    assertEquals(-1, StringUtils
-        .lastIndexOfAny(null, new String[]{null}, 0, false));
+    assertEquals(-1, lastIndexOfAny("", new String[]{""}, 0, false));
+    assertEquals(-1, lastIndexOfAny("", new String[]{"a"}, 0, false));
+    assertEquals(-1, lastIndexOfAny("", new String[]{null}, 0, false));
+    assertEquals(-1, lastIndexOfAny("foobar", new String[]{null}, 0, false));
+    assertEquals(5, lastIndexOfAny("foobar", new String[]{null, ""}, 100, false));
+    assertEquals(-1, lastIndexOfAny(null, new String[]{null}, 0, false));
 
-    assertEquals(2, StringUtils
-        .lastIndexOfAny("foobar", new String[]{"ob", null}, 100, false));
+    assertEquals(2, lastIndexOfAny("foobar", new String[]{"ob", null}, 100, false));
   }
 
   @Test
@@ -1003,21 +833,21 @@ public class StringUtilsLocationTest {
     final String chars1 = "b";
     final String chars2 = "a";
     final String chars3 = "ab";
-    assertEquals(false, StringUtils.containsOnly(null, (String) null));
-    assertEquals(false, StringUtils.containsOnly("", (String) null));
-    assertEquals(false, StringUtils.containsOnly(null, ""));
-    assertEquals(false, StringUtils.containsOnly(str1, ""));
-    assertEquals(true, StringUtils.containsOnly("", ""));
-    assertEquals(true, StringUtils.containsOnly("", chars1));
-    assertEquals(false, StringUtils.containsOnly(str1, chars1));
-    assertEquals(true, StringUtils.containsOnly(str1, chars2));
-    assertEquals(true, StringUtils.containsOnly(str1, chars3));
-    assertEquals(true, StringUtils.containsOnly(str2, chars1));
-    assertEquals(false, StringUtils.containsOnly(str2, chars2));
-    assertEquals(true, StringUtils.containsOnly(str2, chars3));
-    assertEquals(false, StringUtils.containsOnly(str3, chars1));
-    assertEquals(false, StringUtils.containsOnly(str3, chars2));
-    assertEquals(true, StringUtils.containsOnly(str3, chars3));
+    assertEquals(false, containsOnly(null, (String) null));
+    assertEquals(false, containsOnly("", (String) null));
+    assertEquals(false, containsOnly(null, ""));
+    assertEquals(false, containsOnly(str1, ""));
+    assertEquals(true, containsOnly("", ""));
+    assertEquals(true, containsOnly("", chars1));
+    assertEquals(false, containsOnly(str1, chars1));
+    assertEquals(true, containsOnly(str1, chars2));
+    assertEquals(true, containsOnly(str1, chars3));
+    assertEquals(true, containsOnly(str2, chars1));
+    assertEquals(false, containsOnly(str2, chars2));
+    assertEquals(true, containsOnly(str2, chars3));
+    assertEquals(false, containsOnly(str3, chars1));
+    assertEquals(false, containsOnly(str3, chars2));
+    assertEquals(true, containsOnly(str3, chars3));
   }
 
   @Test
@@ -1029,21 +859,21 @@ public class StringUtilsLocationTest {
     final char[] chars2 = {'a'};
     final char[] chars3 = {'a', 'b'};
     final char[] emptyChars = new char[0];
-    assertEquals(false, StringUtils.containsOnly(null, (char[]) null));
-    assertEquals(false, StringUtils.containsOnly("", (char[]) null));
-    assertEquals(false, StringUtils.containsOnly(null, emptyChars));
-    assertEquals(false, StringUtils.containsOnly(str1, emptyChars));
-    assertEquals(true, StringUtils.containsOnly("", emptyChars));
-    assertEquals(true, StringUtils.containsOnly("", chars1));
-    assertEquals(false, StringUtils.containsOnly(str1, chars1));
-    assertEquals(true, StringUtils.containsOnly(str1, chars2));
-    assertEquals(true, StringUtils.containsOnly(str1, chars3));
-    assertEquals(true, StringUtils.containsOnly(str2, chars1));
-    assertEquals(false, StringUtils.containsOnly(str2, chars2));
-    assertEquals(true, StringUtils.containsOnly(str2, chars3));
-    assertEquals(false, StringUtils.containsOnly(str3, chars1));
-    assertEquals(false, StringUtils.containsOnly(str3, chars2));
-    assertEquals(true, StringUtils.containsOnly(str3, chars3));
+    assertEquals(false, containsOnly(null, (char[]) null));
+    assertEquals(false, containsOnly("", (char[]) null));
+    assertEquals(false, containsOnly(null, emptyChars));
+    assertEquals(false, containsOnly(str1, emptyChars));
+    assertEquals(true, containsOnly("", emptyChars));
+    assertEquals(true, containsOnly("", chars1));
+    assertEquals(false, containsOnly(str1, chars1));
+    assertEquals(true, containsOnly(str1, chars2));
+    assertEquals(true, containsOnly(str1, chars3));
+    assertEquals(true, containsOnly(str2, chars1));
+    assertEquals(false, containsOnly(str2, chars2));
+    assertEquals(true, containsOnly(str2, chars3));
+    assertEquals(false, containsOnly(str3, chars1));
+    assertEquals(false, containsOnly(str3, chars2));
+    assertEquals(true, containsOnly(str3, chars3));
   }
 
   //  TODO
@@ -1100,23 +930,23 @@ public class StringUtilsLocationTest {
 
   @Test
   public void testCountMatches_Int() {
-    assertEquals(0, StringUtils.countMatches(null, 0));
-    assertEquals(0, StringUtils.countMatches("", 0));
-    assertEquals(0, StringUtils.countMatches("hello world", 0));
-    assertEquals(1, StringUtils.countMatches("hello world", 'h'));
-    assertEquals(2, StringUtils.countMatches("hello world", 'o'));
-    assertEquals(3, StringUtils.countMatches("hello world", 'l'));
+    assertEquals(0, countMatches(null, 0));
+    assertEquals(0, countMatches("", 0));
+    assertEquals(0, countMatches("hello world", 0));
+    assertEquals(1, countMatches("hello world", 'h'));
+    assertEquals(2, countMatches("hello world", 'o'));
+    assertEquals(3, countMatches("hello world", 'l'));
   }
 
   @Test
   public void testCountMatches_String() {
-    assertEquals(0, StringUtils.countMatches(null, null));
-    assertEquals(0, StringUtils.countMatches("blah", null));
-    assertEquals(0, StringUtils.countMatches(null, "DD"));
-    assertEquals(0, StringUtils.countMatches("x", ""));
-    assertEquals(0, StringUtils.countMatches("", ""));
-    assertEquals(3, StringUtils.countMatches("one long someone sentence of one", "one"));
-    assertEquals(0, StringUtils.countMatches("one long someone sentence of one", "two"));
-    assertEquals(4, StringUtils.countMatches("oooooooooooo", "ooo"));
+    assertEquals(0, countMatches(null, null));
+    assertEquals(0, countMatches("blah", null));
+    assertEquals(0, countMatches(null, "DD"));
+    assertEquals(0, countMatches("x", ""));
+    assertEquals(0, countMatches("", ""));
+    assertEquals(3, countMatches("one long someone sentence of one", "one"));
+    assertEquals(0, countMatches("one long someone sentence of one", "two"));
+    assertEquals(4, countMatches("oooooooooooo", "ooo"));
   }
 }

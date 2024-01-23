@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,23 +15,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+
 import ltd.qubit.commons.io.IoUtils;
 import ltd.qubit.commons.lang.SystemUtils;
 import ltd.qubit.commons.net.UrlPattern;
 import ltd.qubit.commons.text.testbed.Organization;
 import ltd.qubit.commons.text.testbed.Person;
 
-import org.junit.jupiter.api.Test;
-
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import static ltd.qubit.commons.test.XmlUnitUtils.assertXmlEqual;
 import static ltd.qubit.commons.text.jackson.XmlMapperUtils.formatList;
 import static ltd.qubit.commons.text.jackson.XmlMapperUtils.parseList;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class XmlMapperUtilsTest {
 
@@ -90,10 +90,10 @@ public class XmlMapperUtilsTest {
     assertTrue(patterns.size() > 0);
     for (final UrlPattern pattern : patterns) {
       assertNotNull(pattern);
-      System.out.println(pattern);
+      // System.out.println(pattern);
     }
     final String actualXml = formatList(patterns, UrlPattern.class, xmlMapper);
     System.out.println("Serialized XML is:\n" + actualXml);
-    assertXmlEqual(patterns, originalXml, actualXml);
+    assertXmlEqual(originalXml, actualXml);
   }
 }

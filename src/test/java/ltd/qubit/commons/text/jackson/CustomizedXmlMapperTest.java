@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,6 +13,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+
 import ltd.qubit.commons.text.testbed.Gender;
 import ltd.qubit.commons.text.testbed.MixJsonXmlAnnotation;
 import ltd.qubit.commons.text.testbed.OrganizationNoAnnotation;
@@ -21,17 +28,11 @@ import ltd.qubit.commons.text.testbed.ValueEnum;
 import ltd.qubit.commons.text.testbed.WithEnum;
 import ltd.qubit.commons.util.pair.KeyValuePair;
 
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-
-import static ltd.qubit.commons.test.XmlUnitUtils.assertXPathEquals;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import static ltd.qubit.commons.test.XmlUnitUtils.assertXPathEquals;
+import static ltd.qubit.commons.test.XmlUnitUtils.assertXmlEqual;
 
 public class CustomizedXmlMapperTest {
 
@@ -115,40 +116,40 @@ public class CustomizedXmlMapperTest {
 
     final String xml =
         "<person-no-annotation>\n"
-      + "    <id>\n"
-      + "        12345 \n"
-      + "    </id>\n"
-      + "    <code>abc \n"
-      + "    </code> \n"
-      + "    <name> 张三\n"
-      + "    </name> \n"
-      + "    <company>\n"
-      + "        <id>547362</id> \n"
-      + "        <code>xx-tech </code> \n"
-      + "        <name>  XX科技有限公司 \n  </name> \n"
-      + "        <address>江苏省南京市秦淮区XX路32号 </address> \n"
-      + "        <create-time> 2022-09-28T09:38:45.752Z </create-time> \n"
-      + "        <modify-time> 2022-09-28T10:40:32Z \n </modify-time> \n"
-      + "    </company>\n"
-      + "    <gender>\n"
-      + "        MALE \n"
-      + "    </gender>\n"
-      + "    <create-time>\n"
-      + "        2022-09-28T09:38:45.752Z \n"
-      + "    </create-time>\n"
-      + "    <modify-time>\n"
-      + "        2022-09-28T10:40:32Z \n"
-      + "    </modify-time>\n"
-      + "    <payload>\n"
-      + "        <job-title>  engineer </job-title> \n"
-      + "        <age>  32 \n</age> \n"
-      + "    </payload>\n"
-      + "    <job-tags>\n"
-      + "        <job-tag> t1 </job-tag> \n"
-      + "        <job-tag> t2 </job-tag> \n"
-      + "        <job-tag>    t3\t\n </job-tag> \n"
-      + "    </job-tags>\n"
-      + "</person-no-annotation>\n";
+            + "    <id>\n"
+            + "        12345 \n"
+            + "    </id>\n"
+            + "    <code>abc \n"
+            + "    </code> \n"
+            + "    <name> 张三\n"
+            + "    </name> \n"
+            + "    <company>\n"
+            + "        <id>547362</id> \n"
+            + "        <code>xx-tech </code> \n"
+            + "        <name>  XX科技有限公司 \n  </name> \n"
+            + "        <address>江苏省南京市秦淮区XX路32号 </address> \n"
+            + "        <create-time> 2022-09-28T09:38:45.752Z </create-time> \n"
+            + "        <modify-time> 2022-09-28T10:40:32Z \n </modify-time> \n"
+            + "    </company>\n"
+            + "    <gender>\n"
+            + "        MALE \n"
+            + "    </gender>\n"
+            + "    <create-time>\n"
+            + "        2022-09-28T09:38:45.752Z \n"
+            + "    </create-time>\n"
+            + "    <modify-time>\n"
+            + "        2022-09-28T10:40:32Z \n"
+            + "    </modify-time>\n"
+            + "    <payload>\n"
+            + "        <job-title>  engineer </job-title> \n"
+            + "        <age>  32 \n</age> \n"
+            + "    </payload>\n"
+            + "    <job-tags>\n"
+            + "        <job-tag> t1 </job-tag> \n"
+            + "        <job-tag> t2 </job-tag> \n"
+            + "        <job-tag>    t3\t\n </job-tag> \n"
+            + "    </job-tags>\n"
+            + "</person-no-annotation>\n";
 
     System.out.println(xml);
     final PersonNoAnnotation p2 = mapper.readValue(xml, PersonNoAnnotation.class);
@@ -199,7 +200,7 @@ public class CustomizedXmlMapperTest {
     foo.setValue(ValueEnum.VALUE_1);
     final String json = mapper.writeValueAsString(foo);
     System.out.println(json);
-    assertEquals("<with-enum><value>VALUE_1</value></with-enum>", json);
+    assertXmlEqual("<with-enum><value>VALUE_1</value></with-enum>", json);
   }
 
   @Test
@@ -209,7 +210,7 @@ public class CustomizedXmlMapperTest {
     foo.setValue(ValueEnum.VALUE_1);
     String json = mapper.writeValueAsString(foo);
     System.out.println(json);
-    assertEquals("<with-enum><value>VALUE_1</value></with-enum>", json);
+    assertXmlEqual("<with-enum><value>VALUE_1</value></with-enum>", json);
     json = "<with-enum><value>VALUE_1</value></with-enum>";
     final WithEnum f1 = mapper.readValue(json, WithEnum.class);
     assertEquals(foo, f1);

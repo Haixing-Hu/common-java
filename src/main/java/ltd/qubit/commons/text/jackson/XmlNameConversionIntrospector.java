@@ -1,12 +1,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
-//    Haixing Hu, Qubit Co. Ltd.
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
 //
 //    All rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson;
+
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElementWrapper;
+import jakarta.xml.bind.annotation.XmlElements;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.AnnotationIntrospector;
@@ -15,8 +19,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies.NamingBase;
 import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.fasterxml.jackson.databind.introspect.AnnotatedClass;
 import com.fasterxml.jackson.databind.introspect.AnnotatedField;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlElements;
+
 import ltd.qubit.commons.util.transformer.string.PluralToSingularTransformer;
 
 import static ltd.qubit.commons.text.jackson.JacksonUtils.JAXB_DEFAULT_VALUE;
@@ -24,7 +27,7 @@ import static ltd.qubit.commons.text.jackson.JacksonUtils.JAXB_DEFAULT_VALUE;
 /**
  * 此 {@link AnnotationIntrospector} 用于根据指定的命名策略转换根元素名称，并且自动处理 集合类属性内部元素名称。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class XmlNameConversionIntrospector extends AnnotationIntrospector {
 
@@ -60,7 +63,17 @@ public class XmlNameConversionIntrospector extends AnnotationIntrospector {
   }
 
   public PropertyName findWrapperName(final Annotated annotated) {
-    if ((annotated instanceof AnnotatedField) && (annotated.getType().isContainerType())) {
+    if (annotated.hasAnnotation(XmlNoElementWrapper.class)) {
+      return PropertyName.NO_NAME;
+    } else if (annotated.hasAnnotation(XmlElementWrapper.class)) {
+      final XmlElementWrapper annotation = annotated.getAnnotation(XmlElementWrapper.class);
+      final String name = annotation.name();
+      if (JAXB_DEFAULT_VALUE.equals(name)) {
+        return PropertyName.USE_DEFAULT;
+      } else {
+        return new PropertyName(name);
+      }
+    } else if ((annotated instanceof AnnotatedField) && (annotated.getType().isContainerType())) {
       // 容器字段的 Wrapper name 为该字段名称根据指定的命名策略转换的结果。
       final String name = annotated.getName();
       final String convertedName = namingStrategy.translate(name);
@@ -71,8 +84,7 @@ public class XmlNameConversionIntrospector extends AnnotationIntrospector {
 
   @Override
   public PropertyName findNameForDeserialization(final Annotated annotated) {
-    if ((annotated instanceof AnnotatedField)
-        && (annotated.getType().isContainerType())) {
+    if ((annotated instanceof AnnotatedField) && (annotated.getType().isContainerType())) {
       return getWrappedElementName(annotated);
     }
     return null;
@@ -80,8 +92,7 @@ public class XmlNameConversionIntrospector extends AnnotationIntrospector {
 
   @Override
   public PropertyName findNameForSerialization(final Annotated annotated) {
-    if ((annotated instanceof AnnotatedField)
-        && (annotated.getType().isContainerType())) {
+    if ((annotated instanceof AnnotatedField) && (annotated.getType().isContainerType())) {
       return getWrappedElementName(annotated);
     }
     return null;
@@ -92,7 +103,11 @@ public class XmlNameConversionIntrospector extends AnnotationIntrospector {
       // do not provide wrapped element name for @XmlElements annotated fields,
       // since it will use the customized name provided by the internal @XmlElement
       // annotation.
-      return getWrappedElementNameFromXmlElements(annotated);
+      // FIXME: There is a bug in JacksonXmlModule for serializing @XmlElements
+      //  see https://github.com/FasterXML/jackson-dataformat-xml/issues/178
+      //  and https://github.com/FasterXML/jackson-dataformat-xml/issues/230
+      //  and https://github.com/FasterXML/jackson-module-jaxb-annotations/issues/51
+      return getWrappedElementNameFromFieldName(annotated);
     } else {
       return getWrappedElementNameFromFieldName(annotated);
     }

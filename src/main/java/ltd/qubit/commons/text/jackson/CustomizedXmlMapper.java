@@ -1,23 +1,27 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
-//    Haixing Hu, Qubit Co. Ltd.
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
 //
 //    All rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson;
 
+import javax.xml.stream.XMLOutputFactory;
+
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.SerializationConfig;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.module.jakarta.xmlbind.JakartaXmlBindAnnotationIntrospector;
-import ltd.qubit.commons.text.CaseFormat;
-import org.codehaus.stax2.XMLOutputFactory2;
 
-import javax.xml.stream.XMLOutputFactory;
+import ltd.qubit.commons.text.CaseFormat;
+
+import static org.codehaus.stax2.XMLOutputFactory2.P_ATTR_VALUE_ESCAPER;
+import static org.codehaus.stax2.XMLOutputFactory2.P_TEXT_ESCAPER;
 
 import static ltd.qubit.commons.text.jackson.CustomizeJacksonUtils.customizeFeature;
 import static ltd.qubit.commons.text.jackson.CustomizeJacksonUtils.getNormalizedConfig;
@@ -25,7 +29,7 @@ import static ltd.qubit.commons.text.jackson.CustomizeJacksonUtils.getNormalized
 /**
  * 自定义的 Jackson XmlMapper。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class CustomizedXmlMapper extends XmlMapper {
 
@@ -41,7 +45,7 @@ public class CustomizedXmlMapper extends XmlMapper {
 
   private boolean normalized = false;
 
-  private boolean prettyPrint = false;
+  private boolean prettyPrint = true;
 
   // private final XmlNameConversionIntrospector nameConversionIntrospector =
   //     new XmlNameConversionIntrospector(namingStrategy.toPropertyNamingStrategy());
@@ -80,8 +84,9 @@ public class CustomizedXmlMapper extends XmlMapper {
       final SerializationConfig config = getNormalizedConfig(this);
       this.setConfig(config);
     }
+    final PropertyNamingStrategies.NamingBase naming = namingStrategy.toPropertyNamingStrategy();
     // 设置序列化和反序列化时字段属性命名策略
-    this.setPropertyNamingStrategy(namingStrategy.toPropertyNamingStrategy());
+    this.setPropertyNamingStrategy(naming);
     // 注意：默认的 XmlMapper 是同时支持 JacksonXmlAnnotation 和 JacksonAnnotation 的
     // 但这样的话，如果某个字段被同时标注了 Jackson 的 JSON annotation (例如 @JsonSerialize)
     // 和 JAXB 的 XML annotation (例如 @XmlJavaTypeAdapter)，就会发生冲突
@@ -91,21 +96,17 @@ public class CustomizedXmlMapper extends XmlMapper {
     // 会默认加上对 JacksonAnnotation 的支持，例如 Instant 字段标注了 @XmlJavaTypeAdapter
     // 就导致类型报错，因为 JacksonAnnotationIntrospector 会根据 JavaTimeModule 注册的
     // IsoInstantSerializer 处理被 JavaTypeAdaptor 转换后的数据，从而导致类型错误
-    this.setAnnotationIntrospector(
-        new JakartaXmlBindAnnotationIntrospector(this.getTypeFactory()));
+    this.setAnnotationIntrospector(new JakartaXmlBindAnnotationIntrospector(this.getTypeFactory()));
     // 处理 JDK8 的 Optional, Stream 等类型
     this.registerModule(new Jdk8Module());
     // 增加自定义类型注册模块
     this.registerModule(new TypeRegistrationModule());
     // 增加XML序列化自定义模块
-    this.registerModule(
-        new CustomizedXmlModule(namingStrategy.toPropertyNamingStrategy()));
+    this.registerModule(new CustomizedXmlModule(naming));
     // 设置XML输出转义
     final XMLOutputFactory factory = this.getFactory().getXMLOutputFactory();
-    factory.setProperty(XMLOutputFactory2.P_TEXT_ESCAPER,
-        XmlEscapingWriterFactory.INSTANCE);
-    factory.setProperty(XMLOutputFactory2.P_ATTR_VALUE_ESCAPER,
-        XmlEscapingWriterFactory.INSTANCE);
+    factory.setProperty(P_TEXT_ESCAPER, XmlEscapingWriterFactory.INSTANCE);
+    factory.setProperty(P_ATTR_VALUE_ESCAPER, XmlEscapingWriterFactory.INSTANCE);
   }
 
   // private AnnotationIntrospector buildAnnotationIntrospector() {

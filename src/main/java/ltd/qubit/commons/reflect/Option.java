@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
-//    Haixing Hu, Qubit Co. Ltd.
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -114,6 +114,26 @@ public class Option {
   public static final int NON_BRIDGE = 0x0200;
 
   /**
+   * Indicates that the operation is applied to the native methods.
+   */
+  public static final int NATIVE = 0x0400;
+
+  /**
+   * Indicates that the operation is applied to the non-native methods.
+   */
+  public static final int NON_NATIVE = 0x0800;
+
+  /**
+   * Indicates that the operation is applied to the private native methods.
+   */
+  public static final int PRIVATE_NATIVE = 0x1000;
+
+  /**
+   * Indicates that the operation is applied to the non-private-native methods.
+   */
+  public static final int NON_PRIVATE_NATIVE = 0x2000;
+
+  /**
    * Indicates that the operation will exclude the overridden members.
    *
    * <p>If two or more members have the same signature, the operation will keep
@@ -122,7 +142,7 @@ public class Option {
    * the one with a more precised returned type (for methods); otherwise, the
    * operation will throw an {@link AmbiguousMemberException}.
    */
-  public static final int EXCLUDE_OVERRIDDEN = 0x0400;
+  public static final int EXCLUDE_OVERRIDDEN = 0x4000;
 
   /**
    * Indicates that the operation is applied to private, package, protected,
@@ -132,25 +152,64 @@ public class Option {
 
   /**
    * Indicates that the operation is applied to all members, including static
-   * members, non-public members, bridge methods, and those members declared in
-   * the ancestor class or ancestor interfaces of the specified class.
-   */
-  public static final int ALL = ANCESTOR | STATIC | NON_STATIC | ALL_ACCESS
-      | SERIALIZATION | BRIDGE | NON_BRIDGE;
-
-  /**
-   * Indicates that the operation is applied to all members, including static
-   * members, non-public members, and those members declared in the ancestor
+   * members, non-public members, bridge methods, non-bridge methods, native
+   * methods, non-native methods, and those members declared in the ancestor
    * class or ancestor interfaces of the specified class.
    */
-  public static final int ALL_EXCLUDE_BRIDGE = ANCESTOR | STATIC | NON_STATIC
-      | ALL_ACCESS | SERIALIZATION | NON_BRIDGE;
+  public static final int ALL = ANCESTOR
+      | STATIC | NON_STATIC
+      | ALL_ACCESS
+      | SERIALIZATION
+      | BRIDGE | NON_BRIDGE
+      | NATIVE | NON_NATIVE
+      | PRIVATE_NATIVE | NON_PRIVATE_NATIVE;
+
+  /**
+   * Indicates that the operation is applied to all members, excluding bridge
+   * methods.
+   */
+  public static final int ALL_EXCLUDE_BRIDGE = ANCESTOR
+      | STATIC | NON_STATIC
+      | ALL_ACCESS
+      | SERIALIZATION
+      | NON_BRIDGE
+      | NATIVE | NON_NATIVE
+      | PRIVATE_NATIVE | NON_PRIVATE_NATIVE;
+
+  /**
+   * Indicates that the operation is applied to all members, excluding private
+   * native methods.
+   */
+  public static final int ALL_EXCLUDE_PRIVATE_NATIVE = ANCESTOR
+      | STATIC | NON_STATIC
+      | ALL_ACCESS
+      | SERIALIZATION
+      | BRIDGE | NON_BRIDGE
+      | NATIVE | NON_NATIVE
+      | NON_PRIVATE_NATIVE;
+
+  /**
+   * Indicates that the operation is applied to all members, excluding bridge
+   * methods and native methods.
+   */
+  public static final int ALL_EXCLUDE_BRIDGE_PRIVATE_NATIVE = ANCESTOR
+      | STATIC | NON_STATIC
+      | ALL_ACCESS
+      | SERIALIZATION
+      | NON_BRIDGE
+      | NATIVE | NON_NATIVE
+      | NON_PRIVATE_NATIVE;
 
   /**
    * The options for Java bean's getter/setter methods.
    */
-  public static final int BEAN_METHOD = ANCESTOR | NON_STATIC | PUBLIC
-      | NON_BRIDGE | EXCLUDE_OVERRIDDEN;
+  public static final int BEAN_METHOD = ANCESTOR
+      | NON_STATIC
+      | PUBLIC
+      | NON_BRIDGE
+      | NATIVE | NON_NATIVE
+      | PRIVATE_NATIVE | NON_PRIVATE_NATIVE
+      | EXCLUDE_OVERRIDDEN;
 
   /**
    * The options for Java bean's fields.
@@ -161,20 +220,34 @@ public class Option {
    * Indicates that the options is applied to static or non-static public members of the
    * specified class or its super classes/interfaces.
    */
-  public static final int ANCESTOR_PUBLIC = ANCESTOR | STATIC | NON_STATIC
-      | BRIDGE | NON_BRIDGE | PUBLIC;
+  public static final int ANCESTOR_PUBLIC = ANCESTOR
+      | STATIC | NON_STATIC
+      | BRIDGE | NON_BRIDGE
+      | NATIVE | NON_NATIVE
+      | PRIVATE_NATIVE | NON_PRIVATE_NATIVE
+      | PUBLIC;
 
   /**
    * The default options, which is only applied to non-static members declared
    * in the specified class, with all possible accessibility.
    */
-  public static final int DEFAULT = NON_STATIC | NON_BRIDGE | ALL_ACCESS | SERIALIZATION;
+  public static final int DEFAULT = NON_STATIC
+      | NON_BRIDGE
+      | NATIVE | NON_NATIVE
+      | NON_PRIVATE_NATIVE
+      | ALL_ACCESS
+      | SERIALIZATION;
 
   /**
    * The default options, which is only applied to non-static members declared
    * in the specified class, with all possible accessibility.
    */
-  public static final int DEFAULT_PUBLIC = NON_STATIC | NON_BRIDGE | ANCESTOR | PUBLIC;
+  public static final int DEFAULT_PUBLIC = NON_STATIC
+      | NON_BRIDGE
+      | NATIVE | NON_NATIVE
+      | NON_PRIVATE_NATIVE
+      | ANCESTOR
+      | PUBLIC;
 
   /**
    * Tests whether a member of a class satisfies the specified options.
@@ -193,13 +266,13 @@ public class Option {
     if (options == ALL) {
       return true;
     }
-    if (((options & ANCESTOR) == 0)
-        && (! type.equals(member.getDeclaringClass()))) {
-      return false;
+    if ((options & ANCESTOR) == 0) {
+      if (!type.equals(member.getDeclaringClass())) {
+        return false;
+      }
     }
     final int modifiers = member.getModifiers();
-    final int declaringClassModifiers = member.getDeclaringClass()
-                                              .getModifiers();
+    final int declaringClassModifiers = member.getDeclaringClass().getModifiers();
     if ((options & STATIC) == 0) {
       if (Modifier.isStatic(modifiers)) {
         return false;
@@ -231,11 +304,10 @@ public class Option {
     }
     if ((options & PUBLIC) == 0) {
       if (Modifier.isPublic(modifiers)
-           && Modifier.isPublic(declaringClassModifiers)) {
+          && Modifier.isPublic(declaringClassModifiers)) {
         return false;
       }
     }
-
     if (member instanceof Method) {
       final Method method = (Method) member;
       if ((options & BRIDGE) == 0) {
@@ -244,7 +316,29 @@ public class Option {
         }
       }
       if ((options & NON_BRIDGE) == 0) {
-        return method.isBridge();
+        if (! method.isBridge()) {
+          return false;
+        }
+      }
+      if ((options & NATIVE) == 0) {
+        if (Modifier.isNative(modifiers)) {
+          return false;
+        }
+      }
+      if ((options & NON_NATIVE) == 0) {
+        if (! Modifier.isNative(modifiers)) {
+          return false;
+        }
+      }
+      if ((options & PRIVATE_NATIVE) == 0) {
+        if (Modifier.isPrivate(modifiers) && Modifier.isNative(modifiers)) {
+          return false;
+        }
+      }
+      if ((options & NON_PRIVATE_NATIVE) == 0) {
+        if (! (Modifier.isPrivate(modifiers) && Modifier.isNative(modifiers))) {
+          return false;
+        }
       }
     }
     return true;

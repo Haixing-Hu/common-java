@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,8 +11,13 @@ package ltd.qubit.commons.util.transformer.string;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+
+import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlElements;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import ltd.qubit.commons.lang.Assignment;
 import ltd.qubit.commons.lang.Equality;
@@ -26,6 +31,8 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
  *
  * @author Haixing Hu
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "chained-string-transformer")
 public class ChainedStringTransformer implements StringTransformer {
 
   @XmlElements({
@@ -36,6 +43,7 @@ public class ChainedStringTransformer implements StringTransformer {
       @XmlElement(name = "strip-transformer", type = StripTransformer.class),
       @XmlElement(name = "regex-transformer", type = RegexTransformer.class)
   })
+  @XmlElementWrapper(name = "transformers")
   private List<StringTransformer> transformers;
 
   public ChainedStringTransformer() {
@@ -109,7 +117,7 @@ public class ChainedStringTransformer implements StringTransformer {
   @Override
   public String toString() {
     return new ToStringBuilder(this)
-            .append("transformers", transformers)
-            .toString();
+        .append("transformers", transformers)
+        .toString();
   }
 }

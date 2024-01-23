@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -22,11 +22,6 @@ import javax.annotation.Nullable;
 import jakarta.xml.bind.annotation.XmlTransient;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import ltd.qubit.commons.io.IoUtils;
-import ltd.qubit.commons.reflect.ClassUtils;
-import ltd.qubit.commons.text.jackson.CustomizedXmlMapper;
-import ltd.qubit.commons.text.jackson.TypeRegistrationModule;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +30,13 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.PropertyName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+
+import ltd.qubit.commons.io.IoUtils;
+import ltd.qubit.commons.reflect.ClassUtils;
+import ltd.qubit.commons.text.jackson.CustomizedXmlMapper;
+import ltd.qubit.commons.text.jackson.TypeRegistrationModule;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static ltd.qubit.commons.reflect.AccessibleUtils.withAccessibleObject;
 import static ltd.qubit.commons.reflect.FieldUtils.getAllFields;
@@ -48,8 +50,6 @@ import static ltd.qubit.commons.text.jackson.JacksonUtils.getPropertyWrapperName
 import static ltd.qubit.commons.text.jackson.JacksonUtils.getRootName;
 import static ltd.qubit.commons.text.jackson.JacksonUtils.serializeWithAdapter;
 import static ltd.qubit.commons.text.jackson.JacksonUtils.serializeWithSerializer;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * The utility class for testing the XML serialization of a object.
@@ -72,7 +72,7 @@ public abstract class JacksonXmlTestUtils {
     LOGGER.debug("Object is:\n{}", object);
     LOGGER.debug("Expected XML is:\n{}", expectedXml);
     LOGGER.debug("Actual XML is:\n{}", actualXml);
-    assertXmlEqual(object, expectedXml, actualXml);
+    assertXmlEqual(expectedXml, actualXml);
   }
 
   public static <T> void assertXmlDeserializeEquals(final Class<T> cls,
@@ -95,7 +95,7 @@ public abstract class JacksonXmlTestUtils {
       throws Exception {
     LOGGER.debug("Testing XML deserialization for the object:\n{}", obj);
     final String xml = mapper.writerWithDefaultPrettyPrinter()
-        .writeValueAsString(obj);
+                             .writeValueAsString(obj);
     LOGGER.info("The object is serialized to:\n{}", xml);
     final T result = mapper.readValue(xml, (Class<T>) obj.getClass());
     LOGGER.debug("The XML is deserialized to:\n{}", result);
@@ -127,7 +127,7 @@ public abstract class JacksonXmlTestUtils {
     final T obj = mapper.readValue(xml, cls);
     final String marshaledXml = mapper.writeValueAsString(obj);
     LOGGER.debug("Actual XML is:\n{}", marshaledXml);
-    assertXmlEqual(obj, xml, marshaledXml);
+    assertXmlEqual(xml, marshaledXml);
     final T unmarshaledObj = mapper.readValue(marshaledXml, cls);
     LOGGER.debug("Expected object is: {}", obj);
     LOGGER.debug("Actual object is:   {}", unmarshaledObj);

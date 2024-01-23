@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -12,6 +12,8 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.time.Instant;
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
 
 import ltd.qubit.commons.lang.SystemUtils;
 import ltd.qubit.commons.reflect.testbed.ChildBean;
@@ -25,7 +27,11 @@ import ltd.qubit.commons.reflect.testbed.MethodRefBean;
 import ltd.qubit.commons.reflect.testbed.ParentBean;
 import ltd.qubit.commons.reflect.testbed.WithInfo;
 
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import static ltd.qubit.commons.reflect.MethodUtils.getAllMethods;
 import static ltd.qubit.commons.reflect.MethodUtils.getFullyQualifiedMethodName;
@@ -35,13 +41,8 @@ import static ltd.qubit.commons.reflect.MethodUtils.getMethodByReference;
 import static ltd.qubit.commons.reflect.MethodUtils.getMethodUri;
 import static ltd.qubit.commons.reflect.Option.ALL;
 import static ltd.qubit.commons.reflect.Option.ALL_EXCLUDE_BRIDGE;
+import static ltd.qubit.commons.reflect.Option.ALL_EXCLUDE_PRIVATE_NATIVE;
 import static ltd.qubit.commons.reflect.Option.BEAN_METHOD;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class MethodUtilsTest {
 
@@ -70,8 +71,8 @@ public class MethodUtilsTest {
   public void testGetAllMethods_ExcludeBridgeMethods() {
     final List<Method> methods = getAllMethods(Foo.class, ALL_EXCLUDE_BRIDGE);
     final Object[] result = methods.stream()
-                            .filter((m) -> m.getName().equals("getId"))
-                            .toArray();
+                                   .filter((m) -> m.getName().equals("getId"))
+                                   .toArray();
     assertEquals(2, result.length);
   }
 
@@ -185,13 +186,13 @@ public class MethodUtilsTest {
 
   @Test
   public void testGetAllMethods_GenericMethod_ALL() throws Exception {
-    final List<Method> methods = getAllMethods(GenericMethod.class, ALL);
+    final List<Method> methods = getAllMethods(GenericMethod.class, ALL_EXCLUDE_PRIVATE_NATIVE);
     System.out.println("======================================================");
     System.out.println("JDK " + SystemUtils.JAVA_VERSION_FLOAT);
     System.out.println("All methods of the GenericMethod are:");
     methods.forEach((m) -> System.out.println(m.toGenericString()));
     System.out.println("======================================================");
-    methods.removeIf((m) -> m.getName().equals("registerNatives"));
+    // methods.removeIf((m) -> m.getName().equals("registerNatives"));
     assertArrayEquals(new Method[] {
         Object.class.getDeclaredMethod("clone"),
         GenericMethod.class.getDeclaredMethod("createArray", Class.class, int.class),
@@ -238,7 +239,15 @@ public class MethodUtilsTest {
     System.out.println("All methods of the CustomList are:");
     methods.forEach((m) -> System.out.println(m.toGenericString()));
     System.out.println("======================================================");
-    final int expected = (SystemUtils.JAVA_VERSION_FLOAT >= 11 ? 42 : 41);
+    final float jdkVersion = SystemUtils.JAVA_VERSION_FLOAT;
+    final int expected;
+    if (jdkVersion >= 21) {
+      expected = 49;
+    } else if (jdkVersion >= 11) {
+      expected = 42;
+    } else {
+      expected = 41;
+    }
     assertEquals(expected, methods.size());
   }
 

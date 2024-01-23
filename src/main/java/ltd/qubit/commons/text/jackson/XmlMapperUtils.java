@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
-//    Haixing Hu, Qubit Co. Ltd.
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -19,8 +19,8 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import jakarta.validation.constraints.NotNull;
-
-import ltd.qubit.commons.text.Replacer;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,9 +32,8 @@ import com.fasterxml.jackson.databind.PropertyName;
 import com.fasterxml.jackson.databind.SerializationConfig;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
+import ltd.qubit.commons.text.Replacer;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -358,11 +357,11 @@ public class XmlMapperUtils {
   private static final String LIST_WRAPPER_ITEM_TAG_CLOSE = "</" + LIST_WRAPPER_ITEM + ">";
 
 
-  @JacksonXmlRootElement(localName = LIST_WRAPPER_ROOT)
+  @XmlRootElement(name = LIST_WRAPPER_ROOT)
   private static class ListWrapper<T> {
 
-    @JacksonXmlElementWrapper(useWrapping = false)
-    @JacksonXmlProperty(localName = LIST_WRAPPER_ITEM)
+    @XmlNoElementWrapper
+    @XmlElement(name = LIST_WRAPPER_ITEM)
     private final List<T> list;
 
     public ListWrapper(final List<T> list) {
@@ -407,17 +406,17 @@ public class XmlMapperUtils {
     final String itemTagClose = "</" + itemName.getSimpleName() + ">";
     final Replacer replacer = new Replacer();
     String result = replacer.forSubstring(LIST_WRAPPER_ROOT_TAG_OPEN)
-        .withString(wrapperTagOpen)
-        .replace(xml);
+                            .withString(wrapperTagOpen)
+                            .replace(xml);
     result = replacer.forSubstring(LIST_WRAPPER_ROOT_TAG_CLOSE)
-        .withString(wrapperTagClose)
-        .replace(result);
+                     .withString(wrapperTagClose)
+                     .replace(result);
     result = replacer.forSubstring(LIST_WRAPPER_ITEM_TAG_OPEN)
-        .withString(itemTagOpen)
-        .replace(result);
+                     .withString(itemTagOpen)
+                     .replace(result);
     result = replacer.forSubstring(LIST_WRAPPER_ITEM_TAG_CLOSE)
-        .withString(itemTagClose)
-        .replace(result);
+                     .withString(itemTagClose)
+                     .replace(result);
     return result;
   }
 
