@@ -18,6 +18,9 @@ import java.util.regex.Matcher;
 
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ltd.qubit.commons.config.error.ConfigurationError;
 import ltd.qubit.commons.config.error.PropertyHasNoValueError;
 import ltd.qubit.commons.config.error.PropertyNotExistError;
@@ -28,9 +31,6 @@ import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.lang.Type;
 import ltd.qubit.commons.reflect.ConstructorUtils;
 import ltd.qubit.commons.text.Replacer;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An {@link AbstractConfig} is an abstract base class for classes implementing
@@ -539,10 +539,10 @@ public abstract class AbstractConfig implements Config, Serializable {
       LOGGER.trace("Substituting the variable '{}' with value '{}'", varName,
           varValue);
       result = new Replacer()
-          .forSubstring(match.group())
-          .withString(varValue)
+          .searchForSubstring(match.group())
+          .replaceWithString(varValue)
           .ignoreCase(false)
-          .replace(result);
+          .applyTo(result);
       LOGGER.trace("After substitution, the string is: {}", result);
     }
     // check whether there still has any substitution

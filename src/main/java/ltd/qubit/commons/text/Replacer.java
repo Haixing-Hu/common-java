@@ -33,6 +33,7 @@ import ltd.qubit.commons.util.filter.codepoint.NotInStringCodePointFilter;
 import ltd.qubit.commons.util.filter.codepoint.RejectAllCodePointFilter;
 import ltd.qubit.commons.util.filter.codepoint.RejectSpecifiedCodePointFilter;
 
+import static ltd.qubit.commons.lang.ArrayUtils.EMPTY_STRING_ARRAY;
 import static ltd.qubit.commons.lang.ObjectUtils.defaultIfNull;
 import static ltd.qubit.commons.lang.StringUtils.EMPTY;
 import static ltd.qubit.commons.lang.StringUtils.nullToEmpty;
@@ -47,10 +48,18 @@ import static ltd.qubit.commons.text.impl.ReplacerImpl.replaceSubstring;
  */
 public class Replacer {
 
+  private enum Mode {
+    CHAR,
+    CODE_POINT,
+    SUBSTRING,
+    SUBSTRINGS,
+  }
+
+  private Mode mode = Mode.SUBSTRING;
   private CharFilter charFilter;
   private CodePointFilter codePointFilter;
-  private CharSequence substring;
-  private CharSequence[] substrings;
+  private CharSequence substring = EMPTY;
+  private CharSequence[] substrings = EMPTY_STRING_ARRAY;
   private CharSequence replacement;
   private int startIndex = 0;
   private int endIndex = Integer.MAX_VALUE;
@@ -60,10 +69,11 @@ public class Replacer {
   public Replacer() {}
 
   private void clearStrategies() {
+    this.mode = Mode.SUBSTRING;
     this.charFilter = null;
     this.codePointFilter = null;
-    this.substring = null;
-    this.substrings = null;
+    this.substring = EMPTY;
+    this.substrings = EMPTY_STRING_ARRAY;
   }
 
   /**
@@ -74,8 +84,9 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer forChar(final char ch) {
+  public Replacer searchForChar(final char ch) {
     this.clearStrategies();
+    this.mode = Mode.CHAR;
     this.charFilter = new AcceptSpecifiedCharFilter(ch);
     return this;
   }
@@ -89,8 +100,9 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer forCharNotEqual(final char ch) {
+  public Replacer searchForCharNotEqual(final char ch) {
     this.clearStrategies();
+    this.mode = Mode.CHAR;
     this.charFilter = new RejectSpecifiedCharFilter(ch);
     return this;
   }
@@ -104,8 +116,9 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer forCharsIn(@Nullable final char... chars) {
+  public Replacer searchForCharsIn(@Nullable final char... chars) {
     this.clearStrategies();
+    this.mode = Mode.CHAR;
     if ((chars == null) || (chars.length == 0)) {
       this.charFilter = RejectAllCharFilter.INSTANCE;
     } else {
@@ -123,8 +136,9 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer forCharsIn(@Nullable final CharSequence chars) {
+  public Replacer searchForCharsIn(@Nullable final CharSequence chars) {
     this.clearStrategies();
+    this.mode = Mode.CHAR;
     if ((chars == null) || (chars.length() == 0)) {
       this.charFilter = RejectAllCharFilter.INSTANCE;
     } else {
@@ -143,8 +157,9 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer forCharsNotIn(@Nullable final char... chars) {
+  public Replacer searchForCharsNotIn(@Nullable final char... chars) {
     this.clearStrategies();
+    this.mode = Mode.CHAR;
     if ((chars == null) || (chars.length == 0)) {
       this.charFilter = AcceptAllCharFilter.INSTANCE;
     } else {
@@ -163,8 +178,9 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer forCharsNotIn(@Nullable final CharSequence chars) {
+  public Replacer searchForCharsNotIn(@Nullable final CharSequence chars) {
     this.clearStrategies();
+    this.mode = Mode.CHAR;
     if ((chars == null) || (chars.length() == 0)) {
       this.charFilter = AcceptAllCharFilter.INSTANCE;
     } else {
@@ -182,8 +198,9 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer forCharsSatisfy(@Nullable final CharFilter filter) {
+  public Replacer searchForCharsSatisfy(@Nullable final CharFilter filter) {
     this.clearStrategies();
+    this.mode = Mode.CHAR;
     if (filter == null) {
       this.charFilter = RejectAllCharFilter.INSTANCE;
     } else {
@@ -201,8 +218,9 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer forCharsNotSatisfy(@Nullable final CharFilter filter) {
+  public Replacer searchForCharsNotSatisfy(@Nullable final CharFilter filter) {
     this.clearStrategies();
+    this.mode = Mode.CHAR;
     if (filter == null) {
       this.charFilter = AcceptAllCharFilter.INSTANCE;
     } else {
@@ -219,8 +237,9 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer forCodePoint(final int codePoint) {
+  public Replacer searchForCodePoint(final int codePoint) {
     this.clearStrategies();
+    this.mode = Mode.CODE_POINT;
     this.codePointFilter = new AcceptSpecifiedCodePointFilter(codePoint);
     return this;
   }
@@ -235,8 +254,9 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer forCodePoint(@Nullable final CharSequence codePoint) {
+  public Replacer searchForCodePoint(@Nullable final CharSequence codePoint) {
     this.clearStrategies();
+    this.mode = Mode.CODE_POINT;
     if (codePoint == null || codePoint.length() == 0) {
       this.codePointFilter = RejectAllCodePointFilter.INSTANCE;
     } else {
@@ -254,8 +274,9 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer forCodePointNotEqual(final int codePoint) {
+  public Replacer searchForCodePointNotEqual(final int codePoint) {
     this.clearStrategies();
+    this.mode = Mode.CODE_POINT;
     this.codePointFilter = new RejectSpecifiedCodePointFilter(codePoint);
     return this;
   }
@@ -271,8 +292,9 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer forCodePointNotEqual(@Nullable final CharSequence codePoint) {
+  public Replacer searchForCodePointNotEqual(@Nullable final CharSequence codePoint) {
     this.clearStrategies();
+    this.mode = Mode.CODE_POINT;
     if (codePoint == null) {
       this.codePointFilter = AcceptAllCodePointFilter.INSTANCE;
     } else {
@@ -291,8 +313,9 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer forCodePointsIn(@Nullable final int... codePoints) {
+  public Replacer searchForCodePointsIn(@Nullable final int... codePoints) {
     this.clearStrategies();
+    this.mode = Mode.CODE_POINT;
     if ((codePoints == null) || (codePoints.length == 0)) {
       this.codePointFilter = RejectAllCodePointFilter.INSTANCE;
     } else {
@@ -311,8 +334,9 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer forCodePointsIn(@Nullable final CharSequence codePoints) {
+  public Replacer searchForCodePointsIn(@Nullable final CharSequence codePoints) {
     this.clearStrategies();
+    this.mode = Mode.CODE_POINT;
     if ((codePoints == null) || (codePoints.length() == 0)) {
       this.codePointFilter = RejectAllCodePointFilter.INSTANCE;
     } else {
@@ -333,8 +357,9 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer forCodePointsNotIn(@Nullable final int... codePoints) {
+  public Replacer searchForCodePointsNotIn(@Nullable final int... codePoints) {
     this.clearStrategies();
+    this.mode = Mode.CODE_POINT;
     if ((codePoints == null) || (codePoints.length == 0)) {
       this.codePointFilter = AcceptAllCodePointFilter.INSTANCE;
     } else {
@@ -353,8 +378,9 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer forCodePointsNotIn(@Nullable final CharSequence codePoints) {
+  public Replacer searchForCodePointsNotIn(@Nullable final CharSequence codePoints) {
     this.clearStrategies();
+    this.mode = Mode.CODE_POINT;
     if (codePoints == null) {
       this.codePointFilter = AcceptAllCodePointFilter.INSTANCE;
     } else {
@@ -372,8 +398,9 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer forCodePointsSatisfy(@Nullable final CodePointFilter filter) {
+  public Replacer searchForCodePointsSatisfy(@Nullable final CodePointFilter filter) {
     this.clearStrategies();
+    this.mode = Mode.CODE_POINT;
     if (filter == null) {
       this.codePointFilter = RejectAllCodePointFilter.INSTANCE;
     } else {
@@ -391,8 +418,9 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer forCodePointsNotSatisfy(@Nullable final CodePointFilter filter) {
+  public Replacer searchForCodePointsNotSatisfy(@Nullable final CodePointFilter filter) {
     this.clearStrategies();
+    this.mode = Mode.CODE_POINT;
     if (filter == null) {
       this.codePointFilter = AcceptAllCodePointFilter.INSTANCE;
     } else {
@@ -410,14 +438,16 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer forSubstring(final CharSequence substring) {
+  public Replacer searchForSubstring(final CharSequence substring) {
     this.clearStrategies();
+    this.mode = Mode.SUBSTRING;
     this.substring = nullToEmpty(substring);
     return this;
   }
 
   // public Replacer forSubstringIn(final CharSequence... substrings) {
   //   this.clearStrategies();
+  //   this.mode = Mode.SUBSTRINGS;
   //   this.substrings = substrings;
   //   return this;
   // }
@@ -430,7 +460,7 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer withChar(final char replacement) {
+  public Replacer replaceWithChar(final char replacement) {
     this.replacement = CharUtils.toString(replacement);
     return this;
   }
@@ -444,7 +474,7 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer withCodePoint(final int replacement) {
+  public Replacer replaceWithCodePoint(final int replacement) {
     this.replacement = Character.toString(replacement);
     return this;
   }
@@ -460,7 +490,7 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer withCodePoint(@Nullable final CharSequence replacement) {
+  public Replacer replaceWithCodePoint(@Nullable final CharSequence replacement) {
     if (replacement == null || replacement.length() == 0) {
       this.replacement = EMPTY;
     } else {
@@ -481,7 +511,7 @@ public class Replacer {
    * @return
    *     the reference to this {@link Replacer} object.
    */
-  public Replacer withString(@Nullable final CharSequence replacement) {
+  public Replacer replaceWithString(@Nullable final CharSequence replacement) {
     this.replacement = defaultIfNull(replacement, EMPTY);
     return this;
   }
@@ -550,7 +580,7 @@ public class Replacer {
    *     the result of replacement, or {@code null} if {@code str} is {@code null}.
    */
   @Nullable
-  public String replace(@Nullable final CharSequence str) {
+  public String applyTo(@Nullable final CharSequence str) {
     if (str == null) {
       return null;
     }
@@ -565,7 +595,7 @@ public class Replacer {
       return str.toString();
     }
     final StringBuilder builder = new StringBuilder();
-    replace(str, builder);
+    applyTo(str, builder);
     return builder.toString();
   }
 
@@ -581,9 +611,9 @@ public class Replacer {
    *     the number of occurrences have been replaced, or {@code 0} if
    *     {@code str} is {@code null}.
    */
-  public int replace(@Nullable final CharSequence str, final StringBuilder output) {
+  public int applyTo(@Nullable final CharSequence str, final StringBuilder output) {
     try {
-      return replace(str, (Appendable) output);
+      return applyTo(str, (Appendable) output);
     } catch (final IOException e) {
       throw new UncheckedIOException(e);
     }
@@ -603,7 +633,7 @@ public class Replacer {
    * @throws IOException
    *     if any I/O error occurs.
    */
-  public int replace(@Nullable final CharSequence str, final Appendable output)
+  public int applyTo(@Nullable final CharSequence str, final Appendable output)
       throws IOException {
     if (str == null) {
       return 0;
@@ -621,17 +651,15 @@ public class Replacer {
     }
     final int start = Math.max(0, startIndex);
     final int end = Math.min(strLen, endIndex);
-    if (charFilter != null) {
-      return replaceChar(str, start, end, charFilter,
-          replacement, limit, output);
-    } else if (codePointFilter != null) {
-      return replaceCodePoint(str, start, end, codePointFilter,
-          replacement, limit, output);
-    } else if (substring != null) {
-      return replaceSubstring(str, start, end, substring, ignoreCase,
-          replacement, limit, output);
-    } else {
-      throw new IllegalStateException("No replace target was specified.");
+    switch (mode) {
+      case CHAR:
+        return replaceChar(str, start, end, charFilter, replacement, limit, output);
+      case CODE_POINT:
+        return replaceCodePoint(str, start, end, codePointFilter, replacement, limit, output);
+      case SUBSTRING:
+        return replaceSubstring(str, start, end, substring, ignoreCase, replacement, limit, output);
+      default:
+        throw new IllegalStateException("No replace target was specified.");
     }
   }
 }

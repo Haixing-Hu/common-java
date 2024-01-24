@@ -40,9 +40,9 @@ public class CsvUnescaper extends SinglePassTranslator implements CsvConstant {
     if (new Searcher().forCharsIn(CSV_SEARCH_CHARS).isContainedIn(quoteless)) {
       // deal with escaped quotes; ie) ""
       new Replacer()
-          .forSubstring(CSV_ESCAPED_QUOTE_STR)
-          .withChar(CSV_QUOTE)
-          .replace(quoteless, appendable);
+          .searchForSubstring(CSV_ESCAPED_QUOTE_STR)
+          .replaceWithChar(CSV_QUOTE)
+          .applyTo(quoteless, appendable);
     } else {
       appendable.append(quoteless);
     }

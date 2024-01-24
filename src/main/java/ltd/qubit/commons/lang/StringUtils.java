@@ -4587,26 +4587,26 @@ public class StringUtils {
    * @param replacement
    *     the character to replace, may be null
    * @return modified String, {@code null} if null string input
-   * @deprecated use {@link Replacer#forChar(char)}
-   *     and {@link Replacer#withChar(char)}
-   *     and {@link Replacer#replace(CharSequence)}.
+   * @deprecated use {@link Replacer#searchForChar(char)}
+   *     and {@link Replacer#replaceWithChar(char)}
+   *     and {@link Replacer#applyTo(CharSequence)}.
    */
   @Deprecated
   public static String replaceChar(@Nullable final String str,
       final char search, final char replacement) {
     return new Replacer()
-        .forChar(search)
-        .withChar(replacement)
-        .replace(str);
+        .searchForChar(search)
+        .replaceWithChar(replacement)
+        .applyTo(str);
   }
 
   @Deprecated
   public static void replaceChar(@Nullable final String str, final char search,
       final char replacement, final StringBuilder builder) {
     new Replacer()
-        .forChar(search)
-        .withChar(replacement)
-        .replace(str,builder);
+        .searchForChar(search)
+        .replaceWithChar(replacement)
+        .applyTo(str,builder);
   }
 
   /**
@@ -4641,9 +4641,9 @@ public class StringUtils {
    * @param replaceChars
    *     a set of characters to replace, may be null.
    * @return the modified string, or {@code null} if null string input.
-   * @deprecated use {@link Replacer#forChar(char)}
-   *     and {@link Replacer#withChar(char)}
-   *     and {@link Replacer#replace(CharSequence)}.
+   * @deprecated use {@link Replacer#searchForChar(char)}
+   *     and {@link Replacer#replaceWithChar(char)}
+   *     and {@link Replacer#applyTo(CharSequence)}.
    */
   @Deprecated
   public static String replaceChars(@Nullable final String str,
@@ -4721,18 +4721,18 @@ public class StringUtils {
    *     the string to replace it with, may be null.
    * @return the text with any replacements processed, {@code null} if null
    *     String input
-   * @deprecated use {@link Replacer#forSubstring(CharSequence)}
-   *     and {@link Replacer#withString(CharSequence)}
-   *     and {@link Replacer#replace(CharSequence)}.
+   * @deprecated use {@link Replacer#searchForSubstring(CharSequence)}
+   *     and {@link Replacer#replaceWithString(CharSequence)}
+   *     and {@link Replacer#applyTo(CharSequence)}.
    */
   @Deprecated
   public static String replace(@Nullable final CharSequence str,
       @Nullable final CharSequence search, @Nullable final CharSequence replacement) {
     return new Replacer()
-        .forSubstring(search)
+        .searchForSubstring(search)
         .ignoreCase(false)
-        .withString(replacement)
-        .replace(str);
+        .replaceWithString(replacement)
+        .applyTo(str);
   }
 
   /**
@@ -4766,20 +4766,20 @@ public class StringUtils {
    *     not.
    * @return the text with any replacements processed, {@code null} if null
    *     String input
-   * @deprecated use {@link Replacer#forSubstring(CharSequence)}
-   *     and {@link Replacer#withString(CharSequence)}
-   *     and {@link Replacer#replace(CharSequence)}.
+   * @deprecated use {@link Replacer#searchForSubstring(CharSequence)}
+   *     and {@link Replacer#replaceWithString(CharSequence)}
+   *     and {@link Replacer#applyTo(CharSequence)}.
    */
   @Deprecated
   public static String replace(@Nullable final CharSequence str,
       @Nullable final CharSequence search, @Nullable final CharSequence replacement,
       final int max, final boolean ignoreCase) {
     return new Replacer()
-        .forSubstring(search)
-        .withString(replacement)
+        .searchForSubstring(search)
+        .replaceWithString(replacement)
         .limit(max)
         .ignoreCase(ignoreCase)
-        .replace(str);
+        .applyTo(str);
   }
 
   @Deprecated
@@ -4787,11 +4787,11 @@ public class StringUtils {
       @Nullable final CharSequence search, @Nullable final CharSequence replacement,
       final int max, final boolean ignoreCase, final StringBuilder output) {
     return new Replacer()
-        .forSubstring(search)
-        .withString(replacement)
+        .searchForSubstring(search)
+        .replaceWithString(replacement)
         .limit(max)
         .ignoreCase(ignoreCase)
-        .replace(str, output);
+        .applyTo(str, output);
   }
 
   /**

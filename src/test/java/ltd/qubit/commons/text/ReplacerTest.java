@@ -18,358 +18,358 @@ public class ReplacerTest {
   @Test
   public void testReplaceStringWithString() {
     assertNull(new Replacer()
-        .forSubstring(null)
-        .withString(null)
+        .searchForSubstring(null)
+        .replaceWithString(null)
         .limit(-1)
         .ignoreCase(false)
-        .replace(null));
+        .applyTo(null));
     assertNull(new Replacer()
-        .forSubstring(null)
-        .withString("any")
+        .searchForSubstring(null)
+        .replaceWithString("any")
         .limit(-1)
         .ignoreCase(false)
-        .replace(null));
+        .applyTo(null));
     assertNull(new Replacer()
-        .forSubstring("any")
-        .withString(null)
+        .searchForSubstring("any")
+        .replaceWithString(null)
         .limit(-1)
         .ignoreCase(false)
-        .replace(null));
+        .applyTo(null));
     assertNull(new Replacer()
-        .forSubstring("any")
-        .withString("any")
+        .searchForSubstring("any")
+        .replaceWithString("any")
         .limit(-1)
         .ignoreCase(false)
-        .replace(null));
+        .applyTo(null));
 
     assertNull(new Replacer()
-        .forSubstring(null)
-        .withString(null)
+        .searchForSubstring(null)
+        .replaceWithString(null)
         .limit(2)
         .ignoreCase(false)
-        .replace(null));
+        .applyTo(null));
     assertNull(new Replacer()
-        .forSubstring(null)
-        .withString("any")
+        .searchForSubstring(null)
+        .replaceWithString("any")
         .limit(2)
         .ignoreCase(false)
-        .replace(null));
+        .applyTo(null));
     assertNull(new Replacer()
-        .forSubstring("any")
-        .withString(null)
+        .searchForSubstring("any")
+        .replaceWithString(null)
         .limit(2)
         .ignoreCase(false)
-        .replace(null));
+        .applyTo(null));
     assertNull(new Replacer()
-        .forSubstring("any")
-        .withString("any")
+        .searchForSubstring("any")
+        .replaceWithString("any")
         .limit(2)
         .ignoreCase(false)
-        .replace(null));
+        .applyTo(null));
 
     assertEquals("", new Replacer()
-        .forSubstring(null)
-        .withString(null)
+        .searchForSubstring(null)
+        .replaceWithString(null)
         .limit(-1)
         .ignoreCase(false)
-        .replace(""));
+        .applyTo(""));
     assertEquals("", new Replacer()
-        .forSubstring(null)
-        .withString("any")
+        .searchForSubstring(null)
+        .replaceWithString("any")
         .limit(-1)
         .ignoreCase(false)
-        .replace(""));
+        .applyTo(""));
     assertEquals("", new Replacer()
-        .forSubstring("any")
-        .withString(null)
+        .searchForSubstring("any")
+        .replaceWithString(null)
         .limit(-1)
         .ignoreCase(false)
-        .replace(""));
+        .applyTo(""));
     assertEquals("", new Replacer()
-        .forSubstring("any")
-        .withString("any")
+        .searchForSubstring("any")
+        .replaceWithString("any")
         .limit(-1)
         .ignoreCase(false)
-        .replace(""));
+        .applyTo(""));
 
     assertEquals("FOO", new Replacer()
-        .forSubstring("")
-        .withString("any")
+        .searchForSubstring("")
+        .replaceWithString("any")
         .limit(-1)
         .ignoreCase(false)
-        .replace("FOO"));
+        .applyTo("FOO"));
     assertEquals("FOO", new Replacer()
-        .forSubstring(null)
-        .withString("any")
+        .searchForSubstring(null)
+        .replaceWithString("any")
         .limit(-1)
         .ignoreCase(false)
-        .replace("FOO"));
+        .applyTo("FOO"));
     assertEquals("OO", new Replacer()
-        .forSubstring("F")
-        .withString(null)
+        .searchForSubstring("F")
+        .replaceWithString(null)
         .limit(-1)
         .ignoreCase(false)
-        .replace("FOO"));
+        .applyTo("FOO"));
     assertEquals("FOO", new Replacer()
-        .forSubstring(null)
-        .withString(null)
+        .searchForSubstring(null)
+        .replaceWithString(null)
         .limit(-1)
         .ignoreCase(false)
-        .replace("FOO"));
+        .applyTo("FOO"));
 
     assertEquals("", new Replacer()
-        .forSubstring("foo")
-        .withString("")
+        .searchForSubstring("foo")
+        .replaceWithString("")
         .limit(-1)
         .ignoreCase(false)
-        .replace("foofoofoo"));
+        .applyTo("foofoofoo"));
     assertEquals("barbarbar", new Replacer()
-        .forSubstring("foo")
-        .withString("bar")
+        .searchForSubstring("foo")
+        .replaceWithString("bar")
         .limit(-1)
         .ignoreCase(false)
-        .replace("foofoofoo"));
+        .applyTo("foofoofoo"));
     assertEquals("farfarfar", new Replacer()
-        .forSubstring("oo")
-        .withString("ar")
+        .searchForSubstring("oo")
+        .replaceWithString("ar")
         .limit(-1)
         .ignoreCase(false)
-        .replace("foofoofoo"));
+        .applyTo("foofoofoo"));
 
     assertEquals("", new Replacer()
-        .forSubstring(null)
-        .withString(null)
+        .searchForSubstring(null)
+        .replaceWithString(null)
         .limit(2)
         .ignoreCase(false)
-        .replace(""));
+        .applyTo(""));
     assertEquals("", new Replacer()
-        .forSubstring(null)
-        .withString("any")
+        .searchForSubstring(null)
+        .replaceWithString("any")
         .limit(2)
         .ignoreCase(false)
-        .replace(""));
+        .applyTo(""));
     assertEquals("", new Replacer()
-        .forSubstring("any")
-        .withString(null)
+        .searchForSubstring("any")
+        .replaceWithString(null)
         .limit(2)
         .ignoreCase(false)
-        .replace(""));
+        .applyTo(""));
     assertEquals("", new Replacer()
-        .forSubstring("any")
-        .withString("any")
+        .searchForSubstring("any")
+        .replaceWithString("any")
         .limit(2)
         .ignoreCase(false)
-        .replace(""));
+        .applyTo(""));
 
     final String str = new String(new char[]{'o', 'o', 'f', 'o', 'o'});
     assertEquals(str, new Replacer()
-        .forSubstring("x")
-        .withString("")
+        .searchForSubstring("x")
+        .replaceWithString("")
         .limit(-1)
         .ignoreCase(false)
-        .replace(str));
+        .applyTo(str));
 
     assertEquals("f", new Replacer()
-        .forSubstring("o")
-        .withString("")
+        .searchForSubstring("o")
+        .replaceWithString("")
         .limit(-1)
         .ignoreCase(false)
-        .replace("oofoo"));
+        .applyTo("oofoo"));
     assertEquals("oofoo", new Replacer()
-        .forSubstring("o")
-        .withString("")
+        .searchForSubstring("o")
+        .replaceWithString("")
         .limit(0)
         .ignoreCase(false)
-        .replace("oofoo"));
+        .applyTo("oofoo"));
     assertEquals("ofoo", new Replacer()
-        .forSubstring("o")
-        .withString("")
+        .searchForSubstring("o")
+        .replaceWithString("")
         .limit(1)
         .ignoreCase(false)
-        .replace("oofoo"));
+        .applyTo("oofoo"));
     assertEquals("foo", new Replacer()
-        .forSubstring("o")
-        .withString("")
+        .searchForSubstring("o")
+        .replaceWithString("")
         .limit(2)
         .ignoreCase(false)
-        .replace("oofoo"));
+        .applyTo("oofoo"));
     assertEquals("fo", new Replacer()
-        .forSubstring("o")
-        .withString("")
+        .searchForSubstring("o")
+        .replaceWithString("")
         .limit(3)
         .ignoreCase(false)
-        .replace("oofoo"));
+        .applyTo("oofoo"));
     assertEquals("f", new Replacer()
-        .forSubstring("o")
-        .withString("")
+        .searchForSubstring("o")
+        .replaceWithString("")
         .limit(4)
         .ignoreCase(false)
-        .replace("oofoo"));
+        .applyTo("oofoo"));
 
     assertEquals("f", new Replacer()
-        .forSubstring("o")
-        .withString("")
+        .searchForSubstring("o")
+        .replaceWithString("")
         .limit(-5)
         .ignoreCase(false)
-        .replace("oofoo"));
+        .applyTo("oofoo"));
     assertEquals("f", new Replacer()
-        .forSubstring("o")
-        .withString("")
+        .searchForSubstring("o")
+        .replaceWithString("")
         .limit(1000)
         .ignoreCase(false)
-        .replace("oofoo"));
+        .applyTo("oofoo"));
 
     assertNull(new Replacer()
-        .forSubstring(null)
-        .withString(null)
+        .searchForSubstring(null)
+        .replaceWithString(null)
         .limit(1)
         .ignoreCase(false)
-        .replace(null));
+        .applyTo(null));
     assertNull(new Replacer()
-        .forSubstring(null)
-        .withString("any")
+        .searchForSubstring(null)
+        .replaceWithString("any")
         .limit(1)
         .ignoreCase(false)
-        .replace(null));
+        .applyTo(null));
     assertNull(new Replacer()
-        .forSubstring("any")
-        .withString(null)
+        .searchForSubstring("any")
+        .replaceWithString(null)
         .limit(1)
         .ignoreCase(false)
-        .replace(null));
+        .applyTo(null));
     assertNull(new Replacer()
-        .forSubstring("any")
-        .withString("any")
+        .searchForSubstring("any")
+        .replaceWithString("any")
         .limit(1)
         .ignoreCase(false)
-        .replace(null));
+        .applyTo(null));
 
     assertEquals("", new Replacer()
-        .forSubstring(null)
-        .withString(null)
+        .searchForSubstring(null)
+        .replaceWithString(null)
         .limit(1)
         .ignoreCase(false)
-        .replace(""));
+        .applyTo(""));
     assertEquals("", new Replacer()
-        .forSubstring(null)
-        .withString("any")
+        .searchForSubstring(null)
+        .replaceWithString("any")
         .limit(1)
         .ignoreCase(false)
-        .replace(""));
+        .applyTo(""));
     assertEquals("", new Replacer()
-        .forSubstring("any")
-        .withString(null)
+        .searchForSubstring("any")
+        .replaceWithString(null)
         .limit(1)
         .ignoreCase(false)
-        .replace(""));
+        .applyTo(""));
     assertEquals("", new Replacer()
-        .forSubstring("any")
-        .withString("any")
+        .searchForSubstring("any")
+        .replaceWithString("any")
         .limit(1)
         .ignoreCase(false)
-        .replace(""));
+        .applyTo(""));
 
     assertEquals("FOO", new Replacer()
-        .forSubstring("")
-        .withString("any")
+        .searchForSubstring("")
+        .replaceWithString("any")
         .limit(1)
         .ignoreCase(false)
-        .replace("FOO"));
+        .applyTo("FOO"));
     assertEquals("FOO", new Replacer()
-        .forSubstring(null)
-        .withString("any")
+        .searchForSubstring(null)
+        .replaceWithString("any")
         .limit(1)
         .ignoreCase(false)
-        .replace("FOO"));
+        .applyTo("FOO"));
     assertEquals("OO", new Replacer()
-        .forSubstring("F")
-        .withString(null)
+        .searchForSubstring("F")
+        .replaceWithString(null)
         .limit(1)
         .ignoreCase(false)
-        .replace("FOO"));
+        .applyTo("FOO"));
     assertEquals("FOO", new Replacer()
-        .forSubstring(null)
-        .withString(null)
+        .searchForSubstring(null)
+        .replaceWithString(null)
         .limit(1)
         .ignoreCase(false)
-        .replace("FOO"));
+        .applyTo("FOO"));
 
     assertEquals("foofoo", new Replacer()
-        .forSubstring("foo")
-        .withString("")
+        .searchForSubstring("foo")
+        .replaceWithString("")
         .limit(1)
         .ignoreCase(false)
-        .replace("foofoofoo"));
+        .applyTo("foofoofoo"));
   }
 
   @Test
   public void testReplaceCharWithChar() {
-    assertNull(new Replacer().forChar('b').withChar('z').replace(null));
-    assertEquals("", new Replacer().forChar('b').withChar('z').replace(""));
+    assertNull(new Replacer().searchForChar('b').replaceWithChar('z').applyTo(null));
+    assertEquals("", new Replacer().searchForChar('b').replaceWithChar('z').applyTo(""));
     assertEquals("azcza",
-        new Replacer().forChar('b').withChar('z').replace("abcba"));
+        new Replacer().searchForChar('b').replaceWithChar('z').applyTo("abcba"));
     assertEquals("abcba",
-        new Replacer().forChar('x').withChar('z').replace("abcba"));
+        new Replacer().searchForChar('x').replaceWithChar('z').applyTo("abcba"));
   }
 
   @Test
   public void testReplaceCharWithString() {
-    assertNull(new Replacer().forChar('b').withString("xyz").replace(null));
-    assertEquals("", new Replacer().forChar('b').withString("xyz").replace(""));
+    assertNull(new Replacer().searchForChar('b').replaceWithString("xyz").applyTo(null));
+    assertEquals("", new Replacer().searchForChar('b').replaceWithString("xyz").applyTo(""));
     assertEquals("axyzcxyza",
-        new Replacer().forChar('b').withString("xyz").replace("abcba"));
+        new Replacer().searchForChar('b').replaceWithString("xyz").applyTo("abcba"));
     assertEquals("abcba",
-        new Replacer().forChar('x').withString("xyz").replace("abcba"));
+        new Replacer().searchForChar('x').replaceWithString("xyz").applyTo("abcba"));
     assertEquals("aca",
-        new Replacer().forChar('b').withString("").replace("abcba"));
+        new Replacer().searchForChar('b').replaceWithString("").applyTo("abcba"));
     assertEquals("aca",
-        new Replacer().forChar('b').withString(null).replace("abcba"));
+        new Replacer().searchForChar('b').replaceWithString(null).applyTo("abcba"));
     // not replace repeatedly
     assertEquals("axbxcxbxa",
-        new Replacer().forChar('b').withString("xbx").replace("abcba"));
+        new Replacer().searchForChar('b').replaceWithString("xbx").applyTo("abcba"));
   }
 
   @Test
   public void testReplaceCodePointWithCodePoint() {
     assertNull(new Replacer()
-        .forCodePoint('⚽')
-        .withCodePoint("\uD83C\uDFC6")
-        .replace(null));
+        .searchForCodePoint('⚽')
+        .replaceWithCodePoint("\uD83C\uDFC6")
+        .applyTo(null));
     assertEquals("",
         new Replacer()
-        .forCodePoint('⚽')
-        .withCodePoint("\uD83C\uDFC6")
-        .replace(""));
+        .searchForCodePoint('⚽')
+        .replaceWithCodePoint("\uD83C\uDFC6")
+        .applyTo(""));
 
     assertEquals("World Cup \uD83C\uDFC6 2022 \uD83C\uDFC6",
         new Replacer()
-        .forCodePoint('⚽')
-        .withCodePoint("\uD83C\uDFC6")
-        .replace("World Cup ⚽ 2022 ⚽"));
+        .searchForCodePoint('⚽')
+        .replaceWithCodePoint("\uD83C\uDFC6")
+        .applyTo("World Cup ⚽ 2022 ⚽"));
 
     assertEquals("World Cup  2022 ",
         new Replacer()
-        .forCodePoint('⚽')
-        .withCodePoint("")
-        .replace("World Cup ⚽ 2022 ⚽"));
+        .searchForCodePoint('⚽')
+        .replaceWithCodePoint("")
+        .applyTo("World Cup ⚽ 2022 ⚽"));
 
     assertEquals("World Cup  2022 ",
         new Replacer()
-        .forCodePoint('⚽')
-        .withCodePoint(null)
-        .replace("World Cup ⚽ 2022 ⚽"));
+        .searchForCodePoint('⚽')
+        .replaceWithCodePoint(null)
+        .applyTo("World Cup ⚽ 2022 ⚽"));
 
     assertEquals("World Cup ⚽ 2022 ⚽",
         new Replacer()
-            .forCodePoint("\uD83C\uDFC6")
-            .withCodePoint("⚽")
-            .replace("World Cup \uD83C\uDFC6 2022 \uD83C\uDFC6"));
+            .searchForCodePoint("\uD83C\uDFC6")
+            .replaceWithCodePoint("⚽")
+            .applyTo("World Cup \uD83C\uDFC6 2022 \uD83C\uDFC6"));
 
     assertEquals("World Cup \uD83C⚽ 2022 ⚽",
         new Replacer()
-            .forCodePoint("\uD83C\uDFC6")
-            .withCodePoint("⚽")
-            .replace("World Cup \uD83C\uD83C\uDFC6 2022 \uD83C\uDFC6"));
+            .searchForCodePoint("\uD83C\uDFC6")
+            .replaceWithCodePoint("⚽")
+            .applyTo("World Cup \uD83C\uD83C\uDFC6 2022 \uD83C\uDFC6"));
   }
 
 }

@@ -13,14 +13,14 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.text.Replacer;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
@@ -133,10 +133,10 @@ public class RegexTransformer extends AbstractStringTransformer {
         final String pattern = CAPTURE_SUBSTITUTION_PATTERNS[c];
         final String replacement = inputMatcher.group(c);
         substituted = replacer
-            .forSubstring(pattern)
-            .withString(replacement)
+            .searchForSubstring(pattern)
+            .replaceWithString(replacement)
             .ignoreCase(false)
-            .replace(substituted);
+            .applyTo(substituted);
       }
       // now append the substituted string
       builder.append(substituted);

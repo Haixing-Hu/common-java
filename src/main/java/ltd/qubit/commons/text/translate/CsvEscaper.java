@@ -32,9 +32,9 @@ public class CsvEscaper extends SinglePassTranslator implements CsvConstant {
     } else {  // input needs quoting
       appendable.append(CSV_QUOTE);
       new Replacer()
-          .forChar(CSV_QUOTE)
-          .withString(CSV_ESCAPED_QUOTE_STR)
-          .replace(inputSting, appendable);
+          .searchForChar(CSV_QUOTE)
+          .replaceWithString(CSV_ESCAPED_QUOTE_STR)
+          .applyTo(inputSting, appendable);
       appendable.append(CSV_QUOTE);
     }
   }

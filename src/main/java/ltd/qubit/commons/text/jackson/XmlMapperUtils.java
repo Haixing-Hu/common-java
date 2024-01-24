@@ -405,18 +405,18 @@ public class XmlMapperUtils {
     final String itemTagOpen = "<" + itemName.getSimpleName() + ">";
     final String itemTagClose = "</" + itemName.getSimpleName() + ">";
     final Replacer replacer = new Replacer();
-    String result = replacer.forSubstring(LIST_WRAPPER_ROOT_TAG_OPEN)
-                            .withString(wrapperTagOpen)
-                            .replace(xml);
-    result = replacer.forSubstring(LIST_WRAPPER_ROOT_TAG_CLOSE)
-                     .withString(wrapperTagClose)
-                     .replace(result);
-    result = replacer.forSubstring(LIST_WRAPPER_ITEM_TAG_OPEN)
-                     .withString(itemTagOpen)
-                     .replace(result);
-    result = replacer.forSubstring(LIST_WRAPPER_ITEM_TAG_CLOSE)
-                     .withString(itemTagClose)
-                     .replace(result);
+    String result = replacer.searchForSubstring(LIST_WRAPPER_ROOT_TAG_OPEN)
+                            .replaceWithString(wrapperTagOpen)
+                            .applyTo(xml);
+    result = replacer.searchForSubstring(LIST_WRAPPER_ROOT_TAG_CLOSE)
+                     .replaceWithString(wrapperTagClose)
+                     .applyTo(result);
+    result = replacer.searchForSubstring(LIST_WRAPPER_ITEM_TAG_OPEN)
+                     .replaceWithString(itemTagOpen)
+                     .applyTo(result);
+    result = replacer.searchForSubstring(LIST_WRAPPER_ITEM_TAG_CLOSE)
+                     .replaceWithString(itemTagClose)
+                     .applyTo(result);
     return result;
   }
 
