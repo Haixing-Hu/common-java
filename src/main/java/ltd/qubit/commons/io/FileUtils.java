@@ -17,12 +17,16 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.zip.CheckedInputStream;
 import java.util.zip.Checksum;
 
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ltd.qubit.commons.io.error.DirectoryCanNotCreateException;
 import ltd.qubit.commons.io.error.DirectoryCanNotListException;
@@ -36,9 +40,6 @@ import ltd.qubit.commons.io.error.FileNotExistException;
 import ltd.qubit.commons.lang.SystemUtils;
 import ltd.qubit.commons.util.filter.file.DirectoryFileFilter;
 import ltd.qubit.commons.util.filter.file.RegularFileFilter;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static ltd.qubit.commons.io.OperationOption.MAKE_DIRS;
 import static ltd.qubit.commons.io.OperationOption.OVERWRITE;
@@ -58,9 +59,12 @@ public final class FileUtils {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class);
 
+  @SuppressWarnings("SimpleDateFormat")
   @GuardedBy(value = "itself")
-  private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(
-      "yyyy-MM-dd-HH-mm-ss-SSS");
+  private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS");
+
+  @GuardedBy(value = "itself")
+  private static final Random RANDOM = new Random();
 
   public static final String DEFAULT_TEMP_FILE_PREFIX = "temp_";
 
@@ -90,14 +94,32 @@ public final class FileUtils {
       @Nullable final String suffix) {
     final Date now = new Date(System.currentTimeMillis());
     final String dateStr;
+    final String randomStr;
     synchronized (DATE_FORMAT) {
       dateStr = DATE_FORMAT.format(now);
+      randomStr = String.valueOf(Math.abs(RANDOM.nextInt()));
     }
     if (isEmpty(prefix)) {
-      return dateStr + defaultIfNull(suffix, EMPTY);
+      return dateStr + '_' + randomStr + defaultIfNull(suffix, EMPTY);
     } else {
-      return prefix + '_' + dateStr + defaultIfNull(suffix, EMPTY);
+      return prefix + '_' + dateStr + '_' + randomStr + defaultIfNull(suffix, EMPTY);
     }
+  }
+
+  /**
+   * Get the path of the system temporary directory.
+   *
+   * @return
+   *     the path of the system temporary directory.
+   * @throws IOException
+   *     if any error occurs.
+   */
+  public static File getTempDirectory() throws IOException {
+    final String path = SystemUtils.JAVA_IO_TMPDIR;
+    if (path == null) {
+      throw new IOException("The system property 'java.io.tmpdir' is not defined.");
+    }
+    return new File(path);
   }
 
   /**
@@ -178,8 +200,7 @@ public final class FileUtils {
    *     if any error occurs.
    */
   public static File createTempFile() throws IOException {
-    return createTempFile(DEFAULT_TEMP_FILE_PREFIX, null,
-        DEFAULT_TEMP_FILE_RETRIES);
+    return createTempFile(DEFAULT_TEMP_FILE_PREFIX, null, DEFAULT_TEMP_FILE_RETRIES);
   }
 
   /**
@@ -203,6 +224,24 @@ public final class FileUtils {
    *
    * @param prefix
    *     the prefix of the temporary filename.
+   * @param suffix
+   *     the suffix of the temporary filename.
+   * @return a new temporary file in the system's default temporary directory
+   *     with the specified prefix.
+   * @throws IOException
+   *     if any error occurs.
+   */
+  public static File createTempFile(final String prefix, final String suffix)
+      throws IOException {
+    return createTempFile(prefix, suffix, DEFAULT_TEMP_FILE_RETRIES);
+  }
+
+  /**
+   * Create a new empty temporary file in the system's default temporary
+   * directory.
+   *
+   * @param prefix
+   *     the prefix of the temporary filename.
    * @param maxTries
    *     the maximum number of retries performed by this function.
    * @return a new temporary file in the system's default temporary directory
@@ -210,8 +249,8 @@ public final class FileUtils {
    * @throws IOException
    *     if any error occurs.
    */
-  public static File createTempFile(@Nullable final String prefix,
-      final int maxTries) throws IOException {
+  public static File createTempFile(@Nullable final String prefix, final int maxTries)
+      throws IOException {
     return createTempFile(prefix, null, maxTries);
   }
 
@@ -236,12 +275,10 @@ public final class FileUtils {
     int tries = 0;
     while (!tempFile.createNewFile()) {
       ++tries;
-      LOGGER.warn("Failed to create the temporary file, try again: {}",
-          tempFile);
+      LOGGER.warn("Failed to create the temporary file, try again: {}", tempFile);
       if (tries >= maxTries) {
         throw new IOException("Failed to create the temporary file after "
-            + "too many tries: "
-            + maxTries);
+            + maxTries + " tries.");
       }
       tempFile = getTempFile(prefix, suffix);
     }
@@ -1084,7 +1121,9 @@ public final class FileUtils {
    * @param path
    *     the path.
    * @return the filename extracted from the path.
+   * @deprecated use {@link FilenameUtils#getFilenameFromPath(String)} instead.
    */
+  @Deprecated
   public static String getFilenameFromPath(final String path) {
     final int index = path.lastIndexOf(File.separatorChar);
     if (index < 0) {
@@ -1100,7 +1139,9 @@ public final class FileUtils {
    * @param url
    *     the URL.
    * @return the filename extracted from the URL.
+   * @deprecated use {@link FilenameUtils#getFilenameFromUrl(String)} instead.
    */
+  @Deprecated
   public static String getFilenameFromUrl(final String url) {
     final int index = url.lastIndexOf('/');
     if (index < 0) {
@@ -1116,7 +1157,9 @@ public final class FileUtils {
    * @param classpath
    *     the classpath.
    * @return the filename extracted from the classpath.
+   * @deprecated use {@link FilenameUtils#getFilenameFromClasspath(String)} instead.
    */
+  @Deprecated
   public static String getFilenameFromClasspath(final String classpath) {
     final int index = classpath.lastIndexOf('/');
     if (index < 0) {
@@ -1133,7 +1176,9 @@ public final class FileUtils {
    *     a file name.
    * @return the extension of the filename, WITHOUT a dot; or "" if there is
    *     extension of the original filename.
+   * @deprecated use {@link FilenameUtils#getExtension(String)} instead.
    */
+  @Deprecated
   public static String getExtension(final String filename) {
     if (filename == null) {
       return "";
@@ -1152,7 +1197,9 @@ public final class FileUtils {
    *     a file name.
    * @return the extension of the filename, WITH a dot; or "" if there is
    *     extension of the original filename.
+   * @deprecated use {@link FilenameUtils#getDotExtension(String)} instead.
    */
+  @Deprecated
   public static String getDotExtension(final String filename) {
     if (filename == null) {
       return "";
@@ -1206,11 +1253,11 @@ public final class FileUtils {
   }
 
   /**
-   * Gets the the canonical version of the abstract path.
+   * Gets the canonical version of the abstract path.
    *
    * @param file
    *     a File object representing an abstract path.
-   * @return the the canonical version of the abstract path.
+   * @return the canonical version of the abstract path.
    * @throws IOException
    *     if any I/O error occurs.
    */

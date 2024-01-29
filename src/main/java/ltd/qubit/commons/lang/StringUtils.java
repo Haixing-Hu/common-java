@@ -834,9 +834,8 @@ public class StringUtils {
    * @return
    *     {@code true} if the character sequence starts with the specified code
    *     point; {@code false} otherwise.
-   * @deprecated use {@link Searcher#isAtStartOf(CharSequence)}
+   * @see Searcher#isAtStartOf(CharSequence)
    */
-  @Deprecated
   public static boolean startsWithChar(@Nullable final CharSequence str, final int ch) {
     return new Searcher()
         .forCodePoint(ch)
@@ -855,9 +854,8 @@ public class StringUtils {
    *     {@code true} if the character sequence is starting with a character
    *     accepted by a {@link CharFilter}; {@code false} otherwise. If the
    *     character sequence or filter is null, returns {@code false}.
-   * @deprecated use {@link Searcher#isAtStartOf(CharSequence)}
+   * @see Searcher#isAtStartOf(CharSequence)
    */
-  @Deprecated
   public static boolean startsWithChar(@Nullable final CharSequence str,
       @Nullable final CharFilter filter) {
     return new Searcher()
@@ -878,9 +876,8 @@ public class StringUtils {
    *     {@code true} if the character sequence is starting with a code point
    *     accepted by a {@link CodePointFilter}; {@code false} otherwise. If the
    *     character sequence or filter is null, returns {@code false}.
-   * @deprecated use {@link Searcher#isAtStartOf(CharSequence)}
+   * @see Searcher#isAtStartOf(CharSequence)
    */
-  @Deprecated
   public static boolean startsWithChar(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter) {
     return new Searcher()
@@ -914,9 +911,8 @@ public class StringUtils {
    * @return {@code true} if the {@code str} starts with the {@code prefix}, in
    *     case sensitive mode, or both {@code null}
    * @see String#startsWith(String)
-   * @deprecated use {@link Searcher#isAtStartOf(CharSequence)}
+   * @see Searcher#isAtStartOf(CharSequence)
    */
-  @Deprecated
   public static boolean startsWith(@Nullable final String str,
       @Nullable final String prefix) {
     return new Searcher()
@@ -952,9 +948,8 @@ public class StringUtils {
    * @return {@code true} if the {@code str} starts with the {@code prefix}, in
    *     case insensitive mode, or both {@code null}
    * @see String#startsWith(String)
-   * @deprecated use {@link Searcher#isAtStartOf(CharSequence)}
+   * @see Searcher#isAtStartOf(CharSequence)
    */
-  @Deprecated
   public static boolean startsWithIgnoreCase(@Nullable final String str,
       @Nullable final String prefix) {
     return new Searcher()
@@ -983,9 +978,8 @@ public class StringUtils {
    * @return
    *     {@code true} if the character sequence ends with the specified code
    *     point; false otherwise.
-   * @deprecated use {@link Searcher#isAtEndOf(CharSequence)}
+   * @see Searcher#isAtEndOf(CharSequence)
    */
-  @Deprecated
   public static boolean endsWithChar(@Nullable final CharSequence str, final int ch) {
     return new Searcher()
         .forCodePoint(ch)
@@ -1004,9 +998,8 @@ public class StringUtils {
    *     {@code true} if the character sequence is ending with a character
    *     accepted by a {@link CharFilter}; {@code false} otherwise. If the
    *     character sequence or filter is null, returns {@code false}.
-   * @deprecated use {@link Searcher#isAtEndOf(CharSequence)}
+   * @see Searcher#isAtEndOf(CharSequence)
    */
-  @Deprecated
   public static boolean endsWithChar(@Nullable final CharSequence str,
       @Nullable final CharFilter filter) {
     return new Searcher()
@@ -1027,9 +1020,8 @@ public class StringUtils {
    *     {@code true} if the character sequence is ending with a code point
    *     accepted by a {@link CodePointFilter}; {@code false} otherwise. If the
    *     character sequence or filter is null, returns {@code false}.
-   * @deprecated use {@link Searcher#isAtEndOf(CharSequence)}
+   * @see Searcher#isAtEndOf(CharSequence)
    */
-  @Deprecated
   public static boolean endsWithChar(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter) {
     return new Searcher()
@@ -1065,9 +1057,8 @@ public class StringUtils {
    * @return {@code true} if the string starts with the prefix, in case
    *     sensitive mode, or both {@code null}
    * @see String#endsWith(String)
-   * @deprecated use {@link Searcher#isAtEndOf(CharSequence)}
+   * @see Searcher#isAtEndOf(CharSequence)
    */
-  @Deprecated
   public static boolean endsWith(@Nullable final String str,
       @Nullable final String suffix) {
     return new Searcher()
@@ -1105,9 +1096,8 @@ public class StringUtils {
    * @return {@code true} if the string starts with the prefix, in case
    *     insensitive mode, or both {@code null}
    * @see String#endsWith(String)
-   * @deprecated use {@link Searcher#isAtEndOf(CharSequence)}
+   * @see Searcher#isAtEndOf(CharSequence)
    */
-  @Deprecated
   public static boolean endsWithIgnoreCase(@Nullable final String str,
       @Nullable final String suffix) {
     return new Searcher()
@@ -1126,9 +1116,8 @@ public class StringUtils {
    * @return {@code true} if the string is starting or ending with a code point
    *     satisfying the specified {@link CharFilter}; {@code false} otherwise.
    *     If the string is null or empty, returns false.
-   * @deprecated use {@link Searcher#isAtStartOrEndOf(CharSequence)}
+   * @see Searcher#isAtStartOrEndOf(CharSequence)
    */
-  @Deprecated
   public static boolean startsOrEndsWithChar(@Nullable final CharSequence str,
       final int ch) {
     return new Searcher()
@@ -1148,9 +1137,8 @@ public class StringUtils {
    *     satisfying the specified {@link CharFilter}; {@code false} otherwise.
    *     If the string is null or empty, or if the filter is null, returns
    *     false.
-   * @deprecated use {@link Searcher#isAtStartOrEndOf(CharSequence)}
+   * @see Searcher#isAtStartOrEndOf(CharSequence)
    */
-  @Deprecated
   public static boolean startsOrEndsWithChar(@Nullable final CharSequence str,
       @Nullable final CharFilter filter) {
     return new Searcher()
@@ -1170,9 +1158,8 @@ public class StringUtils {
    *     satisfying the specified {@link CodePointFilter}; {@code false} otherwise.
    *     If the string is null or empty, or if the filter is null, returns
    *     false.
-   * @deprecated use {@link Searcher#isAtStartOrEndOf(CharSequence)}
+   * @see Searcher#isAtStartOrEndOf(CharSequence)
    */
-  @Deprecated
   public static boolean startsOrEndsWithChar(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter) {
     return new Searcher()
@@ -1190,9 +1177,8 @@ public class StringUtils {
    * @return {@code true} if the string is starting and ending with a code point
    *     satisfying the specified {@link CharFilter}; {@code false} otherwise.
    *     If the string is null or empty, returns false.
-   * @deprecated use {@link Searcher#isAtStartAndEndOf(CharSequence)}
+   * @see Searcher#isAtStartAndEndOf(CharSequence)
    */
-  @Deprecated
   public static boolean startsAndEndsWithChar(@Nullable final CharSequence str,
       final int ch) {
     return new Searcher()
@@ -1212,9 +1198,8 @@ public class StringUtils {
    *     satisfying the specified {@link CharFilter}; {@code false} otherwise.
    *     If the string is null or empty, or if the filter is null, returns
    *     false.
-   * @deprecated use {@link Searcher#isAtStartAndEndOf(CharSequence)}
+   * @see Searcher#isAtStartAndEndOf(CharSequence)
    */
-  @Deprecated
   public static boolean startsAndEndsWithChar(@Nullable final CharSequence str,
       @Nullable final CharFilter filter) {
     return new Searcher()
@@ -1234,9 +1219,8 @@ public class StringUtils {
    *     satisfying the specified {@link CodePointFilter}; {@code false} otherwise.
    *     If the string is null or empty, or if the filter is null, returns
    *     false.
-   * @deprecated use {@link Searcher#isAtStartAndEndOf(CharSequence)}
+   * @see Searcher#isAtStartAndEndOf(CharSequence)
    */
-  @Deprecated
   public static boolean startsAndEndsWithChar(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter) {
     return new Searcher()
@@ -2576,9 +2560,8 @@ public class StringUtils {
    *     the character.
    * @return {@code true} if the {@code str} is not {@code null} and contains
    *     {@code ch}; {@code false} otherwise.
-   * @deprecated use {@link Searcher#isContainedIn(CharSequence)}
+   * @see Searcher#isContainedIn(CharSequence)
    */
-  @Deprecated
   public static boolean containsChar(@Nullable final CharSequence str, final char ch) {
     return new Searcher()
         .forChar(ch)
@@ -2596,9 +2579,8 @@ public class StringUtils {
    *     the index where to start searching.
    * @return {@code true} if the {@code str} is not {@code null} and contains
    *     {@code ch}; {@code false} otherwise.
-   * @deprecated use {@link Searcher#isContainedIn(CharSequence)}
+   * @see Searcher#isContainedIn(CharSequence)
    */
-  @Deprecated
   public static boolean containsChar(@Nullable final CharSequence str,
       final char ch, final int startIndex) {
     return new Searcher()
@@ -2616,10 +2598,9 @@ public class StringUtils {
    *     the code point of a character.
    * @return {@code true} if the {@code str} is not {@code null} and contains
    *     {@code codePoint}; {@code false} otherwise.
-   * @deprecated use {@link Searcher#isContainedIn(CharSequence)}
+   * @see Searcher#isContainedIn(CharSequence)
    */
-  @Deprecated
-  public static boolean containsChar(@Nullable final CharSequence str,
+  public static boolean containsCodePoint(@Nullable final CharSequence str,
       final int codePoint) {
     return new Searcher()
         .forCodePoint(codePoint)
@@ -2637,10 +2618,9 @@ public class StringUtils {
    *     the index where to start searching.
    * @return {@code true} if the {@code str} is not {@code null} and contains
    *     {@code codePoint}; {@code false} otherwise.
-   * @deprecated use {@link Searcher#isContainedIn(CharSequence)}
+   * @see Searcher#isContainedIn(CharSequence)
    */
-  @Deprecated
-  public static boolean containsChar(@Nullable final CharSequence str,
+  public static boolean containsCodePoint(@Nullable final CharSequence str,
       final int codePoint, final int startIndex) {
     return new Searcher()
         .forCodePoint(codePoint)
@@ -2834,10 +2814,9 @@ public class StringUtils {
    * @return {@code true} if the string does not contain any character satisfying
    *     the specified {@link CharFilter}; {@code false} otherwise. If the
    *     string is null, returns true. If the string is empty, returns true.
-   * @deprecated use {@link Searcher#forCharsSatisfy(CharFilter)} and
-   *     {@link Searcher#isNotContainedIn(CharSequence)}
+   * @see Searcher#forCharsSatisfy(CharFilter)
+   * @see Searcher#isNotContainedIn(CharSequence)
    */
-  @Deprecated
   public static boolean containsNone(@Nullable final CharSequence str,
       final CharFilter filter) {
     return new Searcher()
@@ -2856,14 +2835,33 @@ public class StringUtils {
    * @return {@code true} if the string does not contain any code point satisfying
    *     the specified {@link CodePointFilter}; {@code false} otherwise. If the
    *     string is null, returns true. If the string is empty, returns true.
-   * @deprecated use {@link Searcher#forCodePointsSatisfy(CodePointFilter)} and
-   *     {@link Searcher#isNotContainedIn(CharSequence)}
+   * @see Searcher#forCodePointsSatisfy(CodePointFilter)
+   * @see Searcher#isNotContainedIn(CharSequence)
    */
-  @Deprecated
   public static boolean containsNone(@Nullable final CharSequence str,
       final CodePointFilter filter) {
     return new Searcher()
         .forCodePointsSatisfy(filter)
+        .isNotContainedIn(str);
+  }
+
+  /**
+   * Tests whether the specified string does not contain the specified code
+   * point.
+   *
+   * @param str
+   *     the string to be tested, which may be null or empty.
+   * @param codePoint
+   *     the specified Unicode code point.
+   * @return {@code true} if the string does not contain the specified code
+   *     point; {@code false} otherwise. If the string is null, returns true.
+   *     If the string is empty, returns true.
+   * @see Searcher#forCodePoint(int)
+   * @see Searcher#isNotContainedIn(CharSequence)
+   */
+  public static boolean containsNone(@Nullable final CharSequence str, final int codePoint) {
+    return new Searcher()
+        .forCodePoint(codePoint)
         .isNotContainedIn(str);
   }
 
@@ -2890,10 +2888,9 @@ public class StringUtils {
    * @return
    *     {@code true} if the specified string does not contain any invalid
    *     characters.
-   * @deprecated use {@link Searcher#forCharsIn(char...)} and
-   *     {@link Searcher#isNotContainedIn(CharSequence)}
+   * @see Searcher#forCharsIn(char...)
+   * @see Searcher#isNotContainedIn(CharSequence)
    */
-  @Deprecated
   public static boolean containsNone(@Nullable final CharSequence str,
       @Nullable final char[] invalidChars) {
     return new Searcher()
@@ -2924,10 +2921,9 @@ public class StringUtils {
    * @return
    *     {@code true} if the specified does not contain any of the invalid
    *     characters.
-   * @deprecated use {@link Searcher#forCharsIn(CharSequence)} and
-   *     {@link Searcher#isNotContainedIn(CharSequence)}
+   * @see Searcher#forCharsIn(CharSequence)
+   * @see Searcher#isNotContainedIn(CharSequence)
    */
-  @Deprecated
   public static boolean containsNone(@Nullable final CharSequence str,
       @Nullable final CharSequence invalidChars) {
     return new Searcher()
@@ -2944,13 +2940,12 @@ public class StringUtils {
    * @param filter
    *     a specified {@link CharFilter}, which cannot be null.
    * @return
-   *    {@code true} if the string contains any character satisfying
-   *     the specified {@link CharFilter}; {@code false} otherwise. If the
-   *     string is null, returns false. If the string is empty, returns false.
-   * @deprecated use {@link Searcher#forCharsSatisfy(CharFilter)} and
-   *     {@link Searcher#isContainedIn(CharSequence)}
+   *    {@code true} if the string contains any character satisfying the
+   *    specified {@link CharFilter}; {@code false} otherwise. If the string is
+   *    null or empty, returns {@code false}.
+   * @see Searcher#forCharsSatisfy(CharFilter)
+   * @see Searcher#isContainedIn(CharSequence)
    */
-  @Deprecated
   public static boolean containsAny(@Nullable final CharSequence str,
       final CharFilter filter) {
     return new Searcher()
@@ -2969,15 +2964,35 @@ public class StringUtils {
    * @return
    *    {@code true} if the string contains any code point satisfying
    *     the specified {@link CodePointFilter}; {@code false} otherwise. If the
-   *     string is null, returns false. If the string is empty, returns false.
-   * @deprecated use {@link Searcher#forCodePointsSatisfy(CodePointFilter)} and
-   *     {@link Searcher#isContainedIn(CharSequence)}
+   *     string is null or empty, returns {@code false}.
+   * @see Searcher#forCodePointsSatisfy(CodePointFilter)
+   * @see Searcher#isContainedIn(CharSequence)
    */
-  @Deprecated
   public static boolean containsAny(@Nullable final CharSequence str,
       final CodePointFilter filter) {
     return new Searcher()
         .forCodePointsSatisfy(filter)
+        .isContainedIn(str);
+  }
+
+  /**
+   * Tests whether the specified string contains the specified code point.
+   *
+   * @param str
+   *     the string to be tested, which may be null or empty.
+   * @param codePoint
+   *     the specified code point.
+   * @return
+   *    {@code true} if the string contains the specified code point;
+   *    {@code false} otherwise. If the string is null or empty, returns
+   *    {@code false}.
+   * @see Searcher#forCodePoint(int)
+   * @see Searcher#isContainedIn(CharSequence)
+   */
+  public static boolean containsAny(@Nullable final CharSequence str,
+      final int codePoint) {
+    return new Searcher()
+        .forCodePoint(codePoint)
         .isContainedIn(str);
   }
 
@@ -3003,11 +3018,11 @@ public class StringUtils {
    * @param validChars
    *     an array of valid characters, may be null or empty.
    * @return
-   *     {@code true} if the specified string contains any valid characters.
-   * @deprecated use {@link Searcher#forCharsIn(char...)} and
-   *     {@link Searcher#isContainedIn(CharSequence)}.
+   *     {@code true} if the specified string contains any valid characters. If
+   *     the string is null or empty, returns {@code false}.
+   * @see Searcher#forCharsIn(char...)
+   * @see Searcher#isContainedIn(CharSequence)
    */
-  @Deprecated
   public static boolean containsAny(@Nullable final CharSequence str,
       @Nullable final char[] validChars) {
     return new Searcher()
@@ -3037,11 +3052,11 @@ public class StringUtils {
    * @param validChars
    *     a sequence of valid chars, may be null.
    * @return
-   *     {@code true} if the specified contains any of the valid characters.
-   * @deprecated use {@link Searcher#forCharsIn(CharSequence)} and
-   *     {@link Searcher#isContainedIn(CharSequence)}.
+   *     {@code true} if the specified contains any of the valid characters. If
+   *     the string is null or empty, returns {@code false}.
+   * @see Searcher#forCharsIn(CharSequence)
+   * @see Searcher#isContainedIn(CharSequence)
    */
-  @Deprecated
   public static boolean containsAny(@Nullable final CharSequence str,
       @Nullable final CharSequence validChars) {
     return new Searcher()
@@ -3084,9 +3099,8 @@ public class StringUtils {
    * @param codePoint
    *     the code point of the character to be count.
    * @return the number of occurrences of ch in str, 0 if str is null.
-   * @deprecated use {@link Searcher#countMatchesIn(CharSequence)}
+   * @see Searcher#countMatchesIn(CharSequence)
    */
-  @Deprecated
   public static int countMatches(@Nullable final CharSequence str,
       final int codePoint) {
     return new Searcher()
@@ -3113,9 +3127,8 @@ public class StringUtils {
    * @param substr
    *     the substring to count, may be null
    * @return the number of occurrences, 0 if either String is {@code null}
-   * @deprecated use {@link Searcher#countMatchesIn(CharSequence)}
+   * @see Searcher#countMatchesIn(CharSequence)
    */
-  @Deprecated
   public static int countMatches(@Nullable final CharSequence str,
       @Nullable final CharSequence substr) {
     return new Searcher()
@@ -3145,9 +3158,8 @@ public class StringUtils {
    * @param ignoreCase
    *     whether to compare strings ignoring the case.
    * @return the number of occurrences, 0 if either String is {@code null}
-   * @deprecated use {@link Searcher#countMatchesIn(CharSequence)}
+   * @see Searcher#countMatchesIn(CharSequence)
    */
-  @Deprecated
   public static int countMatches(@Nullable final CharSequence str,
       @Nullable final CharSequence substr, final boolean ignoreCase) {
     return new Searcher()
@@ -3166,9 +3178,8 @@ public class StringUtils {
    *     i.e., the start of the character sequence is a non-graphic character;
    *     {@code false} otherwise.
    * @see CharUtils#isGraph(int)
-   * @deprecated use {@link Stripper#isStrippable(CharSequence)}
+   * @see Stripper#isStrippable(CharSequence)
    */
-  @Deprecated
   public static boolean isStartStrippable(final CharSequence str) {
     return new Stripper()
         .ofBlank()
@@ -3186,9 +3197,8 @@ public class StringUtils {
    *     i.e., the end of the character sequence is a non-graphic character;
    *     {@code false} otherwise.
    * @see CharUtils#isGraph(int)
-   * @deprecated use {@link Stripper#isStrippable(CharSequence)}
+   * @see Stripper#isStrippable(CharSequence)
    */
-  @Deprecated
   public static boolean isEndStrippable(final CharSequence str) {
     return new Stripper()
         .ofBlank()
@@ -3206,9 +3216,8 @@ public class StringUtils {
    *     or end of the character sequence is a non-graphic character; {@code false}
    *     otherwise.
    * @see CharUtils#isGraph(int)
-   * @deprecated use {@link Stripper#isStrippable(CharSequence)}
+   * @see Stripper#isStrippable(CharSequence)
    */
-  @Deprecated
   public static boolean isStrippable(final CharSequence str) {
     return new Stripper()
         .ofBlank()
@@ -3238,9 +3247,8 @@ public class StringUtils {
    * @param str
    *     the string to remove characters from, may be null
    * @return the stripped String, or {@code null} if null String input
-   * @deprecated use {@link Stripper#strip(CharSequence)}
+   * @see Stripper#strip(CharSequence)
    */
-  @Deprecated
   public static String stripStart(@Nullable final CharSequence str) {
     return new Stripper()
         .ofBlank()
@@ -3273,9 +3281,8 @@ public class StringUtils {
    *     the output where to append the result string.
    * @throws IOException
    *     if any I/O error occurs.
-   * @deprecated use {@link Stripper#strip(CharSequence, Appendable)}
+   * @see Stripper#strip(CharSequence, Appendable)
    */
-  @Deprecated
   public static void stripStart(@Nullable final CharSequence str,
       final Appendable output) throws IOException {
     new Stripper()
@@ -3306,9 +3313,8 @@ public class StringUtils {
    * @param stripChar
    *     the character to remove.
    * @return the stripped String, or {@code null} if null String input
-   * @deprecated use {@link Stripper#strip(CharSequence)}
+   * @see Stripper#strip(CharSequence)
    */
-  @Deprecated
   public static String stripStart(@Nullable final CharSequence str,
       final char stripChar) {
     return new Stripper()
@@ -3342,9 +3348,8 @@ public class StringUtils {
    *     the output where to append the stripped String.
    * @throws IOException
    *     if any I/O error occurs.
-   * @deprecated use {@link Stripper#strip(CharSequence, Appendable)}
+   * @see Stripper#strip(CharSequence, Appendable)
    */
-  @Deprecated
   public static void stripStart(@Nullable final CharSequence str,
       final char stripChar, final Appendable output) throws IOException {
     new Stripper()
@@ -3381,9 +3386,8 @@ public class StringUtils {
    *     the characters to remove, null treated as an empty string, and the
    *     original string is returned.
    * @return the stripped String, or {@code null} if null String input
-   * @deprecated use {@link Stripper#strip(CharSequence)}
+   * @see Stripper#strip(CharSequence)
    */
-  @Deprecated
   public static String stripStart(@Nullable final CharSequence str,
       @Nullable final CharSequence stripChars) {
     return new Stripper()
@@ -3392,7 +3396,6 @@ public class StringUtils {
         .strip(str);
   }
 
-  @Deprecated
   public static void stripStart(@Nullable final CharSequence str,
       @Nullable final CharSequence stripChars, final Appendable output)
       throws IOException {
@@ -3419,9 +3422,8 @@ public class StringUtils {
    *     returned.
    * @return
    *     the stripped string, or {@code null} if {@code str} is {@code null}.
-   * @deprecated use {@link Stripper#strip(CharSequence)}
+   * @see Stripper#strip(CharSequence)
    */
-  @Deprecated
   public static String stripStart(@Nullable final CharSequence str,
       @Nullable final CharFilter filter) {
     return new Stripper()
@@ -3447,9 +3449,8 @@ public class StringUtils {
    *     returned.
    * @param output
    *     the output where to append the stripped string.
-   * @deprecated use {@link Stripper#strip(CharSequence, Appendable)}
+   * @see Stripper#strip(CharSequence, Appendable)
    */
-  @Deprecated
   public static void stripStart(@Nullable final CharSequence str,
       @Nullable final CharFilter filter, final Appendable output)
       throws IOException {
@@ -3476,9 +3477,8 @@ public class StringUtils {
    *     string is returned.
    * @return
    *     the stripped string, or {@code null} if {@code str} is {@code null}.
-   * @deprecated use {@link Stripper#strip(CharSequence)}
+   * @see Stripper#strip(CharSequence)
    */
-  @Deprecated
   public static String stripStart(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter) {
     return new Stripper()
@@ -3504,9 +3504,8 @@ public class StringUtils {
    *     string is returned.
    * @param output
    *     the output where to append the stripped string.
-   * @deprecated use {@link Stripper#strip(CharSequence, Appendable)}
+   * @see Stripper#strip(CharSequence, Appendable)
    */
-  @Deprecated
   public static void stripStart(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter, final Appendable output)
       throws IOException {
@@ -3538,9 +3537,8 @@ public class StringUtils {
    * @param str
    *     the string to remove characters from, may be null
    * @return the stripped String, or {@code null} if null String input
-   * @deprecated use {@link Stripper#strip(CharSequence)}
+   * @see Stripper#strip(CharSequence)
    */
-  @Deprecated
   public static String stripEnd(@Nullable final CharSequence str) {
     return new Stripper()
         .ofBlank()
@@ -3548,7 +3546,6 @@ public class StringUtils {
         .strip(str);
   }
 
-  @Deprecated
   public static void stripEnd(@Nullable final CharSequence str,
       final Appendable output) throws IOException {
     new Stripper()
@@ -3578,9 +3575,8 @@ public class StringUtils {
    * @param stripChar
    *     the character to remove.
    * @return the stripped String, or {@code null} if null String input.
-   * @deprecated use {@link Stripper#strip(CharSequence)}
+   * @see Stripper#strip(CharSequence)
    */
-  @Deprecated
   public static String stripEnd(@Nullable final CharSequence str,
       final char stripChar) {
     return new Stripper()
@@ -3609,10 +3605,10 @@ public class StringUtils {
    *     the string to remove characters from, may be null
    * @param stripChar
    *     the character to remove.
-   * @return the stripped String, or {@code null} if null String input.
-   * @deprecated use {@link Stripper#strip(CharSequence, Appendable)}
+   * @param output
+   *     the output where to append the stripped string.
+   * @see Stripper#strip(CharSequence, Appendable)
    */
-  @Deprecated
   public static void stripEnd(@Nullable final CharSequence str,
       final char stripChar, final Appendable output) throws IOException {
     new Stripper()
@@ -3647,9 +3643,8 @@ public class StringUtils {
    *     the characters to remove, null treated as an empty string, and the
    *     original string is returned.
    * @return the stripped String, or {@code null} if null String input
-   * @deprecated use {@link Stripper#strip(CharSequence)}
+   * @see Stripper#strip(CharSequence)
    */
-  @Deprecated
   public static String stripEnd(@Nullable final CharSequence str,
       @Nullable final CharSequence stripChars) {
     return new Stripper()
@@ -3658,7 +3653,6 @@ public class StringUtils {
         .strip(str);
   }
 
-  @Deprecated
   public static void stripEnd(@Nullable final CharSequence str,
       @Nullable final CharSequence stripChars, final StringBuilder output) {
     new Stripper()
@@ -3683,9 +3677,8 @@ public class StringUtils {
    *     the end of {@code str}. If it is null, the original string is
    *     returned.
    * @return the stripped String, or {@code null} if {@code str} is {@code null}
-   * @deprecated use {@link Stripper#strip(CharSequence)}
+   * @see Stripper#strip(CharSequence)
    */
-  @Deprecated
   public static String stripEnd(@Nullable final CharSequence str,
       @Nullable final CharFilter filter) {
     return new Stripper()
@@ -3694,7 +3687,6 @@ public class StringUtils {
         .strip(str);
   }
 
-  @Deprecated
   public static void stripEnd(@Nullable final CharSequence str,
       @Nullable final CharFilter filter, final StringBuilder output) {
     new Stripper()
@@ -3719,9 +3711,8 @@ public class StringUtils {
    *     the end of {@code str}. If it is null, the original string is
    *     returned.
    * @return the stripped String, or {@code null} if {@code str} is {@code null}
-   * @deprecated use {@link Stripper#strip(CharSequence)}
+   * @see Stripper#strip(CharSequence)
    */
-  @Deprecated
   public static String stripEnd(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter) {
     return new Stripper()
@@ -3730,7 +3721,6 @@ public class StringUtils {
         .strip(str);
   }
 
-  @Deprecated
   public static void stripEnd(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter, final StringBuilder output) {
     new Stripper()
@@ -3765,9 +3755,8 @@ public class StringUtils {
    *     the string to remove characters from, may be null
    * @return the stripped String, {@code null} if the input string was stripped
    *     to an empty string.
-   * @deprecated use {@link Stripper#stripToNull(CharSequence)}
+   * @see Stripper#stripToNull(CharSequence)
    */
-  @Deprecated
   public static String stripToNull(@Nullable final CharSequence str) {
     return new Stripper()
         .ofBlank()
@@ -3800,9 +3789,8 @@ public class StringUtils {
    *     the string to remove characters from, may be null
    * @return the stripped String, or an empty string if the input string was
    *     stripped to an empty string.
-   * @deprecated use {@link Stripper#stripToEmpty(CharSequence)}
+   * @see Stripper#stripToEmpty(CharSequence)
    */
-  @Deprecated
   public static String stripToEmpty(@Nullable final String str) {
     return new Stripper()
         .ofBlank()
@@ -3834,7 +3822,8 @@ public class StringUtils {
    * @param str
    *     the string to remove characters from, may be null
    * @return the stripped String, {@code null} if null String input
-   * @deprecated use {@link Stripper#strip(CharSequence)}
+   * @see Stripper#strip(CharSequence)
+   * @see String#strip()
    */
   public static String strip(@Nullable final CharSequence str) {
     return new Stripper()
@@ -3843,7 +3832,6 @@ public class StringUtils {
         .strip(str);
   }
 
-  @Deprecated
   public static void strip(@Nullable final CharSequence str,
       final Appendable output) throws IOException {
     new Stripper()
@@ -3879,9 +3867,8 @@ public class StringUtils {
    *     the characters to remove; if it is null or empty, the original string
    *     is returned.
    * @return the stripped String, {@code null} if null String input
-   * @deprecated use {@link Stripper#strip(CharSequence)}
+   * @see Stripper#strip(CharSequence)
    */
-  @Deprecated
   public static String strip(@Nullable final CharSequence str,
       @Nullable final CharSequence stripChars) {
     return new Stripper()
@@ -3890,7 +3877,6 @@ public class StringUtils {
         .strip(str);
   }
 
-  @Deprecated
   public static void strip(@Nullable final CharSequence str,
       @Nullable final String stripChars, final Appendable output)
       throws IOException {
@@ -3916,9 +3902,8 @@ public class StringUtils {
    *     both end of {@code str}. If it is null, the original string is
    *     returned.
    * @return the stripped String, {@code null} if null String input
-   * @deprecated use {@link Stripper#strip(CharSequence)}
+   * @see Stripper#strip(CharSequence)
    */
-  @Deprecated
   public static String strip(@Nullable final CharSequence str,
       @Nullable final CharFilter filter) {
     return new Stripper()
@@ -3927,7 +3912,6 @@ public class StringUtils {
         .strip(str);
   }
 
-  @Deprecated
   public static void strip(@Nullable final CharSequence str,
       @Nullable final CharFilter filter, final Appendable output)
       throws IOException {
@@ -3953,9 +3937,8 @@ public class StringUtils {
    *     both end of {@code str}. If it is null, the original string is
    *     returned.
    * @return the stripped String, {@code null} if null String input
-   * @deprecated use {@link Stripper#strip(CharSequence)}
+   * @see Stripper#strip(CharSequence)
    */
-  @Deprecated
   public static String strip(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter) {
     return new Stripper()
@@ -3964,7 +3947,6 @@ public class StringUtils {
         .strip(str);
   }
 
-  @Deprecated
   public static void strip(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter, final Appendable output)
       throws IOException {
@@ -3993,10 +3975,9 @@ public class StringUtils {
    * @param str
    *     the string to remove characters from, may be null
    * @return the stripped String, {@code null} if null String input
-   * @deprecated use {@link Remover#forCodePointsSatisfy(CodePointFilter)}
-   *     and {@link Remover#removeFrom(CharSequence)}
+   * @see Remover#forCodePointsSatisfy(CodePointFilter)
+   * @see Remover#removeFrom(CharSequence)
    */
-  @Deprecated
   public static String stripAll(@Nullable final CharSequence str) {
     return new Remover()
         .forCodePointsSatisfy(BlankCodePointFilter.INSTANCE)
@@ -4240,10 +4221,9 @@ public class StringUtils {
    *     the prefix string to search for and remove, may be null.
    * @return the substring with the string removed if found, {@code null} if
    *     null string input.
-   * @deprecated use {@link Remover#forPrefix(CharSequence)} and
-   *     {@link Remover#removeFrom(CharSequence)}}
+   * @see Remover#forPrefix(CharSequence)
+   * @se Remover#removeFrom(CharSequence)
    */
-  @Deprecated
   public static String removePrefix(@Nullable final String str,
       @Nullable final String prefix) {
     return new Remover()
@@ -4285,10 +4265,9 @@ public class StringUtils {
    *     not.
    * @return the substring with the string removed if found, {@code null} if
    *     null string input
-   * @deprecated use {@link Remover#forPrefix(CharSequence)} and
-   *     {@link Remover#removeFrom(CharSequence)}}
+   * @see Remover#forPrefix(CharSequence)
+   * @see Remover#removeFrom(CharSequence)
    */
-  @Deprecated
   public static String removePrefix(@Nullable final String str,
       @Nullable final String prefix, final boolean ignoreCase) {
     return new Remover()
@@ -4297,15 +4276,6 @@ public class StringUtils {
         .removeFrom(str);
   }
 
-  @Deprecated
-  public static void removePrefix(@Nullable final String str,
-      @Nullable final String prefix, final boolean ignoreCase,
-      final StringBuilder output) {
-    new Remover()
-        .forPrefix(prefix)
-        .ignoreCase(ignoreCase)
-        .removeFrom(str, output);
-  }
 
   /**
    * Removes a substring only if it is at the end of a source string, otherwise
@@ -4335,10 +4305,9 @@ public class StringUtils {
    *     the suffix string to search for and remove, may be null.
    * @return the substring with the string removed if found, {@code null} if
    *     null String input
-   * @deprecated use {@link Remover#forSuffix(CharSequence)} and
-   *    {@link Remover#removeFrom(CharSequence)}}
+   * @see Remover#forSuffix(CharSequence)
+   * @see Remover#removeFrom(CharSequence)
    */
-  @Deprecated
   public static String removeSuffix(@Nullable final String str,
       @Nullable final String suffix) {
     return new Remover()
@@ -4379,10 +4348,9 @@ public class StringUtils {
    *     not.
    * @return the substring with the string removed if found, {@code null} if
    *     null String input
-   * @deprecated use {@link Remover#forSuffix(CharSequence)} and
-   *    {@link Remover#removeFrom(CharSequence)}}
+   * @see Remover#forSuffix(CharSequence)
+   * @see Remover#removeFrom(CharSequence)
    */
-  @Deprecated
   public static String removeSuffix(@Nullable final String str,
       @Nullable final String suffix, final boolean ignoreCase) {
     return new Remover()
@@ -4391,17 +4359,6 @@ public class StringUtils {
         .removeFrom(str);
   }
 
-  @Deprecated
-  public static void removeSuffix(@Nullable final String str,
-      @Nullable final String suffix, final boolean ignoreCase,
-      final StringBuilder output) {
-    new Remover()
-        .forSuffix(suffix)
-        .ignoreCase(ignoreCase)
-        .removeFrom(str, output);
-  }
-
-  @Deprecated
   public static String removePrefixAndSuffix(@Nullable final String str,
       final String prefix, final String suffix) {
     return new Remover()
@@ -4411,13 +4368,40 @@ public class StringUtils {
         .removeFrom(str);
   }
 
-  @Deprecated
   public static String removePrefixAndSuffix(@Nullable final String str,
       final String prefix, final String suffix, final boolean ignoreCase) {
     return new Remover()
         .forPrefix(prefix)
         .forSuffix(suffix)
         .ignoreCase(ignoreCase)
+        .removeFrom(str);
+  }
+
+  /**
+   * Removes the occurrences of a character from a string.
+   *
+   * <p>A {@code null} source string will return {@code null}. An empty ("")
+   * source
+   * string will return the empty string.
+   * <pre>
+   * StringUtils.removeChar(null, *)       = null
+   * StringUtils.removeChar("", *)         = ""
+   * StringUtils.removeChar("queued", 'u') = "qeed"
+   * StringUtils.removeChar("queued", 'z') = "queued"
+   * </pre>
+   *
+   * @param str
+   *     the source String to search, which may be null.
+   * @param ch
+   *     the character to search for and remove.
+   * @return the substring with the char removed if found, {@code null} if null
+   *     String input
+   * @see Remover#removeFrom(CharSequence)
+   */
+  public static String removeChar(@Nullable final String str, final char ch) {
+    return new Remover()
+        .forChar(ch)
+        .limit(-1)
         .removeFrom(str);
   }
 
@@ -4443,9 +4427,8 @@ public class StringUtils {
    *     the maximum number of characters could be removed; -1 means no limit.
    * @return the substring with the char removed if found, {@code null} if null
    *     String input
-   * @deprecated use {@link Remover#removeFrom(CharSequence)}
+   * @see Remover#removeFrom(CharSequence)
    */
-  @Deprecated
   public static String removeChar(@Nullable final String str, final char ch,
       final int max) {
     return new Remover()
@@ -4461,11 +4444,39 @@ public class StringUtils {
    * source
    * string will return the empty string.
    * <pre>
-   * StringUtils.removeChar(null, *, *)       = null
-   * StringUtils.removeChar("", *, *)         = ""
-   * StringUtils.removeChar("queued", 'u', -1) = "qeed"
-   * StringUtils.removeChar("queued", 'u', 1) = "qeued"
-   * StringUtils.removeChar("queued", 'z', -1) = "queued"
+   * StringUtils.removeCodePoint(null, *)       = null
+   * StringUtils.removeCodePoint("", *)         = ""
+   * StringUtils.removeCodePoint("queued", 'u') = "qeed"
+   * StringUtils.removeCodePoint("queued", 'z') = "queued"
+   * </pre>
+   *
+   * @param str
+   *     the source String to search, which may be null.
+   * @param codePoint
+   *     the Unicode code point to search for and remove.
+   * @return the substring with the char removed if found, {@code null} if null
+   *     String input
+   * @see Remover#removeFrom(CharSequence)
+   */
+  public static String removeCodePoint(@Nullable final String str, final int codePoint) {
+    return new Remover()
+        .forCodePoint(codePoint)
+        .limit(-1)
+        .removeFrom(str);
+  }
+
+  /**
+   * Removes the occurrences of a Unicode code point from a string.
+   *
+   * <p>A {@code null} source string will return {@code null}. An empty ("")
+   * source
+   * string will return the empty string.
+   * <pre>
+   * StringUtils.removeCodePoint(null, *, *)       = null
+   * StringUtils.removeCodePoint("", *, *)         = ""
+   * StringUtils.removeCodePoint("queued", 'u', -1) = "qeed"
+   * StringUtils.removeCodePoint("queued", 'u', 1) = "qeued"
+   * StringUtils.removeCodePoint("queued", 'z', -1) = "queued"
    * </pre>
    *
    * @param str
@@ -4476,10 +4487,9 @@ public class StringUtils {
    *     the maximum number of characters could be removed; -1 means no limit.
    * @return the substring with the char removed if found, {@code null} if null
    *     String input
-   * @deprecated use {@link Remover#removeFrom(CharSequence)}
+   * @see Remover#removeFrom(CharSequence)
    */
-  @Deprecated
-  public static String removeChar(@Nullable final String str, final int codePoint,
+  public static String removeCodePoint(@Nullable final String str, final int codePoint,
       final int max) {
     return new Remover()
         .forCodePoint(codePoint)
@@ -4487,32 +4497,20 @@ public class StringUtils {
         .removeFrom(str);
   }
 
-  @Deprecated
-  public static int removeChar(@Nullable final String str, final int ch,
-      final int max, final Appendable output) throws IOException {
+  public static String removeChar(@Nullable final String str,
+      @Nullable final CharFilter filter) {
     return new Remover()
-        .forCodePoint(ch)
-        .limit(max)
-        .removeFrom(str, output);
+        .forCharsSatisfy(filter)
+        .limit(-1)
+        .removeFrom(str);
   }
 
-  @Deprecated
   public static String removeChar(@Nullable final String str,
       @Nullable final CharFilter filter, final int max) {
     return new Remover()
         .forCharsSatisfy(filter)
         .limit(max)
         .removeFrom(str);
-  }
-
-  @Deprecated
-  public static int removeChar(@Nullable final String str,
-      @Nullable final CharFilter filter, final int max,
-      final StringBuilder output) {
-    return new Remover()
-        .forCharsSatisfy(filter)
-        .limit(max)
-        .removeFrom(str, output);
   }
 
   /**
@@ -4544,9 +4542,8 @@ public class StringUtils {
    *     not.
    * @return the substring with the string removed if found, {@code null} if
    *     null String input
-   * @deprecated use {@link Remover#removeFrom(CharSequence)}
+   * @see Remover#removeFrom(CharSequence)
    */
-  @Deprecated
   public static String removeSubstring(@Nullable final String str,
       @Nullable final String remove, final int max, final boolean ignoreCase) {
     return new Remover()
@@ -4554,17 +4551,6 @@ public class StringUtils {
         .ignoreCase(ignoreCase)
         .limit(max)
         .removeFrom(str);
-  }
-
-  @Deprecated
-  public static int removeSubstring(@Nullable final String str,
-      @Nullable final String remove, final int max, final boolean ignoreCase,
-      final StringBuilder output) {
-    return new Remover()
-        .forSubstring(remove)
-        .ignoreCase(ignoreCase)
-        .limit(max)
-        .removeFrom(str, output);
   }
 
   /**
@@ -5592,9 +5578,8 @@ public class StringUtils {
    * @param array
    *     the array of values to join together, may be null.
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(final char separator,
       @Nullable final boolean[] array) {
     return new Joiner(separator)
@@ -5654,9 +5639,8 @@ public class StringUtils {
    * @param array
    *     the array of values to join together, may be null
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(final char separator,
       @Nullable final char[] array) {
     return new Joiner(separator)
@@ -5716,9 +5700,8 @@ public class StringUtils {
    * @param separator
    *     the separator character to use
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(final char separator,
       @Nullable final byte[] array) {
     return new Joiner(separator)
@@ -5778,9 +5761,8 @@ public class StringUtils {
    * @param array
    *     the array of values to join together, may be null
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(final char separator,
       @Nullable final short[] array) {
     return new Joiner(separator)
@@ -5840,9 +5822,8 @@ public class StringUtils {
    * @param array
    *     the array of values to join together, may be null *
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(final char separator, @Nullable final int[] array) {
     return new Joiner(separator)
         .addAll(array)
@@ -5901,9 +5882,8 @@ public class StringUtils {
    * @param array
    *     the array of values to join together, may be null
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(final char separator,
       @Nullable final long[] array) {
     return new Joiner(separator)
@@ -5963,9 +5943,8 @@ public class StringUtils {
    * @param array
    *     the array of values to join together, may be null
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(final char separator,
       @Nullable final float[] array) {
     return new Joiner(separator)
@@ -6025,9 +6004,8 @@ public class StringUtils {
    * @param array
    *     the array of values to join together, may be null
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(final char separator,
       @Nullable final double[] array) {
     return new Joiner(separator)
@@ -6091,9 +6069,8 @@ public class StringUtils {
    * @param array
    *     the array of values to join together, may be null
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static <T> String join(final char separator,
       @Nullable final T[] array) {
     return new Joiner(separator)
@@ -6156,9 +6133,8 @@ public class StringUtils {
    * @param iterator
    *     the {@code Iterator} of values to join together, may be null
    * @return the joined String, {@code null} if null iterator input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static <T> String join(final char separator,
       @Nullable final Iterator<T> iterator) {
     return new Joiner(separator)
@@ -6182,9 +6158,8 @@ public class StringUtils {
    * @param iterable
    *     the {@code Iterable} of values to join together, may be null.
    * @return the joined String, {@code null} if null iterator input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static <T> String join(final char separator,
       @Nullable final Iterable<T> iterable) {
     return new Joiner(separator)
@@ -6215,9 +6190,8 @@ public class StringUtils {
    * @param array
    *     the array of values to join together, may be null
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final boolean[] array) {
     return new Joiner(separator)
@@ -6288,9 +6262,8 @@ public class StringUtils {
    * @param array
    *     the array of values to join together, may be null
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final char[] array) {
     return new Joiner(separator)
@@ -6361,9 +6334,8 @@ public class StringUtils {
    * @param array
    *     the array of values to join together, may be null
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final byte[] array) {
     return new Joiner(separator)
@@ -6434,9 +6406,8 @@ public class StringUtils {
    * @param array
    *     the array of values to join together, may be null
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final short[] array) {
     return new Joiner(separator)
@@ -6507,9 +6478,8 @@ public class StringUtils {
    * @param array
    *     the array of values to join together, may be null
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final int[] array) {
     return new Joiner(separator)
@@ -6580,9 +6550,8 @@ public class StringUtils {
    * @param array
    *     the array of values to join together, may be null
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final long[] array) {
     return new Joiner(separator)
@@ -6653,9 +6622,8 @@ public class StringUtils {
    * @param array
    *     the array of values to join together, may be null
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final float[] array) {
     return new Joiner(separator)
@@ -6726,9 +6694,8 @@ public class StringUtils {
    * @param array
    *     the array of values to join together, may be null
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final double[] array) {
     return new Joiner(separator)
@@ -6801,9 +6768,8 @@ public class StringUtils {
    * @param array
    *     the array of values to join together, may be null
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static <T> String join(@Nullable final String separator,
       @Nullable final T[] array) {
     return new Joiner(separator)
@@ -6870,9 +6836,8 @@ public class StringUtils {
    * @param iterator
    *     the {@code Iterator} of values to join together, may be null
    * @return the joined String, {@code null} if null iterator input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static <T> String join(@Nullable final String separator,
       @Nullable final Iterator<T> iterator) {
     return new Joiner(separator)
@@ -6897,9 +6862,8 @@ public class StringUtils {
    * @param iterable
    *     the {@code Iterable} of values to join together, may be null
    * @return the joined String, {@code null} if null iterator input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static <T> String join(@Nullable final String separator,
       @Nullable final Iterable<T> iterable) {
     return new Joiner(separator)
@@ -6936,9 +6900,8 @@ public class StringUtils {
    *     the returned list may be empty if the splitting result has no substring.
    *     The returned list will never be {@code null}.
    * @see SplitOption
-   * @deprecated Use {@link Splitter} class.
+   * @see Splitter
    */
-  @Deprecated
   public static @NotNull List<String> split(@Nullable final CharSequence str,
       final char separator) {
     return new Splitter()
@@ -7361,14 +7324,13 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to splited. If it is null, clear the result (if it is not
+   *     the string to split. If it is null, clear the result (if it is not
    *     {@code null}) and return the result.
    * @return a new linked list of string stores the split sub-strings. Note that
    *     the returned list may be empty if the splitting result has no substring.
    *     The returned list will never be {@code null}.
-   * @deprecated Use {@link Splitter} class.
+   * @see Splitter
    */
-  @Deprecated
   public static @NotNull List<String> split(@Nullable final CharSequence str) {
     return new Splitter()
         .byWhitespaces()
@@ -7529,6 +7491,42 @@ public class StringUtils {
    *
    * <p>A {@code null} input String returns {@code null}.
    * <pre>
+   * splitByString(null, *)                             = null
+   * splitByString("", *)                               = null
+   * splitByString("ab de fg", " ")                     = {"ab", "de", "fg"}
+   * splitByString("ab-!-  cd-!-  -!-ef", "-!-")        = {"ab", "cd", "ef"}
+   * </pre>
+   *
+   * @param str
+   *     the string to split. If it is null, clear the result (if it is not
+   *     {@code null}) and return the result.
+   * @param separator
+   *     the string to be used as the delimiter. If it is null or empty, the
+   *     string is split such that each character become a substring.
+   * @return a new linked list of string stores the split sub-strings. Each
+   *     split substring will be stripped and the empty substrings will be
+   *     ignored. Note that the returned list may be empty if the splitting
+   *     result has no non-blank substring. The returned list will never be
+   *     {@code null}.
+   * @see Splitter
+   */
+  public static @NotNull List<String> splitByString(@Nullable final CharSequence str,
+      @Nullable final CharSequence separator) {
+    return new Splitter()
+        .bySubstring(separator)
+        .strip(true)
+        .ignoreEmpty(true)
+        .split(str);
+  }
+
+  /**
+   * Splits the provided string into a list of substrings, separated by the a
+   * specified sub-string. This is an alternative to using StringTokenizer.
+   *
+   * <p>The separator(s) will not be included in the returned String array.
+   *
+   * <p>A {@code null} input String returns {@code null}.
+   * <pre>
    * splitByString(null, *, *, *)                             = null
    * splitByString("", *, *, *)                               = null
    * splitByString("ab de fg", " ", *, *)                     = {"ab", "de", "fg"}
@@ -7539,11 +7537,11 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to splited. If it is null, clear the result (if it is not
+   *     the string to split. If it is null, clear the result (if it is not
    *     {@code null}) and return the result.
    * @param separator
    *     the string to be used as the delimiter. If it is null or empty, the
-   *     string is splited such that each character become a substring.
+   *     string is split such that each character become a substring.
    * @param options
    *     a bitwise mask of combination of {@link SplitOption}.
    * @return a new linked list of string stores the split sub-strings. Note that
@@ -7580,11 +7578,11 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to splited. If it is null, clear the result (if it is not
+   *     the string to split. If it is null, clear the result (if it is not
    *     {@code null}) and return the result.
    * @param separator
    *     the string to be used as the delimiter. If it is null or empty, the
-   *     string is splited such that each character become a substring.
+   *     string is split such that each character become a substring.
    * @param options
    *     a bitwise mask of combination of {@link SplitOption}.
    * @param list
@@ -7618,7 +7616,31 @@ public class StringUtils {
    * <p>A {@code null} input String returns {@code null}.
    *
    * @param str
-   *     the string to splited. If it is null, clear the result (if it is not
+   *     the string to split. If it is null, clear the result (if it is not
+   *     {@code null}) and return the result.
+   * @return the list of split strings. Each string in the list will be stripped,
+   *     and the empty strings will be ignored. The returned list may be empty
+   *     if the splitting result has no non-blank substring. The returned list
+   *     will never be {@code null}.
+   * @see Splitter
+   */
+  public static @NotNull List<String> splitLines(@Nullable final CharSequence str) {
+    return new Splitter()
+        .toLines()
+        .strip(true)
+        .ignoreEmpty(true)
+        .split(str);
+  }
+
+  /**
+   * Splits the provided string into a list of substrings, separated by lines.
+   *
+   * <p>The line break may be "\r", "\r\n", or "\n".
+   *
+   * <p>A {@code null} input String returns {@code null}.
+   *
+   * @param str
+   *     the string to split. If it is null, clear the result (if it is not
    *     {@code null}) and return the result.
    * @param trim
    *     whether to trim the split substrings.
@@ -7627,7 +7649,7 @@ public class StringUtils {
    * @return an list of splitted strings. The returned list may be empty if the
    *     splitting result has no substring. The returned list will never be
    *     {@code null}.
-   * @deprecated Use {@link Splitter} class.
+   * @deprecated use {@link Splitter}
    */
   @Deprecated
   public static @NotNull List<String> splitLines(@Nullable final CharSequence str,

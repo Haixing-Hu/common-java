@@ -38,6 +38,12 @@
       <artifactId>jakarta.validation-api</artifactId>
     </dependency>
 
+    <!-- Apache commons -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-exec</artifactId>
+    </dependency>
+
     <!-- logging -->
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -95,7 +101,6 @@
       <artifactId>jaxb-impl</artifactId>
       <scope>runtime</scope>
     </dependency>
-
     <!-- Apache Commons -->
     <dependency>
       <groupId>commons-codec</groupId>
@@ -157,10 +162,6 @@
     <dependency>
       <groupId>net.javacrumbs.json-unit</groupId>
       <artifactId>json-unit-assertj</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.jayway.jsonpath</groupId>
-      <artifactId>json-path</artifactId>
     </dependency>
     <!-- json-unit need javax JAXB -->
     <dependency>

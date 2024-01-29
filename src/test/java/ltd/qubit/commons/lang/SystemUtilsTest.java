@@ -10,12 +10,12 @@ package ltd.qubit.commons.lang;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import static ltd.qubit.commons.lang.SystemUtils.getJavaVersionAsFloat;
 import static ltd.qubit.commons.lang.SystemUtils.getJavaVersionAsInt;
 import static ltd.qubit.commons.lang.SystemUtils.getJavaVersionMatches;
 import static ltd.qubit.commons.lang.SystemUtils.getOsMatches;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Unit test for the Systems class.
@@ -280,4 +280,10 @@ public class SystemUtilsTest {
     assertEquals(false, getOsMatches("OS/2", "4.0", "Windows 9", "4.1"));
   }
 
+  @Test
+  public void testOsInfo() {
+    System.out.println("OS NAME:" + SystemUtils.OS_NAME);
+    System.out.println("OS VERSION:" + SystemUtils.OS_VERSION);
+    System.out.println("OS ARCH:" + SystemUtils.OS_ARCH);
+  }
 }

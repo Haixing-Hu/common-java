@@ -8,14 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.io;
 
-import ltd.qubit.commons.lang.SystemUtils;
-
 import org.junit.jupiter.api.Test;
 
-import static ltd.qubit.commons.io.FileUtils.getFilenameFromPath;
-import static ltd.qubit.commons.io.FileUtils.getPath;
+import ltd.qubit.commons.lang.SystemUtils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
+import static ltd.qubit.commons.io.FileUtils.getPath;
 
 public class FileUtilsTest {
 
@@ -39,11 +39,19 @@ public class FileUtilsTest {
   }
 
   @Test
-  public void testGetFilenameFromPath() {
-    if (SystemUtils.IS_OS_WINDOWS) {
-      assertEquals("file.txt", getFilenameFromPath("c:\\tmp\\apt\\file.txt"));
-    } else if (SystemUtils.IS_OS_UNIX) {
-      assertEquals("file.txt", getFilenameFromPath("/tmp/apt/file.txt"));
+  public void testGenerateRandomFile() {
+    final int count = 100;
+    final String[] filenames = new String[count];
+    for (int i = 0; i < count; ++i) {
+      filenames[i] = FileUtils.getRandomFileName("prefix", ".txt");
+    }
+    for (int i = 0; i < count; ++i) {
+      System.out.println("filename[" + i + "] = " + filenames[i]);
+      assertEquals("prefix", filenames[i].substring(0, "prefix".length()));
+      assertEquals(".txt", filenames[i].substring(filenames[i].length() - ".txt".length()));
+      for (int j = i + 1; j < count; ++j) {
+        assertNotEquals(filenames[i], filenames[j]);
+      }
     }
   }
 }
