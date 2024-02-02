@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -25,6 +25,7 @@ import javax.crypto.NoSuchPaddingException;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
+import ltd.qubit.commons.error.DecryptException;
 import ltd.qubit.commons.text.jackson.JsonMapperUtils;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
@@ -162,16 +163,16 @@ public class Decryptor extends CryptoConfig {
    *     JSON string.
    * @return
    *     the decrypted data.
-   * @throws EncryptException
+   * @throws DecryptException
    *     if any decryption error occurs.
    */
   public <T> byte[] decrypt(final Key key, final T data, final JsonMapper mapper)
-      throws EncryptException {
+      throws DecryptException {
     requireNonNull("data", data);
     requireNonNull("mapper", mapper);
     final String json = JsonMapperUtils.formatNormalizedNoThrow(data, mapper);
     if (json == null) {
-      throw new EncryptException(data.toString());
+      throw new DecryptException(data.toString());
     }
     return decrypt(key, json.getBytes(UTF_8));
   }

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
-//    Haixing Hu, Qubit Co. Ltd.
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
+import ltd.qubit.commons.error.VerifySignatureException;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.jackson.JsonMapperUtils;
@@ -53,7 +54,7 @@ public class SignatureVerifier {
     try {
       this.engine = Signature.getInstance(algorithm.code());
     } catch (final NoSuchAlgorithmException e) {
-      throw new SignMessageException(e);
+      throw new VerifySignatureException(e);
     }
   }
 
@@ -144,7 +145,7 @@ public class SignatureVerifier {
    *     if any error occurs.
    */
   public boolean verify(final PublicKey publicKey, final String message,
-      final Charset charset, final byte[] signature) throws VerifyMessageException {
+      final Charset charset, final byte[] signature) throws VerifySignatureException {
     requireNonNull("publicKey", publicKey);
     requireNonNull("message", message);
     requireNonNull("charset", charset);
@@ -168,7 +169,7 @@ public class SignatureVerifier {
    *     if any error occurs.
    */
   public boolean verify(final PublicKey publicKey, final String message,
-      final byte[] signature) throws VerifyMessageException {
+      final byte[] signature) throws VerifySignatureException {
     requireNonNull("publicKey", publicKey);
     requireNonNull("message", message);
     requireNonNull("signature", signature);
@@ -244,7 +245,7 @@ public class SignatureVerifier {
 
   private <T> boolean verifyDataImpl(final PublicKey publicKey, final T data,
       final JsonMapper mapper, final byte[] signature)
-      throws VerifyMessageException {
+      throws VerifySignatureException {
     final String json;
     try {
       json = JsonMapperUtils.formatNormalized(data, mapper);
