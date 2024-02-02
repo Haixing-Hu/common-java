@@ -18,7 +18,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 
@@ -38,18 +37,17 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import ltd.qubit.commons.io.IoUtils;
-import ltd.qubit.commons.lang.StringUtils;
-import ltd.qubit.commons.lang.SystemUtils;
-import ltd.qubit.commons.net.Url;
-import ltd.qubit.commons.net.UrlUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import ltd.qubit.commons.lang.StringUtils;
+import ltd.qubit.commons.lang.SystemUtils;
+import ltd.qubit.commons.net.Url;
+import ltd.qubit.commons.net.UrlUtils;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
@@ -142,8 +140,7 @@ public class XmlUtils {
       new ThreadLocal<TransformerFactory>() {
         @Override
         protected TransformerFactory initialValue() {
-          final TransformerFactory factory = TransformerFactory.newInstance();
-          return factory;
+          return TransformerFactory.newInstance();
         }
       };
 
@@ -171,8 +168,7 @@ public class XmlUtils {
       new ThreadLocal<XPathFactory>() {
         @Override
         protected XPathFactory initialValue() {
-          final XPathFactory factory = XPathFactory.newInstance();
-          return factory;
+          return XPathFactory.newInstance();
         }
       };
 
@@ -195,7 +191,7 @@ public class XmlUtils {
    * @throws XmlException
    *     if any error occurs.
    */
-  public static final DocumentBuilder newBuilder() throws XmlException {
+  public static DocumentBuilder newBuilder() throws XmlException {
     final DocumentBuilderFactory factory = BUILDER_FACTORY.get();
     try {
       LOGGER.debug(CREATING_XML_BUILDER);
@@ -259,15 +255,11 @@ public class XmlUtils {
       throw new XmlParseException(
           "Can not find the specified resource: " + resource);
     }
-    InputStream in = null;
-    try {
-      in = UrlUtils.openStream(url);
+    try (final InputStream in = UrlUtils.openStream(url)) {
       LOGGER.debug(PARSING_XML, url);
       return parseInputStream(in);
     } catch (final IOException e) {
       throw new XmlParseException(url, e);
-    } finally {
-      IoUtils.closeQuietly(in);
     }
   }
 
@@ -289,15 +281,11 @@ public class XmlUtils {
       throw new XmlParseException(
           "Can not find the specified resource: " + resource);
     }
-    InputStream in = null;
-    try {
-      in = UrlUtils.openStream(url);
+    try (final InputStream in = UrlUtils.openStream(url)) {
       LOGGER.debug(PARSING_XML, url);
       return parseInputStream(in);
     } catch (final IOException e) {
       throw new XmlParseException(url, e);
-    } finally {
-      IoUtils.closeQuietly(in);
     }
   }
 
@@ -316,18 +304,14 @@ public class XmlUtils {
       throws XmlException {
     final URL url = SystemUtils.getResource(resource, clazz);
     if (url == null) {
-      throw new XmlParseException(
-          "Can not find the specified resource: " + resource);
+      throw new XmlParseException("Can not find the specified resource with the "
+          + "class loader of " + clazz.getName() + ": " + resource);
     }
-    InputStream in = null;
-    try {
-      in = UrlUtils.openStream(url);
+    try (final InputStream in = UrlUtils.openStream(url)) {
       LOGGER.debug(PARSING_XML, url);
       return parseInputStream(in);
     } catch (final IOException e) {
       throw new XmlParseException(url, e);
-    } finally {
-      IoUtils.closeQuietly(in);
     }
   }
 
@@ -341,15 +325,11 @@ public class XmlUtils {
    *     if any error occurs.
    */
   public static Document parse(final File file) throws XmlException {
-    InputStream in = null;
-    try {
-      in = new FileInputStream(file);
+    try (final InputStream in = new FileInputStream(file)) {
       LOGGER.debug(PARSING_XML, file);
       return parseInputStream(in);
     } catch (final IOException e) {
       throw new XmlParseException(file, e);
-    } finally {
-      IoUtils.closeQuietly(in);
     }
   }
 
@@ -363,17 +343,11 @@ public class XmlUtils {
    *     if any error occurs.
    */
   public static Document parse(final Url url) throws XmlException {
-    InputStream in = null;
-    try {
-      in = UrlUtils.openStream(url);
+    try (final InputStream in = UrlUtils.openStream(url)) {
       LOGGER.debug(PARSING_XML, url);
       return parseInputStream(in);
-    } catch (final MalformedURLException e) {
-      throw new XmlParseException(url, e);
     } catch (final IOException e) {
       throw new XmlParseException(url, e);
-    } finally {
-      IoUtils.closeQuietly(in);
     }
   }
 
@@ -387,17 +361,11 @@ public class XmlUtils {
    *     if any error occurs.
    */
   public static Document parse(final URL url) throws XmlException {
-    InputStream in = null;
-    try {
-      in = UrlUtils.openStream(url);
+    try (final InputStream in = UrlUtils.openStream(url)) {
       LOGGER.debug(PARSING_XML, url);
       return parseInputStream(in);
-    } catch (final MalformedURLException e) {
-      throw new XmlParseException(url, e);
     } catch (final IOException e) {
       throw new XmlParseException(url, e);
-    } finally {
-      IoUtils.closeQuietly(in);
     }
   }
 
@@ -411,17 +379,11 @@ public class XmlUtils {
    *     if any error occurs.
    */
   public static Document parse(final URI uri) throws XmlException {
-    InputStream in = null;
-    try {
-      in = UrlUtils.openStream(uri);
+    try (final InputStream in = UrlUtils.openStream(uri)) {
       LOGGER.debug(PARSING_XML, uri);
       return parseInputStream(in);
-    } catch (final MalformedURLException e) {
-      throw new XmlParseException(uri, e);
     } catch (final IOException e) {
       throw new XmlParseException(uri, e);
-    } finally {
-      IoUtils.closeQuietly(in);
     }
   }
 
@@ -459,9 +421,7 @@ public class XmlUtils {
       builder.reset();
       final InputSource input = new InputSource(reader);
       return builder.parse(input);
-    } catch (final SAXException e) {
-      throw new XmlParseException(reader, e);
-    } catch (final IOException e) {
+    } catch (final SAXException | IOException e) {
       throw new XmlParseException(reader, e);
     }
   }
@@ -483,9 +443,7 @@ public class XmlUtils {
     try {
       builder.reset();
       return builder.parse(in);
-    } catch (final SAXException e) {
-      throw new XmlParseException(in, e);
-    } catch (final IOException e) {
+    } catch (final SAXException | IOException e) {
       throw new XmlParseException(in, e);
     }
   }

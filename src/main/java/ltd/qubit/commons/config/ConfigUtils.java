@@ -14,14 +14,14 @@ import java.util.Date;
 
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ltd.qubit.commons.config.error.ConfigurationError;
 import ltd.qubit.commons.config.impl.DefaultConfig;
 import ltd.qubit.commons.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.SystemUtils;
 import ltd.qubit.commons.text.xml.XmlException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides utility functions about the {@link Config} objects.
@@ -30,8 +30,7 @@ import org.slf4j.LoggerFactory;
  */
 public final class ConfigUtils {
 
-  private static final Logger LOGGER = LoggerFactory
-      .getLogger(DefaultConfig.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(DefaultConfig.class);
 
   /**
    * Choose the non-null value of a specified value and a property value in a
@@ -910,18 +909,25 @@ public final class ConfigUtils {
    */
   public static Config loadXmlConfig(@Nullable final String propertyName,
       final String defaultResource, final Class<?> clazz) {
-    String resource = null;
-    if (propertyName != null) {
-      resource = SystemUtils.getProperty(propertyName);
-    }
-    if (resource == null) {
+    String resource;
+    if (propertyName == null) {
       resource = defaultResource;
+    } else {
+      resource = SystemUtils.getProperty(propertyName);
+      if (resource != null) {
+        LOGGER.debug("Use the resource from system property '{}': {}",
+            propertyName, resource);
+      } else {
+        LOGGER.warn("No system property '{}', use the default resource: {}",
+            propertyName, defaultResource);
+        resource = defaultResource;
+      }
     }
     try {
       return XmlSerialization.deserialize(DefaultConfig.class, resource, clazz);
     } catch (final XmlException e) {
-      LOGGER.warn("Failed to load the configuration from the resource: {}, "
-          + "use an empty configuration: {}", resource, e.getMessage());
+      LOGGER.error("Failed to load the configuration from the resource: {}, "
+          + "use an empty configuration: {}", resource, e.getMessage(), e);
       return new DefaultConfig();
     }
   }
