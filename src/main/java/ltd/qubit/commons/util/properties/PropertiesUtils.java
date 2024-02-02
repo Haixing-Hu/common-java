@@ -1,12 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
-package ltd.qubit.commons.util;
+package ltd.qubit.commons.util.properties;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,6 +28,9 @@ import java.util.Properties;
 
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ltd.qubit.commons.config.error.ConfigurationError;
 import ltd.qubit.commons.config.error.InvalidPropertyValueError;
 import ltd.qubit.commons.config.error.PropertyNotExistError;
@@ -40,9 +43,6 @@ import ltd.qubit.commons.net.UrlUtils;
 import ltd.qubit.commons.text.BooleanFormat;
 import ltd.qubit.commons.text.NumberFormat;
 import ltd.qubit.commons.text.Splitter;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides functions dealing with the {@link Properties} class.
