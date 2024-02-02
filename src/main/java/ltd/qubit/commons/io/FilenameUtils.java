@@ -9,9 +9,13 @@
 package ltd.qubit.commons.io;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URL;
 import java.nio.file.Path;
 
 import javax.annotation.Nullable;
+
+import ltd.qubit.commons.net.Url;
 
 /**
  * Provides utility methods for manipulating filenames.
@@ -299,6 +303,66 @@ public class FilenameUtils {
     } else {
       return extension.isEmpty() ? "" : "." + extension;
     }
+  }
+
+  /**
+   * Gets the filename from the path of a file.
+   *
+   * @param file
+   *     the path of the file.
+   * @return the filename extracted from the path.
+   */
+  public static String getFilename(final File file) {
+    return getFilenameFromPath(file.getPath());
+  }
+
+  /**
+   * Gets the filename from the path of a file.
+   *
+   * @param path
+   *     the path of the file.
+   * @return the filename extracted from the path.
+   */
+  public static String getFilename(final Path path) {
+    final Path filename = path.getFileName();
+    if (filename == null) {
+      return "";
+    } else {
+      return filename.toString();
+    }
+  }
+
+  /**
+   * Gets the filename from the URL of a file.
+   *
+   * @param url
+   *     the URL of the file.
+   * @return the filename extracted from the path.
+   */
+  public static String getFilename(final URL url) {
+    return getFilenameFromUrl(url.toString());
+  }
+
+  /**
+   * Gets the filename from the URL of a file.
+   *
+   * @param uri
+   *     the URI of the file.
+   * @return the filename extracted from the path.
+   */
+  public static String getFilename(final URI uri) {
+    return getFilenameFromUrl(uri.toString());
+  }
+
+  /**
+   * Gets the filename from the URL of a file.
+   *
+   * @param url
+   *     the URL of the file.
+   * @return the filename extracted from the path.
+   */
+  public static String getFilename(final Url url) {
+    return getFilenameFromUrl(url.toString());
   }
 
   /**

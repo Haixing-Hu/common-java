@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
-//    Haixing Hu, Qubit Co. Ltd.
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -10,6 +10,7 @@ package ltd.qubit.commons.io;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.CharArrayWriter;
 import java.io.Closeable;
@@ -34,12 +35,13 @@ import java.util.List;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
-import ltd.qubit.commons.lang.ArrayUtils;
-import ltd.qubit.commons.lang.SystemUtils;
-import ltd.qubit.commons.util.expand.ExpansionPolicy;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import ltd.qubit.commons.lang.ArrayUtils;
+import ltd.qubit.commons.lang.SystemUtils;
+import ltd.qubit.commons.net.UrlUtils;
+import ltd.qubit.commons.util.expand.ExpansionPolicy;
 
 import static ltd.qubit.commons.lang.Argument.requirePositive;
 import static ltd.qubit.commons.lang.SystemUtils.LINE_SEPARATOR;
@@ -197,15 +199,39 @@ public final class IoUtils {
   }
 
   /**
-   * Copy bytes from an {@link InputStream} to an {@link OutputStream}.
-   *
-   * <p>This method buffers the input internally, so there is no need to use a
+   * Copy bytes from an byte array to an {@link OutputStream}.
+   * <p>
+   * This method buffers the input internally, so there is no need to use a
    * {@link BufferedInputStream}.
+   * <p>
+   * <b>NOTE:</b> This method does NOT close the output stream.
+   * <p>
+   * TODO: add the supporting of a progress displaying call-back function.
    *
-   * <p>Note that after calling this function, the {@link OutputStream} was NOT
-   * flushed NOR closed, instead, it MUST be flushed or closed by the caller.
-   *
-   * <p>TODO: add the supporting of a progress displaying call-back function.
+   * @param input
+   *     the byte array to read from.
+   * @param output
+   *     the {@link OutputStream} to write to.
+   * @return the number of bytes copied, which may be larger than 2 GB.
+   * @throws IOException
+   *     if an I/O error occurs
+   * @see #copy(InputStream, long, OutputStream, byte[])
+   */
+  public static long copy(final byte[] input, final OutputStream output)
+      throws IOException {
+    return copy(new ByteArrayInputStream(input), Long.MAX_VALUE, output);
+  }
+
+  /**
+   * Copy bytes from an {@link InputStream} to an {@link OutputStream}.
+   * <p>
+   * This method buffers the input internally, so there is no need to use a
+   * {@link BufferedInputStream}.
+   * <p>
+   * <b>NOTE:</b> This method does NOT close the input stream, nor does it
+   * close the output stream.
+   * <p>
+   * TODO: add the supporting of a progress displaying call-back function.
    *
    * @param input
    *     the {@link InputStream} to read from.
@@ -223,12 +249,12 @@ public final class IoUtils {
 
   /**
    * Copy bytes from an {@link InputStream} to an {@link OutputStream}.
-   *
-   * <p>This method buffers the input internally, so there is no need to use a
+   * <p>
+   * This method buffers the input internally, so there is no need to use a
    * {@link BufferedInputStream}.
-   *
-   * <p>Note that after calling this function, the {@link OutputStream} was NOT
-   * flushed NOR closed, instead, it MUST be flushed or closed by the caller.
+   * <p>
+   * <b>NOTE:</b> This method does NOT close the input stream, nor does it
+   * close the output stream.
    *
    * <p>TODO: add the supporting of a progress displaying call-back function.
    *
@@ -252,14 +278,14 @@ public final class IoUtils {
 
   /**
    * Copy bytes from an {@link InputStream} to an {@link OutputStream}.
-   *
-   * <p>This method buffers the input internally, so there is no need to use a
+   * <p>
+   * This method buffers the input internally, so there is no need to use a
    * {@link BufferedInputStream}.
-   *
-   * <p>Note that after calling this function, the {@link OutputStream} was NOT
-   * flushed NOR closed, instead, it MUST be flushed or closed by the caller.
-   *
-   * <p>TODO: add the supporting of a progress displaying call-back function.
+   * <p>
+   * <b>NOTE:</b> This method does NOT close the input stream, nor does it
+   * close the output stream.
+   * <p>
+   * TODO: add the supporting of a progress displaying call-back function.
    *
    * @param input
    *     the {@link InputStream} to read from
@@ -308,12 +334,12 @@ public final class IoUtils {
 
   /**
    * Copy bytes from a {@code Reader} to an {@code Writer}.
-   *
-   * <p>This method buffers the input internally, so there is no need to use a
+   * <p>
+   * This method buffers the input internally, so there is no need to use a
    * {@code BufferedReader}.
-   *
-   * <p>Note that after calling this function, the {@code Writer} was NOT
-   * flushed NOR closed, instead, it MUST be flushed or closed by the caller.
+   * <p>
+   * <b>NOTE:</b> This method does NOT close the input reader, nor does it
+   * close the output writer.
    *
    * <p>TODO: add the supporting of a progress displaying call-back function.
    *
@@ -337,14 +363,14 @@ public final class IoUtils {
 
   /**
    * Copy bytes from a {@code Reader} to an {@code Writer}.
-   *
-   * <p>This method buffers the input internally, so there is no need to use a
+   * <p>
+   * This method buffers the input internally, so there is no need to use a
    * {@code BufferedReader}.
-   *
-   * <p>Note that after calling this function, the {@code Writer} was NOT flushed
-   * NOR closed, instead, it MUST be flushed or closed by the caller.
-   *
-   * <p>TODO: add the supporting of a progress displaying call-back function.
+   * <p>
+   * <b>NOTE:</b> This method does NOT close the input reader, nor does it
+   * close the output writer.
+   * <p>
+   * TODO: add the supporting of a progress displaying call-back function.
    *
    * @param input
    *     the {@code Reader} to read from.
@@ -393,8 +419,8 @@ public final class IoUtils {
 
   /**
    * Gets the first few bytes of an {@link InputStream}.
-   *
-   * <p>NOTE: the function does not close the {@link InputStream}.
+   * <p>
+   * <b>NOTE:</b> This method does NOT close the input stream.
    *
    * @param input
    *     an input stream.
@@ -449,9 +475,11 @@ public final class IoUtils {
 
   /**
    * Get the contents of an {@code InputStream} as a {@code byte[]}.
-   *
-   * <p>This method buffers the input internally, so there is no need to use a
+   * <p>
+   * This method buffers the input internally, so there is no need to use a
    * {@code BufferedInputStream}.
+   * <p>
+   * <b>NOTE:</b> This method does NOT close the input stream.
    *
    * @param input
    *     the {@code InputStream} to read from.
@@ -467,9 +495,11 @@ public final class IoUtils {
 
   /**
    * Get the contents of a {@code Reader} as a character array.
-   *
-   * <p>This method buffers the input internally, so there is no need to use a
+   * <p>
+   * This method buffers the input internally, so there is no need to use a
    * {@code BufferedReader}.
+   * <p>
+   * <b>NOTE:</b> This method does NOT close the input reader.
    *
    * @param input
    *     the {@code Reader} to read from
@@ -487,8 +517,10 @@ public final class IoUtils {
 
   /**
    * Get the contents of a {@code Reader} as a String.
-   *
-   * <p>This method buffers the input internally, so there is no need to use a
+   * <p>
+   * <b>NOTE:</b> This method does NOT close the input reader.
+   * <p>
+   * This method buffers the input internally, so there is no need to use a
    * {@code BufferedReader}.
    *
    * @param input
@@ -504,9 +536,46 @@ public final class IoUtils {
   }
 
   /**
-   * Get the contents of the specified {@code File} as a string.
+   * Get the contents of a {@code Reader} as a String.
+   * <p>
+   * <b>NOTE:</b> This method does NOT close the input stream.
    *
-   * <p>This method buffers the input internally, so there is no need to use a
+   * @param input
+   *     the {@code InputStream} to read from, which will be decoded using the
+   *     default charset of the system.
+   * @return the requested String
+   * @throws IOException
+   *     if an I/O error occurs
+   */
+  public static String toString(final InputStream input)
+      throws IOException {
+    final InputStreamReader reader = new InputStreamReader(input);
+    return toString(reader);
+  }
+
+  /**
+   * Get the contents of a {@code Reader} as a String.
+   * <p>
+   * <b>NOTE:</b> This method does NOT close the input stream.
+   *
+   * @param input
+   *     the {@code InputStream} to read from.
+   * @param charset
+   *     the charset of the resource.
+   * @return the requested String
+   * @throws IOException
+   *     if an I/O error occurs
+   */
+  public static String toString(final InputStream input, final Charset charset)
+      throws IOException {
+    final InputStreamReader reader = new InputStreamReader(input, charset);
+    return toString(reader);
+  }
+
+  /**
+   * Get the contents of the specified {@code File} as a string.
+   * <p>
+   * This method buffers the input internally, so there is no need to use a
    * {@code BufferedReader}.
    *
    * @param file
@@ -548,7 +617,7 @@ public final class IoUtils {
     if (url == null) {
       return null;
     }
-    try (final InputStream in = url.openStream()) {
+    try (final InputStream in = UrlUtils.openStream(url)) {
       final InputStreamReader reader = new InputStreamReader(in, charset);
       return toString(reader);
     }
@@ -621,8 +690,8 @@ public final class IoUtils {
    */
   public static List<String> readLines(final URL url, final Charset charset)
       throws IOException {
-    try (final InputStream is = url.openStream()) {
-      final InputStreamReader reader = new InputStreamReader(is, charset);
+    try (final InputStream in = UrlUtils.openStream(url)) {
+      final InputStreamReader reader = new InputStreamReader(in, charset);
       return readLines(reader);
     }
   }

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
-//    Haixing Hu, Qubit Co. Ltd.
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -24,6 +24,9 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nullable;
+
+import com.google.common.collect.LinkedHashMultimap;
+import com.google.common.collect.Multimap;
 
 import ltd.qubit.commons.datastructure.list.primitive.BooleanList;
 import ltd.qubit.commons.datastructure.list.primitive.ByteList;
@@ -49,9 +52,6 @@ import ltd.qubit.commons.io.serialize.BinarySerializer;
 import ltd.qubit.commons.io.serialize.NoBinarySerializerRegisteredException;
 import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.lang.StringUtils;
-
-import com.google.common.collect.LinkedHashMultimap;
-import com.google.common.collect.Multimap;
 
 /**
  * Provides functions to read data from the {@link InputStream} object.
@@ -3113,6 +3113,7 @@ public final class InputUtils {
    *     if any I/O other error occurs.
    */
   @SuppressWarnings("unchecked")
+  @Nullable
   public static <T> List<T> readList(final Class<T> valueClass,
       final InputStream in, final boolean allowNullList,
       final boolean allowNullValue, @Nullable final List<T> buffer)
