@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
-//    Haixing Hu, Qubit Co. Ltd.
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -10,13 +10,14 @@ package ltd.qubit.commons.util;
 
 import javax.annotation.concurrent.Immutable;
 
-import ltd.qubit.commons.io.serialize.XmlSerializer;
-import ltd.qubit.commons.text.xml.DomUtils;
-import ltd.qubit.commons.text.xml.XmlException;
-import ltd.qubit.commons.text.xml.XmlSerializationException;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import cn.njzhyl.commons.i18n.LocaleUtils;
+import cn.njzhyl.commons.io.serialize.XmlSerializer;
+import cn.njzhyl.commons.text.xml.DomUtils;
+import cn.njzhyl.commons.text.xml.XmlException;
+import cn.njzhyl.commons.text.xml.XmlSerializationException;
 
 /**
  * The {@link XmlSerializer} for the {@link DatePattern} class.

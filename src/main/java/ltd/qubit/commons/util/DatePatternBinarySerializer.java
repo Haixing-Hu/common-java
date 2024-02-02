@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
-//    Haixing Hu, Qubit Co. Ltd.
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -14,14 +14,15 @@ import java.io.OutputStream;
 
 import javax.annotation.concurrent.Immutable;
 
-import ltd.qubit.commons.io.OutputUtils;
-import ltd.qubit.commons.io.error.SerializationException;
-import ltd.qubit.commons.io.error.UnexpectedNullValueException;
-import ltd.qubit.commons.io.serialize.BinarySerializer;
+import cn.njzhyl.commons.i18n.LocaleUtils;
+import cn.njzhyl.commons.io.OutputUtils;
+import cn.njzhyl.commons.io.error.SerializationException;
+import cn.njzhyl.commons.io.error.UnexpectedNullValueException;
+import cn.njzhyl.commons.io.serialize.BinarySerializer;
 
-import static ltd.qubit.commons.io.InputUtils.readNullMark;
-import static ltd.qubit.commons.io.InputUtils.readString;
-import static ltd.qubit.commons.io.OutputUtils.writeString;
+import static cn.njzhyl.commons.io.InputUtils.readNullMark;
+import static cn.njzhyl.commons.io.InputUtils.readString;
+import static cn.njzhyl.commons.io.OutputUtils.writeString;
 
 /**
  * The {@link BinarySerializer} for the {@link DatePattern} class.

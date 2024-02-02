@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2017 - 2024.
-//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
+//    Copyright (c) 2022 - 2024.
+//    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -22,9 +22,9 @@ import org.apache.commons.exec.PumpStreamHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ltd.qubit.commons.io.FileUtils;
+import cn.njzhyl.commons.io.FileUtils;
 
-import static ltd.qubit.commons.lang.Argument.requireNonNull;
+import static cn.njzhyl.commons.lang.Argument.requireNonNull;
 
 /**
  * A utility class for executing external commands.
@@ -137,6 +137,10 @@ public class CommandExecutor {
 
   /**
    * Executes an external command.
+   * <p>
+   * <b>NOTE:</b> This function will not throw an exception if the command
+   * execution failed. If you want to throw an exception when the command
+   * execution failed, please use the {@link #execute(String, boolean)}.
    *
    * @param cmd
    *     the line of command to be executed.
@@ -144,8 +148,37 @@ public class CommandExecutor {
    *     the output of the command, or {@code null} if the command execution
    *     failed. If the command executed successfully without any output,
    *     this function returns an empty string.
+   * @see #execute(String, boolean)
    */
   public String execute(final String cmd) {
+    try {
+      return execute(cmd, false);
+    } catch (final IOException e) {
+      return null;
+    }
+  }
+
+  /**
+   * Executes an external command.
+   *
+   * @param cmd
+   *     the line of command to be executed.
+   * @param throwError
+   *     whether to throw an exception if the command execution failed because
+   *     of an I/O error. If this parameter is {@code true}, then this function
+   *     will throw an {@link IOException} if the command execution failed
+   *     because of an I/O error; otherwise, this function will return
+   *     {@code null} if the command execution failed.
+   * @return
+   *     the output of the command, or {@code null} if the command execution
+   *     failed. If the command executed successfully without any output,
+   *     this function returns an empty string.
+   * @throws IOException
+   *     if the command execution failed because of an I/O error, and the
+   *     {@code throwError} parameter is {@code true}.
+   * @see #execute(String)
+   */
+  public String execute(final String cmd, final boolean throwError) throws IOException {
     logger.info("Executing the command: {}", cmd);
     final CommandLine commandLine = CommandLine.parse(cmd);
     final ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -169,7 +202,11 @@ public class CommandExecutor {
       logger.info("Finished executing command in {} milliseconds.", after - before);
     } catch (final IOException e) {
       logger.error("Failed to execute the command {}: {}", cmd, e.getMessage(), e);
-      return null;
+      if (throwError) {
+        throw e;
+      } else {
+        return null;
+      }
     }
     final String output = out.toString();
     if (exitValue != exitValueOnSuccess) {
