@@ -17,10 +17,9 @@ import java.util.Set;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
-import ltd.qubit.commons.error.UnsupportedByteOrderException;
-import ltd.qubit.commons.text.Ascii;
-
 import com.google.common.collect.ImmutableSet;
+
+import ltd.qubit.commons.text.Ascii;
 
 import static ltd.qubit.commons.lang.ByteArrayUtils.DEFAULT_BYTE_ORDER;
 import static ltd.qubit.commons.text.NumberFormatSymbols.DEFAULT_UPPERCASE_DIGITS;

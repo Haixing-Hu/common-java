@@ -19,6 +19,9 @@ import java.util.NoSuchElementException;
 
 import javax.annotation.Nullable;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import ltd.qubit.commons.datastructure.list.primitive.BooleanCollection;
 import ltd.qubit.commons.datastructure.list.primitive.ByteCollection;
 import ltd.qubit.commons.datastructure.list.primitive.CharCollection;
@@ -27,14 +30,9 @@ import ltd.qubit.commons.datastructure.list.primitive.FloatCollection;
 import ltd.qubit.commons.datastructure.list.primitive.IntCollection;
 import ltd.qubit.commons.datastructure.list.primitive.LongCollection;
 import ltd.qubit.commons.datastructure.list.primitive.ShortCollection;
-import ltd.qubit.commons.error.TypeConvertException;
-import ltd.qubit.commons.error.TypeMismatchException;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Type;
 import ltd.qubit.commons.text.xml.XmlException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 /**
  * A {@link MultiValues} object represents one or more values of values of

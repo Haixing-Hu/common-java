@@ -16,10 +16,9 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-import ltd.qubit.commons.error.UnsupportedByteOrderException;
-import ltd.qubit.commons.text.NumberFormatSymbols;
-
 import com.google.common.collect.ImmutableSet;
+
+import ltd.qubit.commons.text.NumberFormatSymbols;
 
 import static ltd.qubit.commons.lang.ByteArrayUtils.DEFAULT_BYTE_ORDER;
 import static ltd.qubit.commons.text.NumberFormat.DECIMAL_RADIX;

@@ -18,10 +18,9 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 
-import ltd.qubit.commons.error.DigestMessageException;
-import ltd.qubit.commons.text.jackson.JsonMapperUtils;
-
 import com.fasterxml.jackson.databind.json.JsonMapper;
+
+import ltd.qubit.commons.text.jackson.JsonMapperUtils;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 

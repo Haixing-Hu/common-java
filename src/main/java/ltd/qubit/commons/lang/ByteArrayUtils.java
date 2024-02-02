@@ -16,7 +16,6 @@ import java.util.Date;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
-import ltd.qubit.commons.error.UnsupportedByteOrderException;
 import ltd.qubit.commons.util.codec.HexCodec;
 
 /**

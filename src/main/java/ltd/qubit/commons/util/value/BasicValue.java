@@ -18,9 +18,9 @@ import java.util.NoSuchElementException;
 
 import javax.annotation.Nullable;
 
-import ltd.qubit.commons.error.TypeConvertException;
-import ltd.qubit.commons.error.TypeMismatchException;
-import ltd.qubit.commons.error.UnsupportedDataTypeException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import ltd.qubit.commons.io.error.InvalidFormatException;
 import ltd.qubit.commons.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.Assignment;
@@ -30,9 +30,6 @@ import ltd.qubit.commons.lang.TypeUtils;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import ltd.qubit.commons.text.xml.DomUtils;
 import ltd.qubit.commons.text.xml.XmlException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 

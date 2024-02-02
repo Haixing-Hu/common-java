@@ -21,6 +21,9 @@ import java.util.NoSuchElementException;
 
 import javax.annotation.Nullable;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import ltd.qubit.commons.datastructure.list.primitive.BooleanCollection;
 import ltd.qubit.commons.datastructure.list.primitive.BooleanIterator;
 import ltd.qubit.commons.datastructure.list.primitive.BooleanList;
@@ -52,8 +55,6 @@ import ltd.qubit.commons.datastructure.list.primitive.impl.FloatArrayList;
 import ltd.qubit.commons.datastructure.list.primitive.impl.IntArrayList;
 import ltd.qubit.commons.datastructure.list.primitive.impl.LongArrayList;
 import ltd.qubit.commons.datastructure.list.primitive.impl.ShortArrayList;
-import ltd.qubit.commons.error.TypeConvertException;
-import ltd.qubit.commons.error.UnsupportedDataTypeException;
 import ltd.qubit.commons.io.InputUtils;
 import ltd.qubit.commons.io.OutputUtils;
 import ltd.qubit.commons.text.BooleanFormat;
@@ -65,9 +66,6 @@ import ltd.qubit.commons.text.TextParseException;
 import ltd.qubit.commons.text.xml.DomUtils;
 import ltd.qubit.commons.text.xml.XmlException;
 import ltd.qubit.commons.util.codec.HexCodec;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 import static ltd.qubit.commons.lang.DateUtils.DEFAULT_LOCAL_DATETIME_PATTERN;
 

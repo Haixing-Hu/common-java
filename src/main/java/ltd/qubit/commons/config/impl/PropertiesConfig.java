@@ -26,7 +26,7 @@ import ltd.qubit.commons.config.Config;
 import ltd.qubit.commons.config.error.ConfigurationError;
 import ltd.qubit.commons.io.IoUtils;
 import ltd.qubit.commons.net.Url;
-import ltd.qubit.commons.util.PropertiesUtils;
+import ltd.qubit.commons.util.properties.PropertiesUtils;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 

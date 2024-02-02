@@ -10,12 +10,13 @@ package ltd.qubit.commons.lang;
 
 import java.util.Collection;
 
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import ltd.qubit.commons.math.IntBit;
 
 /**
- * This class provides functions for calculating the hash code.
+ * This class provides functions for calculating the 32-bits hash code.
  *
  * <p>For example, suppose you need to combine the hash code of three variables:
  * a name, which is a String; a age, which is a int; and a addresses, which is an
@@ -39,6 +40,7 @@ import ltd.qubit.commons.math.IntBit;
  * </pre>
  *
  * @author Haixing Hu
+ * @see Hash64
  */
 @ThreadSafe
 public final class Hash {
@@ -49,13 +51,14 @@ public final class Hash {
     return (code * multiplier) + (value ? 1 : 0);
   }
 
-  public static int combine(final int code, final int multiplier, final boolean[] value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final boolean[] value) {
     if (value == null) {
       return code * multiplier;
     } else {
       int result = code;
-      for (int i = 0; i < value.length; ++i) {
-        result = (result * multiplier) + (value[i] ? 1 : 0);
+      for (final boolean b : value) {
+        result = (result * multiplier) + (b ? 1 : 0);
       }
       return result;
     }
@@ -65,13 +68,14 @@ public final class Hash {
     return (code * multiplier) + value;
   }
 
-  public static int combine(final int code, final int multiplier, final char[] value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final char[] value) {
     if (value == null) {
       return code * multiplier;
     } else {
       int result = code;
-      for (int i = 0; i < value.length; ++i) {
-        result = (result * multiplier) + value[i];
+      for (final char c : value) {
+        result = (result * multiplier) + c;
       }
       return result;
     }
@@ -81,13 +85,14 @@ public final class Hash {
     return (code * multiplier) + value;
   }
 
-  public static int combine(final int code, final int multiplier, final byte[] value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final byte[] value) {
     if (value == null) {
       return code * multiplier;
     } else {
       int result = code;
-      for (int i = 0; i < value.length; ++i) {
-        result = (result * multiplier) + value[i];
+      for (final byte b : value) {
+        result = (result * multiplier) + b;
       }
       return result;
     }
@@ -97,13 +102,14 @@ public final class Hash {
     return (code * multiplier) + value;
   }
 
-  public static int combine(final int code, final int multiplier, final short[] value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final short[] value) {
     if (value == null) {
       return code * multiplier;
     } else {
       int result = code;
-      for (int i = 0; i < value.length; ++i) {
-        result = (result * multiplier) + value[i];
+      for (final short item : value) {
+        result = (result * multiplier) + item;
       }
       return result;
     }
@@ -113,13 +119,14 @@ public final class Hash {
     return (code * multiplier) + value;
   }
 
-  public static int combine(final int code, final int multiplier, final int[] value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final int[] value) {
     if (value == null) {
       return code * multiplier;
     } else {
       int result = code;
-      for (int i = 0; i < value.length; ++i) {
-        result = (result * multiplier) + value[i];
+      for (final int j : value) {
+        result = (result * multiplier) + j;
       }
       return result;
     }
@@ -129,13 +136,13 @@ public final class Hash {
     return (code * multiplier) + (int) (value ^ (value >> IntBit.BITS));
   }
 
-  public static int combine(final int code, final int multiplier, final long[] value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final long[] value) {
     if (value == null) {
       return code * multiplier;
     } else {
       int result = code;
-      for (int i = 0; i < value.length; ++i) {
-        final long v = value[i];
+      for (final long v : value) {
         result = (result * multiplier) + (int) (v ^ (v >> IntBit.BITS));
       }
       return result;
@@ -146,13 +153,14 @@ public final class Hash {
     return (code * multiplier) + Float.floatToIntBits(value);
   }
 
-  public static int combine(final int code, final int multiplier, final float[] value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final float[] value) {
     if (value == null) {
       return code * multiplier;
     } else {
       int result = code;
-      for (int i = 0; i < value.length; ++i) {
-        result = (result * multiplier) + Float.floatToIntBits(value[i]);
+      for (final float v : value) {
+        result = (result * multiplier) + Float.floatToIntBits(v);
       }
       return result;
     }
@@ -163,20 +171,22 @@ public final class Hash {
     return (code * multiplier) + (int) (bits ^ (bits >> IntBit.BITS));
   }
 
-  public static int combine(final int code, final int multiplier, final double[] value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final double[] value) {
     if (value == null) {
       return code * multiplier;
     } else {
       int result = code;
-      for (int i = 0; i < value.length; ++i) {
-        final long bits = Double.doubleToLongBits(value[i]);
+      for (final double v : value) {
+        final long bits = Double.doubleToLongBits(v);
         result = (result * multiplier) + (int) (bits ^ (bits >> IntBit.BITS));
       }
       return result;
     }
   }
 
-  public static int combine(final int code, final int multiplier, final Boolean value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final Boolean value) {
     if (value == null) {
       return code * multiplier;
     } else {
@@ -184,20 +194,21 @@ public final class Hash {
     }
   }
 
-  public static int combine(final int code, final int multiplier, final Boolean[] value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final Boolean[] value) {
     if (value == null) {
       return code * multiplier;
     } else {
       int result = code;
-      for (int i = 0; i < value.length; ++i) {
-        final Boolean x = value[i];
+      for (final Boolean x : value) {
         result = (result * multiplier) + (x == null ? 0 : x.hashCode());
       }
       return result;
     }
   }
 
-  public static int combine(final int code, final int multiplier, final Character value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final Character value) {
     if (value == null) {
       return code * multiplier;
     } else {
@@ -205,20 +216,21 @@ public final class Hash {
     }
   }
 
-  public static int combine(final int code, final int multiplier, final Character[] value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final Character[] value) {
     if (value == null) {
       return code * multiplier;
     } else {
       int result = code;
-      for (int i = 0; i < value.length; ++i) {
-        final Character x = value[i];
+      for (final Character x : value) {
         result = (result * multiplier) + (x == null ? 0 : x.hashCode());
       }
       return result;
     }
   }
 
-  public static int combine(final int code, final int multiplier, final Byte value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final Byte value) {
     if (value == null) {
       return code * multiplier;
     } else {
@@ -226,20 +238,21 @@ public final class Hash {
     }
   }
 
-  public static int combine(final int code, final int multiplier, final Byte[] value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final Byte[] value) {
     if (value == null) {
       return code * multiplier;
     } else {
       int result = code;
-      for (int i = 0; i < value.length; ++i) {
-        final Byte x = value[i];
+      for (final Byte x : value) {
         result = (result * multiplier) + (x == null ? 0 : x.hashCode());
       }
       return result;
     }
   }
 
-  public static int combine(final int code, final int multiplier, final Short value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final Short value) {
     if (value == null) {
       return code * multiplier;
     } else {
@@ -247,20 +260,21 @@ public final class Hash {
     }
   }
 
-  public static int combine(final int code, final int multiplier, final Short[] value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final Short[] value) {
     if (value == null) {
       return code * multiplier;
     } else {
       int result = code;
-      for (int i = 0; i < value.length; ++i) {
-        final Short x = value[i];
+      for (final Short x : value) {
         result = (result * multiplier) + (x == null ? 0 : x.hashCode());
       }
       return result;
     }
   }
 
-  public static int combine(final int code, final int multiplier, final Integer value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final Integer value) {
     if (value == null) {
       return code * multiplier;
     } else {
@@ -268,20 +282,21 @@ public final class Hash {
     }
   }
 
-  public static int combine(final int code, final int multiplier, final Integer[] value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final Integer[] value) {
     if (value == null) {
       return code * multiplier;
     } else {
       int result = code;
-      for (int i = 0; i < value.length; ++i) {
-        final Integer x = value[i];
+      for (final Integer x : value) {
         result = (result * multiplier) + (x == null ? 0 : x.hashCode());
       }
       return result;
     }
   }
 
-  public static int combine(final int code, final int multiplier, final Long value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final Long value) {
     if (value == null) {
       return code * multiplier;
     } else {
@@ -289,20 +304,21 @@ public final class Hash {
     }
   }
 
-  public static int combine(final int code, final int multiplier, final Long[] value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final Long[] value) {
     if (value == null) {
       return code * multiplier;
     } else {
       int result = code;
-      for (int i = 0; i < value.length; ++i) {
-        final Long x = value[i];
+      for (final Long x : value) {
         result = (result * multiplier) + (x == null ? 0 : x.hashCode());
       }
       return result;
     }
   }
 
-  public static int combine(final int code, final int multiplier, final Float value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final Float value) {
     if (value == null) {
       return code * multiplier;
     } else {
@@ -310,20 +326,21 @@ public final class Hash {
     }
   }
 
-  public static int combine(final int code, final int multiplier, final Float[] value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final Float[] value) {
     if (value == null) {
       return code * multiplier;
     } else {
       int result = code;
-      for (int i = 0; i < value.length; ++i) {
-        final Float x = value[i];
+      for (final Float x : value) {
         result = (result * multiplier) + (x == null ? 0 : x.hashCode());
       }
       return result;
     }
   }
 
-  public static int combine(final int code, final int multiplier, final Double value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final Double value) {
     if (value == null) {
       return code * multiplier;
     } else {
@@ -331,20 +348,21 @@ public final class Hash {
     }
   }
 
-  public static int combine(final int code, final int multiplier, final Double[] value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final Double[] value) {
     if (value == null) {
       return code * multiplier;
     } else {
       int result = code;
-      for (int i = 0; i < value.length; ++i) {
-        final Double x = value[i];
+      for (final Double x : value) {
         result = (result * multiplier) + (x == null ? 0 : x.hashCode());
       }
       return result;
     }
   }
 
-  public static int combine(final int code, final int multiplier, final String value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final String value) {
     if (value == null) {
       return code * multiplier;
     } else {
@@ -352,21 +370,21 @@ public final class Hash {
     }
   }
 
-  public static int combine(final int code, final int multiplier, final String[] value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final String[] value) {
     if (value == null) {
       return code * multiplier;
     } else {
       int result = code;
-      for (int i = 0; i < value.length; ++i) {
-        final String x = value[i];
+      for (final String x : value) {
         result = (result * multiplier) + (x == null ? 0 : x.hashCode());
       }
       return result;
     }
   }
 
-  public static <E extends Enum<E>> int combine(final int code,
-      final int multiplier, final E value) {
+  public static <E extends Enum<E>> int combine(final int code, final int multiplier,
+      @Nullable final E value) {
     if (value == null) {
       return code * multiplier;
     } else {
@@ -374,21 +392,21 @@ public final class Hash {
     }
   }
 
-  public static <E extends Enum<E>> int combine(final int code,
-      final int multiplier, final E[] value) {
+  public static <E extends Enum<E>> int combine(final int code, final int multiplier,
+      @Nullable final E[] value) {
     if (value == null) {
       return code * multiplier;
     } else {
       int result = code;
-      for (int i = 0; i < value.length; ++i) {
-        final E x = value[i];
+      for (final E x : value) {
         result = (result * multiplier) + (x == null ? 0 : x.ordinal());
       }
       return result;
     }
   }
 
-  public static int combine(final int code, final int multiplier, final Object value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final Object value) {
     if (value == null) {
       return code * multiplier;
     } else {
@@ -422,23 +440,24 @@ public final class Hash {
     }
   }
 
-  public static int combine(final int code, final int multiplier, final Object[] value) {
+  public static int combine(final int code, final int multiplier,
+      @Nullable final Object[] value) {
     if (value == null) {
       return code * multiplier;
     } else {
       int result = code;
-      for (int i = 0; i < value.length; ++i) {
+      for (final Object o : value) {
         // Note that it's important to call the Hash.combine(int, int, Object)
         // to calculate the combination of hash code of value[i], since an
         // multi-dimensional array is an Object in Java.
-        result = combine(result, multiplier, value[i]);
+        result = combine(result, multiplier, o);
       }
       return result;
     }
   }
 
   public static <T> int combine(final int code, final int multiplier,
-      final Collection<T> value) {
+      @Nullable final Collection<T> value) {
     if (value == null) {
       return code * multiplier;
     } else {

@@ -13,7 +13,6 @@ import java.util.Locale;
 import javax.annotation.concurrent.Immutable;
 
 import ltd.qubit.commons.text.Stripper;
-import ltd.qubit.commons.util.LocaleUtils;
 
 @Immutable
 public class PosixLocaleCodec implements Codec<Locale, String> {
