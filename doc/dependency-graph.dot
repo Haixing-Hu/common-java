@@ -1,0 +1,11 @@
+digraph "common-java" {
+  node [shape="box",style="rounded",fontname="Helvetica",fontsize="14"]
+  edge [fontsize="10",fontname="Helvetica"]
+
+  // Node Definitions:
+  "ltd.qubit:common-java:jar"[label=<<font point-size="10">ltd.qubit</font><br/>common-java>]
+  "ltd.qubit:common-annotation:jar"[label=<<font point-size="10">ltd.qubit</font><br/>common-annotation>]
+
+  // Edge Definitions:
+  "ltd.qubit:common-java:jar" -> "ltd.qubit:common-annotation:jar"
+}
