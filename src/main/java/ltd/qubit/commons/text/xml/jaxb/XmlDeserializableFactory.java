@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
-//    Haixing Hu, Qubit Co. Ltd.
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -11,9 +11,8 @@ package ltd.qubit.commons.text.xml.jaxb;
 import java.io.IOException;
 import java.net.URL;
 
+import ltd.qubit.commons.io.resource.Resource;
 import ltd.qubit.commons.text.jackson.XmlMapperUtils;
-
-import org.springframework.core.io.Resource;
 
 /**
  * A factory object used to create the XML deserializable objects.

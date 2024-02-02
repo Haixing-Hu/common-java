@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,6 +11,8 @@ package ltd.qubit.commons.text.xml.jaxb;
 import java.util.Locale;
 
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
+
+import ltd.qubit.commons.i18n.LocaleUtils;
 
 /**
  * The customized JAXB data type adaptor for the {@link Locale} type.
