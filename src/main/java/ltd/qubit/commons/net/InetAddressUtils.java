@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -9,6 +9,8 @@
 package ltd.qubit.commons.net;
 
 import java.util.regex.Pattern;
+
+import ltd.qubit.commons.io.Endian;
 
 public class InetAddressUtils {
 
@@ -104,5 +106,58 @@ public class InetAddressUtils {
    */
   public static boolean isIPv6Address(final String input) {
     return isIPv6StdAddress(input) || isIPv6HexCompressedAddress(input);
+  }
+
+  /**
+   * Formats the IPv4 address.
+   *
+   * @param ip
+   *     the IPv4 address to be formatted, represented as an integer in the
+   *     specified endianess.
+   * @param endian
+   *     the endianess of the integer.
+   * @return
+   *     the formatted IPv4 address.
+   * @author Haixing Hu
+   */
+  public static String formatIPv4Address(final int ip, final Endian endian) {
+    final int x1 = (ip & 0xFF);         // lowest bits
+    final int x2 = ((ip >> 8) & 0xFF);
+    final int x3 = ((ip >> 16) & 0xFF);
+    final int x4 = ((ip >> 24) & 0xFF); // highest bits
+    if (endian == null) {
+      throw new IllegalArgumentException("Null endianess.");
+    }
+    switch (endian) {
+      case LITTLE_ENDIAN:
+        return String.valueOf(x1) + '.' + x2 + '.' + x3 + '.' + x4;
+      case BIG_ENDIAN:
+        return String.valueOf(x4) + '.' + x3 + '.' + x2 + '.' + x1;
+      default:
+        throw new IllegalArgumentException("Invalid endianess: " + endian);
+    }
+  }
+
+  /**
+   * Formats the hardware MAC address.
+   *
+   * @param macAddressBytes
+   *     the hardware MAC address to be formatted, represented as an array of
+   *     bytes.
+   * @return
+   *     the formatted hardware MAC address.
+   */
+  public static String formatMacAddress(final byte[] macAddressBytes) {
+    if (macAddressBytes == null) {
+      throw new NullPointerException("macAddressBytes");
+    }
+    final StringBuilder builder = new StringBuilder();
+    for (final byte b : macAddressBytes) {
+      builder.append(String.format("%02X:", b));
+    }
+    if (builder.length() > 0) {
+      builder.deleteCharAt(builder.length() - 1);
+    }
+    return builder.toString();
   }
 }

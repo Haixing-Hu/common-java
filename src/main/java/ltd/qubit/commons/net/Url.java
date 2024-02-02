@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
-//    Haixing Hu, Qubit Co. Ltd.
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -38,9 +38,8 @@ import static ltd.qubit.commons.lang.StringUtils.EMPTY;
 
 /**
  * A {@link Url} object stores the information of a normalized absolute URL.
- *
- * <p>Normalization of a URL will do the follow transformation on the URL
- * string:</p>
+ * <p>
+ * Normalization of a URL will do the follow transformation on the URL string:</p>
  *
  * <ul>
  * <li>Trim the leading and trailing white spaces of the URL.</li>

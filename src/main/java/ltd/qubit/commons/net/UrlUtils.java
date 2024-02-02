@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
-//    Haixing Hu, Qubit Co. Ltd.
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -17,6 +17,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +28,11 @@ import java.util.zip.InflaterInputStream;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 
-import ltd.qubit.commons.io.FileUtils;
-import ltd.qubit.commons.io.IoUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import ltd.qubit.commons.io.FileUtils;
+import ltd.qubit.commons.io.IoUtils;
 
 import static ltd.qubit.commons.net.InetAddressUtils.isIPv4Address;
 
@@ -230,6 +231,17 @@ public final class UrlUtils {
     } finally {
       IoUtils.closeQuietly(input);
       IoUtils.closeQuietly(output);
+    }
+  }
+
+
+  public static String downloadAsString(final URL url, final Charset charset)
+      throws IOException {
+    try (final InputStream input = openStream(url)) {
+      return IoUtils.toString(input, charset);
+    } catch (final IOException e) {
+      LOGGER.error("Failed to download '{}': {}", url, e.getMessage(), e);
+      throw e;
     }
   }
 
