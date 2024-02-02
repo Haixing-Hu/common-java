@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,6 +11,8 @@ package ltd.qubit.commons.util;
 import java.util.Locale;
 
 import org.junit.jupiter.api.Test;
+
+import ltd.qubit.commons.i18n.LocaleUtils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
