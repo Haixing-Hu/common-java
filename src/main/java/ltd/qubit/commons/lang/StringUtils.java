@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
-//    Haixing Hu, Qubit Co. Ltd.
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -20,11 +20,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
-
-import jakarta.validation.constraints.NotNull;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -236,7 +236,7 @@ public class StringUtils {
    * Checks if a string is empty ("") or null.
    *
    * <pre>
-   * StringUtils.(null == null) || (null.length() == 0)      = true
+   * StringUtils.isEmpty(null)      = true
    * StringUtils.isEmpty("")        = true
    * StringUtils.isEmpty(" ")       = false
    * StringUtils.isEmpty("bob")     = false
@@ -310,6 +310,49 @@ public class StringUtils {
    */
   public static boolean isNotBlank(@Nullable final String str) {
     return (str != null) && (!containsOnly(str, BlankCodePointFilter.INSTANCE));
+  }
+
+  /**
+   * Checks if a string is empty ("") or null or contains only blanks.
+   *
+   * <pre>
+   * StringUtils.isEmptyOrBlank(null)      = true
+   * StringUtils.isEmptyOrBlank("")        = true
+   * StringUtils.isEmptyOrBlank(" ")       = true
+   * StringUtils.isEmptyOrBlank("bob")     = false
+   * StringUtils.isEmptyOrBlank("  bob  ") = false
+   * </pre>
+   *
+   * @param str
+   *     the string to check, may be null.
+   * @return {@code true} if the string is empty or null or contains only blanks;
+   *     {@code false} otherwise.
+   */
+  public static boolean isEmptyOrBlank(@Nullable final CharSequence str) {
+    return (str == null)
+        || (str.length() == 0)
+        || containsOnly(str, BlankCodePointFilter.INSTANCE);
+  }
+
+  /**
+   * Checks if a string is not empty ("") and not {@code null}.
+   * <pre>
+   * StringUtils.isNotEmptyNorBlank(null)      = false
+   * StringUtils.isNotEmptyNorBlank("")        = false
+   * StringUtils.isNotEmptyNorBlank(" ")       = false
+   * StringUtils.isNotEmptyNorBlank("bob")     = true
+   * StringUtils.isNotEmptyNorBlank("  bob  ") = true
+   * </pre>
+   *
+   * @param str
+   *     the string to check, may be null
+   * @return {@code true} if the string is not empty nor null nor contains only
+   *     blanks; {@code false} otherwise.
+   */
+  public static boolean isNotEmptyNorBlank(@Nullable final CharSequence str) {
+    return (str != null)
+        && (str.length() > 0)
+        && (!containsOnly(str, BlankCodePointFilter.INSTANCE));
   }
 
   /**
@@ -4707,11 +4750,10 @@ public class StringUtils {
    *     the string to replace it with, may be null.
    * @return the text with any replacements processed, {@code null} if null
    *     String input
-   * @deprecated use {@link Replacer#searchForSubstring(CharSequence)}
-   *     and {@link Replacer#replaceWithString(CharSequence)}
-   *     and {@link Replacer#applyTo(CharSequence)}.
+   * @see Replacer#searchForSubstring(CharSequence)
+   * @see Replacer#replaceWithString(CharSequence)
+   * @see Replacer#applyTo(CharSequence)
    */
-  @Deprecated
   public static String replace(@Nullable final CharSequence str,
       @Nullable final CharSequence search, @Nullable final CharSequence replacement) {
     return new Replacer()
@@ -6902,13 +6944,18 @@ public class StringUtils {
    * @see SplitOption
    * @see Splitter
    */
-  public static @NotNull List<String> split(@Nullable final CharSequence str,
+  public static @Nonnull List<String> split(@Nullable final CharSequence str,
       final char separator) {
     return new Splitter()
         .byChar(separator)
         .strip(true)
         .ignoreEmpty(true)
         .split(str);
+  }
+
+  public static @Nonnull String[] splitToArray(@Nullable final CharSequence str,
+      final char separator) {
+    return split(str, separator).toArray(new String[0]);
   }
 
   /**
@@ -6945,7 +6992,7 @@ public class StringUtils {
    * @deprecated Use {@link Splitter} class.
    */
   @Deprecated
-  public static @NotNull List<String> split(@Nullable final CharSequence str,
+  public static @Nonnull List<String> split(@Nullable final CharSequence str,
       final char separator, final int options) {
     return new Splitter()
         .byChar(separator)
@@ -6996,7 +7043,7 @@ public class StringUtils {
    * @deprecated Use {@link Splitter} class.
    */
   @Deprecated
-  public static @NotNull List<String> split(@Nullable final CharSequence str,
+  public static @Nonnull List<String> split(@Nullable final CharSequence str,
       final char separator, final int options,
       @Nullable final List<String> list) {
     return new Splitter()
@@ -7043,7 +7090,7 @@ public class StringUtils {
    * @deprecated Use {@link Splitter} class.
    */
   @Deprecated
-  public static @NotNull List<String> split(@Nullable final CharSequence str,
+  public static @Nonnull List<String> split(@Nullable final CharSequence str,
       @Nullable final CharSequence separatorChars, final int options) {
     return new Splitter()
         .byCodePointsIn(separatorChars)
@@ -7095,7 +7142,7 @@ public class StringUtils {
    * @deprecated Use {@link Splitter} class.
    */
   @Deprecated
-  public static @NotNull List<String> split(@Nullable final CharSequence str,
+  public static @Nonnull List<String> split(@Nullable final CharSequence str,
       @Nullable final CharSequence separatorChars, final int options,
       @Nullable final List<String> result) {
     return new Splitter()
@@ -7143,7 +7190,7 @@ public class StringUtils {
    * @deprecated Use {@link Splitter} class.
    */
   @Deprecated
-  public static @NotNull List<String> split(@Nullable final CharSequence str,
+  public static @Nonnull List<String> split(@Nullable final CharSequence str,
       @Nullable final char[] separatorChars, final int options) {
     return new Splitter()
         .byCharsIn(separatorChars)
@@ -7195,7 +7242,7 @@ public class StringUtils {
    * @deprecated Use {@link Splitter} class.
    */
   @Deprecated
-  public static @NotNull List<String> split(@Nullable final CharSequence str,
+  public static @Nonnull List<String> split(@Nullable final CharSequence str,
       @Nullable final char[] separatorChars, final int options,
       @Nullable final List<String> result) {
     return new Splitter()
@@ -7242,7 +7289,7 @@ public class StringUtils {
    * @deprecated Use {@link Splitter} class.
    */
   @Deprecated
-  public static @NotNull List<String> split(@Nullable final CharSequence str,
+  public static @Nonnull List<String> split(@Nullable final CharSequence str,
       final CharFilter charFilter, final int options) {
     return new Splitter()
         .byCharsSatisfy(charFilter)
@@ -7294,7 +7341,7 @@ public class StringUtils {
    * @deprecated Use {@link Splitter} class.
    */
   @Deprecated
-  public static @NotNull List<String> split(@Nullable final CharSequence str,
+  public static @Nonnull List<String> split(@Nullable final CharSequence str,
       final CharFilter charFilter, final int options,
       @Nullable final List<String> list) {
     return new Splitter()
@@ -7331,10 +7378,14 @@ public class StringUtils {
    *     The returned list will never be {@code null}.
    * @see Splitter
    */
-  public static @NotNull List<String> split(@Nullable final CharSequence str) {
+  public static @Nonnull List<String> split(@Nullable final CharSequence str) {
     return new Splitter()
         .byWhitespaces()
         .split(str);
+  }
+
+  public static @Nonnull String[] splitToArray(@Nullable final CharSequence str) {
+    return split(str).toArray(new String[0]);
   }
 
   /**
@@ -7371,7 +7422,7 @@ public class StringUtils {
    * @deprecated Use {@link Splitter} class.
    */
   @Deprecated
-  public static @NotNull List<String> split(@Nullable final CharSequence str,
+  public static @Nonnull List<String> split(@Nullable final CharSequence str,
       @Nullable final List<String> list) {
     return new Splitter()
         .byWhitespaces()
@@ -7419,7 +7470,7 @@ public class StringUtils {
    * @deprecated Use {@link Splitter} class.
    */
   @Deprecated
-  public static @NotNull List<String> splitByCharType(@Nullable final CharSequence str,
+  public static @Nonnull List<String> splitByCharType(@Nullable final CharSequence str,
       final int options) {
     return new Splitter()
         .byCharTypes()
@@ -7473,7 +7524,7 @@ public class StringUtils {
    * @deprecated Use {@link Splitter} class.
    */
   @Deprecated
-  public static @NotNull List<String> splitByCharType(@Nullable final CharSequence str,
+  public static @Nonnull List<String> splitByCharType(@Nullable final CharSequence str,
       final int options, @Nullable final List<String> list) {
     return new Splitter()
         .byCharTypes()
@@ -7510,13 +7561,18 @@ public class StringUtils {
    *     {@code null}.
    * @see Splitter
    */
-  public static @NotNull List<String> splitByString(@Nullable final CharSequence str,
+  public static @Nonnull List<String> splitByString(@Nullable final CharSequence str,
       @Nullable final CharSequence separator) {
     return new Splitter()
         .bySubstring(separator)
         .strip(true)
         .ignoreEmpty(true)
         .split(str);
+  }
+
+  public static @Nonnull String[] splitByStringToArray(@Nullable final CharSequence str,
+      @Nullable final CharSequence separator) {
+    return splitByString(str, separator).toArray(new String[0]);
   }
 
   /**
@@ -7551,7 +7607,7 @@ public class StringUtils {
    * @deprecated Use {@link Splitter} class.
    */
   @Deprecated
-  public static @NotNull List<String> splitByString(@Nullable final CharSequence str,
+  public static @Nonnull List<String> splitByString(@Nullable final CharSequence str,
       @Nullable final CharSequence separator, final int options) {
     return new Splitter()
         .bySubstring(separator)
@@ -7598,7 +7654,7 @@ public class StringUtils {
    * @deprecated Use {@link Splitter} class.
    */
   @Deprecated
-  public static @NotNull List<String> splitByString(@Nullable final CharSequence str,
+  public static @Nonnull List<String> splitByString(@Nullable final CharSequence str,
       @Nullable final CharSequence separator, final int options,
       @Nullable final List<String> list) {
     return new Splitter()
@@ -7624,12 +7680,16 @@ public class StringUtils {
    *     will never be {@code null}.
    * @see Splitter
    */
-  public static @NotNull List<String> splitLines(@Nullable final CharSequence str) {
+  public static @Nonnull List<String> splitLines(@Nullable final CharSequence str) {
     return new Splitter()
         .toLines()
         .strip(true)
         .ignoreEmpty(true)
         .split(str);
+  }
+
+  public static @Nonnull String[] splitLinesToArray(@Nullable final CharSequence str) {
+    return splitLines(str).toArray(new String[0]);
   }
 
   /**
@@ -7652,7 +7712,7 @@ public class StringUtils {
    * @deprecated use {@link Splitter}
    */
   @Deprecated
-  public static @NotNull List<String> splitLines(@Nullable final CharSequence str,
+  public static @Nonnull List<String> splitLines(@Nullable final CharSequence str,
       final boolean trim, final boolean ignoreEmpty) {
     return new Splitter()
         .toLines()
@@ -7722,8 +7782,8 @@ public class StringUtils {
     final StringBuilder builder = new StringBuilder();
     builder.ensureCapacity(n);
     builder.append(str, 0, start)
-           .append(theOverlay)
-           .append(str, end, str.length());
+        .append(theOverlay)
+        .append(str, end, str.length());
     return builder.toString();
   }
 
@@ -9552,7 +9612,7 @@ public class StringUtils {
    *     an empty string if the specified string is {@code null}; otherwise
    *     returns the original string.
    */
-  @NotNull
+  @Nonnull
   public static String nullToEmpty(@Nullable final String str) {
     return (str == null ? EMPTY : str);
   }
@@ -9566,7 +9626,7 @@ public class StringUtils {
    *     an empty string if the specified character sequence is {@code null};
    *     otherwise returns the original character sequence.
    */
-  @NotNull
+  @Nonnull
   public static CharSequence nullToEmpty(@Nullable final CharSequence str) {
     return (str == null ? EMPTY : str);
   }
@@ -9594,5 +9654,30 @@ public class StringUtils {
       result.add(codePoint);
     }
     return result;
+  }
+
+  /**
+   * Split the specified character sequence into Unicode code points.
+   *
+   * @param str
+   *     the specified character sequence.
+   * @return
+   *     the list of Unicode code points in the specified character sequence.
+   *     Returns an empty list if the specified character sequence is {@code null}
+   *     or empty.
+   */
+  public static int[] splitCodePointsToArray(@Nullable final CharSequence str) {
+    return splitCodePoints(str).toArray();
+  }
+
+  public static String formatPercent(final double value, final int fractionDigits) {
+    return formatPercent(value, fractionDigits, Locale.getDefault());
+  }
+
+  public static String formatPercent(final double value, final int fractionDigits,
+      final Locale locale) {
+    final java.text.NumberFormat nf = java.text.NumberFormat.getPercentInstance(locale);
+    nf.setMaximumFractionDigits(fractionDigits);
+    return nf.format(value);
   }
 }

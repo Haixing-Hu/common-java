@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -17,10 +17,10 @@ import java.util.concurrent.ConcurrentSkipListMap;
 
 import javax.annotation.Nullable;
 
-import org.springframework.context.NoSuchMessageException;
-import org.springframework.context.support.ResourceBundleMessageSource;
-
 import com.google.common.collect.ImmutableSet;
+
+import ltd.qubit.commons.error.NoSuchMessageException;
+import ltd.qubit.commons.i18n.message.ResourceBundleMessageSource;
 
 /**
  * Provides utilities functions for {@link Enum}.
@@ -158,8 +158,8 @@ public class EnumUtils {
    * @param <E>
    *     枚举类型。
    */
-  public static <E extends Enum<E>> void registerLocalizedNames(
-      final Class<E> cls, final String bundle) {
+  public static <E extends Enum<E>>
+  void registerLocalizedNames(final Class<E> cls, final String bundle) {
     final ClassKey key = new ClassKey(cls);
     RESOURCE_BUNDLE_MAP.put(key, bundle);
     CLASS_LOCALIZED_NAME_MAP.put(key, new ConcurrentHashMap<>());
@@ -193,8 +193,8 @@ public class EnumUtils {
     return map.get(e.name());
   }
 
-  private static Map<String, String> loadLocalizedNameMap(final Class<? extends Enum<?>> cls,
-      final String bundle, final Locale locale) {
+  private static Map<String, String>
+  loadLocalizedNameMap(final Class<? extends Enum<?>> cls, final String bundle, final Locale locale) {
     final ResourceBundleMessageSource source = new ResourceBundleMessageSource();
     source.setDefaultEncoding(DEFAULT_ENCODING);
     source.setBasename(bundle);

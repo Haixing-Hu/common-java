@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
-//    Haixing Hu, Qubit Co. Ltd.
+//    Copyright (c) 2017 - 2022.
+//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -24,12 +24,13 @@ import java.security.PrivilegedExceptionAction;
 import java.security.SecureRandom;
 import java.util.Random;
 
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
-
-import ltd.qubit.commons.reflect.ConstructorUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import ltd.qubit.commons.reflect.ConstructorUtils;
 
 import static ltd.qubit.commons.lang.CharUtils.isAsciiDigit;
 
@@ -1129,8 +1130,10 @@ public final class SystemUtils {
    *
    * @param resource
    *     the name of the specified resource.
-   * @return the URL of the specified resource.
+   * @return the URL of the specified resource, or {@code null} if the resource
+   *     is not found.
    */
+  @Nullable
   public static URL getResource(final String resource) {
     URL url = null;
     final ClassLoader loader = Thread.currentThread().getContextClassLoader();
@@ -1156,8 +1159,10 @@ public final class SystemUtils {
    *     the name of the specified resource.
    * @param clazz
    *     the class to which the resource is associated with.
-   * @return the URL of the specified resource.
+   * @return the URL of the specified resource, or {@code null} if the resource
+   *     is not found.
    */
+  @Nullable
   public static URL getResource(final String resource, final Class<?> clazz) {
     LOGGER.debug(GETTING_CLASS_RESOURCE, resource);
     URL url = clazz.getResource(resource);
@@ -1193,8 +1198,10 @@ public final class SystemUtils {
    *     the name of the specified resource.
    * @param loader
    *     the class loader to which the resource is associated with.
-   * @return the URL of the specified resource.
+   * @return the URL of the specified resource, or {@code null} if the resource
+   *     is not found.
    */
+  @Nullable
   public static URL getResource(final String resource,
       final ClassLoader loader) {
     LOGGER.debug(GETTING_CLASS_RESOURCE, resource);
@@ -1316,5 +1323,44 @@ public final class SystemUtils {
       n = Math.abs(n);
     }
     return prefix + n + suffix;
+  }
+
+  /**
+   * Return the default ClassLoader to use: typically the thread context
+   * ClassLoader, if available; the ClassLoader that loaded the
+   * {@link SystemUtils} class will be used as fallback.
+   * <p>
+   * Call this method if you intend to use the thread context ClassLoader in a
+   * scenario where you clearly prefer a non-null ClassLoader reference: for
+   * example, for class path resource loading (but not necessarily for
+   * {@code Class.forName}, which accepts a {@code null} ClassLoader reference
+   * as well).
+   *
+   * @return the default ClassLoader (only {@code null} if even the system
+   *     ClassLoader isn't accessible)
+   * @see Thread#getContextClassLoader()
+   * @see ClassLoader#getSystemClassLoader()
+   */
+  @Nullable
+  public static ClassLoader getDefaultClassLoader() {
+    ClassLoader cl = null;
+    try {
+      cl = Thread.currentThread().getContextClassLoader();
+    } catch (final Throwable ex) {
+      // Cannot access thread context ClassLoader - falling back...
+    }
+    if (cl == null) {
+      // No thread context class loader -> use class loader of this class.
+      cl = SystemUtils.class.getClassLoader();
+      if (cl == null) {
+        // getClassLoader() returning null indicates the bootstrap ClassLoader
+        try {
+          cl = ClassLoader.getSystemClassLoader();
+        } catch (final Throwable ex) {
+          // Cannot access system ClassLoader - oh well, maybe the caller can live with null...
+        }
+      }
+    }
+    return cl;
   }
 }
