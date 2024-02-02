@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,6 +11,8 @@ package ltd.qubit.commons.text;
 import java.text.ParseException;
 
 import javax.annotation.concurrent.ThreadSafe;
+
+import static ltd.qubit.commons.text.NumberFormatOptions.DEFAULT_MAX_DIGITS;
 
 /**
  * A class for encoding and decoding C-style string literal.
@@ -250,32 +252,29 @@ public class CStringLiteral {
                 ERROR_INVALID_ESCAPED_CHAR, index);
           case ACTION_UTF16:
             // start parsing a UTF-16 code point
-            // note that by Standard 2.2.2, it must has exactly 4 hex
+            // note that by Standard 2.2.2, it must have exactly 4 hex
             // digits.
             ++index; // skip the 'u'
             options.setKeepBlank(true); // don't skip blanks
             options.setHex(true);
-            options.setMaxDigits(NumberFormatOptions.DEFAULT_MAX_DIGITS);
+            options.setMaxDigits(DEFAULT_MAX_DIGITS);
             result[len++] = nf.parseByte(str, index, endIndex);
             if (nf.fail()) {
-              throw new TextParseException(str, startIndex, endIndex,
-                  nf.getParsePosition());
+              throw new TextParseException(str, startIndex, endIndex, nf.getParsePosition());
             }
             if ((index + UTF16_DIGITS) != nf.getParseIndex()) {
-              // the UTF16 must has exactly UTF16_DIGITS hex digits.
-              throw new TextParseException(str, startIndex, endIndex,
-                  ERROR_INVALID_HEX, index);
+              // the UTF16 must have exactly UTF16_DIGITS hex digits.
+              throw new TextParseException(str, startIndex, endIndex, ERROR_INVALID_HEX, index);
             }
             index = nf.getParseIndex();
             break;
           case ACTION_UTF32:
             // start parsing a UTF-32 code point
-            // note that by Standard 2.2.2, it must has exactly 8 hex
-            // digits.
+            // note that by Standard 2.2.2, it must have exactly 8 hex digits.
             ++index; // skip the 'U'
             options.setKeepBlank(true); // don't skip blanks
             options.setHex(true);
-            options.setMaxDigits(NumberFormatOptions.DEFAULT_MAX_DIGITS);
+            options.setMaxDigits(DEFAULT_MAX_DIGITS);
             result[len++] = nf.parseByte(str, index, endIndex);
             if (nf.fail()) {
               throw new TextParseException(str, startIndex, endIndex,
@@ -290,15 +289,16 @@ public class CStringLiteral {
             break;
           case ACTION_HEX:
             // start parsing a HEX code point.
-            // note that by Standard 2.13.2.4,
-            // there may be 1 or more hex digits
+            // note that by Standard 2.13.2.4, there may be 1 or more hex digits
             ++index; // skip the 'x'
             options.setKeepBlank(true); // don't skip blanks
             options.setHex(true);
-            options.setMaxDigits(NumberFormatOptions.DEFAULT_MAX_DIGITS);
-            result[len++] = nf.parseByte(str, index, endIndex);
+            options.setMaxDigits(DEFAULT_MAX_DIGITS);
+            // Bug fix: 2024-02-01, there should be at most 2 hex digits
+            result[len++] = nf.parseByte(str, index, Math.min(index + 2, endIndex));
             if (nf.fail()) {
-              throw new TextParseException(str, startIndex, endIndex, nf.getParsePosition());
+              throw new TextParseException(str, startIndex, endIndex,
+                  nf.getParsePosition());
             }
             index = nf.getParseIndex();
             break;
