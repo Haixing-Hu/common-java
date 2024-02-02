@@ -47,13 +47,13 @@ import static org.mockito.Mockito.mock;
 class PathResourceTest {
 
   private static final String TEST_DIR =
-      platformPath("src/test/resources/cn/njzhyl/commons/io/resource");
+      platformPath("src/test/resources/ltd/qubit/commons/io/resource");
 
   private static final String TEST_FILE =
-      platformPath("src/test/resources/cn/njzhyl/commons/io/resource/example.properties");
+      platformPath("src/test/resources/ltd/qubit/commons/io/resource/example.properties");
 
   private static final String NON_EXISTING_FILE =
-      platformPath("src/test/resources/cn/njzhyl/commons/io/resource/doesnotexist.properties");
+      platformPath("src/test/resources/ltd/qubit/commons/io/resource/doesnotexist.properties");
 
 
   private static String platformPath(final String string) {

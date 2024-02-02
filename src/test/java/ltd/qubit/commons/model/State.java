@@ -21,40 +21,30 @@ public enum State {
   /**
    * 未激活。
    */
-  INACTIVE(ErrorCode.INACTIVE),
+  INACTIVE,
 
   /**
    * 正常。
    */
-  NORMAL(ErrorCode.NONE),
+  NORMAL,
 
   /**
    * 锁定/冻结。
    */
-  LOCKED(ErrorCode.LOCKED),
+  LOCKED,
 
   /**
    * 屏蔽/封杀。
    */
-  BLOCKED(ErrorCode.BLOCKED),
+  BLOCKED,
 
   /**
    * 已废弃。
    */
-  OBSOLETED(ErrorCode.DISABLED),    // FIXME: 是否需要单独的ErrorCode?
+  OBSOLETED,
 
   /**
    * 禁用。
    */
-  DISABLED(ErrorCode.DISABLED);
-
-  private final ErrorCode errorCode;
-
-  State(final ErrorCode errorCode) {
-    this.errorCode = errorCode;
-  }
-
-  public ErrorCode getErrorCode() {
-    return this.errorCode;
-  }
+  DISABLED;
 }

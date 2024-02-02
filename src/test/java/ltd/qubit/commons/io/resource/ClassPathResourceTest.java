@@ -40,7 +40,7 @@ import static org.junit.jupiter.api.io.CleanupMode.NEVER;
  */
 class ClassPathResourceTest {
 
-  private static final String PACKAGE_PATH = "cn/njzhyl/commons/io/resource";
+  private static final String PACKAGE_PATH = "ltd/qubit/commons/io/resource";
   private static final String NONEXISTENT_RESOURCE_NAME = "nonexistent.xml";
   private static final String ABSOLUTE_PATH_TO_NONEXISTENT_RESOURCE = PACKAGE_PATH + '/' + NONEXISTENT_RESOURCE_NAME;
   private static final String ABSOLUTE_PATH_TO_NONEXISTENT_RESOURCE_WITH_LEADING_SLASH = '/' + ABSOLUTE_PATH_TO_NONEXISTENT_RESOURCE;
@@ -50,9 +50,9 @@ class ClassPathResourceTest {
 
     @Test
     void equalsAndHashCode() {
-      final Resource resource1 = new ClassPathResource("cn/njzhyl/commons/io/resource/Resource.class");
-      final Resource resource2 = new ClassPathResource("cn/njzhyl/commons/../commons/io/resource/./Resource.class");
-      final Resource resource3 = new ClassPathResource("cn/njzhyl/commons/").createRelative("../commons/io/resource/./Resource.class");
+      final Resource resource1 = new ClassPathResource("ltd/qubit/commons/io/resource/Resource.class");
+      final Resource resource2 = new ClassPathResource("ltd/qubit/commons/../commons/io/resource/./Resource.class");
+      final Resource resource3 = new ClassPathResource("ltd/qubit/commons/").createRelative("../commons/io/resource/./Resource.class");
 
       assertThat(resource2).isEqualTo(resource1);
       assertThat(resource3).isEqualTo(resource1);
@@ -68,15 +68,15 @@ class ClassPathResourceTest {
 
     @Test
     void resourcesWithDifferentInputPathsAreEqual() {
-      final Resource resource1 = new ClassPathResource("cn/njzhyl/commons/io/resource/Resource.class", getClass().getClassLoader());
-      final ClassPathResource resource2 = new ClassPathResource("cn/njzhyl/commons/../commons/io/resource/./Resource.class", getClass().getClassLoader());
+      final Resource resource1 = new ClassPathResource("ltd/qubit/commons/io/resource/Resource.class", getClass().getClassLoader());
+      final ClassPathResource resource2 = new ClassPathResource("ltd/qubit/commons/../commons/io/resource/./Resource.class", getClass().getClassLoader());
       assertThat(resource2).isEqualTo(resource1);
     }
 
     @Test
     void resourcesWithEquivalentAbsolutePathsFromTheSameClassLoaderAreEqual() {
       final ClassPathResource resource1 = new ClassPathResource("Resource.class", getClass());
-      final ClassPathResource resource2 = new ClassPathResource("cn/njzhyl/commons/io/resource/Resource.class", getClass().getClassLoader());
+      final ClassPathResource resource2 = new ClassPathResource("ltd/qubit/commons/io/resource/Resource.class", getClass().getClassLoader());
       assertThat(resource1.getPath()).isEqualTo(resource2.getPath());
       assertThat(resource1).isEqualTo(resource2);
       assertThat(resource2).isEqualTo(resource1);
@@ -85,7 +85,7 @@ class ClassPathResourceTest {
     @Test
     void resourcesWithEquivalentAbsolutePathsHaveSameHashCode() {
       final ClassPathResource resource1 = new ClassPathResource("Resource.class", getClass());
-      final ClassPathResource resource2 = new ClassPathResource("cn/njzhyl/commons/io/resource/Resource.class", getClass().getClassLoader());
+      final ClassPathResource resource2 = new ClassPathResource("ltd/qubit/commons/io/resource/Resource.class", getClass().getClassLoader());
       assertThat(resource1.getPath()).isEqualTo(resource2.getPath());
       assertThat(resource1).hasSameHashCodeAs(resource2);
     }
@@ -99,7 +99,7 @@ class ClassPathResourceTest {
       }
 
       final ClassPathResource resource1 = new ClassPathResource("Resource.class", getClass());
-      final ClassPathResource resource2 = new ClassPathResource("cn/njzhyl/commons/io/resource/Resource.class",
+      final ClassPathResource resource2 = new ClassPathResource("ltd/qubit/commons/io/resource/Resource.class",
           new SimpleThrowawayClassLoader(getClass().getClassLoader()));
       assertThat(resource1.getPath()).isEqualTo(resource2.getPath());
       assertThat(resource1).isNotEqualTo(resource2);

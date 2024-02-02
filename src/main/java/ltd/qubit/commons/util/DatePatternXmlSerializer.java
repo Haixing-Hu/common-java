@@ -13,11 +13,11 @@ import javax.annotation.concurrent.Immutable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import cn.njzhyl.commons.i18n.LocaleUtils;
-import cn.njzhyl.commons.io.serialize.XmlSerializer;
-import cn.njzhyl.commons.text.xml.DomUtils;
-import cn.njzhyl.commons.text.xml.XmlException;
-import cn.njzhyl.commons.text.xml.XmlSerializationException;
+import ltd.qubit.commons.i18n.LocaleUtils;
+import ltd.qubit.commons.io.serialize.XmlSerializer;
+import ltd.qubit.commons.text.xml.DomUtils;
+import ltd.qubit.commons.text.xml.XmlException;
+import ltd.qubit.commons.text.xml.XmlSerializationException;
 
 /**
  * The {@link XmlSerializer} for the {@link DatePattern} class.

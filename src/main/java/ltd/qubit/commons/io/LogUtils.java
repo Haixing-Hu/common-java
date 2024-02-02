@@ -15,6 +15,8 @@ import java.lang.reflect.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ltd.qubit.commons.error.InitializationError;
+
 /**
  * Provides utilities about the logging operations.
  *

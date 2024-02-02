@@ -12,6 +12,7 @@ import java.util.Locale;
 
 import javax.annotation.concurrent.Immutable;
 
+import ltd.qubit.commons.i18n.LocaleUtils;
 import ltd.qubit.commons.text.Stripper;
 
 @Immutable

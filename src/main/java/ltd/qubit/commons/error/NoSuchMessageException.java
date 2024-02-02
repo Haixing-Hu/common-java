@@ -23,6 +23,8 @@ import ltd.qubit.commons.util.pair.KeyValuePairList;
  */
 public class NoSuchMessageException extends RuntimeException implements ErrorInfoConvertable  {
 
+  private static final long serialVersionUID = 7603035025205517388L;
+
   private final String code;
   private final Locale locale;
 

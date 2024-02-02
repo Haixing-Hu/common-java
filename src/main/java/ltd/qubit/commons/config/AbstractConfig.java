@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import ltd.qubit.commons.config.error.ConfigurationError;
 import ltd.qubit.commons.config.error.PropertyHasNoValueError;
 import ltd.qubit.commons.config.error.PropertyNotExistError;
+import ltd.qubit.commons.error.TypeConvertException;
 import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.lang.ClassUtils;
 import ltd.qubit.commons.lang.StringUtils;

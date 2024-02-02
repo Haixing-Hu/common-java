@@ -10,6 +10,7 @@ package ltd.qubit.commons.util.value;
 
 import org.junit.jupiter.api.Test;
 
+import ltd.qubit.commons.error.TypeConvertException;
 import ltd.qubit.commons.io.serialize.XmlSerialization;
 import ltd.qubit.commons.text.xml.XmlException;
 

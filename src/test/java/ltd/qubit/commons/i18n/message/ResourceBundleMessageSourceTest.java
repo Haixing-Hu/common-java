@@ -85,7 +85,7 @@ class ResourceBundleMessageSourceTest {
   }
 
   private String[] getBasenames(final boolean reloadable) {
-    final String basepath = "cn/njzhyl/commons/i18n/message/";
+    final String basepath = "ltd/qubit/commons/i18n/message/";
     final String[] basenames;
     if (reloadable) {
       basenames = new String[] {
@@ -220,7 +220,7 @@ class ResourceBundleMessageSourceTest {
   @Test
   void resourceBundleMessageSourceStandalone() {
     final ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
-    ms.setBasename("cn/njzhyl/commons/i18n/message/messages");
+    ms.setBasename("ltd/qubit/commons/i18n/message/messages");
     assertThat(ms.getMessage("code1", null, Locale.ENGLISH)).isEqualTo("message1");
     assertThat(ms.getMessage("code2", null, Locale.GERMAN)).isEqualTo("nachricht2");
   }
@@ -228,7 +228,7 @@ class ResourceBundleMessageSourceTest {
   @Test
   void resourceBundleMessageSourceWithWhitespaceInBasename() {
     final ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
-    ms.setBasename("cn/njzhyl/commons/i18n/message/messages  ");
+    ms.setBasename("ltd/qubit/commons/i18n/message/messages  ");
     assertThat(ms.getMessage("code1", null, Locale.ENGLISH)).isEqualTo("message1");
     assertThat(ms.getMessage("code2", null, Locale.GERMAN)).isEqualTo("nachricht2");
   }
@@ -236,7 +236,7 @@ class ResourceBundleMessageSourceTest {
   @Test
   void resourceBundleMessageSourceWithDefaultCharset() {
     final ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
-    ms.setBasename("cn/njzhyl/commons/i18n/message/messages");
+    ms.setBasename("ltd/qubit/commons/i18n/message/messages");
     ms.setDefaultEncoding("ISO-8859-1");
     assertThat(ms.getMessage("code1", null, Locale.ENGLISH)).isEqualTo("message1");
     assertThat(ms.getMessage("code2", null, Locale.GERMAN)).isEqualTo("nachricht2");
@@ -245,7 +245,7 @@ class ResourceBundleMessageSourceTest {
   @Test
   void resourceBundleMessageSourceWithInappropriateDefaultCharset() {
     final ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
-    ms.setBasename("cn/njzhyl/commons/i18n/message/messages");
+    ms.setBasename("ltd/qubit/commons/i18n/message/messages");
     ms.setDefaultEncoding("argh");
     ms.setFallbackToSystemLocale(false);
     assertThatExceptionOfType(NoSuchMessageException.class)
@@ -255,7 +255,7 @@ class ResourceBundleMessageSourceTest {
   @Test
   void reloadableResourceBundleMessageSourceStandalone() {
     final ReloadableResourceBundleMessageSource ms = new ReloadableResourceBundleMessageSource();
-    ms.setBasename("cn/njzhyl/commons/i18n/message/messages");
+    ms.setBasename("ltd/qubit/commons/i18n/message/messages");
     assertThat(ms.getMessage("code1", null, Locale.ENGLISH)).isEqualTo("message1");
     assertThat(ms.getMessage("code2", null, Locale.GERMAN)).isEqualTo("nachricht2");
   }
@@ -263,7 +263,7 @@ class ResourceBundleMessageSourceTest {
   @Test
   void reloadableResourceBundleMessageSourceWithCacheSeconds() throws InterruptedException {
     final ReloadableResourceBundleMessageSource ms = new ReloadableResourceBundleMessageSource();
-    ms.setBasename("cn/njzhyl/commons/i18n/message/messages");
+    ms.setBasename("ltd/qubit/commons/i18n/message/messages");
     ms.setCacheMillis(100);
     // Initial cache attempt
     assertThat(ms.getMessage("code1", null, Locale.ENGLISH)).isEqualTo("message1");
@@ -277,7 +277,7 @@ class ResourceBundleMessageSourceTest {
   @Test
   void reloadableResourceBundleMessageSourceWithNonConcurrentRefresh() throws InterruptedException {
     final ReloadableResourceBundleMessageSource ms = new ReloadableResourceBundleMessageSource();
-    ms.setBasename("cn/njzhyl/commons/i18n/message/messages");
+    ms.setBasename("ltd/qubit/commons/i18n/message/messages");
     ms.setCacheMillis(100);
     ms.setConcurrentRefresh(false);
     // Initial cache attempt
@@ -295,7 +295,7 @@ class ResourceBundleMessageSourceTest {
     final Properties commonMessages = new Properties();
     commonMessages.setProperty("warning", "Do not do {0}");
     ms.setCommonMessages(commonMessages);
-    ms.setBasename("cn/njzhyl/commons/i18n/message/messages");
+    ms.setBasename("ltd/qubit/commons/i18n/message/messages");
     assertThat(ms.getMessage("code1", null, Locale.ENGLISH)).isEqualTo("message1");
     assertThat(ms.getMessage("code2", null, Locale.GERMAN)).isEqualTo("nachricht2");
     assertThat(ms.getMessage("warning", new Object[]{"this"}, Locale.ENGLISH)).isEqualTo("Do not do this");
@@ -305,7 +305,7 @@ class ResourceBundleMessageSourceTest {
   @Test
   void reloadableResourceBundleMessageSourceWithWhitespaceInBasename() {
     final ReloadableResourceBundleMessageSource ms = new ReloadableResourceBundleMessageSource();
-    ms.setBasename("cn/njzhyl/commons/i18n/message/messages  ");
+    ms.setBasename("ltd/qubit/commons/i18n/message/messages  ");
     assertThat(ms.getMessage("code1", null, Locale.ENGLISH)).isEqualTo("message1");
     assertThat(ms.getMessage("code2", null, Locale.GERMAN)).isEqualTo("nachricht2");
   }
@@ -313,7 +313,7 @@ class ResourceBundleMessageSourceTest {
   @Test
   void reloadableResourceBundleMessageSourceWithDefaultCharset() {
     final ReloadableResourceBundleMessageSource ms = new ReloadableResourceBundleMessageSource();
-    ms.setBasename("cn/njzhyl/commons/i18n/message/messages");
+    ms.setBasename("ltd/qubit/commons/i18n/message/messages");
     ms.setDefaultEncoding("ISO-8859-1");
     assertThat(ms.getMessage("code1", null, Locale.ENGLISH)).isEqualTo("message1");
     assertThat(ms.getMessage("code2", null, Locale.GERMAN)).isEqualTo("nachricht2");
@@ -322,10 +322,10 @@ class ResourceBundleMessageSourceTest {
   @Test
   void reloadableResourceBundleMessageSourceWithInappropriateDefaultCharset() {
     final ReloadableResourceBundleMessageSource ms = new ReloadableResourceBundleMessageSource();
-    ms.setBasename("cn/njzhyl/commons/i18n/message/messages");
+    ms.setBasename("ltd/qubit/commons/i18n/message/messages");
     ms.setDefaultEncoding("unicode");
     final Properties fileCharsets = new Properties();
-    fileCharsets.setProperty("cn/njzhyl/commons/i18n/message/messages_de", "unicode");
+    fileCharsets.setProperty("ltd/qubit/commons/i18n/message/messages_de", "unicode");
     ms.setFileEncodings(fileCharsets);
     ms.setFallbackToSystemLocale(false);
     assertThatExceptionOfType(NoSuchMessageException.class).isThrownBy(() ->
@@ -335,10 +335,10 @@ class ResourceBundleMessageSourceTest {
   @Test
   void reloadableResourceBundleMessageSourceWithInappropriateEnglishCharset() {
     final ReloadableResourceBundleMessageSource ms = new ReloadableResourceBundleMessageSource();
-    ms.setBasename("cn/njzhyl/commons/i18n/message/messages");
+    ms.setBasename("ltd/qubit/commons/i18n/message/messages");
     ms.setFallbackToSystemLocale(false);
     final Properties fileCharsets = new Properties();
-    fileCharsets.setProperty("cn/njzhyl/commons/i18n/message/messages", "unicode");
+    fileCharsets.setProperty("ltd/qubit/commons/i18n/message/messages", "unicode");
     ms.setFileEncodings(fileCharsets);
     assertThatExceptionOfType(NoSuchMessageException.class).isThrownBy(() ->
         ms.getMessage("code1", null, Locale.ENGLISH));
@@ -347,10 +347,10 @@ class ResourceBundleMessageSourceTest {
   @Test
   void reloadableResourceBundleMessageSourceWithInappropriateGermanCharset() {
     final ReloadableResourceBundleMessageSource ms = new ReloadableResourceBundleMessageSource();
-    ms.setBasename("cn/njzhyl/commons/i18n/message/messages");
+    ms.setBasename("ltd/qubit/commons/i18n/message/messages");
     ms.setFallbackToSystemLocale(false);
     final Properties fileCharsets = new Properties();
-    fileCharsets.setProperty("cn/njzhyl/commons/i18n/message/messages_de", "unicode");
+    fileCharsets.setProperty("ltd/qubit/commons/i18n/message/messages_de", "unicode");
     ms.setFileEncodings(fileCharsets);
     assertThat(ms.getMessage("code1", null, Locale.ENGLISH)).isEqualTo("message1");
     assertThat(ms.getMessage("code2", null, Locale.GERMAN)).isEqualTo("message2");
@@ -382,7 +382,7 @@ class ResourceBundleMessageSourceTest {
   @Test
   void reloadableResourceBundleMessageSourceWithCustomFileExtensions() {
     final ReloadableResourceBundleMessageSource ms = new ReloadableResourceBundleMessageSource();
-    ms.setBasename("cn/njzhyl/commons/i18n/message/messages");
+    ms.setBasename("ltd/qubit/commons/i18n/message/messages");
     ms.setFileExtensions(List.of(".toskip", ".custom"));
     assertThat(ms.getMessage("code1", null, Locale.ENGLISH)).isEqualTo("message1");
     assertThat(ms.getMessage("code2", null, Locale.GERMAN)).isEqualTo("nachricht2");
@@ -407,7 +407,7 @@ class ResourceBundleMessageSourceTest {
   @Test
   void messageSourceResourceBundle() {
     final ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
-    ms.setBasename("cn/njzhyl/commons/i18n/message/messages");
+    ms.setBasename("ltd/qubit/commons/i18n/message/messages");
     final MessageSourceResourceBundle rbe = new MessageSourceResourceBundle(ms, Locale.ENGLISH);
     assertThat(rbe.getString("code1")).isEqualTo("message1");
     assertThat(rbe.containsKey("code1")).isTrue();

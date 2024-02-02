@@ -128,8 +128,8 @@ class ResourceTest {
     final URL resourceClass = ResourceTest.class.getResource("ResourceTest.class");
     final Path resourceClassFilePath = Paths.get(resourceClass.toURI());
     return Stream.of(
-        arguments(named("ClassPathResource", new ClassPathResource("cn/njzhyl/commons/io/resource/ResourceTest.class"))),
-        arguments(named("ClassPathResource with ClassLoader", new ClassPathResource("cn/njzhyl/commons/io/resource/ResourceTest.class", ResourceTest.class.getClassLoader()))),
+        arguments(named("ClassPathResource", new ClassPathResource("ltd/qubit/commons/io/resource/ResourceTest.class"))),
+        arguments(named("ClassPathResource with ClassLoader", new ClassPathResource("ltd/qubit/commons/io/resource/ResourceTest.class", ResourceTest.class.getClassLoader()))),
         arguments(named("ClassPathResource with Class", new ClassPathResource("ResourceTest.class", ResourceTest.class))),
         arguments(named("FileSystemResource", new FileSystemResource(resourceClass.getFile()))),
         arguments(named("FileSystemResource with File", new FileSystemResource(new File(resourceClass.getFile())))),

@@ -20,6 +20,7 @@ import java.util.Collection;
 
 import javax.annotation.Nullable;
 
+import ltd.qubit.commons.error.UnsupportedDataTypeException;
 import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.lang.InstantUtils;
 import ltd.qubit.commons.lang.LocalDateTimeUtils;

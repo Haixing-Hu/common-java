@@ -18,6 +18,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.DESedeKeySpec;
 
+import ltd.qubit.commons.error.UnsupportedAlgorithmException;
 import ltd.qubit.commons.util.codec.DecodingException;
 import ltd.qubit.commons.util.codec.EncodingException;
 

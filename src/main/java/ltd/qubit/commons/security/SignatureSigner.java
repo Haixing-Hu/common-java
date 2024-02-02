@@ -19,6 +19,7 @@ import java.security.Signature;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
+import ltd.qubit.commons.error.SignMessageException;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.jackson.JsonMapperUtils;

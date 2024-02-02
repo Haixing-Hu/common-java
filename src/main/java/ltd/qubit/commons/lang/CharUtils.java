@@ -19,6 +19,7 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import com.google.common.collect.ImmutableSet;
 
+import ltd.qubit.commons.error.UnsupportedByteOrderException;
 import ltd.qubit.commons.text.Ascii;
 
 import static ltd.qubit.commons.lang.ByteArrayUtils.DEFAULT_BYTE_ORDER;

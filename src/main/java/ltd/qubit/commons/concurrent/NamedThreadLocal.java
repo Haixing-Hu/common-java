@@ -11,7 +11,7 @@ package ltd.qubit.commons.concurrent;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import static cn.njzhyl.commons.lang.StringUtils.isEmptyOrBlank;
+import static ltd.qubit.commons.lang.StringUtils.isEmptyOrBlank;
 
 /**
  * {@link ThreadLocal} subclass that exposes a specified name as

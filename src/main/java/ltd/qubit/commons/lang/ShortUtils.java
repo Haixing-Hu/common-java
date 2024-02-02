@@ -18,6 +18,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableSet;
 
+import ltd.qubit.commons.error.UnsupportedByteOrderException;
 import ltd.qubit.commons.math.ByteBit;
 import ltd.qubit.commons.text.NumberFormatSymbols;
 

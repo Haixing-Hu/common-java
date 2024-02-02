@@ -49,6 +49,9 @@ import ltd.qubit.commons.datastructure.list.primitive.impl.FloatArrayList;
 import ltd.qubit.commons.datastructure.list.primitive.impl.IntArrayList;
 import ltd.qubit.commons.datastructure.list.primitive.impl.LongArrayList;
 import ltd.qubit.commons.datastructure.list.primitive.impl.ShortArrayList;
+import ltd.qubit.commons.error.TypeConvertException;
+import ltd.qubit.commons.error.TypeMismatchException;
+import ltd.qubit.commons.error.UnsupportedDataTypeException;
 import ltd.qubit.commons.io.error.InvalidFormatException;
 import ltd.qubit.commons.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.ArrayUtils;
@@ -192,16 +195,16 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if (this == other) {
       return;
     }
-    final Type type = other.getType();
-    final int count = other.getCount();
-    if (count == 0) {
-      this.type = type;
+    final Type otherType = other.getType();
+    final int otherCount = other.getCount();
+    if (otherCount == 0) {
+      this.type = otherType;
       valueOrValues = null;
       this.count = 0;
-    } else if (count == 1) {
-      assignSingleValue(type, other);
+    } else if (otherCount == 1) {
+      assignSingleValue(otherType, other);
     } else {
-      assignMultiValues(type, other);
+      assignMultiValues(otherType, other);
     }
   }
 

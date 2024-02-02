@@ -8,7 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.concurrent;
 
-import static cn.njzhyl.commons.lang.StringUtils.isEmptyOrBlank;
+import static ltd.qubit.commons.lang.StringUtils.isEmptyOrBlank;
 
 /**
  * {@link InheritableThreadLocal} subclass that exposes a specified name as

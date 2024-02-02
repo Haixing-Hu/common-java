@@ -30,6 +30,8 @@ import ltd.qubit.commons.datastructure.list.primitive.FloatCollection;
 import ltd.qubit.commons.datastructure.list.primitive.IntCollection;
 import ltd.qubit.commons.datastructure.list.primitive.LongCollection;
 import ltd.qubit.commons.datastructure.list.primitive.ShortCollection;
+import ltd.qubit.commons.error.TypeConvertException;
+import ltd.qubit.commons.error.TypeMismatchException;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Type;
 import ltd.qubit.commons.text.xml.XmlException;

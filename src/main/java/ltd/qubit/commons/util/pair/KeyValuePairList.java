@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,22 +8,25 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.pair;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.Assignment;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.ObjectUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nullable;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 此模型表示键值对列表。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class KeyValuePairList extends ArrayList<KeyValuePair> implements
     Serializable, Assignable<KeyValuePairList> {
@@ -54,6 +57,12 @@ public class KeyValuePairList extends ArrayList<KeyValuePair> implements
       final String value = values.get(i);
       result.add(key, value);
     }
+    return result;
+  }
+
+  public static KeyValuePairList ofArray(final KeyValuePair... params) {
+    final KeyValuePairList result = new KeyValuePairList();
+    Collections.addAll(result, params);
     return result;
   }
 
@@ -131,6 +140,7 @@ public class KeyValuePairList extends ArrayList<KeyValuePair> implements
     return this;
   }
 
+  @Nullable
   public String find(final String key) {
     for (final KeyValuePair pair : this) {
       if (Equality.equals(key, pair.getKey())) {

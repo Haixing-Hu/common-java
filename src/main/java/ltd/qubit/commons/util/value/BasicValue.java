@@ -21,6 +21,9 @@ import javax.annotation.Nullable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import ltd.qubit.commons.error.TypeConvertException;
+import ltd.qubit.commons.error.TypeMismatchException;
+import ltd.qubit.commons.error.UnsupportedDataTypeException;
 import ltd.qubit.commons.io.error.InvalidFormatException;
 import ltd.qubit.commons.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.Assignment;
@@ -152,106 +155,106 @@ public class BasicValue implements Value {
     if (this == other) {
       return;
     }
-    final Type type = other.getType();
+    final Type otherType = other.getType();
     if (other.isEmpty()) {
       value = null;
-      this.type = type;
+      this.type = otherType;
       return;
     }
     //  note that the other Value may NOT store its value as an Object;
     //  for example, the other Value implementation choose to store all value
     //  in its string representation.
-    switch (type) {
+    switch (otherType) {
       case BOOL: {
-        final boolean value = other.getBooleanValue();
+        final boolean otherValue = other.getBooleanValue();
         this.type = Type.BOOL;
-        this.value = Boolean.valueOf(value);
+        this.value = Boolean.valueOf(otherValue);
         return;
       }
       case CHAR: {
-        final char value = other.getCharValue();
+        final char otherValue = other.getCharValue();
         this.type = Type.CHAR;
-        this.value = Character.valueOf(value);
+        this.value = Character.valueOf(otherValue);
         return;
       }
       case BYTE: {
-        final byte value = other.getByteValue();
+        final byte otherValue = other.getByteValue();
         this.type = Type.BYTE;
-        this.value = Byte.valueOf(value);
+        this.value = Byte.valueOf(otherValue);
         return;
       }
       case SHORT: {
-        final short value = other.getShortValue();
+        final short otherValue = other.getShortValue();
         this.type = Type.SHORT;
-        this.value = Short.valueOf(value);
+        this.value = Short.valueOf(otherValue);
         return;
       }
       case INT: {
-        final int value = other.getIntValue();
+        final int otherValue = other.getIntValue();
         this.type = Type.INT;
-        this.value = Integer.valueOf(value);
+        this.value = Integer.valueOf(otherValue);
         return;
       }
       case LONG: {
-        final long value = other.getLongValue();
+        final long otherValue = other.getLongValue();
         this.type = Type.LONG;
-        this.value = Long.valueOf(value);
+        this.value = Long.valueOf(otherValue);
         return;
       }
       case FLOAT: {
-        final float value = other.getFloatValue();
+        final float otherValue = other.getFloatValue();
         this.type = Type.FLOAT;
-        this.value = Float.valueOf(value);
+        this.value = Float.valueOf(otherValue);
         return;
       }
       case DOUBLE: {
-        final double value = other.getDoubleValue();
+        final double otherValue = other.getDoubleValue();
         this.type = Type.DOUBLE;
-        this.value = Double.valueOf(value);
+        this.value = Double.valueOf(otherValue);
         return;
       }
       case STRING: {
-        final String value = other.getStringValue();
+        final String otherValue = other.getStringValue();
         this.type = Type.STRING;
-        this.value = value;
+        this.value = otherValue;
         return;
       }
       case DATE: {
-        final Date value = other.getDateValue();
+        final Date otherValue = other.getDateValue();
         // don't need to clone the value, since it is already the cloned
         // copy of the object in other.
         this.type = Type.DATE;
-        this.value = value;
+        this.value = otherValue;
         return;
       }
       case BYTE_ARRAY: {
-        final byte[] value = other.getByteArrayValue();
+        final byte[] otherValue = other.getByteArrayValue();
         // don't need to clone the value, since it is already the cloned
         // copy of the object in other.
         this.type = Type.BYTE_ARRAY;
-        this.value = value;
+        this.value = otherValue;
         return;
       }
       case CLASS: {
-        final Class<?> value = other.getClassValue();
+        final Class<?> otherValue = other.getClassValue();
         this.type = Type.CLASS;
-        this.value = value;
+        this.value = otherValue;
         return;
       }
       case BIG_INTEGER: {
-        final BigInteger value = other.getBigIntegerValue();
+        final BigInteger otherValue = other.getBigIntegerValue();
         this.type = Type.BIG_INTEGER;
-        this.value = value;
+        this.value = otherValue;
         return;
       }
       case BIG_DECIMAL: {
-        final BigDecimal value = other.getBigDecimalValue();
+        final BigDecimal otherValue = other.getBigDecimalValue();
         this.type = Type.BIG_DECIMAL;
-        this.value = value;
+        this.value = otherValue;
         return;
       }
       default:
-        throw new UnsupportedDataTypeException(type);
+        throw new UnsupportedDataTypeException(otherType);
     }
   }
 
@@ -259,12 +262,10 @@ public class BasicValue implements Value {
   public void readValue(final Type type, final InputStream in)
       throws IOException {
     try {
-      final Object value = TypeUtils.readObject(type, in);
+      final Object otherValue = TypeUtils.readObject(type, in);
       this.type = type;
-      this.value = value;
-    } catch (final UnsupportedDataTypeException e) {
-      throw new InvalidFormatException(e);
-    } catch (final ClassNotFoundException e) {
+      this.value = otherValue;
+    } catch (final UnsupportedDataTypeException | ClassNotFoundException e) {
       throw new InvalidFormatException(e);
     }
   }
@@ -282,9 +283,9 @@ public class BasicValue implements Value {
       this.type = type;
       value = null;
     } else {
-      final Object value = TypeUtils.fromXmlNode(type, child, prevSpaceAttr);
+      final Object otherValue = TypeUtils.fromXmlNode(type, child, prevSpaceAttr);
       this.type = type;
-      this.value = value;
+      this.value = otherValue;
     }
   }
 
@@ -627,8 +628,8 @@ public class BasicValue implements Value {
     if (value == null) {
       throw new NoSuchElementException();
     }
-    final Type type = getType();
-    return TypeUtils.objectAsString(type, value);
+    final Type theType = getType();
+    return TypeUtils.objectAsString(theType, value);
   }
 
   @Override
@@ -637,8 +638,8 @@ public class BasicValue implements Value {
     if (value == null) {
       throw new NoSuchElementException();
     }
-    final Type type = getType();
-    return TypeUtils.objectAsDate(type, value);
+    final Type theType = getType();
+    return TypeUtils.objectAsDate(theType, value);
   }
 
   @Override
@@ -647,8 +648,8 @@ public class BasicValue implements Value {
     if (value == null) {
       throw new NoSuchElementException();
     }
-    final Type type = getType();
-    return TypeUtils.objectAsByteArray(type, value);
+    final Type theType = getType();
+    return TypeUtils.objectAsByteArray(theType, value);
   }
 
   @Override
@@ -675,8 +676,8 @@ public class BasicValue implements Value {
     if (value == null) {
       throw new NoSuchElementException();
     }
-    final Type type = getType();
-    return TypeUtils.objectAsBigDecimal(type, value);
+    final Type theType = getType();
+    return TypeUtils.objectAsBigDecimal(theType, value);
   }
 
   @Override

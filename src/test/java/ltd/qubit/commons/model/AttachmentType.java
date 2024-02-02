@@ -87,7 +87,7 @@ public enum AttachmentType {
     } else if (contentType.equals("text/x-vcard")) {
       return VCARD;
     } else {
-      throw new UnsupportedContentTypeException(contentType);
+      throw new IllegalArgumentException(contentType);
     }
   }
 

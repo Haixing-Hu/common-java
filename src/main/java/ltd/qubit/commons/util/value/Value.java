@@ -21,6 +21,8 @@ import javax.annotation.Nullable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import ltd.qubit.commons.error.TypeConvertException;
+import ltd.qubit.commons.error.TypeMismatchException;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Type;
 import ltd.qubit.commons.text.xml.XmlException;

@@ -15,6 +15,8 @@ import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 
+import ltd.qubit.commons.error.UnsupportedByteOrderException;
+
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
