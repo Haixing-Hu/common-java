@@ -10,9 +10,8 @@ package ltd.qubit.commons.io;
 
 import org.junit.jupiter.api.Test;
 
-import ltd.qubit.commons.lang.SystemUtils;
-
 import ltd.qubit.commons.io.io.FileUtils;
+import ltd.qubit.commons.lang.SystemUtils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;

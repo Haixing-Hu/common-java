@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
-import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.math.RandomEx;
 import ltd.qubit.commons.text.Stripper;
 import ltd.qubit.commons.text.jackson.CustomizedJsonMapper;

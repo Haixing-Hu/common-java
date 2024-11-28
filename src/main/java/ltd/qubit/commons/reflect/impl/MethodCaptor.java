@@ -11,8 +11,6 @@ package ltd.qubit.commons.reflect.impl;
 import java.lang.reflect.Method;
 import java.util.concurrent.atomic.AtomicReference;
 
-import ltd.qubit.commons.reflect.MethodUtils;
-import ltd.qubit.commons.reflect.ReflectionException;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.description.modifier.Visibility;
 import net.bytebuddy.dynamic.scaffold.subclass.ConstructorStrategy;
@@ -21,10 +19,14 @@ import net.bytebuddy.implementation.bind.annotation.FieldValue;
 import net.bytebuddy.implementation.bind.annotation.Origin;
 import net.bytebuddy.implementation.bind.annotation.RuntimeType;
 
-import static ltd.qubit.commons.lang.ClassUtils.getDefaultValueObject;
+import ltd.qubit.commons.reflect.MethodUtils;
+import ltd.qubit.commons.reflect.ReflectionException;
+
 import static net.bytebuddy.matcher.ElementMatchers.isDeclaredBy;
 import static net.bytebuddy.matcher.ElementMatchers.isMethod;
 import static net.bytebuddy.matcher.ElementMatchers.not;
+
+import static ltd.qubit.commons.lang.ClassUtils.getDefaultValueObject;
 
 public class MethodCaptor {
 
