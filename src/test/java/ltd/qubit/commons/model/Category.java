@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,14 +8,24 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
-import jakarta.validation.constraints.Size;
-import ltd.qubit.commons.annotation.*;
-import ltd.qubit.commons.lang.*;
-import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import javax.annotation.Nullable;
 import java.time.Instant;
 import java.util.concurrent.TimeUnit;
+
+import javax.annotation.Nullable;
+
+import jakarta.validation.constraints.Size;
+
+import ltd.qubit.commons.annotation.Computed;
+import ltd.qubit.commons.annotation.Identifier;
+import ltd.qubit.commons.annotation.Precision;
+import ltd.qubit.commons.annotation.Reference;
+import ltd.qubit.commons.annotation.Unique;
+import ltd.qubit.commons.lang.Argument;
+import ltd.qubit.commons.lang.Assignable;
+import ltd.qubit.commons.lang.Assignment;
+import ltd.qubit.commons.lang.Equality;
+import ltd.qubit.commons.lang.Hash;
+import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 import static ltd.qubit.commons.text.CaseFormat.UPPER_CAMEL;
 import static ltd.qubit.commons.text.CaseFormat.UPPER_UNDERSCORE;
@@ -23,7 +33,7 @@ import static ltd.qubit.commons.text.CaseFormat.UPPER_UNDERSCORE;
 /**
  * 此模型表示实体的类别。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class Category implements HasInfoWithEntity, Predefinable, Auditable,
   Emptyful, Normalizable, Assignable<Category> {
@@ -153,7 +163,7 @@ public class Category implements HasInfoWithEntity, Predefinable, Auditable,
   }
 
   @Override
-  public Category clone() {
+  public Category cloneEx() {
     return new Category(this);
   }
 

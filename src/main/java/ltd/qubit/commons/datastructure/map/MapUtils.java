@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,13 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.map;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import ltd.qubit.commons.lang.ClassKey;
-
 import com.fasterxml.jackson.databind.util.ClassUtil;
+
+import ltd.qubit.commons.lang.ClassKey;
 
 /**
  * Provides the utility functions about the {@link Map}.
@@ -57,9 +58,7 @@ public class MapUtils {
    *     map.
    */
   public static <K, V> Map<V, K> invertAsUnmodifiable(final Map<K, V> map) {
-    return map.entrySet()
-        .stream()
-        .collect(Collectors.toUnmodifiableMap(Entry::getValue, Entry::getKey));
+    return Collections.unmodifiableMap(invert(map));
   }
 
   public static <T> T findTypeMapping(final Class<?> type,
@@ -119,6 +118,24 @@ public class MapUtils {
       result = findInterfaceMapping(iface, interfaceMap);
       if (result != null) {
         return result;
+      }
+    }
+    return null;
+  }
+
+  public static boolean containsKeyString(final Map<?, ?> map, final String keyString) {
+    for (final Object key : map.keySet()) {
+      if (key.toString().equals(keyString)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public static Object getByKeyString(final Map<?, ?> map, final String keyString) {
+    for (final Entry<?, ?> entry : map.entrySet()) {
+      if (entry.getKey().toString().equals(keyString)) {
+        return entry.getValue();
       }
     }
     return null;

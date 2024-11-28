@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -16,9 +16,9 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-import ltd.qubit.commons.util.codec.MoneyCodec;
-
 import com.google.common.collect.ImmutableSet;
+
+import ltd.qubit.commons.util.codec.MoneyCodec;
 
 import static java.lang.System.arraycopy;
 import static java.math.BigDecimal.ZERO;
@@ -300,4 +300,26 @@ public class BigDecimalUtils {
     return COMPARABLE_TYPES.contains(type);
   }
 
+  /**
+   * 将指定的浮点数值四舍五入为指定精度的字符串表示。
+   *
+   * @param value
+   *     指定的浮点数值。
+   * @param defaultValue
+   *     如果{@code value}为{@code null}，则返回此默认值。
+   * @param precision
+   *     指定的精度，即小数点后保留的位数。
+   * @return
+   *     {@code value}四舍五入为指定精度的字符串表示，如果{@code value}为{@code null}
+   *     则返回{@code defaultValue}。
+   */
+  @Nullable
+  public static String roundToString(@Nullable final BigDecimal value,
+      @Nullable final String defaultValue, final int precision) {
+    if (value == null) {
+      return defaultValue;
+    } else {
+      return value.setScale(precision, RoundingMode.HALF_UP).toPlainString();
+    }
+  }
 }

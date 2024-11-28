@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -70,7 +70,7 @@ public class CloseRange<T> implements CloneableEx<CloseRange<T>> {
   }
 
   @Override
-  public CloseRange<T> clone() {
+  public CloseRange<T> cloneEx() {
     return new CloseRange<>(this);
   }
 

@@ -31,9 +31,10 @@ import com.fasterxml.jackson.databind.PropertyName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
-import ltd.qubit.commons.io.IoUtils;
-import ltd.qubit.commons.reflect.ClassUtils;
+import ltd.qubit.commons.io.io.IoUtils;
+import ltd.qubit.commons.lang.ClassUtils;
 import ltd.qubit.commons.text.jackson.CustomizedXmlMapper;
+import ltd.qubit.commons.text.jackson.JacksonUtils;
 import ltd.qubit.commons.text.jackson.TypeRegistrationModule;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -45,8 +46,6 @@ import static ltd.qubit.commons.test.XmlUnitUtils.assertXPathAbsent;
 import static ltd.qubit.commons.test.XmlUnitUtils.assertXPathEquals;
 import static ltd.qubit.commons.test.XmlUnitUtils.assertXmlEqual;
 import static ltd.qubit.commons.text.jackson.JacksonUtils.getPropertyName;
-import static ltd.qubit.commons.text.jackson.JacksonUtils.getPropertyWrappedName;
-import static ltd.qubit.commons.text.jackson.JacksonUtils.getPropertyWrapperName;
 import static ltd.qubit.commons.text.jackson.JacksonUtils.getRootName;
 import static ltd.qubit.commons.text.jackson.JacksonUtils.serializeWithAdapter;
 import static ltd.qubit.commons.text.jackson.JacksonUtils.serializeWithSerializer;
@@ -95,7 +94,7 @@ public abstract class JacksonXmlTestUtils {
       throws Exception {
     LOGGER.debug("Testing XML deserialization for the object:\n{}", obj);
     final String xml = mapper.writerWithDefaultPrettyPrinter()
-                             .writeValueAsString(obj);
+        .writeValueAsString(obj);
     LOGGER.info("The object is serialized to:\n{}", xml);
     final T result = mapper.readValue(xml, (Class<T>) obj.getClass());
     LOGGER.debug("The XML is deserialized to:\n{}", result);
@@ -205,7 +204,7 @@ public abstract class JacksonXmlTestUtils {
     if (ClassUtils.isArrayType(fieldType)
         || ClassUtils.isCollectionType(fieldType)
         || ClassUtils.isMapType(fieldType)) {
-      propertyName = getPropertyWrapperName(mapper, field);
+      propertyName = JacksonUtils.getWrapperPropertyName(mapper, field);
     } else {
       propertyName = getPropertyName(mapper, field);
     }
@@ -235,7 +234,7 @@ public abstract class JacksonXmlTestUtils {
     } else {
       String elementPath = path;
       if (field != null) {
-        final PropertyName elementName = getPropertyWrappedName(mapper, field);
+        final PropertyName elementName = JacksonUtils.getWrappedPropertyName(mapper, field);
         elementPath = path + "/" + elementName;
       }
       int i = 1;
@@ -257,7 +256,7 @@ public abstract class JacksonXmlTestUtils {
       String elementPath = path;
       if (field != null && elementType != byte.class) {
         // byte[] should be serialized to BASE64 encoded string
-        final PropertyName elementName = getPropertyWrappedName(mapper, field);
+        final PropertyName elementName = JacksonUtils.getWrappedPropertyName(mapper, field);
         elementPath = path + "/" + elementName.getSimpleName();
       }
       final int n = Array.getLength(array);

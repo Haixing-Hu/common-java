@@ -1,14 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2017 - 2024.
-//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
+//    Copyright (c) 2022 - 2024.
+//    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.concurrent;
 
-import static ltd.qubit.commons.lang.StringUtils.isEmptyOrBlank;
+import ltd.qubit.commons.lang.Argument;
 
 /**
  * {@link InheritableThreadLocal} subclass that exposes a specified name as
@@ -18,8 +18,7 @@ import static ltd.qubit.commons.lang.StringUtils.isEmptyOrBlank;
  * {@code org.springframework.core.NamedInheritableThreadLocal} with slight
  * modifications. It is used to avoid the dependency of Spring Framework.
  *
- * @param <T>
- *     the value type
+ * @param <T> the value type
  * @author Juergen Hoeller
  * @author Haixing Hu
  * @see NamedThreadLocal
@@ -30,19 +29,15 @@ public class NamedInheritableThreadLocal<T> extends InheritableThreadLocal<T> {
 
   /**
    * Create a new NamedInheritableThreadLocal with the given name.
-   *
-   * @param name
-   *     a descriptive name for this ThreadLocal
+   * @param name a descriptive name for this ThreadLocal
    */
   public NamedInheritableThreadLocal(final String name) {
-    if (isEmptyOrBlank(name)) {
-      throw new IllegalArgumentException("Name must not be empty");
-    }
-    this.name = name;
+    this.name = Argument.requireNonEmpty("name", name);;
   }
 
   @Override
   public String toString() {
     return this.name;
   }
+
 }

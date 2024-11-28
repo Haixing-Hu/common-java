@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -26,7 +26,8 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
  */
 public abstract class CharSequenceTranslator implements StringTransformer {
 
-  public abstract CharSequenceTranslator clone();
+  @Override
+  public abstract CharSequenceTranslator cloneEx();
 
   /**
    * Translate a set of code points, represented by an int index into a character

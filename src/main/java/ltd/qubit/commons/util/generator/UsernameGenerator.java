@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -9,7 +9,7 @@
 package ltd.qubit.commons.util.generator;
 
 /**
- * The interface of generators generate the usernames.
+ * The interface of generators generates the usernames.
  *
  * @author Haixing Hu
  */

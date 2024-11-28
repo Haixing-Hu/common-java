@@ -26,7 +26,7 @@ import static org.hamcrest.Matchers.not;
 public class XmlUnitUtils {
 
   public static void assertXPathEquals(final String xml, final String xpath,
-      @Nullable final Object value) {
+          @Nullable final Object value) {
     if (value == null) {
       assertThat(xml, not(HasXPathMatcher.hasXPath(xpath)));
     } else {
@@ -59,10 +59,10 @@ public class XmlUnitUtils {
 
   public static void assertXmlEqual(final String expected, final String actual) {
     XmlAssert.assertThat(actual).and(expected)
-             .ignoreComments()
-             .ignoreChildNodesOrder()
-             .ignoreWhitespace()
-             .ignoreElementContentWhitespace()
-             .areIdentical();
+        .ignoreComments()
+        .ignoreChildNodesOrder()
+        .ignoreWhitespace()
+        .ignoreElementContentWhitespace()
+        .areIdentical();
   }
 }

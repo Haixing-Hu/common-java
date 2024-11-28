@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -22,5 +22,5 @@ public abstract class AbstractStringTransformer extends AbstractTransformer<Stri
   public abstract String transform(String str);
 
   @Override
-  public abstract AbstractStringTransformer clone();
+  public abstract AbstractStringTransformer cloneEx();
 }

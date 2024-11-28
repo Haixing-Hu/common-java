@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,15 +11,16 @@ package ltd.qubit.commons.sql;
 import java.sql.SQLSyntaxErrorException;
 
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
 
 import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
+import ltd.qubit.commons.reflect.impl.GetterMethod;
 import ltd.qubit.commons.text.SqlLikePattern;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
+import static ltd.qubit.commons.reflect.FieldUtils.getFieldName;
 import static ltd.qubit.commons.reflect.ObjectGraphUtils.getPropertyType;
 import static ltd.qubit.commons.reflect.ObjectGraphUtils.getPropertyValue;
 import static ltd.qubit.commons.reflect.ObjectGraphUtils.hasProperty;
@@ -36,9 +37,8 @@ import static ltd.qubit.commons.text.NamingStyleUtils.propertyPathToDatabaseFiel
 /**
  * 此模型表示用于过滤实体的简单条件表达式。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
-@Immutable
 public class SimpleCriterion<T> implements Criterion<T> {
 
   /**
@@ -103,6 +103,30 @@ public class SimpleCriterion<T> implements Criterion<T> {
    *
    * @param entityClass
    *     待创建的{@link SimpleCriterion}对象所过滤的实体的类。
+   * @param getter
+   *     表达式左边的实体类的属性的getter。
+   * @param operator
+   *     表达式中间的比较操作符。
+   * @param value
+   *     表达式右边的数值。支持的数值类型包括：{@code Boolean}, {@code Character},
+   *     {@code Byte}, {@code Short}, {@code Integer}, {@code Long},
+   *     {@code Float}, {@code Double}, {@code BigInteger}, {@code BigDecimal},
+   *     {@code String}, {@code Instant}, {@code LocalDate},
+   *     {@code LocalTime}, {@code LocalDateTime}, {@code ZonedDateTime},
+   *     {@code java.sql.Date}, {@code java.sql.Time},
+   *     {@code java.sql.Timestamp}, {@code java.util.Date},
+   *     {@code Enum}及其派生类，以及以上诸类型所构成的数组。
+   */
+  public <R> SimpleCriterion(final Class<T> entityClass, final GetterMethod<T, R> getter,
+      final ComparisonOperator operator, @Nullable final Object value) {
+    this(entityClass, getFieldName(entityClass, getter), operator, value, false);
+  }
+
+  /**
+   * 创建一个{@link SimpleCriterion}对象。
+   *
+   * @param entityClass
+   *     待创建的{@link SimpleCriterion}对象所过滤的实体的类。
    * @param property
    *     表达式左边的实体类的属性的路径。
    * @param operator
@@ -128,6 +152,34 @@ public class SimpleCriterion<T> implements Criterion<T> {
     this.operator = requireNonNull("operator", operator);
     this.value = value;
     this.compareProperties = compareProperties;
+  }
+
+  /**
+   * 创建一个{@link SimpleCriterion}对象。
+   *
+   * @param entityClass
+   *     待创建的{@link SimpleCriterion}对象所过滤的实体的类。
+   * @param getter
+   *     表达式左边的实体类的属性的getter。
+   * @param operator
+   *     表达式中间的比较操作符。
+   * @param value
+   *     表达式右边的值，可以是一个数值，或者是一个实体类的属性路径，取决于参数
+   *     {@code compareProperties}。支持的数值类型包括：{@code Boolean},
+   *     {@code Character}, {@code Byte}, {@code Short}, {@code Integer},
+   *     {@code Long}, {@code Float}, {@code Double}, {@code BigInteger},
+   *     {@code BigDecimal}, {@code String}, {@code Instant},
+   *     {@code LocalDate}, {@code LocalTime}, {@code LocalDateTime},
+   *     {@code ZonedDateTime}, {@code java.sql.Date}, {@code java.sql.Time},
+   *     {@code java.sql.Timestamp}, {@code java.util.Date},
+   *     {@code Enum}及其派生类，以及以上诸类型所构成的数组。
+   * @param compareProperties
+   *     指明该表达式是否是比较实体类的两个属性值，即其左右两边是否都是实体类的属性路径。
+   */
+  public <R> SimpleCriterion(final Class<T> entityClass, final GetterMethod<T, R> getter,
+      final ComparisonOperator operator, @Nullable final Object value,
+      final boolean compareProperties) {
+    this(entityClass, getFieldName(entityClass, getter), operator, value, compareProperties);
   }
 
   /**
@@ -348,6 +400,7 @@ public class SimpleCriterion<T> implements Criterion<T> {
     }
   }
 
+  @Override
   public boolean equals(final Object o) {
     if (this == o) {
       return true;
@@ -363,6 +416,7 @@ public class SimpleCriterion<T> implements Criterion<T> {
         && Equality.equals(compareProperties, other.compareProperties);
   }
 
+  @Override
   public int hashCode() {
     final int multiplier = 7;
     int result = 3;

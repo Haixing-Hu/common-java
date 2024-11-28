@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2017 - 2022.
-//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
+//    Copyright (c) 2022 - 2024.
+//    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -17,6 +17,7 @@ import java.nio.charset.CharacterCodingException;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -129,6 +130,7 @@ import static ltd.qubit.commons.text.impl.SearcherImpl.firstIndexOf;
  *
  * @author Haixing Hu
  */
+@SuppressWarnings("overloads")
 @ThreadSafe
 public class StringUtils {
 
@@ -635,7 +637,7 @@ public class StringUtils {
     // loop to the next to last char or to the last char if we need another
     // digit to
     // make a valid number (e.g. chars[0..5] = "1234E")
-    while ((i < sz) || ((i < (sz + 1)) && allowSigns && !foundDigit)) {
+    while ((i < sz) || (allowSigns && !foundDigit)) {
       ch = str.charAt(i);
       if ((ch >= '0') && (ch <= '9')) {
         foundDigit = true;
@@ -1622,9 +1624,8 @@ public class StringUtils {
    *     if it were equal to the length of the string: and -1 is returned.
    * @return the first occurrence of the search character, -1 if no match or
    *     {@code null} string input
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int indexOfChar(@Nullable final CharSequence str,
       final char ch, final int startIndex) {
     return new Searcher()
@@ -1659,9 +1660,8 @@ public class StringUtils {
    *     the position to end the search.
    * @return the first occurrence of the search character, -1 if no match or
    *     {@code null} string input.
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int indexOfChar(@Nullable final CharSequence str,
       final char ch, final int startIndex, final int endIndex) {
     return new Searcher()
@@ -1690,9 +1690,8 @@ public class StringUtils {
    * @return the first occurrence of the character accepted by the {@code filter}
    *     in the string {@code str} starting from the {@code startIndex}; or -1
    *     if no such character.
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int indexOfChar(@Nullable final CharSequence str,
       @Nullable final CharFilter filter, final int startIndex) {
     return new Searcher()
@@ -1725,9 +1724,8 @@ public class StringUtils {
    *     is {@code null} or empty, -1 is returned. If {@code [startIndex, endIndex)}
    *     is not a valid range of the string {@code str}, -1 is returned. If
    *     {@code filter} is {@code null}, -1 is returned.
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int indexOfChar(@Nullable final CharSequence str,
       @Nullable final CharFilter filter, final int startIndex,
       final int endIndex) {
@@ -1764,9 +1762,8 @@ public class StringUtils {
    *     if it were equal to the length of the string: and -1 is returned.
    * @return the first occurrence of the search Unicode code point, or -1 if no
    *     match or {@code null} string input
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int indexOfCodePoint(@Nullable final CharSequence str,
       final int codePoint, final int startIndex) {
     return new Searcher()
@@ -1801,9 +1798,8 @@ public class StringUtils {
    *     the position to end the search.
    * @return the first occurrence of the search Unicode code point, or -1 if no
    *     match or {@code null} string input.
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int indexOfCodePoint(@Nullable final CharSequence str,
       final int codePoint, final int startIndex, final int endIndex) {
     return new Searcher()
@@ -1829,9 +1825,8 @@ public class StringUtils {
    *     in the string {@code str}; or -1 if no such character. If {@code str}
    *     is {@code null} or empty, -1 is returned. If {@code filter} is
    *     {@code null}, -1 is returned.
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int indexOfCodePoint(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter) {
     return new Searcher()
@@ -1860,9 +1855,8 @@ public class StringUtils {
    *     returned. If {@code [startIndex, str.length())} is not a valid range of
    *     the string {@code str}, -1 is returned. If {@code filter} is
    *     {@code null}, -1 is returned.
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int indexOfCodePoint(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter, final int startIndex) {
     return new Searcher()
@@ -1895,9 +1889,8 @@ public class StringUtils {
    *     is {@code null} or empty, -1 is returned. If {@code [startIndex, endIndex)}
    *     is not a valid range of the string {@code str}, -1 is returned. If
    *     {@code filter} is {@code null}, -1 is returned.
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int indexOfCodePoint(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter, final int startIndex,
       final int endIndex) {
@@ -1938,9 +1931,8 @@ public class StringUtils {
    *     it is greater than the length of the string, it has the same effect as
    *     if it were equal to the length of the string: and -1 is returned.
    * @return the index of any of the chars, -1 if no match or null input
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int indexOfAnyChar(@Nullable final CharSequence str,
       @Nullable final char[] chars, final int startIndex) {
     return new Searcher()
@@ -1978,9 +1970,8 @@ public class StringUtils {
    *     it is greater than the length of the string, it has the same effect as
    *     if it were equal to the length of the string: and -1 is returned.
    * @return the index of any of the chars, -1 if no match or null input
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int indexOfAnyChar(@Nullable final CharSequence str,
       @Nullable final CharSequence chars, final int startIndex) {
     return new Searcher()
@@ -2019,9 +2010,8 @@ public class StringUtils {
    *     it is greater than the length of the string, it has the same effect as
    *     if it were equal to the length of the string: and -1 is returned.
    * @return the index of any of the chars, -1 if no match or null input
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int indexOfAnyCharBut(@Nullable final CharSequence str,
       @Nullable final char[] searchChars, final int fromIndex) {
     return new Searcher()
@@ -2060,9 +2050,8 @@ public class StringUtils {
    *     it is greater than the length of the string, it has the same effect as
    *     if it were equal to the length of the string: and -1 is returned.
    * @return the index of any of the chars, -1 if no match or null input
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int indexOfAnyCharBut(@Nullable final CharSequence str,
       @Nullable final CharSequence searchChars, final int fromIndex) {
     return new Searcher()
@@ -2110,9 +2099,8 @@ public class StringUtils {
    *     whether to ignore case while comparing strings.
    * @return the first occurrence of the search String, -1 if no match or {@code
    *     null} string input
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int indexOf(@Nullable final CharSequence str,
       @Nullable final CharSequence search, final int fromIndex,
       final boolean ignoreCase) {
@@ -2189,9 +2177,8 @@ public class StringUtils {
    *     whether to ignore case while comparing strings.
    * @return the first occurrence of any of the searchStrs in str, -1 if no
    *     match
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int indexOfAny(@Nullable final CharSequence str,
       @Nullable final String[] searches, final int fromIndex,
       final boolean ignoreCase) {
@@ -2233,9 +2220,8 @@ public class StringUtils {
    *     -1 is returned.
    * @return the last current of the search character, -1 if no match or {@code
    *     null} string input.
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int lastIndexOfChar(@Nullable final CharSequence str,
       final char ch, final int fromIndex) {
     return new Searcher()
@@ -2258,9 +2244,8 @@ public class StringUtils {
    *     searched.
    * @return the first occurrence of the character accepted by the {@code
    *     filter} in the string {@code str} starting from the {@code startIndex}.
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int lastIndexOfChar(@Nullable final CharSequence str,
       @Nullable final CharFilter filter) {
     return new Searcher()
@@ -2288,9 +2273,8 @@ public class StringUtils {
    *     -1 is returned.
    * @return the first occurrence of the character accepted by the {@code
    *     filter} in the string {@code str} starting from the {@code fromIndex}.
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int lastIndexOfChar(@Nullable final CharSequence str,
       @Nullable final CharFilter filter, final int fromIndex) {
     return new Searcher()
@@ -2330,9 +2314,8 @@ public class StringUtils {
    *     searched. If it is negative, it has the same effect as if it were -1:
    *     -1 is returned.
    * @return the index of any of the chars, -1 if no match or null input
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int lastIndexOfAnyChar(@Nullable final CharSequence str,
       @Nullable final char[] searchChars, final int fromIndex) {
     return new Searcher()
@@ -2372,9 +2355,8 @@ public class StringUtils {
    *     searched. If it is negative, it has the same effect as if it were -1:
    *     -1 is returned.
    * @return the index of any of the chars, -1 if no match or null input
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int lastIndexOfAnyChar(@Nullable final CharSequence str,
       @Nullable final String searchChars, final int fromIndex) {
     return new Searcher()
@@ -2415,9 +2397,8 @@ public class StringUtils {
    *     searched. If it is negative, it has the same effect as if it were -1:
    *     -1 is returned.
    * @return the index of any of the chars, -1 if no match or null input
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int lastIndexOfAnyCharBut(@Nullable final CharSequence str,
       @Nullable final char[] searchChars, final int fromIndex) {
     return new Searcher()
@@ -2458,9 +2439,8 @@ public class StringUtils {
    *     searched. If it is negative, it has the same effect as if it were -1:
    *     -1 is returned.
    * @return the index of any of the chars, -1 if no match or null input
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int lastIndexOfAnyCharBut(@Nullable final CharSequence str,
       @Nullable final CharSequence searchChars, final int fromIndex) {
     return new Searcher()
@@ -2505,9 +2485,8 @@ public class StringUtils {
    *     whether to ignore case while comparing strings.
    * @return the first occurrence of the search String, -1 if no match or {@code
    *     null} string input
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int lastIndexOf(@Nullable final CharSequence str,
       @Nullable final CharSequence search, final int fromIndex,
       final boolean ignoreCase) {
@@ -2581,9 +2560,8 @@ public class StringUtils {
    * @param ignoreCase
    *     whether to ignore case while comparing strings.
    * @return the last current of any of the strings, -1 if no match
-   * @deprecated use {@link Searcher}
+   * @see Searcher
    */
-  @Deprecated
   public static int lastIndexOfAny(@Nullable final String str,
       @Nullable final CharSequence[] searches, final int fromIndex,
       final boolean ignoreCase) {
@@ -3122,9 +3100,8 @@ public class StringUtils {
    *     returned.
    * @return a list of integers, which contains all the indexes where the
    *     substring occurs in the string.
-   * @deprecated use {@link Searcher#getOccurrencesIn(CharSequence)}
+   * @see Searcher#getOccurrencesIn(CharSequence)
    */
-  @Deprecated
   public static IntList getOccurrences(@Nullable final CharSequence str,
       @Nullable final CharSequence substr, final boolean ignoreCase,
       @Nullable final IntList list) {
@@ -4265,7 +4242,7 @@ public class StringUtils {
    * @return the substring with the string removed if found, {@code null} if
    *     null string input.
    * @see Remover#forPrefix(CharSequence)
-   * @se Remover#removeFrom(CharSequence)
+   * @see Remover#removeFrom(CharSequence)
    */
   public static String removePrefix(@Nullable final String str,
       @Nullable final String prefix) {
@@ -4616,11 +4593,10 @@ public class StringUtils {
    * @param replacement
    *     the character to replace, may be null
    * @return modified String, {@code null} if null string input
-   * @deprecated use {@link Replacer#searchForChar(char)}
-   *     and {@link Replacer#replaceWithChar(char)}
-   *     and {@link Replacer#applyTo(CharSequence)}.
+   * @see Replacer#searchForChar(char)
+   * @see Replacer#replaceWithChar(char)
+   * @see Replacer#applyTo(CharSequence)
    */
-  @Deprecated
   public static String replaceChar(@Nullable final String str,
       final char search, final char replacement) {
     return new Replacer()
@@ -4629,7 +4605,6 @@ public class StringUtils {
         .applyTo(str);
   }
 
-  @Deprecated
   public static void replaceChar(@Nullable final String str, final char search,
       final char replacement, final StringBuilder builder) {
     new Replacer()
@@ -4670,15 +4645,12 @@ public class StringUtils {
    * @param replaceChars
    *     a set of characters to replace, may be null.
    * @return the modified string, or {@code null} if null string input.
-   * @deprecated use {@link Replacer#searchForChar(char)}
-   *     and {@link Replacer#replaceWithChar(char)}
-   *     and {@link Replacer#applyTo(CharSequence)}.
+   * @see Replacer#searchForChar(char)
+   * @see Replacer#replaceWithChar(char)
+   * @see Replacer#applyTo(CharSequence)
    */
-  @Deprecated
   public static String replaceChars(@Nullable final String str,
       @Nullable final String searchChars, @Nullable final String replaceChars) {
-
-
     if ((str == null) || (str.length() == 0) || (searchChars == null)
         || (searchChars.length() == 0)) {
       return str;
@@ -4794,11 +4766,10 @@ public class StringUtils {
    *     not.
    * @return the text with any replacements processed, {@code null} if null
    *     String input
-   * @deprecated use {@link Replacer#searchForSubstring(CharSequence)}
-   *     and {@link Replacer#replaceWithString(CharSequence)}
-   *     and {@link Replacer#applyTo(CharSequence)}.
+   * @see Replacer#searchForSubstring(CharSequence)
+   * @see Replacer#replaceWithString(CharSequence)
+   * @see Replacer#applyTo(CharSequence)
    */
-  @Deprecated
   public static String replace(@Nullable final CharSequence str,
       @Nullable final CharSequence search, @Nullable final CharSequence replacement,
       final int max, final boolean ignoreCase) {
@@ -4810,7 +4781,6 @@ public class StringUtils {
         .applyTo(str);
   }
 
-  @Deprecated
   public static int replace(@Nullable final CharSequence str,
       @Nullable final CharSequence search, @Nullable final CharSequence replacement,
       final int max, final boolean ignoreCase, final StringBuilder output) {
@@ -5599,7 +5569,7 @@ public class StringUtils {
     if (list.isEmpty()) {
       return null;
     }
-    return list.toArray(new String[list.size()]);
+    return list.toArray(new String[0]);
   }
 
   /**
@@ -5653,9 +5623,8 @@ public class StringUtils {
    *     the index to stop joining from (exclusive). It is an error to pass in
    *     an end current past the end of the array.
    * @return the joined String, {@code null} if null array input.
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(final char separator, @Nullable final boolean[] array,
       final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -5714,9 +5683,8 @@ public class StringUtils {
    *     the index to stop joining from (exclusive). It is an error to pass in
    *     an end current past the end of the array.
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(final char separator, @Nullable final char[] array,
       final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -5775,9 +5743,8 @@ public class StringUtils {
    *     the index to stop joining from (exclusive). It is an error to pass in
    *     an end current past the end of the array.
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(final char separator, @Nullable final byte[] array,
       final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -5836,9 +5803,8 @@ public class StringUtils {
    *     the index to stop joining from (exclusive). It is an error to pass in
    *     an end current past the end of the array.
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(final char separator,
       @Nullable final short[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -5896,9 +5862,8 @@ public class StringUtils {
    *     the index to stop joining from (exclusive). It is an error to pass in
    *     an end current past the end of the array.
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(final char separator, @Nullable final int[] array,
       final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -5957,9 +5922,8 @@ public class StringUtils {
    *     the index to stop joining from (exclusive). It is an error to pass in
    *     an end current past the end of the array.
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(final char separator, @Nullable final long[] array,
       final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6018,9 +5982,8 @@ public class StringUtils {
    *     the index to stop joining from (exclusive). It is an error to pass in
    *     an end current past the end of the array.
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(final char separator,
       @Nullable final float[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6079,9 +6042,8 @@ public class StringUtils {
    *     the index to stop joining from (exclusive). It is an error to pass in
    *     an end current past the end of the array.
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(final char separator,
       @Nullable final double[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6149,9 +6111,8 @@ public class StringUtils {
    *     length of the {@code array}, it is treated as the length of the {@code
    *     array}.
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static <T> String join(final char separator,
       @Nullable final T[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6271,9 +6232,8 @@ public class StringUtils {
    *     length of the {@code array}, it is treated as the length of the {@code
    *     array}.
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final boolean[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6343,9 +6303,8 @@ public class StringUtils {
    *     length of the {@code array}, it is treated as the length of the {@code
    *     array}.
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final char[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6415,9 +6374,8 @@ public class StringUtils {
    *     length of the {@code array}, it is treated as the length of the {@code
    *     array}.
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final byte[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6487,9 +6445,8 @@ public class StringUtils {
    *     length of the {@code array}, it is treated as the length of the {@code
    *     array}.
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final short[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6559,9 +6516,8 @@ public class StringUtils {
    *     length of the {@code array}, it is treated as the length of the {@code
    *     array}.
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final int[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6631,9 +6587,8 @@ public class StringUtils {
    *     length of the {@code array}, it is treated as the length of the {@code
    *     array}.
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final long[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6703,9 +6658,8 @@ public class StringUtils {
    *     length of the {@code array}, it is treated as the length of the {@code
    *     array}.
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final float[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6775,9 +6729,8 @@ public class StringUtils {
    *     length of the {@code array}, it is treated as the length of the {@code
    *     array}.
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final double[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6851,9 +6804,8 @@ public class StringUtils {
    *     length of the {@code array}, it is treated as the length of the {@code
    *     array}.
    * @return the joined String, {@code null} if null array input
-   * @deprecated use {@link Joiner}
+   * @see Joiner
    */
-  @Deprecated
   public static <T> String join(@Nullable final String separator,
       @Nullable final T[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6989,9 +6941,8 @@ public class StringUtils {
    *     the returned list may be empty if the splitting result has no substring.
    *     The returned list will never be {@code null}.
    * @see SplitOption
-   * @deprecated Use {@link Splitter} class.
+   * @see Splitter
    */
-  @Deprecated
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
       final char separator, final int options) {
     return new Splitter()
@@ -7040,9 +6991,7 @@ public class StringUtils {
    *     returned list may be empty if the splitting result has no substring.
    *     The returned list will never be {@code null}.
    * @see SplitOption
-   * @deprecated Use {@link Splitter} class.
    */
-  @Deprecated
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
       final char separator, final int options,
       @Nullable final List<String> list) {
@@ -7087,9 +7036,7 @@ public class StringUtils {
    *     the returned list may be empty if the splitting result has no substring.
    *     The returned list will never be {@code null}.
    * @see SplitOption
-   * @deprecated Use {@link Splitter} class.
    */
-  @Deprecated
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
       @Nullable final CharSequence separatorChars, final int options) {
     return new Splitter()
@@ -7139,9 +7086,7 @@ public class StringUtils {
    *     returned list may be empty if the splitting result has no substring.
    *     The returned list will never be {@code null}.
    * @see SplitOption
-   * @deprecated Use {@link Splitter} class.
    */
-  @Deprecated
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
       @Nullable final CharSequence separatorChars, final int options,
       @Nullable final List<String> result) {
@@ -7187,9 +7132,7 @@ public class StringUtils {
    *     the returned list may be empty if the splitting result has no substring.
    *     The returned list will never be {@code null}.
    * @see SplitOption
-   * @deprecated Use {@link Splitter} class.
    */
-  @Deprecated
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
       @Nullable final char[] separatorChars, final int options) {
     return new Splitter()
@@ -7239,9 +7182,7 @@ public class StringUtils {
    *     returned list may be empty if the splitting result has no substring.
    *     The returned list will never be {@code null}.
    * @see SplitOption
-   * @deprecated Use {@link Splitter} class.
    */
-  @Deprecated
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
       @Nullable final char[] separatorChars, final int options,
       @Nullable final List<String> result) {
@@ -7286,9 +7227,7 @@ public class StringUtils {
    *     the returned list may be empty if the splitting result has no substring.
    *     The returned list will never be {@code null}.
    * @see SplitOption
-   * @deprecated Use {@link Splitter} class.
    */
-  @Deprecated
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
       final CharFilter charFilter, final int options) {
     return new Splitter()
@@ -7338,9 +7277,7 @@ public class StringUtils {
    *     returned list may be empty if the splitting result has no substring.
    *     The returned list will never be {@code null}.
    * @see SplitOption
-   * @deprecated Use {@link Splitter} class.
    */
-  @Deprecated
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
       final CharFilter charFilter, final int options,
       @Nullable final List<String> list) {
@@ -7419,9 +7356,7 @@ public class StringUtils {
    *     created and stores the split sub-strings and is returned. Note that the
    *     returned list may be empty if the splitting result has no substring.
    *     The returned list will never be {@code null}.
-   * @deprecated Use {@link Splitter} class.
    */
-  @Deprecated
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
       @Nullable final List<String> list) {
     return new Splitter()
@@ -7467,9 +7402,8 @@ public class StringUtils {
    *     returned list may be empty if the splitting result has no substring.
    *     The returned list will never be {@code null}.
    * @see SplitOption
-   * @deprecated Use {@link Splitter} class.
+   * @see Splitter
    */
-  @Deprecated
   public static @Nonnull List<String> splitByCharType(@Nullable final CharSequence str,
       final int options) {
     return new Splitter()
@@ -7521,9 +7455,7 @@ public class StringUtils {
    *     returned list may be empty if the splitting result has no substring.
    *     The returned list will never be {@code null}.
    * @see SplitOption
-   * @deprecated Use {@link Splitter} class.
    */
-  @Deprecated
   public static @Nonnull List<String> splitByCharType(@Nullable final CharSequence str,
       final int options, @Nullable final List<String> list) {
     return new Splitter()
@@ -7604,9 +7536,8 @@ public class StringUtils {
    *     the returned list may be empty if the splitting result has no substring.
    *     The returned list will never be {@code null}.
    * @see SplitOption
-   * @deprecated Use {@link Splitter} class.
+   * @see Splitter
    */
-  @Deprecated
   public static @Nonnull List<String> splitByString(@Nullable final CharSequence str,
       @Nullable final CharSequence separator, final int options) {
     return new Splitter()
@@ -7651,9 +7582,7 @@ public class StringUtils {
    *     returned list may be empty if the splitting result has no substring.
    *     The returned list will never be {@code null}.
    * @see SplitOption
-   * @deprecated Use {@link Splitter} class.
    */
-  @Deprecated
   public static @Nonnull List<String> splitByString(@Nullable final CharSequence str,
       @Nullable final CharSequence separator, final int options,
       @Nullable final List<String> list) {
@@ -7709,9 +7638,7 @@ public class StringUtils {
    * @return an list of splitted strings. The returned list may be empty if the
    *     splitting result has no substring. The returned list will never be
    *     {@code null}.
-   * @deprecated use {@link Splitter}
    */
-  @Deprecated
   public static @Nonnull List<String> splitLines(@Nullable final CharSequence str,
       final boolean trim, final boolean ignoreEmpty) {
     return new Splitter()
@@ -7878,9 +7805,7 @@ public class StringUtils {
           + repeat);
     }
     final char[] buffer = new char[repeat];
-    for (int i = 0; i < buffer.length; i++) {
-      buffer[i] = padChar;
-    }
+    Arrays.fill(buffer, padChar);
     return new String(buffer);
   }
 
@@ -8558,8 +8483,7 @@ public class StringUtils {
    * Normalizes the spaces in a string.
    *
    * <p>This function will remove duplicated line breaks, and duplicated
-   * spaces,
-   * and spaces at beginning or ending of a line.
+   * spaces, and spaces at beginning or ending of a line.
    *
    * @param str
    *     the string to be compact.
@@ -8592,7 +8516,7 @@ public class StringUtils {
     }
     int appended = 0;
     final CharSequenceCodePointIterator iter = new CharSequenceCodePointIterator(str);
-    for (; iter.atEnd() == false; iter.forward()) {
+    for (; !iter.atEnd(); iter.forward()) {
       final int codePoint = iter.current();
       int visibility = CharUtils.getVisibility(codePoint);
       // if line should be folded, the line break character is treated as a
@@ -8694,11 +8618,41 @@ public class StringUtils {
       final char leftQuote, final char rightQuote,
       final StringBuilder builder) {
     final String result = escape(str, escapeChar, leftQuote, rightQuote);
-    builder.append(leftQuote).append(result).append(rightQuote);
+    builder.append(leftQuote)
+           .append(result)
+           .append(rightQuote);
   }
 
   /**
-   * Unquotes a string with the given quotation marks, without unescaping the
+   * Quotes a string with the single quotation marks, escaping the characters in
+   * the string if necessary.
+   *
+   * @param str
+   *     the string to be quoted.
+   * @return the single-quoted string, with its original content escaped.
+   */
+  public static String singleQuote(final String str) {
+    final StringBuilder builder = new StringBuilder();
+    quote(str, '\\', '\'', '\'', builder);
+    return builder.toString();
+  }
+
+  /**
+   * Quotes a string with the double quotation marks, escaping the characters in
+   * the string if necessary.
+   *
+   * @param str
+   *     the string to be quoted.
+   * @return the double-quoted string, with its original content escaped.
+   */
+  public static String doubleQuote(final String str) {
+    final StringBuilder builder = new StringBuilder();
+    quote(str, '\\', '"', '"', builder);
+    return builder.toString();
+  }
+
+  /**
+   * Unquotes a string with the given quotation marks, **without** unescaping the
    * characters in the string.
    *
    * @param str
@@ -8707,8 +8661,7 @@ public class StringUtils {
    *     the left quotation mark.
    * @param rightQuote
    *     the right quotation mark.
-   * @return the unquoted string, without escaping the characters in the string,
-   *     or {@code null} if the input string is {@code null}.
+   * @return the unquoted string, without escaping the characters in the string.
    * @throws IllegalArgumentException
    *     if the string is not correctly quoted.
    */
@@ -8723,7 +8676,7 @@ public class StringUtils {
   }
 
   /**
-   * Unquotes a string with the given quotation marks, without unescaping the
+   * Unquotes a string with the given quotation marks, **without** unescaping the
    * characters in the string.
    *
    * @param str
@@ -8733,16 +8686,15 @@ public class StringUtils {
    * @param rightQuote
    *     the right quotation mark.
    * @param builder
-   *     the string builder used to append the unquoted string, without escaping
+   *     the string builder used to append the unquoted string, **without** escaping
    *     the characters in the string.
    * @throws IllegalArgumentException
    *     if the string is not correctly quoted.
    */
-  public static void unquote(@Nullable final String str, final char leftQuote,
+  public static void unquote(final String str, final char leftQuote,
       final char rightQuote, final StringBuilder builder) {
     final int n = str.length();
-    if ((n < 2) || (str.charAt(0) != leftQuote)
-        || (str.charAt(n - 1) != rightQuote)) {
+    if ((n < 2) || (str.charAt(0) != leftQuote) || (str.charAt(n - 1) != rightQuote)) {
       throw new IllegalArgumentException("String is not quoted: " + str);
     }
     builder.append(str, 1, n - 1);
@@ -8793,9 +8745,7 @@ public class StringUtils {
       final char leftQuote, final char rightQuote,
       final StringBuilder builder) {
     final int n = str.length();
-    if ((n < 2)
-        || (str.charAt(0) != leftQuote)
-        || (str.charAt(n - 1) != rightQuote)) {
+    if ((n < 2) || (str.charAt(0) != leftQuote) || (str.charAt(n - 1) != rightQuote)) {
       throw new IllegalArgumentException("String is not quoted: " + str);
     }
     unescape(str.substring(1, n - 1), escapeChar, builder);
@@ -8822,8 +8772,7 @@ public class StringUtils {
       return null;
     }
     final int n = str.length();
-    if ((n >= 2) && (str.charAt(0) == leftQuote) && (str.charAt(n - 1)
-        == rightQuote)) {
+    if ((n >= 2) && (str.charAt(0) == leftQuote) && (str.charAt(n - 1) == rightQuote)) {
       return str.substring(1, n - 1);
     } else {
       return str;
@@ -8847,12 +8796,10 @@ public class StringUtils {
    *     if the string is not correctly quoted.
    */
   public static void unquoteIfNecessary(@Nullable final String str,
-      final char leftQuote,
-      final char rightQuote, final StringBuilder builder) {
+      final char leftQuote, final char rightQuote, final StringBuilder builder) {
     if (str != null) {
       final int n = str.length();
-      if ((n >= 2) && (str.charAt(0) == leftQuote) && (str.charAt(n - 1)
-          == rightQuote)) {
+      if ((n >= 2) && (str.charAt(0) == leftQuote) && (str.charAt(n - 1) == rightQuote)) {
         builder.append(str, 1, n - 1);
       } else {
         builder.append(str);
@@ -9064,7 +9011,7 @@ public class StringUtils {
     final BooleanFormat bf = new BooleanFormat();
     final boolean value = bf.parse(str);
     if (bf.success()) {
-      return Boolean.valueOf(value);
+      return value;
     } else {
       return defaultValue;
     }
@@ -9162,7 +9109,7 @@ public class StringUtils {
     final NumberFormat nf = new NumberFormat();
     final short value = nf.parseShort(str);
     if (nf.success()) {
-      return Short.valueOf(value);
+      return value;
     } else {
       return defaultValue;
     }
@@ -9197,7 +9144,7 @@ public class StringUtils {
     final NumberFormat nf = new NumberFormat();
     final int value = nf.parseInt(str);
     if (nf.success()) {
-      return Integer.valueOf(value);
+      return value;
     } else {
       return defaultValue;
     }
@@ -9233,7 +9180,7 @@ public class StringUtils {
     final NumberFormat nf = new NumberFormat();
     final long value = nf.parseLong(str);
     if (nf.success()) {
-      return Long.valueOf(value);
+      return value;
     } else {
       return defaultValue;
     }
@@ -9269,7 +9216,7 @@ public class StringUtils {
     final NumberFormat nf = new NumberFormat();
     final float value = nf.parseFloat(str);
     if (nf.success()) {
-      return Float.valueOf(value);
+      return value;
     } else {
       return defaultValue;
     }
@@ -9305,7 +9252,7 @@ public class StringUtils {
     final NumberFormat nf = new NumberFormat();
     final double value = nf.parseDouble(str);
     if (nf.success()) {
-      return Double.valueOf(value);
+      return value;
     } else {
       return defaultValue;
     }
@@ -9481,20 +9428,12 @@ public class StringUtils {
     }
   }
 
-  public static String concat(@Nullable final String... strings) {
+  public static String concat(final String... strings) {
     final StringBuilder builder = new StringBuilder();
-    boolean nonNull = false;
     for (final String str : strings) {
-      if (str != null) {
-        builder.append(str);
-        nonNull = true;
-      }
+      builder.append(str);
     }
-    if (nonNull) {
-      return builder.toString();
-    } else {
-      return null;
-    }
+    return builder.toString();
   }
 
   public static String valueOf(@Nullable final Object obj) {
@@ -9517,16 +9456,45 @@ public class StringUtils {
     }
   }
 
+  /**
+   * Converts a string to a string representation.
+   *
+   * @param value
+   *     the value to be converted.
+   * @return
+   *     the string representation of the value, or {@code null} if the value is
+   *     {@code null}.
+   */
   public static String toString(@Nullable final Object value) {
-    if (value == null) {
-      return null;
-    }
+    return (value == null ? null : toStringImpl(value));
+  }
+
+  /**
+   * Converts a value to a string representation, with a default value if the
+   * value is {@code null}.
+   *
+   * @param value
+   *     the value to be converted.
+   * @param defaultValue
+   *     the default value.
+   * @return
+   *     the string representation of the value, or the default value if the
+   *     value is {@code null}.
+   */
+  public static String toString(@Nullable final Object value,
+      final String defaultValue) {
+    return (value == null ? defaultValue : toStringImpl(value));
+  }
+
+  private static String toStringImpl(final Object value) {
     if (value instanceof String) {
       return (String) value;
     } else if (value instanceof Character) {
       return String.valueOf(value);
     } else if (value instanceof Enum) {
-      return ((Enum) value).name();
+      return ((Enum<?>) value).name();
+    } else if (ArrayUtils.isArray(value)) {
+      return ArrayUtils.toString(value);
     } else {
       return value.toString();
     }
@@ -9670,6 +9638,10 @@ public class StringUtils {
     return splitCodePoints(str).toArray();
   }
 
+  public static String formatPercent(final double value) {
+    return formatPercent(value, 2, Locale.getDefault());
+  }
+
   public static String formatPercent(final double value, final int fractionDigits) {
     return formatPercent(value, fractionDigits, Locale.getDefault());
   }
@@ -9679,5 +9651,25 @@ public class StringUtils {
     final java.text.NumberFormat nf = java.text.NumberFormat.getPercentInstance(locale);
     nf.setMaximumFractionDigits(fractionDigits);
     return nf.format(value);
+  }
+
+  /**
+   * Add a prefix to each line of the input string.
+   * <p>
+   * The line break characters include {@code '\n'}, {@code '\r'}, and {@code '\r\n'}.
+   *
+   * @param input
+   *     the input string.
+   * @param prefix
+   *     the prefix to be added to each line.
+   * @return
+   *     the string with the specified prefix added to each line.
+   */
+  public static String addPrefixToEachLine(final String input, final String prefix) {
+    // 使用正则表达式来匹配每行的开头，并添加前缀
+    // 正则表达式解释:
+    // ^ 表示一行的开始
+    // (?m) 是多行模式，它使 ^ 和 $ 匹配每行的开始和结束
+    return input.replaceAll("(?m)^", prefix);
   }
 }

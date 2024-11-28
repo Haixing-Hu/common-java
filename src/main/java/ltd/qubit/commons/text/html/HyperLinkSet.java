@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -43,7 +43,7 @@ public final class HyperLinkSet extends HashSet<HyperLink> implements
   }
 
   @Override
-  public HyperLinkSet clone() {
+  public HyperLinkSet cloneEx() {
     return new HyperLinkSet(this);
   }
 }

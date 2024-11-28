@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,11 +11,13 @@ package ltd.qubit.commons.util.value;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -52,8 +54,8 @@ import ltd.qubit.commons.datastructure.list.primitive.impl.ShortArrayList;
 import ltd.qubit.commons.error.TypeConvertException;
 import ltd.qubit.commons.error.TypeMismatchException;
 import ltd.qubit.commons.error.UnsupportedDataTypeException;
-import ltd.qubit.commons.io.error.InvalidFormatException;
-import ltd.qubit.commons.io.serialize.XmlSerialization;
+import ltd.qubit.commons.io.io.error.InvalidFormatException;
+import ltd.qubit.commons.io.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.lang.Assignment;
 import ltd.qubit.commons.lang.Hash;
@@ -67,6 +69,7 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 public class BasicMultiValues implements MultiValues, Serializable {
 
+  @Serial
   private static final long serialVersionUID = 1158197073979656745L;
 
   static {
@@ -213,56 +216,56 @@ public class BasicMultiValues implements MultiValues, Serializable {
       case BOOL: {
         final boolean value = other.getBooleanValue();
         this.type = Type.BOOL;
-        valueOrValues = Boolean.valueOf(value);
+        valueOrValues = value;
         count = 1;
         return;
       }
       case CHAR: {
         final char value = other.getCharValue();
         this.type = Type.CHAR;
-        valueOrValues = Character.valueOf(value);
+        valueOrValues = value;
         count = 1;
         return;
       }
       case BYTE: {
         final byte value = other.getByteValue();
         this.type = Type.BYTE;
-        valueOrValues = Byte.valueOf(value);
+        valueOrValues = value;
         count = 1;
         return;
       }
       case SHORT: {
         final short value = other.getShortValue();
         this.type = Type.SHORT;
-        valueOrValues = Short.valueOf(value);
+        valueOrValues = value;
         count = 1;
         return;
       }
       case INT: {
         final int value = other.getIntValue();
         this.type = Type.INT;
-        valueOrValues = Integer.valueOf(value);
+        valueOrValues = value;
         count = 1;
         return;
       }
       case LONG: {
         final long value = other.getLongValue();
         this.type = Type.LONG;
-        valueOrValues = Long.valueOf(value);
+        valueOrValues = value;
         count = 1;
         return;
       }
       case FLOAT: {
         final float value = other.getFloatValue();
         this.type = Type.FLOAT;
-        valueOrValues = Float.valueOf(value);
+        valueOrValues = value;
         count = 1;
         return;
       }
       case DOUBLE: {
         final double value = other.getDoubleValue();
         this.type = Type.DOUBLE;
-        valueOrValues = Double.valueOf(value);
+        valueOrValues = value;
         count = 1;
         return;
       }
@@ -276,7 +279,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       case DATE: {
         final Date value = other.getDateValue();
         // don't need to clone the value, since it is already the cloned
-        // copy of the object in other.
+        // copy of the object of `other`.
         this.type = Type.DATE;
         valueOrValues = value;
         count = 1;
@@ -285,7 +288,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       case BYTE_ARRAY: {
         final byte[] value = other.getByteArrayValue();
         // don't need to clone the value, since it is already the cloned
-        // copy of the object in other.
+        // copy of the object of `other`.
         this.type = Type.BYTE_ARRAY;
         valueOrValues = value;
         count = 1;
@@ -367,14 +370,14 @@ public class BasicMultiValues implements MultiValues, Serializable {
       case DATE: {
         final Date[] values = other.getDateValues();
         // don't need to clone the value, since it is already the cloned
-        // copy of the object in other.
+        // copy of the object of `other`.
         doAddDateValues(false, values);
         return;
       }
       case BYTE_ARRAY: {
         final byte[][] values = other.getByteArrayValues();
         // don't need to clone the value, since it is already the cloned
-        // copy of the object in other.
+        // copy of the object of `other`.
         doAddByteArrayValues(false, values);
         return;
       }
@@ -465,14 +468,14 @@ public class BasicMultiValues implements MultiValues, Serializable {
       case DATE: {
         final Date other_value = other.getDateValue();
         // don't need to clone the value, since it is already the cloned
-        // copy of the object in other.
+        // copy of the object of `other`.
         doAddDateValue(false, other_value);
         return;
       }
       case BYTE_ARRAY: {
         final byte[] other_value = other.getByteArrayValue();
         // don't need to clone the value, since it is already the cloned
-        // copy of the object in other.
+        // copy of the object of `other`.
         doAddByteArrayValue(false, other_value);
         return;
       }
@@ -546,14 +549,14 @@ public class BasicMultiValues implements MultiValues, Serializable {
       case DATE: {
         final Date[] other_values = other.getDateValues();
         // don't need to clone the value, since it is already the cloned
-        // copy of the object in other.
+        // copy of the object of `other`.
         doAddDateValues(false, other_values);
         return;
       }
       case BYTE_ARRAY: {
         final byte[][] other_values = other.getByteArrayValues();
         // don't need to clone the value, since it is already the cloned
-        // copy of the object in other.
+        // copy of the object of `other`.
         doAddByteArrayValues(false, other_values);
         return;
       }
@@ -596,9 +599,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
         valueOrValues = values;
         count = n;
       }
-    } catch (final UnsupportedDataTypeException e) {
-      throw new InvalidFormatException(e);
-    } catch (final ClassNotFoundException e) {
+    } catch (final UnsupportedDataTypeException | ClassNotFoundException e) {
       throw new InvalidFormatException(e);
     }
   }
@@ -641,13 +642,11 @@ public class BasicMultiValues implements MultiValues, Serializable {
   public void appendValuesToXml(final Document doc, final Element parent,
       final String containerName, final String tagName,
       @Nullable final String prevSpaceAttr) {
-    if (count == 0) {
-      return;
-    } else if (count == 1) {
+    if (count == 1) {
       final Element node = TypeUtils.toXmlNode(type, valueOrValues, doc,
           tagName, prevSpaceAttr);
       parent.appendChild(node);
-    } else {
+    } else if (count > 1) {
       final List<Element> nodes = TypeUtils.toXmlNodes(type, valueOrValues,
           doc, parent, containerName, tagName, prevSpaceAttr);
       for (final Element node : nodes) {
@@ -665,19 +664,17 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if (count == 0) {
       throw new NoSuchElementException();
     } else if (count == 1) {
-      final Boolean value = (Boolean) valueOrValues;
-      return value;
+      return (Boolean) valueOrValues;
     } else {
       final BooleanList values = (BooleanList) valueOrValues;
-      final boolean value = values.iterator().next();
-      return value;
+      return values.iterator().next();
     }
   }
 
   @Override
   public void setBooleanValue(final boolean value) {
     type = Type.BOOL;
-    valueOrValues = Boolean.valueOf(value);
+    valueOrValues = value;
     count = 1;
   }
 
@@ -690,8 +687,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_BOOLEAN_ARRAY;
     } else if (count == 1) {
       final Boolean value = (Boolean) valueOrValues;
-      final boolean[] result = { value };
-      return result;
+      return new boolean[]{ value };
     } else { // count > 1
       final BooleanList values = (BooleanList) valueOrValues;
       return values.toArray();
@@ -707,7 +703,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     } else if (values.length == 1) {
       final boolean value = values[0];
       type = Type.BOOL;
-      valueOrValues = Boolean.valueOf(value);
+      valueOrValues = value;
       count = 1;
     } else {
       final BooleanList list = new BooleanArrayList(values);
@@ -727,7 +723,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     } else if (n == 1) {
       final boolean value = values.iterator().next();
       type = Type.BOOL;
-      valueOrValues = Boolean.valueOf(value);
+      valueOrValues = value;
       count = 1;
     } else {
       final BooleanList list = new BooleanArrayList(values);
@@ -854,19 +850,17 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if (count == 0) {
       throw new NoSuchElementException();
     } else if (count == 1) {
-      final Character value = (Character) valueOrValues;
-      return value;
+      return (Character) valueOrValues;
     } else {
       final CharList values = (CharList) valueOrValues;
-      final char value = values.iterator().next();
-      return value;
+      return values.iterator().next();
     }
   }
 
   @Override
   public void setCharValue(final char value) {
     type = Type.CHAR;
-    valueOrValues = Character.valueOf(value);
+    valueOrValues = value;
     count = 1;
   }
 
@@ -879,8 +873,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_CHAR_ARRAY;
     } else if (count == 1) {
       final Character value = (Character) valueOrValues;
-      final char[] result = { value };
-      return result;
+      return new char[]{ value };
     } else { // count > 1
       final CharList values = (CharList) valueOrValues;
       return values.toArray();
@@ -896,7 +889,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     } else if (values.length == 1) {
       final char value = values[0];
       type = Type.CHAR;
-      valueOrValues = Character.valueOf(value);
+      valueOrValues = value;
       count = 1;
     } else {
       final CharList list = new CharArrayList(values);
@@ -916,7 +909,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     } else if (n == 1) {
       final char value = values.iterator().next();
       type = Type.CHAR;
-      valueOrValues = Character.valueOf(value);
+      valueOrValues = value;
       count = 1;
     } else {
       final CharList list = new CharArrayList(values);
@@ -1042,19 +1035,17 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if (count == 0) {
       throw new NoSuchElementException();
     } else if (count == 1) {
-      final Byte value = (Byte) valueOrValues;
-      return value;
+      return (Byte) valueOrValues;
     } else {  // count > 1
       final ByteList values = (ByteList) valueOrValues;
-      final byte value = values.iterator().next();
-      return value;
+      return values.iterator().next();
     }
   }
 
   @Override
   public void setByteValue(final byte value) {
     type = Type.BYTE;
-    valueOrValues = Byte.valueOf(value);
+    valueOrValues = value;
     count = 1;
   }
 
@@ -1067,8 +1058,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_BYTE_ARRAY;
     } else if (count == 1) {
       final Byte value = (Byte) valueOrValues;
-      final byte[] result = { value };
-      return result;
+      return new byte[]{ value };
     } else { // count > 1
       final ByteList values = (ByteList) valueOrValues;
       return values.toArray();
@@ -1084,7 +1074,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     } else if (values.length == 1) {
       final byte value = values[0];
       type = Type.BYTE;
-      valueOrValues = Byte.valueOf(value);
+      valueOrValues = value;
       count = 1;
     } else {
       final ByteList list = new ByteArrayList(values);
@@ -1104,7 +1094,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     } else if (n == 1) {
       final byte value = values.iterator().next();
       type = Type.BYTE;
-      valueOrValues = Byte.valueOf(value);
+      valueOrValues = value;
       count = 1;
     } else {
       final ByteList list = new ByteArrayList(values);
@@ -1231,19 +1221,17 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if (count == 0) {
       throw new NoSuchElementException();
     } else if (count == 1) {
-      final Short value = (Short) valueOrValues;
-      return value;
+      return (Short) valueOrValues;
     } else {
       final ShortList values = (ShortList) valueOrValues;
-      final short value = values.iterator().next();
-      return value;
+      return values.iterator().next();
     }
   }
 
   @Override
   public void setShortValue(final short value) {
     type = Type.SHORT;
-    valueOrValues = Short.valueOf(value);
+    valueOrValues = value;
     count = 1;
   }
 
@@ -1256,8 +1244,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_SHORT_ARRAY;
     } else if (count == 1) {
       final Short value = (Short) valueOrValues;
-      final short[] result = { value };
-      return result;
+      return new short[]{ value };
     } else { // count > 1
       final ShortList values = (ShortList) valueOrValues;
       return values.toArray();
@@ -1273,7 +1260,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     } else if (values.length == 1) {
       final short value = values[0];
       type = Type.SHORT;
-      valueOrValues = Short.valueOf(value);
+      valueOrValues = value;
       count = 1;
     } else {
       final ShortList list = new ShortArrayList(values);
@@ -1293,7 +1280,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     } else if (n == 1) {
       final short value = values.iterator().next();
       type = Type.SHORT;
-      valueOrValues = Short.valueOf(value);
+      valueOrValues = value;
       count = 1;
     } else {
       final ShortList list = new ShortArrayList(values);
@@ -1420,19 +1407,17 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if (count == 0) {
       throw new NoSuchElementException();
     } else if (count == 1) {
-      final Integer value = (Integer) valueOrValues;
-      return value;
+      return (Integer) valueOrValues;
     } else {  //  count > 1
       final IntList values = (IntList) valueOrValues;
-      final int value = values.iterator().next();
-      return value;
+      return values.iterator().next();
     }
   }
 
   @Override
   public void setIntValue(final int value) {
     type = Type.INT;
-    valueOrValues = Integer.valueOf(value);
+    valueOrValues = value;
     count = 1;
   }
 
@@ -1445,8 +1430,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_INT_ARRAY;
     } else if (count == 1) {
       final Integer value = (Integer) valueOrValues;
-      final int[] result = { value };
-      return result;
+      return new int[]{ value };
     } else { // count > 1
       final IntList values = (IntList) valueOrValues;
       return values.toArray();
@@ -1462,7 +1446,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     } else if (values.length == 1) {
       final int value = values[0];
       type = Type.INT;
-      valueOrValues = Integer.valueOf(value);
+      valueOrValues = value;
       count = 1;
     } else {
       final IntList list = new IntArrayList(values);
@@ -1482,7 +1466,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     } else if (n == 1) {
       final int value = values.iterator().next();
       type = Type.INT;
-      valueOrValues = Integer.valueOf(value);
+      valueOrValues = value;
       count = 1;
     } else {
       final IntList list = new IntArrayList(values);
@@ -1609,19 +1593,17 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if (count == 0) {
       throw new NoSuchElementException();
     } else if (count == 1) {
-      final Long value = (Long) valueOrValues;
-      return value;
+      return (Long) valueOrValues;
     } else {
       final LongList values = (LongList) valueOrValues;
-      final long value = values.iterator().next();
-      return value;
+      return values.iterator().next();
     }
   }
 
   @Override
   public void setLongValue(final long value) {
     type = Type.LONG;
-    valueOrValues = Long.valueOf(value);
+    valueOrValues = value;
     count = 1;
   }
 
@@ -1634,8 +1616,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_LONG_ARRAY;
     } else if (count == 1) {
       final Long value = (Long) valueOrValues;
-      final long[] result = { value };
-      return result;
+      return new long[]{ value };
     } else { // count > 1
       final LongList values = (LongList) valueOrValues;
       return values.toArray();
@@ -1651,7 +1632,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     } else if (values.length == 1) {
       final long value = values[0];
       type = Type.LONG;
-      valueOrValues = Long.valueOf(value);
+      valueOrValues = value;
       count = 1;
     } else {
       final LongList list = new LongArrayList(values);
@@ -1671,7 +1652,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     } else if (n == 1) {
       final long value = values.iterator().next();
       type = Type.LONG;
-      valueOrValues = Long.valueOf(value);
+      valueOrValues = value;
       count = 1;
     } else {
       final LongList list = new LongArrayList(values);
@@ -2173,12 +2154,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if (count == 0) {
       throw new NoSuchElementException();
     } else if (count == 1) {
-      final String value = (String) valueOrValues;
-      return value;
+      return (String) valueOrValues;
     } else {
       final List<String> values = (List<String>) valueOrValues;
-      final String value = values.iterator().next();
-      return value;
+      return values.iterator().next();
     }
   }
 
@@ -2199,11 +2178,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_STRING_ARRAY;
     } else if (count == 1) {
       final String value = (String) valueOrValues;
-      final String[] result = { value };
-      return result;
+      return new String[]{ value };
     } else { // count > 1
       final List<String> values = (List<String>) valueOrValues;
-      return values.toArray(new String[values.size()]);
+      return values.toArray(new String[0]);
     }
   }
 
@@ -2219,9 +2197,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       count = 1;
     } else {
       final List<String> list = new ArrayList<>(values.length);
-      for (final String value : values) {
-        list.add(value);
-      }
+      Collections.addAll(list, values);
       type = Type.STRING;
       valueOrValues = list;
       count = values.length;
@@ -2241,9 +2217,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       count = 1;
     } else {
       final List<String> list = new ArrayList<>(n);
-      for (final String value : values) {
-        list.add(value);
-      }
+      list.addAll(values);
       type = Type.STRING;
       valueOrValues = list;
       count = n;
@@ -2314,9 +2288,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
   private void doAddStringValues(final String... values) {
     if (count == 0) {
       final List<String> list = new ArrayList<>(values.length);
-      for (final String value : values) {
-        list.add(value);
-      }
+      Collections.addAll(list, values);
       type = Type.STRING;
       valueOrValues = list;
       count = list.size();
@@ -2324,17 +2296,13 @@ public class BasicMultiValues implements MultiValues, Serializable {
       final String oldValue = (String) valueOrValues;
       final List<String> list = new ArrayList<>();
       list.add(oldValue);
-      for (final String value : values) {
-        list.add(value);
-      }
+      Collections.addAll(list, values);
       type = Type.STRING;
       valueOrValues = list;
       count = list.size();
     } else { // count > 1
       final List<String> list = (List<String>) valueOrValues;
-      for (final String value : values) {
-        list.add(value);
-      }
+      Collections.addAll(list, values);
       type = Type.STRING;
       valueOrValues = list;
       count = list.size();
@@ -2375,12 +2343,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if (count == 0) {
       throw new NoSuchElementException();
     } else if (count == 1) {
-      final Date value = (Date) valueOrValues;
-      return value;
+      return (Date) valueOrValues;
     } else {
       final List<Date> values = (List<Date>) valueOrValues;
-      final Date value = values.iterator().next();
-      return value;
+      return values.iterator().next();
     }
   }
 
@@ -2401,8 +2367,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_DATE_ARRAY;
     } else if (count == 1) {
       final Date value = (Date) valueOrValues;
-      final Date[] result = { Assignment.clone(value) };
-      return result;
+      return new Date[]{ Assignment.clone(value) };
     } else { // count > 1
       final List<Date> values = (List<Date>) valueOrValues;
       final Date[] result = new Date[values.size()];
@@ -2539,9 +2504,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
           list.add(Assignment.clone(value));
         }
       } else {
-        for (final Date value : values) {
-          list.add(value);
-        }
+        Collections.addAll(list, values);
       }
       type = Type.DATE;
       valueOrValues = list;
@@ -2555,9 +2518,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
           list.add(Assignment.clone(value));
         }
       } else {
-        for (final Date value : values) {
-          list.add(value);
-        }
+        Collections.addAll(list, values);
       }
       type = Type.DATE;
       valueOrValues = list;
@@ -2569,9 +2530,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
           list.add(Assignment.clone(value));
         }
       } else {
-        for (final Date value : values) {
-          list.add(value);
-        }
+        Collections.addAll(list, values);
       }
       type = Type.DATE;
       valueOrValues = list;
@@ -2589,9 +2548,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
           list.add(Assignment.clone(value));
         }
       } else {
-        for (final Date value : values) {
-          list.add(value);
-        }
+        list.addAll(values);
       }
       type = Type.DATE;
       valueOrValues = list;
@@ -2605,9 +2562,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
           list.add(Assignment.clone(value));
         }
       } else {
-        for (final Date value : values) {
-          list.add(value);
-        }
+        list.addAll(values);
       }
       type = Type.DATE;
       valueOrValues = list;
@@ -2619,9 +2574,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
           list.add(Assignment.clone(value));
         }
       } else {
-        for (final Date value : values) {
-          list.add(value);
-        }
+        list.addAll(values);
       }
       type = Type.DATE;
       valueOrValues = list;
@@ -2639,12 +2592,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if (count == 0) {
       throw new NoSuchElementException();
     } else if (count == 1) {
-      final BigInteger value = (BigInteger) valueOrValues;
-      return value;
+      return (BigInteger) valueOrValues;
     } else {
       final List<BigInteger> values = (List<BigInteger>) valueOrValues;
-      final BigInteger value = values.iterator().next();
-      return value;
+      return values.iterator().next();
     }
   }
 
@@ -2665,11 +2616,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_BIG_INTEGER_ARRAY;
     } else if (count == 1) {
       final BigInteger value = (BigInteger) valueOrValues;
-      final BigInteger[] result = { value };
-      return result;
+      return new BigInteger[]{ value };
     } else { // count > 1
       final List<BigInteger> values = (List<BigInteger>) valueOrValues;
-      return values.toArray(new BigInteger[values.size()]);
+      return values.toArray(new BigInteger[0]);
     }
   }
 
@@ -2685,9 +2635,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       count = 1;
     } else {
       final List<BigInteger> list = new ArrayList<>(values.length);
-      for (final BigInteger value : values) {
-        list.add(value);
-      }
+      Collections.addAll(list, values);
       type = Type.BIG_INTEGER;
       valueOrValues = list;
       count = values.length;
@@ -2707,9 +2655,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       count = 1;
     } else {
       final List<BigInteger> list = new ArrayList<>(n);
-      for (final BigInteger value : values) {
-        list.add(value);
-      }
+      list.addAll(values);
       type = Type.BIG_INTEGER;
       valueOrValues = list;
       count = n;
@@ -2780,9 +2726,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
   private void doAddBigIntegerValues(final BigInteger... values) {
     if (count == 0) {
       final List<BigInteger> list = new ArrayList<>(values.length);
-      for (final BigInteger value : values) {
-        list.add(value);
-      }
+      Collections.addAll(list, values);
       type = Type.BIG_INTEGER;
       valueOrValues = list;
       count = list.size();
@@ -2790,17 +2734,13 @@ public class BasicMultiValues implements MultiValues, Serializable {
       final BigInteger oldValue = (BigInteger) valueOrValues;
       final List<BigInteger> list = new ArrayList<>();
       list.add(oldValue);
-      for (final BigInteger value : values) {
-        list.add(value);
-      }
+      Collections.addAll(list, values);
       type = Type.BIG_INTEGER;
       valueOrValues = list;
       count = list.size();
     } else { // count > 1
       final List<BigInteger> list = (List<BigInteger>) valueOrValues;
-      for (final BigInteger value : values) {
-        list.add(value);
-      }
+      Collections.addAll(list, values);
       type = Type.BIG_INTEGER;
       valueOrValues = list;
       count = list.size();
@@ -2841,12 +2781,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if (count == 0) {
       throw new NoSuchElementException();
     } else if (count == 1) {
-      final BigDecimal value = (BigDecimal) valueOrValues;
-      return value;
+      return (BigDecimal) valueOrValues;
     } else {
       final List<BigDecimal> values = (List<BigDecimal>) valueOrValues;
-      final BigDecimal value = values.iterator().next();
-      return value;
+      return values.iterator().next();
     }
   }
 
@@ -2867,11 +2805,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_BIG_DECIMAL_ARRAY;
     } else if (count == 1) {
       final BigDecimal value = (BigDecimal) valueOrValues;
-      final BigDecimal[] result = { value };
-      return result;
+      return new BigDecimal[]{ value };
     } else { // count > 1
       final List<BigDecimal> values = (List<BigDecimal>) valueOrValues;
-      return values.toArray(new BigDecimal[values.size()]);
+      return values.toArray(new BigDecimal[0]);
     }
   }
 
@@ -2887,9 +2824,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       count = 1;
     } else {
       final List<BigDecimal> list = new ArrayList<>(values.length);
-      for (final BigDecimal value : values) {
-        list.add(value);
-      }
+      Collections.addAll(list, values);
       type = Type.BIG_DECIMAL;
       valueOrValues = list;
       count = values.length;
@@ -2909,9 +2844,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       count = 1;
     } else {
       final List<BigDecimal> list = new ArrayList<>(n);
-      for (final BigDecimal value : values) {
-        list.add(value);
-      }
+      list.addAll(values);
       type = Type.BIG_DECIMAL;
       valueOrValues = list;
       count = n;
@@ -2983,9 +2916,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
   private void doAddBigDecimalValues(final BigDecimal... values) {
     if (count == 0) {
       final List<BigDecimal> list = new ArrayList<>(values.length);
-      for (final BigDecimal value : values) {
-        list.add(value);
-      }
+      Collections.addAll(list, values);
       type = Type.BIG_DECIMAL;
       valueOrValues = list;
       count = list.size();
@@ -2993,17 +2924,13 @@ public class BasicMultiValues implements MultiValues, Serializable {
       final BigDecimal oldValue = (BigDecimal) valueOrValues;
       final List<BigDecimal> list = new ArrayList<>();
       list.add(oldValue);
-      for (final BigDecimal value : values) {
-        list.add(value);
-      }
+      Collections.addAll(list, values);
       type = Type.BIG_DECIMAL;
       valueOrValues = list;
       count = list.size();
     } else { // count > 1
       final List<BigDecimal> list = (List<BigDecimal>) valueOrValues;
-      for (final BigDecimal value : values) {
-        list.add(value);
-      }
+      Collections.addAll(list, values);
       type = Type.BIG_DECIMAL;
       valueOrValues = list;
       count = list.size();
@@ -3044,12 +2971,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if (count == 0) {
       throw new NoSuchElementException();
     } else if (count == 1) {
-      final byte[] value = (byte[]) valueOrValues;
-      return value;
+      return (byte[]) valueOrValues;
     } else {
       final List<byte[]> values = (List<byte[]>) valueOrValues;
-      final byte[] value = values.iterator().next();
-      return value;
+      return values.iterator().next();
     }
   }
 
@@ -3070,8 +2995,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_BYTE_ARRAY_ARRAY;
     } else if (count == 1) {
       final byte[] value = (byte[]) valueOrValues;
-      final byte[][] result = { Assignment.clone(value) };
-      return result;
+      return new byte[][]{ Assignment.clone(value) };
     } else { // count > 1
       final List<byte[]> values = (List<byte[]>) valueOrValues;
       final byte[][] result = new byte[values.size()][];
@@ -3211,9 +3135,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
           list.add(Assignment.clone(value));
         }
       } else {
-        for (final byte[] value : values) {
-          list.add(value);
-        }
+        Collections.addAll(list, values);
       }
       type = Type.BYTE_ARRAY;
       valueOrValues = list;
@@ -3227,9 +3149,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
           list.add(Assignment.clone(value));
         }
       } else {
-        for (final byte[] value : values) {
-          list.add(value);
-        }
+        Collections.addAll(list, values);
       }
       type = Type.BYTE_ARRAY;
       valueOrValues = list;
@@ -3241,9 +3161,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
           list.add(Assignment.clone(value));
         }
       } else {
-        for (final byte[] value : values) {
-          list.add(value);
-        }
+        Collections.addAll(list, values);
       }
       type = Type.BYTE_ARRAY;
       valueOrValues = list;
@@ -3261,9 +3179,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
           list.add(Assignment.clone(value));
         }
       } else {
-        for (final byte[] value : values) {
-          list.add(value);
-        }
+        list.addAll(values);
       }
       type = Type.BYTE_ARRAY;
       valueOrValues = list;
@@ -3277,9 +3193,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
           list.add(Assignment.clone(value));
         }
       } else {
-        for (final byte[] value : values) {
-          list.add(value);
-        }
+        list.addAll(values);
       }
       type = Type.BYTE_ARRAY;
       valueOrValues = list;
@@ -3291,9 +3205,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
           list.add(Assignment.clone(value));
         }
       } else {
-        for (final byte[] value : values) {
-          list.add(value);
-        }
+        list.addAll(values);
       }
       type = Type.BYTE_ARRAY;
       valueOrValues = list;
@@ -3311,12 +3223,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if (count == 0) {
       throw new NoSuchElementException();
     } else if (count == 1) {
-      final Class<?> value = (Class<?>) valueOrValues;
-      return value;
+      return (Class<?>) valueOrValues;
     } else {
       final List<Class<?>> values = (List<Class<?>>) valueOrValues;
-      final Class<?> value = values.iterator().next();
-      return value;
+      return values.iterator().next();
     }
   }
 
@@ -3337,11 +3247,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_CLASS_ARRAY;
     } else if (count == 1) {
       final Class<?> value = (Class<?>) valueOrValues;
-      final Class<?>[] result = { value };
-      return result;
+      return new Class<?>[]{ value };
     } else { // count > 1
       final List<Class<?>> values = (List<Class<?>>) valueOrValues;
-      return values.toArray(new Class<?>[values.size()]);
+      return values.toArray(new Class<?>[0]);
     }
   }
 
@@ -3357,9 +3266,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       count = 1;
     } else {
       final List<Class<?>> list = new ArrayList<>(values.length);
-      for (final Class<?> value : values) {
-        list.add(value);
-      }
+      Collections.addAll(list, values);
       type = Type.CLASS;
       valueOrValues = list;
       count = values.length;
@@ -3379,9 +3286,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       count = 1;
     } else {
       final List<Class<?>> list = new ArrayList<>(n);
-      for (final Class<?> value : values) {
-        list.add(value);
-      }
+      list.addAll(values);
       type = Type.CLASS;
       valueOrValues = list;
       count = n;
@@ -3451,9 +3356,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
   private void doAddClassValues(final Class<?>... values) {
     if (count == 0) {
       final List<Class<?>> list = new ArrayList<>(values.length);
-      for (final Class<?> value : values) {
-        list.add(value);
-      }
+      Collections.addAll(list, values);
       type = Type.CLASS;
       valueOrValues = list;
       count = list.size();
@@ -3461,17 +3364,13 @@ public class BasicMultiValues implements MultiValues, Serializable {
       final Class<?> oldValue = (Class<?>) valueOrValues;
       final List<Class<?>> list = new ArrayList<>();
       list.add(oldValue);
-      for (final Class<?> value : values) {
-        list.add(value);
-      }
+      Collections.addAll(list, values);
       type = Type.CLASS;
       valueOrValues = list;
       count = list.size();
     } else { // count > 1
       final List<Class<?>> list = (List<Class<?>>) valueOrValues;
-      for (final Class<?> value : values) {
-        list.add(value);
-      }
+      Collections.addAll(list, values);
       type = Type.CLASS;
       valueOrValues = list;
       count = list.size();
@@ -3520,8 +3419,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_BOOLEAN_ARRAY;
     } else if (count == 1) {
       final boolean value = TypeUtils.objectAsBoolean(type, valueOrValues);
-      final boolean[] result = { value };
-      return result;
+      return new boolean[]{ value };
     } else { // count > 1
       return TypeUtils.collectionAsBooleans(type, valueOrValues);
     }
@@ -3545,8 +3443,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_CHAR_ARRAY;
     } else if (count == 1) {
       final char value = TypeUtils.objectAsChar(type, valueOrValues);
-      final char[] result = { value };
-      return result;
+      return new char[]{ value };
     } else { // count > 1
       return TypeUtils.collectionAsChars(type, valueOrValues);
     }
@@ -3570,8 +3467,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_BYTE_ARRAY;
     } else if (count == 1) {
       final byte value = TypeUtils.objectAsByte(type, valueOrValues);
-      final byte[] result = { value };
-      return result;
+      return new byte[]{ value };
     } else { // count > 1
       return TypeUtils.collectionAsBytes(type, valueOrValues);
     }
@@ -3595,8 +3491,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_SHORT_ARRAY;
     } else if (count == 1) {
       final short value = TypeUtils.objectAsShort(type, valueOrValues);
-      final short[] result = { value };
-      return result;
+      return new short[]{ value };
     } else { // count > 1
       return TypeUtils.collectionAsShorts(type, valueOrValues);
     }
@@ -3620,8 +3515,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_INT_ARRAY;
     } else if (count == 1) {
       final int value = TypeUtils.objectAsInt(type, valueOrValues);
-      final int[] result = { value };
-      return result;
+      return new int[]{ value };
     } else { // count > 1
       return TypeUtils.collectionAsInts(type, valueOrValues);
     }
@@ -3645,8 +3539,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_LONG_ARRAY;
     } else if (count == 1) {
       final long value = TypeUtils.objectAsLong(type, valueOrValues);
-      final long[] result = { value };
-      return result;
+      return new long[]{ value };
     } else { // count > 1
       return TypeUtils.collectionAsLongs(type, valueOrValues);
     }
@@ -3670,8 +3563,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_FLOAT_ARRAY;
     } else if (count == 1) {
       final float value = TypeUtils.objectAsFloat(type, valueOrValues);
-      final float[] result = { value };
-      return result;
+      return new float[]{ value };
     } else { // count > 1
       return TypeUtils.collectionAsFloats(type, valueOrValues);
     }
@@ -3695,8 +3587,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_DOUBLE_ARRAY;
     } else if (count == 1) {
       final double value = TypeUtils.objectAsDouble(type, valueOrValues);
-      final double[] result = { value };
-      return result;
+      return new double[]{ value };
     } else { // count > 1
       return TypeUtils.collectionAsDoubles(type, valueOrValues);
     }
@@ -3720,8 +3611,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_STRING_ARRAY;
     } else if (count == 1) {
       final String value = TypeUtils.objectAsString(type, valueOrValues);
-      final String[] result = { value };
-      return result;
+      return new String[]{ value };
     } else { // count > 1
       final Object list = valueOrValues;
       return TypeUtils.collectionAsStrings(type, list);
@@ -3746,8 +3636,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_DATE_ARRAY;
     } else if (count == 1) {
       final Date value = TypeUtils.objectAsDate(type, valueOrValues);
-      final Date[] result = { value };
-      return result;
+      return new Date[]{ value };
     } else { // count > 1
       return TypeUtils.collectionAsDates(type, valueOrValues);
     }
@@ -3771,8 +3660,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_BYTE_ARRAY_ARRAY;
     } else if (count == 1) {
       final byte[] value = TypeUtils.objectAsByteArray(type, valueOrValues);
-      final byte[][] result = { value };
-      return result;
+      return new byte[][]{ value };
     } else { // count > 1
       return TypeUtils.collectionAsByteArrays(type, valueOrValues);
     }
@@ -3796,8 +3684,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_CLASS_ARRAY;
     } else if (count == 1) {
       final Class<?> value = TypeUtils.objectAsClass(type, valueOrValues);
-      final Class<?>[] result = { value };
-      return result;
+      return new Class<?>[]{ value };
     } else { // count > 1
       return TypeUtils.collectionAsClasses(type, valueOrValues);
     }
@@ -3821,8 +3708,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_BIG_INTEGER_ARRAY;
     } else if (count == 1) {
       final BigInteger value = TypeUtils.objectAsBigInteger(type, valueOrValues);
-      final BigInteger[] result = { value };
-      return result;
+      return new BigInteger[]{ value };
     } else { // count > 1
       return TypeUtils.collectionAsBigIntegers(type, valueOrValues);
     }
@@ -3846,15 +3732,14 @@ public class BasicMultiValues implements MultiValues, Serializable {
       return ArrayUtils.EMPTY_BIG_DECIMAL_ARRAY;
     } else if (count == 1) {
       final BigDecimal value = TypeUtils.objectAsBigDecimal(type, valueOrValues);
-      final BigDecimal[] result = { value };
-      return result;
+      return new BigDecimal[]{ value };
     } else { // count > 1
       return TypeUtils.collectionAsBigDecimals(type, valueOrValues);
     }
   }
 
   @Override
-  public BasicMultiValues clone() {
+  public BasicMultiValues cloneEx() {
     try {
       final BasicMultiValues result = (BasicMultiValues) super.clone();
       result.assignValues(this);
@@ -3890,18 +3775,16 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if (obj == null) {
       return false;
     }
-    if (! (obj instanceof BasicMultiValues)) {
+    if (! (obj instanceof final BasicMultiValues other)) {
       return false;
     }
-    final BasicMultiValues other = (BasicMultiValues) obj;
     if ((type != other.type) || (count != other.count)) {
       return false;
     }
     if (count == 1) {
       return TypeUtils.equalsObject(type, valueOrValues, other.valueOrValues);
     } else if (count > 1) {
-      return TypeUtils.equalsCollections(type, valueOrValues,
-          other.valueOrValues);
+      return TypeUtils.equalsCollections(type, valueOrValues, other.valueOrValues);
     } else {
       return true;
     }
@@ -3915,5 +3798,4 @@ public class BasicMultiValues implements MultiValues, Serializable {
                .append("valueOrValues", valueOrValues)
                .toString();
   }
-
 }

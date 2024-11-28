@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -36,17 +36,19 @@ public final class PageRequest {
    * Creates a {@link PageRequest}.
    *
    * @param pageIndex
-   *     the page index, or {@code null} if not specified.
+   *     the page index, or {@code null} to use the default value. The default
+   *     value is {@code 0}.
    * @param pageSize
-   *     the page size, or {@code null} if not specified.
-   * @return returns {@code null} if both {@code pageIndex} and {@code pageSize}
-   *     is {@code null}; or a {@link PageRequest} with the specified or default
-   *     page index and page size.
+   *     the page size, or {@code null} to use the default value. The default
+   *     value is {@value #DEFAULT_PAGE_SIZE}.
+   * @return
+   *     a {@link PageRequest} with the specified or default page index and page
+   *     size.
    */
   public static PageRequest create(@Nullable final Integer pageIndex,
       @Nullable final Integer pageSize) {
     if (pageIndex == null && pageSize == null) {
-      return null;
+      return new PageRequest(0, DEFAULT_PAGE_SIZE);
     } else if (pageIndex == null) {
       return new PageRequest(pageSize);
     } else if (pageSize == null) {
@@ -188,11 +190,29 @@ public final class PageRequest {
 
   /**
    * Gets the next page request.
+   * <p>
+   * This function will create a new page request with the page index increased
+   * by one. It is different from {@link #toNext()} which will modify this page
+   * request directly.
    *
    * @return the next page request.
+   * @see #toNext()
    */
   public PageRequest next() {
     return new PageRequest(pageIndex + 1, pageSize);
+  }
+
+  /**
+   * Moves this page request the next page request.
+   * <p>
+   * This function will increase the page index of this page request by one.
+   * It is different from {@link #next()} which will create a new page request
+   * with the page index increased by one.
+   *
+   * @see #next()
+   */
+  public void toNext() {
+    ++pageIndex;
   }
 
   /**

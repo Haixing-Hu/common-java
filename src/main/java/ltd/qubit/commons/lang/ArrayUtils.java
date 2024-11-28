@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -18,11 +18,14 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
@@ -63,6 +66,11 @@ public class ArrayUtils {
    * An empty immutable {@code String} array.
    */
   public static final String[] EMPTY_STRING_ARRAY = new String[0];
+
+  /**
+   * An empty immutable {@code String[]} array.
+   */
+  public static final String[][] EMPTY_STRING_ARRAY_2D = new String[0][0];
 
   /**
    * An empty immutable {@code long} array.
@@ -293,11 +301,9 @@ public class ArrayUtils {
     final Map<Object, Object> map = new HashMap<>((int) (array.length * 1.5));
     for (int i = 0; i < array.length; ++i) {
       final Object object = array[i];
-      if (object instanceof Map.Entry) {
-        final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) object;
+      if (object instanceof final Map.Entry<?, ?> entry) {
         map.put(entry.getKey(), entry.getValue());
-      } else if (object instanceof Object[]) {
-        final Object[] entry = (Object[]) object;
+      } else if (object instanceof final Object[] entry) {
         if (entry.length < 2) {
           throw new IllegalArgumentException("Array element "
               + i
@@ -1213,6 +1219,199 @@ public class ArrayUtils {
       --j;
       ++i;
     }
+  }
+
+  /**
+   * Shadow clone the given array and reverse the order of the elements.
+   *
+   * <p><b>There is no special handling for multi-dimensional arrays.</b>
+   *
+   * <p>This method does nothing for a {@code null} input array.
+   *
+   * @param <T>
+   *     the type of the elements in the array.
+   * @param array
+   *     the array to reverse, may be {@code null}
+   */
+  @Nullable
+  public static <T> T[] reverseClone(@Nullable final T[] array) {
+    if (array == null) {
+      return null;
+    }
+    final T[] result = createArrayOfSameElementType(array, array.length);
+    final int lastIndex = array.length - 1;
+    for (int i = 0; i < array.length; i++) {
+      result[i] = array[lastIndex - i];
+    }
+    return result;
+  }
+
+  /**
+   * Clone the given array and reverse the order of the elements.
+   *
+   * <p>This method does nothing for a {@code null} input array.
+   *
+   * @param array
+   *     the array to reverse, may be {@code null}
+   */
+  @Nullable
+  public static long[] reverseClone(@Nullable final long[] array) {
+    if (array == null) {
+      return null;
+    }
+    final long[] result = new long[array.length];
+    final int lastIndex = array.length - 1;
+    for (int i = 0; i < array.length; i++) {
+      result[i] = array[lastIndex - i];
+    }
+    return result;
+  }
+
+  /**
+   * Clone the given array and reverse the order of the elements.
+   *
+   * <p>This method does nothing for a {@code null} input array.
+   *
+   * @param array
+   *     the array to reverse, may be {@code null}
+   */
+  @Nullable
+  public static int[] reverseClone(@Nullable final int[] array) {
+    if (array == null) {
+      return null;
+    }
+    final int[] result = new int[array.length];
+    final int lastIndex = array.length - 1;
+    for (int i = 0; i < array.length; i++) {
+      result[i] = array[lastIndex - i];
+    }
+    return result;
+  }
+
+  /**
+   * Clone the given array and reverse the order of the elements.
+   *
+   * <p>This method does nothing for a {@code null} input array.
+   *
+   * @param array
+   *     the array to reverse, may be {@code null}
+   */
+  @Nullable
+  public static short[] reverseClone(@Nullable final short[] array) {
+    if (array == null) {
+      return null;
+    }
+    final short[] result = new short[array.length];
+    final int lastIndex = array.length - 1;
+    for (int i = 0; i < array.length; i++) {
+      result[i] = array[lastIndex - i];
+    }
+    return result;
+  }
+
+  /**
+   * Clone the given array and reverse the order of the elements.
+   *
+   * <p>This method does nothing for a {@code null} input array.
+   *
+   * @param array
+   *     the array to reverse, may be {@code null}
+   */
+  @Nullable
+  public static byte[] reverseClone(@Nullable final byte[] array) {
+    if (array == null) {
+      return null;
+    }
+    final byte[] result = new byte[array.length];
+    final int lastIndex = array.length - 1;
+    for (int i = 0; i < array.length; i++) {
+      result[i] = array[lastIndex - i];
+    }
+    return result;
+  }
+
+  /**
+   * Clone the given array and reverse the order of the elements.
+   *
+   * <p>This method does nothing for a {@code null} input array.
+   *
+   * @param array
+   *     the array to reverse, may be {@code null}
+   */
+  @Nullable
+  public static char[] reverseClone(@Nullable final char[] array) {
+    if (array == null) {
+      return null;
+    }
+    final char[] result = new char[array.length];
+    final int lastIndex = array.length - 1;
+    for (int i = 0; i < array.length; i++) {
+      result[i] = array[lastIndex - i];
+    }
+    return result;
+  }
+
+  /**
+   * Clone the given array and reverse the order of the elements.
+   *
+   * <p>This method does nothing for a {@code null} input array.
+   *
+   * @param array
+   *     the array to reverse, may be {@code null}
+   */
+  @Nullable
+  public static float[] reverseClone(@Nullable final float[] array) {
+    if (array == null) {
+      return null;
+    }
+    final float[] result = new float[array.length];
+    final int lastIndex = array.length - 1;
+    for (int i = 0; i < array.length; i++) {
+      result[i] = array[lastIndex - i];
+    }
+    return result;
+  }
+
+  /**
+   * Clone the given array and reverse the order of the elements.
+   *
+   * <p>This method does nothing for a {@code null} input array.
+   *
+   * @param array
+   *     the array to reverse, may be {@code null}
+   */
+  @Nullable
+  public static double[] reverseClone(@Nullable final double[] array) {
+    if (array == null) {
+      return null;
+    }
+    final double[] result = new double[array.length];
+    final int lastIndex = array.length - 1;
+    for (int i = 0; i < array.length; i++) {
+      result[i] = array[lastIndex - i];
+    }
+    return result;
+  }
+
+  /**
+   * Clone the given array and reverse the order of the elements.
+   *
+   * <p>This method does nothing for a {@code null} input array.
+   *
+   * @param array
+   *     the array to reverse, may be {@code null}
+   */
+  @Nullable
+  public static boolean[] reverseClone(@Nullable final boolean[] array) {
+    if (array == null) {
+      return null;
+    }
+    final boolean[] result = new boolean[array.length];
+    final int lastIndex = array.length - 1;
+    for (int i = 0; i < array.length; i++) {
+      result[i] = array[lastIndex - i];
+    }
+    return result;
   }
 
   /**
@@ -7341,8 +7540,7 @@ public class ArrayUtils {
    * @return a new array with the same element type as the specified array.
    */
   @SuppressWarnings("unchecked")
-  public static <T> T[] createArrayOfSameElementType(final T[] array,
-      final int n) {
+  public static <T> T[] createArrayOfSameElementType(final T[] array, final int n) {
     final Class<?> componentType = array.getClass().getComponentType();
     final Object result = Array.newInstance(componentType, n);
     return (T[]) result;
@@ -7527,5 +7725,55 @@ public class ArrayUtils {
   @SuppressWarnings("unchecked")
   public static <T> T[] nullToEmpty(@Nullable final T[] array) {
     return (array == null ? (T[]) EMPTY_OBJECT_ARRAY : array);
+  }
+
+  /**
+   * Gets the stream of a nullable array.
+   *
+   * @param <T>
+   *     the type of the elements in the array.
+   * @param array
+   *     the array, which could be {@code null}.
+   * @return
+   *     the stream of the array, or an empty stream if the array is {@code null}.
+   */
+  public static <T> Stream<T> stream(@Nullable final T[] array) {
+    return (array == null ? Stream.empty() : Arrays.stream(array));
+  }
+
+  /**
+   * Performs the given action for each element of the array until all elements
+   * have been processed or the action throws an exception.  Actions are
+   * performed in the order of the array. Exceptions thrown by the action are
+   * relayed to the caller.
+   * <p>
+   * The behavior of this method is unspecified if the action performs side
+   * effects that modify the underlying source of elements, unless an overriding
+   * class has specified a concurrent modification policy.
+   * <p>
+   * The default implementation behaves as if:
+   * <pre>{@code
+   *    if (array != null) {
+   *      for (final T value : array) {
+   *        action.accept(value);
+   *      }
+   *    }
+   * }</pre>
+   *
+   * @param <T>
+   *     The type of the element in the array.
+   * @param array
+   *     An {@code array} to be iterated, which may be {@code null}.
+   * @param action
+   *     The action to be performed for each element.
+   * @throws NullPointerException
+   *     if the specified action is null.
+   */
+  public static <T> void forEach(@Nullable final T[] array, final Consumer<? super T> action) {
+    if (array != null) {
+      for (final T value : array) {
+        action.accept(value);
+      }
+    }
   }
 }

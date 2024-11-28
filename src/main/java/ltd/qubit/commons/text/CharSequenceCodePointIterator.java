@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -183,7 +183,7 @@ public final class CharSequenceCodePointIterator extends CodePointIterator
   }
 
   @Override
-  public CharSequenceCodePointIterator clone() {
+  public CharSequenceCodePointIterator cloneEx() {
     final CharSequenceCodePointIterator cloned = new CharSequenceCodePointIterator();
     cloned.text = text;
     cloned.start = start;

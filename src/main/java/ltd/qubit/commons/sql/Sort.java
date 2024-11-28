@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import ltd.qubit.commons.lang.Equality;
@@ -21,6 +22,7 @@ import ltd.qubit.commons.text.tostring.ToStringBuilder;
  */
 public class Sort implements Serializable {
 
+  @Serial
   private static final long serialVersionUID = -1666296704696820914L;
 
   private String field;

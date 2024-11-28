@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 /**
  * 此接口表示实体具有证件信息。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface WithCredential {
 

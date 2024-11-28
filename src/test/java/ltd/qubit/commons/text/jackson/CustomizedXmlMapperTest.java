@@ -8,18 +8,31 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson;
 
+import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
+
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.xmlunit.builder.DiffBuilder;
+import org.xmlunit.diff.DefaultNodeMatcher;
+import org.xmlunit.diff.Diff;
+import org.xmlunit.diff.ElementSelectors;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
+import ltd.qubit.commons.text.testbed.DictEntryInfo;
+import ltd.qubit.commons.text.testbed.Document;
 import ltd.qubit.commons.text.testbed.Gender;
 import ltd.qubit.commons.text.testbed.MixJsonXmlAnnotation;
 import ltd.qubit.commons.text.testbed.OrganizationNoAnnotation;
@@ -29,6 +42,7 @@ import ltd.qubit.commons.text.testbed.WithEnum;
 import ltd.qubit.commons.util.pair.KeyValuePair;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import static ltd.qubit.commons.test.XmlUnitUtils.assertXPathEquals;
@@ -116,40 +130,40 @@ public class CustomizedXmlMapperTest {
 
     final String xml =
         "<person-no-annotation>\n"
-            + "    <id>\n"
-            + "        12345 \n"
-            + "    </id>\n"
-            + "    <code>abc \n"
-            + "    </code> \n"
-            + "    <name> 张三\n"
-            + "    </name> \n"
-            + "    <company>\n"
-            + "        <id>547362</id> \n"
-            + "        <code>xx-tech </code> \n"
-            + "        <name>  XX科技有限公司 \n  </name> \n"
-            + "        <address>江苏省南京市秦淮区XX路32号 </address> \n"
-            + "        <create-time> 2022-09-28T09:38:45.752Z </create-time> \n"
-            + "        <modify-time> 2022-09-28T10:40:32Z \n </modify-time> \n"
-            + "    </company>\n"
-            + "    <gender>\n"
-            + "        MALE \n"
-            + "    </gender>\n"
-            + "    <create-time>\n"
-            + "        2022-09-28T09:38:45.752Z \n"
-            + "    </create-time>\n"
-            + "    <modify-time>\n"
-            + "        2022-09-28T10:40:32Z \n"
-            + "    </modify-time>\n"
-            + "    <payload>\n"
-            + "        <job-title>  engineer </job-title> \n"
-            + "        <age>  32 \n</age> \n"
-            + "    </payload>\n"
-            + "    <job-tags>\n"
-            + "        <job-tag> t1 </job-tag> \n"
-            + "        <job-tag> t2 </job-tag> \n"
-            + "        <job-tag>    t3\t\n </job-tag> \n"
-            + "    </job-tags>\n"
-            + "</person-no-annotation>\n";
+      + "    <id>\n"
+      + "        12345 \n"
+      + "    </id>\n"
+      + "    <code>abc \n"
+      + "    </code> \n"
+      + "    <name> 张三\n"
+      + "    </name> \n"
+      + "    <company>\n"
+      + "        <id>547362</id> \n"
+      + "        <code>xx-tech </code> \n"
+      + "        <name>  XX科技有限公司 \n  </name> \n"
+      + "        <address>江苏省南京市秦淮区XX路32号 </address> \n"
+      + "        <create-time> 2022-09-28T09:38:45.752Z </create-time> \n"
+      + "        <modify-time> 2022-09-28T10:40:32Z \n </modify-time> \n"
+      + "    </company>\n"
+      + "    <gender>\n"
+      + "        MALE \n"
+      + "    </gender>\n"
+      + "    <create-time>\n"
+      + "        2022-09-28T09:38:45.752Z \n"
+      + "    </create-time>\n"
+      + "    <modify-time>\n"
+      + "        2022-09-28T10:40:32Z \n"
+      + "    </modify-time>\n"
+      + "    <payload>\n"
+      + "        <entry><key>  job-title </key><value> engineer </value></entry> \n"
+      + "        <entry><key>age</key><value>  32 \n</value></entry> \n"
+      + "    </payload>\n"
+      + "    <job-tags>\n"
+      + "        <job-tag> t1 </job-tag> \n"
+      + "        <job-tag> t2 </job-tag> \n"
+      + "        <job-tag>    t3\t\n </job-tag> \n"
+      + "    </job-tags>\n"
+      + "</person-no-annotation>\n";
 
     System.out.println(xml);
     final PersonNoAnnotation p2 = mapper.readValue(xml, PersonNoAnnotation.class);
@@ -247,5 +261,311 @@ public class CustomizedXmlMapperTest {
     final String errorJson = "<with-enum><value>value-3</value></with-enum>";
     assertThrows(InvalidFormatException.class,
         () -> mapper.readValue(errorJson, WithEnum.class));
+  }
+
+  @Test
+  public void testSerializeXmlElementAnnotatedAtGetter()
+      throws JsonProcessingException {
+    final XmlMapper xmlMapper = new CustomizedXmlMapper();
+    final DictEntryInfo obj = new DictEntryInfo();
+
+    obj.setId(123L);
+    obj.setCode("QD");
+    obj.setName("每天使用一次");
+    obj.setParams(null);
+    String xml = xmlMapper.writeValueAsString(obj);
+    System.out.println(xml);
+    assertXmlEqual("<dict-entry-info>\n"
+            + "  <id>123</id>\n"
+            + "  <code>QD</code>\n"
+            + "  <name>每天使用一次</name>\n"
+            + "  <display-name>每天使用一次</display-name>\n"
+            + "  <display-code>QD</display-code>\n"
+            + "</dict-entry-info>",
+        xml);
+
+    obj.setId(4578237832L);
+    obj.setCode("Q{0}H");
+    obj.setName("每{0}小时使用一次");
+    obj.setParams(new String[]{"3"});
+    xml = xmlMapper.writeValueAsString(obj);
+    System.out.println(xml);
+    assertXmlEqual("<dict-entry-info>\n"
+            + "  <id>4578237832</id>\n"
+            + "  <code>Q{0}H</code>\n"
+            + "  <name>每{0}小时使用一次</name>\n"
+            + "  <params>\n"
+            + "    <param>3</param>\n"
+            + "  </params>\n"
+            + "  <display-name>每3小时使用一次</display-name>\n"
+            + "  <display-code>Q3H</display-code>\n"
+            + "</dict-entry-info>",
+        xml);
+
+    obj.setId(2342343243L);
+    obj.setCode("MCD{0}D{1}");
+    obj.setName("月经第{0}天至第{1}天使用");
+    obj.setParams(new String[]{"3", "5"});
+    xml = xmlMapper.writeValueAsString(obj);
+    System.out.println(xml);
+    assertXmlEqual("<dict-entry-info>\n"
+            + "  <id>2342343243</id>\n"
+            + "  <code>MCD{0}D{1}</code>\n"
+            + "  <name>月经第{0}天至第{1}天使用</name>\n"
+            + "  <params>\n"
+            + "    <param>3</param>\n"
+            + "    <param>5</param>\n"
+            + "  </params>\n"
+            + "  <display-name>月经第3天至第5天使用</display-name>\n"
+            + "  <display-code>MCD3D5</display-code>\n"
+            + "</dict-entry-info>",
+        xml);
+
+    obj.setId(123123423332L);
+    obj.setCode("OTH");
+    obj.setName("{0}");
+    obj.setParams(new String[]{"特定的XX方法"});
+    xml = xmlMapper.writeValueAsString(obj);
+    System.out.println(xml);
+    assertXmlEqual("<dict-entry-info>\n"
+            + "  <id>123123423332</id>\n"
+            + "  <code>OTH</code>\n"
+            + "  <name>{0}</name>\n"
+            + "  <params>\n"
+            + "    <param>特定的XX方法</param>\n"
+            + "  </params>\n"
+            + "  <display-name>特定的XX方法</display-name>\n"
+            + "  <display-code>OTH</display-code>\n"
+            + "</dict-entry-info>",
+        xml);
+
+    obj.setId(21321434246879L);
+    obj.setCode("QW({0},{1},{2})");
+    obj.setName("每周{0},{1},{2}使用");
+    obj.setParams(new String[]{"2", "4", "6"});
+    xml = xmlMapper.writeValueAsString(obj);
+    System.out.println(xml);
+    assertXmlEqual("<dict-entry-info>\n"
+            + "  <id>21321434246879</id>\n"
+            + "  <code>QW({0},{1},{2})</code>\n"
+            + "  <name>每周{0},{1},{2}使用</name>\n"
+            + "  <params>\n"
+            + "    <param>2</param>\n"
+            + "    <param>4</param>\n"
+            + "    <param>6</param>\n"
+            + "  </params>\n"
+            + "  <display-name>每周2,4,6使用</display-name>\n"
+            + "  <display-code>QW(2,4,6)</display-code>\n"
+            + "</dict-entry-info>",
+        xml);
+  }
+
+  @Test
+  public void testDeserializeXmlElementAnnotatedAtGetter()
+      throws JsonProcessingException {
+    final XmlMapper xmlMapper = new CustomizedXmlMapper();
+    final String xml = "<dict-entry-info>\n"
+        + "  <id>123</id>\n"
+        + "  <code>QD</code>\n"
+        + "  <name>每天使用一次</name>\n"
+        + "  <display-name>每天使用一次</display-name>\n"
+        + "  <display-code>QD</display-code>\n"
+        + "</dict-entry-info>";
+
+    final DictEntryInfo expected = new DictEntryInfo();
+    expected.setId(123L);
+    expected.setCode("QD");
+    expected.setName("每天使用一次");
+    expected.setParams(null);
+    System.out.println("Deserialize from XML:\n" + xml);
+    final DictEntryInfo actual = xmlMapper.readValue(xml, DictEntryInfo.class);
+    System.out.println(actual);
+    assertEquals(expected, actual);
+  }
+
+  @XmlRootElement(name = "my-root")
+  static class ClassWithXmlRootElement {
+    private final int value;
+
+    public ClassWithXmlRootElement(final int value) {
+      this.value = value;
+    }
+
+    public int getValue() {
+      return value;
+    }
+  }
+
+  @XmlRootElement
+  static class ClassWithDefaultXmlRootElement {
+    private final int value;
+
+    public ClassWithDefaultXmlRootElement(final int value) {
+      this.value = value;
+    }
+
+    public int getValue() {
+      return value;
+    }
+  }
+
+  @Test
+  public void testSerializeClassWithXmlRootElement()
+      throws JsonProcessingException {
+    final XmlMapper mapper = new CustomizedXmlMapper();
+    Object obj = new ClassWithXmlRootElement(123);
+    String xml = mapper.writeValueAsString(obj);
+    String expected = "<my-root><value>123</value></my-root>";
+    System.out.println("Expected XML: " + expected);
+    System.out.println("Actual XML: " + xml);
+    assertXmlEqual(expected, xml);
+
+    obj = new ClassWithDefaultXmlRootElement(123);
+    xml = mapper.writeValueAsString(obj);
+    expected = "<class-with-default-xml-root-element><value>123</value></class-with-default-xml-root-element>";
+    System.out.println("Expected XML: " + expected);
+    System.out.println("Actual XML: " + xml);
+    assertXmlEqual(expected, xml);
+  }
+
+  @XmlRootElement(name = "my-root")
+  static class ClassWithXmlElement {
+    @XmlElement(name = "int-value")
+    private final int value;
+
+    public ClassWithXmlElement(final int value) {
+      this.value = value;
+    }
+
+    public int getValue() {
+      return value;
+    }
+  }
+
+  @XmlRootElement
+  static class ClassWithDefaultXmlElement {
+    @XmlElement
+    private final int value;
+
+    public ClassWithDefaultXmlElement(final int value) {
+      this.value = value;
+    }
+
+    public int getValue() {
+      return value;
+    }
+  }
+
+  @Test
+  public void testSerializeClassWithXmlElement()
+      throws JsonProcessingException {
+    final XmlMapper mapper = new CustomizedXmlMapper();
+    Object obj = new ClassWithXmlElement(123);
+    String xml = mapper.writeValueAsString(obj);
+    String expected = "<my-root><int-value>123</int-value></my-root>";
+    System.out.println("Expected XML: " + expected);
+    System.out.println("Actual XML: " + xml);
+    assertXmlEqual(expected, xml);
+
+    obj = new ClassWithDefaultXmlElement(123);
+    xml = mapper.writeValueAsString(obj);
+    expected = "<class-with-default-xml-element><value>123</value></class-with-default-xml-element>";
+    System.out.println("Expected XML: " + expected);
+    System.out.println("Actual XML: " + xml);
+    assertXmlEqual(expected, xml);
+  }
+
+  @XmlRootElement(name = "my-list-wrapper")
+  private static class ListWrapper<T> {
+
+    @XmlNoElementWrapper
+    @XmlElement(name = "my-list-item")
+    private final List<T> list;
+
+    public ListWrapper(final List<T> list) {
+      this.list = list;
+    }
+
+    public final List<T> getList() {
+      return list;
+    }
+  }
+
+  @Test
+  public void testSerializeListWrapper() throws JsonProcessingException {
+    final XmlMapper mapper = new CustomizedXmlMapper();
+    final List<ClassWithXmlElement> list = new ArrayList<>();
+    list.add(new ClassWithXmlElement(1));
+    list.add(new ClassWithXmlElement(2));
+    list.add(new ClassWithXmlElement(3));
+    final ListWrapper<ClassWithXmlElement> wrapper = new ListWrapper<>(list);
+    final String xml = mapper.writeValueAsString(wrapper);
+    final String expected = "<my-list-wrapper>"
+        + "<my-list-item><int-value>1</int-value></my-list-item>"
+        + "<my-list-item><int-value>2</int-value></my-list-item>"
+        + "<my-list-item><int-value>3</int-value></my-list-item>"
+        + "</my-list-wrapper>";
+    System.out.println("Expected XML: " + expected);
+    System.out.println("Actual XML: " + xml);
+    assertXmlEqual(expected, xml);
+  }
+
+  @Test
+  public void testXmlElementNameForContainerType() throws JsonProcessingException {
+    final XmlMapper mapper = new CustomizedXmlMapper();
+    final DictEntryInfo info = new DictEntryInfo();
+    info.setId(123L);
+    info.setCode("Q{0}H");
+    info.setName("每{0}小时使用一次");
+    info.setParams(new String[] {"3"});
+    final String xml = mapper.writeValueAsString(info);
+    final String expected = "<dict-entry-info>\n"
+        + "  <id>123</id>\n"
+        + "  <code>Q{0}H</code>\n"
+        + "  <name>每{0}小时使用一次</name>\n"
+        + "  <params>\n"
+        + "    <param>3</param>\n"
+        + "  </params>\n"
+        + "  <display-name>每3小时使用一次</display-name>\n"
+        + "  <display-code>Q3H</display-code>\n"
+        + "</dict-entry-info>\n";
+    assertEquals(expected, xml);
+  }
+
+  @Test
+  public void testXmlElementNameForMapType() throws JsonProcessingException {
+    final Document doc = new Document();
+    doc.setId("1234567");
+    doc.setTitle("title");
+    doc.setContent("content");
+    doc.setMetadata(new TreeMap<>());
+    doc.getMetadata().put("author", "author");
+    doc.getMetadata().put("date", "2023-01-01");
+    doc.setScore(new BigDecimal("0.382"));
+    final XmlMapper mapper = new CustomizedXmlMapper();
+    final String xml = mapper.writeValueAsString(doc);
+    System.out.println("The document is serialized to:\n" + xml);
+    final String expected = "<document>\n"
+        + "  <id>1234567</id>\n"
+        + "  <title>title</title>\n"
+        + "  <content>content</content>\n"
+        + "  <metadata>\n"
+        + "    <entry>\n"
+        + "      <key>author</key>\n"
+        + "      <value>author</value>\n"
+        + "    </entry>\n"
+        + "    <entry>\n"
+        + "      <key>date</key>\n"
+        + "      <value>2023-01-01</value>\n"
+        + "    </entry>\n"
+        + "  </metadata>\n"
+        + "  <score>0.382000</score>\n"
+        + "</document>\n";
+    final Diff diff = DiffBuilder.compare(expected).withTest(xml)
+                                 .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndText))
+                                 .ignoreWhitespace()
+                                 .checkForSimilar()
+                                 .build();
+    assertFalse(diff.hasDifferences(), () -> "XMLs are different: " + diff);
   }
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect.impl;
 
-import ltd.qubit.commons.reflect.testbed.MethodRefBean;
-
 import org.junit.jupiter.api.Test;
+
+import ltd.qubit.commons.reflect.testbed.MethodRefBean;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -245,12 +245,16 @@ public class MethodReferenceInterfaceTest {
 
   private String lastInvoke;
 
+
+  @SuppressWarnings("overloads")
   private <T, R, P1>
   void invoke(final T bean, final NonVoidMethod1<T, R, P1> ref) {
     ref.invoke(bean, null);
     lastInvoke = "invoke(T, NonVoidMethod1)";
   }
 
+
+  @SuppressWarnings("overloads")
   private <T, R>
   void invoke(final T bean, final NonVoidMethod1Byte<T, R> ref) {
     ref.invoke(bean, (byte) 0);
@@ -275,6 +279,7 @@ public class MethodReferenceInterfaceTest {
   //    lastInvoke = "invoke(T, NonVoidMethod1Long)";
   //  }
 
+  @SuppressWarnings("overloads")
   private <T, R>
   void invoke(final T bean, final NonVoidMethod1Boolean<T, R> ref) {
     ref.invoke(bean, false);

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -10,12 +10,15 @@ package ltd.qubit.commons.sql;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.annotation.Nullable;
 
+import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.lang.StringUtils;
+import ltd.qubit.commons.sql.error.UnexpectedColumnValueException;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 import static java.sql.DatabaseMetaData.typeNoNulls;
@@ -204,11 +207,50 @@ public final class TypeInfo {
     numPrecRadix = DECIMAL_RADIX;
   }
 
+  public TypeInfo(final ResultSet rs) throws SQLException {
+    typeName = rs.getString("TYPE_NAME");
+    dataType = rs.getInt("DATA_TYPE");
+    precision = rs.getInt("PRECISION");
+    literalPrefix = rs.getString("LITERAL_PREFIX");
+    literalSuffix = rs.getString("LITERAL_SUFFIX");
+    createParams = rs.getString("CREATE_PARAMS");
+    nullable = rs.getShort("NULLABLE");
+    caseSensitive = rs.getBoolean("CASE_SENSITIVE");
+    searchable = rs.getShort("SEARCHABLE");
+    unsignedAttribute = rs.getBoolean("UNSIGNED_ATTRIBUTE");
+    fixedPrecScale = rs.getBoolean("FIXED_PREC_SCALE");
+    autoIncrement = rs.getBoolean("AUTO_INCREMENT");
+    localTypeName = rs.getString("LOCAL_TYPE_NAME");
+    minimumScale = rs.getShort("MINIMUM_SCALE");
+    maximumScale = rs.getShort("MAXIMUM_SCALE");
+    sqlDataType = rs.getInt("SQL_DATA_TYPE");
+    sqlDatetimeSub = rs.getInt("SQL_DATETIME_SUB");
+    numPrecRadix = rs.getInt("NUM_PREC_RADIX");
+    if (typeName == null) {
+      throw new UnexpectedColumnValueException(TYPE_NAME, null);
+    }
+    if (ArrayUtils.indexOf(DATA_TYPE_ENUM, dataType) < 0) {
+      throw new UnexpectedColumnValueException(DATA_TYPE, dataType);
+    }
+    if (precision < 0) {
+      throw new UnexpectedColumnValueException(PRECISION, precision);
+    }
+    if (ArrayUtils.indexOf(NULLABLE_ENUM, nullable) < 0) {
+      throw new UnexpectedColumnValueException(NULLABLE, nullable);
+    }
+    if (ArrayUtils.indexOf(SEARCHABLE_ENUM, searchable) < 0) {
+      throw new UnexpectedColumnValueException(SEARCHABLE, searchable);
+    }
+    if (numPrecRadix < 2) {
+      throw new UnexpectedColumnValueException(NUM_PREC_RADIX, numPrecRadix);
+    }
+  }
+
   public String getTypeName() {
     return typeName;
   }
 
-  protected void setTypeName(final String typeName) {
+  void setTypeName(final String typeName) {
     this.typeName = requireNonNull("typeName", typeName);
   }
 
@@ -216,7 +258,7 @@ public final class TypeInfo {
     return dataType;
   }
 
-  protected void setDataType(final int dataType) {
+  void setDataType(final int dataType) {
     this.dataType = requireInEnum("dataType", dataType, DATA_TYPE_ENUM);
   }
 
@@ -224,7 +266,7 @@ public final class TypeInfo {
     return precision;
   }
 
-  protected void setPrecision(final int precision) {
+  void setPrecision(final int precision) {
     this.precision = requireGreaterEqual("precision", precision, "zero", 0);
   }
 
@@ -232,7 +274,7 @@ public final class TypeInfo {
     return literalPrefix;
   }
 
-  protected void setLiteralPrefix(@Nullable final String literalPrefix) {
+  void setLiteralPrefix(@Nullable final String literalPrefix) {
     this.literalPrefix = literalPrefix;
   }
 
@@ -240,7 +282,7 @@ public final class TypeInfo {
     return literalSuffix;
   }
 
-  protected void setLiteralSuffix(@Nullable final String literalSuffix) {
+  void setLiteralSuffix(@Nullable final String literalSuffix) {
     this.literalSuffix = literalSuffix;
   }
 
@@ -248,7 +290,7 @@ public final class TypeInfo {
     return createParams;
   }
 
-  protected void setCreateParams(@Nullable final String createParams) {
+  void setCreateParams(@Nullable final String createParams) {
     this.createParams = createParams;
   }
 
@@ -256,7 +298,7 @@ public final class TypeInfo {
     return nullable;
   }
 
-  protected void setNullable(final short nullable) {
+  void setNullable(final short nullable) {
     this.nullable = requireInEnum("nullable", nullable, NULLABLE_ENUM);
   }
 
@@ -264,7 +306,7 @@ public final class TypeInfo {
     return caseSensitive;
   }
 
-  protected void setCaseSensitive(final boolean caseSensitive) {
+  void setCaseSensitive(final boolean caseSensitive) {
     this.caseSensitive = caseSensitive;
   }
 
@@ -272,7 +314,7 @@ public final class TypeInfo {
     return searchable;
   }
 
-  protected void setSearchable(final short searchable) {
+  void setSearchable(final short searchable) {
     this.searchable = requireInEnum("searchable", searchable, SEARCHABLE_ENUM);
   }
 
@@ -280,7 +322,7 @@ public final class TypeInfo {
     return unsignedAttribute;
   }
 
-  protected void setUnsignedAttribute(final boolean unsignedAttribute) {
+  void setUnsignedAttribute(final boolean unsignedAttribute) {
     this.unsignedAttribute = unsignedAttribute;
   }
 
@@ -288,7 +330,7 @@ public final class TypeInfo {
     return fixedPrecScale;
   }
 
-  protected void setFixedPrecScale(final boolean fixedPrecScale) {
+  void setFixedPrecScale(final boolean fixedPrecScale) {
     this.fixedPrecScale = fixedPrecScale;
   }
 
@@ -296,7 +338,7 @@ public final class TypeInfo {
     return autoIncrement;
   }
 
-  protected void setAutoIncrement(final boolean autoIncrement) {
+  void setAutoIncrement(final boolean autoIncrement) {
     this.autoIncrement = autoIncrement;
   }
 
@@ -304,7 +346,7 @@ public final class TypeInfo {
     return localTypeName;
   }
 
-  protected void setLocalTypeName(@Nullable final String localTypeName) {
+  void setLocalTypeName(@Nullable final String localTypeName) {
     this.localTypeName = localTypeName;
   }
 
@@ -312,7 +354,7 @@ public final class TypeInfo {
     return minimumScale;
   }
 
-  protected void setMinimumScale(final short minimumScale) {
+  void setMinimumScale(final short minimumScale) {
     this.minimumScale = requireGreaterEqual("minimumScale", minimumScale,
         "zero", (short) 0);
   }
@@ -321,7 +363,7 @@ public final class TypeInfo {
     return maximumScale;
   }
 
-  protected void setMaximumScale(final short maximumScale) {
+  void setMaximumScale(final short maximumScale) {
     this.maximumScale = requireGreaterEqual("maximumScale", maximumScale,
         "zero", (short) 0);
   }
@@ -330,7 +372,7 @@ public final class TypeInfo {
     return sqlDataType;
   }
 
-  protected void setSqlDataType(final int sqlDataType) {
+  void setSqlDataType(final int sqlDataType) {
     this.sqlDataType = sqlDataType;
   }
 
@@ -338,7 +380,7 @@ public final class TypeInfo {
     return sqlDatetimeSub;
   }
 
-  protected void setSqlDatetimeSub(final int sqlDatetimeSub) {
+  void setSqlDatetimeSub(final int sqlDatetimeSub) {
     this.sqlDatetimeSub = sqlDatetimeSub;
   }
 
@@ -346,7 +388,7 @@ public final class TypeInfo {
     return numPrecRadix;
   }
 
-  protected void setNumPrecRadix(final int numPrecRadix) {
+  void setNumPrecRadix(final int numPrecRadix) {
     this.numPrecRadix = requireGreaterEqual("numPrecRadix", numPrecRadix,
         "zero", 0);
   }

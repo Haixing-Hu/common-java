@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,18 +13,15 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
+import org.junit.jupiter.api.Test;
+
+import ltd.qubit.commons.model.Foo;
 import ltd.qubit.commons.reflect.testbed.ChildBean;
 import ltd.qubit.commons.reflect.testbed.Info;
 import ltd.qubit.commons.reflect.testbed.ParentBean;
 import ltd.qubit.commons.util.range.CloseRange;
-
-import org.junit.jupiter.api.Test;
-
-import static ltd.qubit.commons.reflect.FieldUtils.getField;
-import static ltd.qubit.commons.reflect.FieldUtils.getReadMethod;
-import static ltd.qubit.commons.reflect.FieldUtils.getWriteMethod;
-import static ltd.qubit.commons.reflect.Option.BEAN_FIELD;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,6 +30,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static ltd.qubit.commons.reflect.FieldUtils.getField;
+import static ltd.qubit.commons.reflect.FieldUtils.getReadMethod;
+import static ltd.qubit.commons.reflect.FieldUtils.getWriteMethod;
+import static ltd.qubit.commons.reflect.Option.BEAN_FIELD;
 
 /**
  * Unit test of the {@link BeanInfo}.
@@ -305,5 +307,57 @@ public class BeanInfoTest {
     final BeanInfo info1 = BeanInfo.of(Info.class);
     final BeanInfo info2 = BeanInfo.of(Info.class);
     assertSame(info1, info2);
+  }
+
+  @Test
+  public void testBeanInfoOfBeanWithPublicFields() {
+    final BeanInfo info = BeanInfo.of(Foo.class);
+    assertSame(Foo.class, info.getType());
+    final List<Property> expectedProperties = Arrays.asList(
+        Property.of(Foo.class, "class"),
+        Property.of(Foo.class, "m_boolean"),
+        Property.of(Foo.class, "m_char"),
+        Property.of(Foo.class, "m_byte"),
+        Property.of(Foo.class, "m_short"),
+        Property.of(Foo.class, "m_int"),
+        Property.of(Foo.class, "m_long"),
+        Property.of(Foo.class, "m_float"),
+        Property.of(Foo.class, "m_double"),
+        Property.of(Foo.class, "m_Boolean"),
+        Property.of(Foo.class, "m_Character"),
+        Property.of(Foo.class, "m_Byte"),
+        Property.of(Foo.class, "m_Short"),
+        Property.of(Foo.class, "m_Integer"),
+        Property.of(Foo.class, "m_Long"),
+        Property.of(Foo.class, "m_Float"),
+        Property.of(Foo.class, "m_Double"),
+        Property.of(Foo.class, "m_BigInteger"),
+        Property.of(Foo.class, "m_BigDecimal"),
+        Property.of(Foo.class, "m_String"),
+        Property.of(Foo.class, "m_Instant"),
+        Property.of(Foo.class, "m_LocalDate"),
+        Property.of(Foo.class, "m_LocalTime"),
+        Property.of(Foo.class, "m_LocalDateTime"),
+        Property.of(Foo.class, "m_ZonedDateTime"),
+        Property.of(Foo.class, "m_java_sql_Date"),
+        Property.of(Foo.class, "m_java_sql_Time"),
+        Property.of(Foo.class, "m_java_sql_Timestamp"),
+        Property.of(Foo.class, "m_java_util_Date"),
+        Property.of(Foo.class, "m_Gender"),
+        Property.of(Foo.class, "m_State"),
+        Property.of(Foo.class, "m_LongArray"),
+        Property.of(Foo.class, "m_StringArray"),
+        Property.of(Foo.class, "m_InstantArray"),
+        Property.of(Foo.class, "m_StateArray"),
+        Property.of(Foo.class, "m_child")
+    );
+    final List<String> expectedPropertyNames = expectedProperties
+        .stream().map(Property::getName).sorted().toList();
+    final Collection<Property> properties = info.getProperties();
+    assertNotNull(properties);
+    final List<String> propertyNames = properties
+        .stream().map(Property::getName).sorted().toList();
+    assertEquals(expectedPropertyNames, propertyNames);
+    assertEquals(new HashSet<>(expectedProperties), new HashSet<>(properties));
   }
 }

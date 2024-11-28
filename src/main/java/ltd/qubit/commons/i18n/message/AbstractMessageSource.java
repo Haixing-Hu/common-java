@@ -51,10 +51,10 @@ import ltd.qubit.commons.lang.ArrayUtils;
  * @author Juergen Hoeller
  * @author Rod Johnson
  * @author Haixing Hu
- * @see #resolveCode(String, Locale)
- * @see #resolveCodeWithoutArguments(String, Locale)
+ * @see #resolveCode(String, java.util.Locale)
+ * @see #resolveCodeWithoutArguments(String, java.util.Locale)
  * @see #setAlwaysUseMessageFormat
- * @see MessageFormat
+ * @see java.text.MessageFormat
  */
 public abstract class AbstractMessageSource extends MessageSourceSupport
     implements HierarchicalMessageSource {
@@ -382,7 +382,7 @@ public abstract class AbstractMessageSource extends MessageSourceSupport
    *     support internationalization)
    * @return the message String, or {@code null} if not found
    * @see #resolveCode
-   * @see MessageFormat
+   * @see java.text.MessageFormat
    */
   @Nullable
   protected String resolveCodeWithoutArguments(final String code,
@@ -411,7 +411,7 @@ public abstract class AbstractMessageSource extends MessageSourceSupport
    *     the locale to resolve the code for (subclasses are encouraged to
    *     support internationalization)
    * @return the MessageFormat for the message, or {@code null} if not found
-   * @see #resolveCodeWithoutArguments(String, Locale)
+   * @see #resolveCodeWithoutArguments(String, java.util.Locale)
    */
   @Nullable
   protected abstract MessageFormat resolveCode(String code, Locale locale);

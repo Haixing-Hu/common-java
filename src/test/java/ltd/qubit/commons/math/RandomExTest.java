@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -10,10 +10,10 @@ package ltd.qubit.commons.math;
 
 import java.util.Arrays;
 
+import org.junit.jupiter.api.Test;
+
 import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.util.range.CloseRange;
-
-import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;

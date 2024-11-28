@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,7 +15,7 @@ import javax.annotation.concurrent.Immutable;
 import ltd.qubit.commons.util.codec.BigIntegerCodec;
 
 /**
- * The JSON deserializer of a {@link BigInteger} object.
+ * The JACKSON deserializer of a {@link BigInteger} object.
  *
  * @author Haixing Hu
  */

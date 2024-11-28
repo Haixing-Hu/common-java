@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -135,7 +135,7 @@ public class LookupTranslator extends CharSequenceTranslator {
   }
 
   @Override
-  public LookupTranslator clone() {
+  public LookupTranslator cloneEx() {
     return new LookupTranslator(this);
   }
 }

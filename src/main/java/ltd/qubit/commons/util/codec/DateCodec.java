@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -22,12 +22,12 @@ import java.util.TimeZone;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ltd.qubit.commons.lang.DateUtils;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.text.Stripper;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.lang.DateUtils.getDate;

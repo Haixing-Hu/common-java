@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,11 +24,12 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.reflect.impl.GetterMethod;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
+import static ltd.qubit.commons.reflect.FieldUtils.getAllFields;
 import static ltd.qubit.commons.reflect.MethodUtils.getAllMethods;
 import static ltd.qubit.commons.reflect.PropertyUtils.getPropertyNameFromGetter;
 
 /**
- * Stores the information about a bean.
+ * Stores the information about a type of beans.
  *
  * @author Haixing Hu
  */
@@ -47,7 +49,8 @@ public class BeanInfo {
    *
    * @param type
    *     the type of the beans.
-   * @return the object storing the information of the beans.
+   * @return
+   *     the object storing the information of the beans.
    */
   public static BeanInfo of(final Class<?> type) {
     return CACHE.get(type);
@@ -62,39 +65,97 @@ public class BeanInfo {
     this.type = type;
     this.properties = new ArrayList<>();
     this.propertyMap = new HashMap<>();
+    collectPropertiesFromBeanMethods();
+    collectPropertiesFromFields();
+    this.idProperty = findIdProperty();
+  }
+
+  private void collectPropertiesFromBeanMethods() {
     final List<Method> methods = getAllMethods(type, Option.BEAN_METHOD);
-    Property id = null;
     for (final Method method : methods) {
       final String propertyName = getPropertyNameFromGetter(method);
-      if (propertyName == null) {
+      if ((propertyName == null) || propertyMap.containsKey(propertyName)) {
         continue;
       }
       final Property property = Property.of(type, propertyName);
       properties.add(property);
       propertyMap.put(propertyName, property);
-      if (property.isIdentifier()) {
-        id = property;
-      }
     }
-    this.idProperty = id;
   }
 
+  private void collectPropertiesFromFields() {
+    final List<Field> fields = getAllFields(type, Option.BEAN_FIELD);
+    for (final Field field : fields) {
+      final String propertyName = field.getName();
+      if (propertyMap.containsKey(propertyName)) {
+        continue;
+      }
+      final Property property = Property.of(type, propertyName);
+      properties.add(property);
+      propertyMap.put(propertyName, property);
+    }
+  }
+
+  private Property findIdProperty() {
+    for (final Property prop : properties) {
+      if (prop.isIdentifier()) {
+        return prop;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Gets the name of bean class, i.e., the simple name of the class of the beans.
+   *
+   * @return
+   *     the name of bean class, i.e., the simple name of the class of the beans.
+   */
   public String getName() {
     return type.getSimpleName();
   }
 
+  /**
+   * Gets the type of the beans, i.e., the class object of the beans.
+   *
+   * @return
+   *     the type of the beans, i.e., the class object of the beans.
+   */
   public Class<?> getType() {
     return type;
   }
 
+  /**
+   * Tests whether the bean class has a property with the specified name.
+   *
+   * @param name
+   *     the name of the property.
+   * @return
+   *     {@code true} if the bean class has a property with the specified name;
+   *     {@code false} otherwise.
+   */
   public boolean hasProperty(final String name) {
     return propertyMap.containsKey(name);
   }
 
+  /**
+   * Gets the list of properties of the beans.
+   *
+   * @return
+   *     the list of properties of the beans.
+   */
   public List<Property> getProperties() {
     return new ArrayList<>(properties);
   }
 
+  /**
+   * Gets the list of properties of the beans with the specified names.
+   *
+   * @param names
+   *     the names of the properties.
+   * @return
+   *     the list of properties of the beans with the specified names.
+   */
   public List<Property> getProperties(final String... names) {
     final List<Property> result = new ArrayList<>();
     for (final String name : names) {
@@ -105,6 +166,14 @@ public class BeanInfo {
     return result;
   }
 
+  /**
+   * Gets the list of properties of the beans that satisfy the specified condition.
+   *
+   * @param cond
+   *     the condition to be satisfied.
+   * @return
+   *     the list of properties of the beans that satisfy the specified condition.
+   */
   public List<Property> getProperties(final Predicate<Property> cond) {
     final List<Property> result = new ArrayList<>();
     for (final Property prop : properties) {
@@ -115,11 +184,34 @@ public class BeanInfo {
     return result;
   }
 
+  /**
+   * Gets the property of the beans with the specified name.
+   *
+   * @param name
+   *     the name of the property.
+   * @return
+   *     the property of the beans with the specified name, or {@code null} if
+   *     the bean class does not have a property with the specified name.
+   */
   @Nullable
   public Property getProperty(final String name) {
     return propertyMap.get(name);
   }
 
+  /**
+   * Gets the property of the beans with the specified getter method.
+   *
+   * @param <T>
+   *     the type of the beans.
+   * @param <R>
+   *     the type of the property.
+   * @param getter
+   *     the getter method of the property.
+   * @return
+   *     the property of the beans with the specified getter method, or
+   *     {@code null} if the bean class does not have a property with the
+   *     specified getter method.
+   */
   @Nullable
   public <T, R> Property getProperty(final GetterMethod<T, R> getter) {
     @SuppressWarnings(
@@ -132,31 +224,72 @@ public class BeanInfo {
     }
   }
 
+  /**
+   * Gets the list of properties of the beans that are reference properties.
+   *
+   * @return
+   *     the list of properties of the beans that are reference properties.
+   */
   public List<Property> getReferenceProperties() {
     return properties.stream()
                      .filter(Property::isReference)
                      .collect(Collectors.toList());
   }
 
+  /**
+   * Gets the list of properties of the beans that are non-computed properties.
+   *
+   * @return
+   *     the list of properties of the beans that are non-computed properties.
+   */
   public List<Property> getNonComputedProperties() {
     return properties.stream()
                      .filter(Property::isNonComputed)
                      .collect(Collectors.toList());
   }
 
+  /**
+   * Gets the property of the beans that is ID property.
+   *
+   * @return
+   *     the property of the beans that is ID property, or {@code null} if the
+   *     bean class does not have an ID property.
+   */
   @Nullable
   public Property getIdProperty() {
     return idProperty;
   }
 
+  /**
+   * Tests whether the bean class has an ID property.
+   *
+   * @return
+   *     {@code true} if the bean class has an ID property; {@code false}
+   *     otherwise.
+   */
   public boolean hasIdProperty() {
     return idProperty != null;
   }
 
+  /**
+   * Tests whether the bean class has an auto-generated ID property.
+   *
+   * @return
+   *    {@code true} if the bean class has an auto-generated ID property;
+   *    {@code false} otherwise.
+   */
   public boolean hasAutoGeneratedIdProperty() {
     return (idProperty != null) && idProperty.isAutoGeneratedId();
   }
 
+  /**
+   * Gets the list of properties that a specified unique property is respect to.
+   *
+   * @param uniqueProperty
+   *     the specified unique property of the bean class.
+   * @return
+   *     the list of properties that the specified unique property is respect to.
+   */
   public List<Property> getRespectToProperties(final Property uniqueProperty) {
     final String[] respectTo = uniqueProperty.getUniqueRespectTo();
     final List<Property> result = new ArrayList<>();
@@ -175,6 +308,16 @@ public class BeanInfo {
     return result;
   }
 
+  /**
+   * Gets the ID of the specified model.
+   *
+   * @param model
+   *     the specified model, i.e., an instance of the bean class.
+   * @return
+   *     the ID of the specified model.
+   * @throws IllegalArgumentException
+   *     if the bean class does not have an ID property.
+   */
   public Object getId(final Object model) {
     if (idProperty == null) {
       throw new IllegalArgumentException(
@@ -183,6 +326,16 @@ public class BeanInfo {
     return idProperty.getValue(model);
   }
 
+  /**
+   * Sets the ID of the specified model.
+   *
+   * @param model
+   *     the specified model, i.e., an instance of the bean class.
+   * @param value
+   *     the new value of the ID.
+   * @throws IllegalArgumentException
+   *     if the bean class does not have an ID property.
+   */
   public void setId(final Object model, @Nullable final Object value) {
     if (idProperty == null) {
       throw new IllegalArgumentException(
@@ -191,6 +344,20 @@ public class BeanInfo {
     idProperty.setValue(model, value);
   }
 
+  /**
+   * Gets the value of the specified property of the specified model.
+   *
+   * @param model
+   *     the specified model, i.e., an instance of the bean class.
+   * @param propertyName
+   *     the name of the property.
+   * @return
+   *     the value of the specified property of the specified model, which may
+   *     be {@code null}.
+   * @throws IllegalArgumentException
+   *     if the bean class does not have a property with the specified name.
+   */
+  @Nullable
   public Object get(final Object model, final String propertyName) {
     final Property property = this.getProperty(propertyName);
     if (property == null) {
@@ -202,6 +369,19 @@ public class BeanInfo {
     return property.getValue(model);
   }
 
+  /**
+   * Gets the value of the specified property of the specified model.
+   *
+   * @param model
+   *     the specified model, i.e., an instance of the bean class.
+   * @param property
+   *     the specified property.
+   * @return
+   *     the value of the specified property of the specified model, which may
+   *     be {@code null}.
+   * @throws IllegalArgumentException
+   *     if the bean class does not have the specified property.
+   */
   public Object get(final Object model, final Property property) {
     if (property.getOwnerClass() != type) {
       throw new IllegalArgumentException("The owner class of the property "
@@ -210,8 +390,20 @@ public class BeanInfo {
     return property.getValue(model);
   }
 
+  /**
+   * Sets the value of the specified property of the specified model.
+   *
+   * @param model
+   *     the specified model, i.e., an instance of the bean class.
+   * @param propertyName
+   *     the name of the property.
+   * @param propertyValue
+   *     the new value of the property, which may be {@code null}.
+   * @throws IllegalArgumentException
+   *     if the bean class does not have a property with the specified name.
+   */
   public void set(final Object model, final String propertyName,
-      final Object propertyValue) {
+      @Nullable final Object propertyValue) {
     final Property property = this.getProperty(propertyName);
     if (property == null) {
       throw new IllegalArgumentException("Cannot find property '"
@@ -222,6 +414,18 @@ public class BeanInfo {
     property.setValue(model, propertyValue);
   }
 
+  /**
+   * Sets the value of the specified property of the specified model.
+   *
+   * @param model
+   *     the specified model, i.e., an instance of the bean class.
+   * @param property
+   *     the specified property.
+   * @param propertyValue
+   *     the new value of the property, which may be {@code null}.
+   * @throws IllegalArgumentException
+   *     if the bean class does not have the specified property.
+   */
   public void set(final Object model, final Property property,
       final Object propertyValue) {
     if (property.getOwnerClass() != type) {
@@ -231,6 +435,7 @@ public class BeanInfo {
     property.setValue(model, propertyValue);
   }
 
+  @Override
   public boolean equals(@Nullable final Object o) {
     if (this == o) {
       return true;
@@ -245,6 +450,7 @@ public class BeanInfo {
         && Equality.equals(idProperty, other.idProperty);
   }
 
+  @Override
   public int hashCode() {
     final int multiplier = 7;
     int result = 3;
@@ -255,6 +461,7 @@ public class BeanInfo {
     return result;
   }
 
+  @Override
   public String toString() {
     return new ToStringBuilder(this).append("type", type)
                                     .append("properties", properties)

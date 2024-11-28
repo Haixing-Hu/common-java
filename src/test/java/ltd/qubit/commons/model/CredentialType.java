@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,12 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
-import jakarta.xml.bind.annotation.XmlRootElement;
-import ltd.qubit.commons.lang.EnumUtils;
-
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+import ltd.qubit.commons.lang.EnumUtils;
+import ltd.qubit.commons.lang.LocalizedEnum;
 
 import static ltd.qubit.commons.lang.EnumUtils.registerLocalizedNames;
 
@@ -28,10 +30,10 @@ import static ltd.qubit.commons.lang.EnumUtils.registerLocalizedNames;
  *   类别代码</a></li>
  * </ul>
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @XmlRootElement(name = "credential-type")
-public enum CredentialType {
+public enum CredentialType implements LocalizedEnum {
 
   /**
    * 身份证。
@@ -167,14 +169,6 @@ public enum CredentialType {
     registerLocalizedNames(CredentialType.class, "i18n/credential-type");
   }
 
-  public String getLocalizedName() {
-    return getLocalizedName(Locale.getDefault());
-  }
-
-  public String getLocalizedName(final Locale locale) {
-    return EnumUtils.getLocalizedName(locale, this);
-  }
-
   public static CredentialType forCode(final String code) {
     return CODE_MAP.get(code);
   }
@@ -186,11 +180,11 @@ public enum CredentialType {
     }
   }
 
-  public static Map<String, CredentialType> getNameMap(final Locale locale) {
-    final Map<String, CredentialType> result = new HashMap<>();
-    for (final CredentialType e : values()) {
-      result.put(e.getLocalizedName(locale), e);
-    }
-    return result;
+  public static CredentialType forLocalizedName(final String name) {
+    return forLocalizedName(Locale.getDefault(), name);
+  }
+
+  public static CredentialType forLocalizedName(final Locale locale, final String name) {
+    return EnumUtils.forLocalizedName(CredentialType.class, locale, name);
   }
 }

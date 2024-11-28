@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -51,7 +51,7 @@ public class AssignmentTest {
     }
 
     @Override
-    public A clone() {
+    public A cloneEx() {
       return new A(x);
     }
   }
@@ -89,7 +89,7 @@ public class AssignmentTest {
     }
 
     @Override
-    public B clone() {
+    public B cloneEx() {
       return new B(x, y);
     }
   }

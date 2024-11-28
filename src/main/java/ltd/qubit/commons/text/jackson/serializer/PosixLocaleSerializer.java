@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -12,9 +12,9 @@ import java.util.Locale;
 
 import javax.annotation.concurrent.Immutable;
 
-import ltd.qubit.commons.util.codec.PosixLocaleCodec;
-
 import com.fasterxml.jackson.core.JsonGenerator;
+
+import ltd.qubit.commons.util.codec.PosixLocaleCodec;
 
 @Immutable
 public class PosixLocaleSerializer extends EncoderSerializer<Locale> {

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,22 +8,27 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.range;
 
+import java.io.Serial;
+import java.io.Serializable;
+import java.time.LocalTime;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.lang.Assignable;
+import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
-import javax.annotation.Nullable;
-import java.io.Serializable;
-import java.time.LocalTime;
-
 /**
  * 此模型表示时间范围（前闭后开区间）。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
-public class LocalTimeRange implements Serializable, Assignable<LocalTimeRange> {
+public class LocalTimeRange implements Serializable, Assignable<LocalTimeRange>,
+    CloneableEx<LocalTimeRange> {
 
+  @Serial
   private static final long serialVersionUID = 2344974464980585572L;
 
   /**
@@ -56,7 +61,7 @@ public class LocalTimeRange implements Serializable, Assignable<LocalTimeRange> 
   }
 
   @Override
-  public LocalTimeRange clone() {
+  public LocalTimeRange cloneEx() {
     return new LocalTimeRange(this);
   }
 

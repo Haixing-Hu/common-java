@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -10,9 +10,9 @@ package ltd.qubit.commons.text;
 
 import org.junit.jupiter.api.Test;
 
-import static ltd.qubit.commons.text.NamingStyleUtils.propertyPathToDatabaseField;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static ltd.qubit.commons.text.NamingStyleUtils.propertyPathToDatabaseField;
 
 public class NamingStyleUtilsTest {
 

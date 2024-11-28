@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -12,16 +12,16 @@ import java.net.MalformedURLException;
 
 import javax.annotation.concurrent.ThreadSafe;
 
-import ltd.qubit.commons.io.serialize.XmlSerializer;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import ltd.qubit.commons.io.io.serialize.XmlSerializer;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.net.Url;
 import ltd.qubit.commons.text.xml.DomUtils;
 import ltd.qubit.commons.text.xml.InvalidXmlAttributeException;
 import ltd.qubit.commons.text.xml.XmlException;
 import ltd.qubit.commons.text.xml.XmlSerializationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 /**
  * The {@link XmlSerializer} for the {@link HyperLink} class.

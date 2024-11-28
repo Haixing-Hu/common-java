@@ -202,7 +202,7 @@ public final class LocaleContextHolder {
   /**
    * Return the Locale associated with the current thread, if any, or the system
    * default Locale otherwise. This is effectively a replacement for
-   * {@link Locale#getDefault()}, able to optionally respect a
+   * {@link java.util.Locale#getDefault()}, able to optionally respect a
    * user-level Locale setting.
    * <p>
    * Note: This method has a fallback to the shared default Locale, either at
@@ -216,7 +216,7 @@ public final class LocaleContextHolder {
    * @see #getLocaleContext()
    * @see LocaleContext#getLocale()
    * @see #setDefaultLocale(Locale)
-   * @see Locale#getDefault()
+   * @see java.util.Locale#getDefault()
    */
   public static Locale getLocale() {
     return getLocale(getLocaleContext());
@@ -225,7 +225,7 @@ public final class LocaleContextHolder {
   /**
    * Return the Locale associated with the given user context, if any, or the
    * system default Locale otherwise. This is effectively a replacement for
-   * {@link Locale#getDefault()}, able to optionally respect a
+   * {@link java.util.Locale#getDefault()}, able to optionally respect a
    * user-level Locale setting.
    *
    * @param localeContext
@@ -235,7 +235,7 @@ public final class LocaleContextHolder {
    * @see #getLocale()
    * @see LocaleContext#getLocale()
    * @see #setDefaultLocale(Locale)
-   * @see Locale#getDefault()
+   * @see java.util.Locale#getDefault()
    * @since 5.0
    */
   public static Locale getLocale(@Nullable final LocaleContext localeContext) {
@@ -319,7 +319,7 @@ public final class LocaleContextHolder {
   /**
    * Return the TimeZone associated with the current thread, if any, or the
    * system default TimeZone otherwise. This is effectively a replacement for
-   * {@link TimeZone#getDefault()}, able to optionally respect a
+   * {@link java.util.TimeZone#getDefault()}, able to optionally respect a
    * user-level TimeZone setting.
    * <p>
    * Note: This method has a fallback to the shared default TimeZone, either at
@@ -334,7 +334,7 @@ public final class LocaleContextHolder {
    * @see #getLocaleContext()
    * @see TimeZoneAwareLocaleContext#getTimeZone()
    * @see #setDefaultTimeZone(TimeZone)
-   * @see TimeZone#getDefault()
+   * @see java.util.TimeZone#getDefault()
    */
   public static TimeZone getTimeZone() {
     return getTimeZone(getLocaleContext());
@@ -343,7 +343,7 @@ public final class LocaleContextHolder {
   /**
    * Return the TimeZone associated with the given user context, if any, or the
    * system default TimeZone otherwise. This is effectively a replacement for
-   * {@link TimeZone#getDefault()}, able to optionally respect a
+   * {@link java.util.TimeZone#getDefault()}, able to optionally respect a
    * user-level TimeZone setting.
    *
    * @param localeContext
@@ -353,7 +353,7 @@ public final class LocaleContextHolder {
    * @see #getTimeZone()
    * @see TimeZoneAwareLocaleContext#getTimeZone()
    * @see #setDefaultTimeZone(TimeZone)
-   * @see TimeZone#getDefault()
+   * @see java.util.TimeZone#getDefault()
    * @since 5.0
    */
   public static TimeZone getTimeZone(@Nullable final LocaleContext localeContext) {

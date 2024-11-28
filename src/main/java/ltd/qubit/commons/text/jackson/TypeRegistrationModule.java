@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,171 +8,180 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson;
 
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+import java.util.ServiceLoader;
+
+import javax.annotation.Nullable;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.KeyDeserializer;
-import ltd.qubit.commons.text.jackson.deserializer.*;
-import ltd.qubit.commons.text.jackson.serializer.*;
 
-import javax.annotation.Nullable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.time.*;
-import java.util.Date;
-import java.util.Locale;
+import ltd.qubit.commons.lang.ClassUtils;
+import ltd.qubit.commons.lang.SystemUtils;
+import ltd.qubit.commons.text.jackson.type.TypeRegister;
 
 /**
  * 自定义的Jackson模块，支持自定义的序列化和反序列化器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class TypeRegistrationModule extends com.fasterxml.jackson.databind.Module {
 
-  private static final long serialVersionUID = -9122443223157229093L;
+  public static final String MODULE_NAME = TypeRegistrationModule.class.getSimpleName();
 
-  private static final ConcurrentSerializers SERIALIZERS = new ConcurrentSerializers();
+  public static final Version VERSION = new Version(1, 0, 0, null, "ltd.qubit",
+      TypeRegistrationModule.class.getName());
 
-  private static final ConcurrentDeserializers DESERIALIZERS = new ConcurrentDeserializers();
+  private static final Logger LOGGER = LoggerFactory.getLogger(TypeRegistrationModule.class);
 
-  private static final ConcurrentSerializers KEY_SERIALIZERS = new ConcurrentSerializers();
-
-  private static final ConcurrentKeyDeserializers KEY_DESERIALIZERS = new ConcurrentKeyDeserializers();
+  private static final MapSerializers SERIALIZERS = new MapSerializers();
+  private static final MapDeserializers DESERIALIZERS = new MapDeserializers();
+  private static final MapSerializers KEY_SERIALIZERS = new MapSerializers();
+  private static final MapKeyDeserializers KEY_DESERIALIZERS = new MapKeyDeserializers();
 
   static {
-    SERIALIZERS.put(Enum.class, RawEnumSerializer.INSTANCE);
-    DESERIALIZERS.put(Enum.class, RawEnumDeserializer.INSTANCE);
+    registerTypesByServiceLoader();
+  }
 
-    SERIALIZERS.put(float.class, FloatSerializer.INSTANCE);
-    DESERIALIZERS.put(float.class, FloatDeserializer.INSTANCE);
+  public static final TypeRegistrationModule INSTANCE = new TypeRegistrationModule();
 
-    SERIALIZERS.put(Float.class, FloatSerializer.INSTANCE);
-    DESERIALIZERS.put(Float.class, FloatDeserializer.INSTANCE);
+  @SuppressWarnings("rawtypes")
+  public static List<TypeRegister> getCommonTypeRegisters() {
+    final String resource = "META-INF/services/" + TypeRegister.class.getName();
+    LOGGER.info("Loading the common Jackson type registers from the resource: {}", resource);
+    final List<TypeRegister> result;
+    try {
+      result = SystemUtils.loadInstance(TypeRegister.class, resource,
+          TypeRegistrationModule.class.getClassLoader());
+    } catch (final IOException | ClassNotFoundException e) {
+      LOGGER.error("Failed to load the common Jackson type registers from the resource: {}", resource, e);
+      return Collections.emptyList();
+    }
+    LOGGER.info("Totally {} common Jackson types registered.", result.size());
+    return result;
+  }
 
-    SERIALIZERS.put(double.class, DoubleSerializer.INSTANCE);
-    DESERIALIZERS.put(double.class, DoubleDeserializer.INSTANCE);
-
-    SERIALIZERS.put(Double.class, DoubleSerializer.INSTANCE);
-    DESERIALIZERS.put(Double.class, DoubleDeserializer.INSTANCE);
-
-    SERIALIZERS.put(byte[].class, Base64ByteArraySerializer.INSTANCE);
-    DESERIALIZERS.put(byte[].class, Base64ByteArrayDeserializer.INSTANCE);
-
-    SERIALIZERS.put(BigInteger.class, BigIntegerJsonSerializer.INSTANCE);
-    DESERIALIZERS.put(BigInteger.class, BigIntegerDeserializer.INSTANCE);
-
-    SERIALIZERS.put(BigDecimal.class, BigDecimalSerializer.INSTANCE);
-    DESERIALIZERS.put(BigDecimal.class, BigDecimalDeserializer.INSTANCE);
-
-    SERIALIZERS.put(Date.class, IsoDateSerializer.INSTANCE);
-    DESERIALIZERS.put(Date.class, IsoDateDeserializer.INSTANCE);
-
-    SERIALIZERS.put(Instant.class, IsoInstantSerializer.INSTANCE);
-    DESERIALIZERS.put(Instant.class, IsoInstantDeserializer.INSTANCE);
-
-    SERIALIZERS.put(Duration.class, DurationSerializer.INSTANCE);
-    DESERIALIZERS.put(Duration.class, DurationDeserializer.INSTANCE);
-
-    SERIALIZERS.put(Period.class, PeriodSerializer.INSTANCE);
-    DESERIALIZERS.put(Period.class, PeriodDeserializer.INSTANCE);
-
-    SERIALIZERS.put(LocalDate.class, IsoLocalDateSerializer.INSTANCE);
-    DESERIALIZERS.put(LocalDate.class, IsoLocalDateDeserializer.INSTANCE);
-
-    SERIALIZERS.put(LocalTime.class, IsoLocalTimeSerializer.INSTANCE);
-    DESERIALIZERS.put(LocalTime.class, IsoLocalTimeDeserializer.INSTANCE);
-
-    SERIALIZERS.put(LocalDateTime.class, IsoLocalDateTimeSerializer.INSTANCE);
-    DESERIALIZERS.put(LocalDateTime.class, IsoLocalDateTimeDeserializer.INSTANCE);
-
-    SERIALIZERS.put(Year.class, YearSerializer.INSTANCE);
-    DESERIALIZERS.put(Year.class, YearDeserializer.INSTANCE);
-
-    SERIALIZERS.put(YearMonth.class, YearMonthJsonSerializer.INSTANCE);
-    DESERIALIZERS.put(YearMonth.class, YearMonthDeserializer.INSTANCE);
-
-    SERIALIZERS.put(MonthDay.class, MonthDaySerializer.INSTANCE);
-    DESERIALIZERS.put(MonthDay.class, MonthDayDeserializer.INSTANCE);
-
-    SERIALIZERS.put(OffsetTime.class, IsoOffsetTimeJsonSerializer.INSTANCE);
-    DESERIALIZERS.put(OffsetTime.class, IsoOffsetTimeJsonDeserializer.INSTANCE);
-
-    SERIALIZERS.put(ZoneId.class, ZoneIdSerializer.INSTANCE);
-    DESERIALIZERS.put(ZoneId.class, ZoneIdDeserializer.INSTANCE);
-
-    SERIALIZERS.put(ZoneOffset.class, ZoneOffsetSerializer.INSTANCE);
-    DESERIALIZERS.put(ZoneOffset.class, ZoneOffsetDeserializer.INSTANCE);
-
-    SERIALIZERS.put(Locale.class, PosixLocaleSerializer.INSTANCE);
-    DESERIALIZERS.put(Locale.class, PosixLocaleDeserializer.INSTANCE);
+  public static void clear() {
+    LOGGER.info("Clearing all Jackson type registers...");
+    SERIALIZERS.clear();
+    DESERIALIZERS.clear();
+    KEY_SERIALIZERS.clear();
+    KEY_DESERIALIZERS.clear();
   }
 
   /**
-   * 注册针对指定类型的的Jackson序列器。
+   * 通过 ServiceLoader 加载预定义的 Jackson 类型注册器。
+   * <p>
+   * 安卓系统会根据{@code AndroidManifest.xml}中是否设置了{@code android:sharedUserId}
+   * 属性来决定使用哪种{@code ClassLoader}：对于设置了{@code android:sharedUserId}
+   * 属性的应用，会使用一个特殊的{@code WarningClassLoader}，无法正确通过
+   * {@code ServiceLoader}预注册的服务资源。
    *
-   * <p>该序列化器可同时被Jackson的{@code JsonMapper}和{@code XmlMapper}所使用。</p>
-   *
-   * @param <T>
-   *     指定的类型。
-   * @param type
-   *     指定的类型的类对象。
-   * @param serializer
-   *     指定的类型对应的序列化器实例，注意待注册的序列化对象必须是不可改（Immutable）对象。
+   * @see #registerCommonTypes()
+   * @see #registerTypes(List)
+   * @see #registerType(TypeRegister)
    */
-  public static <T> void registerSerializer(final Class<T> type,
-      final JsonSerializer<T> serializer) {
+  public static void registerTypesByServiceLoader() {
+    LOGGER.info("Loading predefined Jackson type registers...");
+    // 注意，使用 ServiceLoader.load() 时，必须提供一个 ClassLoader，否则会使用默认的
+    // 当前线程的上下文 ClassLoader。在普通的 Java 程序中，这么做没什么问题。但如果是
+    // 安卓程序，安卓系统会根据 AndroidManifest.xml 中是否设置了 android:sharedUserId
+    // 属性来决定使用哪种 ClassLoader：对于设置了 android:sharedUserId 属性的应用，
+    // 会使用一个特殊的 WarningClassLoader，无法正确 load 预注册的服务资源。
+    // 具体参见：
+    // [1] https://blog.csdn.net/Eqiqi/article/details/129042141
+    // [2] https://github.com/ACRA/acra/issues/656
+    // [3] https://github.com/ACRA/acra/pull/657
+    @SuppressWarnings("rawtypes")
+    final ServiceLoader<TypeRegister> loader = ServiceLoader.load(TypeRegister.class,
+        TypeRegistrationModule.class.getClassLoader());
+
+    int count = 0;
+    for (final TypeRegister<?> register : loader) {
+      ++count;
+      registerType(register);
+    }
+    LOGGER.info("Totally {} predefined Jackson types registered.", count);
+  }
+
+  /**
+   * 注册常见的预定义的 Jackson 类型注册器。
+   * <p>
+   * 这些类型注册器是定义在此JAR的
+   * {@code META-INF/services/ltd.qubit.commons.text.jackson.type.TypeRegister}
+   * 中的。
+   */
+  @SuppressWarnings("rawtypes")
+  public static void registerCommonTypes() {
+    final List<TypeRegister> registerList = getCommonTypeRegisters();
+    registerTypes(registerList);
+  }
+
+  /**
+   * 注册一组 Jackson 类型注册器。
+   *
+   * @param registers
+   *     要注册的 Jackson 类型注册器。
+   */
+  @SuppressWarnings("rawtypes")
+  public static void registerTypes(final List<TypeRegister> registers) {
+    LOGGER.info("Adding Jackson type registers...");
+    int count = 0;
+    for (final TypeRegister<?> r : registers) {
+      registerType(r);
+      ++count;
+    }
+    LOGGER.info("Totally {} Jackson types registered.", count);
+  }
+
+  /**
+   * 注册一个 Jackson 类型注册器。
+   *
+   * @param register
+   *     要注册的 Jackson 类型注册器。
+   */
+  public static void registerType(final TypeRegister<?> register) {
+    final Class<?> type = register.getType();
+    LOGGER.info("Registering the Jackson type: {}", ClassUtils.getFullCanonicalName(type));
+    final JsonSerializer<?> serializer = register.getSerializer();
+    if (serializer != null) {
+      SERIALIZERS.put(type, serializer);
+    }
+    final JsonDeserializer<?> deserializer = register.getDeserializer();
+    if (deserializer != null) {
+      DESERIALIZERS.put(type, deserializer);
+    }
+    final JsonSerializer<?> keySerializer = register.getKeySerializer();
+    if (keySerializer != null) {
+      KEY_SERIALIZERS.put(type, keySerializer);
+    }
+    final KeyDeserializer keyDeserializer = register.getKeyDeserializer();
+    if (keyDeserializer != null) {
+      KEY_DESERIALIZERS.put(type, keyDeserializer);
+    }
+  }
+
+  public static <T> void addSerializer(final Class<? extends T> type, final JsonSerializer<T> serializer) {
     SERIALIZERS.put(type, serializer);
   }
 
-  /**
-   * 注册针对指定类型的的Jackson反序列器。
-   *
-   * <p>该反序列化器可同时被Jackson的{@code JsonMapper}和{@code XmlMapper}所使用。</p>
-   *
-   * @param <T>
-   *     指定的类型。
-   * @param type
-   *     指定的类型的类对象。
-   * @param deserializer
-   *     指定的类型对应的反序列化器实例，注意待注册的反序列化对象必须是不可改（Immutable）对象。
-   */
-  public static <T> void registerDeserializer(final Class<T> type,
-      final JsonDeserializer<T> deserializer) {
+  public static <T> void addDeserializer(final Class<? extends T> type, final JsonDeserializer<T> deserializer) {
     DESERIALIZERS.put(type, deserializer);
   }
 
-  /**
-   * 注册针对指定类型的的Jackson主键序列器。
-   *
-   * <p>该反序列化器可同时被Jackson的{@code JsonMapper}和{@code XmlMapper}所使用。</p>
-   *
-   * @param <T>
-   *     指定的类型。
-   * @param type
-   *     指定的类型的类对象。
-   * @param keySerializer
-   *     指定的类型对应的主键序列化器实例，注意待注册的序列化对象必须是不可改（Immutable）对象。
-   */
-  public static <T> void registerKeySerializer(final Class<T> type,
-      final JsonSerializer<T>  keySerializer) {
-    KEY_SERIALIZERS.put(type, keySerializer);
+  public static <T> void addKeySerializer(final Class<? extends T> type, final JsonSerializer<T> serializer) {
+    KEY_SERIALIZERS.put(type, serializer);
   }
 
-  /**
-   * 注册针对指定类型的的Jackson主键反序列器。
-   *
-   * <p>该反序列化器可同时被Jackson的{@code JsonMapper}和{@code XmlMapper}所使用。</p>
-   *
-   * @param <T>
-   *     指定的类型。
-   * @param type
-   *     指定的类型的类对象。
-   * @param keyDeserializer
-   *     指定的类型对应的主键反序列化器实例。
-   */
-  public static <T> void registerKeyDeserializer(final Class<T> type,
-      final KeyDeserializer keyDeserializer) {
-    KEY_DESERIALIZERS.put(type, keyDeserializer);
+  public static <T> void addKeyDeserializer(final Class<? extends T> type, final KeyDeserializer deserializer) {
+    KEY_DESERIALIZERS.put(type, deserializer);
   }
 
   @Nullable
@@ -195,7 +204,37 @@ public class TypeRegistrationModule extends com.fasterxml.jackson.databind.Modul
     return KEY_DESERIALIZERS.get(type);
   }
 
-  public TypeRegistrationModule() {}
+  public static int getSerializerCount() {
+    return SERIALIZERS.size();
+  }
+
+  public static int getDeserializerCount() {
+    return DESERIALIZERS.size();
+  }
+
+  public static int getKeySerializerCount() {
+    return KEY_SERIALIZERS.size();
+  }
+
+  private TypeRegistrationModule() {
+    //  empty
+  }
+
+  public MapSerializers getSerializers() {
+    return SERIALIZERS;
+  }
+
+  public MapDeserializers getDeserializers() {
+    return DESERIALIZERS;
+  }
+
+  public MapSerializers getKeySerializers() {
+    return KEY_SERIALIZERS;
+  }
+
+  public MapKeyDeserializers getKeyDeserializers() {
+    return KEY_DESERIALIZERS;
+  }
 
   @Override
   public void setupModule(final SetupContext context) {
@@ -207,11 +246,11 @@ public class TypeRegistrationModule extends com.fasterxml.jackson.databind.Modul
 
   @Override
   public String getModuleName() {
-    return TypeRegistrationModule.class.getSimpleName();
+    return MODULE_NAME;
   }
 
   @Override
   public Version version() {
-    return Version.unknownVersion();
+    return VERSION;
   }
 }

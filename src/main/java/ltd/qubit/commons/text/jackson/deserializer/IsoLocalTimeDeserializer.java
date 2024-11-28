@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,14 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
-import ltd.qubit.commons.util.codec.IsoLocalTimeCodec;
-
-import javax.annotation.concurrent.Immutable;
 import java.time.LocalTime;
 
+import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.util.codec.IsoLocalTimeCodec;
+
 /**
- * 符合 ISO-8601 的本地时间类 {@link LocalTime} 的 JSON 反序列化器，其编
- * 码格式为 "HH:mm:ss"。
+ * The JACKSON deserializer of a {@link LocalTime} object, in the ISO-8601
+ * format of "HH:mm:ss".
  *
  * @author Haixing Hu
  */

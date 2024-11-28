@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 /**
  * 此枚举表示排序时对NULL值得处理方式。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public enum NullSortOption {
 

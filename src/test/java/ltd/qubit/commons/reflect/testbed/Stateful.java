@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,7 +11,7 @@ package ltd.qubit.commons.reflect.testbed;
 /**
  * 此接口表示实体类具有状态属性。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface Stateful {
 

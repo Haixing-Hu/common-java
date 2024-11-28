@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,7 +11,7 @@ package ltd.qubit.commons.text.jackson.deserializer;
 import ltd.qubit.commons.util.codec.Decoder;
 
 /**
- * The JSON deserializer of an enumeration class.
+ * The JACKSON deserializer of an enumeration class.
  *
  * @author Haixing Hu
  */

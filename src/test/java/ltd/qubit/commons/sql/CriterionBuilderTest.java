@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -10,6 +10,8 @@ package ltd.qubit.commons.sql;
 
 import java.sql.SQLSyntaxErrorException;
 import java.time.Instant;
+
+import org.junit.jupiter.api.Test;
 
 import ltd.qubit.commons.model.Address;
 import ltd.qubit.commons.model.Contact;
@@ -21,11 +23,9 @@ import ltd.qubit.commons.model.PersonInfo;
 import ltd.qubit.commons.model.State;
 import ltd.qubit.commons.model.StatefulInfo;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static ltd.qubit.commons.util.LogicRelation.AND;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CriterionBuilderTest {
 

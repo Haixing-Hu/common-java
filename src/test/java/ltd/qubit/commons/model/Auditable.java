@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -16,7 +16,7 @@ package ltd.qubit.commons.model;
  *   <li>标记删除时间；</li>
  * </ul>
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface Auditable extends Creatable, Modifiable, Deletable {
     // empty

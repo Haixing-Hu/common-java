@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -10,6 +10,7 @@ package ltd.qubit.commons.util.codec;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+
 import ltd.qubit.commons.datastructure.list.StringList;
 import ltd.qubit.commons.text.Stripper;
 
@@ -19,7 +20,7 @@ import ltd.qubit.commons.text.Stripper;
  * <p>此编码解码器将字符串列表以JSON方式进行编码和解码，从而可将字符串列表存入数据库的某个
  * 单独字段中。</p>
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class StringListCodec implements Codec<StringList, String> {
 

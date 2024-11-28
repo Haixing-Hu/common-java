@@ -8,10 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.pair;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.Assignment;
+import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.ObjectUtils;
 
@@ -29,9 +32,14 @@ import ltd.qubit.commons.lang.ObjectUtils;
  * @author 胡海星
  */
 public class KeyValuePairList extends ArrayList<KeyValuePair> implements
-    Serializable, Assignable<KeyValuePairList> {
+    Serializable, Assignable<KeyValuePairList>, CloneableEx<KeyValuePairList> {
 
+  @Serial
   private static final long serialVersionUID = 8257783205419834476L;
+
+  public static KeyValuePairListBuilder builder() {
+    return new KeyValuePairListBuilder();
+  }
 
   public static KeyValuePairList of(final Object... params) {
     final KeyValuePairList result = new KeyValuePairList();
@@ -70,6 +78,10 @@ public class KeyValuePairList extends ArrayList<KeyValuePair> implements
     // empty
   }
 
+  public KeyValuePairList(final List<KeyValuePair> list) {
+    super(list);
+  }
+
   public KeyValuePairList(final KeyValuePairList other) {
     assign(other);
   }
@@ -79,6 +91,12 @@ public class KeyValuePairList extends ArrayList<KeyValuePair> implements
       for (final KeyValuePair pair : array) {
         add(pair);
       }
+    }
+  }
+
+  public KeyValuePairList(final Map<String, String> map) {
+    for (final Map.Entry<String, String> entry : map.entrySet()) {
+      add(entry.getKey(), entry.getValue());
     }
   }
 
@@ -92,11 +110,22 @@ public class KeyValuePairList extends ArrayList<KeyValuePair> implements
     }
   }
 
-  public KeyValuePairList clone() {
+  @Override
+  public KeyValuePairList cloneEx() {
     return new KeyValuePairList(this);
   }
 
-  public String getValue(final String key) {
+  public boolean has(final String key) {
+    for (final KeyValuePair kv : this) {
+      if (Equality.equals(kv.getKey(), key)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @Nullable
+  public String get(final String key) {
     for (final KeyValuePair kv : this) {
       if (Equality.equals(kv.getKey(), key)) {
         return kv.getValue();
@@ -105,8 +134,7 @@ public class KeyValuePairList extends ArrayList<KeyValuePair> implements
     return null;
   }
 
-  public KeyValuePairList setValue(final String key,
-      @Nullable final Object value) {
+  public KeyValuePairList set(final String key, @Nullable final Object value) {
     for (final KeyValuePair kv : this) {
       if (Equality.equals(kv.getKey(), key)) {
         kv.setValue(value == null ? null : value.toString());
@@ -140,16 +168,7 @@ public class KeyValuePairList extends ArrayList<KeyValuePair> implements
     return this;
   }
 
-  @Nullable
-  public String find(final String key) {
-    for (final KeyValuePair pair : this) {
-      if (Equality.equals(key, pair.getKey())) {
-        return pair.getValue();
-      }
-    }
-    return null;
-  }
-
+  @Override
   public KeyValuePair[] toArray() {
     return this.toArray(new KeyValuePair[0]);
   }

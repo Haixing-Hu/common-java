@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,16 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
-import ltd.qubit.commons.lang.EnumUtils;
-
 import java.util.Locale;
+
+import ltd.qubit.commons.lang.EnumUtils;
 
 import static ltd.qubit.commons.lang.EnumUtils.registerLocalizedNames;
 
 /**
  * 此枚举表示媒体类型。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public enum MediaType {
 

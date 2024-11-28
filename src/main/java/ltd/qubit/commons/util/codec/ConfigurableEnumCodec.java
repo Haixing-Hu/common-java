@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -14,13 +14,13 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ltd.qubit.commons.lang.ClassUtils;
 import ltd.qubit.commons.lang.EnumUtils;
 import ltd.qubit.commons.text.Stripper;
 import ltd.qubit.commons.text.jackson.XmlMapperUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ConfigurableEnumCodec<T extends Enum<T>> implements
         Encoder<T, String>, Decoder<String, T> {

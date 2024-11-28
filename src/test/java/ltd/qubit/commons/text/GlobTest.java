@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,12 +11,12 @@ package ltd.qubit.commons.text;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
-import ltd.qubit.commons.io.error.InvalidFormatException;
-import ltd.qubit.commons.io.serialize.BinarySerialization;
-import ltd.qubit.commons.io.serialize.XmlSerialization;
-import ltd.qubit.commons.text.xml.XmlException;
-
 import org.junit.jupiter.api.Test;
+
+import ltd.qubit.commons.io.io.error.InvalidFormatException;
+import ltd.qubit.commons.io.io.serialize.BinarySerialization;
+import ltd.qubit.commons.io.io.serialize.XmlSerialization;
+import ltd.qubit.commons.text.xml.XmlException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;

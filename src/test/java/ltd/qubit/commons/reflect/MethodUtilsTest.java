@@ -28,7 +28,6 @@ import ltd.qubit.commons.reflect.testbed.ParentBean;
 import ltd.qubit.commons.reflect.testbed.WithInfo;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -71,8 +70,8 @@ public class MethodUtilsTest {
   public void testGetAllMethods_ExcludeBridgeMethods() {
     final List<Method> methods = getAllMethods(Foo.class, ALL_EXCLUDE_BRIDGE);
     final Object[] result = methods.stream()
-                                   .filter((m) -> m.getName().equals("getId"))
-                                   .toArray();
+                            .filter((m) -> m.getName().equals("getId"))
+                            .toArray();
     assertEquals(2, result.length);
   }
 
@@ -147,7 +146,7 @@ public class MethodUtilsTest {
     System.out.println("a3 = " + a3);
     assertArrayEquals(new Method[]{
         Country.class.getDeclaredMethod("assign", Country.class),
-        Country.class.getDeclaredMethod("clone"),
+        Country.class.getDeclaredMethod("cloneEx"),
         Country.class.getDeclaredMethod("equals", Object.class),
         Object.class.getDeclaredMethod("getClass"),
         Country.class.getDeclaredMethod("getCode"),
@@ -273,10 +272,33 @@ public class MethodUtilsTest {
   public void testGetMethodByReference_NonVoidMethod1() {
     assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::nonVoidMethod1))
         .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "nonVoidMethod1"));
+  }
 
-    assertThatExceptionOfType(IllegalArgumentException.class)
-        .isThrownBy(() -> getMethodByReference(MethodRefBean.class, MethodRefBean::nonVoidMethod1PrimitiveInt))
-        .withMessage("The method must have non-primitive arguments.");
+  @Test
+  public void testGetMethodByReference_NonVoidMethod1_primitive() {
+    assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::nonVoidMethod1PrimitiveBoolean))
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "nonVoidMethod1PrimitiveBoolean"));
+
+    // assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::nonVoidMethod1PrimitiveChar))
+    //     .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "nonVoidMethod1PrimitiveChar"));
+
+    assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::nonVoidMethod1PrimitiveByte))
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "nonVoidMethod1PrimitiveByte"));
+
+    assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::nonVoidMethod1PrimitiveShort))
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "nonVoidMethod1PrimitiveShort"));
+
+    assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::nonVoidMethod1PrimitiveInt))
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "nonVoidMethod1PrimitiveInt"));
+
+    assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::nonVoidMethod1PrimitiveLong))
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "nonVoidMethod1PrimitiveLong"));
+
+    assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::nonVoidMethod1PrimitiveFloat))
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "nonVoidMethod1PrimitiveFloat"));
+
+    assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::nonVoidMethod1PrimitiveDouble))
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "nonVoidMethod1PrimitiveDouble"));
   }
 
   @Test
@@ -316,13 +338,63 @@ public class MethodUtilsTest {
   public void testGetMethodByReference_VoidMethod1() {
     assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::voidMethod1))
         .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "voidMethod1"));
-
-    assertThatExceptionOfType(IllegalArgumentException.class)
-        .isThrownBy(() -> getMethodByReference(MethodRefBean.class, MethodRefBean::voidMethod1PrimitiveInt))
-        .withMessage("The method must have non-primitive arguments.");
-
     assertThat(getMethodByReference(Info.class, Info::setId))
         .isEqualTo(getMethodByName(Info.class, Option.DEFAULT, "setId"));
+  }
+
+  @Test
+  public void testGetMethodByReference_VoidMethod1_primitive() {
+    assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::setPrimitiveBoolean))
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setPrimitiveBoolean"));
+
+    // FIXME: Current primitive char is not supported
+    // assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::voidMethod1PrimitiveChar))
+    //     .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "voidMethod1PrimitiveChar"));
+
+    assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::setPrimitiveByte))
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setPrimitiveByte"));
+
+    assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::setPrimitiveShort))
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setPrimitiveShort"));
+
+    assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::setPrimitiveInt))
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setPrimitiveInt"));
+
+    assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::setPrimitiveLong))
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setPrimitiveLong"));
+
+    assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::setPrimitiveFloat))
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setPrimitiveFloat"));
+
+    assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::setPrimitiveDouble))
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setPrimitiveDouble"));
+  }
+
+  @Test
+  public void testGetMethodByReference_VoidMethod1_primitive_boxing() {
+    assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::setBoolean))
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setBoolean"));
+
+    assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::setCharacter))
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setCharacter"));
+
+    assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::setByte))
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setByte"));
+
+    assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::setShort))
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setShort"));
+
+    assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::setInteger))
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setInteger"));
+
+    assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::setLong))
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setLong"));
+
+    assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::setFloat))
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setFloat"));
+
+    assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::setDouble))
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setDouble"));
   }
 
   @Test

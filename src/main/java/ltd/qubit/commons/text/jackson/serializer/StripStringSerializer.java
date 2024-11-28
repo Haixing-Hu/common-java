@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -10,11 +10,11 @@ package ltd.qubit.commons.text.jackson.serializer;
 
 import java.io.IOException;
 
-import ltd.qubit.commons.text.Stripper;
-
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+
+import ltd.qubit.commons.text.Stripper;
 
 /**
  * The serializer of String class for XML serializations.

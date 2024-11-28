@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,15 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
-import ltd.qubit.commons.util.codec.CompactDateCodec;
-
 import java.time.LocalDate;
+
+import ltd.qubit.commons.util.codec.CompactDateCodec;
 
 /**
  * 本地日期类 {@link LocalDate} 的 JSON 反序列化器，该反序列器将{@link LocalDate} 对象
  * 编码为"yyyyMMdd"形式的日期。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class CompactDateSerializer extends LocalDateSerializer {
 

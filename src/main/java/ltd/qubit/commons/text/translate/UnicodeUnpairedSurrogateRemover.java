@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -32,7 +32,7 @@ public class UnicodeUnpairedSurrogateRemover extends CodePointTranslator {
   }
 
   @Override
-  public UnicodeUnpairedSurrogateRemover clone() {
+  public UnicodeUnpairedSurrogateRemover cloneEx() {
     return new UnicodeUnpairedSurrogateRemover();
   }
 }

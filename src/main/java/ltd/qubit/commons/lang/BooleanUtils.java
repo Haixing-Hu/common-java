@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -17,10 +17,10 @@ import java.util.Set;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.google.common.collect.ImmutableSet;
+
 import ltd.qubit.commons.datastructure.list.primitive.BooleanCollection;
 import ltd.qubit.commons.datastructure.list.primitive.BooleanIterator;
-
-import com.google.common.collect.ImmutableSet;
 
 /**
  * This class provides operations on {@code boolean} primitives and {@link

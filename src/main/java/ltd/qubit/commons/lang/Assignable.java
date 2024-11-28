@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -9,7 +9,7 @@
 package ltd.qubit.commons.lang;
 
 /**
- * This interface impose a assignment operations of a class T.
+ * This interface impose a same type assignment operations of a class T.
  *
  * @author Haixing Hu
  */
@@ -22,7 +22,7 @@ public interface Assignable<T> extends CloneableEx<T> {
    * of this object.
    *
    * @param other
-   *          the other object.
+   *     the other object, which is of the same class as this object.
    */
   void assign(T other);
 }

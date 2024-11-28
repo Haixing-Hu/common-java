@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -14,15 +14,15 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import static ltd.qubit.commons.lang.SplitOption.CAMEL_CASE;
 import static ltd.qubit.commons.lang.SplitOption.IGNORE_EMPTY;
 import static ltd.qubit.commons.lang.SplitOption.NONE;
 import static ltd.qubit.commons.lang.SplitOption.TRIM;
 import static ltd.qubit.commons.lang.StringUtils.splitLines;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Unit test for the split() function of Strings class.
@@ -69,7 +69,7 @@ public class StringUtilsSplitTest {
     str = " a ";
     result.clear();
     result = StringUtils.split(str, result);
-    assertEquals(Arrays.asList("a"), result);
+    assertEquals(List.of("a"), result);
 
     str = "a" + WHITESPACE + "b" + NON_WHITESPACE + "c";
     result.clear();
@@ -487,7 +487,7 @@ public class StringUtilsSplitTest {
     result.clear();
     result = StringUtils.splitByString("", ".", NONE, result);
     assertNotNull(result);
-    assertEquals(Arrays.asList(""), result);
+    assertEquals(List.of(""), result);
 
     result.clear();
     result = StringUtils.splitByString(null, ".", TRIM | IGNORE_EMPTY, result);
@@ -497,7 +497,7 @@ public class StringUtilsSplitTest {
     result.clear();
     result = StringUtils.splitByString("", ".", TRIM, result);
     assertNotNull(result);
-    assertEquals(Arrays.asList(""), result);
+    assertEquals(List.of(""), result);
 
     result.clear();
     result = StringUtils.splitByString("", ".", IGNORE_EMPTY, result);
@@ -547,22 +547,22 @@ public class StringUtilsSplitTest {
     result.clear();
     result = StringUtils.splitByString("a", null, NONE, result);
     assertNotNull(result);
-    assertEquals(Arrays.asList("a"), result);
+    assertEquals(List.of("a"), result);
 
     result.clear();
     result = StringUtils.splitByString("a", "", NONE, result);
     assertNotNull(result);
-    assertEquals(Arrays.asList("a"), result);
+    assertEquals(List.of("a"), result);
 
     result.clear();
     result = StringUtils.splitByString("", null, NONE, result);
     assertNotNull(result);
-    assertEquals(Arrays.asList(""), result);
+    assertEquals(List.of(""), result);
 
     result.clear();
     result = StringUtils.splitByString("", "", NONE, result);
     assertNotNull(result);
-    assertEquals(Arrays.asList(""), result);
+    assertEquals(List.of(""), result);
 
     result.clear();
     result = StringUtils.splitByString("", null, IGNORE_EMPTY, result);
@@ -612,7 +612,7 @@ public class StringUtilsSplitTest {
     result.clear();
     result = StringUtils.splitByString(". a .", ".", IGNORE_EMPTY, result);
     assertNotNull(result);
-    assertEquals(Arrays.asList(" a "), result);
+    assertEquals(List.of(" a "), result);
 
     result.clear();
     result = StringUtils.splitByString(". a .", ".", TRIM, result);
@@ -622,7 +622,7 @@ public class StringUtilsSplitTest {
     result.clear();
     result = StringUtils.splitByString(". a .", ".", TRIM | IGNORE_EMPTY, result);
     assertNotNull(result);
-    assertEquals(Arrays.asList("a"), result);
+    assertEquals(List.of("a"), result);
 
     result.clear();
     result = StringUtils.splitByString(" a  b c", " ", NONE, result);
@@ -683,7 +683,7 @@ public class StringUtilsSplitTest {
     result.clear();
     result = StringUtils.splitByString(";;;;;;;;;", ";;", TRIM | IGNORE_EMPTY, result);
     assertNotNull(result);
-    assertEquals(Arrays.asList(";"), result);
+    assertEquals(List.of(";"), result);
 
     result.clear();
     result = StringUtils.splitByString(";;;;;;;;;", ";;;", TRIM, result);
@@ -716,8 +716,7 @@ public class StringUtilsSplitTest {
     assertEquals("", result.get(0));
 
     result.clear();
-    result = StringUtils
-        .splitByCharType("ab de fg", NONE, result);
+    result = StringUtils.splitByCharType("ab de fg", NONE, result);
     assertNotNull(result);
     assertEquals(5, result.size());
     assertEquals("ab", result.get(0));
@@ -727,8 +726,7 @@ public class StringUtilsSplitTest {
     assertEquals("fg", result.get(4));
 
     result.clear();
-    result = StringUtils
-        .splitByCharType("ab de fg", IGNORE_EMPTY, result);
+    result = StringUtils.splitByCharType("ab de fg", IGNORE_EMPTY, result);
     assertNotNull(result);
     assertEquals(5, result.size());
     assertEquals("ab", result.get(0));
@@ -738,8 +736,7 @@ public class StringUtilsSplitTest {
     assertEquals("fg", result.get(4));
 
     result.clear();
-    result = StringUtils
-        .splitByCharType("ab de fg", TRIM, result);
+    result = StringUtils.splitByCharType("ab de fg", TRIM, result);
     assertNotNull(result);
     assertEquals(5, result.size());
     assertEquals("ab", result.get(0));
@@ -757,8 +754,7 @@ public class StringUtilsSplitTest {
     assertEquals("fg", result.get(2));
 
     result.clear();
-    result = StringUtils
-        .splitByCharType("ab   de fg", NONE, result);
+    result = StringUtils.splitByCharType("ab   de fg", NONE, result);
     assertNotNull(result);
     assertEquals(5, result.size());
     assertEquals("ab", result.get(0));
@@ -768,8 +764,7 @@ public class StringUtilsSplitTest {
     assertEquals("fg", result.get(4));
 
     result.clear();
-    result = StringUtils
-        .splitByCharType("ab:de:fg", NONE, result);
+    result = StringUtils.splitByCharType("ab:de:fg", NONE, result);
     assertNotNull(result);
     assertEquals(5, result.size());
     assertEquals("ab", result.get(0));
@@ -779,8 +774,7 @@ public class StringUtilsSplitTest {
     assertEquals("fg", result.get(4));
 
     result.clear();
-    result = StringUtils
-        .splitByCharType("number5", NONE, result);
+    result = StringUtils.splitByCharType("number5", NONE, result);
     assertNotNull(result);
     assertEquals(2, result.size());
     assertEquals("number", result.get(0));
@@ -795,8 +789,7 @@ public class StringUtilsSplitTest {
     assertEquals("ar", result.get(2));
 
     result.clear();
-    result = StringUtils
-        .splitByCharType("foo2000Bar", NONE, result);
+    result = StringUtils.splitByCharType("foo2000Bar", NONE, result);
     assertNotNull(result);
     assertEquals(4, result.size());
     assertEquals("foo", result.get(0));
@@ -805,8 +798,7 @@ public class StringUtilsSplitTest {
     assertEquals("ar", result.get(3));
 
     result.clear();
-    result = StringUtils
-        .splitByCharType("ASFRules", NONE, result);
+    result = StringUtils.splitByCharType("ASFRules", NONE, result);
     assertNotNull(result);
     assertEquals(2, result.size());
     assertEquals("ASFR", result.get(0));
@@ -820,8 +812,7 @@ public class StringUtilsSplitTest {
     assertEquals("Bar", result.get(1));
 
     result.clear();
-    result = StringUtils
-        .splitByCharType("foo2000Bar", CAMEL_CASE, result);
+    result = StringUtils.splitByCharType("foo2000Bar", CAMEL_CASE, result);
     assertNotNull(result);
     assertEquals(3, result.size());
     assertEquals("foo", result.get(0));
@@ -829,8 +820,7 @@ public class StringUtilsSplitTest {
     assertEquals("Bar", result.get(2));
 
     result.clear();
-    result = StringUtils
-        .splitByCharType("ASFRules", CAMEL_CASE, result);
+    result = StringUtils.splitByCharType("ASFRules", CAMEL_CASE, result);
     assertNotNull(result);
     assertEquals(2, result.size());
     assertEquals("ASF", result.get(0));
@@ -842,7 +832,7 @@ public class StringUtilsSplitTest {
   public void testSplitLines() {
     assertTrue(splitLines(null, false, false).isEmpty());
     assertTrue(splitLines("", false, true).isEmpty());
-    assertEquals(Arrays.asList(""), splitLines("", false, false));
+    assertEquals(List.of(""), splitLines("", false, false));
     assertEquals(Arrays.asList("  a", "b", "    ", "d", "", "e"),
         splitLines("  a\nb\n    \rd\r\n\ne", false, false));
     assertEquals(Arrays.asList("  a", "b", "    ", "d", "e"),

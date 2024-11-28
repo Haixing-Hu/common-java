@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2017 - 2022.
-//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
+//    Copyright (c) 2022 - 2024.
+//    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -341,7 +341,7 @@ public final class Hash64 {
 
   public static long combine(final long code, final long multiplier,
       @Nullable final String value) {
-    return code * multiplier + hash(value);
+    return code * multiplier + hash64(value);
   }
 
   public static long combine(final long code, final long multiplier,
@@ -351,7 +351,7 @@ public final class Hash64 {
     } else {
       long result = code;
       for (final String x : value) {
-        result = (result * multiplier) + hash(x);
+        result = (result * multiplier) + hash64(x);
       }
       return result;
     }
@@ -383,6 +383,8 @@ public final class Hash64 {
       @Nullable final Object value) {
     if (value == null) {
       return code * multiplier;
+    } else if (value instanceof String) {
+      return combine(code, multiplier, hash64((String) value));
     } else {
       final Class<?> valueClass = value.getClass();
       if (valueClass.isArray()) {
@@ -446,7 +448,7 @@ public final class Hash64 {
     }
   }
 
-  public static long hash(@Nullable final String value) {
+  public static long hash64(@Nullable final String value) {
     if (value == null) {
       return 0;
     }

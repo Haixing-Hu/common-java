@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,19 +8,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.security;
 
-import ltd.qubit.commons.math.RandomEx;
-import ltd.qubit.commons.text.jackson.CustomizedJsonMapper;
-import ltd.qubit.commons.util.codec.DoubleCodec;
-import ltd.qubit.commons.util.codec.IsoInstantCodec;
-
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
-import static ltd.qubit.commons.test.JsonUnitUtils.assertJsonNodeEquals;
+import ltd.qubit.commons.math.RandomEx;
+import ltd.qubit.commons.text.jackson.CustomizedJsonMapper;
+import ltd.qubit.commons.util.codec.DoubleCodec;
+import ltd.qubit.commons.util.codec.IsoInstantCodec;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static ltd.qubit.commons.test.JsonUnitUtils.assertJsonNodeEquals;
 
 /**
  * Unit test of the {@link SignedMessage} class.
@@ -79,7 +79,8 @@ public class SignedMessageTest {
     for (int i = 0; i < TEST_COUNT; ++i) {
       final App app = createApp();
       final SignedMessage<App> obj = new SignedMessage<>(app);
-      obj.setSignature(createString()).setReturnUrl(createNullableString());
+      obj.setSignature(createString());
+      obj.setReturnUrl(createNullableString());
       System.out.println(obj);
       final String json = mapper.writerWithDefaultPrettyPrinter()
                                 .writeValueAsString(obj);
@@ -147,7 +148,8 @@ public class SignedMessageTest {
     for (int i = 0; i < TEST_COUNT; ++i) {
       final App app = createApp();
       final AppSignedMessage obj = new AppSignedMessage(app);
-      obj.setSignature(createString()).setReturnUrl(createNullableString());
+      obj.setSignature(createString());
+      obj.setReturnUrl(createNullableString());
       System.out.println(obj);
       final String json = mapper.writerWithDefaultPrettyPrinter()
                                 .writeValueAsString(obj);

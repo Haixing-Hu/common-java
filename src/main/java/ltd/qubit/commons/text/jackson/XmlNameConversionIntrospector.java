@@ -1,52 +1,54 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2017 - 2022.
-//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
+//    Copyright (c) 2022 - 2024.
+//    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson;
 
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlElementWrapper;
-import jakarta.xml.bind.annotation.XmlElements;
-
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import com.fasterxml.jackson.databind.PropertyName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.NamingBase;
+import com.fasterxml.jackson.databind.cfg.MapperConfig;
 import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.fasterxml.jackson.databind.introspect.AnnotatedClass;
 import com.fasterxml.jackson.databind.introspect.AnnotatedField;
+import com.fasterxml.jackson.databind.introspect.AnnotatedMethod;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.fasterxml.jackson.module.jakarta.xmlbind.JakartaXmlBindAnnotationIntrospector;
 
-import ltd.qubit.commons.util.transformer.string.PluralToSingularTransformer;
-
-import static ltd.qubit.commons.text.jackson.JacksonUtils.JAXB_DEFAULT_VALUE;
+import static ltd.qubit.commons.text.jackson.JacksonUtils.getXmlRootName;
+import static ltd.qubit.commons.text.jackson.JacksonUtils.getXmlWrappedPropertyName;
+import static ltd.qubit.commons.text.jackson.JacksonUtils.getXmlWrapperPropertyName;
 
 /**
- * 此 {@link AnnotationIntrospector} 用于根据指定的命名策略转换根元素名称，并且自动处理 集合类属性内部元素名称。
+ * 此 {@link AnnotationIntrospector} 用于根据指定的命名策略转换根元素名称，并且自动处理
+ * 集合类属性内部元素名称。
  *
  * @author 胡海星
  */
-public class XmlNameConversionIntrospector extends AnnotationIntrospector {
+public class XmlNameConversionIntrospector extends AnnotationIntrospector
+    implements AnnotationIntrospector.XmlExtensions {
 
   private static final long serialVersionUID = 6574159265535613840L;
 
-  private NamingBase namingStrategy;
+  private final static String MARKER_FOR_DEFAULT = "##default";
 
-  private final PluralToSingularTransformer transformer = PluralToSingularTransformer.INSTANCE;
+  private final NamingBase namingStrategy;
+  // private final PluralToSingularTransformer transformer = PluralToSingularTransformer.INSTANCE;
+  private final JakartaXmlBindAnnotationIntrospector xmlBindAi;
 
-  public XmlNameConversionIntrospector(final NamingBase namingStrategy) {
+  public XmlNameConversionIntrospector(final NamingBase namingStrategy, final TypeFactory typeFactory) {
     this.namingStrategy = namingStrategy;
+    // 使用一个内置的 JakartaXmlBindAnnotationIntrospector
+    this.xmlBindAi = new JakartaXmlBindAnnotationIntrospector(typeFactory);
   }
 
-  public final NamingBase getNamingStrategy() {
+  public NamingBase getNamingStrategy() {
     return namingStrategy;
-  }
-
-  public void setNamingStrategy(final NamingBase namingStrategy) {
-    this.namingStrategy = namingStrategy;
   }
 
   @Override
@@ -54,87 +56,83 @@ public class XmlNameConversionIntrospector extends AnnotationIntrospector {
     return Version.unknownVersion();
   }
 
+  @Override
   public PropertyName findRootName(final AnnotatedClass annotatedClass) {
-    // 根据类名和指定的命名策略生成根元素名称
-    final Class<?> type = annotatedClass.getRawType();
-    final String name = type.getSimpleName();
-    final String convertedName = namingStrategy.translate(name);
-    return PropertyName.construct(convertedName);
+    return getXmlRootName(namingStrategy, annotatedClass.getAnnotated());
   }
 
+  @Override
   public PropertyName findWrapperName(final Annotated annotated) {
-    if (annotated.hasAnnotation(XmlNoElementWrapper.class)) {
-      return PropertyName.NO_NAME;
-    } else if (annotated.hasAnnotation(XmlElementWrapper.class)) {
-      final XmlElementWrapper annotation = annotated.getAnnotation(XmlElementWrapper.class);
-      final String name = annotation.name();
-      if (JAXB_DEFAULT_VALUE.equals(name)) {
-        return PropertyName.USE_DEFAULT;
-      } else {
-        return new PropertyName(name);
-      }
-    } else if ((annotated instanceof AnnotatedField) && (annotated.getType().isContainerType())) {
-      // 容器字段的 Wrapper name 为该字段名称根据指定的命名策略转换的结果。
-      final String name = annotated.getName();
-      final String convertedName = namingStrategy.translate(name);
-      return PropertyName.construct(convertedName);
+    if (annotated instanceof final AnnotatedField af) {
+      return getXmlWrapperPropertyName(namingStrategy, af.getAnnotated());
+    } else if (annotated instanceof final AnnotatedMethod am) {
+      return getXmlWrapperPropertyName(namingStrategy, am.getAnnotated());
+    } else {
+      throw new IllegalArgumentException("Unsupported annotated: " + annotated);
     }
-    return null;
   }
 
   @Override
   public PropertyName findNameForDeserialization(final Annotated annotated) {
-    if ((annotated instanceof AnnotatedField) && (annotated.getType().isContainerType())) {
+    if ((annotated instanceof AnnotatedField) && annotated.getType().isContainerType()) {
       return getWrappedElementName(annotated);
+    }
+    // 先通过 JakartaXmlBindAnnotationIntrospector 获取此属性的名称，然后根据命名策略转换
+    final PropertyName pn = xmlBindAi.findNameForDeserialization(annotated);
+    if (pn != null && (!pn.equals(PropertyName.NO_NAME))) {
+      return translatePropertyName(pn);
     }
     return null;
   }
 
   @Override
   public PropertyName findNameForSerialization(final Annotated annotated) {
-    if ((annotated instanceof AnnotatedField) && (annotated.getType().isContainerType())) {
+    if ((annotated instanceof AnnotatedField)
+        && annotated.getType().isContainerType()
+        && (!annotated.getType().isMapLikeType())) {  // 对于Map类型特殊处理，因为它不存在wrapper，所以不需要转换名字单复数
       return getWrappedElementName(annotated);
+    }
+    // 先通过 JakartaXmlBindAnnotationIntrospector 获取此属性的名称，然后根据命名策略转换
+    final PropertyName pn = xmlBindAi.findNameForSerialization(annotated);
+    if (pn != null && (!pn.equals(PropertyName.NO_NAME))) {
+      return translatePropertyName(pn);
     }
     return null;
   }
 
+  private PropertyName translatePropertyName(final PropertyName pn) {
+    final String name = pn.getSimpleName();
+    final String convertedName = namingStrategy.translate(name);
+    return PropertyName.construct(convertedName, pn.getNamespace());
+  }
+
   private PropertyName getWrappedElementName(final Annotated annotated) {
-    if (annotated.hasAnnotation(XmlElements.class)) {
-      // do not provide wrapped element name for @XmlElements annotated fields,
-      // since it will use the customized name provided by the internal @XmlElement
-      // annotation.
-      // FIXME: There is a bug in JacksonXmlModule for serializing @XmlElements
-      //  see https://github.com/FasterXML/jackson-dataformat-xml/issues/178
-      //  and https://github.com/FasterXML/jackson-dataformat-xml/issues/230
-      //  and https://github.com/FasterXML/jackson-module-jaxb-annotations/issues/51
-      return getWrappedElementNameFromFieldName(annotated);
+    if (annotated instanceof final AnnotatedField af) {
+      return getXmlWrappedPropertyName(namingStrategy, af.getAnnotated());
+    } else if (annotated instanceof final AnnotatedMethod am) {
+      return getXmlWrappedPropertyName(namingStrategy, am.getAnnotated());
     } else {
-      return getWrappedElementNameFromFieldName(annotated);
+      throw new IllegalArgumentException("Unsupported annotated: " + annotated);
     }
   }
 
-  private PropertyName getWrappedElementNameFromFieldName(final Annotated annotated) {
-    // 容器字段的 name 为该字段名称的“单数形式”根据指定的命名策略转换的结果。
-    final String name = annotated.getName();
-    final String singularName = transformer.transform(name);
-    final String convertedName = namingStrategy.translate(singularName);
-    return PropertyName.construct(convertedName);
+  @Override
+  public String findNamespace(final MapperConfig<?> config, final Annotated ann) {
+    return xmlBindAi.findNamespace(config, ann);
   }
 
-  private PropertyName getWrappedElementNameFromXmlElements(final Annotated annotated) {
-    final XmlElements annotation = annotated.getAnnotation(XmlElements.class);
-    final XmlElement[] elements = annotation.value();
-    final Class<?> annotatedType = annotated.getRawType();
-    for (final XmlElement element : elements) {
-      if (annotatedType.equals(element.type())) {
-        final String name = element.name();
-        if (JAXB_DEFAULT_VALUE.equals(name)) {
-          return getWrappedElementNameFromFieldName(annotated);
-        } else {
-          return new PropertyName(name);
-        }
-      }
-    }
-    return getWrappedElementNameFromFieldName(annotated);
+  @Override
+  public Boolean isOutputAsAttribute(final MapperConfig<?> config, final Annotated ann) {
+    return xmlBindAi.isOutputAsAttribute(config, ann);
+  }
+
+  @Override
+  public Boolean isOutputAsText(final MapperConfig<?> config, final Annotated ann) {
+    return xmlBindAi.isOutputAsText(config, ann);
+  }
+
+  @Override
+  public Boolean isOutputAsCData(final MapperConfig<?> config, final Annotated ann) {
+    return xmlBindAi.isOutputAsCData(config, ann);
   }
 }

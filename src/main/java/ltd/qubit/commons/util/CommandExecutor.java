@@ -22,7 +22,7 @@ import org.apache.commons.exec.PumpStreamHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ltd.qubit.commons.io.FileUtils;
+import ltd.qubit.commons.io.io.FileUtils;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
@@ -153,7 +153,7 @@ public class CommandExecutor {
   public String execute(final String cmd) {
     try {
       return execute(cmd, false);
-    } catch (final IOException e) {
+    } catch (final Throwable e) {
       return null;
     }
   }
@@ -200,7 +200,7 @@ public class CommandExecutor {
       exitValue = executor.execute(commandLine);
       final long after = System.currentTimeMillis();
       logger.info("Finished executing command in {} milliseconds.", after - before);
-    } catch (final IOException e) {
+    } catch (final Throwable e) {
       logger.error("Failed to execute the command {}: {}", cmd, e.getMessage(), e);
       if (throwError) {
         throw e;
@@ -214,9 +214,10 @@ public class CommandExecutor {
           exitValue, cmd);
       logger.error("The output of the command is: {}", output);
       return null;
+    } else {
+      logger.debug("The output of the command is: {}", output);
+      return output;
     }
-    logger.debug("The output of the command is: {}", output);
-    return output;
   }
 
   private File findWorkingDirectory() {

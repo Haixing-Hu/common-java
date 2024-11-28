@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,12 +13,12 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ltd.qubit.commons.lang.ClassUtils;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.text.Stripper;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class EnumCodec<T extends Enum<T>> implements Codec<T, String> {
 

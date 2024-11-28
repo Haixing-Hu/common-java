@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -53,7 +53,8 @@ public class XsiUnescaper extends CharSequenceTranslator {
     return Character.codePointCount(input, 0, input.length());
   }
 
-  public XsiUnescaper clone() {
+  @Override
+  public XsiUnescaper cloneEx() {
     return new XsiUnescaper();
   }
 }

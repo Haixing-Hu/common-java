@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -10,12 +10,12 @@ package ltd.qubit.commons.text.jackson.serializer;
 
 import javax.annotation.concurrent.Immutable;
 
-import ltd.qubit.commons.util.codec.Base64Codec;
-
 import com.fasterxml.jackson.core.JsonGenerator;
 
+import ltd.qubit.commons.util.codec.Base64Codec;
+
 /**
- * The JSON serializer of a {@code byte[]} object, which serialize the
+ * The JACKSON serializer of a {@code byte[]} object, which serialize the
  * {@code byte[]} to the string encoded in the BASE-64 format.
  *
  * @author Haixing Hu

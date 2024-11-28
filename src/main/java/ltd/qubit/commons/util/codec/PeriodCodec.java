@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -17,6 +17,9 @@ import ltd.qubit.commons.text.Stripper;
 
 /**
  * The codec which encode/decode {@link Period} objects to/from strings.
+ * <p>
+ * The period is encoded/decoded with the ISO-8601 period format, such as
+ * {@code "P1Y2M3D"}.
  *
  * @author Haixing Hu
  */

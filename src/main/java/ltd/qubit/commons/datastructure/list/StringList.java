@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,23 +8,25 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list;
 
+import java.io.Serial;
+import java.util.ArrayList;
+import java.util.Collection;
+
 import ltd.qubit.commons.annotation.TypeCodec;
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.util.codec.Codec;
 import ltd.qubit.commons.util.codec.StringListCodec;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 /**
  * 此模型表示字符串列表，继承了JDK的原生{@link ArrayList}，但提供了自定义的{@link Codec}
  * 和MyBatis Type Handler，并实现了{@link Assignable}接口。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @TypeCodec(StringListCodec.class)
 public class StringList extends ArrayList<String> implements Assignable<StringList> {
 
+  @Serial
   private static final long serialVersionUID = 7510619465554403307L;
 
   public StringList() {
@@ -46,7 +48,7 @@ public class StringList extends ArrayList<String> implements Assignable<StringLi
   }
 
   @Override
-  public StringList clone() {
+  public StringList cloneEx() {
     return new StringList(this);
   }
 }

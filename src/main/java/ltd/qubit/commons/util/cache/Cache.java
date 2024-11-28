@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Set;
 
-import ltd.qubit.commons.io.Openable;
+import ltd.qubit.commons.io.io.Openable;
 
 /**
  * The interface of a cache.

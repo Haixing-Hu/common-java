@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -16,13 +16,14 @@ import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.xml.namespace.QName;
 
-import jakarta.validation.constraints.NotNull;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
+import jakarta.xml.bind.annotation.XmlElements;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -31,15 +32,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyMetadata;
 import com.fasterxml.jackson.databind.PropertyName;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies.NamingBase;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy.PropertyNamingStrategyBase;
 import com.fasterxml.jackson.databind.SerializationConfig;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -60,18 +61,29 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
 
+import ltd.qubit.commons.reflect.AnnotationGetter;
+import ltd.qubit.commons.reflect.AnnotationTester;
 import ltd.qubit.commons.reflect.ConstructorUtils;
+import ltd.qubit.commons.reflect.FieldUtils;
 import ltd.qubit.commons.text.Remover;
-import ltd.qubit.commons.util.transformer.string.PluralToSingularTransformer;
 import ltd.qubit.commons.util.transformer.string.SingularToPluralTransformer;
 
-import static ltd.qubit.commons.lang.StringUtils.defaultToNull;
-import static ltd.qubit.commons.reflect.FieldUtils.getAnnotation;
-import static ltd.qubit.commons.reflect.FieldUtils.isAnnotationPresent;
+import static ltd.qubit.commons.reflect.PropertyUtils.getPropertyNameFromSetter;
 import static ltd.qubit.commons.text.jackson.Operation.SERIALIZE;
+import static ltd.qubit.commons.text.jackson.PropertyNameUtils.newJacksonJsonPropertyName;
+import static ltd.qubit.commons.text.jackson.PropertyNameUtils.newJacksonXmlElementName;
+import static ltd.qubit.commons.text.jackson.PropertyNameUtils.newJaxbXmlAttributeName;
+import static ltd.qubit.commons.text.jackson.PropertyNameUtils.newJaxbXmlElementName;
+import static ltd.qubit.commons.text.jackson.PropertyNameUtils.newJsonPropertyName;
+import static ltd.qubit.commons.text.jackson.PropertyNameUtils.newJsonWrappedPropertyName;
+import static ltd.qubit.commons.text.jackson.PropertyNameUtils.newXmlAttributeName;
+import static ltd.qubit.commons.text.jackson.PropertyNameUtils.newXmlElementName;
+import static ltd.qubit.commons.text.jackson.PropertyNameUtils.newXmlWrappedElementName;
+import static ltd.qubit.commons.text.jackson.PropertyNameUtils.newXmlWrapperElementName;
+import static ltd.qubit.commons.text.jackson.PropertyNameUtils.translateName;
 
 /**
- * Provide Jackson related utilities.
+ * Provide JACKSON ObjectMapper related utilities.
  *
  * @author Haixing Hu
  */
@@ -79,158 +91,379 @@ public class JacksonUtils {
 
   private JacksonUtils() {}
 
-  public static final String JAXB_DEFAULT_VALUE = "##default";
-
-  public static final String JACKSON_DEFAULT_VALUE = "";
-
-  @SuppressWarnings("deprecation")
-  public static String translateName(final ObjectMapper mapper, final String name) {
-    final PropertyNamingStrategy namingStrategy = mapper.getPropertyNamingStrategy();
-    if (namingStrategy instanceof PropertyNamingStrategyBase) {
-      return ((PropertyNamingStrategyBase) namingStrategy).translate(name);
-    } else if (namingStrategy instanceof NamingBase) {
-      return ((NamingBase) namingStrategy).translate(name);
-    } else {
-      return name;
-    }
-  }
-
+  @Nonnull
   public static PropertyName getRootWrapperName(final ObjectMapper mapper,
       final Class<?> type) {
-    final PropertyName rootName = getRootName(mapper,type);
+    final PropertyName rootName = getRootName(mapper, type);
     final SingularToPluralTransformer transformer = SingularToPluralTransformer.INSTANCE;
     final String name = transformer.transform(rootName.getSimpleName());
     return new PropertyName(name);
   }
 
+  @Nonnull
   public static PropertyName getRootName(final ObjectMapper mapper, final Class<?> type) {
     if (mapper instanceof XmlMapper) {
-      if (type.isAnnotationPresent(XmlRootElement.class)) {
-        final XmlRootElement rootElement = type.getAnnotation(XmlRootElement.class);
-        final String name = defaultToNull(JAXB_DEFAULT_VALUE, rootElement.name());
-        final String namespace = defaultToNull(JAXB_DEFAULT_VALUE, rootElement.namespace());
-        if (name != null) {
-          return new PropertyName(name, namespace);
-        }
-      } else if (type.isAnnotationPresent(JacksonXmlRootElement.class)) {
-        final JacksonXmlRootElement rootElement = type.getAnnotation(
-            JacksonXmlRootElement.class);
-        final String name = defaultToNull(JACKSON_DEFAULT_VALUE, rootElement.localName());
-        final String namespace = defaultToNull(JACKSON_DEFAULT_VALUE, rootElement.namespace());
-        if (name != null) {
-          return new PropertyName(name, namespace);
-        }
-      }
+      return getXmlRootName(mapper.getPropertyNamingStrategy(), type);
     } else if (mapper instanceof JsonMapper) {
-      if (type.isAnnotationPresent(JsonRootName.class)) {
-        final JsonRootName rootName = type.getAnnotation(JsonRootName.class);
-        final String name = defaultToNull(JACKSON_DEFAULT_VALUE, rootName.value());
-        final String namespace = defaultToNull(JACKSON_DEFAULT_VALUE, rootName.namespace());
-        if (name != null) {
-          return new PropertyName(name, namespace);
-        }
-      }
+      return getJsonRootName(mapper.getPropertyNamingStrategy(), type);
+    } else {
+      return getJsonRootName(mapper.getPropertyNamingStrategy(), type);
     }
-    final String name = translateName(mapper, type.getSimpleName());
-    return new PropertyName(name);
   }
 
-  public static PropertyName getPropertyName(final ObjectMapper mapper,
+  @Nonnull
+  public static PropertyName getXmlRootName(final PropertyNamingStrategy namingStrategy,
+      final Class<?> type) {
+    if (type.isAnnotationPresent(XmlRootElement.class)) {
+      final XmlRootElement rootElement = type.getAnnotation(XmlRootElement.class);
+      final PropertyName pn = newJaxbXmlElementName(rootElement.name(), rootElement.namespace());
+      if (pn != null) {
+        return pn;
+      }
+    }
+    if (type.isAnnotationPresent(JacksonXmlRootElement.class)) {
+      final JacksonXmlRootElement rootElement = type.getAnnotation(JacksonXmlRootElement.class);
+      final PropertyName pn = newJacksonXmlElementName(rootElement.localName(), rootElement.namespace());
+      if (pn != null) {
+        return pn;
+      }
+    }
+    return newXmlElementName(namingStrategy, type.getSimpleName());
+  }
+
+  @Nonnull
+  public static PropertyName getJsonRootName(final PropertyNamingStrategy namingStrategy,
+      final Class<?> type) {
+    if (type.isAnnotationPresent(JsonRootName.class)) {
+      final JsonRootName rootName = type.getAnnotation(JsonRootName.class);
+      final PropertyName pn = newJacksonXmlElementName(rootName.value(), rootName.namespace());
+      if (pn != null) {
+        return pn;
+      }
+    }
+    return newJsonPropertyName(namingStrategy, type.getSimpleName());
+  }
+
+  @Nonnull
+  public static PropertyName getPropertyName(final ObjectMapper mapper, final Field field) {
+    if (mapper instanceof XmlMapper) {
+      return getXmlPropertyName(mapper.getPropertyNamingStrategy(), field);
+    } else if (mapper instanceof JsonMapper) {
+      return getJsonPropertyName(mapper.getPropertyNamingStrategy(), field);
+    } else {
+      return getJsonPropertyName(mapper.getPropertyNamingStrategy(), field);
+    }
+  }
+
+  @Nonnull
+  public static PropertyName getPropertyName(final ObjectMapper mapper, final Method method) {
+    if (mapper instanceof XmlMapper) {
+      return getXmlPropertyName(mapper.getPropertyNamingStrategy(), method);
+    } else if (mapper instanceof JsonMapper) {
+      return getJsonPropertyName(mapper.getPropertyNamingStrategy(), method);
+    } else {
+      return getJsonPropertyName(mapper.getPropertyNamingStrategy(), method);
+    }
+  }
+
+  @Nonnull
+  public static PropertyName getXmlPropertyName(final PropertyNamingStrategy namingStrategy,
       final Field field) {
-    if (mapper instanceof JsonMapper) {
-        if (isAnnotationPresent(field, JsonProperty.class)) {
-          final JsonProperty annotation = getAnnotation(field, JsonProperty.class);
-          final String name = defaultToNull(JACKSON_DEFAULT_VALUE, annotation.value());
-          final String namespace = defaultToNull(JACKSON_DEFAULT_VALUE, annotation.namespace());
-          if (name != null) {
-            return new PropertyName(name, namespace);
-          }
-        }
-    } else if (mapper instanceof XmlMapper) {
-      if (isAnnotationPresent(field, XmlElement.class)) {
-        final XmlElement annotation = getAnnotation(field, XmlElement.class);
-        final String name = defaultToNull(JAXB_DEFAULT_VALUE, annotation.name());
-        final String namespace = defaultToNull(JAXB_DEFAULT_VALUE, annotation.namespace());
-        if (name != null) {
-          return new PropertyName(name, namespace);
-        }
-      }
-      if (isAnnotationPresent(field, XmlAttribute.class)) {
-        final XmlAttribute annotation = getAnnotation(field, XmlAttribute.class);
-        final String name = defaultToNull(JAXB_DEFAULT_VALUE, annotation.name());
-        final String namespace = defaultToNull(JAXB_DEFAULT_VALUE, annotation.namespace());
-        if (name != null) {
-          return new PropertyName("@" + name, namespace);
-        } else {
-          return new PropertyName("@" + translateName(mapper, field.getName()));
-        }
-      }
-    }
-    final String name = translateName(mapper, field.getName());
-    return new PropertyName(name);
+    // note that we must check/get the annotation from the field as well as the
+    // corresponding read method of the field
+    return getXmlPropertyNameImpl(namingStrategy, field.getName(),
+        (a) -> FieldUtils.isAnnotationPresent(field, a),
+        (a) -> FieldUtils.getAnnotation(field, a));
   }
 
-  @NotNull
-  public static PropertyName getPropertyWrapperName(final ObjectMapper mapper,
+  @Nullable
+  public static PropertyName getXmlPropertyName(final PropertyNamingStrategy namingStrategy,
+      final Method method) {
+    final String name = getPropertyNameFromSetter(method);
+    if (name == null) {
+      return null;
+    } else {
+      return getXmlPropertyNameImpl(namingStrategy, name,
+          method::isAnnotationPresent, method::getAnnotation);
+    }
+  }
+
+  @Nonnull
+  private static PropertyName getXmlPropertyNameImpl(final PropertyNamingStrategy namingStrategy,
+      final String name, final AnnotationTester tester, final AnnotationGetter getter) {
+    if (tester.exist(XmlElement.class)) {
+      final XmlElement a = (XmlElement) getter.get(XmlElement.class);
+      assert a != null;
+      final PropertyName pn = newJaxbXmlElementName(a.name(), a.namespace());
+      if (pn != null) {
+        return pn;
+      } else {
+        return newXmlElementName(namingStrategy, name);
+      }
+    } else if (tester.exist(XmlAttribute.class)) {
+      final XmlAttribute a = (XmlAttribute) getter.get(XmlAttribute.class);
+      assert a != null;
+      final PropertyName pn = newJaxbXmlAttributeName(a.name(), a.namespace());
+      if (pn != null) {
+        return pn;
+      } else {
+        return newXmlAttributeName(namingStrategy, name);
+      }
+    } else {
+      return newXmlElementName(namingStrategy, name);
+    }
+  }
+
+  @Nonnull
+  public static PropertyName getJsonPropertyName(final PropertyNamingStrategy namingStrategy,
+      final Field field) {
+    // note that we must check/get the annotation from the field as well as the
+    // corresponding read method of the field
+    return getJsonPropertyNameImpl(namingStrategy, field.getName(),
+        (a) -> FieldUtils.isAnnotationPresent(field, a),
+        (a) -> FieldUtils.getAnnotation(field, a));
+  }
+
+  @Nullable
+  public static PropertyName getJsonPropertyName(final PropertyNamingStrategy namingStrategy,
+      final Method method) {
+    final String name = getPropertyNameFromSetter(method);
+    if (name == null) {
+      return null;
+    } else {
+      return getJsonPropertyNameImpl(namingStrategy, name,
+          method::isAnnotationPresent, method::getAnnotation);
+    }
+  }
+
+  @Nonnull
+  private static PropertyName getJsonPropertyNameImpl(final PropertyNamingStrategy namingStrategy,
+      final String name, final AnnotationTester tester, final AnnotationGetter getter) {
+    if (tester.exist(JsonProperty.class)) {
+      final JsonProperty a = (JsonProperty) getter.get(JsonProperty.class);
+      assert a != null;
+      final PropertyName pn = newJacksonXmlElementName(a.value(), a.namespace());
+      if (pn != null) {
+        return pn;
+      }
+    }
+    return newJsonPropertyName(namingStrategy, name);
+  }
+
+  @Nonnull
+  public static PropertyName getWrapperPropertyName(final ObjectMapper mapper,
       final Field field) {
     if (mapper instanceof XmlMapper) {
-      if (isAnnotationPresent(field, XmlElementWrapper.class)) {
-        final XmlElementWrapper annotation = getAnnotation(field,
-            XmlElementWrapper.class);
-        final String name = defaultToNull(JAXB_DEFAULT_VALUE, annotation.name());
-        final String namespace = defaultToNull(JAXB_DEFAULT_VALUE, annotation.namespace());
-        if (name != null) {
-          return new PropertyName(name, namespace);
-        }
-      } else if (isAnnotationPresent(field, JacksonXmlElementWrapper.class)) {
-        final JacksonXmlElementWrapper annotation = getAnnotation(field,
-            JacksonXmlElementWrapper.class);
-        if (!annotation.useWrapping()) {
-          return null;
-        }
-        final String name = defaultToNull(JACKSON_DEFAULT_VALUE, annotation.localName());
-        final String namespace = defaultToNull(JACKSON_DEFAULT_VALUE, annotation.namespace());
-        if (name != null) {
-          return new PropertyName(name, namespace);
-        }
-      }
+      return getXmlWrapperPropertyName(mapper.getPropertyNamingStrategy(), field);
+    } else if (mapper instanceof JsonMapper) {
+      return getJsonWrapperPropertyName(mapper.getPropertyNamingStrategy(), field);
+    } else {
+      return getJsonWrapperPropertyName(mapper.getPropertyNamingStrategy(), field);
     }
-    final String name = translateName(mapper, field.getName());
-    return new PropertyName(name);
   }
 
-  public static PropertyName getPropertyWrappedName(final ObjectMapper mapper,
+  @Nonnull
+  public static PropertyName getWrapperPropertyName(final ObjectMapper mapper,
+      final Method method) {
+    if (mapper instanceof XmlMapper) {
+      return getXmlWrapperPropertyName(mapper.getPropertyNamingStrategy(), method);
+    } else if (mapper instanceof JsonMapper) {
+      return getJsonWrapperPropertyName(mapper.getPropertyNamingStrategy(), method);
+    } else {
+      return getJsonWrapperPropertyName(mapper.getPropertyNamingStrategy(), method);
+    }
+  }
+
+  @Nonnull
+  public static PropertyName getXmlWrapperPropertyName(final PropertyNamingStrategy namingStrategy,
       final Field field) {
-    if (mapper instanceof JsonMapper) {
-        if (isAnnotationPresent(field, JsonProperty.class)) {
-          final JsonProperty annotation = getAnnotation(field, JsonProperty.class);
-          final String name = defaultToNull(JACKSON_DEFAULT_VALUE, annotation.value());
-          final String namespace = defaultToNull(JACKSON_DEFAULT_VALUE, annotation.namespace());
-          if (name != null) {
-            return new PropertyName(name, namespace);
-          }
-        }
-    } else if (mapper instanceof XmlMapper) {
-      if (isAnnotationPresent(field, XmlElement.class)) {
-        final XmlElement annotation = getAnnotation(field, XmlElement.class);
-        final String name = defaultToNull(JAXB_DEFAULT_VALUE, annotation.name());
-        final String namespace = defaultToNull(JAXB_DEFAULT_VALUE, annotation.namespace());
-        if (name != null) {
-          return new PropertyName(name, namespace);
-        }
-      } else if (isAnnotationPresent(field, JacksonXmlProperty.class)) {
-        final JacksonXmlProperty annotation = getAnnotation(field, JacksonXmlProperty.class);
-        final String name = defaultToNull(JACKSON_DEFAULT_VALUE, annotation.localName());
-        final String namespace = defaultToNull(JACKSON_DEFAULT_VALUE, annotation.namespace());
-        if (name != null) {
-          return new PropertyName(name, namespace);
-        }
+    // note that we must check/get the annotation from the field as well as the
+    // corresponding read method of the field
+    return getXmlWrapperPropertyNameImpl(namingStrategy, field.getName(),
+        (a) -> FieldUtils.isAnnotationPresent(field, a),
+        (a) -> FieldUtils.getAnnotation(field, a));
+  }
+
+  @Nullable
+  public static PropertyName getXmlWrapperPropertyName(final PropertyNamingStrategy namingStrategy,
+      final Method method) {
+    final String name = getPropertyNameFromSetter(method);
+    if (name == null) {
+      return null;
+    } else {
+      return getXmlWrapperPropertyNameImpl(namingStrategy, name,
+          method::isAnnotationPresent, method::getAnnotation);
+    }
+  }
+
+  @Nonnull
+  private static PropertyName getXmlWrapperPropertyNameImpl(final PropertyNamingStrategy namingStrategy,
+      final String name, final AnnotationTester tester, final AnnotationGetter getter) {
+    if (tester.exist(XmlElementWrapper.class)) {
+      final XmlElementWrapper a = (XmlElementWrapper) getter.get(XmlElementWrapper.class);
+      assert a != null;
+      final PropertyName pn = newJaxbXmlElementName(a.name(), a.namespace());
+      if (pn != null) {
+        return pn;
       }
     }
-    final String name = translateName(mapper, field.getName());
-    // translate the plural form of the field name to its singular form
-    final PluralToSingularTransformer transformer = PluralToSingularTransformer.INSTANCE;
-    return new PropertyName(transformer.transform(name));
+    if (tester.exist(XmlNoElementWrapper.class)) {
+      return PropertyName.NO_NAME;
+    }
+    if (tester.exist(JacksonXmlElementWrapper.class)) {
+      final JacksonXmlElementWrapper a = (JacksonXmlElementWrapper) getter.get(JacksonXmlElementWrapper.class);
+      assert a != null;
+      if (!a.useWrapping()) {
+        return PropertyName.NO_NAME;
+      }
+      final PropertyName pn = newJacksonXmlElementName(a.localName(), a.namespace());
+      if (pn != null) {
+        return pn;
+      }
+    }
+    return newXmlWrapperElementName(namingStrategy, name);
+  }
+
+  @Nonnull
+  public static PropertyName getJsonWrapperPropertyName(final PropertyNamingStrategy namingStrategy,
+      final Field field) {
+    return getJsonWrapperPropertyNameImpl(namingStrategy, field.getName());
+  }
+
+  @Nullable
+  public static PropertyName getJsonWrapperPropertyName(final PropertyNamingStrategy namingStrategy,
+      final Method method) {
+    final String name = getPropertyNameFromSetter(method);
+    if (name == null) {
+      return null;
+    } else {
+      return getJsonWrapperPropertyNameImpl(namingStrategy, name);
+    }
+  }
+
+  @Nonnull
+  private static PropertyName getJsonWrapperPropertyNameImpl(final PropertyNamingStrategy namingStrategy,
+      final String name) {
+    final String translateName = translateName(namingStrategy, name);
+    return new PropertyName(translateName);
+  }
+
+  @Nonnull
+  public static PropertyName getWrappedPropertyName(final ObjectMapper mapper,
+      final Field field) {
+    if (mapper instanceof XmlMapper) {
+      return getXmlWrappedPropertyName(mapper.getPropertyNamingStrategy(), field);
+    } else if (mapper instanceof JsonMapper) {
+      return getJsonWrappedPropertyName(mapper.getPropertyNamingStrategy(), field);
+    } else {
+      return getJsonWrappedPropertyName(mapper.getPropertyNamingStrategy(), field);
+    }
+  }
+
+  @Nullable
+  public static PropertyName getWrappedPropertyName(final ObjectMapper mapper,
+      final Method method) {
+    if (mapper instanceof XmlMapper) {
+      return getXmlWrappedPropertyName(mapper.getPropertyNamingStrategy(), method);
+    } else if (mapper instanceof JsonMapper) {
+      return getJsonWrappedPropertyName(mapper.getPropertyNamingStrategy(), method);
+    } else {
+      return getJsonWrappedPropertyName(mapper.getPropertyNamingStrategy(), method);
+    }
+  }
+
+  @Nonnull
+  public static PropertyName getXmlWrappedPropertyName(final PropertyNamingStrategy namingStrategy,
+      final Field field) {
+    // note that we must check/get the annotation from the field as well as the
+    // corresponding read method of the field
+    return getXmlWrappedPropertyNameImpl(namingStrategy, field.getName(),
+        (a) -> FieldUtils.isAnnotationPresent(field, a),
+        (a) -> FieldUtils.getAnnotation(field, a));
+  }
+
+  @Nullable
+  public static PropertyName getXmlWrappedPropertyName(final PropertyNamingStrategy namingStrategy,
+      final Method method) {
+    final String name = getPropertyNameFromSetter(method);
+    if (name == null) {
+      return null;
+    } else {
+      return getXmlWrappedPropertyNameImpl(namingStrategy, name,
+          method::isAnnotationPresent, method::getAnnotation);
+    }
+  }
+
+  @Nonnull
+  private static PropertyName getXmlWrappedPropertyNameImpl(final PropertyNamingStrategy namingStrategy,
+      final String name, final AnnotationTester tester, final AnnotationGetter getter) {
+    if (tester.exist(XmlElement.class)) {
+      final XmlElement a = (XmlElement) getter.get(XmlElement.class);
+      assert a != null;
+      final PropertyName pn = newJaxbXmlElementName(a.name(), a.namespace());
+      if (pn != null) {
+        return pn;
+      } else {
+        return newXmlWrappedElementName(namingStrategy, name);
+      }
+    }
+    if (tester.exist(XmlElements.class)) {
+      // do not provide wrapped element name for @XmlElements annotated fields,
+      // since it will use the customized name provided by the internal @XmlElement
+      // annotation.
+      // FIXME: There is a bug in JacksonXmlModule for serializing @XmlElements
+      //  see https://github.com/FasterXML/jackson-dataformat-xml/issues/178
+      //  and https://github.com/FasterXML/jackson-dataformat-xml/issues/230
+      //  and https://github.com/FasterXML/jackson-module-jaxb-annotations/issues/51
+      return newXmlWrappedElementName(namingStrategy, name);
+    }
+    if (tester.exist(JacksonXmlProperty.class)) {
+      final JacksonXmlProperty a = (JacksonXmlProperty) getter.get(JacksonXmlProperty.class);
+      assert a != null;
+      final PropertyName pn = newJacksonXmlElementName(a.localName(), a.namespace());
+      if (pn != null) {
+        return pn;
+      } else {
+        return newXmlWrappedElementName(namingStrategy, name);
+      }
+    }
+    return newXmlWrappedElementName(namingStrategy, name);
+  }
+
+  @Nonnull
+  public static PropertyName getJsonWrappedPropertyName(final PropertyNamingStrategy namingStrategy,
+      final Field field) {
+    // note that we must check/get the annotation from the field as well as the
+    // corresponding read method of the field
+    return getJsonWrappedPropertyNameImpl(namingStrategy, field.getName(),
+        (a) -> FieldUtils.isAnnotationPresent(field, a),
+        (a) -> FieldUtils.getAnnotation(field, a));
+  }
+
+  @Nullable
+  public static PropertyName getJsonWrappedPropertyName(final PropertyNamingStrategy namingStrategy,
+      final Method method) {
+    final String name = getPropertyNameFromSetter(method);
+    if (name == null) {
+      return null;
+    } else {
+      return getJsonWrappedPropertyNameImpl(namingStrategy, name,
+          method::isAnnotationPresent, method::getAnnotation);
+    }
+  }
+
+  @Nonnull
+  private static PropertyName getJsonWrappedPropertyNameImpl(final PropertyNamingStrategy namingStrategy,
+      final String name, final AnnotationTester tester, final AnnotationGetter getter) {
+    if (tester.exist(JsonProperty.class)) {
+      final JsonProperty a = (JsonProperty) getter.get(JsonProperty.class);
+      assert a != null;
+      final PropertyName pn = newJacksonJsonPropertyName(a.value(), a.namespace());
+      if (pn != null) {
+        return pn;
+      }
+    }
+    return newJsonWrappedPropertyName(namingStrategy, name);
   }
 
   @SuppressWarnings("rawtypes")
@@ -326,9 +559,9 @@ public class JacksonUtils {
     final Class<?> beanClass = field.getDeclaringClass();
     final JavaType beanType = config.constructType(beanClass);
     final AnnotatedClass annotatedClass = AnnotatedClassResolver.resolve(config, beanType, config);
-    final AnnotationIntrospector introspector = config.getAnnotationIntrospector();
+    final AnnotationIntrospector ai = config.getAnnotationIntrospector();
     final AnnotationMap annotations = new AnnotationMap();
-    collectAnnotations(field.getAnnotations(), introspector, annotations);
+    collectAnnotations(field.getAnnotations(), ai, annotations);
     // TODO: deal with mixins
     return new AnnotatedField(annotatedClass, field, annotations);
   }
@@ -339,41 +572,41 @@ public class JacksonUtils {
     final Class<?> beanClass = method.getDeclaringClass();
     final JavaType beanType = config.constructType(beanClass);
     final AnnotatedClass annotatedClass = AnnotatedClassResolver.resolve(config, beanType, config);
-    final AnnotationIntrospector introspector = config.getAnnotationIntrospector();
+    final AnnotationIntrospector ai = config.getAnnotationIntrospector();
     final AnnotationMap annotations = new AnnotationMap();
-    collectAnnotations(method.getAnnotations(), introspector, annotations);
+    collectAnnotations(method.getAnnotations(), ai, annotations);
     // TODO: deal with mixins
     final AnnotationMap[] paramAnnotations =
-        collectAnnotations(method.getParameterAnnotations(), introspector);
+        collectAnnotations(method.getParameterAnnotations(), ai);
     // TODO: deal with mixins
     return new AnnotatedMethod(annotatedClass, method, annotations, paramAnnotations);
   }
 
   private static void collectAnnotations(final Annotation[] annotations,
-      final AnnotationIntrospector introspector, final AnnotationMap result) {
+      final AnnotationIntrospector ai, final AnnotationMap result) {
     // algorithm comes from
     // com.fasterxml.jackson.databind.introspect.AnnotatedFieldCollector.collectAnnotations()
     for (final Annotation annotation : annotations) {
       result.add(annotation);
-      if (introspector.isAnnotationBundle(annotation)) {
-        collectAnnotationsFromBundle(annotation, introspector, result);
+      if (ai.isAnnotationBundle(annotation)) {
+        collectAnnotationsFromBundle(annotation, ai, result);
       }
     }
   }
 
   private static AnnotationMap[] collectAnnotations(final Annotation[][] annotationsList,
-      final AnnotationIntrospector introspector) {
+      final AnnotationIntrospector ai) {
     final int n = annotationsList.length;
     final AnnotationMap[] result = new AnnotationMap[n];
     for (int i = 0; i < n; ++i) {
       result[i] = new AnnotationMap();
-      collectAnnotations(annotationsList[i], introspector, result[i]);
+      collectAnnotations(annotationsList[i], ai, result[i]);
     }
     return result;
   }
 
   private static void collectAnnotationsFromBundle(final Annotation bundle,
-      final AnnotationIntrospector introspector, final AnnotationMap result) {
+      final AnnotationIntrospector ai, final AnnotationMap result) {
     // algorithm comes from
     // com.fasterxml.jackson.databind.introspect.AnnotatedFieldCollector.collectFromBundle()
     final Annotation[] anns = ClassUtil.findClassAnnotations(bundle.annotationType());
@@ -385,8 +618,8 @@ public class JacksonUtils {
         continue;
       }
       result.add(a);
-      if (introspector.isAnnotationBundle(a)) {
-        collectAnnotationsFromBundle(a, introspector, result);
+      if (ai.isAnnotationBundle(a)) {
+        collectAnnotationsFromBundle(a, ai, result);
       }
     }
   }
@@ -536,8 +769,7 @@ public class JacksonUtils {
     // com.fasterxml.jackson.databind.introspect.POJOPropertyBuilder._rawTypeOf()
     // AnnotatedMethod always returns type, but for setters we
     // actually need argument type
-    if (member instanceof AnnotatedMethod) {
-      final AnnotatedMethod method = (AnnotatedMethod) member;
+    if (member instanceof final AnnotatedMethod method) {
       if (method.getParameterCount() > 0) {
         // note: get raw type FROM full type since only that resolves
         // generic types
@@ -547,5 +779,32 @@ public class JacksonUtils {
     // same as above, must get fully resolved type to handled generic typing
     // of fields etc.
     return member.getType().getRawClass();
+  }
+
+  public static void ensureCurrentToken(final JsonParser jp, final JsonToken expectedToken)
+      throws IOException {
+    final JsonToken token = jp.currentToken();
+    if (token != expectedToken) {
+      throw new IllegalStateException("Expected " + expectedToken + " token, "
+          + "but got " + token + " token");
+    }
+  }
+
+  public static void ensureNextToken(final JsonParser jp, final JsonToken expectedToken)
+      throws IOException {
+    final JsonToken token = jp.nextToken();
+    if (token != expectedToken) {
+      throw new IllegalStateException("Expected " + expectedToken + " token, "
+          + "but got " + token + " token");
+    }
+  }
+
+  public static void ensureCurrentName(final JsonParser jp, final String expectedName)
+      throws IOException {
+    final String fieldName = jp.getCurrentName();
+    if (!fieldName.equals(expectedName)) {
+      throw new IllegalStateException("Expected field name '" + expectedName
+          + "', got: " + fieldName);
+    }
   }
 }

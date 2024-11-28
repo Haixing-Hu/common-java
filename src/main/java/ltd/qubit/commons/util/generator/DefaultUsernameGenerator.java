@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,7 +15,7 @@ package ltd.qubit.commons.util.generator;
  */
 public class DefaultUsernameGenerator implements UsernameGenerator {
 
-  public static final String PREFIX = "mobile-";
+  public static final String PREFIX = "user-";
 
   @Override
   public String generate(final String mobile) {

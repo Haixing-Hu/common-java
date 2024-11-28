@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -19,16 +19,16 @@ import java.util.regex.PatternSyntaxException;
 
 import javax.annotation.Nullable;
 
-import ltd.qubit.commons.io.serialize.BinarySerialization;
-import ltd.qubit.commons.io.serialize.XmlSerialization;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ltd.qubit.commons.io.io.serialize.BinarySerialization;
+import ltd.qubit.commons.io.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
@@ -167,7 +167,7 @@ public final class DatePattern implements CloneableEx<DatePattern>, Serializable
   }
 
   @Override
-  public DatePattern clone() {
+  public DatePattern cloneEx() {
     return new DatePattern(pattern, format, locale);
   }
 

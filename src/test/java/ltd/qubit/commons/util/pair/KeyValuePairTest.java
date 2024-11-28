@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2017 - 2022.
-//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
+//    Copyright (c) 2022 - 2024.
+//    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
+import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.math.RandomEx;
 import ltd.qubit.commons.text.Stripper;
 import ltd.qubit.commons.text.jackson.CustomizedJsonMapper;
@@ -52,7 +53,7 @@ public class KeyValuePairTest {
       final KeyValuePair obj = createKeyValuePair();
       System.out.println(obj);
       final String json = jsonMapper.writerWithDefaultPrettyPrinter()
-                                    .writeValueAsString(obj);
+                                .writeValueAsString(obj);
       System.out.println(json);
       assertJsonNodeEquals(json, "key", obj.getKey());
       assertJsonNodeEquals(json, "value", obj.getValue());

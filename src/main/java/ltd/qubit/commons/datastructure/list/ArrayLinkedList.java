@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -748,7 +748,7 @@ public class ArrayLinkedList<E> extends AbstractSequentialList<E>
    * @return a shallow copy of this {@link ArrayLinkedList} instance.
    */
   @Override
-  public ArrayLinkedList<E> clone() {
+  public ArrayLinkedList<E> cloneEx() {
     return new ArrayLinkedList<>(this, expansionPolicy);
   }
 

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -14,10 +14,10 @@ import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import static ltd.qubit.commons.lang.DateUtils.getUtcDate;
 import static ltd.qubit.commons.lang.DateUtils.getUtcDateTime;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Unit test of the {@link DateCodec}.

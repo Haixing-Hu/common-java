@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,19 +8,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.security;
 
+import java.io.Serializable;
+
+import javax.annotation.Nullable;
+
 import jakarta.validation.constraints.Size;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import ltd.qubit.commons.util.pair.KeyValuePairList;
 
-import javax.annotation.Nullable;
-import java.io.Serializable;
-
 /**
  * 此模型表示对指定消息进行签名的请求。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class SignRequest implements Serializable {
 

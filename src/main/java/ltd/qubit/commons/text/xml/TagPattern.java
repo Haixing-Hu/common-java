@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -12,15 +12,15 @@ import java.io.Serializable;
 
 import javax.annotation.Nullable;
 
-import ltd.qubit.commons.io.serialize.BinarySerialization;
-import ltd.qubit.commons.io.serialize.XmlSerialization;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
+import ltd.qubit.commons.io.io.serialize.BinarySerialization;
+import ltd.qubit.commons.io.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 /**
  * The {@link TagPattern} object represent a pattern applied to an XML tag.
@@ -185,7 +185,7 @@ public final class TagPattern implements CloneableEx<TagPattern>, Serializable {
   }
 
   @Override
-  public TagPattern clone() {
+  public TagPattern cloneEx() {
     final TagPattern cloned = new TagPattern();
     cloned.tagName = tagName;
     cloned.attributeName = attributeName;

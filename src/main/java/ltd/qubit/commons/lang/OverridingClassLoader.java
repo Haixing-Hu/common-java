@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2017 - 2024.
-//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
+//    Copyright (c) 2022 - 2024.
+//    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -13,7 +13,7 @@ import java.io.InputStream;
 
 import javax.annotation.Nullable;
 
-import ltd.qubit.commons.io.IoUtils;
+import ltd.qubit.commons.io.io.IoUtils;
 
 /**
  * {@code ClassLoader} that does <i>not</i> always delegate to the parent loader

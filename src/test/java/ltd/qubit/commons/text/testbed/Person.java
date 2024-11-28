@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,13 +11,13 @@ package ltd.qubit.commons.text.testbed;
 import java.time.Instant;
 import java.util.Map;
 
-import ltd.qubit.commons.lang.Equality;
-import ltd.qubit.commons.lang.Hash;
-import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import ltd.qubit.commons.lang.Equality;
+import ltd.qubit.commons.lang.Hash;
+import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;

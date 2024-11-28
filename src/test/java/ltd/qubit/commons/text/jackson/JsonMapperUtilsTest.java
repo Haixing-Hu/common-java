@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -12,12 +12,12 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
-import ltd.qubit.commons.text.testbed.Organization;
-import ltd.qubit.commons.text.testbed.Person;
-
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
+
+import ltd.qubit.commons.text.testbed.Organization;
+import ltd.qubit.commons.text.testbed.Person;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

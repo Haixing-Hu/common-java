@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,7 +13,7 @@ import ltd.qubit.commons.util.codec.BigDecimalCodec;
 /**
  * 地理位置坐标编码器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class LocationCoordinateCodec extends BigDecimalCodec {
 

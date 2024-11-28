@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,7 +13,7 @@ package ltd.qubit.commons.reflect.impl;
  *
  * @param <T>
  *     方法所属的类的类型。
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface MethodReference<T> {
   //  empty

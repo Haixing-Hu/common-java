@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,16 +15,16 @@ import java.io.OutputStream;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import ltd.qubit.commons.io.error.SerializationException;
-import ltd.qubit.commons.io.error.UnexpectedNullValueException;
-import ltd.qubit.commons.io.serialize.BinarySerializer;
+import ltd.qubit.commons.io.io.error.SerializationException;
+import ltd.qubit.commons.io.io.error.UnexpectedNullValueException;
+import ltd.qubit.commons.io.io.serialize.BinarySerializer;
 
-import static ltd.qubit.commons.io.InputUtils.readFloat;
-import static ltd.qubit.commons.io.InputUtils.readNullMark;
-import static ltd.qubit.commons.io.InputUtils.readVarInt;
-import static ltd.qubit.commons.io.OutputUtils.writeFloat;
-import static ltd.qubit.commons.io.OutputUtils.writeNullMark;
-import static ltd.qubit.commons.io.OutputUtils.writeVarInt;
+import static ltd.qubit.commons.io.io.InputUtils.readFloat;
+import static ltd.qubit.commons.io.io.InputUtils.readNullMark;
+import static ltd.qubit.commons.io.io.InputUtils.readVarInt;
+import static ltd.qubit.commons.io.io.OutputUtils.writeFloat;
+import static ltd.qubit.commons.io.io.OutputUtils.writeNullMark;
+import static ltd.qubit.commons.io.io.OutputUtils.writeVarInt;
 
 /**
  * The {@link BinarySerializer} for the {@link FloatBuffer} class.

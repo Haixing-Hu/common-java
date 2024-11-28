@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,12 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
-import jakarta.xml.bind.annotation.XmlRootElement;
-import ltd.qubit.commons.lang.EnumUtils;
-
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+import ltd.qubit.commons.lang.EnumUtils;
 
 import static ltd.qubit.commons.lang.EnumUtils.registerLocalizedNames;
 
@@ -25,7 +26,7 @@ import static ltd.qubit.commons.lang.EnumUtils.registerLocalizedNames;
  * <li>【GB/T 2261.2-2003】个人基本信息分类与代码 第2部分：婚姻状况代码</li>
  * </ul>
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @XmlRootElement(name = "marriage")
 public enum Marriage {

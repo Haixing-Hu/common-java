@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -10,7 +10,9 @@ package ltd.qubit.commons.sql;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
@@ -47,6 +49,7 @@ public final class Page<E> {
    * @return
    *     the page of query results.
    */
+  @Nonnull
   public static <E> Page<E> create(@Nullable final PageRequest pageRequest,
       final long totalCount, final List<E> content) {
     if (pageRequest == null) {
@@ -147,10 +150,29 @@ public final class Page<E> {
         page.getPageSize(), content);
   }
 
+
+  /**
+   * Constructs a {@link Page}.
+   *
+   * @param <T>
+   *     the type of content of the other page.
+   * @param page
+   *     another page object whose configuration will be copied to the new
+   *     page.
+   * @param mapper
+   *     the function to map the content of the other page to the content of
+   *     this page.
+   */
+  public <T> Page(final Page<T> page, final Function<T, E> mapper) {
+    this(page.getTotalCount(), page.getTotalPages(), page.getPageIndex(),
+        page.getPageSize(), page.getContent().stream().map(mapper).toList());
+  }
+
   /**
    * Tests whether the content of this page is empty.
    *
-   * @return {@code true} if the content of this page is empty; {@code false}
+   * @return
+   *     {@code true} if the content of this page is empty; {@code false}
    *     otherwise.
    */
   public boolean isEmpty() {
@@ -160,7 +182,8 @@ public final class Page<E> {
   /**
    * Gets the number of entities in the content of this page.
    *
-   * @return the number of entities in the content of this page.
+   * @return
+   *     the number of entities in the content of this page.
    */
   public int size() {
     return content.size();
@@ -170,7 +193,8 @@ public final class Page<E> {
    * Gets the total number of entities in the query result, which may be an
    * estimation.
    *
-   * @return the total number of entities in the query result, which may be an
+   * @return
+   *     the total number of entities in the query result, which may be an
    *     estimation.
    */
   public long getTotalCount() {
@@ -181,7 +205,8 @@ public final class Page<E> {
    * Gets the estimated total number of pages in the query result, according to
    * the specified page pageRequest.
    *
-   * @return the estimated total number of pages in the query result, according
+   * @return
+   *     the estimated total number of pages in the query result, according
    *     to the specified page pageRequest.
    */
   public long getTotalPages() {
@@ -191,7 +216,8 @@ public final class Page<E> {
   /**
    * Gets the index of page.
    *
-   * @return the index of page.
+   * @return
+   *     the index of page.
    */
   public int getPageIndex() {
     return pageIndex;
@@ -200,7 +226,8 @@ public final class Page<E> {
   /**
    * Gets the size of page.
    *
-   * @return the size of page.
+   * @return
+   *     the size of page.
    */
   public int getPageSize() {
     return pageSize;
@@ -209,8 +236,11 @@ public final class Page<E> {
   /**
    * Gets the content of the query result in this page.
    *
-   * @return the content of the query result in this page.
+   * @return
+   *     the content of the query result in this page; or an empty list if
+   *     there is no content.
    */
+  @Nonnull
   public List<E> getContent() {
     return content;
   }

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2017 - 2022.
-//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
+//    Copyright (c) 2022 - 2024.
+//    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -18,10 +18,13 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Nullable;
@@ -30,6 +33,7 @@ import javax.annotation.concurrent.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ltd.qubit.commons.io.io.IoUtils;
 import ltd.qubit.commons.reflect.ConstructorUtils;
 
 import static ltd.qubit.commons.lang.CharUtils.isAsciiDigit;
@@ -780,7 +784,7 @@ public final class SystemUtils {
    *     the java version string.
    * @return the version, for example 1.31f for JDK 1.3.1
    */
-  protected static float getJavaVersionAsFloat(final String version) {
+  static float getJavaVersionAsFloat(final String version) {
     String versionTrimmed = getJavaVersionTrimmed(version);
     if (versionTrimmed == null) {
       return 0f;
@@ -842,7 +846,7 @@ public final class SystemUtils {
    *     the Java version string.
    * @return the version, for example 131 for JDK 1.3.1
    */
-  protected static int getJavaVersionAsInt(final String version) {
+  static int getJavaVersionAsInt(final String version) {
     String versionTrimmed = getJavaVersionTrimmed(version);
     if (versionTrimmed == null || versionTrimmed.length() == 0) {
       return 0;
@@ -896,7 +900,7 @@ public final class SystemUtils {
    *     the java version string.
    * @return the trimmed java version
    */
-  protected static String getJavaVersionTrimmed(final String version) {
+  private static String getJavaVersionTrimmed(final String version) {
     if (version != null) {
       for (int i = 0; i < version.length(); i++) {
         final char ch = version.charAt(i);
@@ -917,8 +921,8 @@ public final class SystemUtils {
    *     the prefix for the java version
    * @return true if matches, or false if not or can't determine
    */
-  protected static boolean getJavaVersionMatches(final String version,
-          final String versionPrefix) {
+  static boolean getJavaVersionMatches(final String version,
+      final String versionPrefix) {
     final String versionTrimmed = getJavaVersionTrimmed(version);
     if (versionTrimmed == null) {
       return false;
@@ -935,8 +939,7 @@ public final class SystemUtils {
    *     the prefix for the name of the operating system
    * @return true if matches, or false if not or can't determine
    */
-  protected static boolean getOsMatches(final String name,
-      final String namePrefix) {
+  static boolean getOsMatches(final String name, final String namePrefix) {
     if (name == null) {
       return false;
     }
@@ -956,8 +959,8 @@ public final class SystemUtils {
    *     the prefix for the version of the operating system
    * @return true if matches, or false if not or can't determine
    */
-  protected static boolean getOsMatches(final String name, final String version,
-          final String namePrefix, final String versionPrefix) {
+  static boolean getOsMatches(final String name, final String version,
+      final String namePrefix, final String versionPrefix) {
     if ((name == null) || (version == null)) {
       return false;
     }
@@ -1125,29 +1128,53 @@ public final class SystemUtils {
   private static final String CANNOT_FIND_RESOURCE =
           "Cannot find the resource {}.";
 
+  private static final String CLASSPATH_PREFIX = "classpath:";
+
+  private static final String CLASSPATH_STAR_PREFIX = "classpath*:";
+
+
+  private static String cleanResourceName(final String resource) {
+    if (resource == null) {
+      throw new NullPointerException("resource");
+    }
+    if (resource.startsWith(CLASSPATH_PREFIX)) {
+      return resource.substring(CLASSPATH_PREFIX.length());
+    }
+    if (resource.startsWith(CLASSPATH_STAR_PREFIX)) {
+      return resource.substring(CLASSPATH_STAR_PREFIX.length());
+    }
+    return resource;
+  }
+
   /**
    * Gets the URL of a specified resource.
    *
    * @param resource
-   *     the name of the specified resource.
+   *     the name of the specified resource. If the resource name starts with
+   *     "/", it is considered an absolute file path. If not, it is considered a
+   *     relative file path. If the resource name starts with "classpath:" or
+   *     "classpath*:", the prefix is removed and the resource is loaded from the
+   *     classpath.
    * @return the URL of the specified resource, or {@code null} if the resource
    *     is not found.
    */
   @Nullable
   public static URL getResource(final String resource) {
+    final String res = cleanResourceName(resource);
+    LOGGER.debug(GETTING_CLASS_RESOURCE, res);
     URL url = null;
     final ClassLoader loader = Thread.currentThread().getContextClassLoader();
     if (loader != null) {
-      LOGGER.debug(GETTING_CONTEXT_RESOURCE, resource);
-      url = loader.getResource(resource);
+      LOGGER.debug(GETTING_CONTEXT_RESOURCE, res);
+      url = loader.getResource(res);
     }
     if (url == null) {
-      LOGGER.debug(GETTING_SYSTEM_RESOURCE, resource);
-      url = ClassLoader.getSystemResource(resource);
+      LOGGER.debug(GETTING_SYSTEM_RESOURCE, res);
+      url = ClassLoader.getSystemResource(res);
     }
-    LOGGER.debug(RESOURCE_URL_IS, resource, url);
+    LOGGER.debug(RESOURCE_URL_IS, res, url);
     if (url == null) {
-      LOGGER.warn(CANNOT_FIND_RESOURCE, resource);
+      LOGGER.debug(CANNOT_FIND_RESOURCE, res);
     }
     return url;
   }
@@ -1156,7 +1183,11 @@ public final class SystemUtils {
    * Gets the URL of a specified resource associated with a given class.
    *
    * @param resource
-   *     the name of the specified resource.
+   *     the name of the specified resource. If the resource name starts with
+   *     "/", it is considered an absolute file path. If not, it is considered a
+   *     relative file path. If the resource name starts with "classpath:" or
+   *     "classpath*:", the prefix is removed and the resource is loaded from the
+   *     classpath.
    * @param clazz
    *     the class to which the resource is associated with.
    * @return the URL of the specified resource, or {@code null} if the resource
@@ -1164,29 +1195,30 @@ public final class SystemUtils {
    */
   @Nullable
   public static URL getResource(final String resource, final Class<?> clazz) {
-    LOGGER.debug(GETTING_CLASS_RESOURCE, resource);
-    URL url = clazz.getResource(resource);
+    final String res = cleanResourceName(resource);
+    LOGGER.debug(GETTING_CLASS_RESOURCE, res);
+    URL url = clazz.getResource(res);
     if (url == null) {
       ClassLoader loader = clazz.getClassLoader();
       if (loader != null) {
-        LOGGER.debug(GETTING_CLASS_LOADER_RESOURCE, resource);
-        url = loader.getResource(resource);
+        LOGGER.debug(GETTING_CLASS_LOADER_RESOURCE, res);
+        url = loader.getResource(res);
       }
       if (url == null) {
         loader = Thread.currentThread().getContextClassLoader();
         if (loader != null) {
-          LOGGER.debug(GETTING_CONTEXT_RESOURCE, resource);
-          url = loader.getResource(resource);
+          LOGGER.debug(GETTING_CONTEXT_RESOURCE, res);
+          url = loader.getResource(res);
         }
         if (url == null) {
-          LOGGER.debug(GETTING_SYSTEM_RESOURCE, resource);
-          url = ClassLoader.getSystemResource(resource);
+          LOGGER.debug(GETTING_SYSTEM_RESOURCE, res);
+          url = ClassLoader.getSystemResource(res);
         }
       }
     }
     LOGGER.debug(RESOURCE_URL_IS, resource, url);
     if (url == null) {
-      LOGGER.warn(CANNOT_FIND_RESOURCE, resource);
+      LOGGER.debug(CANNOT_FIND_RESOURCE, res);
     }
     return url;
   }
@@ -1195,7 +1227,11 @@ public final class SystemUtils {
    * Gets the URL of a specified resource associated with a given class loader.
    *
    * @param resource
-   *     the name of the specified resource.
+   *     the name of the specified resource. If the resource name starts with
+   *     "/", it is considered an absolute file path. If not, it is considered a
+   *     relative file path. If the resource name starts with "classpath:" or
+   *     "classpath*:", the prefix is removed and the resource is loaded from the
+   *     classpath.
    * @param loader
    *     the class loader to which the resource is associated with.
    * @return the URL of the specified resource, or {@code null} if the resource
@@ -1204,22 +1240,23 @@ public final class SystemUtils {
   @Nullable
   public static URL getResource(final String resource,
       final ClassLoader loader) {
-    LOGGER.debug(GETTING_CLASS_RESOURCE, resource);
-    URL url = loader.getResource(resource);
+    final String res = cleanResourceName(resource);
+    LOGGER.debug(GETTING_CLASS_RESOURCE, res);
+    URL url = loader.getResource(res);
     if (url == null) {
       final ClassLoader cl = Thread.currentThread().getContextClassLoader();
       if (cl != null) {
-        LOGGER.debug(GETTING_CONTEXT_RESOURCE, resource);
-        url = cl.getResource(resource);
+        LOGGER.debug(GETTING_CONTEXT_RESOURCE, res);
+        url = cl.getResource(res);
       }
       if (url == null) {
-        LOGGER.debug(GETTING_SYSTEM_RESOURCE, resource);
-        url = ClassLoader.getSystemResource(resource);
+        LOGGER.debug(GETTING_SYSTEM_RESOURCE, res);
+        url = ClassLoader.getSystemResource(res);
       }
     }
-    LOGGER.debug(RESOURCE_URL_IS, resource, url);
+    LOGGER.debug(RESOURCE_URL_IS, res, url);
     if (url == null) {
-      LOGGER.warn(CANNOT_FIND_RESOURCE, resource);
+      LOGGER.debug(CANNOT_FIND_RESOURCE, res);
     }
     return url;
   }
@@ -1362,5 +1399,42 @@ public final class SystemUtils {
       }
     }
     return cl;
+  }
+
+  /**
+   * Load instances from a specified resource.
+   * <p>
+   * The resource file is a text file contains a list of full qualified class
+   * names, each class name is in a separate line. This function will load the
+   * classes and create instances of them.
+   *
+   * @param <T>
+   *     the type of the class of the instances to be loaded.
+   * @param cls
+   *     the class of the instances.
+   * @param resource
+   *     the path of the specified resources.
+   * @param loader
+   *     the class loader.
+   * @return
+   *     a list of instances loaded from the specified resource.
+   */
+  public static <T> List<T> loadInstance(final Class<T> cls,
+      final String resource, final ClassLoader loader)
+      throws IOException, ClassNotFoundException {
+    final URL url = getResource(resource, loader);
+    if (url == null) {
+      throw new IllegalArgumentException("Cannot find resource: " + resource);
+    }
+    final List<String> classNames = IoUtils.readLines(url, StandardCharsets.UTF_8);
+    final List<T> result = new ArrayList<>();
+    for (final String className : classNames) {
+      final Class<?> clazz = Class.forName(className, true, loader);
+      if (cls.isAssignableFrom(clazz)) {
+        final Object instance = ConstructorUtils.newInstance(clazz);
+        result.add(cls.cast(instance));
+      }
+    }
+    return result;
   }
 }

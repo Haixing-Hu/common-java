@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,6 +13,8 @@ import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
@@ -1924,6 +1926,10 @@ public final class Equality {
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
         }
+      } else if (Set.class.isAssignableFrom(class1)) {
+        final Set<?> col1 = (Set<?>) value1;
+        final Set<?> col2 = (Set<?>) value2;
+        return equals(col1, col2);
       } else if (Collection.class.isAssignableFrom(class1)) {
         final Collection<?> col1 = (Collection<?>) value1;
         final Collection<?> col2 = (Collection<?>) value2;
@@ -2281,9 +2287,8 @@ public final class Equality {
   /**
    * Tests the equality of two collections.
    *
-   * <p>The elements in the collections to be test may be any objects, or
-   * arrays,
-   * or another collection of objects.
+   * <p>The elements in the collections to be tested may be any objects, or
+   * arrays, or another collection of objects.
    *
    * <p>This function compare the float numbers with their bits
    * representations,
@@ -2308,6 +2313,14 @@ public final class Equality {
     if (col1.size() != col2.size()) {
       return false;
     }
+    // special treatment for Sets
+    if (col1 instanceof Set) {
+      if (col2 instanceof Set) {
+        return setEquals((Set<?>) col1, (Set<?>) col2);
+      } else {
+        return false;
+      }
+    }
     final Iterator<?> lhsIter = col1.iterator();
     final Iterator<?> rhsIter = col2.iterator();
     while (lhsIter.hasNext()) {
@@ -2316,6 +2329,101 @@ public final class Equality {
       // note that here we must call the equals(Object, Object), since the
       // lhsValue and rhsValue may also be array or collection.
       if (!equals(lhsValue, rhsValue)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Tests the equality of two sets.
+   *
+   * <p>The elements in the sets to be tested may be any objects, or
+   * arrays, or another collection of objects.
+   *
+   * @param set1
+   *     the first set, which may be null.
+   * @param set2
+   *     the second set, which may be null.
+   * @return true if two sets are equal, or both are null; false otherwise.
+   */
+  public static boolean equals(@Nullable final Set<?> set1,
+      @Nullable final Set<?> set2) {
+    return setEquals(set1, set2);
+  }
+
+  /**
+   * Tests the equality of two sets.
+   *
+   * <p>The elements in the sets to be tested may be any objects, or
+   * arrays, or another collection of objects.
+   *
+   * @param set1
+   *     the first set, which may be null.
+   * @param set2
+   *     the second set, which may be null.
+   * @return true if two sets are equal, or both are null; false otherwise.
+   */
+  public static boolean setEquals(@Nullable final Set<?> set1,
+      @Nullable final Set<?> set2) {
+    if (set1 == set2) {
+      return true;
+    }
+    if ((set1 == null) || (set2 == null)) {
+      return false;
+    }
+    if (set1.size() != set2.size()) {
+      return false;
+    }
+    return set2.containsAll(set1);
+  }
+
+
+  /**
+   * Tests the equality of two maps.
+   *
+   * <p>The elements in the maps to be tested may be any objects, or
+   * arrays, or another collection of objects.
+   *
+   * @param map1
+   *     the first map, which may be null.
+   * @param map2
+   *     the second map, which may be null.
+   * @return true if two maps are equal, or both are null; false otherwise.
+   */
+  public static boolean equals(@Nullable final Map<?, ?> map1,
+      @Nullable final Map<?, ?> map2) {
+    return mapEquals(map1, map2);
+  }
+
+  /**
+   * Tests the equality of two maps.
+   *
+   * <p>The elements in the maps to be tested may be any objects, or
+   * arrays, or another collection of objects.
+   *
+   * @param map1
+   *     the first map, which may be null.
+   * @param map2
+   *     the second map, which may be null.
+   * @return true if two maps are equal, or both are null; false otherwise.
+   */
+  public static boolean mapEquals(@Nullable final Map<?, ?> map1,
+      @Nullable final Map<?, ?> map2) {
+    if (map1 == map2) {
+      return true;
+    }
+    if ((map1 == null) || (map2 == null)) {
+      return false;
+    }
+    if (map1.size() != map2.size()) {
+      return false;
+    }
+    for (final Map.Entry<?, ?> entry : map1.entrySet()) {
+      final Object key = entry.getKey();
+      final Object value1 = entry.getValue();
+      final Object value2 = map2.get(key);
+      if (!equals(value1, value2)) {
         return false;
       }
     }

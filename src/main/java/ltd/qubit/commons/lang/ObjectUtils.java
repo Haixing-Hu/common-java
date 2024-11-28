@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -220,6 +220,13 @@ public final class ObjectUtils {
   public static String toString(@Nullable final Object obj) {
     if (obj == null) {
       return null;
+    }
+    if (obj instanceof String) {
+      return (String) obj;
+    } else if (obj instanceof Character) {
+      return String.valueOf(obj);
+    } else if (obj instanceof Enum) {
+      return ((Enum<?>) obj).name();
     } else if (ArrayUtils.isArray(obj)) {
       return ArrayUtils.toString(obj);
     } else {

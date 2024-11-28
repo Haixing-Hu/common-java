@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,11 +15,11 @@ import java.io.OutputStream;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import ltd.qubit.commons.io.error.SerializationException;
-import ltd.qubit.commons.io.serialize.BinarySerializer;
+import ltd.qubit.commons.io.io.error.SerializationException;
+import ltd.qubit.commons.io.io.serialize.BinarySerializer;
 
-import static ltd.qubit.commons.io.InputUtils.readDoubleArray;
-import static ltd.qubit.commons.io.OutputUtils.writeDoubleArray;
+import static ltd.qubit.commons.io.io.InputUtils.readDoubleArray;
+import static ltd.qubit.commons.io.io.OutputUtils.writeDoubleArray;
 
 /**
  * The {@link BinarySerializer} for {@code double[]} class.

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,14 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
-import ltd.qubit.commons.util.codec.IsoDateCodec;
-
-import javax.annotation.concurrent.Immutable;
 import java.util.Date;
 
+import javax.annotation.concurrent.Immutable;
+
+import ltd.qubit.commons.util.codec.IsoDateCodec;
+
 /**
- * 符合 ISO-8601 的时间戳类 {@link Date} 的 JSON 序列化器，其编码格式为
- * "yyyy-MM-dd'T'HH:mm:ss'Z'"。
+ * The JACKSON serializer of a {@link Date} object, in the ISO-8601
+ * format of "yyyy-MM-dd'T'HH:mm:ss'Z'".
  *
  * @author Haixing Hu
  */

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -119,7 +119,8 @@ public class JavaUnicodeEscaper extends UnicodeEscaper {
         .toString();
   }
 
-  public JavaUnicodeEscaper clone() {
+  @Override
+  public JavaUnicodeEscaper cloneEx() {
     return new JavaUnicodeEscaper(this);
   }
 }

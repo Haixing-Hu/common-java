@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,11 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
-import ltd.qubit.commons.text.jackson.CustomizedJsonMapper;
-
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
+
+import ltd.qubit.commons.text.jackson.CustomizedJsonMapper;
 
 import static net.javacrumbs.jsonunit.JsonAssert.assertJsonEquals;
 

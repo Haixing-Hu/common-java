@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -24,7 +24,7 @@ public final class ClientInfoRowMapper implements RowMapper<ClientInfo> {
   public static final ClientInfoRowMapper INSTANCE = new ClientInfoRowMapper();
 
   @Override
-  public ClientInfo mapRow(final ResultSet rs, final int rowNum)
+  public ClientInfo mapRow(final ResultSet rs, final int rowNumber)
       throws SQLException {
     final String name = rs.getString(1);
     if (name == null) {

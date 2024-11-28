@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -178,7 +178,7 @@ public class NumericEntityEscaper extends CodePointTranslator {
   }
 
   @Override
-  public NumericEntityEscaper clone() {
+  public NumericEntityEscaper cloneEx() {
     return new NumericEntityEscaper(this);
   }
 }

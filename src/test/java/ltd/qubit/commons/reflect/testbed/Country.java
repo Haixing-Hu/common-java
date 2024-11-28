@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,7 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect.testbed;
 
+import java.io.Serial;
+import java.time.Instant;
+
+import javax.annotation.Nullable;
+
 import jakarta.validation.constraints.Size;
+
 import ltd.qubit.commons.annotation.Unique;
 import ltd.qubit.commons.lang.Argument;
 import ltd.qubit.commons.lang.Assignable;
@@ -16,17 +22,15 @@ import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
-import javax.annotation.Nullable;
-import java.time.Instant;
-
 /**
  * 此模型表示国家。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class Country implements Identifiable, WithInfo, Assignable<Country>,
     Creatable, Modifiable, Deletable {
 
+  @Serial
   private static final long serialVersionUID = 7415231604886436994L;
 
   /**
@@ -124,7 +128,7 @@ public class Country implements Identifiable, WithInfo, Assignable<Country>,
   }
 
   @Override
-  public Country clone() {
+  public Country cloneEx() {
     return new Country(this);
   }
 

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -10,7 +10,9 @@ package ltd.qubit.commons.lang;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.nio.ByteOrder;
+import java.util.Currency;
 import java.util.Date;
 import java.util.Set;
 
@@ -351,5 +353,85 @@ public class DoubleUtils {
    */
   public static boolean isComparable(final Class<?> type) {
     return COMPARABLE_TYPES.contains(type);
+  }
+
+  /**
+   * 将指定的浮点数值四舍五入为指定精度的字符串表示。
+   *
+   * @param value
+   *     指定的浮点数值。
+   * @param precision
+   *     指定的精度，即小数点后保留的位数。
+   * @return
+   *     四舍五入为指定精度的字符串表示。
+   */
+  public static String roundToString(final double value, final int precision) {
+    if (Double.isNaN(value) || Double.isInfinite(value)) {
+      return Double.toString(value);
+    } else {
+      final BigDecimal bd = new BigDecimal(value);
+      return bd.setScale(precision, RoundingMode.HALF_UP).toPlainString();
+    }
+  }
+
+  /**
+   * 将指定的浮点数值四舍五入为指定精度的字符串表示。
+   *
+   * @param value
+   *     指定的浮点数值。
+   * @param defaultValue
+   *     如果{@code value}为{@code null}，则返回此默认值。
+   * @param precision
+   *     指定的精度，即小数点后保留的位数。
+   * @return
+   *     {@code value}四舍五入为指定精度的字符串表示，如果{@code value}为{@code null}
+   *     则返回{@code defaultValue}。
+   */
+  @Nullable
+  public static String roundToString(@Nullable final Double value,
+      @Nullable final String defaultValue, final int precision) {
+    if (value == null) {
+      return defaultValue;
+    } else if (Double.isNaN(value) || Double.isInfinite(value)) {
+      return Double.toString(value);
+    } else {
+      return roundToString(value, precision);
+    }
+  }
+
+  /**
+   * Formats the specified amount of money.
+   *
+   * @param currency
+   *     the currency of the money. If {@code null}, the currency symbol will
+   *     not be ignored.
+   * @param amount
+   *     the amount of money.
+   * @return
+   *     the formatted money.
+   */
+  public static String formatMoney(@Nullable final Currency currency,
+      final double amount) {
+    return formatMoney(currency, amount, 2);
+  }
+
+  /**
+   * Formats the specified amount of money.
+   *
+   * @param currency
+   *     the currency of the money. If {@code null}, the currency symbol will
+   *     not be ignored.
+   * @param amount
+   *     the amount of money.
+   * @param precision
+   *     the precision of the money value, i.e., the number of digits after the
+   *     decimal point.
+   * @return
+   *     the formatted money.
+   */
+  public static String formatMoney(@Nullable final Currency currency,
+      final double amount, final int precision) {
+    return (currency == null ? "" : currency.getSymbol() + " ")
+        + roundToString(amount, precision);
   }
 }

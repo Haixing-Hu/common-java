@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,6 +15,7 @@ import ltd.qubit.commons.reflect.FieldUtils;
 import ltd.qubit.commons.reflect.Option;
 import ltd.qubit.commons.reflect.ReflectionException;
 
+@SuppressWarnings("overloads")
 public class GetMethodByReferenceImpl {
 
   public static final ClassValue<ReferenceToMethodCache<?>>
@@ -59,6 +60,70 @@ public class GetMethodByReferenceImpl {
       throw new IllegalArgumentException(
           "The method must have non-primitive arguments.");
     }
+    return captor.getCapturedMethod();
+  }
+
+  public static <T, R> Method findMethod(final Class<T> clazz,
+      final NonVoidMethod1Boolean<T, R> ref) {
+    final MethodCaptor captor = new MethodCaptor();
+    final T proxy = createProxy(clazz, captor);
+    ref.invoke(proxy, false);
+    return captor.getCapturedMethod();
+  }
+
+  public static <T, R> Method findMethod(final Class<T> clazz,
+      final NonVoidMethod1Char<T, R> ref) {
+    final MethodCaptor captor = new MethodCaptor();
+    final T proxy = createProxy(clazz, captor);
+    ref.invoke(proxy, 'x');
+    return captor.getCapturedMethod();
+  }
+
+  public static <T, R> Method findMethod(final Class<T> clazz,
+      final NonVoidMethod1Byte<T, R> ref) {
+    final MethodCaptor captor = new MethodCaptor();
+    final T proxy = createProxy(clazz, captor);
+    ref.invoke(proxy, (byte) 0);
+    return captor.getCapturedMethod();
+  }
+
+  public static <T, R> Method findMethod(final Class<T> clazz,
+      final NonVoidMethod1Short<T, R> ref) {
+    final MethodCaptor captor = new MethodCaptor();
+    final T proxy = createProxy(clazz, captor);
+    ref.invoke(proxy, (short) 0);
+    return captor.getCapturedMethod();
+  }
+
+  public static <T, R> Method findMethod(final Class<T> clazz,
+      final NonVoidMethod1Int<T, R> ref) {
+    final MethodCaptor captor = new MethodCaptor();
+    final T proxy = createProxy(clazz, captor);
+    ref.invoke(proxy, 0);
+    return captor.getCapturedMethod();
+  }
+
+  public static <T, R> Method findMethod(final Class<T> clazz,
+      final NonVoidMethod1Long<T, R> ref) {
+    final MethodCaptor captor = new MethodCaptor();
+    final T proxy = createProxy(clazz, captor);
+    ref.invoke(proxy, 0L);
+    return captor.getCapturedMethod();
+  }
+
+  public static <T, R> Method findMethod(final Class<T> clazz,
+      final NonVoidMethod1Float<T, R> ref) {
+    final MethodCaptor captor = new MethodCaptor();
+    final T proxy = createProxy(clazz, captor);
+    ref.invoke(proxy, 0.0f);
+    return captor.getCapturedMethod();
+  }
+
+  public static <T, R> Method findMethod(final Class<T> clazz,
+      final NonVoidMethod1Double<T, R> ref) {
+    final MethodCaptor captor = new MethodCaptor();
+    final T proxy = createProxy(clazz, captor);
+    ref.invoke(proxy, 0.0);
     return captor.getCapturedMethod();
   }
 
@@ -186,9 +251,72 @@ public class GetMethodByReferenceImpl {
     try {
       ref.invoke(proxy, null);
     } catch (final NullPointerException e) {
-      throw new IllegalArgumentException(
-          "The method must have non-primitive arguments.");
+      throw new IllegalArgumentException("The method must have non-primitive arguments.");
     }
+    return captor.getCapturedMethod();
+  }
+
+  public static <T> Method findMethod(final Class<T> clazz,
+      final VoidMethod1Boolean<T> ref) {
+    final MethodCaptor captor = new MethodCaptor();
+    final T proxy = createProxy(clazz, captor);
+    ref.invoke(proxy, false);
+    return captor.getCapturedMethod();
+  }
+
+  public static <T> Method findMethod(final Class<T> clazz,
+      final VoidMethod1Char<T> ref) {
+    final MethodCaptor captor = new MethodCaptor();
+    final T proxy = createProxy(clazz, captor);
+    ref.invoke(proxy, 'x');
+    return captor.getCapturedMethod();
+  }
+
+  public static <T> Method findMethod(final Class<T> clazz,
+      final VoidMethod1Byte<T> ref) {
+    final MethodCaptor captor = new MethodCaptor();
+    final T proxy = createProxy(clazz, captor);
+    ref.invoke(proxy, (byte) 0);
+    return captor.getCapturedMethod();
+  }
+
+  public static <T> Method findMethod(final Class<T> clazz,
+      final VoidMethod1Short<T> ref) {
+    final MethodCaptor captor = new MethodCaptor();
+    final T proxy = createProxy(clazz, captor);
+    ref.invoke(proxy, (short) 0);
+    return captor.getCapturedMethod();
+  }
+
+  public static <T> Method findMethod(final Class<T> clazz,
+      final VoidMethod1Int<T> ref) {
+    final MethodCaptor captor = new MethodCaptor();
+    final T proxy = createProxy(clazz, captor);
+    ref.invoke(proxy, 0);
+    return captor.getCapturedMethod();
+  }
+
+  public static <T> Method findMethod(final Class<T> clazz,
+      final VoidMethod1Long<T> ref) {
+    final MethodCaptor captor = new MethodCaptor();
+    final T proxy = createProxy(clazz, captor);
+    ref.invoke(proxy, 0L);
+    return captor.getCapturedMethod();
+  }
+
+  public static <T> Method findMethod(final Class<T> clazz,
+      final VoidMethod1Float<T> ref) {
+    final MethodCaptor captor = new MethodCaptor();
+    final T proxy = createProxy(clazz, captor);
+    ref.invoke(proxy, 0.0f);
+    return captor.getCapturedMethod();
+  }
+
+  public static <T> Method findMethod(final Class<T> clazz,
+      final VoidMethod1Double<T> ref) {
+    final MethodCaptor captor = new MethodCaptor();
+    final T proxy = createProxy(clazz, captor);
+    ref.invoke(proxy, 0.0);
     return captor.getCapturedMethod();
   }
 

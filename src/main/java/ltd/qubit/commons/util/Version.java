@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,8 +13,8 @@ import java.text.ParseException;
 
 import javax.annotation.concurrent.Immutable;
 
-import ltd.qubit.commons.io.serialize.BinarySerialization;
-import ltd.qubit.commons.io.serialize.XmlSerialization;
+import ltd.qubit.commons.io.io.serialize.BinarySerialization;
+import ltd.qubit.commons.io.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.text.NumberFormat;
 import ltd.qubit.commons.text.NumberFormatOptions;
@@ -235,7 +235,7 @@ public final class Version implements Serializable, CloneableEx<Version>,
   }
 
   @Override
-  public Version clone() {
+  public Version cloneEx() {
     return new Version(number, false);
   }
 

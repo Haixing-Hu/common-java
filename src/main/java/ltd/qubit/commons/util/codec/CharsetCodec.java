@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -14,11 +14,11 @@ import java.nio.charset.UnsupportedCharsetException;
 
 import javax.annotation.Nullable;
 
-import ltd.qubit.commons.lang.StringUtils;
-import ltd.qubit.commons.text.Stripper;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import ltd.qubit.commons.lang.StringUtils;
+import ltd.qubit.commons.text.Stripper;
 
 /**
  * The codec which encode/decode {@link Charset} objects to/from strings.

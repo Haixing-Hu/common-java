@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,17 +8,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.net;
 
-import jakarta.validation.constraints.NotNull;
-import ltd.qubit.commons.math.RandomEx;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import jakarta.validation.constraints.NotNull;
+
+import ltd.qubit.commons.math.RandomEx;
+
 /**
  * 产生随机的 User Agent.
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see <a href="https://github.com/mkstayalive/random-user-agent-java">random-user-agent-java</a>
  */
 public class RandomUserAgent {

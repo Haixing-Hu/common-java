@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -10,10 +10,7 @@ package ltd.qubit.commons.sql;
 
 import java.sql.SQLSyntaxErrorException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-
-import javax.annotation.concurrent.Immutable;
 
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
@@ -32,9 +29,8 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
  *
  * @param <T>
  *     待过滤的实体的类。
- * @author Haixing Hu
+ * @author 胡海星
  */
-@Immutable
 public class ComposedCriterion<T> implements Criterion<T> {
 
   private final Class<T> entityClass;
@@ -51,6 +47,7 @@ public class ComposedCriterion<T> implements Criterion<T> {
     this.criteria = requireNonNull("criteria", criteria);
   }
 
+  @SuppressWarnings("varargs")
   @SafeVarargs
   public ComposedCriterion(final Class<T> entityClass,
       final LogicRelation relation,
@@ -70,7 +67,7 @@ public class ComposedCriterion<T> implements Criterion<T> {
   }
 
   public final List<SimpleCriterion<T>> getCriteria() {
-    return Collections.unmodifiableList(criteria);
+    return criteria;
   }
 
   @Override

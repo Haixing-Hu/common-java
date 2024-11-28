@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -17,11 +17,11 @@ import org.junit.jupiter.api.Test;
 import static java.nio.ByteOrder.BIG_ENDIAN;
 import static java.nio.ByteOrder.LITTLE_ENDIAN;
 
-import static ltd.qubit.commons.lang.ByteArrayUtils.DEFAULT_BYTE_ORDER;
-
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+
+import static ltd.qubit.commons.lang.ByteArrayUtils.DEFAULT_BYTE_ORDER;
 
 public class FloatUtilsTest {
 

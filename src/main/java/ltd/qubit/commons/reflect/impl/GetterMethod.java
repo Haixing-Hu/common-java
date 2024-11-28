@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,7 +15,7 @@ package ltd.qubit.commons.reflect.impl;
  *     方法所属的类的类型。
  * @param <R>
  *     方法的返回值的类型。
- * @author Haixing Hu
+ * @author 胡海星
  */
 @FunctionalInterface
 public interface GetterMethod<T, R> extends NonVoidMethod0<T, R> {

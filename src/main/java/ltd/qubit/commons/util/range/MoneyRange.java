@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,18 +8,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.range;
 
+import java.math.BigDecimal;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.annotation.Money;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
-import javax.annotation.Nullable;
-import java.math.BigDecimal;
-
 /**
  * 此模型表示金钱范围（前闭后开区间）。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class MoneyRange {
 

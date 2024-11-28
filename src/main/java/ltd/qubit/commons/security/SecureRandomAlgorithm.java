@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * 此枚举表示系统支持的安全随机数算法。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see SecureRandom
  * @see <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html#SecureRandom">SecureRandom Number Generation Algorithms</a>
  */

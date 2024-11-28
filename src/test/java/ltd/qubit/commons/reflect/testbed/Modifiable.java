@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,13 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect.testbed;
 
-import javax.annotation.Nullable;
 import java.time.Instant;
+
+import javax.annotation.Nullable;
 
 /**
  * 此接口表示实体类记录了最后一次修改时间。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface Modifiable {
 

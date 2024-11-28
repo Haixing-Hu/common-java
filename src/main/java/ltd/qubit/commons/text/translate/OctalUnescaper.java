@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -75,7 +75,8 @@ public class OctalUnescaper extends CharSequenceTranslator {
     return result;
   }
 
-  public OctalUnescaper clone() {
+  @Override
+  public OctalUnescaper cloneEx() {
     return new OctalUnescaper();
   }
 }

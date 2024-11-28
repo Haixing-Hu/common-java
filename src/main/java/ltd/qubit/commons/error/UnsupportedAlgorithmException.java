@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.error;
 
+import java.io.Serial;
 import java.security.GeneralSecurityException;
 
 import ltd.qubit.commons.util.pair.KeyValuePairList;
@@ -15,6 +16,7 @@ import ltd.qubit.commons.util.pair.KeyValuePairList;
 public class UnsupportedAlgorithmException extends GeneralSecurityException
     implements ErrorInfoConvertable {
 
+  @Serial
   private static final long serialVersionUID = 2973072118457122125L;
 
   private final String algorithm;

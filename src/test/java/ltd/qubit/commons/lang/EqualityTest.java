@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,8 +11,14 @@ package ltd.qubit.commons.lang;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import org.junit.jupiter.api.Test;
 
 import ltd.qubit.commons.datastructure.list.primitive.impl.BooleanArrayList;
 import ltd.qubit.commons.datastructure.list.primitive.impl.ByteArrayList;
@@ -23,8 +29,7 @@ import ltd.qubit.commons.datastructure.list.primitive.impl.IntArrayList;
 import ltd.qubit.commons.datastructure.list.primitive.impl.LongArrayList;
 import ltd.qubit.commons.datastructure.list.primitive.impl.ShortArrayList;
 
-import org.junit.jupiter.api.Test;
-
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -2405,12 +2410,8 @@ public class EqualityTest {
         {Integer.MIN_VALUE, Integer.MIN_VALUE / 2},
         {Integer.MAX_VALUE / 2, Integer.MAX_VALUE}};
     final int[][] intarray3 = {{0, Integer.MAX_VALUE}};
-    assertEquals(
-        true,
-        Equality.equals(intarray1, 0, intarray2, 0, intarray2.length));
-    assertEquals(
-        false,
-        Equality.equals(intarray3, 0, intarray2, 0, intarray2.length));
+    assertTrue(Equality.equals(intarray1, 0, intarray2, 0, intarray2.length));
+    assertFalse(Equality.equals(intarray3, 0, intarray2, 0, intarray2.length));
     assertFalse(Equality.equals(intarray3, 0, intarray2, 2, 1));
     assertTrue(Equality.equals(intarray1, 1, intarray2, 1, 1));
 
@@ -3884,7 +3885,7 @@ public class EqualityTest {
       array1[i] = new long[2];
       array2[i] = new long[2];
       for (int j = 0; j < array1[i].length; ++j) {
-        array1[i][j] = (i + 1) * (j + 1);
+        array1[i][j] = (long) (i + 1) * (j + 1);
         array2[i][j] = (i + 1) * (j + 1);
       }
     }
@@ -4113,15 +4114,15 @@ public class EqualityTest {
     final Object[] y = new Object[]{new TestBCanEqualA(1)};
 
     // sanity checks:
-    assertTrue(Arrays.equals(x, x));
-    assertTrue(Arrays.equals(y, y));
-    assertTrue(Arrays.equals(x, y));
-    assertTrue(Arrays.equals(y, x));
+    assertArrayEquals(x, x);
+    assertArrayEquals(y, y);
+    assertArrayEquals(x, y);
+    assertArrayEquals(y, x);
     // real tests:
-    assertTrue(x[0].equals(x[0]));
-    assertTrue(y[0].equals(y[0]));
-    assertTrue(x[0].equals(y[0]));
-    assertTrue(y[0].equals(x[0]));
+    assertEquals(x[0], x[0]);
+    assertEquals(y[0], y[0]);
+    assertEquals(x[0], y[0]);
+    assertEquals(y[0], x[0]);
     assertTrue(Equality.equals(x, x));
     assertTrue(Equality.equals(y, y));
     assertTrue(Equality.equals(x, y));
@@ -4393,6 +4394,78 @@ public class EqualityTest {
     assertFalse(Equality.equals(col1, col2));
     col1 = null;
     assertTrue(Equality.equals(col1, col2));
+  }
+
+  @Test
+  public void testSet() {
+    Set<Character> set1 = new HashSet<>();
+    set1.add('a');
+    set1.add('b');
+    set1.add('c');
+    set1.add('d');
+    Set<Character> set2 = new HashSet<>();
+    set2.add('d');
+    set2.add('c');
+    set2.add('b');
+    set2.add('a');
+
+    assertTrue(Equality.equals(set1, set2));
+    set2.add('b');
+    assertTrue(Equality.equals(set1, set2));
+
+    set2.add('x');
+    assertFalse(Equality.equals(set1, set2));
+    set2 = null;
+    assertFalse(Equality.equals(set1, set2));
+    set1 = null;
+    assertTrue(Equality.equals(set1, set2));
+  }
+
+  @Test
+  public void testSetAsCollection() {
+    Collection<Character> set1 = new HashSet<>();
+    set1.add('a');
+    set1.add('b');
+    set1.add('c');
+    set1.add('d');
+    Collection<Character> set2 = new HashSet<>();
+    set2.add('d');
+    set2.add('c');
+    set2.add('b');
+    set2.add('a');
+
+    assertTrue(Equality.equals(set1, set2));
+    set2.add('b');
+    assertTrue(Equality.equals(set1, set2));
+
+    set2.add('x');
+    assertFalse(Equality.equals(set1, set2));
+    set2 = null;
+    assertFalse(Equality.equals(set1, set2));
+    set1 = null;
+    assertTrue(Equality.equals(set1, set2));
+  }
+
+  @Test
+  public void testMap() {
+    Map<Character, Integer> map1 = new HashMap<>();
+    map1.put('a', 1);
+    map1.put('b', 2);
+    map1.put('c', 3);
+    map1.put('d', 4);
+    Map<Character, Integer> map2 = new HashMap<>();
+    map2.put('d', 4);
+    map2.put('c', 3);
+    map2.put('b', 2);
+    map2.put('a', 1);
+
+    assertTrue(Equality.equals(map1, map2));
+    map2.put('b', 3);
+    assertFalse(Equality.equals(map1, map2));
+    map2 = null;
+    assertFalse(Equality.equals(map1, map2));
+    map1 = null;
+    assertTrue(Equality.equals(map1, map2));
   }
 
   @Test

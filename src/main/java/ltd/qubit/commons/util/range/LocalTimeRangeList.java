@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,10 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.range;
 
+import java.io.Serial;
 import java.util.ArrayList;
 
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.Assignment;
+import ltd.qubit.commons.lang.CloneableEx;
 
 /**
  * 此模型表示时间范围集合。
@@ -19,8 +21,9 @@ import ltd.qubit.commons.lang.Assignment;
  * @author pino
  */
 public class LocalTimeRangeList extends ArrayList<LocalTimeRange> implements
-    Assignable<LocalTimeRangeList> {
+    Assignable<LocalTimeRangeList>, CloneableEx<LocalTimeRangeList> {
 
+  @Serial
   private static final long serialVersionUID = -4177321765027710164L;
 
   public LocalTimeRangeList() {}
@@ -39,7 +42,8 @@ public class LocalTimeRangeList extends ArrayList<LocalTimeRange> implements
     }
   }
 
-  public LocalTimeRangeList clone() {
+  @Override
+  public LocalTimeRangeList cloneEx() {
     return new LocalTimeRangeList(this);
   }
 

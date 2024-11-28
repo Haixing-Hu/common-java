@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,12 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
-import ltd.qubit.commons.util.codec.Encoder;
-
 import com.fasterxml.jackson.core.JsonGenerator;
 
+import ltd.qubit.commons.util.codec.Encoder;
+
 /**
- * The JSON serializer of a enumeration class.
+ * The JACKSON serializer of a enumeration class.
  *
  * @author Haixing Hu
  */

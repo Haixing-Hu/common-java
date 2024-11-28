@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -24,8 +24,8 @@ import org.w3c.dom.Element;
 import ltd.qubit.commons.error.TypeConvertException;
 import ltd.qubit.commons.error.TypeMismatchException;
 import ltd.qubit.commons.error.UnsupportedDataTypeException;
-import ltd.qubit.commons.io.error.InvalidFormatException;
-import ltd.qubit.commons.io.serialize.XmlSerialization;
+import ltd.qubit.commons.io.io.error.InvalidFormatException;
+import ltd.qubit.commons.io.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.Assignment;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.lang.Type;
@@ -681,7 +681,7 @@ public class BasicValue implements Value {
   }
 
   @Override
-  public BasicValue clone() {
+  public BasicValue cloneEx() {
     try {
       final BasicValue result = (BasicValue) super.clone();
       result.type = type;
@@ -717,8 +717,8 @@ public class BasicValue implements Value {
   @Override
   public String toString() {
     return new ToStringBuilder(this)
-               .append("type", type)
-               .append("value", value)
-               .toString();
+        .append("type", type)
+        .append("value", value)
+        .toString();
   }
 }

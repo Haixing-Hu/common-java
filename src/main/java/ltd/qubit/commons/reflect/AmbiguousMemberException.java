@@ -1,12 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect;
+
+import java.io.Serial;
 
 /**
  * Thrown to indicate the specified member is ambiguous.
@@ -15,6 +17,7 @@ package ltd.qubit.commons.reflect;
  */
 public class AmbiguousMemberException extends ReflectionException {
 
+  @Serial
   private static final long serialVersionUID = - 7385799996559327654L;
 
   public AmbiguousMemberException(final Class<?> cls, final String name) {

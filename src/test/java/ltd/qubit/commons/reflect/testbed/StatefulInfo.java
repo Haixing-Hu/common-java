@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,11 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect.testbed;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
@@ -23,7 +25,7 @@ import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
 /**
  * 此模型表示有状态且可删除的对象的基本信息。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @XmlRootElement(name = "info")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -70,7 +72,7 @@ public class StatefulInfo extends Info implements Stateful {
   }
 
   @Override
-  public StatefulInfo clone() {
+  public StatefulInfo cloneEx() {
     return new StatefulInfo(this);
   }
 

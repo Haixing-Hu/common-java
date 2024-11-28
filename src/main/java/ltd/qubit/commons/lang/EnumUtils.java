@@ -212,8 +212,30 @@ public class EnumUtils {
     return result;
   }
 
-  private static final Set<Class<?>> COMPARABLE_TYPES =
-      ImmutableSet.of(char.class, Character.class, String.class);
+  /**
+   * 根据枚举对象的本地化名称，获取枚举对象。
+   *
+   * @param <E>
+   *     枚举类型。
+   * @param enumClass
+   *     指定的枚举类型的类对象。
+   * @param locale
+   *     指定的本地化区域。
+   * @param localizedName
+   *     指定的本地化名称。
+   * @return
+   *     拥有指定本地化名称的枚举对象，或者{@code null}如果不存在这样的枚举对象。
+   */
+  public static <E extends Enum<E>>
+  E forLocalizedName(final Class<E> enumClass, final Locale locale, final String localizedName) {
+    final E[] values = enumClass.getEnumConstants();
+    for (final E value : values) {
+      if (getLocalizedName(locale, value).equals(localizedName)) {
+        return value;
+      }
+    }
+    return null;
+  }
 
   /**
    * 测试指定的类型的值是否可以和{@code Enum}类型的值进行比较。
@@ -227,6 +249,9 @@ public class EnumUtils {
   public static boolean isComparable(final Class<?> type) {
     return COMPARABLE_TYPES.contains(type) || Enum.class.isAssignableFrom(type);
   }
+
+  private static final Set<Class<?>> COMPARABLE_TYPES =
+      ImmutableSet.of(char.class, Character.class, String.class);
 
   /**
    * 获取指定枚举名称对应的枚举值。

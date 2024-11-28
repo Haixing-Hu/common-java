@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -16,7 +16,8 @@ import java.io.IOException;
  */
 public abstract class SinglePassTranslator extends CharSequenceTranslator {
 
-  public abstract SinglePassTranslator clone();
+  @Override
+  public abstract SinglePassTranslator cloneEx();
 
   /**
    * {@inheritDoc}

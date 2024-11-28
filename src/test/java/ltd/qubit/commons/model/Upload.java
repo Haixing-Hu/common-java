@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,19 +8,24 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
-import ltd.qubit.commons.annotation.Identifier;
-import ltd.qubit.commons.annotation.Precision;
-import ltd.qubit.commons.lang.*;
-import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import javax.annotation.Nullable;
 import java.time.Instant;
 import java.util.concurrent.TimeUnit;
+
+import javax.annotation.Nullable;
+
+import ltd.qubit.commons.annotation.Identifier;
+import ltd.qubit.commons.annotation.Precision;
+import ltd.qubit.commons.lang.Argument;
+import ltd.qubit.commons.lang.Assignable;
+import ltd.qubit.commons.lang.Assignment;
+import ltd.qubit.commons.lang.Equality;
+import ltd.qubit.commons.lang.Hash;
+import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
  * 此模型表示一个上传的文件的元信息。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class Upload implements Identifiable, Creatable, Deletable,
     Assignable<Upload> {
@@ -96,7 +101,7 @@ public class Upload implements Identifiable, Creatable, Deletable,
   }
 
   @Override
-  public Upload clone() {
+  public Upload cloneEx() {
     return new Upload(this);
   }
 

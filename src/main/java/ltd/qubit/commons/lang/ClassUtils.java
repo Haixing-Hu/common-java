@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -10,12 +10,23 @@ package ltd.qubit.commons.lang;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Proxy;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.lang.reflect.WildcardType;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-import javax.annotation.concurrent.ThreadSafe;
+import javax.annotation.concurrent.Immutable;
 
+import ltd.qubit.commons.reflect.MethodUtils;
 import ltd.qubit.commons.text.Remover;
 import ltd.qubit.commons.util.filter.character.WhitespaceCharFilter;
 
@@ -40,8 +51,7 @@ import static ltd.qubit.commons.lang.ObjectUtils.defaultIfNull;
  * @author Haixing Hu
  * @since 1.0.0
  */
-@ThreadSafe
-public final class ClassUtils {
+public class ClassUtils {
 
   /**
    * The default {@link Class} value used when necessary.
@@ -133,8 +143,6 @@ public final class ClassUtils {
       invertAsUnmodifiable(ABBREVIATION_MAP);
 
   private static final float AUTOBOXING_JDK_VERSION = 1.5f;
-
-  private ClassUtils() {}
 
   /**
    * Checks if an array of Classes can be assigned to another array of Classes.
@@ -705,6 +713,52 @@ public final class ClassUtils {
   }
 
   /**
+   * Gets the full canonical name of the class of an {@code Object}.
+   *
+   * @param object
+   *     the class to get the short name for, may be null.
+   * @param valueIfNull
+   *     the value to return if null.
+   * @return the full canonical name of the class of the object, or {@code null}.
+   */
+  public static String getFullCanonicalName(final Object object,
+      final String valueIfNull) {
+    if (object == null) {
+      return valueIfNull;
+    }
+    return getCanonicalNameImpl(object.getClass().getName());
+  }
+
+  /**
+   * Gets the full canonical name of a {@code Class}.
+   *
+   * @param cls
+   *     the class to get the short name for.
+   * @return the full canonical name of the class, or an empty string.
+   */
+  public static String getFullCanonicalName(final Class<?> cls) {
+    if (cls == null) {
+      return StringUtils.EMPTY;
+    }
+    return getCanonicalNameImpl(cls.getName());
+  }
+
+  /**
+   * Gets the full canonical name of a class name.
+   *
+   * <p>The string passed in is assumed to be a canonical name - it is not
+   * checked.
+   *
+   * @param canonicalName
+   *     the class name to get the short name for.
+   * @return the full canonical name of the class or an empty string.
+   * @since 1.0.0
+   */
+  public static String getFullCanonicalName(final String canonicalName) {
+    return getCanonicalNameImpl(canonicalName);
+  }
+
+  /**
    * Gets the canonical name minus the package name for an {@code Object}.
    *
    * @param object
@@ -751,7 +805,7 @@ public final class ClassUtils {
    * @since 1.0.0
    */
   public static String getShortCanonicalName(final String canonicalName) {
-    return getShortClassName(getCanonicalName(canonicalName));
+    return getShortClassName(getCanonicalNameImpl(canonicalName));
   }
 
   /**
@@ -801,7 +855,7 @@ public final class ClassUtils {
    * @since 1.0.0
    */
   public static String getPackageCanonicalName(final String canonicalName) {
-    return getPackageName(getCanonicalName(canonicalName));
+    return getPackageName(getCanonicalNameImpl(canonicalName));
   }
 
   /**
@@ -817,58 +871,57 @@ public final class ClassUtils {
     if (cls == null) {
       return null;
     }
-    final List<Class<?>> classes = new ArrayList<>();
+    final List<Class<?>> result = new ArrayList<>();
     Class<?> superclass = cls.getSuperclass();
     while (superclass != null) {
-      classes.add(superclass);
+      result.add(superclass);
       superclass = superclass.getSuperclass();
     }
-    return classes;
+    return result;
   }
 
   /**
    * Gets a {@code List} of all interfaces implemented by the given class and
    * its super-classes.
-   *
-   * <p>The order is determined by looking through each interface in turn as
+   * <p>
+   * The order is determined by looking through each interface in turn as
    * declared in the source file and following its hierarchy up. Then each
    * superclass is considered in the same way. Later duplicates are ignored, so
    * the order is maintained.
    *
    * @param cls
    *     the class to look up, may be {@code null}.
-   * @return the {@code List} of interfaces in order, {@code null} if null
-   *     input.
-   * @since 1.0.0
+   * @return
+   *     the {@code List} of interfaces in order, {@code null} if null input.
    */
   public static List<Class<?>> getAllInterfaces(final Class<?> cls) {
     if (cls == null) {
       return null;
     }
-    final List<Class<?>> list = new ArrayList<>();
-    Class<?> type = cls;
-    while (type != null) {
-      final Class<?>[] interfaces = type.getInterfaces();
+    final List<Class<?>> result = new ArrayList<>();
+    Class<?> current = cls;
+    while (current != null) {
+      final Class<?>[] interfaces = current.getInterfaces();
       for (final Class<?> i : interfaces) {
-        if (!list.contains(i)) {
-          list.add(i);
+        if (!result.contains(i)) {
+          result.add(i);
         }
         final List<Class<?>> superInterfaces = getAllInterfaces(i);
         for (final Class<?> j : superInterfaces) {
-          if (!list.contains(j)) {
-            list.add(j);
+          if (!result.contains(j)) {
+            result.add(j);
           }
         }
       }
-      type = type.getSuperclass();
+      current = current.getSuperclass();
     }
-    return list;
+    return result;
   }
 
   /**
    * Gets the desired Method much like {@code Class.getMethod}, however it
    * ensures that the returned Method is from a public class or interface and
-   * not from an anonymous inner class. ,p This means that the Method is
+   * not from an anonymous inner class. This means that the Method is
    * invokable and doesn't fall foul of Java bug
    * <a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4071957">4071957</a>).
    *
@@ -890,10 +943,11 @@ public final class ClassUtils {
    * @throws SecurityException
    *     if a a security violation occurred.
    * @throws NoSuchMethodException
-   *     if the method is not found in the given class or if the method doen't
+   *     if the method is not found in the given class or if the method doesn't
    *     conform with the requirements.
-   * @since 1.0.0
+   * @deprecated use {@link MethodUtils#getMethod(Class, int, String, Class[])} instead.
    */
+  @Deprecated
   public static Method getPublicMethod(final Class<?> cls,
       final String methodName, final Class<?>[] parameterTypes)
       throws SecurityException, NoSuchMethodException {
@@ -969,9 +1023,8 @@ public final class ClassUtils {
    * @param className
    *     the name of class.
    * @return canonical form of class name.
-   * @since 1.0.0
    */
-  private static String getCanonicalName(final String className) {
+  private static String getCanonicalNameImpl(final String className) {
     String name = new Remover()
         .forCharsSatisfy(WhitespaceCharFilter.INSTANCE)
         .removeFrom(className);
@@ -1044,5 +1097,509 @@ public final class ClassUtils {
       }
     }
     return null;
+  }
+
+
+  /**
+   * Check if a type is an interface.
+   *
+   * @param type
+   *     the type to check
+   * @return true if the type is an interface, false otherwise
+   */
+  public static boolean isInterface(final Class<?> type) {
+    return type.isInterface();
+  }
+
+  /**
+   * Check if the type is abstract (either an interface or an abstract class).
+   *
+   * @param type
+   *     the type to check
+   * @param <T>
+   *     the actual type to check
+   * @return true if the type is abstract, false otherwise
+   */
+  public static <T> boolean isAbstract(final Class<T> type) {
+    return Modifier.isAbstract(type.getModifiers());
+  }
+
+  /**
+   * Check if the type is public.
+   *
+   * @param type
+   *     the type to check
+   * @param <T>
+   *     the actual type to check
+   * @return true if the type is public, false otherwise
+   */
+  public static <T> boolean isPublic(final Class<T> type) {
+    return Modifier.isPublic(type.getModifiers());
+  }
+
+  /**
+   * Check if the type is protected.
+   *
+   * @param type
+   *     the type to check
+   * @param <T>
+   *     the actual type to check
+   * @return true if the type is protected, false otherwise
+   */
+  public static <T> boolean isProtected(final Class<T> type) {
+    return Modifier.isProtected(type.getModifiers());
+  }
+
+  /**
+   * Check if the type is private.
+   *
+   * @param type
+   *     the type to check
+   * @param <T>
+   *     the actual type to check
+   * @return true if the type is private, false otherwise
+   */
+  public static <T> boolean isPrivate(final Class<T> type) {
+    return Modifier.isPrivate(type.getModifiers());
+  }
+
+  /**
+   * Check whether a class object is a proxy class.
+   *
+   * @param type
+   *     the class object be checked.
+   * @return
+   *     true if the class object is a proxy class; false otherwise.
+   */
+  public static boolean isProxy(final Class<?> type) {
+    if (type == null) {
+      return false;
+    } else if (Proxy.isProxyClass(type)) {
+      return true;
+    } else {
+      return matchesWellKnownProxyClassNamePattern(type.getName());
+    }
+  }
+
+  static boolean matchesWellKnownProxyClassNamePattern(final String className) {
+    return className.contains(BYTE_BUDDY_CLASS_SEPARATOR)
+        || className.contains(CGLIB_JAVASSIST_CLASS_SEPARATOR)
+        || className.contains(HIBERNATE_PROXY_CLASS_SEPARATOR);
+  }
+
+  private static final String CGLIB_JAVASSIST_CLASS_SEPARATOR = "$$";
+  private static final String BYTE_BUDDY_CLASS_SEPARATOR = "$ByteBuddy$";
+  private static final String HIBERNATE_PROXY_CLASS_SEPARATOR = "$HibernateProxy$";
+
+  /**
+   * Check if a type is a primitive type.
+   *
+   * @param type
+   *     the type to check.
+   * @return true if the type is a primitive type, false otherwise.
+   */
+  public static boolean isPrimitiveType(final Class<?> type) {
+    return type.isPrimitive();
+  }
+
+  /**
+   * Check if a type is an array type.
+   *
+   * @param type
+   *     the type to check.
+   * @return true if the type is an array type, false otherwise.
+   */
+  public static boolean isArrayType(final Class<?> type) {
+    return type.isArray();
+  }
+
+  /**
+   * Check if a type is an enum type.
+   *
+   * @param type
+   *     the type to check.
+   * @return true if the type is an enum type, false otherwise.
+   */
+  public static boolean isEnumType(final Class<?> type) {
+    return type.isEnum() || Enum.class.isAssignableFrom(type);
+  }
+
+  /**
+   * Check if a type is a collection type.
+   *
+   * @param type
+   *     the type to check.
+   * @return true if the type is a collection type, false otherwise
+   */
+  public static boolean isCollectionType(final Class<?> type) {
+    return Collection.class.isAssignableFrom(type);
+  }
+
+  /**
+   * Check if a type is a collection type.
+   *
+   * @param type
+   *     the type to check.
+   * @return true if the type is a collection type, false otherwise
+   */
+  public static boolean isCollectionType(final java.lang.reflect.Type type) {
+    return isParameterizedType(type)
+        && isCollectionType((Class<?>) ((ParameterizedType) type).getRawType());
+  }
+
+  /**
+   * Check if a type is a list type.
+   *
+   * @param type
+   *     the type to check.
+   * @return true if the type is a list type, false otherwise
+   */
+  public static boolean isListType(final Class<?> type) {
+    return List.class.isAssignableFrom(type);
+  }
+
+  /**
+   * Check if a type is a list type.
+   *
+   * @param type
+   *     the type to check.
+   * @return true if the type is a list type, false otherwise
+   */
+  public static boolean isListType(final java.lang.reflect.Type type) {
+    return isParameterizedType(type)
+        && isListType((Class<?>) ((ParameterizedType) type).getRawType());
+  }
+
+  /**
+   * Check if a type is a set type.
+   *
+   * @param type
+   *     the type to check.
+   * @return true if the type is a set type, false otherwise
+   */
+  public static boolean isSetType(final Class<?> type) {
+    return Set.class.isAssignableFrom(type);
+  }
+
+  /**
+   * Check if a type is a set type.
+   *
+   * @param type
+   *     the type to check.
+   * @return true if the type is a set type, false otherwise
+   */
+  public static boolean isSetType(final java.lang.reflect.Type type) {
+    return isParameterizedType(type)
+        && isSetType((Class<?>) ((ParameterizedType) type).getRawType());
+  }
+
+  /**
+   * Check if a type is a map type.
+   *
+   * @param type
+   *     the type to check
+   * @return true if the type is a map type, false otherwise.
+   */
+  public static boolean isMapType(final Class<?> type) {
+    return Map.class.isAssignableFrom(type);
+  }
+
+  /**
+   * Check if a type is a map type.
+   *
+   * @param type
+   *     the type to check.
+   * @return true if the type is a map type, false otherwise
+   */
+  public static boolean isMapType(final java.lang.reflect.Type type) {
+    return isParameterizedType(type)
+        && isMapType((Class<?>) ((ParameterizedType) type).getRawType());
+  }
+
+  /**
+   * Check if a type is a JDK built-in class.
+   *
+   * @param type
+   *     the type to check
+   * @return true if the type is a built-in class, false otherwise.
+   */
+  public static boolean isJdkBuiltIn(final Class<?> type) {
+    final String name = type.getName();
+    return name.startsWith("java.") || name.startsWith("javax.");
+  }
+
+  /**
+   * Check whether a type is the boxing type of primitive type.
+   *
+   * @param type
+   *     the class object of the type to check.
+   * @return
+   *     {@code true} if the type is the boxing type of primitive type,
+   *     {@code false} otherwise.
+   */
+  public static boolean isBoxingType(final Class<?> type) {
+    return (type == Character.class)
+        || (type == Boolean.class)
+        || (type == Byte.class)
+        || (type == Short.class)
+        || (type == Integer.class)
+        || (type == Long.class)
+        || (type == Float.class)
+        || (type == Double.class);
+  }
+
+  /**
+   * Check whether a type is the type representing a permission.
+   *
+   * @param type
+   *     the class object of the type to check.
+   * @return
+   *     {@code true} if the type is the type representing a permission, i.e.,
+   *     the subclass of {@link java.security.Permission}; {@code false}
+   *     otherwise.
+   */
+  public static boolean isPermissionType(final Class<?> type) {
+    return java.security.Permission.class.isAssignableFrom(type);
+  }
+
+  private static final Set<Class<?>> IMMUTABLE_JDK_CLASSES = new HashSet<>();
+
+  static {
+    IMMUTABLE_JDK_CLASSES.add(Character.class);
+    IMMUTABLE_JDK_CLASSES.add(Boolean.class);
+    IMMUTABLE_JDK_CLASSES.add(Byte.class);
+    IMMUTABLE_JDK_CLASSES.add(Short.class);
+    IMMUTABLE_JDK_CLASSES.add(Integer.class);
+    IMMUTABLE_JDK_CLASSES.add(Long.class);
+    IMMUTABLE_JDK_CLASSES.add(Float.class);
+    IMMUTABLE_JDK_CLASSES.add(Double.class);
+    IMMUTABLE_JDK_CLASSES.add(Void.class);
+    IMMUTABLE_JDK_CLASSES.add(BigInteger.class);
+    IMMUTABLE_JDK_CLASSES.add(BigDecimal.class);
+    IMMUTABLE_JDK_CLASSES.add(String.class);
+    IMMUTABLE_JDK_CLASSES.add(Class.class);
+    IMMUTABLE_JDK_CLASSES.add(StackTraceElement.class);
+    IMMUTABLE_JDK_CLASSES.add(java.net.IDN.class);
+    IMMUTABLE_JDK_CLASSES.add(java.net.Inet4Address.class);
+    IMMUTABLE_JDK_CLASSES.add(java.net.Inet6Address.class);
+    IMMUTABLE_JDK_CLASSES.add(java.net.InetSocketAddress.class);
+    IMMUTABLE_JDK_CLASSES.add(java.net.URL.class);
+    IMMUTABLE_JDK_CLASSES.add(java.net.URI.class);
+    IMMUTABLE_JDK_CLASSES.add(java.security.Permission.class);
+    IMMUTABLE_JDK_CLASSES.add(java.io.File.class);
+    // 2024-03-15 starfish: Remove the following AWT related classes since they do not exist in Android environment
+    // IMMUTABLE_JDK_CLASSES.add(java.awt.Font.class);
+    // IMMUTABLE_JDK_CLASSES.add(java.awt.BasicStroke.class);
+    // IMMUTABLE_JDK_CLASSES.add(java.awt.Color.class);
+    // IMMUTABLE_JDK_CLASSES.add(java.awt.GradientPaint.class);
+    // IMMUTABLE_JDK_CLASSES.add(java.awt.LinearGradientPaint.class);
+    // IMMUTABLE_JDK_CLASSES.add(java.awt.RadialGradientPaint.class);
+    // IMMUTABLE_JDK_CLASSES.add(java.awt.Cursor.class);
+    IMMUTABLE_JDK_CLASSES.add(java.util.Locale.class);
+    IMMUTABLE_JDK_CLASSES.add(java.util.UUID.class);
+    IMMUTABLE_JDK_CLASSES.add(java.util.Currency.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.Clock.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.Duration.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.Instant.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.LocalDate.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.LocalDateTime.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.LocalTime.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.MonthDay.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.OffsetDateTime.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.OffsetTime.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.Period.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.Year.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.YearMonth.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.ZonedDateTime.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.ZoneId.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.ZoneOffset.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.chrono.HijrahChronology.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.chrono.HijrahDate.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.chrono.IsoChronology.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.chrono.JapaneseChronology.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.chrono.JapaneseDate.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.chrono.JapaneseEra.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.chrono.MinguoChronology.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.chrono.MinguoDate.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.chrono.ThaiBuddhistChronology.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.chrono.ThaiBuddhistDate.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.format.DateTimeFormatter.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.format.DateTimeFormatterBuilder.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.format.DecimalStyle.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.temporal.IsoFields.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.temporal.JulianFields.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.temporal.TemporalAdjusters.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.temporal.TemporalQueries.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.temporal.ValueRange.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.temporal.WeekFields.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.zone.ZoneOffsetTransition.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.zone.ZoneOffsetTransitionRule.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.zone.ZoneRules.class);
+    IMMUTABLE_JDK_CLASSES.add(java.time.zone.ZoneRulesProvider.class);
+  }
+
+  /**
+   * Check whether a type is a type of immutable objects.
+   *
+   * @param type
+   *     the class object of the type to check.
+   * @return
+   *     {@code true} if the type is a type of immutable objects, {@code false}
+   *     otherwise.
+   */
+  public static boolean isImmutableType(final Class<?> type) {
+    return IMMUTABLE_JDK_CLASSES.contains(type)
+        || isEnumType(type)
+        || isPermissionType(type)
+        || type.isAnnotationPresent(Immutable.class);
+  }
+
+  /**
+   * Check whether a type is a type of mutable objects.
+   *
+   * @param type
+   *     the class object of the type to check.
+   * @return
+   *     {@code true} if the type is a type of mutable objects, {@code false}
+   *     otherwise.
+   */
+  public static boolean isMutableType(final Class<?> type) {
+    return !isImmutableType(type);
+  }
+
+  /**
+   * Check if a type should be introspected for internal fields.
+   * <p>
+   * FIXME: this method is only used by common-random, and it should be moved to
+   *   the common-random library.
+   *
+   * @param type
+   *     the type to check
+   * @return true if the type should be introspected, false otherwise
+   */
+  public static boolean isIntrospectable(final Class<?> type) {
+    return !isEnumType(type)
+        && !isArrayType(type)
+        && !(isCollectionType(type) && isJdkBuiltIn(type))
+        && !(isMapType(type) && isJdkBuiltIn(type));
+  }
+
+  /**
+   * Check if a type is populatable.
+   * <p>
+   * FIXME: this method is only used by common-random, and it should be moved to
+   *   the common-random library.
+   *
+   * @param type
+   *     the type to check
+   * @return true if the type is populatable, false otherwise
+   */
+  public static boolean isPopulatable(final java.lang.reflect.Type type) {
+    return !isWildcardType(type)
+        && !isTypeVariable(type)
+        && !isCollectionType(type)
+        && !isParameterizedType(type);
+  }
+
+  /**
+   * Check if a type is a parameterized type.
+   *
+   * @param type
+   *     the type to check
+   * @return true if the type is parameterized, false otherwise
+   */
+  public static boolean isParameterizedType(final java.lang.reflect.Type type) {
+    return (type instanceof ParameterizedType)
+        && ((ParameterizedType) type).getActualTypeArguments().length > 0;
+  }
+
+  /**
+   * Check if a type is a wildcard type.
+   *
+   * @param type
+   *     the type to check
+   * @return true if the type is a wildcard type, false otherwise
+   */
+  public static boolean isWildcardType(final java.lang.reflect.Type type) {
+    return (type instanceof WildcardType);
+  }
+
+  /**
+   * Check if a type is a type variable.
+   *
+   * @param type
+   *     the type to check
+   * @return true if the type is a type variable, false otherwise
+   */
+  public static boolean isTypeVariable(final Type type) {
+    return (type instanceof TypeVariable<?>);
+  }
+
+  /**
+   * Searches the specified interface of a class.
+   *
+   * @param type
+   *     the specified class.
+   * @param simpleName
+   *     the simple name of the interface to be searched.
+   * @return the interface of the class with the specified simple name; or
+   *     {@code null} if no such interface.
+   */
+  public static Class<?> getInterface(final Class<?> type, final String simpleName) {
+    for (final Class<?> cls : type.getInterfaces()) {
+      if (cls.getSimpleName().equals(simpleName)) {
+        return cls;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Gets the real class object of a possible proxy class object.
+   *
+   * @param <T>
+   *     the type parameter of the class object.
+   * @param clazz
+   *     a class object, possibly a proxy class object.
+   * @return
+   *     the real class object of the specified possible proxy class object.
+   */
+  @SuppressWarnings("unchecked")
+  public static <T> Class<T> getRealClass(final Class<T> clazz) {
+    if (clazz == null) {
+      return null;
+    } else if (Proxy.isProxyClass(clazz)) {
+      final Class<?>[] interfaces = clazz.getInterfaces();
+      if (interfaces.length != 1) {
+        throw new IllegalArgumentException("Unexpected number of interfaces: "
+            + interfaces.length);
+      }
+      return (Class<T>) interfaces[0];
+    } else if (matchesWellKnownProxyClassNamePattern(clazz.getName())) {
+      final Class<T> superclass = (Class<T>) clazz.getSuperclass();
+      return getRealClass(superclass);
+    } else {
+      return clazz;
+    }
+  }
+
+  /**
+   * Gets the real class object of a possible proxy object.
+   *
+   * @param <T>
+   *     the type of the object.
+   * @param object
+   *     the object, possibly a proxy object.
+   * @return
+   *     the real class object of the specified possible proxy object.
+   */
+  public static <T> Class<T> getRealClass(final T object) {
+    if (object instanceof Class<?>) {
+      throw new IllegalArgumentException("The provided object is already a class: "
+          + object + ". " + "You probably want to call ClassUtils.getRealClass(Class) instead.");
+    }
+    @SuppressWarnings("unchecked")
+    final Class<T> entityClass = (Class<T>) object.getClass();
+    return getRealClass(entityClass);
   }
 }

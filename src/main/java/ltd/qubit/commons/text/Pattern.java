@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,17 +8,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.regex.Matcher;
 
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.concurrent.ThreadSafe;
 
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlValue;
 
-import ltd.qubit.commons.io.serialize.BinarySerialization;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ltd.qubit.commons.io.io.serialize.BinarySerialization;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
@@ -31,17 +35,21 @@ import static ltd.qubit.commons.lang.ObjectUtils.defaultIfNull;
 /**
  * A {@link Pattern} object represents a generic pattern of strings.
  *
- * <p>NOTE: This class is NOT thread safe. If more than one threads use the
- * {@link #matches(String)} method, it must be synchronized.
+ * <p>NOTE: This class is thread safe. The {@link #matches(String)} method can
+ * be called concurrently by multiple threads.</p>
  *
  * @author Haixing Hu
  */
-@NotThreadSafe
+@ThreadSafe
 public final class Pattern implements CloneableEx<Pattern>, Serializable {
 
+  @Serial
   private static final long serialVersionUID = -6759804850795758979L;
 
+  private static final Logger logger = LoggerFactory.getLogger(Pattern.class);
+
   public static final PatternType DEFAULT_TYPE = PatternType.LITERAL;
+
   public static final boolean DEFAULT_IGNORE_CASE = false;
 
   static {
@@ -57,7 +65,7 @@ public final class Pattern implements CloneableEx<Pattern>, Serializable {
   @XmlValue
   private String expression;
 
-  private transient Matcher matcher;
+  private transient volatile Matcher matcher;
 
   public Pattern() {
     type = null;
@@ -119,35 +127,49 @@ public final class Pattern implements CloneableEx<Pattern>, Serializable {
     if (str == null) {
       return false;
     }
-    switch (defaultIfNull(type, DEFAULT_TYPE)) {
-      case LITERAL:
-        if (defaultIfNull(ignoreCase, DEFAULT_IGNORE_CASE)) {
-          return expression.equalsIgnoreCase(str);
-        } else {
-          return expression.equals(str);
-        }
-      case PREFIX:
-        return new Searcher()
-            .forSubstring(expression)
-            .ignoreCase(defaultIfNull(ignoreCase, DEFAULT_IGNORE_CASE))
-            .isAtStartOf(str);
-      case SUFFIX:
-        return new Searcher()
-            .forSubstring(expression)
-            .ignoreCase(defaultIfNull(ignoreCase, DEFAULT_IGNORE_CASE))
-            .isAtEndOf(str);
-      case REGEX:
-        if (matcher == null) {
-          setRegexMatcher();
-        }
-        return matcher.reset(str).matches();
-      case GLOB:
-        if (matcher == null) {
-          setGlobMatcher();
-        }
-        return matcher.reset(str).matches();
-      default:
-        return false;
+    try {
+      switch (defaultIfNull(type, DEFAULT_TYPE)) {
+        case LITERAL:
+          if (defaultIfNull(ignoreCase, DEFAULT_IGNORE_CASE)) {
+            return expression.equalsIgnoreCase(str);
+          } else {
+            return expression.equals(str);
+          }
+        case PREFIX:
+          return new Searcher()
+              .forSubstring(expression)
+              .ignoreCase(defaultIfNull(ignoreCase, DEFAULT_IGNORE_CASE))
+              .isAtStartOf(str);
+        case SUFFIX:
+          return new Searcher()
+              .forSubstring(expression)
+              .ignoreCase(defaultIfNull(ignoreCase, DEFAULT_IGNORE_CASE))
+              .isAtEndOf(str);
+        case SUBSTRING:
+          return new Searcher()
+              .forSubstring(expression)
+              .ignoreCase(defaultIfNull(ignoreCase, DEFAULT_IGNORE_CASE))
+              .isContainedIn(str);
+        case REGEX:
+          synchronized (this) {
+            if (matcher == null) {
+              setRegexMatcher();
+            }
+            return matcher.reset(str).matches();
+          }
+        case GLOB:
+          synchronized (this) {
+            if (matcher == null) {
+              setGlobMatcher();
+            }
+            return matcher.reset(str).matches();
+          }
+        default:
+          return false;
+      }
+    } catch (final Exception e) {
+      logger.error("Failed to match pattern: pattern = {}, str = '{}'", this, str, e);
+      return false;
     }
   }
 
@@ -173,7 +195,7 @@ public final class Pattern implements CloneableEx<Pattern>, Serializable {
   }
 
   @Override
-  public Pattern clone() {
+  public Pattern cloneEx() {
     return new Pattern(type, ignoreCase, expression);
   }
 

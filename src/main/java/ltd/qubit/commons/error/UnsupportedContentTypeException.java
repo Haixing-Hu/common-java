@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.error;
 
+import java.io.Serial;
+
 import ltd.qubit.commons.util.pair.KeyValuePair;
 
 /**
@@ -18,6 +20,7 @@ import ltd.qubit.commons.util.pair.KeyValuePair;
 public class UnsupportedContentTypeException extends RuntimeException
     implements ErrorInfoConvertable {
 
+  @Serial
   private static final long serialVersionUID = 1526366180287500174L;
 
   private final String contentType;

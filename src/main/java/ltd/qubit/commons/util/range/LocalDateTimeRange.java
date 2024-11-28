@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,20 +8,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.range;
 
-import ltd.qubit.commons.lang.Equality;
-import ltd.qubit.commons.lang.Hash;
-import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+
+import javax.annotation.Nullable;
+
+import ltd.qubit.commons.lang.Equality;
+import ltd.qubit.commons.lang.Hash;
+import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 
 /**
  * 此模型表示日期时间范围（前闭后开区间）。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class LocalDateTimeRange implements Serializable {
 

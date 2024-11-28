@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,12 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.xml;
 
-import ltd.qubit.commons.io.serialize.XmlSerialization;
-
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+
+import ltd.qubit.commons.io.io.serialize.XmlSerialization;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -123,7 +123,7 @@ public class TagPatternTest {
     final TagPattern child = new TagPattern();
     child.setTagName("child");
 
-    pattern.setChild(child.clone());
+    pattern.setChild(child.cloneEx());
     assertEquals(child, pattern.getChild());
 
     pattern.setChild(null);
@@ -276,17 +276,17 @@ public class TagPatternTest {
   }
 
   /**
-   * Test method for {@link TagPattern#clone()}.
+   * Test method for {@link TagPattern#cloneEx()}.
    */
   @Test
   public void testClone() {
     final TagPattern pattern = new TagPattern();
-    TagPattern cloned = pattern.clone();
+    TagPattern cloned = pattern.cloneEx();
     assertEquals(pattern, cloned);
     assertNotSame(pattern, cloned);
 
     pattern.setTagName("tag");
-    cloned = pattern.clone();
+    cloned = pattern.cloneEx();
     assertEquals(pattern, cloned);
     assertNotSame(pattern, cloned);
   }
@@ -297,11 +297,11 @@ public class TagPatternTest {
   @Test
   public void testHashCode() {
     final TagPattern pattern = new TagPattern();
-    TagPattern cloned = pattern.clone();
+    TagPattern cloned = pattern.cloneEx();
     assertEquals(pattern.hashCode(), cloned.hashCode());
 
     pattern.setTagName("tag");
-    cloned = pattern.clone();
+    cloned = pattern.cloneEx();
     assertEquals(pattern.hashCode(), cloned.hashCode());
   }
 

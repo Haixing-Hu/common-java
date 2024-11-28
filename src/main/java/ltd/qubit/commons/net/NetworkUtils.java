@@ -46,7 +46,7 @@ public class NetworkUtils {
       LOGGER.info("Connect to {}:{} success.", host, port);
       return true;
     } catch (final IOException e) {
-      LOGGER.error("Connect to {}:{} failed: {}", host, port, e.getMessage());
+      LOGGER.error("Connect to {}:{} failed.", host, port, e);
       return false;
     }
   }

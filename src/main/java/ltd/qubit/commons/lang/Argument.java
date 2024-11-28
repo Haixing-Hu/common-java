@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,6 +15,8 @@ import javax.annotation.Nullable;
 import ltd.qubit.commons.math.MathEx;
 import ltd.qubit.commons.text.Joiner;
 import ltd.qubit.commons.text.Unicode;
+
+import static ltd.qubit.commons.lang.StringUtils.isBlank;
 
 /**
  * Provides common arg checking functions.
@@ -49,6 +51,16 @@ public final class Argument {
   public static <T> T requireNonNull(final String name, final T arg) {
     if (arg == null) {
       throw new NullPointerException("The '" + name + "' can not be null.");
+    }
+    return arg;
+  }
+
+  public static String requireNonBlank(final String name, final String arg) {
+    if (arg == null) {
+      throw new NullPointerException("The '" + name + "' can not be null.");
+    }
+    if (isBlank(arg)) {
+      throw new IllegalArgumentException("The '" + name + "' can not be blank.");
     }
     return arg;
   }

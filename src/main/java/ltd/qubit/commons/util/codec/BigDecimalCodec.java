@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,6 +13,11 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 
+import javax.annotation.Nullable;
+
+import ltd.qubit.commons.annotation.Money;
+import ltd.qubit.commons.annotation.Round;
+import ltd.qubit.commons.annotation.Scale;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.Stripper;
@@ -65,6 +70,23 @@ public class BigDecimalCodec implements Codec<BigDecimal, String> {
     this.scale = requireNonNegative("scale", scale);
     this.useGroup = useGroup;
     this.roundingMode = roundingMode;
+  }
+
+  public BigDecimalCodec(@Nullable final Scale scale,
+      @Nullable final Round round,
+      @Nullable final Money money) {
+    this();
+    if (scale != null) {
+      this.scale = scale.value();
+    }
+    if (round != null) {
+      this.roundingMode = round.value();
+    }
+    if (money != null) {
+      this.scale = money.scale();
+      this.roundingMode = money.roundingModel();
+      this.useGroup = money.useGroup();
+    }
   }
 
   public final int getScale() {

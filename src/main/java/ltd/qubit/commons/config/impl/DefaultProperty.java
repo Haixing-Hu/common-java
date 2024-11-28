@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -14,17 +14,17 @@ import java.util.Date;
 
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ltd.qubit.commons.config.Property;
-import ltd.qubit.commons.io.serialize.BinarySerialization;
-import ltd.qubit.commons.io.serialize.XmlSerialization;
+import ltd.qubit.commons.io.io.serialize.BinarySerialization;
+import ltd.qubit.commons.io.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.lang.Type;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import ltd.qubit.commons.util.value.BasicNamedMultiValues;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The default implementation of the {@link Property} interface.
@@ -181,7 +181,7 @@ public class DefaultProperty extends BasicNamedMultiValues implements Property {
   }
 
   @Override
-  public DefaultProperty clone() {
+  public DefaultProperty cloneEx() {
     final DefaultProperty result = new DefaultProperty(name, type);
     result.assign(this);
     return result;

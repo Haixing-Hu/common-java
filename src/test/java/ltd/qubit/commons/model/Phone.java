@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,25 +8,28 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
+import java.io.Serializable;
+
+import javax.annotation.Nullable;
+
 import jakarta.validation.constraints.Size;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ltd.qubit.commons.annotation.TypeCodec;
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import ltd.qubit.commons.util.codec.DecodingException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nullable;
-import java.io.Serializable;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
  * 此模型表示电话号码。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @TypeCodec(PhoneCodec.class)
 public class Phone implements Serializable, Emptyful, Normalizable, Assignable<Phone> {
@@ -104,7 +107,7 @@ public class Phone implements Serializable, Emptyful, Normalizable, Assignable<P
   }
 
   @Override
-  public Phone clone() {
+  public Phone cloneEx() {
     return new Phone(this);
   }
 

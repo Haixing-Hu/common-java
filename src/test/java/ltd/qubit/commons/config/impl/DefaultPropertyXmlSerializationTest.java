@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,12 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.config.impl;
 
-import ltd.qubit.commons.io.serialize.XmlSerialization;
-import ltd.qubit.commons.text.xml.XmlException;
-import ltd.qubit.commons.text.xml.XmlUtils;
-
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
+
+import ltd.qubit.commons.io.io.serialize.XmlSerialization;
+import ltd.qubit.commons.text.xml.XmlException;
+import ltd.qubit.commons.text.xml.XmlUtils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

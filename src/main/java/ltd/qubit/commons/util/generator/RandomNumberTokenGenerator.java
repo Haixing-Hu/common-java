@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -30,6 +30,11 @@ public final class RandomNumberTokenGenerator implements TokenGenerator {
   public RandomNumberTokenGenerator() {
     random = new Random();
     digits = DEFAULT_DIGITS;
+  }
+
+  public RandomNumberTokenGenerator(final int digits) {
+    random = new Random();
+    this.digits = digits;
   }
 
   public int getDigits() {

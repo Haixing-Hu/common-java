@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -19,14 +19,14 @@ import java.time.temporal.TemporalAccessor;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.text.Stripper;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static java.time.LocalDateTime.ofInstant;
 

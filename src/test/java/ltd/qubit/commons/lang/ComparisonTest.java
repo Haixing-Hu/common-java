@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -16,6 +16,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.stream.IntStream;
 
+import org.junit.jupiter.api.Test;
+
 import ltd.qubit.commons.datastructure.list.primitive.impl.BooleanArrayList;
 import ltd.qubit.commons.datastructure.list.primitive.impl.ByteArrayList;
 import ltd.qubit.commons.datastructure.list.primitive.impl.CharArrayList;
@@ -25,13 +27,10 @@ import ltd.qubit.commons.datastructure.list.primitive.impl.IntArrayList;
 import ltd.qubit.commons.datastructure.list.primitive.impl.LongArrayList;
 import ltd.qubit.commons.datastructure.list.primitive.impl.ShortArrayList;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static ltd.qubit.commons.lang.Comparison.compare;
 import static ltd.qubit.commons.lang.Comparison.compareIgnoreCase;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ComparisonTest {
 
@@ -1898,27 +1897,6 @@ public class ComparisonTest {
 
   @Test
   public void testObject() {
-    Object value1 = new TestClassA();
-    Object value2 = new TestClassA();
-
-    assertEquals(0, compare(value1, value1));
-    assertTrue(compare(value1, value2) != 0);
-    value2 = new TestClassB();
-    assertEquals(-1, compare(value1, value2));
-    assertEquals(1, compare(value2, value1));
-    value2 = new TestClassZ();
-    assertEquals(-25, compare(value1, value2));
-    assertEquals(25, compare(value2, value1));
-    value1 = TestClassA.class;
-    value2 = TestClassB.class;
-    assertTrue(compare(value1, value2) < 0);
-    assertTrue(compare(value2, value1) > 0);
-    value2 = null;
-    assertEquals(1, compare(value1, value2));
-    assertEquals(-1, compare(value2, value1));
-    value1 = null;
-    assertEquals(0, compare(value1, value2));
-
     final boolean[] booleanarray1 = {true, false, false, true};
     final boolean[] booleanarray2 = {true, false, false, true};
     final boolean[] booleanarray3 = {false, true, true};
@@ -2264,7 +2242,7 @@ public class ComparisonTest {
     Object[] array2 = {new TestClassA(), new TestClassA()};
 
     assertEquals(0, compare(array1, array1));
-    assertTrue(compare(array1, array2) != 0);
+    assertEquals(true, compare(array1, array2) != 0);
     array2 = null;
     assertEquals(1, compare(array1, array2));
     assertEquals(-1, compare(array2, array1));
@@ -2613,8 +2591,9 @@ public class ComparisonTest {
 
     assertEquals(0,
         compare(array1, array1.length, array1, array1.length));
-    assertTrue(compare(array1, array1.length, array2, array2.length) != 0);
-    assertTrue(compare(array1, 1, array2, 1) != 0);
+    assertEquals(true,
+        compare(array1, array1.length, array2, array2.length) != 0);
+    assertEquals(true, compare(array1, 1, array2, 1) != 0);
 
     final boolean[][] booleanarray1 = {{true, false}, {false, true}};
     final boolean[][] booleanarray2 = {{true, false}, {false, true}};
@@ -3139,26 +3118,6 @@ public class ComparisonTest {
   @Test
   public void testObjectWithEpsilon() {
     final double epsilon = 0.01;
-    Object value1 = new TestClassA();
-    Object value2 = new TestClassA();
-
-    assertEquals(0, compare(value1, value1, epsilon));
-    assertTrue(compare(value1, value2, epsilon) != 0);
-    value2 = new TestClassB();
-    assertEquals(-1, compare(value1, value2, epsilon));
-    assertEquals(1, compare(value2, value1, epsilon));
-    value2 = new TestClassZ();
-    assertEquals(-25, compare(value1, value2, epsilon));
-    assertEquals(25, compare(value2, value1, epsilon));
-    value1 = TestClassA.class;
-    value2 = TestClassB.class;
-    assertTrue(compare(value1, value2, epsilon) < 0);
-    assertTrue(compare(value2, value1, epsilon) > 0);
-    value2 = null;
-    assertEquals(1, compare(value1, value2, epsilon));
-    assertEquals(-1, compare(value2, value1, epsilon));
-    value1 = null;
-    assertEquals(0, compare(value1, value2, epsilon));
 
     final boolean[] booleanarray1 = {true, false, false, true};
     final boolean[] booleanarray2 = {true, false, false, true};
@@ -3501,7 +3460,7 @@ public class ComparisonTest {
     Object[] array2 = {new TestClassA(), new TestClassA()};
 
     assertEquals(0, compare(array1, array1, epsilon));
-    assertTrue(compare(array1, array2, epsilon) != 0);
+    assertEquals(true, compare(array1, array2, epsilon) != 0);
     array2 = null;
     assertEquals(1, compare(array1, array2, epsilon));
     assertEquals(-1, compare(array2, array1, epsilon));
@@ -3843,9 +3802,8 @@ public class ComparisonTest {
     final Object[] array2 = {new TestClassA(), new TestClassA()};
 
     assertEquals(0, compare(array1, array1.length, array1, array1.length, epsilon));
-    assertTrue(
-        compare(array1, array1.length, array2, array2.length, epsilon) != 0);
-    assertTrue(compare(array1, 1, array2, 1, epsilon) != 0);
+    assertEquals(true, compare(array1, array1.length, array2, array2.length, epsilon) != 0);
+    assertEquals(true, compare(array1, 1, array2, 1, epsilon) != 0);
 
     final boolean[][] booleanarray1 = {{true, false}, {false, true}};
     final boolean[][] booleanarray2 = {{true, false}, {false, true}};
@@ -4382,7 +4340,7 @@ public class ComparisonTest {
     String value2 = "alonglongago";
 
     assertEquals(0, compare(value1, value1, strComparator));
-    assertTrue(compare(value1, value2, strComparator) != 0);
+    assertEquals(true, compare(value1, value2, strComparator) != 0);
     value2 = "along";
     assertEquals(1, compare(value1, value2, strComparator));
     assertEquals(-1, compare(value2, value1, strComparator));

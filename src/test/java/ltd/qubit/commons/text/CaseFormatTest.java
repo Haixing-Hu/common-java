@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -10,15 +10,15 @@ package ltd.qubit.commons.text;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 import static ltd.qubit.commons.text.CaseFormat.LOWER_CAMEL;
 import static ltd.qubit.commons.text.CaseFormat.LOWER_HYPHEN;
 import static ltd.qubit.commons.text.CaseFormat.LOWER_UNDERSCORE;
 import static ltd.qubit.commons.text.CaseFormat.UPPER_CAMEL;
 import static ltd.qubit.commons.text.CaseFormat.UPPER_UNDERSCORE;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
 
 /**
  * Unit test for the {@link CaseFormat} class.

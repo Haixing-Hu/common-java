@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,10 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson;
 
+import java.io.Serial;
+
 import com.fasterxml.jackson.databind.SerializationConfig;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+
 import ltd.qubit.commons.text.CaseFormat;
 
 import static ltd.qubit.commons.text.jackson.CustomizeJacksonUtils.customizeFeature;
@@ -20,10 +23,11 @@ import static ltd.qubit.commons.text.jackson.CustomizeJacksonUtils.getNormalized
 /**
  * 自定义的 Jackson JSON ObjectMapper。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class CustomizedJsonMapper extends JsonMapper {
 
+  @Serial
   private static final long serialVersionUID = 2077067730796046421L;
 
   public static final CaseFormat DEFAULT_NAMING_STRATEGY = CaseFormat.LOWER_UNDERSCORE;
@@ -69,7 +73,7 @@ public class CustomizedJsonMapper extends JsonMapper {
     // 处理 JDK8 的 Optional, Stream 等类型
     this.registerModule(new Jdk8Module());
     // 增加自定义类型注册模块
-    this.registerModule(new TypeRegistrationModule());
+    this.registerModule(TypeRegistrationModule.INSTANCE);
   }
 
   public final boolean isPrettyPrint() {

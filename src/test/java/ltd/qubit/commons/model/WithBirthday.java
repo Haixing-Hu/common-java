@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,16 +8,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
-import ltd.qubit.commons.annotation.Computed;
-
-import javax.annotation.Nullable;
 import java.time.LocalDate;
 import java.time.Period;
+
+import javax.annotation.Nullable;
+
+import ltd.qubit.commons.annotation.Computed;
 
 /**
  * 此接口表示实体类具有出生日期属性。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface WithBirthday {
 

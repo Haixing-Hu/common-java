@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect;
 
+import java.io.Serial;
 import java.lang.reflect.Method;
 
 import ltd.qubit.commons.text.Joiner;
@@ -19,6 +20,7 @@ import ltd.qubit.commons.text.Joiner;
  */
 public class InvokingMethodFailedException extends ReflectionException {
 
+  @Serial
   private static final long serialVersionUID = 7457691421536998975L;
 
   public InvokingMethodFailedException(final Class<?> cls, final int options,

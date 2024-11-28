@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -10,24 +10,24 @@ package ltd.qubit.commons.reflect;
 
 import java.beans.PropertyDescriptor;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import ltd.qubit.commons.priv.PrivateBeanFactory;
 import ltd.qubit.commons.priv.PrivateDirect;
 import ltd.qubit.commons.reflect.testbed.App;
 import ltd.qubit.commons.reflect.testbed.Bean;
 import ltd.qubit.commons.reflect.testbed.BeanPublicSubclass;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import static ltd.qubit.commons.reflect.MethodUtils.getMethodByName;
-import static ltd.qubit.commons.reflect.PropertyUtils.getPropertyNameFromGetter;
-import static ltd.qubit.commons.reflect.PropertyUtils.getPropertyNameFromSetter;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
+
+import static ltd.qubit.commons.reflect.MethodUtils.getMethodByName;
+import static ltd.qubit.commons.reflect.PropertyUtils.getPropertyNameFromGetter;
+import static ltd.qubit.commons.reflect.PropertyUtils.getPropertyNameFromSetter;
 
 /**
  * Unit test of the {@link ltd.qubit.commons.reflect.PropertyUtils} class.

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -52,7 +52,7 @@ public final class StripStartTransformer extends AbstractStringTransformer {
   }
 
   @Override
-  public StripStartTransformer clone() {
+  public StripStartTransformer cloneEx() {
     return this;
   }
 }

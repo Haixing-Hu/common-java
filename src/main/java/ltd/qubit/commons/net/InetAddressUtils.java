@@ -10,7 +10,7 @@ package ltd.qubit.commons.net;
 
 import java.util.regex.Pattern;
 
-import ltd.qubit.commons.io.Endian;
+import ltd.qubit.commons.io.io.Endian;
 
 public class InetAddressUtils {
 

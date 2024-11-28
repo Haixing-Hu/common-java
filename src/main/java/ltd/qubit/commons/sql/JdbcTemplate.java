@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -29,7 +29,7 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
  *
  * @author Haixing Hu
  */
-public final class JdbcTemplate {
+public class JdbcTemplate {
 
   private DataSource dataSource;
   private boolean readOnly;

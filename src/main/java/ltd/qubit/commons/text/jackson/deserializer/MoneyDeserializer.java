@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -12,16 +12,16 @@ import java.math.BigDecimal;
 
 import javax.annotation.concurrent.Immutable;
 
-import ltd.qubit.commons.annotation.Money;
-import ltd.qubit.commons.util.codec.MoneyCodec;
-
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 
+import ltd.qubit.commons.annotation.Money;
+import ltd.qubit.commons.util.codec.MoneyCodec;
+
 /**
- * The JSON deserializer of money values, which are represented with
+ * The JACKSON deserializer of money values, which are represented with
  * {@link BigDecimal} objects.
  *
  * @author Haixing Hu

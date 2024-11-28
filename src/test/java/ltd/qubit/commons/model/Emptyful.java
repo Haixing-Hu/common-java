@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,19 +8,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
+import java.util.Collection;
+import java.util.Map;
+
+import javax.annotation.Nullable;
+
 import ltd.qubit.commons.annotation.Computed;
 import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.reflect.BeanInfo;
 import ltd.qubit.commons.reflect.Property;
 
-import javax.annotation.Nullable;
-import java.util.Collection;
-import java.util.Map;
-
 /**
  * 此接口表示对象具有{@code isEmpty()}方法。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface Emptyful {
 

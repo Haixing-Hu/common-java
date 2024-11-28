@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -19,7 +19,7 @@ import java.net.URL;
 
 import ltd.qubit.commons.config.Config;
 import ltd.qubit.commons.config.error.ConfigurationError;
-import ltd.qubit.commons.io.serialize.XmlSerialization;
+import ltd.qubit.commons.io.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.SystemUtils;
 import ltd.qubit.commons.net.Url;
 import ltd.qubit.commons.text.xml.XmlException;

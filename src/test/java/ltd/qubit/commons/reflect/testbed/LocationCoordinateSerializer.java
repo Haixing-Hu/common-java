@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,7 +13,7 @@ import ltd.qubit.commons.text.jackson.serializer.BigDecimalSerializer;
 /**
  * 地理位置坐标的JSON序列化器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class LocationCoordinateSerializer extends BigDecimalSerializer {
 

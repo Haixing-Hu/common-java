@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -102,7 +102,7 @@ public final class NumberFormat implements Assignable<NumberFormat> {
   }
 
   @Override
-  public NumberFormat clone() {
+  public NumberFormat cloneEx() {
     return new NumberFormat(this);
   }
 

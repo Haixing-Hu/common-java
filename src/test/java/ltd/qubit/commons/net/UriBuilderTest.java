@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,10 +15,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import ltd.qubit.commons.util.pair.NameValuePair;
-
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
+
+import ltd.qubit.commons.util.pair.NameValuePair;
 
 import static java.nio.charset.StandardCharsets.ISO_8859_1;
 import static java.nio.charset.StandardCharsets.UTF_8;

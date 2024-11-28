@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,17 +13,17 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import ltd.qubit.commons.text.testbed.Gender;
-import ltd.qubit.commons.text.testbed.OrganizationNoAnnotation;
-import ltd.qubit.commons.text.testbed.PersonNoAnnotation;
-import ltd.qubit.commons.text.testbed.ValueEnum;
-import ltd.qubit.commons.text.testbed.WithEnum;
-
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+
+import ltd.qubit.commons.text.testbed.Gender;
+import ltd.qubit.commons.text.testbed.OrganizationNoAnnotation;
+import ltd.qubit.commons.text.testbed.PersonNoAnnotation;
+import ltd.qubit.commons.text.testbed.ValueEnum;
+import ltd.qubit.commons.text.testbed.WithEnum;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

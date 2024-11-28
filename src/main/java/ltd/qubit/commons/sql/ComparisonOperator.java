@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,7 +11,7 @@ package ltd.qubit.commons.sql;
 /**
  * 此枚举表示表达式左右之间的比较操作符。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public enum ComparisonOperator {
   /**

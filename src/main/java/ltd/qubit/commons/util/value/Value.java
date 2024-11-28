@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -740,5 +740,5 @@ public interface Value extends CloneableEx<Value> {
    * @return the cloned copy of this {@link Value} object.
    */
   @Override
-  Value clone();
+  Value cloneEx();
 }

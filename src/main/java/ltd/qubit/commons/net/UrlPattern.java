@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 import javax.annotation.Nullable;
 
-import ltd.qubit.commons.io.serialize.BinarySerialization;
+import ltd.qubit.commons.io.io.serialize.BinarySerialization;
 import ltd.qubit.commons.lang.Argument;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Equality;
@@ -80,8 +80,8 @@ public class UrlPattern implements Serializable, CloneableEx<UrlPattern> {
   }
 
   @Override
-  public UrlPattern clone() {
-    return new UrlPattern(part, pattern.clone());
+  public UrlPattern cloneEx() {
+    return new UrlPattern(part, pattern.cloneEx());
   }
 
   @Override

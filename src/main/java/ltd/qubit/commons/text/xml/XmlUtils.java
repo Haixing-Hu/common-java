@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -653,7 +653,7 @@ public class XmlUtils {
    *
    * @param xml
    *     the string representation of an XML document.
-   * @return the formated string representation of the XML document.
+   * @return the formatted string representation of the XML document.
    */
   public static String formatXml(final String xml) {
     final StringReader reader = new StringReader(xml);

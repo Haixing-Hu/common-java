@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -9,14 +9,14 @@
 package ltd.qubit.commons.reflect;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import javax.annotation.Nullable;
 
+import ltd.qubit.commons.reflect.impl.GetterMethod;
+
 import static ltd.qubit.commons.lang.StringUtils.isEmpty;
 import static ltd.qubit.commons.reflect.FieldUtils.getField;
-import static ltd.qubit.commons.reflect.FieldUtils.readField;
-import static ltd.qubit.commons.reflect.FieldUtils.writeField;
-import static ltd.qubit.commons.reflect.Option.BEAN_FIELD;
 
 /**
  * Provides functions to handle object graphs.
@@ -25,6 +25,242 @@ import static ltd.qubit.commons.reflect.Option.BEAN_FIELD;
  */
 public class ObjectGraphUtils {
 
+  private static <T, R> void ensureFieldExists(@Nullable final Field field,
+      final Class<T> type, final GetterMethod<T, R> getter) {
+    if (field == null) {
+      final Method m = MethodUtils.getMethodByReference(type, getter);
+      throw new IllegalArgumentException("No field found for the getter: " + m.getName());
+    }
+  }
+
+  /**
+   * Gets the path of a property specified by a getter method.
+   *
+   * @param <T>
+   *     the type of the object.
+   * @param <R>
+   *     the type of the property.
+   * @param type
+   *     the class of the object.
+   * @param getter
+   *     the getter method of the property.
+   * @return
+   *     the path of the property specified by the getter method.
+   */
+  public static <T, R> String getPropertyPath(final Class<T> type,
+      final GetterMethod<T, R> getter) {
+    final Field field = getField(type, getter);
+    ensureFieldExists(field, type, getter);
+    assert field != null;
+    return field.getName();
+  }
+
+  /**
+   * Gets the path of a property specified by a chain of getter methods.
+   *
+   * @param <T>
+   *     the type of the object.
+   * @param <P>
+   *     the return type of the first getter, which is the type of the property
+   *     of the original object specified by the first getter.
+   * @param <R>
+   *     the return type of the second getter, which is the type of the property
+   *     of the result of the first getter specified by the second getter.
+   * @param type
+   *     the class of the object.
+   * @param g1
+   *     the first getter method, which is the getter of the original object.
+   * @param g2
+   *     the second getter method, which is the getter of the result of the first getter.
+   * @return
+   *     the path of the property specified by the chain of getter methods.
+   */
+  public static <T, P, R> String getPropertyPath(final Class<T> type,
+      final GetterMethod<T, P> g1, final GetterMethod<P, R> g2) {
+    final Field f1 = getField(type, g1);
+    ensureFieldExists(f1, type, g1);
+    assert f1 != null;
+    @SuppressWarnings("unchecked")
+    final Class<P> c1 = (Class<P>) f1.getType();
+    final Field f2 = getField(c1, g2);
+    ensureFieldExists(f2, c1, g2);
+    assert f2 != null;
+    return f1.getName() + '.' + f2.getName();
+  }
+
+  /**
+   * Gets the path of a property specified by a chain of getter methods.
+   *
+   * @param <T>
+   *     the type of the object.
+   * @param <P1>
+   *     the return type of the first getter, which is the type of the property
+   *     of the original object specified by the first getter.
+   * @param <P2>
+   *     the return type of the second getter, which is the type of the property
+   *     of the result of the first getter specified by the second getter.
+   * @param <R>
+   *     the return type of the third getter, which is the type of the property
+   *     of the result of the second getter specified by the third getter.
+   * @param type
+   *     the class of the object.
+   * @param g1
+   *     the first getter method, which is the getter of the original object.
+   * @param g2
+   *     the second getter method, which is the getter of the result of the
+   *     first getter.
+   * @param g3
+   *     the third getter method, which is the getter of the result of the
+   *     second getter.
+   * @return
+   *     the path of the property specified by the chain of getter methods.
+   */
+  public static <T, P1, P2, R> String getPropertyPath(final Class<T> type,
+      final GetterMethod<T, P1> g1, final GetterMethod<P1, P2> g2,
+      final GetterMethod<P2, R> g3) {
+    final Field f1 = getField(type, g1);
+    ensureFieldExists(f1, type, g1);
+    assert f1 != null;
+    @SuppressWarnings("unchecked")
+    final Class<P1> c1 = (Class<P1>) f1.getType();
+    final Field f2 = getField(c1, g2);
+    ensureFieldExists(f2, c1, g2);
+    assert f2 != null;
+    @SuppressWarnings("unchecked")
+    final Class<P2> c2 = (Class<P2>) f2.getType();
+    final Field f3 = getField(c2, g3);
+    assert f3 != null;
+    ensureFieldExists(f3, c2, g3);
+    return f1.getName() + '.' + f2.getName() + '.' + f3.getName();
+  }
+
+  /**
+   * Gets the path of a property specified by a chain of getter methods.
+   *
+   * @param <T>
+   *     the type of the object.
+   * @param <P1>
+   *     the return type of the first getter, which is the type of the property
+   *     of the original object specified by the first getter.
+   * @param <P2>
+   *     the return type of the second getter, which is the type of the property
+   *     of the result of the first getter specified by the second getter.
+   * @param <P3>
+   *     the return type of the third getter, which is the type of the property
+   *     of the result of the second getter specified by the third getter.
+   * @param <R>
+   *     the return type of the fourth getter, which is the type of the property
+   *     of the result of the third getter specified by the fourth getter.
+   * @param type
+   *     the class of the object.
+   * @param g1
+   *     the first getter method, which is the getter of the original object.
+   * @param g2
+   *     the second getter method, which is the getter of the result of the
+   *     first getter.
+   * @param g3
+   *     the third getter method, which is the getter of the result of the
+   *     second getter.
+   * @param g4
+   *     the fourth getter method, which is the getter of the result of the
+   *     third getter.
+   * @return
+   *     the path of the property specified by the chain of getter methods.
+   */
+  public static <T, P1, P2, P3, R> String getPropertyPath(final Class<T> type,
+      final GetterMethod<T, P1> g1, final GetterMethod<P1, P2> g2,
+      final GetterMethod<P2, P3> g3, final GetterMethod<P3, R> g4) {
+    final Field f1 = getField(type, g1);
+    ensureFieldExists(f1, type, g1);
+    assert f1 != null;
+    @SuppressWarnings("unchecked")
+    final Class<P1> c1 = (Class<P1>) f1.getType();
+    final Field f2 = getField(c1, g2);
+    ensureFieldExists(f2, c1, g2);
+    assert f2 != null;
+    @SuppressWarnings("unchecked")
+    final Class<P2> c2 = (Class<P2>) f2.getType();
+    final Field f3 = getField(c2, g3);
+    ensureFieldExists(f3, c2, g3);
+    assert f3 != null;
+    @SuppressWarnings("unchecked")
+    final Class<P3> c3 = (Class<P3>) f3.getType();
+    final Field f4 = getField(c3, g4);
+    ensureFieldExists(f4, c3, g4);
+    assert f4 != null;
+    return f1.getName() + '.' + f2.getName() + '.' + f3.getName() + '.' + f4.getName();
+  }
+
+  /**
+   * Gets the path of a property specified by a chain of getter methods.
+   *
+   * @param <T>
+   *     the type of the object.
+   * @param <P1>
+   *     the return type of the first getter, which is the type of the property
+   *     of the original object specified by the first getter.
+   * @param <P2>
+   *     the return type of the second getter, which is the type of the property
+   *     of the result of the first getter specified by the second getter.
+   * @param <P3>
+   *     the return type of the third getter, which is the type of the property
+   *     of the result of the second getter specified by the third getter.
+   * @param <P4>
+   *     the return type of the fourth getter, which is the type of the property
+   *     of the result of the third getter specified by the fourth getter.
+   * @param <R>
+   *     the return type of the fifth getter, which is the type of the property
+   *     of the result of the third getter specified by the fifth getter.
+   * @param type
+   *     the class of the object.
+   * @param g1
+   *     the first getter method, which is the getter of the original object.
+   * @param g2
+   *     the second getter method, which is the getter of the result of the
+   *     first getter.
+   * @param g3
+   *     the third getter method, which is the getter of the result of the
+   *     second getter.
+   * @param g4
+   *     the fourth getter method, which is the getter of the result of the
+   *     third getter.
+   * @param g5
+   *     the fifth getter method, which is the getter of the result of the
+   *     fourth getter.
+   * @return
+   *     the path of the property specified by the chain of getter methods.
+   */
+  public static <T, P1, P2, P3, P4, R> String getPropertyPath(final Class<T> type,
+      final GetterMethod<T, P1> g1, final GetterMethod<P1, P2> g2,
+      final GetterMethod<P2, P3> g3, final GetterMethod<P3, P4> g4,
+      final GetterMethod<P4, R> g5) {
+    final Field f1 = getField(type, g1);
+    ensureFieldExists(f1, type, g1);
+    assert f1 != null;
+    @SuppressWarnings("unchecked")
+    final Class<P1> c1 = (Class<P1>) f1.getType();
+    final Field f2 = getField(c1, g2);
+    ensureFieldExists(f2, c1, g2);
+    assert f2 != null;
+    @SuppressWarnings("unchecked")
+    final Class<P2> c2 = (Class<P2>) f2.getType();
+    final Field f3 = getField(c2, g3);
+    ensureFieldExists(f3, c2, g3);
+    assert f3 != null;
+    @SuppressWarnings("unchecked")
+    final Class<P3> c3 = (Class<P3>) f3.getType();
+    final Field f4 = getField(c3, g4);
+    ensureFieldExists(f4, c3, g4);
+    assert f4 != null;
+    @SuppressWarnings("unchecked")
+    final Class<P4> c4 = (Class<P4>) f4.getType();
+    final Field f5 = getField(c4, g5);
+    ensureFieldExists(f5, c4, g5);
+    assert f5 != null;
+    return f1.getName() + '.' + f2.getName() + '.' + f3.getName()
+        + '.' + f4.getName() + '.' + f5.getName();
+  }
+
   /**
    * Tests whether the specified class has the property specified in a object
    * graph path.
@@ -32,7 +268,8 @@ public class ObjectGraphUtils {
    * @param cls
    *     the specified class.
    * @param path
-   *     the specified path in the object graph.
+   *     the specified path in the object graph. The path <b>may</b> contain
+   *     computed properties.
    * @return
    *     {@code true} if the specified class has the property specified in the
    *     specified object graph path; {@code false} otherwise.
@@ -46,15 +283,17 @@ public class ObjectGraphUtils {
     String p = path;
     while (index >= 0) {
       final String name = p.substring(0, index);
-      final Field field = getField(c, BEAN_FIELD, name);
-      if (field == null) {
+      // 使用BeanInfo，从而支持计算属性
+      final BeanInfo info = BeanInfo.of(c);
+      final Property prop = info.getProperty(name);
+      if (prop == null) {
         return false;
       }
-      c = field.getType();
+      c = prop.getType();
       p = p.substring(index + 1);
       index = p.indexOf('.');
     }
-    return FieldUtils.hasField(c, BEAN_FIELD, p);
+    return BeanInfo.of(c).hasProperty(p);
   }
 
   /**
@@ -64,14 +303,16 @@ public class ObjectGraphUtils {
    * @param obj
    *     the specified object.
    * @param path
-   *     the specified path in the object graph.
+   *     the specified path in the object graph. The path <b>may</b> contain
+   *     computed properties.
    * @return
    *     the value of a property of the specified object specified by the object
-   *     graph path.
+   *     graph path, or {@code null} if any object in the path is {@code null}.
    * @throws FieldNotExistException
    *     if there is no such path exist in the object graph.
    */
-  public static Object getPropertyValue(final Object obj, final String path) {
+  @Nullable
+  public static Object getPropertyValue(@Nullable final Object obj, final String path) {
     if (isEmpty(path)) {
       return obj;
     }
@@ -90,25 +331,28 @@ public class ObjectGraphUtils {
         pathBuilder.append('.');
       }
       pathBuilder.append(fieldName);
-      final Field field = getField(currentClass, BEAN_FIELD, fieldName);
-      if (field == null) {
-        throw new FieldNotExistException(originalClass, BEAN_FIELD,
-            pathBuilder.toString());
+      // 使用 BeanInfo 来获取 Property，从而支持可计算属性
+      final BeanInfo info = BeanInfo.of(currentClass);
+      final Property prop = info.getProperty(fieldName);
+      if (prop == null) {
+        throw new FieldNotExistException(originalClass, pathBuilder.toString());
       }
-      final Object fieldValue = readField(field, currentObject);
+      final Object fieldValue = prop.getValue(currentObject);
       if (fieldValue == null) {
         return null;
       }
-      currentClass = field.getType();
+      currentClass = prop.getType();
       currentObject = fieldValue;
       currentPath = currentPath.substring(index + 1);
       index = currentPath.indexOf('.');
     }
-    final Field field = getField(currentClass, BEAN_FIELD, currentPath);
-    if (field == null) {
-      throw new FieldNotExistException(originalClass, BEAN_FIELD, path);
+    // 使用 BeanInfo 来获取 Property，从而支持可计算属性
+    final BeanInfo info = BeanInfo.of(currentClass);
+    final Property prop = info.getProperty(currentPath);
+    if (prop == null) {
+      throw new FieldNotExistException(originalClass, path);
     }
-    return readField(field, currentObject);
+    return info.get(currentObject, prop);
   }
 
   /**
@@ -118,7 +362,8 @@ public class ObjectGraphUtils {
    * @param cls
    *     the specified class.
    * @param path
-   *     the specified path in the object graph.
+   *     the specified path in the object graph. The path <b>may</b> contain
+   *     computed properties.
    * @return
    *     the type of the property of the specified class specified by the object
    *     graph path.
@@ -139,36 +384,78 @@ public class ObjectGraphUtils {
         pathBuilder.append('.');
       }
       pathBuilder.append(fieldName);
-      final Field field = getField(currentClass, BEAN_FIELD, fieldName);
-      if (field == null) {
-        throw new FieldNotExistException(cls, BEAN_FIELD, pathBuilder.toString());
+      // 使用 BeanInfo 来获取 Property，从而支持可计算属性
+      final BeanInfo info = BeanInfo.of(currentClass);
+      final Property prop = info.getProperty(fieldName);
+      if (prop == null) {
+        throw new FieldNotExistException(cls, pathBuilder.toString());
       }
-      currentClass = field.getType();
+      currentClass = prop.getType();
       currentPath = currentPath.substring(index + 1);
       index = currentPath.indexOf('.');
     }
-    final Field field = getField(currentClass, BEAN_FIELD, currentPath);
-    if (field == null) {
-      throw new FieldNotExistException(cls, BEAN_FIELD, path);
+    // 使用 BeanInfo 来获取 Property，从而支持可计算属性
+    final BeanInfo info = BeanInfo.of(currentClass);
+    final Property prop = info.getProperty(currentPath);
+    if (prop == null) {
+      throw new FieldNotExistException(cls, path);
     }
-    return field.getType();
+    return prop.getType();
   }
 
   /**
    * Sets the value of a property of the specified object specified by an object
    * graph path.
+   * <p>
+   * This method will not create intermediate objects if they are {@code null}.
+   * Instead, it will throw a {@link NullPointerException} if any intermediate
+   * object in the path is {@code null}.
    *
    * @param obj
    *     the specified object.
    * @param path
-   *     the specified path in the object graph.
+   *     the specified path in the object graph. The path <b>must NOT</b> contain
+   *     computed properties.
    * @param value
    *     the value of a property to be set.
    * @throws FieldNotExistException
    *     if there is no such path exist in the object graph.
+   * @throws NullPointerException
+   *     if any intermediate object in the path is {@code null}.
+   * @see #setPropertyValue(Object, String, Object, boolean)
    */
   public static void setPropertyValue(final Object obj, final String path,
       @Nullable final Object value) {
+    setPropertyValue(obj, path, value, false);
+  }
+
+  /**
+   * Sets the value of a property of the specified object specified by an object
+   * graph path.
+   * <p>
+   * If the argument {@code createIntermediate} is {@code true}, this method will
+   * create intermediate objects if they are {@code null}. Otherwise, it will
+   * throw a {@link NullPointerException} if any intermediate object in the path
+   * is {@code null}.
+   *
+   * @param obj
+   *     the specified object.
+   * @param path
+   *     the specified path in the object graph. The path <b>must NOT</b> contain
+   *     computed properties.
+   * @param value
+   *     the value of a property to be set.
+   * @param createIntermediate
+   *     whether to create intermediate objects if they are {@code null}.
+   * @throws FieldNotExistException
+   *     if there is no such path exist in the object graph.
+   * @throws NullPointerException
+   *     if the {@code createIntermediate} argument is {@code false} and any
+   *     intermediate object in the path is {@code null}.
+   * @see #setPropertyValue(Object, String, Object)
+   */
+  public static void setPropertyValue(final Object obj, final String path,
+      @Nullable final Object value, final boolean createIntermediate) {
     if (obj == null) {
       throw new NullPointerException("object cannot be null.");
     }
@@ -184,25 +471,34 @@ public class ObjectGraphUtils {
         pathBuilder.append('.');
       }
       pathBuilder.append(fieldName);
-      final Field field = getField(currentClass, BEAN_FIELD, fieldName);
-      if (field == null) {
-        throw new FieldNotExistException(originalClass, BEAN_FIELD,
-            pathBuilder.toString());
+      // 使用 BeanInfo 来获取 Property
+      final BeanInfo info = BeanInfo.of(currentClass);
+      final Property prop = info.getProperty(fieldName);
+      if (prop == null) {
+        throw new FieldNotExistException(originalClass, pathBuilder.toString());
       }
-      final Object fieldValue = readField(field, currentObject);
+      if (prop.isReadonly() || prop.isComputed()) {
+        throw new ReflectionException("Cannot write a read-only or computed property:" + pathBuilder);
+      }
+      Object fieldValue = prop.getValue(currentObject);
       if (fieldValue == null) {
-        throw new NullPointerException("The " + pathBuilder
-            + " of the specified object is null.");
+        if (createIntermediate) {
+          fieldValue = ConstructorUtils.newInstance(prop.getType());
+          prop.setValue(currentObject, fieldValue);
+        } else {
+          throw new NullPointerException("The " + pathBuilder + " of the specified object is null.");
+        }
       }
-      currentClass = field.getType();
+      currentClass = prop.getType();
       currentObject = fieldValue;
       currentPath = currentPath.substring(index + 1);
       index = currentPath.indexOf('.');
     }
-    final Field field = getField(currentClass, BEAN_FIELD, currentPath);
-    if (field == null) {
-      throw new FieldNotExistException(originalClass, BEAN_FIELD, path);
+    final BeanInfo info = BeanInfo.of(currentClass);
+    final Property prop = info.getProperty(currentPath);
+    if (prop == null) {
+      throw new FieldNotExistException(originalClass, path);
     }
-    writeField(field, currentObject, value);
+    prop.setValue(currentObject, value);
   }
 }

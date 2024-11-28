@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nullable;
+import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -241,9 +242,9 @@ public final class JdbcUtils {
     final ResultSet rs = metadata.getClientInfoProperties();
     processRow(rs, new RowProcessor() {
       @Override
-      public void processRow(final ResultSet rs, final int rowNum)
+      public void processRow(final ResultSet rs, final int rowNumber)
           throws SQLException {
-        final ClientInfo info = ClientInfoRowMapper.INSTANCE.mapRow(rs, rowNum);
+        final ClientInfo info = ClientInfoRowMapper.INSTANCE.mapRow(rs, rowNumber);
         result.put(info.getName(), info);
       }
     });
@@ -265,9 +266,9 @@ public final class JdbcUtils {
     final ResultSet rs = metadata.getTypeInfo();
     processRow(rs, new RowProcessor() {
       @Override
-      public void processRow(final ResultSet rs, final int rowNum)
+      public void processRow(final ResultSet rs, final int rowNumber)
           throws SQLException {
-        final TypeInfo info = TypeInfoRowMapper.INSTANCE.mapRow(rs, rowNum);
+        final TypeInfo info = new TypeInfo(rs);
         result.put(info.getDataType(), info);
       }
     });
@@ -488,6 +489,99 @@ public final class JdbcUtils {
       pst.executeUpdate();
     } finally {
       closeQuietly(pst);
+    }
+  }
+
+  /**
+   * Gets the name of the database opened by a {@link DataSource}.
+   *
+   * @param dataSource
+   *     a {@link DataSource}.
+   * @return
+   *     the name of the database opened by the data source.
+   */
+  public static String getDatabaseName(final DataSource dataSource) throws SQLException {
+    final Connection connection = dataSource.getConnection();
+    final DatabaseMetaData metaData = connection.getMetaData();
+    final String url = metaData.getURL();
+    return extractDatabaseNameFromUrl(url);
+  }
+
+  private static String extractDatabaseNameFromUrl(final String url) {
+    if (url == null) {
+      throw new IllegalArgumentException("Database URL is null");
+    }
+    if (url.startsWith("jdbc:mysql://") || url.startsWith("jdbc:postgresql://")) { // MySQL and PostgreSQL
+      final String[] parts = url.split("/");
+      if (parts.length > 0) {
+        return parts[parts.length - 1].split("\\?")[0]; // Remove query parameters if present
+      }
+      throw new IllegalArgumentException("Database name not found in MySQL/PostgreSQL URL: " + url);
+    } else if (url.startsWith("jdbc:sqlserver://")) { // SQL Server
+      final String[] parts = url.split(";");
+      for (final String part : parts) {
+        if (part.startsWith("databaseName=")) {
+          return part.split("=")[1];
+        }
+      }
+      throw new IllegalArgumentException("Database name not found in SQL Server URL: " + url);
+    } else if (url.startsWith("jdbc:oracle:thin:@")) {  // Oracle
+      final String[] parts = url.split(":");
+      if (parts.length > 0) {
+        return parts[parts.length - 1];
+      }
+      throw new IllegalArgumentException("Database name not found in Oracle URL: " + url);
+    } else if (url.startsWith("jdbc:sqlite:")) {  // SQLite
+      return url.substring("jdbc:sqlite:".length());
+    } else {
+      throw new IllegalArgumentException("Unsupported database URL: " + url);
+    }
+  }
+
+
+  /**
+   * Gets the host of the database opened by a {@link DataSource}.
+   *
+   * @param dataSource
+   *     a {@link DataSource}.
+   * @return
+   *     the host of the database opened by the data source.
+   */
+  public static String getDatabaseHost(final DataSource dataSource) throws SQLException {
+    final Connection connection = dataSource.getConnection();
+    final DatabaseMetaData metaData = connection.getMetaData();
+    final String url = metaData.getURL();
+    return extractDatabaseHostFromUrl(url);
+  }
+
+  private static String extractDatabaseHostFromUrl(final String url) {
+    if (url == null) {
+      throw new IllegalArgumentException("Database URL is null");
+    }
+    if (url.startsWith("jdbc:mysql://") || url.startsWith("jdbc:postgresql://")) { // MySQL and PostgreSQL
+      final String[] parts = url.split("/");
+      if (parts.length > 2) {
+        return parts[2].split(":")[0];
+      }
+      throw new IllegalArgumentException("Database name not found in MySQL/PostgreSQL URL: " + url);
+    } else if (url.startsWith("jdbc:sqlserver://")) { // SQL Server
+      final String[] parts = url.split(";");
+      for (final String part : parts) {
+        if (part.startsWith("serverName=")) {
+          return part.split("=")[1];
+        }
+      }
+      throw new IllegalArgumentException("Database name not found in SQL Server URL: " + url);
+    } else if (url.startsWith("jdbc:oracle:thin:@")) {  // Oracle
+      final String[] parts = url.split(":");
+      if (parts.length > 0) {
+        return parts[parts.length - 2];
+      }
+      throw new IllegalArgumentException("Database name not found in Oracle URL: " + url);
+    } else if (url.startsWith("jdbc:sqlite:")) {  // SQLite
+      return "localhost";
+    } else {
+      throw new IllegalArgumentException("Unsupported database URL: " + url);
     }
   }
 }

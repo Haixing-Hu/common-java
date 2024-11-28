@@ -8,7 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.error;
 
+import java.io.Serial;
 import java.io.Serializable;
+import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 
 import javax.annotation.Nullable;
 
@@ -29,6 +32,7 @@ import ltd.qubit.commons.util.pair.KeyValuePairList;
  */
 public class ErrorInfo implements Serializable, Assignable<ErrorInfo> {
 
+  @Serial
   private static final long serialVersionUID = 4005921165449943047L;
 
   /**
@@ -99,7 +103,15 @@ public class ErrorInfo implements Serializable, Assignable<ErrorInfo> {
   ErrorInfo(final E1 type, final E2 code, final Throwable e) {
     this.type = type.name();
     this.code = code.name();
-    this.params = KeyValuePairList.of("message", e.getMessage());
+    if (e instanceof SQLException) {
+      // 不要把 SQLSyntaxErrorException.message() 作为错误消息，因为它包含了 SQL 语句，可能会泄露敏感信息。
+      this.params = KeyValuePairList.builder()
+          .add("message", ((SQLSyntaxErrorException) e).getSQLState())
+          .add("reason", e.getMessage())
+          .build();
+    } else {
+      this.params = KeyValuePairList.of("message", e.getMessage());
+    }
   }
 
   public <E1 extends Enum<E1>, E2 extends Enum<E2>>
@@ -110,8 +122,7 @@ public class ErrorInfo implements Serializable, Assignable<ErrorInfo> {
   }
 
   public <E1 extends Enum<E1>, E2 extends Enum<E2>>
-  ErrorInfo(final E1 type, final E2 code,
-      @Nullable final KeyValuePairList params) {
+  ErrorInfo(final E1 type, final E2 code, @Nullable final KeyValuePairList params) {
     this.type = type.name();
     this.code = code.name();
     this.params = params;
@@ -126,7 +137,7 @@ public class ErrorInfo implements Serializable, Assignable<ErrorInfo> {
   }
 
   @Override
-  public ErrorInfo clone() {
+  public ErrorInfo cloneEx() {
     return new ErrorInfo(this);
   }
 

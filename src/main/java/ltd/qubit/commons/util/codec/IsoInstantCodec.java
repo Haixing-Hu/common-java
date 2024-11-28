@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,15 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.codec;
 
-import ltd.qubit.commons.lang.DateUtils;
+import java.time.Instant;
 
 import javax.annotation.Nullable;
-import java.time.Instant;
+
+import ltd.qubit.commons.lang.DateUtils;
 
 /**
  * 符合 ISO-8601 的时间戳编码器，其编码格式为 "uuuu-mm-dd'T'HH:mm:ss.SSS'Z'"。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see <a href="https://stackoverflow.com/questions/29014225/what-is-the-difference-between-year-and-year-of-era">
  * What is the difference between year and year-of-era?</a>
  */

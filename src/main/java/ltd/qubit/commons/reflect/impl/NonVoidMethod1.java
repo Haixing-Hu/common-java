@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -17,7 +17,7 @@ package ltd.qubit.commons.reflect.impl;
  *     方法的返回值的类型。
  * @param <P1>
  *     方法的第1个参数的类型。
- * @author Haixing Hu
+ * @author 胡海星
  */
 @FunctionalInterface
 public interface NonVoidMethod1<T, R, P1> extends MethodReference<T> {

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,25 +13,25 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import ltd.qubit.commons.io.IoUtils;
-import ltd.qubit.commons.io.error.InvalidFormatException;
-import ltd.qubit.commons.io.serialize.BinarySerialization;
+import org.junit.jupiter.api.Test;
+
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+
+import ltd.qubit.commons.io.io.IoUtils;
+import ltd.qubit.commons.io.io.error.InvalidFormatException;
+import ltd.qubit.commons.io.io.serialize.BinarySerialization;
 import ltd.qubit.commons.lang.SystemUtils;
 import ltd.qubit.commons.text.Pattern;
 import ltd.qubit.commons.text.PatternType;
 import ltd.qubit.commons.text.jackson.CustomizedXmlMapper;
 
-import org.junit.jupiter.api.Test;
-
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import static ltd.qubit.commons.test.JacksonXmlTestUtils.assertXmlDeserializeEquals;
 import static ltd.qubit.commons.test.JacksonXmlTestUtils.assertXmlSerializeEquals;
 import static ltd.qubit.commons.text.jackson.XmlMapperUtils.parseListNoThrow;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Unit test of the {@link UrlPattern} class.
@@ -57,7 +57,7 @@ public class UrlPatternTest {
   public void testUrlPatternUrlPartPattern() {
 
     final Pattern pattern = new Pattern(PatternType.GLOB, "www.*");
-    UrlPattern urlPattern = new UrlPattern(UrlPart.HOSTNAME, pattern.clone());
+    UrlPattern urlPattern = new UrlPattern(UrlPart.HOSTNAME, pattern.cloneEx());
     assertEquals(UrlPart.HOSTNAME, urlPattern.getPart());
     assertEquals(pattern, urlPattern.getPattern());
 
@@ -79,7 +79,7 @@ public class UrlPatternTest {
   @Test
   public void testGetSetUrlPart() {
     final Pattern pattern = new Pattern(PatternType.GLOB, "www.*");
-    final UrlPattern urlPattern = new UrlPattern(UrlPart.HOSTNAME, pattern.clone());
+    final UrlPattern urlPattern = new UrlPattern(UrlPart.HOSTNAME, pattern.cloneEx());
 
     assertEquals(UrlPart.HOSTNAME, urlPattern.getPart());
 
@@ -101,12 +101,12 @@ public class UrlPatternTest {
   @Test
   public void testGetSetPattern() {
     Pattern pattern = new Pattern(PatternType.GLOB, "www.*");
-    final UrlPattern urlPattern = new UrlPattern(UrlPart.HOSTNAME, pattern.clone());
+    final UrlPattern urlPattern = new UrlPattern(UrlPart.HOSTNAME, pattern.cloneEx());
 
     assertEquals(pattern, urlPattern.getPattern());
 
     pattern = new Pattern(PatternType.SUFFIX, "com.cn");
-    urlPattern.setPattern(pattern.clone());
+    urlPattern.setPattern(pattern.cloneEx());
     assertEquals(pattern, urlPattern.getPattern());
 
     try {
@@ -250,7 +250,7 @@ public class UrlPatternTest {
   }
 
   /**
-   * Test method for {@link UrlPattern#clone()}.
+   * Test method for {@link UrlPattern#cloneEx()}.
    */
   @Test
   public void testClone() {

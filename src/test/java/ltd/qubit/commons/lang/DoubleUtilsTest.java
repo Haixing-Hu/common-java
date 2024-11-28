@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -17,11 +17,14 @@ import org.junit.jupiter.api.Test;
 import static java.nio.ByteOrder.BIG_ENDIAN;
 import static java.nio.ByteOrder.LITTLE_ENDIAN;
 
-import static ltd.qubit.commons.lang.ByteArrayUtils.DEFAULT_BYTE_ORDER;
-
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static ltd.qubit.commons.lang.ByteArrayUtils.DEFAULT_BYTE_ORDER;
 
 public class DoubleUtilsTest {
 
@@ -75,8 +78,8 @@ public class DoubleUtilsTest {
 
   @Test
   public void testToBoolean_Double_Boolean() {
-    assertEquals(true, DoubleUtils.toBoolean(null, true));
-    assertEquals(false, DoubleUtils.toBoolean(null, false));
+    assertTrue(DoubleUtils.toBoolean(null, true));
+    assertFalse(DoubleUtils.toBoolean(null, false));
 
     for (int i = 0; i < area.length; ++i) {
       final Double x = area[i];
@@ -95,7 +98,7 @@ public class DoubleUtilsTest {
 
   @Test
   public void testToBooleanObject_Double() {
-    assertEquals(null, DoubleUtils.toBooleanObject(null));
+    assertNull(DoubleUtils.toBooleanObject(null));
 
     for (int i = 0; i < area.length; ++i) {
       final Double x = area[i];
@@ -106,7 +109,7 @@ public class DoubleUtilsTest {
 
   @Test
   public void testToBooleanObject_Double_Boolean() {
-    assertEquals(null, DoubleUtils.toBooleanObject(null, null));
+    assertNull(DoubleUtils.toBooleanObject(null, null));
 
     final Boolean a = true;
     final Boolean b = false;
@@ -164,7 +167,7 @@ public class DoubleUtilsTest {
 
   @Test
   public void testToCharObject_Double() {
-    assertEquals(null, DoubleUtils.toCharObject(null));
+    assertNull(DoubleUtils.toCharObject(null));
 
     for (int i = 0; i < area.length; ++i) {
       final Double x = area[i];
@@ -178,7 +181,7 @@ public class DoubleUtilsTest {
     final Character[] a = {Character.MIN_VALUE, Character.MIN_VALUE / 2,
         (char) 0, (char) 1, Character.MAX_VALUE / 2, Character.MAX_VALUE};
 
-    assertEquals(null, DoubleUtils.toCharObject(null, null));
+    assertNull(DoubleUtils.toCharObject(null, null));
 
     for (int i = 0; i < a.length; ++i) {
       assertEquals(a[i], DoubleUtils.toCharObject(null, a[i]));
@@ -235,7 +238,7 @@ public class DoubleUtilsTest {
 
   @Test
   public void testToByteObject_Double() {
-    assertEquals(null, DoubleUtils.toByteObject(null));
+    assertNull(DoubleUtils.toByteObject(null));
 
     for (int i = 0; i < area.length; ++i) {
       final Double x = area[i];
@@ -246,7 +249,7 @@ public class DoubleUtilsTest {
 
   @Test
   public void testToByteObject_Double_Byte() {
-    assertEquals(null, DoubleUtils.toByteObject(null, null));
+    assertNull(DoubleUtils.toByteObject(null, null));
 
     for (int i = Byte.MIN_VALUE; i <= Byte.MAX_VALUE; ++i) {
       final Byte x = (byte) i;
@@ -309,7 +312,7 @@ public class DoubleUtilsTest {
 
   @Test
   public void testToShortObject_Double() {
-    assertEquals(null, DoubleUtils.toShortObject(null));
+    assertNull(DoubleUtils.toShortObject(null));
 
     for (int i = 0; i < area.length; ++i) {
       final Double x = area[i];
@@ -324,7 +327,7 @@ public class DoubleUtilsTest {
         (short) 0, (short) 1,
         Short.MAX_VALUE / 2, Short.MAX_VALUE};
 
-    assertEquals(null, DoubleUtils.toShortObject(null, null));
+    assertNull(DoubleUtils.toShortObject(null, null));
 
     for (int i = 0; i < a.length; ++i) {
       assertEquals(a[i], DoubleUtils.toShortObject(null, a[i]));
@@ -384,7 +387,7 @@ public class DoubleUtilsTest {
 
   @Test
   public void testToIntObject_Double() {
-    assertEquals(null, DoubleUtils.toIntObject(null));
+    assertNull(DoubleUtils.toIntObject(null));
 
     for (int i = 0; i < area.length; ++i) {
       final Double x = area[i];
@@ -398,7 +401,7 @@ public class DoubleUtilsTest {
     final Integer[] a = {Integer.MIN_VALUE, Integer.MIN_VALUE / 2, -1, 0, 1,
         Integer.MAX_VALUE / 2, Integer.MAX_VALUE};
 
-    assertEquals(null, DoubleUtils.toIntObject(null, null));
+    assertNull(DoubleUtils.toIntObject(null, null));
 
     for (int i = 0; i < a.length; ++i) {
       assertEquals(a[i], DoubleUtils.toIntObject(null, a[i]));
@@ -460,7 +463,7 @@ public class DoubleUtilsTest {
 
   @Test
   public void testToLongObject_Double() {
-    assertEquals(null, DoubleUtils.toLongObject(null));
+    assertNull(DoubleUtils.toLongObject(null));
 
     for (int i = 0; i < area.length; ++i) {
       final Double x = area[i];
@@ -475,7 +478,7 @@ public class DoubleUtilsTest {
         (long) 1,
         Long.MAX_VALUE / 2, Long.MAX_VALUE};
 
-    assertEquals(null, DoubleUtils.toLongObject(null, null));
+    assertNull(DoubleUtils.toLongObject(null, null));
 
     for (int i = 0; i < a.length; ++i) {
       assertEquals(a[i], DoubleUtils.toLongObject(null, a[i]));
@@ -539,7 +542,7 @@ public class DoubleUtilsTest {
 
   @Test
   public void testToFloatObject_Double() {
-    assertEquals(null, DoubleUtils.toFloatObject(null));
+    assertNull(DoubleUtils.toFloatObject(null));
 
     for (int i = 0; i < area.length; ++i) {
       final Double x = area[i];
@@ -576,7 +579,7 @@ public class DoubleUtilsTest {
 
   @Test
   public void testToString_Double() {
-    assertEquals(null, DoubleUtils.toString(null));
+    assertNull(DoubleUtils.toString(null));
 
     for (int i = 0; i < area.length; ++i) {
       final Double x = area[i];
@@ -588,7 +591,7 @@ public class DoubleUtilsTest {
   public void testToString_Double_String() {
     Double value1 = null;
     String value2 = null;
-    assertEquals(null, DoubleUtils.toString(value1, value2));
+    assertNull(DoubleUtils.toString(value1, value2));
 
     value2 = "helloworld";
     assertEquals("helloworld", DoubleUtils.toString(value1, value2));
@@ -612,7 +615,7 @@ public class DoubleUtilsTest {
 
   @Test
   public void testToDate_Double() {
-    assertEquals(null, DoubleUtils.toDate(null));
+    assertNull(DoubleUtils.toDate(null));
 
     for (int i = 0; i < area.length; ++i) {
       final Double x = area[i];
@@ -627,7 +630,7 @@ public class DoubleUtilsTest {
         new Date(-1), new Date(0), new Date(1),
         new Date(Long.MAX_VALUE / 2), new Date(Long.MAX_VALUE)};
 
-    assertEquals(null, DoubleUtils.toDate(null, null));
+    assertNull(DoubleUtils.toDate(null, null));
 
     for (int i = 0; i < a.length; ++i) {
       assertEquals(a[i], DoubleUtils.toDate(null, a[i]));
@@ -666,7 +669,7 @@ public class DoubleUtilsTest {
 
   @Test
   public void testToByteArray_Double() {
-    assertEquals(null, DoubleUtils.toByteArray(null));
+    assertNull(DoubleUtils.toByteArray(null));
 
     for (int i = 0; i < area.length; ++i) {
       final Double x = area[i];
@@ -678,8 +681,8 @@ public class DoubleUtilsTest {
 
   @Test
   public void testToByteArray_Double_ByteOrder() {
-    assertEquals(null, DoubleUtils.toByteArray(null, BIG_ENDIAN));
-    assertEquals(null, DoubleUtils.toByteArray(null, LITTLE_ENDIAN));
+    assertNull(DoubleUtils.toByteArray(null, BIG_ENDIAN));
+    assertNull(DoubleUtils.toByteArray(null, LITTLE_ENDIAN));
 
     for (int i = 0; i < area.length; ++i) {
       final Double x = area[i];
@@ -731,7 +734,7 @@ public class DoubleUtilsTest {
 
   @Test
   public void testToClass_Double() {
-    assertEquals(null, DoubleUtils.toClass(null));
+    assertNull(DoubleUtils.toClass(null));
 
     for (int i = 0; i < area.length; ++i) {
       final Double x = area[i];
@@ -741,7 +744,7 @@ public class DoubleUtilsTest {
 
   @Test
   public void testToClass_Double_ClassOfQ() {
-    assertEquals(null, DoubleUtils.toClass(null, null));
+    assertNull(DoubleUtils.toClass(null, null));
 
     assertSame(Double.class, DoubleUtils.toClass(null, Double.class));
 
@@ -762,7 +765,7 @@ public class DoubleUtilsTest {
 
   @Test
   public void testToBigInteger_Double() {
-    assertEquals(null, DoubleUtils.toBigInteger(null));
+    assertNull(DoubleUtils.toBigInteger(null));
 
     for (int i = 0; i < area.length; ++i) {
       final Double x = area[i];
@@ -773,7 +776,7 @@ public class DoubleUtilsTest {
 
   @Test
   public void testToBigInteger_Double_BigInteger() {
-    assertEquals(null, DoubleUtils.toBigInteger(null, null));
+    assertNull(DoubleUtils.toBigInteger(null, null));
 
     for (int i = 0; i < area.length; ++i) {
       final BigInteger x = BigInteger.valueOf((long) area[i]);
@@ -801,7 +804,7 @@ public class DoubleUtilsTest {
 
   @Test
   public void testToBigDecimal_Double() {
-    assertEquals(null, DoubleUtils.toBigDecimal(null));
+    assertNull(DoubleUtils.toBigDecimal(null));
 
     for (int i = 0; i < area.length; ++i) {
       final Double x = area[i];
@@ -812,7 +815,7 @@ public class DoubleUtilsTest {
 
   @Test
   public void testToBigDecimal_Double_BigDecimal() {
-    assertEquals(null, DoubleUtils.toBigDecimal(null, null));
+    assertNull(DoubleUtils.toBigDecimal(null, null));
 
     for (int i = Byte.MIN_VALUE; i <= Byte.MAX_VALUE; ++i) {
       final BigDecimal x = BigDecimal.valueOf(i);
@@ -829,5 +832,4 @@ public class DoubleUtilsTest {
       }
     }
   }
-
 }

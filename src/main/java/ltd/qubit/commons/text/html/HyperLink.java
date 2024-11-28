@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,8 +13,8 @@ import java.io.Serializable;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import ltd.qubit.commons.io.serialize.BinarySerialization;
-import ltd.qubit.commons.io.serialize.XmlSerialization;
+import ltd.qubit.commons.io.io.serialize.BinarySerialization;
+import ltd.qubit.commons.io.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Comparison;
 import ltd.qubit.commons.lang.Equality;
@@ -68,7 +68,7 @@ public final class HyperLink implements Comparable<HyperLink>,
   }
 
   @Override
-  public HyperLink clone() {
+  public HyperLink cloneEx() {
     return new HyperLink(url, anchor);
   }
 

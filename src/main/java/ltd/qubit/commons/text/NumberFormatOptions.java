@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -65,7 +65,7 @@ public class NumberFormatOptions extends FormatFlags implements Assignable<Numbe
   }
 
   @Override
-  public NumberFormatOptions clone() {
+  public NumberFormatOptions cloneEx() {
     return new NumberFormatOptions(this);
   }
 

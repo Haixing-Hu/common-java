@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2017 - 2024.
-//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
+//    Copyright (c) 2022 - 2024.
+//    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -19,10 +19,10 @@ import ltd.qubit.commons.lang.SystemUtils;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import static ltd.qubit.commons.io.FilenameUtils.getBasename;
-import static ltd.qubit.commons.io.FilenameUtils.getDotExtension;
-import static ltd.qubit.commons.io.FilenameUtils.getExtension;
-import static ltd.qubit.commons.io.FilenameUtils.getFilenameFromPath;
+import static ltd.qubit.commons.io.io.FilenameUtils.getBasename;
+import static ltd.qubit.commons.io.io.FilenameUtils.getDotExtension;
+import static ltd.qubit.commons.io.io.FilenameUtils.getExtension;
+import static ltd.qubit.commons.io.io.FilenameUtils.getFilenameFromPath;
 
 public class FilenameUtilsTest {
 

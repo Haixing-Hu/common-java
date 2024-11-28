@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,7 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.sql.impl;
 
-import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.Instant;
@@ -28,8 +27,6 @@ import ltd.qubit.commons.lang.LocalDateUtils;
 import ltd.qubit.commons.lang.LocalTimeUtils;
 import ltd.qubit.commons.lang.NumericUtils;
 import ltd.qubit.commons.lang.StringUtils;
-import ltd.qubit.commons.reflect.FieldUtils;
-import ltd.qubit.commons.reflect.impl.GetterMethod;
 import ltd.qubit.commons.sql.ComparisonOperator;
 import ltd.qubit.commons.sql.Criterion;
 import ltd.qubit.commons.text.Replacer;
@@ -45,7 +42,7 @@ import ltd.qubit.commons.util.codec.LocalTimeCodec;
 /**
  * 提供实现{@link Criterion}相关类的工具函数。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class CriterionImplUtils {
 
@@ -633,73 +630,5 @@ public class CriterionImplUtils {
       throw new IllegalArgumentException("Unsupported comparable value type: "
           + value.getClass().getName());
     }
-  }
-
-  public static <T, R> String getProperty(final Class<T> type,
-      final GetterMethod<T, R> getter) {
-    final String property = FieldUtils.getFieldName(type, getter);
-    if (property == null) {
-      throw new IllegalArgumentException("The method reference is not a valid getter.");
-    }
-    return property;
-  }
-
-  public static <T, P, R> String getProperty(final Class<T> type,
-      final GetterMethod<T, P> g1, final GetterMethod<P, R> g2) {
-    final Field f1 = FieldUtils.getField(type, g1);
-    if (f1 == null) {
-      throw new IllegalArgumentException("The method reference is not a valid getter.");
-    }
-    @SuppressWarnings("unchecked")
-    final Field f2 = FieldUtils.getField((Class<P>) f1.getType(), g2);
-    if (f2 == null) {
-      throw new IllegalArgumentException("The method reference is not a valid getter.");
-    }
-    return f1.getName() + '.' + f2.getName();
-  }
-
-  public static <T, P1, P2, R> String getProperty(final Class<T> type,
-      final GetterMethod<T, P1> g1, final GetterMethod<P1, P2> g2,
-      final GetterMethod<P2, R> g3) {
-    final Field f1 = FieldUtils.getField(type, g1);
-    if (f1 == null) {
-      throw new IllegalArgumentException("The method reference is not a valid getter.");
-    }
-    @SuppressWarnings("unchecked")
-    final Field f2 = FieldUtils.getField((Class<P1>) f1.getType(), g2);
-    if (f2 == null) {
-      throw new IllegalArgumentException("The method reference is not a valid getter.");
-    }
-    @SuppressWarnings("unchecked")
-    final Field f3 = FieldUtils.getField((Class<P2>) f2.getType(), g3);
-    if (f3 == null) {
-      throw new IllegalArgumentException("The method reference is not a valid getter.");
-    }
-    return f1.getName() + '.' + f2.getName() + '.' + f3.getName();
-  }
-
-  public static <T, P1, P2, P3, R> String getProperty(final Class<T> type,
-      final GetterMethod<T, P1> g1, final GetterMethod<P1, P2> g2,
-      final GetterMethod<P2, P3> g3, final GetterMethod<P3, R> g4) {
-    final Field f1 = FieldUtils.getField(type, g1);
-    if (f1 == null) {
-      throw new IllegalArgumentException("The method reference is not a valid getter.");
-    }
-    @SuppressWarnings("unchecked")
-    final Field f2 = FieldUtils.getField((Class<P1>) f1.getType(), g2);
-    if (f2 == null) {
-      throw new IllegalArgumentException("The method reference is not a valid getter.");
-    }
-    @SuppressWarnings("unchecked")
-    final Field f3 = FieldUtils.getField((Class<P2>) f2.getType(), g3);
-    if (f3 == null) {
-      throw new IllegalArgumentException("The method reference is not a valid getter.");
-    }
-    @SuppressWarnings("unchecked")
-    final Field f4 = FieldUtils.getField((Class<P3>) f3.getType(), g4);
-    if (f4 == null) {
-      throw new IllegalArgumentException("The method reference is not a valid getter.");
-    }
-    return f1.getName() + '.' + f2.getName() + '.' + f3.getName() + '.' + f4.getName();
   }
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -22,6 +22,7 @@ import java.sql.SQLException;
  *     the type of objects mapped from rows.
  * @author Haixing Hu
  */
+@FunctionalInterface
 public interface RowMapper<T> {
 
   /**
@@ -33,7 +34,7 @@ public interface RowMapper<T> {
    *
    * @param rs
    *     the ResultSet to map (pre-initialized for the current row).
-   * @param rowNum
+   * @param rowNumber
    *     the number of the current row. Note that the row number is count from
    *     1.
    * @return the result object for the current row.
@@ -41,6 +42,6 @@ public interface RowMapper<T> {
    *     if a SQLException is encountered getting column values (that is,
    *     there's no need to catch SQLException)
    */
-  T mapRow(ResultSet rs, int rowNum) throws SQLException;
+  T mapRow(ResultSet rs, int rowNumber) throws SQLException;
 
 }

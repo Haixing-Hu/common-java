@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,7 +13,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 /**
  * 此枚举表示操作系统平台。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @XmlRootElement(name = "platform")
 public enum Platform {

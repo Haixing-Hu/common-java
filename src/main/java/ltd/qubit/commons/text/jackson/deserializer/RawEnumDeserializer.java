@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,10 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
-import javax.annotation.concurrent.Immutable;
+import java.io.Serial;
 
-import ltd.qubit.commons.reflect.ClassUtils;
-import ltd.qubit.commons.util.codec.RawEnumCodec;
+import javax.annotation.concurrent.Immutable;
 
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -20,8 +19,11 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 
+import ltd.qubit.commons.lang.ClassUtils;
+import ltd.qubit.commons.util.codec.RawEnumCodec;
+
 /**
- * The deserializer of the enum objects.
+ * The JACKSON deserializer of the enum objects.
  *
  * @author Haixing Hu
  */
@@ -30,6 +32,7 @@ import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 public class RawEnumDeserializer extends DecoderDeserializer<Enum>
     implements ContextualDeserializer {
 
+  @Serial
   private static final long serialVersionUID = 528653488213198744L;
 
   public static final RawEnumDeserializer INSTANCE = new RawEnumDeserializer();

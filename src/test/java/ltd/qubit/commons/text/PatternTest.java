@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -10,19 +10,26 @@ package ltd.qubit.commons.text;
 
 import java.io.IOException;
 
-import ltd.qubit.commons.io.error.InvalidFormatException;
-import ltd.qubit.commons.io.serialize.BinarySerialization;
-import ltd.qubit.commons.lang.StringUtils;
-
 import org.junit.jupiter.api.Test;
 
-import static ltd.qubit.commons.test.JacksonXmlTestUtils.assertXmlDeserializeEquals;
-import static ltd.qubit.commons.test.JacksonXmlTestUtils.assertXmlSerializeEquals;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+
+import ltd.qubit.commons.io.io.error.InvalidFormatException;
+import ltd.qubit.commons.io.io.serialize.BinarySerialization;
+import ltd.qubit.commons.lang.StringUtils;
+import ltd.qubit.commons.text.jackson.CustomizedXmlMapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
+
+import static ltd.qubit.commons.test.JacksonXmlTestUtils.assertXmlDeserializeEquals;
+import static ltd.qubit.commons.test.JacksonXmlTestUtils.assertXmlSerializeEquals;
+import static ltd.qubit.commons.test.XmlUnitUtils.assertXmlEqual;
 
 /**
  * Unit test of the {@link Pattern} class.
@@ -65,12 +72,12 @@ public class PatternTest {
   public void testPatternPatternTypeBooleanString() {
     Pattern pattern = new Pattern(PatternType.SUFFIX, true, "suffix");
     assertEquals(PatternType.SUFFIX, pattern.getType());
-    assertEquals(true, pattern.getIgnoreCase());
+    assertTrue(pattern.getIgnoreCase());
     assertEquals("suffix", pattern.getExpression());
 
     pattern = new Pattern(PatternType.PREFIX, false, "prefix");
     assertEquals(PatternType.PREFIX, pattern.getType());
-    assertEquals(false, pattern.getIgnoreCase());
+    assertFalse(pattern.getIgnoreCase());
     assertEquals("prefix", pattern.getExpression());
   }
 
@@ -113,10 +120,10 @@ public class PatternTest {
     assertNull(pattern.getIgnoreCase());
 
     pattern.setIgnoreCase(true);
-    assertEquals(true, pattern.getIgnoreCase());
+    assertTrue(pattern.getIgnoreCase());
 
     pattern.setIgnoreCase(false);
-    assertEquals(false, pattern.getIgnoreCase());
+    assertFalse(pattern.getIgnoreCase());
   }
 
   /**
@@ -160,20 +167,20 @@ public class PatternTest {
     p.setIgnoreCase(false);
 
     p.setExpression("");
-    assertEquals(true, p.matches(""));
-    assertEquals(false, p.matches("str"));
+    assertTrue(p.matches(""));
+    assertFalse(p.matches("str"));
 
     p.setExpression("hello");
-    assertEquals(true, p.matches("hello"));
-    assertEquals(false, p.matches("str"));
-    assertEquals(false, p.matches(""));
-    assertEquals(false, p.matches("Hello"));
+    assertTrue(p.matches("hello"));
+    assertFalse(p.matches("str"));
+    assertFalse(p.matches(""));
+    assertFalse(p.matches("Hello"));
 
     p.setIgnoreCase(true);
-    assertEquals(true, p.matches("hello"));
-    assertEquals(false, p.matches("str"));
-    assertEquals(false, p.matches(""));
-    assertEquals(true, p.matches("Hello"));
+    assertTrue(p.matches("hello"));
+    assertFalse(p.matches("str"));
+    assertFalse(p.matches(""));
+    assertTrue(p.matches("Hello"));
   }
 
   private void testMatchesForPrefixPattern() {
@@ -183,24 +190,24 @@ public class PatternTest {
     p.setIgnoreCase(false);
 
     p.setExpression("");
-    assertEquals(true, p.matches(""));
-    assertEquals(true, p.matches("str"));
+    assertTrue(p.matches(""));
+    assertTrue(p.matches("str"));
 
     p.setExpression("hello");
-    assertEquals(true, p.matches("hello"));
-    assertEquals(true, p.matches("hello123"));
-    assertEquals(false, p.matches("str"));
-    assertEquals(false, p.matches(""));
-    assertEquals(false, p.matches("Hello"));
-    assertEquals(false, p.matches("Hello123"));
+    assertTrue(p.matches("hello"));
+    assertTrue(p.matches("hello123"));
+    assertFalse(p.matches("str"));
+    assertFalse(p.matches(""));
+    assertFalse(p.matches("Hello"));
+    assertFalse(p.matches("Hello123"));
 
     p.setIgnoreCase(true);
-    assertEquals(true, p.matches("hello"));
-    assertEquals(true, p.matches("hello123"));
-    assertEquals(false, p.matches("str"));
-    assertEquals(false, p.matches(""));
-    assertEquals(true, p.matches("Hello"));
-    assertEquals(true, p.matches("Hello123"));
+    assertTrue(p.matches("hello"));
+    assertTrue(p.matches("hello123"));
+    assertFalse(p.matches("str"));
+    assertFalse(p.matches(""));
+    assertTrue(p.matches("Hello"));
+    assertTrue(p.matches("Hello123"));
   }
 
   private void testMatchesForSuffixPattern() {
@@ -210,28 +217,28 @@ public class PatternTest {
     p.setIgnoreCase(false);
 
     p.setExpression("");
-    assertEquals(true, p.matches(""));
-    assertEquals(true, p.matches("str"));
+    assertTrue(p.matches(""));
+    assertTrue(p.matches("str"));
 
     p.setExpression("hello");
-    assertEquals(true, p.matches("hello"));
-    assertEquals(true, p.matches("123hello"));
-    assertEquals(false, p.matches("hello123"));
-    assertEquals(false, p.matches("str"));
-    assertEquals(false, p.matches(""));
-    assertEquals(false, p.matches("Hello"));
-    assertEquals(false, p.matches("123Hello"));
-    assertEquals(false, p.matches("Hello123"));
+    assertTrue(p.matches("hello"));
+    assertTrue(p.matches("123hello"));
+    assertFalse(p.matches("hello123"));
+    assertFalse(p.matches("str"));
+    assertFalse(p.matches(""));
+    assertFalse(p.matches("Hello"));
+    assertFalse(p.matches("123Hello"));
+    assertFalse(p.matches("Hello123"));
 
     p.setIgnoreCase(true);
-    assertEquals(true, p.matches("hello"));
-    assertEquals(true, p.matches("123hello"));
-    assertEquals(false, p.matches("hello123"));
-    assertEquals(false, p.matches("str"));
-    assertEquals(false, p.matches(""));
-    assertEquals(true, p.matches("Hello"));
-    assertEquals(true, p.matches("123Hello"));
-    assertEquals(false, p.matches("Hello123"));
+    assertTrue(p.matches("hello"));
+    assertTrue(p.matches("123hello"));
+    assertFalse(p.matches("hello123"));
+    assertFalse(p.matches("str"));
+    assertFalse(p.matches(""));
+    assertTrue(p.matches("Hello"));
+    assertTrue(p.matches("123Hello"));
+    assertFalse(p.matches("Hello123"));
   }
 
   private void testMatchesForRegexPattern() {
@@ -241,77 +248,77 @@ public class PatternTest {
     p.setIgnoreCase(false);
 
     p.setExpression("");
-    assertEquals(true, p.matches(""));
-    assertEquals(false, p.matches("str"));
+    assertTrue(p.matches(""));
+    assertFalse(p.matches("str"));
 
     p.setExpression(".");
-    assertEquals(false, p.matches(""));
-    assertEquals(true, p.matches("s"));
-    assertEquals(true, p.matches("t"));
-    assertEquals(false, p.matches("st"));
+    assertFalse(p.matches(""));
+    assertTrue(p.matches("s"));
+    assertTrue(p.matches("t"));
+    assertFalse(p.matches("st"));
 
     p.setExpression(".*");
-    assertEquals(true, p.matches(""));
-    assertEquals(true, p.matches("s"));
-    assertEquals(true, p.matches("s"));
-    assertEquals(true, p.matches("st"));
+    assertTrue(p.matches(""));
+    assertTrue(p.matches("s"));
+    assertTrue(p.matches("s"));
+    assertTrue(p.matches("st"));
 
     p.setExpression("ab.c");
-    assertEquals(false, p.matches(""));
-    assertEquals(true, p.matches("abxc"));
-    assertEquals(true, p.matches("abyc"));
-    assertEquals(false, p.matches("abc"));
-    assertEquals(false, p.matches("abxyc"));
-    assertEquals(false, p.matches("abx"));
+    assertFalse(p.matches(""));
+    assertTrue(p.matches("abxc"));
+    assertTrue(p.matches("abyc"));
+    assertFalse(p.matches("abc"));
+    assertFalse(p.matches("abxyc"));
+    assertFalse(p.matches("abx"));
 
     p.setExpression("ab.*c");
-    assertEquals(false, p.matches(""));
-    assertEquals(true, p.matches("abxc"));
-    assertEquals(true, p.matches("abyc"));
-    assertEquals(true, p.matches("abc"));
-    assertEquals(true, p.matches("abxyc"));
-    assertEquals(false, p.matches("aBxc"));
-    assertEquals(false, p.matches("Abyc"));
-    assertEquals(false, p.matches("abC"));
-    assertEquals(false, p.matches("AbxYC"));
-    assertEquals(false, p.matches("abx"));
+    assertFalse(p.matches(""));
+    assertTrue(p.matches("abxc"));
+    assertTrue(p.matches("abyc"));
+    assertTrue(p.matches("abc"));
+    assertTrue(p.matches("abxyc"));
+    assertFalse(p.matches("aBxc"));
+    assertFalse(p.matches("Abyc"));
+    assertFalse(p.matches("abC"));
+    assertFalse(p.matches("AbxYC"));
+    assertFalse(p.matches("abx"));
 
     p.setExpression("ab.+c");
-    assertEquals(false, p.matches(""));
-    assertEquals(true, p.matches("abxc"));
-    assertEquals(true, p.matches("abyc"));
-    assertEquals(false, p.matches("abc"));
-    assertEquals(true, p.matches("abxyc"));
-    assertEquals(false, p.matches("aBxc"));
-    assertEquals(false, p.matches("Abyc"));
-    assertEquals(false, p.matches("abC"));
-    assertEquals(false, p.matches("AbxYC"));
-    assertEquals(false, p.matches("abx"));
+    assertFalse(p.matches(""));
+    assertTrue(p.matches("abxc"));
+    assertTrue(p.matches("abyc"));
+    assertFalse(p.matches("abc"));
+    assertTrue(p.matches("abxyc"));
+    assertFalse(p.matches("aBxc"));
+    assertFalse(p.matches("Abyc"));
+    assertFalse(p.matches("abC"));
+    assertFalse(p.matches("AbxYC"));
+    assertFalse(p.matches("abx"));
 
     p.setIgnoreCase(true);
     p.setExpression("ab.*c");
-    assertEquals(false, p.matches(""));
-    assertEquals(true, p.matches("abxc"));
-    assertEquals(true, p.matches("abyc"));
-    assertEquals(true, p.matches("abc"));
-    assertEquals(true, p.matches("abxyc"));
-    assertEquals(true, p.matches("aBxc"));
-    assertEquals(true, p.matches("Abyc"));
-    assertEquals(true, p.matches("abC"));
-    assertEquals(true, p.matches("AbxYC"));
-    assertEquals(false, p.matches("abx"));
+    assertFalse(p.matches(""));
+    assertTrue(p.matches("abxc"));
+    assertTrue(p.matches("abyc"));
+    assertTrue(p.matches("abc"));
+    assertTrue(p.matches("abxyc"));
+    assertTrue(p.matches("aBxc"));
+    assertTrue(p.matches("Abyc"));
+    assertTrue(p.matches("abC"));
+    assertTrue(p.matches("AbxYC"));
+    assertFalse(p.matches("abx"));
 
     p.setExpression("ab.+c");
-    assertEquals(false, p.matches(""));
-    assertEquals(true, p.matches("abxc"));
-    assertEquals(true, p.matches("abyc"));
-    assertEquals(false, p.matches("abc"));
-    assertEquals(true, p.matches("abxyc"));
-    assertEquals(true, p.matches("aBxc"));
-    assertEquals(true, p.matches("Abyc"));
-    assertEquals(false, p.matches("abC"));
-    assertEquals(true, p.matches("AbxYC"));
-    assertEquals(false, p.matches("abx"));
+    assertFalse(p.matches(""));
+    assertTrue(p.matches("abxc"));
+    assertTrue(p.matches("abyc"));
+    assertFalse(p.matches("abc"));
+    assertTrue(p.matches("abxyc"));
+    assertTrue(p.matches("aBxc"));
+    assertTrue(p.matches("Abyc"));
+    assertFalse(p.matches("abC"));
+    assertTrue(p.matches("AbxYC"));
+    assertFalse(p.matches("abx"));
   }
 
   private void testMatchesForGlobPattern() {
@@ -321,53 +328,53 @@ public class PatternTest {
     p.setIgnoreCase(false);
 
     p.setExpression("");
-    assertEquals(true, p.matches(""));
-    assertEquals(false, p.matches("str"));
+    assertTrue(p.matches(""));
+    assertFalse(p.matches("str"));
 
     p.setExpression("?");
-    assertEquals(false, p.matches(""));
-    assertEquals(true, p.matches("s"));
-    assertEquals(true, p.matches("t"));
-    assertEquals(false, p.matches("st"));
+    assertFalse(p.matches(""));
+    assertTrue(p.matches("s"));
+    assertTrue(p.matches("t"));
+    assertFalse(p.matches("st"));
 
     p.setExpression("*");
-    assertEquals(true, p.matches(""));
-    assertEquals(true, p.matches("s"));
-    assertEquals(true, p.matches("s"));
-    assertEquals(true, p.matches("st"));
+    assertTrue(p.matches(""));
+    assertTrue(p.matches("s"));
+    assertTrue(p.matches("s"));
+    assertTrue(p.matches("st"));
 
     p.setExpression("ab?c");
-    assertEquals(false, p.matches(""));
-    assertEquals(true, p.matches("abxc"));
-    assertEquals(true, p.matches("abyc"));
-    assertEquals(false, p.matches("abc"));
-    assertEquals(false, p.matches("abxyc"));
-    assertEquals(false, p.matches("abx"));
+    assertFalse(p.matches(""));
+    assertTrue(p.matches("abxc"));
+    assertTrue(p.matches("abyc"));
+    assertFalse(p.matches("abc"));
+    assertFalse(p.matches("abxyc"));
+    assertFalse(p.matches("abx"));
 
     p.setExpression("ab*c");
-    assertEquals(false, p.matches(""));
-    assertEquals(true, p.matches("abxc"));
-    assertEquals(true, p.matches("abyc"));
-    assertEquals(true, p.matches("abc"));
-    assertEquals(true, p.matches("abxyc"));
-    assertEquals(false, p.matches("aBxc"));
-    assertEquals(false, p.matches("Abyc"));
-    assertEquals(false, p.matches("abC"));
-    assertEquals(false, p.matches("AbxYC"));
-    assertEquals(false, p.matches("abx"));
+    assertFalse(p.matches(""));
+    assertTrue(p.matches("abxc"));
+    assertTrue(p.matches("abyc"));
+    assertTrue(p.matches("abc"));
+    assertTrue(p.matches("abxyc"));
+    assertFalse(p.matches("aBxc"));
+    assertFalse(p.matches("Abyc"));
+    assertFalse(p.matches("abC"));
+    assertFalse(p.matches("AbxYC"));
+    assertFalse(p.matches("abx"));
 
     p.setIgnoreCase(true);
     p.setExpression("ab*c");
-    assertEquals(false, p.matches(""));
-    assertEquals(true, p.matches("abxc"));
-    assertEquals(true, p.matches("abyc"));
-    assertEquals(true, p.matches("abc"));
-    assertEquals(true, p.matches("abxyc"));
-    assertEquals(true, p.matches("aBxc"));
-    assertEquals(true, p.matches("Abyc"));
-    assertEquals(true, p.matches("abC"));
-    assertEquals(true, p.matches("AbxYC"));
-    assertEquals(false, p.matches("abx"));
+    assertFalse(p.matches(""));
+    assertTrue(p.matches("abxc"));
+    assertTrue(p.matches("abyc"));
+    assertTrue(p.matches("abc"));
+    assertTrue(p.matches("abxyc"));
+    assertTrue(p.matches("aBxc"));
+    assertTrue(p.matches("Abyc"));
+    assertTrue(p.matches("abC"));
+    assertTrue(p.matches("AbxYC"));
+    assertFalse(p.matches("abx"));
 
   }
 
@@ -439,36 +446,35 @@ public class PatternTest {
     final Pattern p1 = new Pattern();
     final Pattern p2 = new Pattern();
 
-    assertEquals(true, p1.equals(p1));
-    assertEquals(true, p1.equals(p2));
-    assertEquals(false, p1.equals(null));
+    assertEquals(p1, p2);
+    assertNotEquals(null, p1);
     assertEquals(p1.hashCode(), p2.hashCode());
 
     p1.setIgnoreCase(false);
     p2.setIgnoreCase(true);
-    assertEquals(false, p1.equals(p2));
-    assertFalse(p1.hashCode() == p2.hashCode());
+    assertNotEquals(p1, p2);
+    assertNotEquals(p1.hashCode(), p2.hashCode());
 
     p1.setIgnoreCase(false);
     p2.setIgnoreCase(false);
     p1.setExpression("expression");
     p2.setExpression("expression");
-    assertEquals(true, p1.equals(p2));
+    assertEquals(p1, p2);
     assertEquals(p1.hashCode(), p2.hashCode());
 
     p2.setExpression("expression2");
-    assertEquals(false, p1.equals(p2));
-    assertFalse(p1.hashCode() == p2.hashCode());
+    assertNotEquals(p1, p2);
+    assertNotEquals(p1.hashCode(), p2.hashCode());
 
     p2.setExpression("expression");
     p1.setType(PatternType.LITERAL);
     p2.setType(PatternType.LITERAL);
-    assertEquals(true, p1.equals(p2));
+    assertEquals(p1, p2);
     assertEquals(p1.hashCode(), p2.hashCode());
 
     p2.setType(PatternType.REGEX);
-    assertEquals(false, p1.equals(p2));
-    assertFalse(p1.hashCode() == p2.hashCode());
+    assertNotEquals(p1, p2);
+    assertNotEquals(p1.hashCode(), p2.hashCode());
   }
 
   /**
@@ -494,4 +500,13 @@ public class PatternTest {
     System.out.println(p);
   }
 
+  @Test
+  public void testXmlMapperBug_9432() throws JsonProcessingException {
+   final String xml = "<pattern type='PREFIX' ignore-case='true'>http://</pattern>";
+   final Pattern pattern = new Pattern(PatternType.PREFIX, true, "http://");
+   final XmlMapper mapper = new CustomizedXmlMapper();
+   final String actual = mapper.writeValueAsString(pattern);
+   System.out.println("Actual XML: " + actual);
+   assertXmlEqual(xml, actual);
+  }
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -12,6 +12,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,19 +22,20 @@ import javax.annotation.concurrent.Immutable;
 
 import jakarta.validation.constraints.Size;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ltd.qubit.commons.annotation.Computed;
 import ltd.qubit.commons.annotation.Identifier;
 import ltd.qubit.commons.annotation.KeyIndex;
 import ltd.qubit.commons.annotation.Reference;
 import ltd.qubit.commons.annotation.Unique;
+import ltd.qubit.commons.lang.ClassUtils;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.reflect.impl.GetterMethod;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import ltd.qubit.commons.util.range.CloseRange;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static ltd.qubit.commons.lang.Argument.requireNonEmpty;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
@@ -121,6 +123,21 @@ public class Property {
   @Nullable
   private final Field field;
 
+  private final boolean computed;
+
+  private final boolean readonly;
+
+  private final boolean publicField;
+
+  private final boolean protectedField;
+
+  private final boolean privateField;
+
+  private final boolean transientField;
+
+  private final boolean finalField;
+
+  @Nullable
   private final Method readMethod;
 
   @Nullable
@@ -149,8 +166,7 @@ public class Property {
    *     the name of the bean property.
    */
   private Property(final Class<?> ownerClass, final String name) {
-    this(ownerClass, name,
-        FieldUtils.getFieldInfo(ownerClass, Option.BEAN_FIELD, name));
+    this(ownerClass, name, FieldUtils.getFieldInfo(ownerClass, Option.BEAN_FIELD, name));
   }
 
   /**
@@ -169,28 +185,40 @@ public class Property {
     this.name = requireNonEmpty("name", name);
     this.fullname = ownerClass.getSimpleName() + '.' + name;
     this.fieldInfo = fieldInfo;
-    if (fieldInfo != null) {
-      this.field = fieldInfo.getField();
-      this.readMethod = FieldUtils.getReadMethod(this.field);
-    } else {
-      this.field = null;
-      this.readMethod = FieldUtils.getReadMethod(ownerClass, name);
-    }
-    if (readMethod == null) {
-      throw new IllegalArgumentException("Cannot find the read method for the "
-          + "property " + name + " of the bean " + ownerClass.getCanonicalName());
-    }
-    final Reference referenceAnnotation;
+    this.field = (fieldInfo == null ? null : fieldInfo.getField());
     if (field != null) {
       type = field.getType();
+      readMethod = FieldUtils.getReadMethod(field);
       writeMethod = FieldUtils.getWriteMethod(field);
       declaringClass = field.getDeclaringClass();
-      referenceAnnotation = field.getAnnotation(Reference.class);
+      publicField = ((field.getModifiers() & Modifier.PUBLIC) != 0);
+      protectedField = ((field.getModifiers() & Modifier.PROTECTED) != 0);
+      privateField = ((field.getModifiers() & Modifier.PRIVATE) != 0);
+      transientField = ((field.getModifiers() & Modifier.TRANSIENT) != 0);
+      finalField = ((field.getModifiers() & Modifier.FINAL) != 0);
     } else {
+      readMethod = FieldUtils.getReadMethod(ownerClass, name);
+      if (readMethod == null) {
+        throw new IllegalArgumentException("The specified property has no field nor read method:" + fullname);
+      }
       type = readMethod.getReturnType();
       writeMethod = FieldUtils.getWriteMethod(ownerClass, name, type);
       declaringClass = readMethod.getDeclaringClass();
+      publicField = false;
+      protectedField = false;
+      privateField = false;
+      transientField = false;
+      finalField = false;
+    }
+    computed = (readMethod != null) && (readMethod.isAnnotationPresent(Computed.class));
+    readonly = (!publicField) && (!computed) && (writeMethod == null);
+    final Reference referenceAnnotation;
+    if (field != null && field.isAnnotationPresent(Reference.class)) {
+      referenceAnnotation = field.getAnnotation(Reference.class);
+    } else if (readMethod != null && Reference.class.isAnnotationPresent(Reference.class)) {
       referenceAnnotation = readMethod.getAnnotation(Reference.class);
+    } else {
+      referenceAnnotation = null;
     }
     if (referenceAnnotation == null) {
       reference = false;
@@ -210,16 +238,20 @@ public class Property {
   private <T extends Annotation> boolean hasAnnotation(final Class<T> annotationClass) {
     if (field != null) {
       return field.isAnnotationPresent(annotationClass);
-    } else {
+    } else if (readMethod != null) {
       return readMethod.isAnnotationPresent(annotationClass);
+    } else {
+      return false;
     }
   }
 
   private <T extends Annotation> T getAnnotation(final Class<T> annotationClass) {
     if (field != null) {
       return field.getAnnotation(annotationClass);
-    } else {
+    } else if (readMethod != null) {
       return readMethod.getAnnotation(annotationClass);
+    } else {
+      return null;
     }
   }
 
@@ -300,6 +332,61 @@ public class Property {
   }
 
   /**
+   * Tests whether the bean property is a public accessible field.
+   *
+   * @return
+   *     {@code true} if the bean property is a public accessible field;
+   *     {@code false} otherwise.
+   */
+  public boolean isPublicField() {
+    return publicField;
+  }
+
+  /**
+   * Tests whether the bean property is a protected field.
+   *
+   * @return
+   *     {@code true} if the bean property is a protected field; {@code false}
+   *     otherwise.
+   */
+  public boolean isProtectedField() {
+    return protectedField;
+  }
+
+  /**
+   * Tests whether the bean property is a private field.
+   *
+   * @return
+   *     {@code true} if the bean property is a private field; {@code false}
+   *     otherwise.
+   */
+  public boolean isPrivateField() {
+    return privateField;
+  }
+
+  /**
+   * Tests whether the bean property is a transient field.
+   *
+   * @return
+   *     {@code true} if the bean property is a transient field; {@code false}
+   *     otherwise.
+   */
+  public boolean isTransientField() {
+    return transientField;
+  }
+
+  /**
+   * Tests whether the bean property is a final field.
+   *
+   * @return
+   *     {@code true} if the bean property is a final field; {@code false}
+   *     otherwise.
+   */
+  public boolean isFinalField() {
+    return finalField;
+  }
+
+  /**
    * Tests whether the bean property is a computed property.
    *
    * @return
@@ -309,7 +396,7 @@ public class Property {
    * @see #getComputedDependOn()
    */
   public boolean isComputed() {
-    return readMethod.isAnnotationPresent(Computed.class);
+    return computed;
   }
 
   /**
@@ -322,7 +409,7 @@ public class Property {
    * @see #getComputedDependOn()
    */
   public boolean isNonComputed() {
-    return ! readMethod.isAnnotationPresent(Computed.class);
+    return (! computed);
   }
 
   /**
@@ -335,7 +422,7 @@ public class Property {
    */
   @Nullable
   public final String[] getComputedDependOn() {
-    final Computed annotation = readMethod.getAnnotation(Computed.class);
+    final Computed annotation = getAnnotation(Computed.class);
     return (annotation == null ? null : nullIfEmpty(annotation.value()));
   }
 
@@ -347,8 +434,7 @@ public class Property {
    *     otherwise.
    */
   public boolean isReadonly() {
-    return ((writeMethod == null)
-        && (! readMethod.isAnnotationPresent(Computed.class)));
+    return readonly;
   }
 
   /**
@@ -382,6 +468,17 @@ public class Property {
    */
   public boolean isCollection() {
     return Collection.class.isAssignableFrom(type);
+  }
+
+  /**
+   * Tests whether the bean property is a property of a map type.
+   *
+   * @return
+   *     {@code true} if the bean property is a property of a map type;
+   *     {@code false} otherwise.
+   */
+  public boolean isMap() {
+    return Map.class.isAssignableFrom(type);
   }
 
   /**
@@ -491,7 +588,7 @@ public class Property {
   }
 
   /**
-   * Tests whether this bean property is a indirect reference to a property of
+   * Tests whether this bean property is an indirect reference to a property of
    * another model.
    *
    * @return
@@ -631,6 +728,7 @@ public class Property {
    *     the {@link Method} object of the getter of this bean property, which is
    *     always not null.
    */
+  @Nullable
   public Method getReadMethod() {
     return readMethod;
   }
@@ -649,13 +747,13 @@ public class Property {
   }
 
   /**
-   * Gets the qualified name of this bean property.
+   * Gets the full qualified name of this bean property.
    *
    * @return
-   *      the qualified name of this bean property.
+   *      the full qualified name of this bean property.
    */
-  public String getQualifiedName() {
-    return ownerClass.getSimpleName() + "." + name;
+  public String getFullQualifiedName() {
+    return ClassUtils.getFullCanonicalName(ownerClass) + "." + name;
   }
 
   /**
@@ -669,11 +767,22 @@ public class Property {
    *     if any reflection error occurs.
    */
   public Object getValue(final Object owner) {
-    try {
-      return readMethod.invoke(owner);
-    } catch (final IllegalAccessException | InvocationTargetException | RuntimeException e) {
-      LOGGER.error("Failed to get value for {}: {}", fullname, e.getMessage());
-      throw new ReflectionException(e);
+    if (readMethod != null) {
+      try {
+        return readMethod.invoke(owner);
+      } catch (final IllegalAccessException | InvocationTargetException | RuntimeException e) {
+        LOGGER.error("Failed to get value for {}: {}", fullname, e.getMessage());
+        throw new ReflectionException(e);
+      }
+    } else if (field != null) {
+      try {
+        return field.get(owner);
+      } catch (final IllegalAccessException | RuntimeException e) {
+        LOGGER.error("Failed to get value for {}: {}", fullname, e.getMessage());
+        throw new ReflectionException(e);
+      }
+    } else {
+      throw new ReflectionException("Cannot read a write-only property: " + getFullQualifiedName());
     }
   }
 
@@ -688,15 +797,22 @@ public class Property {
    *     if any reflection error occurs.
    */
   public void setValue(final Object owner, @Nullable final Object value) {
-    if (writeMethod == null) {
-      throw new ReflectionException("Cannot write a readonly or computed property: "
-          + getQualifiedName());
-    }
-    try {
-      writeMethod.invoke(owner, value);
-    } catch (final IllegalAccessException | InvocationTargetException | RuntimeException e) {
-      LOGGER.error("Failed to set value for {}: {}", fullname, e.getMessage());
-      throw new ReflectionException(e);
+    if (writeMethod != null) {
+      try {
+        writeMethod.invoke(owner, value);
+      } catch (final IllegalAccessException | InvocationTargetException | RuntimeException e) {
+        LOGGER.error("Failed to set value for {}: {}", fullname, e.getMessage());
+        throw new ReflectionException(e);
+      }
+    } else if (field != null) {
+      try {
+        field.set(owner, value);
+      } catch (final IllegalAccessException | RuntimeException e) {
+        LOGGER.error("Failed to set value for {}: {}", fullname, e.getMessage());
+        throw new ReflectionException(e);
+      }
+    } else {
+      throw new ReflectionException("Cannot write a read-only or computed property: " + getFullQualifiedName());
     }
   }
 

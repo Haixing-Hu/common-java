@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.config.impl;
 
+import java.io.Serial;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
@@ -17,6 +18,9 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nullable;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ltd.qubit.commons.config.AbstractConfig;
 import ltd.qubit.commons.config.Config;
@@ -30,15 +34,12 @@ import ltd.qubit.commons.datastructure.list.primitive.FloatCollection;
 import ltd.qubit.commons.datastructure.list.primitive.IntCollection;
 import ltd.qubit.commons.datastructure.list.primitive.LongCollection;
 import ltd.qubit.commons.datastructure.list.primitive.ShortCollection;
-import ltd.qubit.commons.io.serialize.BinarySerialization;
-import ltd.qubit.commons.io.serialize.XmlSerialization;
+import ltd.qubit.commons.io.io.serialize.BinarySerialization;
+import ltd.qubit.commons.io.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.Argument;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.lang.Type;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The {@link DefaultConfig} class is the default implementation of the {@link
@@ -48,6 +49,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultConfig extends AbstractConfig {
 
+  @Serial
   private static final long serialVersionUID = 3519879255214071861L;
 
   protected static final Logger LOGGER = LoggerFactory
@@ -124,6 +126,39 @@ public class DefaultConfig extends AbstractConfig {
 
   public DefaultProperty set(final DefaultProperty property) {
     return properties.put(property.getName(), property);
+  }
+
+  /**
+   * Adds all properties of the specified {@link Config} object to this
+   * {@link DefaultConfig} object.
+   *
+   * @param config
+   *     the {@link Config} object whose properties are to be added.
+   * @return
+   *     this {@link DefaultConfig} object.
+   */
+  public DefaultConfig addAll(final Config config) {
+    Argument.requireNonNull("config", config);
+    for (final Property prop : config.getProperties()) {
+      add(prop);
+    }
+    return this;
+  }
+
+  /**
+   * Adds a collection of {@link Property}s to this {@link DefaultConfig} object.
+   *
+   * @param properties
+   *     the collection of {@link Property}s to be added.
+   * @return
+   *     this {@link DefaultConfig} object.
+   */
+  public DefaultConfig addAll(final Collection<? extends Property> properties) {
+    Argument.requireNonNull("properties", properties);
+    for (final Property prop : properties) {
+      add(prop);
+    }
+    return this;
   }
 
   /**
@@ -824,6 +859,26 @@ public class DefaultConfig extends AbstractConfig {
     prop.addByteArrayValues(values);
   }
 
+  public void setEnum(final String name, final Enum<?> value) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setStringValue(value.name());
+  }
+
+  public final void setEnums(final String name, final Enum<?>... values) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    final String[] strValues = new String[values.length];
+    for (int i = 0; i < values.length; ++i) {
+      strValues[i] = values[i].name();
+    }
+    prop.setStringValues(strValues);
+  }
+
   public void setClass(final String name, final Class<?> value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -1018,19 +1073,17 @@ public class DefaultConfig extends AbstractConfig {
     // that is, allowing the object of the sub-class of DefaultConfig
     // to be equal to the object of DefaultConfig, as long as they have
     // the same properties.
-    if (!(obj instanceof DefaultConfig)) {
+    if (!(obj instanceof final DefaultConfig other)) {
       return false;
     }
-    final DefaultConfig other = (DefaultConfig) obj;
     return properties.equals(other.properties);
   }
 
   @Override
-  public Config clone() {
-    final DefaultConfig result = (DefaultConfig) super.clone();
-    result.properties = new HashMap<>();
+  public Config cloneEx() {
+    final DefaultConfig result = new DefaultConfig();
     for (final DefaultProperty prop : properties.values()) {
-      result.properties.put(prop.getName(), prop.clone());
+      result.properties.put(prop.getName(), prop.cloneEx());
     }
     return result;
   }

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -23,7 +23,7 @@ import ltd.qubit.commons.util.expand.ExpansionPolicy;
 
 import static java.lang.System.arraycopy;
 
-import static ltd.qubit.commons.io.serialize.BinarySerialization.register;
+import static ltd.qubit.commons.io.io.serialize.BinarySerialization.register;
 import static ltd.qubit.commons.lang.Argument.checkBounds;
 import static ltd.qubit.commons.lang.Argument.requireGreaterEqual;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
@@ -378,7 +378,7 @@ public final class BooleanBuffer implements Swappable<BooleanBuffer>,
   }
 
   @Override
-  public BooleanBuffer clone() {
+  public BooleanBuffer cloneEx() {
     final BooleanBuffer cloned = new BooleanBuffer(buffer.length);
     cloned.length = length;
     arraycopy(buffer, 0, cloned.buffer, 0, buffer.length);

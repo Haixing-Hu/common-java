@@ -90,7 +90,7 @@ public class ChainedStringTransformer implements StringTransformer {
   }
 
   @Override
-  public ChainedStringTransformer clone() {
+  public ChainedStringTransformer cloneEx() {
     return new ChainedStringTransformer(Assignment.deepClone(transformers));
   }
 
@@ -117,7 +117,7 @@ public class ChainedStringTransformer implements StringTransformer {
   @Override
   public String toString() {
     return new ToStringBuilder(this)
-        .append("transformers", transformers)
-        .toString();
+            .append("transformers", transformers)
+            .toString();
   }
 }

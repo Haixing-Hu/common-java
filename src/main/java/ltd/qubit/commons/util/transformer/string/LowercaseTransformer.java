@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -76,7 +76,7 @@ public final class LowercaseTransformer extends AbstractStringTransformer {
   }
 
   @Override
-  public LowercaseTransformer clone() {
+  public LowercaseTransformer cloneEx() {
     return new LowercaseTransformer(locale);
   }
 }

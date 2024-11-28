@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,16 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
-import ltd.qubit.commons.lang.EnumUtils;
-
 import java.util.Locale;
+
+import ltd.qubit.commons.lang.EnumUtils;
 
 import static ltd.qubit.commons.lang.EnumUtils.registerLocalizedNames;
 
 /**
  * 此枚举表示民族。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @since 1.0
  * @see <a href="https://zh.wikipedia.org/wiki/%E4%B8%AD%E5%9C%8B%E6%B0%91%E6%97%8F%E5%88%97%E8%A1%A8">中国民族列表</a>
  */

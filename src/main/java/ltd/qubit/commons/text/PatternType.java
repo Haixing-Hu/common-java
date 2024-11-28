@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -37,6 +37,12 @@ public enum PatternType {
   SUFFIX("suffix"),
 
   /**
+   * Indicate that the pattern represents a substring, therefore a string matches
+   * the pattern if and only if the string has a substring equals the pattern.
+   */
+  SUBSTRING("substring"),
+
+  /**
    * Indicate that the pattern represents a regular expression pattern,
    * therefore a string matches the pattern if and only if the string matches
    * the regular expression represented by the pattern.
@@ -56,6 +62,7 @@ public enum PatternType {
     NAME_MAP.put(LITERAL.name, LITERAL);
     NAME_MAP.put(PREFIX.name, PREFIX);
     NAME_MAP.put(SUFFIX.name, SUFFIX);
+    NAME_MAP.put(SUBSTRING.name, SUBSTRING);
     NAME_MAP.put(REGEX.name, REGEX);
     NAME_MAP.put(GLOB.name, GLOB);
   }
@@ -82,6 +89,8 @@ public enum PatternType {
         return "^" + Pattern.quote(pattern);
       case SUFFIX:
         return Pattern.quote(pattern) + "$";
+      case SUBSTRING:
+        return ".*" + Pattern.quote(pattern) + ".*";
       case REGEX:
         return pattern;
       case GLOB:

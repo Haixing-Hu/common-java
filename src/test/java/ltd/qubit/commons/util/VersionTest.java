@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,12 +11,12 @@ package ltd.qubit.commons.util;
 import java.io.IOException;
 import java.text.ParseException;
 
-import ltd.qubit.commons.io.error.InvalidFormatException;
-import ltd.qubit.commons.io.serialize.BinarySerialization;
-import ltd.qubit.commons.io.serialize.XmlSerialization;
-import ltd.qubit.commons.text.xml.XmlException;
-
 import org.junit.jupiter.api.Test;
+
+import ltd.qubit.commons.io.io.error.InvalidFormatException;
+import ltd.qubit.commons.io.io.serialize.BinarySerialization;
+import ltd.qubit.commons.io.io.serialize.XmlSerialization;
+import ltd.qubit.commons.text.xml.XmlException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -520,14 +520,14 @@ public class VersionTest {
   }
 
   /**
-   * Test method for {@link Version#clone()}.
+   * Test method for {@link Version#cloneEx()}.
    */
   @Test
   public void testClone() {
     Version v1 = new Version(255, 255, 255, 255);
     Version v2 = null;
 
-    v2 = v1.clone();
+    v2 = v1.cloneEx();
     assertTrue(v1 != v2);
     assertEquals(255, v2.major());
     assertEquals(255, v2.minor());
@@ -535,7 +535,7 @@ public class VersionTest {
     assertEquals(255, v2.micro());
 
     v1 = new Version(0, 1, 2, 3);
-    v2 = v1.clone();
+    v2 = v1.cloneEx();
     assertTrue(v1 != v2);
     assertEquals(0, v2.major());
     assertEquals(1, v2.minor());
@@ -543,7 +543,7 @@ public class VersionTest {
     assertEquals(3, v2.micro());
 
     v1 = new Version(0, 0, 0, 0);
-    v2 = v1.clone();
+    v2 = v1.cloneEx();
     assertTrue(v1 != v2);
     assertEquals(0, v2.major());
     assertEquals(0, v2.minor());

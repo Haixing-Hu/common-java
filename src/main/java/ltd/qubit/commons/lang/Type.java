@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,6 +15,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Map;
+
+import javax.annotation.Nullable;
 
 import static java.util.Map.entry;
 
@@ -90,12 +92,67 @@ public enum Type {
   private static final Map<Type, ClassKey>  TYPE_CLASS_MAP =
       invertAsUnmodifiable(CLASS_TYPE_MAP);
 
+  @Nullable
   public static Type forClass(final Class<?> clazz) {
     return CLASS_TYPE_MAP.get(new ClassKey(clazz));
   }
 
+  @Nullable
   public static Class<?> toClass(final Type type) {
     final ClassKey result = TYPE_CLASS_MAP.get(type);
     return (result == null ? null : result.getActualClass());
+  }
+
+  /**
+   * Parses a text to an object of this type.
+   *
+   * @param text
+   *     the text to be parsed, which must be trimmed if necessary.
+   * @return
+   *     the parsed object.
+   */
+  public Object parse(final String text) {
+    switch (this) {
+      case BOOL:
+        return Boolean.parseBoolean(text);
+      case CHAR:
+        return text.charAt(0);
+      case BYTE:
+        return Byte.parseByte(text);
+      case SHORT:
+        return Short.parseShort(text);
+      case INT:
+        return Integer.parseInt(text);
+      case LONG:
+        return Long.parseLong(text);
+      case FLOAT:
+        return Float.parseFloat(text);
+      case DOUBLE:
+        return Double.parseDouble(text);
+      case STRING:
+        return text;
+      case DATE:
+        return LocalDate.parse(text);
+      case TIME:
+        return LocalTime.parse(text);
+      case DATETIME:
+        return LocalDateTime.parse(text);
+      case TIMESTAMP:
+        return Timestamp.valueOf(text);
+      case BYTE_ARRAY:
+        return text.getBytes();
+      case CLASS:
+        try {
+          return Class.forName(text);
+        } catch (final ClassNotFoundException e) {
+          throw new IllegalArgumentException("Invalid class name: " + text, e);
+        }
+      case BIG_INTEGER:
+        return new BigInteger(text);
+      case BIG_DECIMAL:
+        return new BigDecimal(text);
+      default:
+        throw new UnsupportedOperationException("Unsupported type: " + this);
+    }
   }
 }

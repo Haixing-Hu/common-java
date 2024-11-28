@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -16,8 +17,8 @@ import java.util.regex.Pattern;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import ltd.qubit.commons.error.TypeMismatchException;
-import ltd.qubit.commons.io.serialize.BinarySerialization;
-import ltd.qubit.commons.io.serialize.XmlSerialization;
+import ltd.qubit.commons.io.io.serialize.BinarySerialization;
+import ltd.qubit.commons.io.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Equality;
@@ -30,7 +31,7 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
 /**
  * The class of the filename glob patterns.
  *
- * <p>The glob pattern syntax obey the rule at http://www.jedit.org/users-guide/globs.html.
+ * <p>The glob pattern syntax obey the rule at <a href="http://www.jedit.org/users-guide/globs.html">Globs</a>.
  *
  * <p>The following character sequences have special meaning within a glob pattern:
  *
@@ -50,6 +51,7 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
 @NotThreadSafe
 public class Glob implements Serializable, CloneableEx<Glob>, Assignable<Glob> {
 
+  @Serial
   private static final long   serialVersionUID = -1303433525002426637L;
 
   public static final int DEFAULT_FLAGS        = Pattern.CASE_INSENSITIVE;
@@ -65,8 +67,46 @@ public class Glob implements Serializable, CloneableEx<Glob>, Assignable<Glob> {
   }
 
   /**
-   * Converts a Unix-style filename glob to a regular expression.
+   * Tests whether the specified string is a glob pattern.
    *
+   * @param str
+   *     the string to be tested.
+   * @return
+   *     {@code true} if the specified string is a glob pattern; {@code false}
+   *     otherwise.
+   */
+  public static boolean isGlob(final String str) {
+    if (str == null) {
+      return false;
+    }
+    final int len = str.length();
+    if (len == 0) {
+      return false;
+    }
+    for (int i = 0; i < len; ++i) {
+      final char ch = str.charAt(i);
+      switch (ch) {
+        case '?':
+        case '*':
+        case '{':
+        case '}':
+        case '[':
+        case ']':
+          return true;
+        case '\\':
+          if ((i + 1) < len) {
+            ++i;
+          }
+          break;
+        default:
+          break;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Converts a Unix-style filename glob to a regular expression.
    *
    * <p>Since we use java.util.regex patterns to implement globs, this means that
    * in addition to the above, a number of “character class metacharacters” may
@@ -275,7 +315,7 @@ public class Glob implements Serializable, CloneableEx<Glob>, Assignable<Glob> {
   }
 
   @Override
-  public Glob clone() {
+  public Glob cloneEx() {
     final Glob result = new Glob();
     result.flags = flags;
     result.pattern = pattern;

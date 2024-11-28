@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -22,12 +22,12 @@ import java.util.TimeZone;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ltd.qubit.commons.lang.DateUtils;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.text.Stripper;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
@@ -151,8 +151,7 @@ public class InstantCodec implements Codec<Instant, String> {
         final TemporalAccessor temporal = decodeFormatter.parseBest(text,
                 ZonedDateTime::from,
                 LocalDateTime::from, LocalDate::from);
-        if (temporal instanceof LocalDate) {
-          final LocalDate date = (LocalDate) temporal;
+        if (temporal instanceof final LocalDate date) {
           return ZonedDateTime.of(date, LocalTime.of(0, 0), zone.toZoneId()).toInstant();
         } else if (temporal instanceof LocalDateTime) {
           final LocalDateTime time = (LocalDateTime) temporal;
@@ -170,15 +169,6 @@ public class InstantCodec implements Codec<Instant, String> {
         LOGGER.error("Invalid date time format: {}, expected {}", text, decodePattern);
         throw new DecodingException(e);
       }
-    }
-  }
-
-  public Instant decodeNoThrow(@Nullable final String str) {
-    try {
-      return decode(str);
-    } catch (final DecodingException e) {
-      // ignore
-      return null;
     }
   }
 }

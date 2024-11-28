@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,7 +13,7 @@ import java.time.Instant;
 /**
  * 此接口表示实体类记录了创建时间。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface Creatable {
 

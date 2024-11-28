@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -12,20 +12,21 @@ import java.io.IOException;
 
 import javax.annotation.concurrent.Immutable;
 
-import ltd.qubit.commons.text.Stripper;
-import ltd.qubit.commons.util.codec.Decoder;
-import ltd.qubit.commons.util.codec.DecodingException;
-
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
+import ltd.qubit.commons.text.Stripper;
+import ltd.qubit.commons.util.codec.Decoder;
+import ltd.qubit.commons.util.codec.DecodingException;
+
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.lang.StringUtils.isEmpty;
 
 /**
- * The deserializer which use a decoder to decode string to the specified value.
+ * The JACKSON deserializer which use a decoder to decode string to the
+ * specified value.
  *
  * @param <T>
  *     the type of values to be deserialized.
@@ -93,6 +94,7 @@ public class DecoderDeserializer<T> extends StdDeserializer<T> {
     switch (token) {
       case VALUE_STRING:
       case VALUE_NUMBER_INT:
+      case VALUE_NUMBER_FLOAT:
       case VALUE_TRUE:
       case VALUE_FALSE:
       case VALUE_NULL:

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,6 +15,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+
+import org.junit.jupiter.api.Test;
 
 import ltd.qubit.commons.config.error.ConfigurationError;
 import ltd.qubit.commons.config.impl.DefaultConfig;
@@ -39,11 +41,10 @@ import ltd.qubit.commons.lang.SystemUtils;
 import ltd.qubit.commons.lang.Type;
 import ltd.qubit.commons.util.value.MultiValues;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -66,19 +67,19 @@ public class ConfigTest {
     final DefaultConfig config = new DefaultConfig();
 
     config.setBoolean("prop1", true);
-    assertEquals(true, config.getBoolean("prop1"));
+    assertTrue(config.getBoolean("prop1"));
 
     config.setBoolean("prop2", false);
-    assertEquals(false, config.getBoolean("prop2"));
+    assertFalse(config.getBoolean("prop2"));
 
     config.setBoolean("prop1", false);
-    assertEquals(false, config.getBoolean("prop1"));
+    assertFalse(config.getBoolean("prop1"));
 
     // add an empty property, then set the value
     config.setFinal("prop3", true);
     config.setBoolean("prop3", true);
-    assertEquals(true, config.getBoolean("prop3"));
-    assertEquals(true, config.isFinal("prop3"));
+    assertTrue(config.getBoolean("prop3"));
+    assertTrue(config.isFinal("prop3"));
   }
 
   private static void assertBooleanArrayEquals(final boolean[] lhs,
@@ -93,22 +94,22 @@ public class ConfigTest {
     final DefaultConfig config = new DefaultConfig();
 
     config.addBoolean("prop1", true);
-    assertEquals(true, config.getBoolean("prop1"));
+    assertTrue(config.getBoolean("prop1"));
     assertBooleanArrayEquals(new boolean[]{true},
         config.getBooleans("prop1"));
 
     config.addBoolean("prop1", false);
-    assertEquals(true, config.getBoolean("prop1"));
+    assertTrue(config.getBoolean("prop1"));
     assertBooleanArrayEquals(new boolean[]{true, false},
         config.getBooleans("prop1"));
 
     // set the value of a exist list property
     config.setFinal("prop1", true);
     config.setBoolean("prop1", true);
-    assertEquals(true, config.getBoolean("prop1"));
+    assertTrue(config.getBoolean("prop1"));
     assertBooleanArrayEquals(new boolean[]{true},
         config.getBooleans("prop1"));
-    assertEquals(true, config.isFinal("prop1"));
+    assertTrue(config.isFinal("prop1"));
 
     // add an array of values
     config.addBooleans("prop1", false, true);
@@ -152,7 +153,7 @@ public class ConfigTest {
     config.setFinal("prop3", true);
     config.setByte("prop3", (byte) 3);
     assertEquals((byte) 3, config.getByte("prop3"));
-    assertEquals(true, config.isFinal("prop3"));
+    assertTrue(config.isFinal("prop3"));
   }
 
   @Test
@@ -175,7 +176,7 @@ public class ConfigTest {
     assertEquals((byte) 0, config.getByte("prop1"));
     assertArrayEquals(new byte[]{(byte) 0},
         config.getBytes("prop1"));
-    assertEquals(true, config.isFinal("prop1"));
+    assertTrue(config.isFinal("prop1"));
 
     // add an array of values
     config.addBytes("prop1", (byte) 1, (byte) 2);
@@ -218,7 +219,7 @@ public class ConfigTest {
     config.setFinal("prop3", true);
     config.setShort("prop3", (short) 3);
     assertEquals((short) 3, config.getShort("prop3"));
-    assertEquals(true, config.isFinal("prop3"));
+    assertTrue(config.isFinal("prop3"));
   }
 
   @Test
@@ -241,7 +242,7 @@ public class ConfigTest {
     assertEquals((short) 0, config.getShort("prop1"));
     assertArrayEquals(new short[]{(short) 0},
         config.getShorts("prop1"));
-    assertEquals(true, config.isFinal("prop1"));
+    assertTrue(config.isFinal("prop1"));
 
     // add an array of values
     config.addShorts("prop1", (short) 1, (short) 2);
@@ -284,7 +285,7 @@ public class ConfigTest {
     config.setFinal("prop3", true);
     config.setInt("prop3", 3);
     assertEquals(3, config.getInt("prop3"));
-    assertEquals(true, config.isFinal("prop3"));
+    assertTrue(config.isFinal("prop3"));
   }
 
   @Test
@@ -307,7 +308,7 @@ public class ConfigTest {
     assertEquals(0, config.getInt("prop1"));
     assertArrayEquals(new int[]{0},
         config.getInts("prop1"));
-    assertEquals(true, config.isFinal("prop1"));
+    assertTrue(config.isFinal("prop1"));
 
     // add an array of values
     config.addInts("prop1", 1, 2);
@@ -351,7 +352,7 @@ public class ConfigTest {
     config.setFinal("prop3", true);
     config.setLong("prop3", 3L);
     assertEquals(3L, config.getLong("prop3"));
-    assertEquals(true, config.isFinal("prop3"));
+    assertTrue(config.isFinal("prop3"));
   }
 
   @Test
@@ -374,7 +375,7 @@ public class ConfigTest {
     assertEquals(0L, config.getLong("prop1"));
     assertArrayEquals(new long[]{0L},
         config.getLongs("prop1"));
-    assertEquals(true, config.isFinal("prop1"));
+    assertTrue(config.isFinal("prop1"));
 
     // add an array of values
     config.addLongs("prop1", 1L, 2L);
@@ -418,7 +419,7 @@ public class ConfigTest {
     config.setFinal("prop3", true);
     config.setChar("prop3", '3');
     assertEquals('3', config.getChar("prop3"));
-    assertEquals(true, config.isFinal("prop3"));
+    assertTrue(config.isFinal("prop3"));
   }
 
   @Test
@@ -441,7 +442,7 @@ public class ConfigTest {
     assertEquals('0', config.getChar("prop1"));
     assertArrayEquals(new char[]{'0'},
         config.getChars("prop1"));
-    assertEquals(true, config.isFinal("prop1"));
+    assertTrue(config.isFinal("prop1"));
 
     // add an array of values
     config.addChars("prop1", '1', '2');
@@ -484,7 +485,7 @@ public class ConfigTest {
     config.setFinal("prop3", true);
     config.setFloat("prop3", 3.3f);
     assertEquals(3.3f, config.getFloat("prop3"), FLOAT_EPSILON);
-    assertEquals(true, config.isFinal("prop3"));
+    assertTrue(config.isFinal("prop3"));
   }
 
   @Test
@@ -507,7 +508,7 @@ public class ConfigTest {
     assertEquals(0.0f, config.getFloat("prop1"), FLOAT_EPSILON);
     assertArrayEquals(new float[]{0.0f},
         config.getFloats("prop1"), FLOAT_EPSILON);
-    assertEquals(true, config.isFinal("prop1"));
+    assertTrue(config.isFinal("prop1"));
 
     // add an array of values
     config.addFloats("prop1", 1.1f, 2.2f);
@@ -551,7 +552,7 @@ public class ConfigTest {
     config.setFinal("prop3", true);
     config.setDouble("prop3", 3.3);
     assertEquals(3.3, config.getDouble("prop3"), DOUBLE_EPSILON);
-    assertEquals(true, config.isFinal("prop3"));
+    assertTrue(config.isFinal("prop3"));
   }
 
   @Test
@@ -574,7 +575,7 @@ public class ConfigTest {
     assertEquals(0.0, config.getDouble("prop1"), DOUBLE_EPSILON);
     assertArrayEquals(new double[]{0.0},
         config.getDoubles("prop1"), DOUBLE_EPSILON);
-    assertEquals(true, config.isFinal("prop1"));
+    assertTrue(config.isFinal("prop1"));
 
     // add an array of values
     config.addDoubles("prop1", 1.1, 2.2);
@@ -618,7 +619,7 @@ public class ConfigTest {
     config.setFinal("prop3", true);
     config.setBigDecimal("prop3", BigDecimal.TEN);
     assertEquals(BigDecimal.TEN, config.getBigDecimal("prop3"));
-    assertEquals(true, config.isFinal("prop3"));
+    assertTrue(config.isFinal("prop3"));
   }
 
   @Test
@@ -641,7 +642,7 @@ public class ConfigTest {
     assertEquals(BigDecimal.ZERO, config.getBigDecimal("prop1"));
     assertArrayEquals(new Object[]{BigDecimal.ZERO},
         config.getBigDecimals("prop1"));
-    assertEquals(true, config.isFinal("prop1"));
+    assertTrue(config.isFinal("prop1"));
 
     // add an array of values
     config.addBigDecimals("prop1", BigDecimal.ONE, BigDecimal.TEN);
@@ -690,7 +691,7 @@ public class ConfigTest {
     config.setFinal("prop3", true);
     config.setBigInteger("prop3", BigInteger.TEN);
     assertEquals(BigInteger.TEN, config.getBigInteger("prop3"));
-    assertEquals(true, config.isFinal("prop3"));
+    assertTrue(config.isFinal("prop3"));
   }
 
   @Test
@@ -713,7 +714,7 @@ public class ConfigTest {
     assertEquals(BigInteger.ZERO, config.getBigInteger("prop1"));
     assertArrayEquals(new Object[]{BigInteger.ZERO},
         config.getBigIntegers("prop1"));
-    assertEquals(true, config.isFinal("prop1"));
+    assertTrue(config.isFinal("prop1"));
 
     // add an array of values
     config.addBigIntegers("prop1", BigInteger.ONE, BigInteger.TEN);
@@ -772,7 +773,7 @@ public class ConfigTest {
     config.setDate("prop3", date);
     assertEquals(date, config.getDate("prop3"));
     assertNotSame(date, config.getDate("prop3"));
-    assertEquals(true, config.isFinal("prop3"));
+    assertTrue(config.isFinal("prop3"));
 
   }
 
@@ -803,7 +804,7 @@ public class ConfigTest {
     assertEquals(date0, config.getDate("prop1"));
     assertArrayEquals(new Date[]{date0},
         config.getDates("prop1"));
-    assertEquals(true, config.isFinal("prop1"));
+    assertTrue(config.isFinal("prop1"));
 
     // add an array of values
     config.addDates("prop1", date1, date2);
@@ -856,7 +857,7 @@ public class ConfigTest {
     config.setString("prop3", str);
     assertEquals(str, config.getRawString("prop3"));
     assertSame(str, config.getRawString("prop3"));
-    assertEquals(true, config.isFinal("prop3"));
+    assertTrue(config.isFinal("prop3"));
 
   }
 
@@ -887,7 +888,7 @@ public class ConfigTest {
     assertEquals(str0, config.getRawString("prop1"));
     assertArrayEquals(new String[]{str0},
         config.getRawStrings("prop1"));
-    assertEquals(true, config.isFinal("prop1"));
+    assertTrue(config.isFinal("prop1"));
 
     // add an array of values
     config.addStrings("prop1", str1, str2);
@@ -940,7 +941,7 @@ public class ConfigTest {
     config.setString("prop3", str);
     assertEquals(str, config.getString("prop3"));
     assertSame(str, config.getString("prop3"));
-    assertEquals(true, config.isFinal("prop3"));
+    assertTrue(config.isFinal("prop3"));
 
   }
 
@@ -1004,7 +1005,7 @@ public class ConfigTest {
     assertEquals(str0, config.getString("prop1"));
     assertArrayEquals(new String[]{str0},
         config.getStrings("prop1"));
-    assertEquals(true, config.isFinal("prop1"));
+    assertTrue(config.isFinal("prop1"));
 
     // add an array of values
     config.addStrings("prop1", str1, str2);
@@ -1057,7 +1058,7 @@ public class ConfigTest {
     config.setClass("prop3", cls);
     assertEquals(cls, config.getClass("prop3"));
     assertSame(cls, config.getClass("prop3"));
-    assertEquals(true, config.isFinal("prop3"));
+    assertTrue(config.isFinal("prop3"));
 
   }
 
@@ -1088,7 +1089,7 @@ public class ConfigTest {
     assertEquals(cls0, config.getClass("prop1"));
     assertArrayEquals(new Class<?>[]{cls0},
         config.getClasses("prop1"));
-    assertEquals(true, config.isFinal("prop1"));
+    assertTrue(config.isFinal("prop1"));
 
     // add an array of values
     config.addClasses("prop1", cls1, cls2);
@@ -1141,7 +1142,7 @@ public class ConfigTest {
     config.setByteArray("prop3", bytes);
     assertArrayEquals(bytes, config.getByteArray("prop3"));
     assertNotSame(bytes, config.getByteArray("prop3"));
-    assertEquals(true, config.isFinal("prop3"));
+    assertTrue(config.isFinal("prop3"));
 
   }
 
@@ -1172,7 +1173,7 @@ public class ConfigTest {
     assertArrayEquals(bytes0, config.getByteArray("prop1"));
     assertArrayEquals(new byte[][]{bytes0},
         config.getByteArrays("prop1"));
-    assertEquals(true, config.isFinal("prop1"));
+    assertTrue(config.isFinal("prop1"));
 
     // add an array of values
     config.addByteArrays("prop1", bytes1, bytes2);
@@ -1212,16 +1213,16 @@ public class ConfigTest {
   public void testIsEmpty() {
     final DefaultConfig config = new DefaultConfig();
 
-    assertEquals(true, config.isEmpty());
+    assertTrue(config.isEmpty());
 
     config.setString("prop1", "value1");
     config.setString("prop2", "value2");
     config.setString("prop3", "value3");
     config.setString("prop4", "value4");
-    assertEquals(false, config.isEmpty());
+    assertFalse(config.isEmpty());
 
     config.removeAll();
-    assertEquals(true, config.isEmpty());
+    assertTrue(config.isEmpty());
   }
 
   @Test
@@ -1270,19 +1271,19 @@ public class ConfigTest {
   public void testContains() {
     final DefaultConfig config = new DefaultConfig();
 
-    assertEquals(false, config.contains("prop1"));
+    assertFalse(config.contains("prop1"));
 
     config.setString("prop1", "value1");
     config.setString("prop2", "value2");
     config.setString("prop3", "value3");
     config.setString("prop4", "value4");
-    assertEquals(true, config.contains("prop1"));
-    assertEquals(true, config.contains("prop2"));
-    assertEquals(true, config.contains("prop3"));
-    assertEquals(true, config.contains("prop4"));
-    assertEquals(false, config.contains("prop5"));
-    assertEquals(false, config.contains(""));
-    assertEquals(false, config.contains(null));
+    assertTrue(config.contains("prop1"));
+    assertTrue(config.contains("prop2"));
+    assertTrue(config.contains("prop3"));
+    assertTrue(config.contains("prop4"));
+    assertFalse(config.contains("prop5"));
+    assertFalse(config.contains(""));
+    assertFalse(config.contains(null));
   }
 
   @Test
@@ -1346,8 +1347,8 @@ public class ConfigTest {
     config.setFinal("prop2", false);
     config.setFinal("prop3", true);
     config.setFinal("prop4", false);
-    assertEquals(true, config.isFinal("prop1"));
-    assertEquals(false, config.isFinal("prop2"));
+    assertTrue(config.isFinal("prop1"));
+    assertFalse(config.isFinal("prop2"));
     assertTrue(config.isFinal("prop3"));
     assertFalse(config.isFinal("prop4"));
 
@@ -1626,34 +1627,34 @@ public class ConfigTest {
     final Config config1 = modifiableConfig1;
     final Config config2 = modifiableConfig2;
 
-    assertTrue(modifiableConfig1.equals(modifiableConfig2));
-    assertTrue(config1.equals(config2));
+    assertEquals(modifiableConfig1, modifiableConfig2);
+    assertEquals(config1, config2);
 
     addPrefix1(modifiableConfig1);
     addPrefix2(modifiableConfig2);
 
-    assertFalse(modifiableConfig1.equals(modifiableConfig2));
-    assertFalse(config1.equals(config2));
-    assertTrue(config1.equals(modifiableConfig1));
-    assertTrue(modifiableConfig1.equals(config1));
-    assertTrue(config2.equals(modifiableConfig2));
-    assertTrue(modifiableConfig2.equals(config2));
+    assertNotEquals(modifiableConfig1, modifiableConfig2);
+    assertNotEquals(config1, config2);
+    assertEquals(config1, modifiableConfig1);
+    assertEquals(modifiableConfig1, config1);
+    assertEquals(config2, modifiableConfig2);
+    assertEquals(modifiableConfig2, config2);
 
     modifiableConfig1.assign(modifiableConfig1);
-    assertTrue(modifiableConfig1.equals(modifiableConfig1));
-    assertTrue(config1.equals(config1));
+    assertEquals(modifiableConfig1, modifiableConfig1);
+    assertEquals(config1, config1);
 
     modifiableConfig1.assign(modifiableConfig2);
-    assertTrue(modifiableConfig1.equals(modifiableConfig2));
-    assertTrue(config1.equals(config2));
+    assertEquals(modifiableConfig1, modifiableConfig2);
+    assertEquals(config1, config2);
 
     modifiableConfig2.removeAll();
-    assertFalse(modifiableConfig1.equals(modifiableConfig2));
-    assertFalse(config1.equals(config2));
+    assertNotEquals(modifiableConfig1, modifiableConfig2);
+    assertNotEquals(config1, config2);
 
     modifiableConfig1.assign(modifiableConfig2);
-    assertTrue(modifiableConfig1.equals(modifiableConfig2));
-    assertTrue(config1.equals(config2));
+    assertEquals(modifiableConfig1, modifiableConfig2);
+    assertEquals(config1, config2);
   }
 
   @Test
@@ -1663,39 +1664,39 @@ public class ConfigTest {
     Config config1 = modifiableConfig1;
     Config config2 = null;
 
-    assertFalse(modifiableConfig1.equals(modifiableConfig2));
-    assertFalse(config1.equals(config2));
+    assertNotEquals(modifiableConfig1, modifiableConfig2);
+    assertNotEquals(config1, config2);
 
     addPrefix1(modifiableConfig1);
 
-    assertFalse(modifiableConfig1.equals(modifiableConfig2));
-    assertFalse(config1.equals(config2));
+    assertNotEquals(modifiableConfig1, modifiableConfig2);
+    assertNotEquals(config1, config2);
 
-    modifiableConfig2 = (DefaultConfig) modifiableConfig1.clone();
-    assertTrue(modifiableConfig1.equals(modifiableConfig2));
+    modifiableConfig2 = (DefaultConfig) modifiableConfig1.cloneEx();
+    assertEquals(modifiableConfig1, modifiableConfig2);
     assertNotSame(modifiableConfig1, modifiableConfig2);
 
-    config2 = modifiableConfig1.clone();
-    assertTrue(modifiableConfig1.equals(config2));
+    config2 = modifiableConfig1.cloneEx();
+    assertEquals(modifiableConfig1, config2);
     assertNotSame(modifiableConfig1, config2);
 
     modifiableConfig1.removeAll();
-    assertFalse(modifiableConfig1.equals(modifiableConfig2));
-    assertFalse(modifiableConfig1.equals(config2));
+    assertNotEquals(modifiableConfig1, modifiableConfig2);
+    assertNotEquals(modifiableConfig1, config2);
 
-    modifiableConfig2 = (DefaultConfig) modifiableConfig1.clone();
-    assertTrue(modifiableConfig1.equals(modifiableConfig2));
+    modifiableConfig2 = (DefaultConfig) modifiableConfig1.cloneEx();
+    assertEquals(modifiableConfig1, modifiableConfig2);
     assertNotSame(modifiableConfig1, modifiableConfig2);
 
-    config2 = modifiableConfig1.clone();
-    assertTrue(modifiableConfig1.equals(config2));
+    config2 = modifiableConfig1.cloneEx();
+    assertEquals(modifiableConfig1, config2);
     assertNotSame(modifiableConfig1, config2);
 
     addPrefix1(modifiableConfig1);
-    config1 = modifiableConfig1.clone();
-    config2 = modifiableConfig1.clone();
-    assertTrue(config1.equals(config2));
-    assertTrue(modifiableConfig1.equals(config2));
+    config1 = modifiableConfig1.cloneEx();
+    config2 = modifiableConfig1.cloneEx();
+    assertEquals(config1, config2);
+    assertEquals(modifiableConfig1, config2);
     assertNotSame(config1, config2);
   }
 

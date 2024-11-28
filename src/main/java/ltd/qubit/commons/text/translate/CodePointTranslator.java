@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -18,7 +18,8 @@ import java.io.IOException;
  */
 public abstract class CodePointTranslator extends CharSequenceTranslator {
 
-  public abstract CodePointTranslator clone();
+  @Override
+  public abstract CodePointTranslator cloneEx();
 
   @Override
   public final int translate(final CharSequence input, final int index,

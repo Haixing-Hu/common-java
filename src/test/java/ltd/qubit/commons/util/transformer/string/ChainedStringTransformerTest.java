@@ -59,12 +59,12 @@ public class ChainedStringTransformerTest {
         + "</chained-string-transformer>";
     ChainedStringTransformer tr = new ChainedStringTransformer();
     tr.add(new LowercaseTransformer(new Locale("zh", "CN")))
-      .add(new UppercaseTransformer(new Locale("zh", "CN")))
-      .add(new StripStartTransformer())
-      .add(new StripEndTransformer())
-      .add(new StripTransformer())
-      .add(new RegexTransformer("([0-9]+)-([0-9]+)-([0-9]+)",
-          "[year: ${1}, month: ${2}, day: ${3}, day again: ${3}]"));
+        .add(new UppercaseTransformer(new Locale("zh", "CN")))
+        .add(new StripStartTransformer())
+        .add(new StripEndTransformer())
+        .add(new StripTransformer())
+        .add(new RegexTransformer("([0-9]+)-([0-9]+)-([0-9]+)",
+            "[year: ${1}, month: ${2}, day: ${3}, day again: ${3}]"));
     assertXmlSerializeEquals(ChainedStringTransformer.class, tr, xml);
     assertXmlDeserializeEquals(ChainedStringTransformer.class, xml, tr);
 

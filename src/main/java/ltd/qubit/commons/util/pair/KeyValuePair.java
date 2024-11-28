@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,19 +8,29 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.pair;
 
-import ltd.qubit.commons.lang.*;
+import java.io.Serial;
+import java.io.Serializable;
 
 import javax.annotation.Nullable;
-import java.io.Serializable;
+
+import ltd.qubit.commons.lang.Assignable;
+import ltd.qubit.commons.lang.CloneableEx;
+import ltd.qubit.commons.lang.Equality;
+import ltd.qubit.commons.lang.Hash;
+import ltd.qubit.commons.lang.ObjectUtils;
+import ltd.qubit.commons.reflect.impl.GetterMethod;
+
+import static ltd.qubit.commons.reflect.FieldUtils.getFieldName;
 
 /**
  * 此模型表示简单的字符串键值对。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class KeyValuePair implements Serializable, CloneableEx<KeyValuePair>,
         Assignable<KeyValuePair> {
 
+  @Serial
   private static final long serialVersionUID = -509702675803272160L;
 
   /**
@@ -55,6 +65,11 @@ public class KeyValuePair implements Serializable, CloneableEx<KeyValuePair>,
     this.value = ObjectUtils.toString(value, null);
   }
 
+  public <T, K> KeyValuePair(final Class<T> cls, final GetterMethod<T, K> keyGetter, final K value) {
+    this.key = getFieldName(cls, keyGetter);
+    this.value = ObjectUtils.toString(value, null);
+  }
+
   @Override
   public void assign(final KeyValuePair other) {
     key = other.key;
@@ -62,7 +77,7 @@ public class KeyValuePair implements Serializable, CloneableEx<KeyValuePair>,
   }
 
   @Override
-  public KeyValuePair clone() {
+  public KeyValuePair cloneEx() {
     return new KeyValuePair(this);
   }
 
@@ -107,9 +122,6 @@ public class KeyValuePair implements Serializable, CloneableEx<KeyValuePair>,
 
   @Override
   public String toString() {
-    String builder = key +
-            " = " +
-            value;
-    return builder;
+    return  key + " = " + value;
   }
 }

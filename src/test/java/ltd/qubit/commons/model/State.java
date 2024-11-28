@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,7 +13,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 /**
  * 此枚举表示实体类型的状态。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @XmlRootElement(name = "state")
 public enum State {
@@ -21,30 +21,40 @@ public enum State {
   /**
    * 未激活。
    */
-  INACTIVE,
+  INACTIVE("INACTIVE"),
 
   /**
    * 正常。
    */
-  NORMAL,
+  NORMAL("NONE"),
 
   /**
    * 锁定/冻结。
    */
-  LOCKED,
+  LOCKED("LOCKED"),
 
   /**
    * 屏蔽/封杀。
    */
-  BLOCKED,
+  BLOCKED("BLOCKED"),
 
   /**
    * 已废弃。
    */
-  OBSOLETED,
+  OBSOLETED("DISABLED"),    // FIXME: 是否需要单独的ErrorCode?
 
   /**
    * 禁用。
    */
-  DISABLED;
+  DISABLED("DISABLED");
+
+  private final String errorCode;
+
+  State(final String errorCode) {
+    this.errorCode = errorCode;
+  }
+
+  public String getErrorCode() {
+    return this.errorCode;
+  }
 }

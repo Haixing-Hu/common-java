@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,7 +11,6 @@ package ltd.qubit.commons.reflect;
 import java.lang.annotation.Annotation;
 
 public class AnnotationUtils {
-
   /**
    * Gets the value of an attribute of an annotation.
    *
@@ -21,8 +20,6 @@ public class AnnotationUtils {
    *     the name of the attribute.
    * @return
    *     the value of the attribute.
-   * @throws RuntimeException
-   *     if any error occurs.
    */
   @SuppressWarnings("unchecked")
   public static <T> T getAttribute(final Annotation annotation, final String name) {

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -9,17 +9,21 @@
 package ltd.qubit.commons.text.jackson;
 
 import java.math.BigDecimal;
-
-import ltd.qubit.commons.annotation.Scale;
-import ltd.qubit.commons.lang.Equality;
-import ltd.qubit.commons.lang.Hash;
-import ltd.qubit.commons.text.tostring.ToStringBuilder;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import ltd.qubit.commons.annotation.Scale;
+import ltd.qubit.commons.lang.Equality;
+import ltd.qubit.commons.lang.Hash;
+import ltd.qubit.commons.text.jackson.type.TypeRegister;
+import ltd.qubit.commons.text.tostring.ToStringBuilder;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TypeRegistrationModuleTest {
 
@@ -47,6 +51,7 @@ public class TypeRegistrationModuleTest {
       this.amount = amount;
     }
 
+    @Override
     public boolean equals(final Object o) {
       if (this == o) {
         return true;
@@ -59,6 +64,7 @@ public class TypeRegistrationModuleTest {
           && Equality.equals(amount, other.amount);
     }
 
+    @Override
     public int hashCode() {
       final int multiplier = 7;
       int result = 3;
@@ -67,6 +73,7 @@ public class TypeRegistrationModuleTest {
       return result;
     }
 
+    @Override
     public String toString() {
       return new ToStringBuilder(this)
           .append("price", price)
@@ -101,4 +108,16 @@ public class TypeRegistrationModuleTest {
     assertEquals(s1, s2);
   }
 
+  @Test
+  public void testGetCommonTypeRegisters() {
+    @SuppressWarnings("rawtypes")
+    final List<TypeRegister> registerList = TypeRegistrationModule.getCommonTypeRegisters();
+    assertNotEquals(0, registerList.size());
+    for (final TypeRegister<?> register : registerList) {
+      assertNotNull(register);
+      System.out.println(register);
+    }
+    TypeRegistrationModule.clear();
+    TypeRegistrationModule.registerTypes(registerList);
+  }
 }

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2017 - 2024.
-//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
+//    Copyright (c) 2022 - 2024.
+//    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -30,7 +30,7 @@ import java.util.Properties;
  * @author Juergen Hoeller
  * @author Haixing Hu
  * @see DefaultPropertiesPersister
- * @see Properties
+ * @see java.util.Properties
  */
 public interface PropertiesPersister {
 
@@ -44,7 +44,7 @@ public interface PropertiesPersister {
    *     the InputStream to load from
    * @throws IOException
    *     in case of I/O errors
-   * @see Properties#load
+   * @see java.util.Properties#load
    */
   void load(Properties props, InputStream is) throws IOException;
 
@@ -72,7 +72,7 @@ public interface PropertiesPersister {
    *     the description of the property list
    * @throws IOException
    *     in case of I/O errors
-   * @see Properties#store
+   * @see java.util.Properties#store
    */
   void store(Properties props, OutputStream os, String header)
       throws IOException;
@@ -101,7 +101,7 @@ public interface PropertiesPersister {
    *     the InputStream to load from
    * @throws IOException
    *     in case of I/O errors
-   * @see Properties#loadFromXML(InputStream)
+   * @see java.util.Properties#loadFromXML(java.io.InputStream)
    */
   void loadFromXml(Properties props, InputStream is) throws IOException;
 
@@ -117,7 +117,7 @@ public interface PropertiesPersister {
    *     the description of the property list
    * @throws IOException
    *     in case of I/O errors
-   * @see Properties#storeToXML(OutputStream, String)
+   * @see java.util.Properties#storeToXML(java.io.OutputStream, String)
    */
   void storeToXml(Properties props, OutputStream os, String header)
       throws IOException;
@@ -136,7 +136,7 @@ public interface PropertiesPersister {
    *     the description of the property list
    * @throws IOException
    *     in case of I/O errors
-   * @see Properties#storeToXML(OutputStream, String, String)
+   * @see java.util.Properties#storeToXML(java.io.OutputStream, String, String)
    */
   void storeToXml(Properties props, OutputStream os, String header,
       String encoding) throws IOException;

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.config;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
@@ -40,9 +41,10 @@ import ltd.qubit.commons.text.Replacer;
  */
 public abstract class AbstractConfig implements Config, Serializable {
 
+  @Serial
   private static final long serialVersionUID = -7405936020731523154L;
 
-  protected static final Logger LOGGER = LoggerFactory.getLogger(AbstractConfig.class);
+  protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   @Override
   public boolean isEmpty() {
@@ -489,7 +491,7 @@ public abstract class AbstractConfig implements Config, Serializable {
 
   @Override
   public String substitute(@Nullable final String value) {
-    LOGGER.trace("Getting the substituted string value: {}", value);
+    logger.trace("Getting the substituted string value: {}", value);
     if ((value == null) || (value.length() == 0)) {
       return value;
     }
@@ -512,11 +514,11 @@ public abstract class AbstractConfig implements Config, Serializable {
         try {
           varValue = varItem.getValueAsString();
         } catch (final TypeConvertException e) {
-          LOGGER.warn("Failed to convert the property value of '{}' into "
+          logger.warn("Failed to convert the property value of '{}' into "
                   + "a string.", varName);
           varValue = null;
         } catch (final NoSuchElementException e) {
-          LOGGER.warn("Failed to get the property value of '{}'.", varName);
+          logger.warn("Failed to get the property value of '{}'.", varName);
           varValue = null;
         }
       }
@@ -525,30 +527,30 @@ public abstract class AbstractConfig implements Config, Serializable {
         try {
           varValue = System.getProperty(varName);
         } catch (final Exception se) {
-          LOGGER.warn("Failed to get the system property '{}'. ", varName, se);
+          logger.warn("Failed to get the system property '{}'. ", varName, se);
         }
       }
       // return the literal contains ${name} if no such name is found
       if (varValue == null) {
-        LOGGER.warn("The string contains an unsubstitutable variable '{}': {}",
+        logger.warn("The string contains an unsubstitutable variable '{}': {}",
             varName, result);
         return result;
       }
       // substitute
-      LOGGER.trace("Before substitution, the string is: {}", result);
-      LOGGER.trace("Substituting the variable '{}' with value '{}'", varName,
+      logger.trace("Before substitution, the string is: {}", result);
+      logger.trace("Substituting the variable '{}' with value '{}'", varName,
           varValue);
       result = new Replacer()
           .searchForSubstring(match.group())
           .replaceWithString(varValue)
           .ignoreCase(false)
           .applyTo(result);
-      LOGGER.trace("After substitution, the string is: {}", result);
+      logger.trace("After substitution, the string is: {}", result);
     }
     // check whether there still has any substitution
     match.reset(result);
     if (match.find()) {
-      LOGGER.warn("The string contains unsubstituted variable '{}', "
+      logger.warn("The string contains unsubstituted variable '{}', "
               + "but maximum depth of substitutions has reached: {}",
           match.group(), result);
     }
@@ -717,6 +719,58 @@ public abstract class AbstractConfig implements Config, Serializable {
     }
     return prop.getValuesAsByteArray();
   }
+
+  @Override
+  public <E extends Enum<E>>
+  E getEnum(final String name, final Class<E> enumType) {
+    final Property prop = get(name);
+    if (prop == null) {
+      throw new PropertyNotExistError(name);
+    }
+    if (prop.isEmpty()) {
+      throw new PropertyHasNoValueError(name);
+    }
+    final String value = prop.getValueAsString();
+    try {
+      return Enum.valueOf(enumType, value);
+    } catch (final NullPointerException | IllegalArgumentException e) {
+      throw new ConfigurationError(e);
+    }
+  }
+
+  @Override
+  public <E extends Enum<E>>
+  E getEnum(final String name, @Nullable final E defaultValue, final Class<E> enumType) {
+    final Property prop = get(name);
+    if (prop == null || prop.isEmpty()) {
+      return defaultValue;
+    }
+    final String value = prop.getValueAsString();
+    try {
+      return Enum.valueOf(enumType, value);
+    } catch (final NullPointerException | IllegalArgumentException e) {
+      throw new ConfigurationError(e);
+    }
+  }
+
+  // @SuppressWarnings("unchecked")
+  // @Override
+  // public <E extends Enum<E>>
+  // E[] getEnums(final String name, final Class<E> enumType) {
+  //   final Property prop = get(name);
+  //   if (prop == null) {
+  //     throw new PropertyNotExistError(name);
+  //   }
+  //   if (prop.isEmpty()) {
+  //     return (E[]) ArrayUtils.EMPTY_OBJECT_ARRAY;
+  //   }
+  //   final String[] values = prop.getValuesAsString();
+  //   try {
+  //     return Enum.valueOf(enumType, value);
+  //   } catch (final NullPointerException | IllegalArgumentException e) {
+  //     throw new ConfigurationError(e);
+  //   }
+  // }
 
   @Override
   public Class<?> getClass(final String name) {
@@ -985,9 +1039,9 @@ public abstract class AbstractConfig implements Config, Serializable {
   }
 
   @Override
-  public Config clone() {
+  public Config cloneEx() {
     try {
-      return (Config) super.clone();
+      return (Config) clone();
     } catch (final CloneNotSupportedException e) {
       throw new UnsupportedOperationException(e);
     }

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2017 - 2022.
-//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
+//    Copyright (c) 2022 - 2024.
+//    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.Writer;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
@@ -389,9 +390,7 @@ public class XmlMapperUtils {
 
   public static <T> String formatList(final List<T> list, final Class<T> cls,
       final XmlMapper mapper) throws JsonProcessingException {
-    final TypeFactory factory = mapper.getTypeFactory();
     final ListWrapper<T> wrapper = new ListWrapper<>(list);
-    final JavaType type = factory.constructParametricType(ListWrapper.class, cls);
     final String xml = mapper.writeValueAsString(wrapper);
     return fixListWrapperTags(mapper, cls, xml);
   }
@@ -406,17 +405,17 @@ public class XmlMapperUtils {
     final String itemTagClose = "</" + itemName.getSimpleName() + ">";
     final Replacer replacer = new Replacer();
     String result = replacer.searchForSubstring(LIST_WRAPPER_ROOT_TAG_OPEN)
-                            .replaceWithString(wrapperTagOpen)
-                            .applyTo(xml);
+        .replaceWithString(wrapperTagOpen)
+        .applyTo(xml);
     result = replacer.searchForSubstring(LIST_WRAPPER_ROOT_TAG_CLOSE)
-                     .replaceWithString(wrapperTagClose)
-                     .applyTo(result);
+        .replaceWithString(wrapperTagClose)
+        .applyTo(result);
     result = replacer.searchForSubstring(LIST_WRAPPER_ITEM_TAG_OPEN)
-                     .replaceWithString(itemTagOpen)
-                     .applyTo(result);
+        .replaceWithString(itemTagOpen)
+        .applyTo(result);
     result = replacer.searchForSubstring(LIST_WRAPPER_ITEM_TAG_CLOSE)
-                     .replaceWithString(itemTagClose)
-                     .applyTo(result);
+        .replaceWithString(itemTagClose)
+        .applyTo(result);
     return result;
   }
 
@@ -796,5 +795,28 @@ public class XmlMapperUtils {
           obj.getClass().getName(), obj, e);
       return null;
     }
+  }
+
+  public static Writer outputXmlDeclaration(final Writer writer) throws IOException {
+    writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+    return writer;
+  }
+
+  public static Writer outputXmlListWrapperOpenTag(final Writer writer,
+      final XmlMapper mapper, final Class<?> cls) throws IOException {
+    final PropertyName wrapperName = getRootWrapperName(mapper, cls);
+    final String wrapperTagOpen = "<" + wrapperName.getSimpleName() + ">";
+    writer.write(wrapperTagOpen);
+    writer.write('\n');
+    return writer;
+  }
+
+  public static Writer outputXmlListWrapperCloseTag(final Writer writer,
+      final XmlMapper mapper, final Class<?> cls) throws IOException {
+    final PropertyName wrapperName = getRootWrapperName(mapper, cls);
+    final String itemTagClose = "</" + wrapperName.getSimpleName() + ">";
+    writer.write(itemTagClose);
+    writer.write('\n');
+    return writer;
   }
 }

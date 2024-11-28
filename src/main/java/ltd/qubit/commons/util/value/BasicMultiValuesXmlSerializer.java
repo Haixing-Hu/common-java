@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -10,13 +10,13 @@ package ltd.qubit.commons.util.value;
 
 import javax.annotation.concurrent.Immutable;
 
-import ltd.qubit.commons.io.serialize.XmlSerializer;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import ltd.qubit.commons.io.io.serialize.XmlSerializer;
 import ltd.qubit.commons.lang.Type;
 import ltd.qubit.commons.text.xml.XmlException;
 import ltd.qubit.commons.text.xml.XmlSerializationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 import static ltd.qubit.commons.text.xml.DomUtils.checkNode;
 import static ltd.qubit.commons.text.xml.DomUtils.getOptEnumAttr;

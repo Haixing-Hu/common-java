@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -10,17 +10,17 @@ package ltd.qubit.commons.text.jackson.serializer;
 
 import javax.annotation.concurrent.Immutable;
 
-import ltd.qubit.commons.annotation.Scale;
-import ltd.qubit.commons.util.codec.DoubleCodec;
-
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 
+import ltd.qubit.commons.annotation.Scale;
+import ltd.qubit.commons.util.codec.DoubleCodec;
+
 /**
- * The JSON serializer of a {@link Double} object.
+ * The JACKSON serializer of a {@link Double} object.
  *
  * @author Haixing Hu
  */

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -12,6 +12,7 @@ import java.time.LocalDate;
 
 import javax.annotation.Nullable;
 
+import ltd.qubit.commons.util.codec.IsoLocalDateCodec;
 import ltd.qubit.commons.util.codec.LocalDateCodec;
 
 /**
@@ -29,6 +30,10 @@ import ltd.qubit.commons.util.codec.LocalDateCodec;
  * @author Haixing Hu
  */
 public class LocalDateUtils {
+
+  public static String toString(@Nullable final LocalDate value) {
+    return toString(value, null, IsoLocalDateCodec.DEFAULT_ENCODE_PATTERN);
+  }
 
   public static String toString(@Nullable final LocalDate value,
       final String pattern) {

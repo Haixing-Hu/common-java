@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -172,7 +172,7 @@ public class RegexTransformer extends AbstractStringTransformer {
   }
 
   @Override
-  public RegexTransformer clone() {
+  public RegexTransformer cloneEx() {
     return new RegexTransformer(inputPattern, outputPattern);
   }
 

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -72,7 +72,7 @@ public final class Redirection implements Serializable,
   }
 
   @Override
-  public Redirection clone() {
+  public Redirection cloneEx() {
     return new Redirection(url, temporary, refreshTime);
   }
 

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,6 +15,11 @@ import java.util.List;
 
 import javax.annotation.concurrent.Immutable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import ltd.qubit.commons.CommonsConfig;
 import ltd.qubit.commons.config.Config;
 import ltd.qubit.commons.lang.StringUtils;
@@ -22,11 +27,6 @@ import ltd.qubit.commons.text.xml.DomUtils;
 import ltd.qubit.commons.text.xml.InvalidXmlNodeContentException;
 import ltd.qubit.commons.text.xml.XmlException;
 import ltd.qubit.commons.text.xml.XmlUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 import static ltd.qubit.commons.net.TopLevelDomain.Type.GENERIC;
 import static ltd.qubit.commons.net.TopLevelDomain.Type.INFRASTRUCTURE;

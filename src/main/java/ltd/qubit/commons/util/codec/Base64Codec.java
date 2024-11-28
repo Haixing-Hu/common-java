@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,16 +8,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.codec;
 
-import ltd.qubit.commons.lang.ArrayUtils;
-import ltd.qubit.commons.text.Stripper;
+import java.util.Base64;
 
 import javax.annotation.concurrent.Immutable;
-import java.util.Base64;
+
+import ltd.qubit.commons.lang.ArrayUtils;
+import ltd.qubit.commons.text.Stripper;
 
 /**
  * 对字节数组进行 BASE-64 编码解码的编码解码器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public class Base64Codec implements Codec<byte[], String> {

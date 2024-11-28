@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -9,15 +9,16 @@
 package ltd.qubit.commons.text.jackson.keydeserializer;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.annotation.concurrent.Immutable;
+
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.KeyDeserializer;
 
 import ltd.qubit.commons.text.Stripper;
 import ltd.qubit.commons.util.codec.Decoder;
 import ltd.qubit.commons.util.codec.DecodingException;
-
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.KeyDeserializer;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.lang.StringUtils.isEmpty;
@@ -29,7 +30,8 @@ import static ltd.qubit.commons.lang.StringUtils.isEmpty;
  *     the type of values to be deserialized.
  */
 @Immutable
-public class DecoderKeyDeserializer<T> extends KeyDeserializer {
+public class DecoderKeyDeserializer<T> extends KeyDeserializer
+    implements Serializable {
 
   private static final long serialVersionUID = 2275892683881205502L;
 

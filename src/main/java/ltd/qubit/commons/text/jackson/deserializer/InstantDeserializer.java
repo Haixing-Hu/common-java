@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,7 +13,7 @@ import java.time.Instant;
 import ltd.qubit.commons.util.codec.Decoder;
 
 /**
- * The JSON deserializer of a {@link Instant} object.
+ * The JACKSON deserializer of a {@link Instant} object.
  *
  * @author Haixing Hu
  */

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,7 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.Nullable;
+
 import jakarta.validation.constraints.Size;
+
 import ltd.qubit.commons.annotation.Computed;
 import ltd.qubit.commons.annotation.Precision;
 import ltd.qubit.commons.annotation.Unique;
@@ -17,17 +24,12 @@ import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
-import javax.annotation.Nullable;
-import java.io.Serializable;
-import java.time.Instant;
-import java.util.concurrent.TimeUnit;
-
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
  * 此对象表示令牌。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class Token implements Serializable, Emptyful, Normalizable, Assignable<Token> {
 
@@ -75,7 +77,7 @@ public class Token implements Serializable, Emptyful, Normalizable, Assignable<T
   }
 
   @Override
-  public Token clone() {
+  public Token cloneEx() {
     return new Token(this);
   }
 

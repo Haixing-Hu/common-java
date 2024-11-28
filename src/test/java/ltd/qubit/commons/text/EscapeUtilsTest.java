@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,6 +15,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import static ltd.qubit.commons.text.EscapeUtils.ESCAPE_CSV;
 import static ltd.qubit.commons.text.EscapeUtils.ESCAPE_ECMASCRIPT;
@@ -39,12 +45,6 @@ import static ltd.qubit.commons.text.EscapeUtils.unescapeHtml4;
 import static ltd.qubit.commons.text.EscapeUtils.unescapeJava;
 import static ltd.qubit.commons.text.EscapeUtils.unescapeXSI;
 import static ltd.qubit.commons.text.EscapeUtils.unescapeXml;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class EscapeUtilsTest {
   private static final String FOO = "foo";

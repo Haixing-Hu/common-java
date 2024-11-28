@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,19 +8,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
+import java.io.Serializable;
+
 import jakarta.validation.constraints.Size;
+
 import ltd.qubit.commons.lang.Argument;
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
-import java.io.Serializable;
-
 /**
  * 此模型表示媒体信息。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class MediaInfo implements Serializable, Assignable<MediaInfo> {
 
@@ -65,7 +66,7 @@ public class MediaInfo implements Serializable, Assignable<MediaInfo> {
   }
 
   @Override
-  public MediaInfo clone() {
+  public MediaInfo cloneEx() {
     return new MediaInfo(this);
   }
 

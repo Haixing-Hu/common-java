@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,22 +8,28 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
+import java.time.Instant;
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.Nullable;
+
 import jakarta.validation.constraints.Size;
+
 import ltd.qubit.commons.annotation.Identifier;
 import ltd.qubit.commons.annotation.Precision;
 import ltd.qubit.commons.annotation.Reference;
 import ltd.qubit.commons.annotation.Unique;
-import ltd.qubit.commons.lang.*;
+import ltd.qubit.commons.lang.Argument;
+import ltd.qubit.commons.lang.Assignable;
+import ltd.qubit.commons.lang.Assignment;
+import ltd.qubit.commons.lang.Equality;
+import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import javax.annotation.Nullable;
-import java.time.Instant;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 此模型表示渠道来源，例如可以表示产品订单的渠道，也可以表示新用户的来源等。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class Source implements HasInfo, WithApp, WithEntity, Predefinable,
     Emptyful, Normalizable, Auditable, Assignable<Source> {
@@ -142,7 +148,7 @@ public class Source implements HasInfo, WithApp, WithEntity, Predefinable,
   }
 
   @Override
-  public Source clone() {
+  public Source cloneEx() {
     return new Source(this);
   }
 

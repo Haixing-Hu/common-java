@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -14,6 +14,8 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import static ltd.qubit.commons.text.translate.EntityArrays.APOS_ESCAPE;
 import static ltd.qubit.commons.text.translate.EntityArrays.APOS_UNESCAPE;
 import static ltd.qubit.commons.text.translate.EntityArrays.BASIC_ESCAPE;
@@ -24,8 +26,6 @@ import static ltd.qubit.commons.text.translate.EntityArrays.ISO8859_1_ESCAPE;
 import static ltd.qubit.commons.text.translate.EntityArrays.ISO8859_1_UNESCAPE;
 import static ltd.qubit.commons.text.translate.EntityArrays.JAVA_CTRL_CHARS_ESCAPE;
 import static ltd.qubit.commons.text.translate.EntityArrays.JAVA_CTRL_CHARS_UNESCAPE;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class EntityArraysTest {
 

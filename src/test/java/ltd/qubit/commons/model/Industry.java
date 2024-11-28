@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,7 +11,7 @@ package ltd.qubit.commons.model;
 /**
  * 此枚举表示行业。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see <a href="http://www.stats.gov.cn/tjsj/tjbz/hyflbz/201710/P020181022345132273248.pdf">国民经济行业分类</a>
  */
 public enum Industry {

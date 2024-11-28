@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect;
 
-import ltd.qubit.commons.reflect.testbed.NewInstanceBean;
-
 import org.junit.jupiter.api.Test;
+
+import ltd.qubit.commons.reflect.testbed.NewInstanceBean;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

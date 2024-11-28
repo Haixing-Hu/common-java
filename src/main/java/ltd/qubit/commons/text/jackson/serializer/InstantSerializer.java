@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -12,12 +12,12 @@ import java.time.Instant;
 
 import javax.annotation.concurrent.Immutable;
 
-import ltd.qubit.commons.util.codec.Encoder;
-
 import com.fasterxml.jackson.core.JsonGenerator;
 
+import ltd.qubit.commons.util.codec.Encoder;
+
 /**
- * The JSON serializer of a {@link Instant} object.
+ * The JACKSON serializer of a {@link Instant} object.
  *
  * @author Haixing Hu
  */

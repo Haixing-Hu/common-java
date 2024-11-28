@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -19,14 +19,14 @@ import java.time.temporal.TemporalAccessor;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.text.Stripper;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.lang.StringUtils.isEmpty;
@@ -46,60 +46,85 @@ public class LocalDateTimeCodec implements Codec<LocalDateTime, String> {
   // see: https://stackoverflow.com/questions/29014225/what-is-the-difference-between-year-and-year-of-era
   public static final String DEFAULT_ENCODE_PATTERN = "uuuu-MM-dd HH:mm:ss";
 
-  public static final String DEFAULT_DECODE_PATTERN = "uuuu-MM-dd[[' ']['T']HH:mm[':'ss[.SSS]]]";
+  public static final String[] DEFAULT_DECODE_PATTERNS = {
+      "uuuu-MM-dd HH:mm:ss.SSS",
+      "uuuu-MM-dd'T'HH:mm:ss.SSS",
+      "uuuu-MM-dd HH:mm:ss.SS",
+      "uuuu-MM-dd'T'HH:mm:ss.SS",
+      "uuuu-MM-dd HH:mm:ss.S",
+      "uuuu-MM-dd'T'HH:mm:ss.S",
+      "uuuu-MM-dd HH:mm:ss",
+      "uuuu-MM-dd'T'HH:mm:ss",
+      "uuuu-MM-dd HH:mm",
+      "uuuu-MM-dd'T'HH:mm",
+      "uuuu-MM-dd",
+  };
 
   public static final boolean DEFAULT_EMPTY_FOR_NULL = false;
 
   public static final boolean DEFAULT_STRIP_BEFORE_PARSING = true;
 
   private String encodePattern;
-  private String decodePattern;
+  private String[] decodePatterns;
   private boolean emptyForNull;
   private boolean trim;
   private transient DateTimeFormatter encodeFormatter;
-  private transient DateTimeFormatter decodeFormatter;
+  private transient DateTimeFormatter[] decodeFormatters;
 
   public LocalDateTimeCodec() {
-    this(DEFAULT_ENCODE_PATTERN, DEFAULT_DECODE_PATTERN, DEFAULT_EMPTY_FOR_NULL,
-            DEFAULT_STRIP_BEFORE_PARSING);
+    this(DEFAULT_ENCODE_PATTERN, DEFAULT_DECODE_PATTERNS, DEFAULT_EMPTY_FOR_NULL, DEFAULT_STRIP_BEFORE_PARSING);
   }
 
   public LocalDateTimeCodec(@Nonnull final String pattern) {
-    this(pattern, pattern, DEFAULT_EMPTY_FOR_NULL, DEFAULT_STRIP_BEFORE_PARSING);
+    this(pattern, new String[]{ pattern }, DEFAULT_EMPTY_FOR_NULL, DEFAULT_STRIP_BEFORE_PARSING);
   }
 
   public LocalDateTimeCodec(@Nonnull final String pattern, final boolean emptyForNull) {
-    this(pattern, pattern, emptyForNull, DEFAULT_STRIP_BEFORE_PARSING);
+    this(pattern, new String[]{ pattern }, emptyForNull, DEFAULT_STRIP_BEFORE_PARSING);
   }
 
   public LocalDateTimeCodec(@Nonnull final String pattern, final boolean emptyForNull,
           final boolean trim) {
-    this(pattern, pattern, emptyForNull, trim);
+    this(pattern, new String[]{ pattern }, emptyForNull, trim);
   }
 
   public LocalDateTimeCodec(final boolean emptyForNull) {
-    this(DEFAULT_ENCODE_PATTERN, DEFAULT_DECODE_PATTERN, emptyForNull,
+    this(DEFAULT_ENCODE_PATTERN, DEFAULT_DECODE_PATTERNS, emptyForNull,
             DEFAULT_STRIP_BEFORE_PARSING);
   }
 
   public LocalDateTimeCodec(final boolean emptyForNull, final boolean trim) {
-    this(DEFAULT_ENCODE_PATTERN, DEFAULT_DECODE_PATTERN, emptyForNull, trim);
+    this(DEFAULT_ENCODE_PATTERN, DEFAULT_DECODE_PATTERNS, emptyForNull, trim);
   }
 
   public LocalDateTimeCodec(@Nonnull final String encodePattern,
       @Nonnull final String decodePattern, final boolean emptyForNull) {
-    this(encodePattern, decodePattern, emptyForNull, DEFAULT_STRIP_BEFORE_PARSING);
+    this(encodePattern, new String[]{ decodePattern }, emptyForNull, DEFAULT_STRIP_BEFORE_PARSING);
+  }
+
+  public LocalDateTimeCodec(@Nonnull final String encodePattern,
+      @Nonnull final String[] decodePatterns, final boolean emptyForNull) {
+    this(encodePattern, decodePatterns, emptyForNull, DEFAULT_STRIP_BEFORE_PARSING);
   }
 
   public LocalDateTimeCodec(@Nonnull final String encodePattern,
       @Nonnull final String decodePattern, final boolean emptyForNull,
       final boolean trim) {
+    this(encodePattern, new String[]{ decodePattern }, emptyForNull, trim);
+  }
+
+  public LocalDateTimeCodec(@Nonnull final String encodePattern,
+      @Nonnull final String[] decodePatterns, final boolean emptyForNull,
+      final boolean trim) {
     this.encodePattern = requireNonNull("encodePattern", encodePattern);
-    this.decodePattern = requireNonNull("decodePattern", decodePattern);
+    this.decodePatterns = requireNonNull("decodePatterns", decodePatterns);
     this.emptyForNull = emptyForNull;
     this.trim = trim;
     this.encodeFormatter = DateTimeFormatter.ofPattern(encodePattern);
-    this.decodeFormatter = DateTimeFormatter.ofPattern(decodePattern);
+    this.decodeFormatters = new DateTimeFormatter[decodePatterns.length];
+    for (int i = 0; i < decodePatterns.length; ++i) {
+      this.decodeFormatters[i] = DateTimeFormatter.ofPattern(decodePatterns[i]);
+    }
   }
 
   public final String getEncodePattern() {
@@ -112,13 +137,18 @@ public class LocalDateTimeCodec implements Codec<LocalDateTime, String> {
     return this;
   }
 
-  public final String getDecodePattern() {
-    return decodePattern;
+  public final String[] getDecodePatterns() {
+    return decodePatterns;
   }
 
-  public final LocalDateTimeCodec setDecodePattern(final String decodePattern) {
-    this.decodePattern = requireNonNull("decodePattern", decodePattern);
-    this.decodeFormatter = DateTimeFormatter.ofPattern(decodePattern);
+  public final LocalDateTimeCodec setDecodePatterns(final String[] decodePatterns) {
+    requireNonNull("decodePatterns", decodePatterns);
+    final DateTimeFormatter[] formatters = new DateTimeFormatter[decodePatterns.length];
+    for (int i = 0; i < decodePatterns.length; ++i) {
+      formatters[i] = DateTimeFormatter.ofPattern(decodePatterns[i]);
+    }
+    this.decodePatterns = decodePatterns;
+    this.decodeFormatters = formatters;
     return this;
   }
 
@@ -156,31 +186,37 @@ public class LocalDateTimeCodec implements Codec<LocalDateTime, String> {
       return null;
     } else {
       LOGGER.debug("Parsing date: {}", text);
-      try {
-        final TemporalAccessor temporal = decodeFormatter.parseBest(text,
-                ZonedDateTime::from,
-                LocalDateTime::from, LocalDate::from);
-        if (temporal instanceof LocalDate) {
-          final LocalDate date = (LocalDate) temporal;
-          return LocalDateTime.of(date.getYear(), date.getMonthValue(),
-                  date.getDayOfMonth(), 0, 0);
-        } else if (temporal instanceof LocalDateTime) {
-          return (LocalDateTime) temporal;
-        } else if (temporal instanceof ZonedDateTime) {
-          final ZonedDateTime datetime = (ZonedDateTime) temporal;
-          // use the system default time zone.
-          return LocalDateTime.ofInstant(datetime.toInstant(), ZoneId.systemDefault());
-        } else {
-          LOGGER.error("Unsupported time type {} while parsing {}",
-                  temporal.getClass(), text);
-          throw new DecodingException("Unsupported time type "
+      final TemporalAccessor temporal = parseText(text);
+      if (temporal == null) {
+        LOGGER.error("Invalid date time format: '{}', expected {}", text, decodePatterns);
+        throw new DecodingException("Invalid date time format: " + text);
+      }
+      if (temporal instanceof final LocalDate date) {
+        return LocalDateTime.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth(), 0, 0);
+      } else if (temporal instanceof LocalDateTime) {
+        return (LocalDateTime) temporal;
+      } else if (temporal instanceof final ZonedDateTime datetime) {
+        // use the system default time zone.
+        return LocalDateTime.ofInstant(datetime.toInstant(), ZoneId.systemDefault());
+      } else {
+        LOGGER.error("Unsupported time type {} while parsing {}", temporal.getClass(), text);
+        throw new DecodingException("Unsupported time type "
             + temporal.getClass() + " while parsing " + text);
-        }
-      } catch (final DateTimeParseException e) {
-        LOGGER.error("Invalid date time format: {}, expected {}", text, decodePattern);
-        throw new DecodingException(e);
       }
     }
+  }
+
+  private TemporalAccessor parseText(final String text) {
+    for (int i = 0; i < decodeFormatters.length; ++i) {
+      final DateTimeFormatter formatter = decodeFormatters[i];
+      try {
+        return formatter.parseBest(text, ZonedDateTime::from, LocalDateTime::from, LocalDate::from);
+      } catch (final DateTimeParseException e) {
+        LOGGER.trace("Failed to parse date time: pattern = {}, text = '{}'",
+            decodePatterns[i], text, e);
+      }
+    }
+    return null;
   }
 
   @Override
@@ -195,7 +231,7 @@ public class LocalDateTimeCodec implements Codec<LocalDateTime, String> {
     return Equality.equals(emptyForNull, other.emptyForNull)
             && Equality.equals(trim, other.trim)
             && Equality.equals(encodePattern, other.encodePattern)
-            && Equality.equals(decodePattern, other.decodePattern);
+            && Equality.equals(decodePatterns, other.decodePatterns);
   }
 
   @Override
@@ -203,7 +239,7 @@ public class LocalDateTimeCodec implements Codec<LocalDateTime, String> {
     final int multiplier = 7;
     int result = 3;
     result = Hash.combine(result, multiplier, encodePattern);
-    result = Hash.combine(result, multiplier, decodePattern);
+    result = Hash.combine(result, multiplier, decodePatterns);
     result = Hash.combine(result, multiplier, emptyForNull);
     result = Hash.combine(result, multiplier, trim);
     return result;
@@ -213,7 +249,7 @@ public class LocalDateTimeCodec implements Codec<LocalDateTime, String> {
   public String toString() {
     return new ToStringBuilder(this)
             .append("encodePattern", encodePattern)
-            .append("decodePattern", decodePattern)
+            .append("decodePatterns", decodePatterns)
             .append("emptyForNull", emptyForNull)
             .append("trim", trim)
             .toString();

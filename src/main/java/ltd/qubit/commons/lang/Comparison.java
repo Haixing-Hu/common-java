@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -3207,7 +3207,7 @@ public final class Comparison {
    *     value compares lexicographically less than, equal to, or greater than
    *     the second value.
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "rawtypes"})
   public static int compare(@Nullable final Object value1,
       @Nullable final Object value2) {
     if (value1 == null) {
@@ -3967,6 +3967,88 @@ public final class Comparison {
       final int result = compareIgnoreCase(array1[i], array2[i]);
       if (result != 0) {
         return result;
+      }
+    }
+    return Integer.compare(n1, n2);
+  }
+
+  /**
+   * Compares two {@link String} objects for order, ignoring the case.
+   *
+   * <p>We assume that {@code null} is the minimum value for
+   * {@link String} objects.
+   *
+   * @param value1
+   *     the first {@link String} object, which could be null.
+   * @param value2
+   *     the second {@link String} object, which could be null.
+   * @return An integer less than, equal to or greater than 0, if the first
+   *     value compares ignoring the case lexicographically less than, equal to,
+   *     or greater than the second value.
+   */
+  public static int compareIgnoreCase(@Nullable final String value1,
+      @Nullable final String value2) {
+    if (value1 == null) {
+      return (value2 == null ? 0 : -1);
+    } else if (value2 == null) {
+      return +1;
+    } else {
+      return Integer.compare(value1.compareToIgnoreCase(value2), 0);
+    }
+  }
+
+  /**
+   * Compares two {@link String} arrays lexically, ignoring the case.
+   *
+   * <p>We assume that {@code null} is the minimum value for
+   * {@link String} objects.
+   *
+   * @param array1
+   *     the first {@link String} array, which could be null.
+   * @param array2
+   *     the second {@link String} array, which could be null.
+   * @return An integer less than, equal to or greater than 0, if the first
+   *     array compares ignoring the case lexicographically less than, equal to,
+   *     or greater than the second array.
+   */
+  public static int compareIgnoreCase(@Nullable final String[] array1,
+      @Nullable final String[] array2) {
+    if (array1 == array2) {
+      return 0;
+    } else if (array1 == null) {
+      return -1;
+    } else if (array2 == null) {
+      return +1;
+    } else {
+      return compareIgnoreCase(array1, array1.length, array2, array2.length);
+    }
+  }
+
+  /**
+   * Compares two {@link String} arrays lexically, ignoring the case.
+   *
+   * <p>We assume that {@code null} is the minimum value for
+   * {@link String} objects.
+   *
+   * @param array1
+   *     the first {@link String} array.
+   * @param n1
+   *     the length of the first {@link String} array.
+   * @param array2
+   *     the second {@link String} array.
+   * @param n2
+   *     the length of the second {@link String} array.
+   * @return An integer less than, equal to or greater than 0, if the first
+   *     array compares ignoring the case lexicographically less than, equal to,
+   *     or greater than the second array.
+   */
+  public static int compareIgnoreCase(final String[] array1, final int n1,
+      final String[] array2, final int n2) {
+    final int n = Math.min(n1, n2);
+    for (int i = 0; i < n; ++i) {
+      final int result = compareIgnoreCase(array1[i], array2[i]);
+      if (result != 0) {
+        return (result < 0 ? -1 : +1);
       }
     }
     return Integer.compare(n1, n2);

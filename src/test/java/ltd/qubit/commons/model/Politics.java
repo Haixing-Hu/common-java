@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,7 +11,7 @@ package ltd.qubit.commons.model;
 /**
  * 此枚举表示政治面貌。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see "《GB/T 4762-1984 政治面貌代码》"
  */
 public enum Politics {

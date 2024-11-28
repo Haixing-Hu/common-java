@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2017 - 2022.
-//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
+//    Copyright (c) 2022 - 2024.
+//    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -24,8 +24,8 @@ import java.util.Stack;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import ltd.qubit.commons.io.serialize.BinarySerialization;
-import ltd.qubit.commons.io.serialize.XmlSerialization;
+import ltd.qubit.commons.io.io.serialize.BinarySerialization;
+import ltd.qubit.commons.io.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.text.NumberFormat;
@@ -628,7 +628,7 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
   }
 
   @Override
-  public Url clone() {
+  public Url cloneEx() {
     return new Url(scheme, userInfo, hostname, port, path,
         query, fragment, domain, url);
   }

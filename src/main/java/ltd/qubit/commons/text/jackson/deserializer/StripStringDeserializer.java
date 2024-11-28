@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -12,11 +12,11 @@ import java.io.IOException;
 
 import javax.annotation.concurrent.Immutable;
 
-import ltd.qubit.commons.text.Stripper;
-
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+
+import ltd.qubit.commons.text.Stripper;
 
 /**
  * The deserializer of String class for XML serializations.

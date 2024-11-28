@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -20,18 +20,72 @@ public class MethodRefBean {
     lastCalledMethod = "voidMethod1";
   }
 
-  public int voidMethod1PrimitiveInt(final int p1) {
-    lastCalledMethod = "voidMethod1PrimitiveInt";
-    return 0;
+  public void setPrimitiveBoolean(final boolean p1) {
+    lastCalledMethod = "setPrimitiveBoolean";
   }
 
-  public int voidMethod1Integer(final Integer p1) {
-    lastCalledMethod = "voidMethod1Integer";
-    return 0;
+  public void setPrimitiveChar(final char p1) {
+    lastCalledMethod = "setPrimitiveChar";
   }
 
-  public int voidMethod1String(final String p1) {
-    lastCalledMethod = "voidMethod1String";
+  public void setPrimitiveByte(final byte p1) {
+    lastCalledMethod = "setPrimitiveByte";
+  }
+
+  public void setPrimitiveShort(final short p1) {
+    lastCalledMethod = "setPrimitiveShort";
+  }
+
+  public void setPrimitiveInt(final int p1) {
+    lastCalledMethod = "setPrimitiveInt";
+  }
+
+  public void setPrimitiveLong(final long p1) {
+    lastCalledMethod = "setPrimitiveLong";
+  }
+
+  public void setPrimitiveFloat(final float p1) {
+    lastCalledMethod = "setPrimitiveFloat";
+  }
+
+  public void setPrimitiveDouble(final double p1) {
+    lastCalledMethod = "setPrimitiveDouble";
+  }
+
+  public void setBoolean(final Boolean p1) {
+    lastCalledMethod = "setBoolean";
+  }
+
+  public void setCharacter(final Character p1) {
+    lastCalledMethod = "setCharacter";
+  }
+
+  public void setByte(final Byte p1) {
+    lastCalledMethod = "setByte";
+  }
+
+  public void setShort(final Short p1) {
+    lastCalledMethod = "setShort";
+  }
+
+  public void setInteger(final Integer p1) {
+    lastCalledMethod = "setInteger";
+  }
+
+  public void setLong(final Long p1) {
+    lastCalledMethod = "setLong";
+  }
+
+  public void setFloat(final Float p1) {
+    lastCalledMethod = "setFloat";
+  }
+
+  public void setDouble(final Double p1) {
+    lastCalledMethod = "setDouble";
+  }
+
+  public int setString(final String p1) {
+    lastCalledMethod = "setString";
     return 0;
   }
 
@@ -77,18 +131,13 @@ public class MethodRefBean {
     return 0;
   }
 
-  public int nonVoidMethod1PrimitiveInt(final int p1) {
-    lastCalledMethod = "nonVoidMethod1PrimitiveInt";
+  public int nonVoidMethod1PrimitiveBoolean(final boolean p1) {
+    lastCalledMethod = "nonVoidMethod1PrimitiveBoolean";
     return 0;
   }
 
-  public int nonVoidMethod1Integer(final Integer p1) {
-    lastCalledMethod = "nonVoidMethod1Integer";
-    return 0;
-  }
-
-  public int nonVoidMethod1String(final String p1) {
-    lastCalledMethod = "nonVoidMethod1String";
+  public int nonVoidMethod1PrimitiveChar(final char p1) {
+    lastCalledMethod = "nonVoidMethod1PrimitiveChar";
     return 0;
   }
 
@@ -102,18 +151,13 @@ public class MethodRefBean {
     return 0;
   }
 
+  public int nonVoidMethod1PrimitiveInt(final int p1) {
+    lastCalledMethod = "nonVoidMethod1PrimitiveInt";
+    return 0;
+  }
+
   public int nonVoidMethod1PrimitiveLong(final long p1) {
     lastCalledMethod = "nonVoidMethod1PrimitiveLong";
-    return 0;
-  }
-
-  public int nonVoidMethod1PrimitiveBoolean(final boolean p1) {
-    lastCalledMethod = "nonVoidMethod1PrimitiveBoolean";
-    return 0;
-  }
-
-  public int nonVoidMethod1PrimitiveChar(final char p1) {
-    lastCalledMethod = "nonVoidMethod1PrimitiveChar";
     return 0;
   }
 
@@ -124,6 +168,16 @@ public class MethodRefBean {
 
   public int nonVoidMethod1PrimitiveDouble(final double p1) {
     lastCalledMethod = "nonVoidMethod1PrimitiveDouble";
+    return 0;
+  }
+
+  public int nonVoidMethod1Integer(final Integer p1) {
+    lastCalledMethod = "nonVoidMethod1Integer";
+    return 0;
+  }
+
+  public int nonVoidMethod1String(final String p1) {
+    lastCalledMethod = "nonVoidMethod1String";
     return 0;
   }
 

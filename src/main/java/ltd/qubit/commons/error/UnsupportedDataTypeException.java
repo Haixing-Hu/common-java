@@ -8,6 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.error;
 
+import java.io.Serial;
+
+import ltd.qubit.commons.lang.ClassUtils;
 import ltd.qubit.commons.lang.Type;
 import ltd.qubit.commons.util.pair.KeyValuePairList;
 
@@ -19,6 +22,7 @@ import ltd.qubit.commons.util.pair.KeyValuePairList;
 public class UnsupportedDataTypeException extends RuntimeException
     implements ErrorInfoConvertable {
 
+  @Serial
   private static final long serialVersionUID = 67589732551790772L;
 
   private String typeName;
@@ -29,6 +33,10 @@ public class UnsupportedDataTypeException extends RuntimeException
 
   public UnsupportedDataTypeException(final Type type) {
     this.typeName = type.name();
+  }
+
+  public UnsupportedDataTypeException(final Class<?> type) {
+    this.typeName = ClassUtils.getFullCanonicalName(type);
   }
 
   public UnsupportedDataTypeException(final String typeName, final String message) {

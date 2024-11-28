@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 
 import ltd.qubit.commons.error.NoSuchMessageException;
 import ltd.qubit.commons.i18n.LocaleContextHolder;
-import ltd.qubit.commons.util.bundle.MessageSourceResourceBundle;
+import ltd.qubit.commons.i18n.bundle.MessageSourceResourceBundle;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;

@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Reader;
+import java.io.Serial;
 import java.io.Writer;
 import java.net.URI;
 import java.net.URL;
@@ -24,7 +25,7 @@ import java.util.Properties;
 
 import ltd.qubit.commons.config.Config;
 import ltd.qubit.commons.config.error.ConfigurationError;
-import ltd.qubit.commons.io.IoUtils;
+import ltd.qubit.commons.io.io.IoUtils;
 import ltd.qubit.commons.net.Url;
 import ltd.qubit.commons.util.properties.PropertiesUtils;
 
@@ -40,6 +41,7 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
  */
 public class PropertiesConfig extends DefaultConfig {
 
+  @Serial
   private static final long serialVersionUID = 6463503499725651996L;
 
   /**
@@ -409,9 +411,8 @@ public class PropertiesConfig extends DefaultConfig {
   public void load(final String resource, final ClassLoader loader) {
     LOGGER.debug("Loading properties configuration from {}", resource);
     try {
-      final Properties properties = PropertiesUtils.load(resource, loader,
-          charset);
-      load(properties);
+      final Properties props = PropertiesUtils.load(resource, loader, charset);
+      load(props);
     } catch (final IOException e) {
       throw new ConfigurationError(e);
     }
@@ -428,8 +429,8 @@ public class PropertiesConfig extends DefaultConfig {
   public void load(final Url url) {
     LOGGER.debug("Loading properties configuration from {}", url);
     try {
-      final Properties properties = PropertiesUtils.load(url, charset);
-      load(properties);
+      final Properties props = PropertiesUtils.load(url, charset);
+      load(props);
     } catch (final IOException e) {
       throw new ConfigurationError(e);
     }
@@ -446,8 +447,8 @@ public class PropertiesConfig extends DefaultConfig {
   public void load(final URL url) {
     LOGGER.debug("Loading properties configuration from {}", url);
     try {
-      final Properties properties = PropertiesUtils.load(url, charset);
-      load(properties);
+      final Properties props = PropertiesUtils.load(url, charset);
+      load(props);
     } catch (final IOException e) {
       throw new ConfigurationError(e);
     }
@@ -463,8 +464,8 @@ public class PropertiesConfig extends DefaultConfig {
    */
   public void load(final URI uri) {
     try {
-      final Properties properties = PropertiesUtils.load(uri, charset);
-      load(properties);
+      final Properties props = PropertiesUtils.load(uri, charset);
+      load(props);
     } catch (final IOException e) {
       throw new ConfigurationError(e);
     }
@@ -481,8 +482,8 @@ public class PropertiesConfig extends DefaultConfig {
   public void load(final File file) {
     LOGGER.debug("Loading properties configuration from {}", file);
     try {
-      final Properties properties = PropertiesUtils.load(file, charset);
-      load(properties);
+      final Properties props = PropertiesUtils.load(file, charset);
+      load(props);
     } catch (final IOException e) {
       throw new ConfigurationError(e);
     }
@@ -502,8 +503,8 @@ public class PropertiesConfig extends DefaultConfig {
   public void load(final InputStream in) {
     LOGGER.debug("Loading properties configuration from {}", in);
     try {
-      final Properties properties = PropertiesUtils.load(in, charset);
-      load(properties);
+      final Properties props = PropertiesUtils.load(in, charset);
+      load(props);
     } catch (final IOException e) {
       throw new ConfigurationError(e);
     }
@@ -522,9 +523,9 @@ public class PropertiesConfig extends DefaultConfig {
   public void load(final Reader reader) {
     LOGGER.debug("Loading properties configuration from {}", reader);
     try {
-      final Properties properties = new Properties();
-      properties.load(reader);
-      load(properties);
+      final Properties props = new Properties();
+      props.load(reader);
+      load(props);
     } catch (final IOException e) {
       throw new ConfigurationError(e);
     }
@@ -559,9 +560,9 @@ public class PropertiesConfig extends DefaultConfig {
    */
   public void store(final OutputStream out) {
     LOGGER.debug("Storing properties configuration from {}", out);
-    final Properties properties = store();
+    final Properties props = store();
     try {
-      PropertiesUtils.store(properties, out, charset, description);
+      PropertiesUtils.store(props, out, charset, description);
     } catch (final IOException e) {
       throw new ConfigurationError(e);
     }
@@ -579,9 +580,9 @@ public class PropertiesConfig extends DefaultConfig {
    */
   public void store(final PrintStream out) {
     LOGGER.debug("Storing properties configuration from {}", out);
-    final Properties properties = store();
+    final Properties props = store();
     try {
-      PropertiesUtils.store(properties, out, charset, description);
+      PropertiesUtils.store(props, out, charset, description);
     } catch (final IOException e) {
       throw new ConfigurationError(e);
     }
@@ -599,9 +600,9 @@ public class PropertiesConfig extends DefaultConfig {
    */
   public void store(final Writer writer) {
     LOGGER.debug("Storing properties configuration from {}", writer);
-    final Properties properties = store();
+    final Properties props = store();
     try {
-      properties.store(writer, description);
+      props.store(writer, description);
     } catch (final IOException e) {
       throw new ConfigurationError(e);
     } finally {
@@ -619,11 +620,11 @@ public class PropertiesConfig extends DefaultConfig {
    */
   public void store(final File file) {
     LOGGER.debug("Storing properties configuration from {}", file);
-    final Properties properties = store();
+    final Properties props = store();
     OutputStream out = null;
     try {
       out = new FileOutputStream(file);
-      properties.store(out, description);
+      props.store(out, description);
     } catch (final IOException e) {
       throw new ConfigurationError(e);
     } finally {

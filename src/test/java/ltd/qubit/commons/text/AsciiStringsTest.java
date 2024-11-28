@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -9,6 +9,8 @@
 package ltd.qubit.commons.text;
 
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static ltd.qubit.commons.text.AsciiStringUtils.equalsIgnoreCase;
 import static ltd.qubit.commons.text.AsciiStringUtils.indexOf;
@@ -19,8 +21,6 @@ import static ltd.qubit.commons.text.AsciiStringUtils.indexOfAnyIgnoreCase;
 import static ltd.qubit.commons.text.AsciiStringUtils.indexOfIgnoreCase;
 import static ltd.qubit.commons.text.AsciiStringUtils.indexOfNonWhitespace;
 import static ltd.qubit.commons.text.AsciiStringUtils.indexOfWhitespace;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Unit test of the {@link AsciiString} class.

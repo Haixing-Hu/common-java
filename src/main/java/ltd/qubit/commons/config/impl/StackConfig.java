@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -151,8 +151,8 @@ public class StackConfig extends AbstractConfig {
   }
 
   @Override
-  public StackConfig clone() {
-    final StackConfig result = (StackConfig) super.clone();
+  public StackConfig cloneEx() {
+    final StackConfig result = (StackConfig) super.cloneEx();
     for (final Config config : configs) {
       result.configs.add(config);
     }

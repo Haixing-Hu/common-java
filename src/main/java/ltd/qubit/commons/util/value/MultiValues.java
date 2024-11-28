@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -2157,5 +2157,5 @@ public interface MultiValues extends CloneableEx<MultiValues> {
    * @return the cloned copy of this {@link MultiValues} object.
    */
   @Override
-  MultiValues clone();
+  MultiValues cloneEx();
 }

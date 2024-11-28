@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -39,7 +39,8 @@ public class CsvEscaper extends SinglePassTranslator implements CsvConstant {
     }
   }
 
-  public CsvEscaper clone() {
+  @Override
+  public CsvEscaper cloneEx() {
     return new CsvEscaper();
   }
 }

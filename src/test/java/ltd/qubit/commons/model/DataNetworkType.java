@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,7 +11,7 @@ package ltd.qubit.commons.model;
 /**
  * 此枚举表示移动数据网络类型。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public enum DataNetworkType {
   /**

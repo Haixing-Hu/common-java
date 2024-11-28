@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.error;
 
+import java.io.Serial;
 import java.security.GeneralSecurityException;
 
 /**
@@ -18,6 +19,7 @@ import java.security.GeneralSecurityException;
 public class SignMessageException extends GeneralSecurityException
     implements ErrorInfoConvertable {
 
+  @Serial
   private static final long serialVersionUID = 1999689777863825980L;
 
   public SignMessageException() {}

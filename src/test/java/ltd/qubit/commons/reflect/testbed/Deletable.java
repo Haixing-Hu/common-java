@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,15 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect.testbed;
 
-import ltd.qubit.commons.annotation.Computed;
+import java.time.Instant;
 
 import javax.annotation.Nullable;
-import java.time.Instant;
+
+import ltd.qubit.commons.annotation.Computed;
 
 /**
  * 此接口表示实体类记录了标记删除时间。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface Deletable {
 

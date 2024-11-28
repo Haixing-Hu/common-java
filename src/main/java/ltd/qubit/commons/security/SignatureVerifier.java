@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2017 - 2022.
-//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
+//    Copyright (c) 2022 - 2024.
+//    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -32,7 +32,7 @@ import ltd.qubit.commons.util.codec.DecodingException;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import static ltd.qubit.commons.io.IoUtils.BUFFER_SIZE;
+import static ltd.qubit.commons.io.io.IoUtils.BUFFER_SIZE;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**

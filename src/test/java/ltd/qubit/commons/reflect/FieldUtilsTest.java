@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -20,6 +20,9 @@ import java.util.Set;
 
 import jakarta.validation.constraints.NotNull;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.reflect.testbed.AmbiguousMember;
 import ltd.qubit.commons.reflect.testbed.App;
@@ -30,6 +33,7 @@ import ltd.qubit.commons.reflect.testbed.CustomList;
 import ltd.qubit.commons.reflect.testbed.Foo;
 import ltd.qubit.commons.reflect.testbed.Info;
 import ltd.qubit.commons.reflect.testbed.Interface;
+import ltd.qubit.commons.reflect.testbed.MethodRefBean;
 import ltd.qubit.commons.reflect.testbed.PrivatelyShadowedChild;
 import ltd.qubit.commons.reflect.testbed.PublicBase;
 import ltd.qubit.commons.reflect.testbed.PublicChild;
@@ -37,8 +41,14 @@ import ltd.qubit.commons.reflect.testbed.PubliclyShadowedChild;
 import ltd.qubit.commons.reflect.testbed.StaticContainer;
 import ltd.qubit.commons.reflect.testbed.StringMap;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import static ltd.qubit.commons.reflect.FieldUtils.IGNORED_FIELD_PREFIXES;
 import static ltd.qubit.commons.reflect.FieldUtils.getAllFields;
@@ -65,15 +75,6 @@ import static ltd.qubit.commons.reflect.Option.PRIVATE;
 import static ltd.qubit.commons.reflect.Option.PROTECTED;
 import static ltd.qubit.commons.reflect.Option.PUBLIC;
 import static ltd.qubit.commons.reflect.Option.STATIC;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Unit tests FieldUtils.
@@ -115,7 +116,7 @@ public class FieldUtilsTest {
     final HashSet<Field> actual = new HashSet<>();
 
     fillSet(expected,
-            List.of(Interface.class.getDeclaredField("VALUE1")));
+        Arrays.asList(Interface.class.getDeclaredField("VALUE1")));
     fillSet(actual, getAllFields(Interface.class, ALL));
     assertEquals(expected, actual);
 
@@ -132,7 +133,7 @@ public class FieldUtilsTest {
     assertEquals(expected, actual);
 
     fillSet(expected,
-            List.of(Interface.class.getDeclaredField("VALUE1")));
+        Arrays.asList(Interface.class.getDeclaredField("VALUE1")));
     fillSet(actual, getAllFields(Interface.class, STATIC | PUBLIC));
     assertEquals(expected, actual);
 
@@ -1146,8 +1147,8 @@ public class FieldUtilsTest {
         .isEqualTo("code");
     assertThat(getFieldName(App.class, App::setCreateTime))
         .isEqualTo("createTime");
-//    assertThat(getFieldName(App.class, App::setPredefined))
-//        .isEqualTo("predefined");
+   assertThat(getFieldName(App.class, App::setPredefined))
+       .isEqualTo("predefined");
     assertThat(getFieldName(App.class, App::toString))
         .isNull();
   }
@@ -1160,10 +1161,89 @@ public class FieldUtilsTest {
         .isEqualTo(getField(App.class, "code"));
     assertThat(getField(App.class, App::setCreateTime))
         .isEqualTo(getField(App.class, "createTime"));
-//    assertThat(getField(App.class, App::setPredefined))
-//        .isEqualTo(getField(App.class, "predefined"));
+   assertThat(getField(App.class, App::setPredefined))
+       .isEqualTo(getField(App.class, "predefined"));
     assertThat(getField(App.class, App::toString))
         .isNull();
   }
 
+  @Test
+  public void testGetFieldNameBySetter_2() {
+    assertThat(getFieldName(MethodRefBean.class, MethodRefBean::setPrimitiveBoolean))
+        .isEqualTo("primitiveBoolean");
+
+    // FIXME: Current primitive char is not supported
+    // assertThat(getFieldName(MethodRefBean.class, MethodRefBean::setPrimitiveChar))
+    //     .isEqualTo("primitiveChar");
+    assertThat(getFieldName(MethodRefBean.class, MethodRefBean::setPrimitiveByte))
+        .isEqualTo("primitiveByte");
+    assertThat(getFieldName(MethodRefBean.class, MethodRefBean::setPrimitiveShort))
+        .isEqualTo("primitiveShort");
+    assertThat(getFieldName(MethodRefBean.class, MethodRefBean::setPrimitiveInt))
+        .isEqualTo("primitiveInt");
+    assertThat(getFieldName(MethodRefBean.class, MethodRefBean::setPrimitiveLong))
+        .isEqualTo("primitiveLong");
+    assertThat(getFieldName(MethodRefBean.class, MethodRefBean::setPrimitiveFloat))
+        .isEqualTo("primitiveFloat");
+    assertThat(getFieldName(MethodRefBean.class, MethodRefBean::setPrimitiveDouble))
+        .isEqualTo("primitiveDouble");
+
+
+    assertThat(getFieldName(MethodRefBean.class, MethodRefBean::setBoolean))
+        .isEqualTo("boolean");
+    assertThat(getFieldName(MethodRefBean.class, MethodRefBean::setByte))
+        .isEqualTo("byte");
+    assertThat(getFieldName(MethodRefBean.class, MethodRefBean::setCharacter))
+        .isEqualTo("character");
+    assertThat(getFieldName(MethodRefBean.class, MethodRefBean::setShort))
+        .isEqualTo("short");
+    assertThat(getFieldName(MethodRefBean.class, MethodRefBean::setInteger))
+        .isEqualTo("integer");
+    assertThat(getFieldName(MethodRefBean.class, MethodRefBean::setLong))
+        .isEqualTo("long");
+    assertThat(getFieldName(MethodRefBean.class, MethodRefBean::setFloat))
+        .isEqualTo("float");
+    assertThat(getFieldName(MethodRefBean.class, MethodRefBean::setDouble))
+        .isEqualTo("double");
+  }
+
+  @Test
+  public void testGetFieldBySetter_2() {
+    assertThat(getField(MethodRefBean.class, MethodRefBean::setPrimitiveBoolean))
+        .isEqualTo(getField(MethodRefBean.class, "primitiveBoolean"));
+
+    // FIXME: Current primitive char is not supported
+    // assertThat(getField(MethodRefBean.class, MethodRefBean::setPrimitiveChar))
+    //     .isEqualTo("primitiveChar");
+    assertThat(getField(MethodRefBean.class, MethodRefBean::setPrimitiveByte))
+        .isEqualTo(getField(MethodRefBean.class, "primitiveByte"));
+    assertThat(getField(MethodRefBean.class, MethodRefBean::setPrimitiveShort))
+        .isEqualTo(getField(MethodRefBean.class, "primitiveShort"));
+    assertThat(getField(MethodRefBean.class, MethodRefBean::setPrimitiveInt))
+        .isEqualTo(getField(MethodRefBean.class, "primitiveInt"));
+    assertThat(getField(MethodRefBean.class, MethodRefBean::setPrimitiveLong))
+        .isEqualTo(getField(MethodRefBean.class, "primitiveLong"));
+    assertThat(getField(MethodRefBean.class, MethodRefBean::setPrimitiveFloat))
+        .isEqualTo(getField(MethodRefBean.class, "primitiveFloat"));
+    assertThat(getField(MethodRefBean.class, MethodRefBean::setPrimitiveDouble))
+        .isEqualTo(getField(MethodRefBean.class, "primitiveDouble"));
+
+
+    assertThat(getField(MethodRefBean.class, MethodRefBean::setBoolean))
+        .isEqualTo(getField(MethodRefBean.class, "boolean"));
+    assertThat(getField(MethodRefBean.class, MethodRefBean::setByte))
+        .isEqualTo(getField(MethodRefBean.class, "byte"));
+    assertThat(getField(MethodRefBean.class, MethodRefBean::setCharacter))
+        .isEqualTo(getField(MethodRefBean.class, "character"));
+    assertThat(getField(MethodRefBean.class, MethodRefBean::setShort))
+        .isEqualTo(getField(MethodRefBean.class, "short"));
+    assertThat(getField(MethodRefBean.class, MethodRefBean::setInteger))
+        .isEqualTo(getField(MethodRefBean.class, "integer"));
+    assertThat(getField(MethodRefBean.class, MethodRefBean::setLong))
+        .isEqualTo(getField(MethodRefBean.class, "long"));
+    assertThat(getField(MethodRefBean.class, MethodRefBean::setFloat))
+        .isEqualTo(getField(MethodRefBean.class, "float"));
+    assertThat(getField(MethodRefBean.class, MethodRefBean::setDouble))
+        .isEqualTo(getField(MethodRefBean.class, "double"));
+  }
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -156,6 +156,7 @@ public class NumericEntityUnescaper extends CharSequenceTranslator {
     return 0;
   }
 
+  @Override
   public boolean equals(final Object o) {
     if (this == o) {
       return true;
@@ -167,6 +168,7 @@ public class NumericEntityUnescaper extends CharSequenceTranslator {
     return Equality.equals(options, other.options);
   }
 
+  @Override
   public int hashCode() {
     final int multiplier = 7;
     int result = 3;
@@ -174,13 +176,15 @@ public class NumericEntityUnescaper extends CharSequenceTranslator {
     return result;
   }
 
+  @Override
   public String toString() {
     return new ToStringBuilder(this)
         .append("options", options)
         .toString();
   }
 
-  public NumericEntityUnescaper clone() {
+  @Override
+  public NumericEntityUnescaper cloneEx() {
     return new NumericEntityUnescaper(this);
   }
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,11 +13,12 @@ import ltd.qubit.commons.lang.CloneableEx;
 /**
  * 此接口表示实体类可进行脱敏操作。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface Desensitizable<T> extends CloneableEx<T> {
 
-  T clone();
+  @Override
+  T cloneEx();
 
   /**
    * 对此对象进行脱敏操作。
@@ -32,7 +33,7 @@ public interface Desensitizable<T> extends CloneableEx<T> {
    */
   @SuppressWarnings("unchecked")
   default T desensitizedClone() {
-    final T result = clone();
+    final T result = cloneEx();
     ((Desensitizable<T>) result).desensitize();
     return result;
   }

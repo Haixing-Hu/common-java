@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -26,4 +26,20 @@ public interface Encoder<FROM, TO> {
    */
   TO encode(FROM source) throws EncodingException;
 
+  /**
+   * Encodes an object to another, and returns {@code null} if any encoding
+   * error occurred.
+   *
+   * @param source
+   *     the source object to be encoded.
+   * @return
+   *     the encoding result, or {@code null} if any encoding error occurred.
+   */
+  default TO encodeNoThrow(final FROM source) {
+    try {
+      return encode(source);
+    } catch (final EncodingException e) {
+      return null;
+    }
+  }
 }

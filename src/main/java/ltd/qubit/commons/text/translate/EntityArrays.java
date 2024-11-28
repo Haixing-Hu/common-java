@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,8 +15,8 @@ import static ltd.qubit.commons.datastructure.map.MapUtils.invertAsUnmodifiable;
 /**
  * Class holding various entity data for HTML and XML - generally for use with
  * the LookupTranslator.
- *
- * <p>All Maps are generated using {@code java.util.Collections.unmodifiableMap()}.</p>
+ * <p>
+ * All Maps are generated using {@code java.util.Collections.unmodifiableMap()}.
  *
  * @author Haixing Hu
  */
@@ -24,8 +24,8 @@ public class EntityArrays {
 
   /**
    * A Map of characters to escape.
-   *
-   * <p>The map contains the
+   * <p>
+   * The map contains the
    * <a href="https://secure.wikimedia.org/wikipedia/en/wiki/ISO/IEC_8859-1">ISO-8859-1</a>
    * characters to their named HTML 3.x equivalents.</p>
    */
@@ -344,7 +344,7 @@ public class EntityArrays {
   /**
    * A Map&lt;CharSequence, CharSequence&gt; to escape the basic XML and HTML
    * character entities.
-   *
+   * <p>
    * Namely: {@code " & < >}
    */
   public static final Map<CharSequence, CharSequence> BASIC_ESCAPE = Map.of(
@@ -377,7 +377,7 @@ public class EntityArrays {
   /**
    * A Map&lt;CharSequence, CharSequence&gt; to escape the Java
    * control characters.
-   *
+   * <p>
    * Namely: {@code \b \n \t \f \r}
    */
   public static final Map<CharSequence, CharSequence> JAVA_CTRL_CHARS_ESCAPE = Map.of(
@@ -393,4 +393,33 @@ public class EntityArrays {
    */
   public static final Map<CharSequence, CharSequence> JAVA_CTRL_CHARS_UNESCAPE
       = invertAsUnmodifiable(JAVA_CTRL_CHARS_ESCAPE);
+
+  /**
+   * A Map&lt;CharSequence, CharSequence&gt; to escape the special characters of
+   * Java regular expressions.
+   * <p>
+   * Namely: {@code \ . [ ] { } ( ) ^ $ | ? * +}
+   */
+  public static final Map<CharSequence, CharSequence> JAVA_REGEX_ESCAPE = Map.ofEntries(
+      Map.entry("\\", "\\\\"),
+      Map.entry(".", "\\."),
+      Map.entry("[", "\\["),
+      Map.entry("]", "\\]"),
+      Map.entry("{", "\\{"),
+      Map.entry("}", "\\}"),
+      Map.entry("(", "\\("),
+      Map.entry(")", "\\)"),
+      Map.entry("^", "\\^"),
+      Map.entry("$", "\\$"),
+      Map.entry("|", "\\|"),
+      Map.entry("?", "\\?"),
+      Map.entry("*", "\\*"),
+      Map.entry("+", "\\+")
+  );
+
+  /**
+   * Reverse of {@link #JAVA_REGEX_ESCAPE} for unescaping purposes.
+   */
+  public static final Map<CharSequence, CharSequence> JAVA_REGEX_UNESCAPE
+      = invertAsUnmodifiable(JAVA_REGEX_ESCAPE);
 }

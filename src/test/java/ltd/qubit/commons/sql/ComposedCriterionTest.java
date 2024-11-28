@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,9 +11,11 @@ package ltd.qubit.commons.sql;
 import java.sql.SQLSyntaxErrorException;
 import java.util.Arrays;
 
+import org.junit.jupiter.api.Test;
+
 import ltd.qubit.commons.reflect.testbed.Foo;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static ltd.qubit.commons.sql.ComparisonOperator.EQUAL;
 import static ltd.qubit.commons.sql.ComparisonOperator.IN;
@@ -21,8 +23,6 @@ import static ltd.qubit.commons.sql.ComparisonOperator.LESS;
 import static ltd.qubit.commons.sql.ComparisonOperator.NOT_EQUAL;
 import static ltd.qubit.commons.util.LogicRelation.AND;
 import static ltd.qubit.commons.util.LogicRelation.NOT;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ComposedCriterionTest {
 

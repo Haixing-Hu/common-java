@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -24,6 +24,8 @@ import javax.annotation.concurrent.ThreadSafe;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.reflect.impl.NonVoidMethod0;
 import ltd.qubit.commons.reflect.impl.NonVoidMethod1;
+import ltd.qubit.commons.reflect.impl.NonVoidMethod1Boolean;
+import ltd.qubit.commons.reflect.impl.NonVoidMethod1Byte;
 import ltd.qubit.commons.reflect.impl.NonVoidMethod2;
 import ltd.qubit.commons.reflect.impl.NonVoidMethod3;
 import ltd.qubit.commons.reflect.impl.NonVoidMethod4;
@@ -35,6 +37,8 @@ import ltd.qubit.commons.reflect.impl.NonVoidMethod9;
 import ltd.qubit.commons.reflect.impl.ReferenceToMethodCache;
 import ltd.qubit.commons.reflect.impl.VoidMethod0;
 import ltd.qubit.commons.reflect.impl.VoidMethod1;
+import ltd.qubit.commons.reflect.impl.VoidMethod1Boolean;
+import ltd.qubit.commons.reflect.impl.VoidMethod1Byte;
 import ltd.qubit.commons.reflect.impl.VoidMethod2;
 import ltd.qubit.commons.reflect.impl.VoidMethod3;
 import ltd.qubit.commons.reflect.impl.VoidMethod4;
@@ -49,12 +53,8 @@ import static ltd.qubit.commons.lang.ArrayUtils.EMPTY_CLASS_ARRAY;
 import static ltd.qubit.commons.lang.ArrayUtils.EMPTY_OBJECT_ARRAY;
 import static ltd.qubit.commons.lang.ClassUtils.isAssignable;
 import static ltd.qubit.commons.lang.ObjectUtils.defaultIfNull;
-import static ltd.qubit.commons.reflect.Option.ALL_ACCESS;
-import static ltd.qubit.commons.reflect.Option.ANCESTOR;
+import static ltd.qubit.commons.reflect.Option.ALL_EXCLUDE_BRIDGE;
 import static ltd.qubit.commons.reflect.Option.DEFAULT;
-import static ltd.qubit.commons.reflect.Option.NON_BRIDGE;
-import static ltd.qubit.commons.reflect.Option.NON_STATIC;
-import static ltd.qubit.commons.reflect.Option.STATIC;
 import static ltd.qubit.commons.reflect.impl.GetMethodByReferenceImpl.GETTER_METHOD_CACHES;
 import static ltd.qubit.commons.reflect.impl.GetMethodByReferenceImpl.findMethod;
 
@@ -79,6 +79,7 @@ import static ltd.qubit.commons.reflect.impl.GetMethodByReferenceImpl.findMethod
  * @author Haixing Hu
  * @since 1.0.0
  */
+@SuppressWarnings("overloads")
 @ThreadSafe
 public class MethodUtils {
 
@@ -791,15 +792,76 @@ public class MethodUtils {
     } else {
       final String name = method.getName();
       final Class<?>[] paramTypes = method.getParameterTypes();
-      final int options = ANCESTOR | STATIC | NON_STATIC | ALL_ACCESS | NON_BRIDGE;
       final Class<?> cls = method.getDeclaringClass();
       final List<MethodInfo> methodInfos = getAllMethodInfos(cls);
       for (final MethodInfo current : methodInfos) {
         final Method m = current.getMethod();
-        if (Option.satisfy(cls, m, options)
+        if (Option.satisfy(cls, m, ALL_EXCLUDE_BRIDGE)
             && name.equals(m.getName())
             && Equality.equals(paramTypes, m.getParameterTypes())
             && (m.getDeclaredAnnotation(annotationClass) != null)) {
+          return true;
+        }
+      }
+      return false;
+    }
+  }
+
+  /**
+   * 检查指定的方法的某个参数是否被标注了指定的注解。
+   *
+   * @param <T>
+   *      注解的类型。
+   * @param method
+   *     指定的方法。
+   * @param annotationClass
+   *     指定的注解的类。
+   * @return
+   *     给定的方法的某个参数是否被标注了指定的注解。
+   * @see #isAnnotationPresentInParameters(Method, Class)
+   */
+  public static <T extends Annotation> boolean isAnnotationDirectlyPresentInParameters(
+      final Method method, final Class<T> annotationClass) {
+    final Annotation[][] annotations = method.getParameterAnnotations();
+    for (final Annotation[] annotationList : annotations) {
+      for (final Annotation ann : annotationList) {
+        if (annotationClass.isAssignableFrom(ann.getClass())) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
+   * 检查指定的方法的某个参数是否被标注了指定的注解，此方法将在该方法的声明类/接口及其父类
+   * /父接口中检查所有重载方法的所有参数的注解。
+   *
+   * @param <T>
+   *      注解的类型。
+   * @param method
+   *     指定的方法。
+   * @param annotationClass
+   *     指定的注解的类。
+   * @return
+   *     给定的方法的某个参数是否在其声明类/声明接口或其父类/父接口中被标注了指定的注解。
+   * @see #isAnnotationDirectlyPresentInParameters(Method, Class)
+   */
+  public static <T extends Annotation> boolean isAnnotationPresentInParameters(
+      final Method method, final Class<T> annotationClass) {
+    if (method.getParameterCount() == 0) {
+      return false;
+    } else {
+      final String name = method.getName();
+      final Class<?>[] paramTypes = method.getParameterTypes();
+      final Class<?> cls = method.getDeclaringClass();
+      final List<MethodInfo> methodInfos = getAllMethodInfos(cls);
+      for (final MethodInfo current : methodInfos) {
+        final Method m = current.getMethod();
+        if (Option.satisfy(cls, m, ALL_EXCLUDE_BRIDGE)
+            && name.equals(m.getName())
+            && Equality.equals(paramTypes, m.getParameterTypes())
+            && isAnnotationDirectlyPresentInParameters(m, annotationClass)) {
           return true;
         }
       }
@@ -870,6 +932,78 @@ public class MethodUtils {
     return cache.computeIfAbsent(ref,
         (g) -> findMethod(clazz, (NonVoidMethod1<T, R, P1>) g));
   }
+
+  @SuppressWarnings("unchecked")
+  public static <T, R> Method getMethodByReference(final Class<T> clazz,
+      final NonVoidMethod1Boolean<T, R> ref) {
+    final ReferenceToMethodCache<T> cache =
+        (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+    return cache.computeIfAbsent(ref,
+        (g) -> findMethod(clazz, (NonVoidMethod1Boolean<T, R>) g));
+  }
+
+  // @SuppressWarnings("unchecked")
+  // public static <T, R> Method getMethodByReference(final Class<T> clazz,
+  //     final NonVoidMethod1Char<T, R> ref) {
+  //   final ReferenceToMethodCache<T> cache =
+  //       (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+  //   return cache.computeIfAbsent(ref,
+  //       (g) -> findMethod(clazz, (NonVoidMethod1Char<T, R>) g));
+  // }
+
+  @SuppressWarnings("unchecked")
+  public static <T, R> Method getMethodByReference(final Class<T> clazz,
+      final NonVoidMethod1Byte<T, R> ref) {
+    final ReferenceToMethodCache<T> cache =
+        (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+    return cache.computeIfAbsent(ref,
+        (g) -> findMethod(clazz, (NonVoidMethod1Byte<T, R>) g));
+  }
+
+  // @SuppressWarnings("unchecked")
+  // public static <T, R> Method getMethodByReference(final Class<T> clazz,
+  //     final NonVoidMethod1Short<T, R> ref) {
+  //   final ReferenceToMethodCache<T> cache =
+  //       (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+  //   return cache.computeIfAbsent(ref,
+  //       (g) -> findMethod(clazz, (NonVoidMethod1Short<T, R>) g));
+  // }
+  //
+  // @SuppressWarnings("unchecked")
+  // public static <T, R> Method getMethodByReference(final Class<T> clazz,
+  //     final NonVoidMethod1Int<T, R> ref) {
+  //   final ReferenceToMethodCache<T> cache =
+  //       (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+  //   return cache.computeIfAbsent(ref,
+  //       (g) -> findMethod(clazz, (NonVoidMethod1Int<T, R>) g));
+  // }
+  //
+  // @SuppressWarnings("unchecked")
+  // public static <T, R> Method getMethodByReference(final Class<T> clazz,
+  //     final NonVoidMethod1Long<T, R> ref) {
+  //   final ReferenceToMethodCache<T> cache =
+  //       (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+  //   return cache.computeIfAbsent(ref,
+  //       (g) -> findMethod(clazz, (NonVoidMethod1Long<T, R>) g));
+  // }
+  //
+  // @SuppressWarnings("unchecked")
+  // public static <T, R> Method getMethodByReference(final Class<T> clazz,
+  //     final NonVoidMethod1Float<T, R> ref) {
+  //   final ReferenceToMethodCache<T> cache =
+  //       (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+  //   return cache.computeIfAbsent(ref,
+  //       (g) -> findMethod(clazz, (NonVoidMethod1Float<T, R>) g));
+  // }
+  //
+  // @SuppressWarnings("unchecked")
+  // public static <T, R> Method getMethodByReference(final Class<T> clazz,
+  //     final NonVoidMethod1Double<T, R> ref) {
+  //   final ReferenceToMethodCache<T> cache =
+  //       (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+  //   return cache.computeIfAbsent(ref,
+  //       (g) -> findMethod(clazz, (NonVoidMethod1Double<T, R>) g));
+  // }
 
   @SuppressWarnings("unchecked")
   public static <T, R, P1, P2> Method getMethodByReference(final Class<T> clazz,
@@ -1007,6 +1141,78 @@ public class MethodUtils {
     return cache.computeIfAbsent(ref,
         (g) -> findMethod(clazz, (VoidMethod1<T, P1>) g));
   }
+
+  @SuppressWarnings("unchecked")
+  public static <T> Method getMethodByReference(final Class<T> clazz,
+      final VoidMethod1Boolean<T> ref) {
+    final ReferenceToMethodCache<T> cache =
+        (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+    return cache.computeIfAbsent(ref,
+        (g) -> findMethod(clazz, (VoidMethod1Boolean<T>) g));
+  }
+
+  // @SuppressWarnings("unchecked")
+  // public static <T> Method getMethodByReference(final Class<T> clazz,
+  //     final VoidMethod1Char<T> ref) {
+  //   final ReferenceToMethodCache<T> cache =
+  //       (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+  //   return cache.computeIfAbsent(ref,
+  //       (g) -> findMethod(clazz, (VoidMethod1Char<T>) g));
+  // }
+
+  @SuppressWarnings("unchecked")
+  public static <T> Method getMethodByReference(final Class<T> clazz,
+      final VoidMethod1Byte<T> ref) {
+    final ReferenceToMethodCache<T> cache =
+        (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+    return cache.computeIfAbsent(ref,
+        (g) -> findMethod(clazz, (VoidMethod1Byte<T>) g));
+  }
+
+  // @SuppressWarnings("unchecked")
+  // public static <T> Method getMethodByReference(final Class<T> clazz,
+  //     final VoidMethod1Short<T> ref) {
+  //   final ReferenceToMethodCache<T> cache =
+  //       (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+  //   return cache.computeIfAbsent(ref,
+  //       (g) -> findMethod(clazz, (VoidMethod1Short<T>) g));
+  // }
+  //
+  // @SuppressWarnings("unchecked")
+  // public static <T> Method getMethodByReference(final Class<T> clazz,
+  //     final VoidMethod1Int<T> ref) {
+  //   final ReferenceToMethodCache<T> cache =
+  //       (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+  //   return cache.computeIfAbsent(ref,
+  //       (g) -> findMethod(clazz, (VoidMethod1Int<T>) g));
+  // }
+  //
+  // @SuppressWarnings("unchecked")
+  // public static <T> Method getMethodByReference(final Class<T> clazz,
+  //     final VoidMethod1Long<T> ref) {
+  //   final ReferenceToMethodCache<T> cache =
+  //       (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+  //   return cache.computeIfAbsent(ref,
+  //       (g) -> findMethod(clazz, (VoidMethod1Long<T>) g));
+  // }
+  //
+  // @SuppressWarnings("unchecked")
+  // public static <T> Method getMethodByReference(final Class<T> clazz,
+  //     final VoidMethod1Float<T> ref) {
+  //   final ReferenceToMethodCache<T> cache =
+  //       (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+  //   return cache.computeIfAbsent(ref,
+  //       (g) -> findMethod(clazz, (VoidMethod1Float<T>) g));
+  // }
+  //
+  // @SuppressWarnings("unchecked")
+  // public static <T> Method getMethodByReference(final Class<T> clazz,
+  //     final VoidMethod1Double<T> ref) {
+  //   final ReferenceToMethodCache<T> cache =
+  //       (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+  //   return cache.computeIfAbsent(ref,
+  //       (g) -> findMethod(clazz, (VoidMethod1Double<T>) g));
+  // }
 
   @SuppressWarnings("unchecked")
   public static <T, P1, P2> Method getMethodByReference(final Class<T> clazz,

@@ -22,7 +22,7 @@ import ltd.qubit.commons.lang.ArrayUtils;
 
 /**
  * Base class for message source implementations, providing support
- * infrastructure such as {@link MessageFormat} handling but not
+ * infrastructure such as {@link java.text.MessageFormat} handling but not
  * implementing concrete methods defined in the {@link MessageSource}.
  * <p>
  * {@link AbstractMessageSource} derives from this class, providing concrete
@@ -68,7 +68,7 @@ public abstract class MessageSourceSupport {
    * with actual arguments are supposed to be written with {@code MessageFormat}
    * escaping.
    *
-   * @see MessageFormat
+   * @see java.text.MessageFormat
    */
   public void setAlwaysUseMessageFormat(final boolean alwaysUseMessageFormat) {
     this.alwaysUseMessageFormat = alwaysUseMessageFormat;
@@ -98,7 +98,7 @@ public abstract class MessageSourceSupport {
    * @param locale
    *     the Locale used for formatting
    * @return the rendered default message (with resolved arguments)
-   * @see #formatMessage(String, Object[], Locale)
+   * @see #formatMessage(String, Object[], java.util.Locale)
    */
   protected String renderDefaultMessage(final String defaultMessage,
       @Nullable final Object[] args, final Locale locale) {

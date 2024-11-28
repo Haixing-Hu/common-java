@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,24 +8,27 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.security;
 
-import jakarta.xml.bind.annotation.XmlAnyElement;
-import ltd.qubit.commons.lang.Equality;
-import ltd.qubit.commons.lang.Hash;
-import ltd.qubit.commons.text.tostring.ToStringBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.Serializable;
+import java.util.regex.Pattern;
 
 import javax.annotation.Nullable;
 import javax.annotation.RegEx;
-import java.io.Serializable;
-import java.util.regex.Pattern;
+
+import jakarta.xml.bind.annotation.XmlAnyElement;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ltd.qubit.commons.lang.Equality;
+import ltd.qubit.commons.lang.Hash;
+import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
  * 此模型表示带数字签名的消息。
  *
  * @param <T>
  *     消息体的数据
- * @author Haixing Hu
+ * @author 胡海星
  * @see SignatureAlgorithm
  * @see SignatureSigner
  * @see SignatureVerifier
@@ -74,41 +77,38 @@ public class SignedMessage<T> implements Serializable {
     this.data = data;
   }
 
-  public final T getData() {
+  public T getData() {
     return data;
   }
 
-  public final SignedMessage<T> setData(final T data) {
+  public void setData(final T data) {
     this.data = data;
-    return this;
   }
 
   @Nullable
-  public final String getReturnUrl() {
+  public String getReturnUrl() {
     return returnUrl;
   }
 
-  public final SignedMessage<T> setReturnUrl(@Nullable final String returnUrl) {
+  public void setReturnUrl(@Nullable final String returnUrl) {
     this.returnUrl = returnUrl;
-    return this;
   }
 
-  public final String getNotifyUrl() {
+  @Nullable
+  public String getNotifyUrl() {
     return notifyUrl;
   }
 
-  public final SignedMessage<T> setNotifyUrl(final String notifyUrl) {
+  public void setNotifyUrl(@Nullable final String notifyUrl) {
     this.notifyUrl = notifyUrl;
-    return this;
   }
 
-  public final String getSignature() {
+  public String getSignature() {
     return signature;
   }
 
-  public final SignedMessage<T> setSignature(final String signature) {
+  public void setSignature(final String signature) {
     this.signature = signature;
-    return this;
   }
 
   @Override

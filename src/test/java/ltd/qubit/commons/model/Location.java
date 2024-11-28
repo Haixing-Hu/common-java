@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,17 +8,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+
+import javax.annotation.Nullable;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import ltd.qubit.commons.annotation.Scale;
 import ltd.qubit.commons.lang.Argument;
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import javax.annotation.Nullable;
-import java.io.Serializable;
-import java.math.BigDecimal;
 
 import static ltd.qubit.commons.lang.BigDecimalUtils.limitPrecision;
 
@@ -38,7 +40,7 @@ import static ltd.qubit.commons.lang.BigDecimalUtils.limitPrecision;
  * <li>1度 = 60分</li>
  * </ul>
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class Location implements Serializable, Emptyful, Normalizable,
     Assignable<Location> {
@@ -98,7 +100,7 @@ public class Location implements Serializable, Emptyful, Normalizable,
   }
 
   @Override
-  public Location clone() {
+  public Location cloneEx() {
     return new Location(this);
   }
 

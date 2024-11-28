@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -10,10 +10,10 @@ package ltd.qubit.commons.util.transformer.string;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import static ltd.qubit.commons.test.JacksonXmlTestUtils.assertXmlDeserializeEquals;
 import static ltd.qubit.commons.test.JacksonXmlTestUtils.assertXmlSerializeEquals;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Unit test of the {@link RegexTransformer} class.

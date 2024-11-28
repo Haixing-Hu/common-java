@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -183,7 +183,7 @@ public interface Config extends CloneableEx<Config> {
   boolean getBoolean(String name, boolean defaultValue);
 
   /**
-   * Gets the values of the specified property as a array of {@code boolean}
+   * Gets the values of the specified property as an array of {@code boolean}
    * values.
    *
    * @param name
@@ -198,7 +198,7 @@ public interface Config extends CloneableEx<Config> {
   boolean[] getBooleans(String name);
 
   /**
-   * Gets the values of the specified property as a array of {@code boolean}
+   * Gets the values of the specified property as an array of {@code boolean}
    * values.
    *
    * @param name
@@ -246,7 +246,7 @@ public interface Config extends CloneableEx<Config> {
   char getChar(String name, char defaultValue);
 
   /**
-   * Gets the values of the specified property as a array of {@code char}
+   * Gets the values of the specified property as an array of {@code char}
    * values.
    *
    * @param name
@@ -261,7 +261,7 @@ public interface Config extends CloneableEx<Config> {
   char[] getChars(String name);
 
   /**
-   * Gets the values of the specified property as a array of {@code char}
+   * Gets the values of the specified property as an array of {@code char}
    * values.
    *
    * @param name
@@ -309,7 +309,7 @@ public interface Config extends CloneableEx<Config> {
   byte getByte(String name, byte defaultValue);
 
   /**
-   * Gets the values of the specified property as a array of {@code byte}
+   * Gets the values of the specified property as an array of {@code byte}
    * values.
    *
    * @param name
@@ -324,7 +324,7 @@ public interface Config extends CloneableEx<Config> {
   byte[] getBytes(String name);
 
   /**
-   * Gets the values of the specified property as a array of {@code byte}
+   * Gets the values of the specified property as an array of {@code byte}
    * values.
    *
    * @param name
@@ -371,7 +371,7 @@ public interface Config extends CloneableEx<Config> {
   short getShort(String name, short defaultValue);
 
   /**
-   * Gets the values of the specified property as a array of {@code short}
+   * Gets the values of the specified property as an array of {@code short}
    * values.
    *
    * @param name
@@ -386,7 +386,7 @@ public interface Config extends CloneableEx<Config> {
   short[] getShorts(String name);
 
   /**
-   * Gets the values of the specified property as a array of {@code short}
+   * Gets the values of the specified property as an array of {@code short}
    * values.
    *
    * @param name
@@ -433,7 +433,7 @@ public interface Config extends CloneableEx<Config> {
   int getInt(String name, int defaultValue);
 
   /**
-   * Gets the values of the specified property as a array of {@code int}
+   * Gets the values of the specified property as an array of {@code int}
    * values.
    *
    * @param name
@@ -448,7 +448,7 @@ public interface Config extends CloneableEx<Config> {
   int[] getInts(String name);
 
   /**
-   * Gets the values of the specified property as a array of {@code int}
+   * Gets the values of the specified property as an array of {@code int}
    * values.
    *
    * @param name
@@ -495,7 +495,7 @@ public interface Config extends CloneableEx<Config> {
   long getLong(String name, long defaultValue);
 
   /**
-   * Gets the values of the specified property as a array of {@code long}
+   * Gets the values of the specified property as an array of {@code long}
    * values.
    *
    * @param name
@@ -510,7 +510,7 @@ public interface Config extends CloneableEx<Config> {
   long[] getLongs(String name);
 
   /**
-   * Gets the values of the specified property as a array of {@code long}
+   * Gets the values of the specified property as an array of {@code long}
    * values.
    *
    * @param name
@@ -558,7 +558,7 @@ public interface Config extends CloneableEx<Config> {
   float getFloat(String name, float defaultValue);
 
   /**
-   * Gets the values of the specified property as a array of {@code float}
+   * Gets the values of the specified property as an array of {@code float}
    * values.
    *
    * @param name
@@ -573,7 +573,7 @@ public interface Config extends CloneableEx<Config> {
   float[] getFloats(String name);
 
   /**
-   * Gets the values of the specified property as a array of {@code float}
+   * Gets the values of the specified property as an array of {@code float}
    * values.
    *
    * @param name
@@ -620,7 +620,7 @@ public interface Config extends CloneableEx<Config> {
   double getDouble(String name, double defaultValue);
 
   /**
-   * Gets the values of the specified property as a array of {@code double}
+   * Gets the values of the specified property as an array of {@code double}
    * values.
    *
    * @param name
@@ -635,7 +635,7 @@ public interface Config extends CloneableEx<Config> {
   double[] getDoubles(String name);
 
   /**
-   * Gets the values of the specified property as a array of {@code double}
+   * Gets the values of the specified property as an array of {@code double}
    * values.
    *
    * @param name
@@ -685,7 +685,7 @@ public interface Config extends CloneableEx<Config> {
   String getRawString(String name, @Nullable String defaultValue);
 
   /**
-   * Gets the values of the specified property as a array of {@code String}
+   * Gets the values of the specified property as an array of {@code String}
    * values.
    *
    * @param name
@@ -701,7 +701,7 @@ public interface Config extends CloneableEx<Config> {
   String[] getRawStrings(String name);
 
   /**
-   * Gets the values of the specified property as a array of {@code String}
+   * Gets the values of the specified property as an array of {@code String}
    * values.
    *
    * @param name
@@ -772,7 +772,7 @@ public interface Config extends CloneableEx<Config> {
       @Nullable String defaultValue);
 
   /**
-   * Gets the values of the specified property as a array of substituted {@code
+   * Gets the values of the specified property as an array of substituted {@code
    * String} values.
    *
    * <p>That is, if the property value of the specified name contains
@@ -796,7 +796,7 @@ public interface Config extends CloneableEx<Config> {
   String[] getStrings(String name);
 
   /**
-   * Gets the values of the specified property as a array of substituted {@code
+   * Gets the values of the specified property as an array of substituted {@code
    * String} values.
    *
    * <p>That is, if the property value of the specified name contains
@@ -879,7 +879,7 @@ public interface Config extends CloneableEx<Config> {
       @Nullable BigDecimal defaultValue);
 
   /**
-   * Gets the values of the specified property as a array of {@code BigDecimal}
+   * Gets the values of the specified property as an array of {@code BigDecimal}
    * values. If the specified property does not exists or has no value, a {@code
    * ConfigurationError} is thrown.
    *
@@ -894,7 +894,7 @@ public interface Config extends CloneableEx<Config> {
   BigDecimal[] getBigDecimals(String name);
 
   /**
-   * Gets the values of the specified property as a array of {@code BigDecimal}
+   * Gets the values of the specified property as an array of {@code BigDecimal}
    * values. If the specified property does not exists or has no value, a {@code
    * ConfigurationError} is thrown.
    *
@@ -944,7 +944,7 @@ public interface Config extends CloneableEx<Config> {
       @Nullable BigInteger defaultValue);
 
   /**
-   * Gets the values of the specified property as a array of {@code BigInteger}
+   * Gets the values of the specified property as an array of {@code BigInteger}
    * values.
    *
    * @param name
@@ -959,7 +959,7 @@ public interface Config extends CloneableEx<Config> {
   BigInteger[] getBigIntegers(String name);
 
   /**
-   * Gets the values of the specified property as a array of {@code BigInteger}
+   * Gets the values of the specified property as an array of {@code BigInteger}
    * values.
    *
    * @param name
@@ -1007,7 +1007,7 @@ public interface Config extends CloneableEx<Config> {
   Date getDate(String name, @Nullable Date defaultValue);
 
   /**
-   * Gets the values of the specified property as a array of {@code Date}
+   * Gets the values of the specified property as an array of {@code Date}
    * values.
    *
    * @param name
@@ -1022,7 +1022,7 @@ public interface Config extends CloneableEx<Config> {
   Date[] getDates(String name);
 
   /**
-   * Gets the values of the specified property as a array of {@code Date}
+   * Gets the values of the specified property as an array of {@code Date}
    * values.
    *
    * @param name
@@ -1071,7 +1071,7 @@ public interface Config extends CloneableEx<Config> {
       @Nullable byte[] defaultValue);
 
   /**
-   * Gets the values of the specified property as a array of {@code byte[]}
+   * Gets the values of the specified property as an array of {@code byte[]}
    * values.
    *
    * @param name
@@ -1086,7 +1086,7 @@ public interface Config extends CloneableEx<Config> {
   byte[][] getByteArrays(String name);
 
   /**
-   * Gets the values of the specified property as a array of {@code byte[]}
+   * Gets the values of the specified property as an array of {@code byte[]}
    * values.
    *
    * @param name
@@ -1102,6 +1102,98 @@ public interface Config extends CloneableEx<Config> {
    */
   byte[][] getByteArrays(String name,
       @Nullable byte[][] defaultValues);
+
+  /**
+   * Gets the value of the specified property as an enumeration object.
+   * <p>
+   * The value of the specified property must be stored as a string, and must be
+   * the name of an enumeration object.
+   *
+   * @param <E>
+   *     the enumeration type.
+   * @param name
+   *     the name of the specified property.
+   * @param enumType
+   *     the class of the enumeration class.
+   * @return the value of the specified property as an enumeration object.
+   * @throws ConfigurationError
+   *     if the type of the specified property is not {@code String}; or the
+   *     {@code String} value of the specified property can not be converted
+   *     to the specified enumeration object.
+   */
+  <E extends Enum<E>> E getEnum(String name, Class<E> enumType);
+
+  /**
+   * Gets the value of the specified property as an enumeration object.
+   * <p>
+   * The value of the specified property must be stored as a string, and must be
+   * the name of an enumeration object.
+   *
+   * @param <E>
+   *     the enumeration type.
+   * @param name
+   *     the name of the specified property.
+   * @param defaultValue
+   *     the default enumerator returned in case of there is no such property
+   *     or the property has no value. It could be null.
+   * @param enumType
+   *     the class of the enumeration class.
+   * @return the value of the specified property as an enumeration object, which
+   *     may be {@code null}.
+   * @throws ConfigurationError
+   *     if the type of the specified property is not {@code String}; or the
+   *     {@code String} value of the specified property can not be converted
+   *     to the specified enumeration object.
+   */
+  @Nullable
+  <E extends Enum<E>> E getEnum(String name, @Nullable E defaultValue, Class<E> enumType);
+
+  // /**
+  //  * Gets the value of the specified property as an array of enumeration objects.
+  //  * <p>
+  //  * The value of the specified property must be stored as a string, and must be
+  //  * the names of an array of enumeration objects.
+  //  *
+  //  * @param <E>
+  //  *     the enumeration type.
+  //  * @param name
+  //  *     the name of the specified property.
+  //  * @param enumType
+  //  *     the class of the enumeration class.
+  //  * @return the values of the specified property as an array of enumeration
+  //  *     objects, which may be {@code null}.
+  //  * @throws ConfigurationError
+  //  *     if the type of the specified property is not {@code String}; or the
+  //  *     {@code String} value of the specified property can not be converted
+  //  *     to the specified enumeration object.
+  //  */
+  // <E extends Enum<E>> E[] getEnums(String name, Class<E> enumType);
+  //
+  // /**
+  //  * Gets the value of the specified property as an array of enumeration objects.
+  //  * <p>
+  //  * The value of the specified property must be stored as a string, and must be
+  //  * an array of names of an enumeration objects.
+  //  *
+  //  * @param <E>
+  //  *     the enumeration type.
+  //  * @param name
+  //  *     the name of the specified property.
+  //  * @param defaultValues
+  //  *     the default enumerators returned in case of there is no such property
+  //  *     or the property has no value. It could be null.
+  //  * @param enumType
+  //  *     the class of the enumeration class.
+  //  * @return the values of the specified property as an array of enumeration
+  //  *     objects, or the default values in case of there is no such property
+  //  *     or the property has no value, which may be {@code null}.
+  //  * @throws ConfigurationError
+  //  *     if the type of the specified property is not {@code String}; or the
+  //  *     {@code String} value of the specified property can not be converted
+  //  *     to the specified enumeration object.
+  //  */
+  // @Nullable
+  // <E extends Enum<E>> E[] getEnums(String name, @Nullable E[] defaultValues, Class<E> enumType);
 
   /**
    * Gets the value of the specified property as a {@code Class} value.
@@ -1162,7 +1254,7 @@ public interface Config extends CloneableEx<Config> {
   Class<?> getClass(String name, @Nullable String defaultClassName);
 
   /**
-   * Gets the values of the specified property as a array of {@code Class}
+   * Gets the values of the specified property as an array of {@code Class}
    * values.
    *
    * <p>Note: the type of the specified property must be either {@link
@@ -1180,7 +1272,7 @@ public interface Config extends CloneableEx<Config> {
   Class<?>[] getClasses(String name);
 
   /**
-   * Gets the values of the specified property as a array of {@code Class}
+   * Gets the values of the specified property as an array of {@code Class}
    * values.
    *
    * <p>Note: the type of the specified property must be either {@link
@@ -1200,7 +1292,7 @@ public interface Config extends CloneableEx<Config> {
   Class<?>[] getClasses(String name, @Nullable Class<?>[] defaultValues);
 
   /**
-   * Gets the values of the specified property as a array of {@code Class}
+   * Gets the values of the specified property as an array of {@code Class}
    * values.
    *
    * <p>Note: the type of the specified property must be either {@link

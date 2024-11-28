@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -10,10 +10,10 @@ package ltd.qubit.commons.text.xml;
 
 import javax.annotation.concurrent.Immutable;
 
-import ltd.qubit.commons.io.serialize.XmlSerializer;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import ltd.qubit.commons.io.io.serialize.XmlSerializer;
 
 /**
  * The {@link XmlSerializer} for the {@link NodePattern} class.

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -56,6 +56,7 @@ public class NameValuePair implements Serializable, CloneableEx<NameValuePair>,
     return value;
   }
 
+  @Override
   public boolean equals(final Object o) {
     if (this == o) {
       return true;
@@ -68,6 +69,7 @@ public class NameValuePair implements Serializable, CloneableEx<NameValuePair>,
         && Equality.equals(value, other.value);
   }
 
+  @Override
   public int hashCode() {
     final int multiplier = 7;
     int result = 3;
@@ -76,6 +78,7 @@ public class NameValuePair implements Serializable, CloneableEx<NameValuePair>,
     return result;
   }
 
+  @Override
   public String toString() {
     return new ToStringBuilder(this)
         .append("name", name)
@@ -83,7 +86,8 @@ public class NameValuePair implements Serializable, CloneableEx<NameValuePair>,
         .toString();
   }
 
-  public NameValuePair clone() {
+  @Override
+  public NameValuePair cloneEx() {
     return new NameValuePair(name, value);
   }
 

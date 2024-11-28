@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,7 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util;
 
-import ltd.qubit.commons.io.error.InvalidFormatException;
+import ltd.qubit.commons.io.io.error.InvalidFormatException;
 
 /**
  * Thrown to indicate a version mismatch error.

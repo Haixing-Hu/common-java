@@ -66,7 +66,7 @@ public class MessageSourceAccessor {
    * corresponding constructor, or LocaleContextHolder's locale as fallback. Can
    * be overridden in subclasses.
    *
-   * @see #MessageSourceAccessor(MessageSource, Locale)
+   * @see #MessageSourceAccessor(MessageSource, java.util.Locale)
    * @see LocaleContextHolder#getLocale()
    */
   protected Locale getDefaultLocale() {

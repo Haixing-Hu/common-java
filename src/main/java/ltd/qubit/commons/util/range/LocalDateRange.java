@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,24 +8,29 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.range;
 
+import java.io.Serial;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+
+import javax.annotation.Nullable;
+
+import ltd.qubit.commons.annotation.Computed;
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
-import javax.annotation.Nullable;
-import java.io.Serializable;
-import java.time.LocalDate;
-
 /**
  * 此模型表示日期范围（前闭后开区间）。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class LocalDateRange implements Serializable, CloneableEx<LocalDateRange>,
         Assignable<LocalDateRange> {
 
+  @Serial
   private static final long serialVersionUID = -3726401531475792968L;
 
   /**
@@ -61,10 +66,24 @@ public class LocalDateRange implements Serializable, CloneableEx<LocalDateRange>
 
   public LocalDateRange() {}
 
+  public LocalDateRange(@Nullable final LocalDate start) {
+    this(start, null);
+  }
+
   public LocalDateRange(@Nullable final LocalDate start,
       @Nullable final LocalDate end) {
     this.start = start;
     this.end = end;
+  }
+
+  public LocalDateRange(@Nullable final String start) {
+    this(start, null);
+  }
+
+  public LocalDateRange(@Nullable final String start,
+      @Nullable final String end) {
+    this((start == null ? null : LocalDate.parse(start)),
+         (end == null ? null : LocalDate.parse(end)));
   }
 
   public LocalDateRange(final LocalDateRange other) {
@@ -78,7 +97,7 @@ public class LocalDateRange implements Serializable, CloneableEx<LocalDateRange>
   }
 
   @Override
-  public LocalDateRange clone() {
+  public LocalDateRange cloneEx() {
     return new LocalDateRange(this);
   }
 
@@ -128,5 +147,29 @@ public class LocalDateRange implements Serializable, CloneableEx<LocalDateRange>
             .append("start", start)
             .append("end", end)
             .toString();
+  }
+
+  @Computed({"start", "end"})
+  public InstantRange toInstantRange(final ZoneOffset zoneOffset) {
+    final InstantRange result = new InstantRange();
+    if (start != null) {
+      result.setStart(start.atStartOfDay().toInstant(zoneOffset));
+    }
+    if (end != null) {
+      result.setEnd(end.atStartOfDay().toInstant(zoneOffset));
+    }
+    return result;
+  }
+
+  @Computed({"start", "end"})
+  public LocalDateTimeRange toLocalDateTimeRange() {
+    final LocalDateTimeRange result = new LocalDateTimeRange();
+    if (start != null) {
+      result.setStart(start.atStartOfDay());
+    }
+    if (end != null) {
+      result.setEnd(end.atStartOfDay());
+    }
+    return result;
   }
 }

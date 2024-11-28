@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,16 +11,12 @@ package ltd.qubit.commons.reflect;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import org.junit.jupiter.api.Test;
+
+import ltd.qubit.commons.model.Foo;
 import ltd.qubit.commons.reflect.testbed.ChildBean;
 import ltd.qubit.commons.reflect.testbed.Info;
 import ltd.qubit.commons.util.range.CloseRange;
-
-import org.junit.jupiter.api.Test;
-
-import static ltd.qubit.commons.reflect.FieldUtils.getField;
-import static ltd.qubit.commons.reflect.FieldUtils.getReadMethod;
-import static ltd.qubit.commons.reflect.FieldUtils.getWriteMethod;
-import static ltd.qubit.commons.reflect.Option.BEAN_FIELD;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,6 +25,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static ltd.qubit.commons.reflect.FieldUtils.getField;
+import static ltd.qubit.commons.reflect.FieldUtils.getReadMethod;
+import static ltd.qubit.commons.reflect.FieldUtils.getWriteMethod;
+import static ltd.qubit.commons.reflect.Option.BEAN_FIELD;
 
 /**
  * Unit test of the {@link Property} class.
@@ -176,5 +177,39 @@ public class PropertyTest {
     assertFalse(p7.isUnique());
     assertNull(p6.getUniqueRespectTo());
     assertNull(p6.getSizeRange());
+  }
+
+  @Test
+  public void testPropertyOfPublicField() throws NoSuchFieldException {
+    final Foo foo = new Foo();
+    final Property p1 = Property.of(Foo.class, "m_boolean");
+    assertSame(Foo.class, p1.getOwnerClass());
+    assertEquals("m_boolean", p1.getName());
+    assertSame(boolean.class, p1.getType());
+    assertTrue(p1.isPublicField());
+    assertEquals(Foo.class.getField("m_boolean"), p1.getField());
+    assertFalse(p1.isReadonly());
+    assertFalse(p1.isIdentifier());
+    assertFalse(p1.isNullable());
+    assertFalse(p1.isUnique());
+    assertNull(p1.getUniqueRespectTo());
+    assertNull(p1.getSizeRange());
+    p1.setValue(foo, true);
+    assertEquals(Boolean.TRUE, p1.getValue(foo));
+
+    final Property p2 = Property.of(Foo.class, "m_Integer");
+    assertSame(Foo.class, p2.getOwnerClass());
+    assertEquals("m_Integer", p2.getName());
+    assertSame(Integer.class, p2.getType());
+    assertTrue(p2.isPublicField());
+    assertEquals(Foo.class.getField("m_Integer"), p2.getField());
+    assertFalse(p2.isReadonly());
+    assertFalse(p2.isIdentifier());
+    assertFalse(p2.isNullable());
+    assertFalse(p2.isUnique());
+    assertNull(p2.getUniqueRespectTo());
+    assertNull(p2.getSizeRange());
+    p2.setValue(foo, 200);
+    assertEquals(200, p2.getValue(foo));
   }
 }

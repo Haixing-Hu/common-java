@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,7 +13,7 @@ import ltd.qubit.commons.text.Inflector;
 /**
  * 将英文单词的复数形式转换为单数形式。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class PluralToSingularTransformer extends AbstractStringTransformer {
 
@@ -27,7 +27,7 @@ public class PluralToSingularTransformer extends AbstractStringTransformer {
   }
 
   @Override
-  public PluralToSingularTransformer clone() {
+  public PluralToSingularTransformer cloneEx() {
     return new PluralToSingularTransformer();
   }
 }

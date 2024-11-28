@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -351,7 +351,7 @@ public final class NumberFormatSymbols implements Assignable<NumberFormatSymbols
   }
 
   @Override
-  public NumberFormatSymbols clone() {
+  public NumberFormatSymbols cloneEx() {
     final NumberFormatSymbols result = new NumberFormatSymbols();
     result.assign(this);
     return result;

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -80,7 +80,7 @@ public final class BooleanFormatSymbols implements CloneableEx<BooleanFormatSymb
   }
 
   @Override
-  public BooleanFormatSymbols clone() {
+  public BooleanFormatSymbols cloneEx() {
     final BooleanFormatSymbols result = new BooleanFormatSymbols();
     result.assign(this);
     return result;

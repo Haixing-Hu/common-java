@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -21,8 +21,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import ltd.qubit.commons.error.InitializationError;
-import ltd.qubit.commons.io.serialize.BinarySerialization;
-import ltd.qubit.commons.io.serialize.XmlSerialization;
+import ltd.qubit.commons.io.io.serialize.BinarySerialization;
+import ltd.qubit.commons.io.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
@@ -115,7 +115,7 @@ public class NodePattern implements CloneableEx<NodePattern>, Serializable {
   }
 
   @Override
-  public NodePattern clone() {
+  public NodePattern cloneEx() {
     final NodePattern result = new NodePattern();
     result.xpath = xpath;
     result.expression = expression;

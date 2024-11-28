@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -10,16 +10,18 @@ package ltd.qubit.commons.model;
 
 import java.util.Locale;
 
+import ltd.qubit.commons.error.UnsupportedContentTypeException;
 import ltd.qubit.commons.lang.EnumUtils;
+import ltd.qubit.commons.lang.LocalizedEnum;
 
 import static ltd.qubit.commons.lang.EnumUtils.registerLocalizedNames;
 
 /**
  * 此枚举表示附件类型。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
-public enum AttachmentType {
+public enum AttachmentType implements LocalizedEnum {
 
   /**
    * 图像。
@@ -87,7 +89,7 @@ public enum AttachmentType {
     } else if (contentType.equals("text/x-vcard")) {
       return VCARD;
     } else {
-      throw new IllegalArgumentException(contentType);
+      throw new UnsupportedContentTypeException(contentType);
     }
   }
 
@@ -95,11 +97,11 @@ public enum AttachmentType {
     registerLocalizedNames(AttachmentType.class, "i18n/attachment-type");
   }
 
-  public String getLocalizedName() {
-    return getLocalizedName(Locale.getDefault());
+  public static AttachmentType forLocalizedName(final String name) {
+    return forLocalizedName(Locale.getDefault(), name);
   }
 
-  public String getLocalizedName(final Locale locale) {
-    return EnumUtils.getLocalizedName(locale, this);
+  public static AttachmentType forLocalizedName(final Locale locale, final String name) {
+    return EnumUtils.forLocalizedName(AttachmentType.class, locale, name);
   }
 }

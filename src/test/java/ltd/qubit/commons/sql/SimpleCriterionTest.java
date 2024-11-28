@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -14,6 +14,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
 
 import ltd.qubit.commons.lang.BigDecimalUtils;
 import ltd.qubit.commons.lang.BigIntegerUtils;
@@ -33,7 +35,13 @@ import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.model.Foo;
 import ltd.qubit.commons.reflect.testbed.State;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import static ltd.qubit.commons.lang.ArrayUtils.excludeAll;
 import static ltd.qubit.commons.lang.DateUtils.UTC_ZONE_ID;
@@ -53,14 +61,6 @@ import static ltd.qubit.commons.sql.ComparisonOperator.NOT_EQUAL;
 import static ltd.qubit.commons.sql.ComparisonOperator.NOT_IN;
 import static ltd.qubit.commons.sql.ComparisonOperator.NOT_LIKE;
 import static ltd.qubit.commons.sql.impl.CriterionImplUtils.isSupportedDataType;
-
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SimpleCriterionTest {
 

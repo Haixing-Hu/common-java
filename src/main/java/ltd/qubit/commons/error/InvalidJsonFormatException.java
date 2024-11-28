@@ -9,6 +9,7 @@
 package ltd.qubit.commons.error;
 
 import java.io.IOException;
+import java.io.Serial;
 
 import ltd.qubit.commons.util.pair.KeyValuePair;
 
@@ -20,6 +21,7 @@ import ltd.qubit.commons.util.pair.KeyValuePair;
 public class InvalidJsonFormatException extends IOException
     implements ErrorInfoConvertable {
 
+  @Serial
   private static final long serialVersionUID = -6779062496130135614L;
 
   private String json = "<unknown>";
@@ -43,5 +45,9 @@ public class InvalidJsonFormatException extends IOException
     return new ErrorInfo("IO_ERROR", "INVALID_JSON_FORMAT",
         new KeyValuePair("json", json),
         new KeyValuePair("message", getMessage()));
+  }
+
+  public String getJson() {
+    return json;
   }
 }

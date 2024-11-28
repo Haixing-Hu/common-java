@@ -11,15 +11,15 @@ package ltd.qubit.commons.text.jackson;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
-import ltd.qubit.commons.io.IoUtils;
+import ltd.qubit.commons.io.io.IoUtils;
 import ltd.qubit.commons.lang.SystemUtils;
 import ltd.qubit.commons.net.UrlPattern;
 import ltd.qubit.commons.text.testbed.Organization;
@@ -50,7 +50,7 @@ public class XmlMapperUtilsTest {
     person.setName("张三");
     person.setCompany(company);
     person.setCreateTime(Instant.parse("2022-09-28T09:38:45.752Z"));
-    final Map<String, String> payload = new HashMap<>();
+    final Map<String, String> payload = new TreeMap<>();
     payload.put("job-title", "engineer");
     payload.put("age", "32");
     person.setPayload(payload);
@@ -72,8 +72,8 @@ public class XmlMapperUtilsTest {
         + "<id>12345</id>"
         + "<name>张三</name>"
         + "<payload>"
-        + "<age>32</age>"
-        + "<job-title>engineer</job-title>"
+        + "<entry><key>age</key><value>32</value></entry>"
+        + "<entry><key>job-title</key><value>engineer</value></entry>"
         + "</payload>"
         + "</person>", j2);
   }

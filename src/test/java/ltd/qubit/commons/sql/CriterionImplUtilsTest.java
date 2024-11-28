@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -29,6 +29,8 @@ import java.util.Stack;
 import java.util.TimeZone;
 import java.util.Vector;
 
+import org.junit.jupiter.api.Test;
+
 import ltd.qubit.commons.lang.BigDecimalUtils;
 import ltd.qubit.commons.lang.BigIntegerUtils;
 import ltd.qubit.commons.lang.BooleanUtils;
@@ -47,7 +49,10 @@ import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.model.Foo;
 import ltd.qubit.commons.model.Gender;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import static ltd.qubit.commons.lang.ArrayUtils.excludeAll;
 import static ltd.qubit.commons.lang.DateUtils.BEIJING;
@@ -71,11 +76,6 @@ import static ltd.qubit.commons.sql.impl.CriterionImplUtils.isComparable;
 import static ltd.qubit.commons.sql.impl.CriterionImplUtils.isSupportedDataType;
 import static ltd.qubit.commons.sql.impl.CriterionImplUtils.stringToSql;
 import static ltd.qubit.commons.sql.impl.CriterionImplUtils.valueToSql;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CriterionImplUtilsTest {
 
@@ -123,7 +123,7 @@ public class CriterionImplUtilsTest {
     assertEquals("-123", valueToSql((byte) -123));
     assertEquals("123", valueToSql((short) +123));
     assertEquals("12345", valueToSql(12345));
-    assertEquals("1234567890", valueToSql(1234567890L));
+    assertEquals("1234567890", valueToSql(1234567890l));
     assertEquals("123.45", valueToSql(123.45f));
     assertEquals("123.45", valueToSql(123.45));
     assertEquals("12345678901234567890",

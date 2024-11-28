@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -9,6 +9,9 @@
 package ltd.qubit.commons.lang;
 
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import static ltd.qubit.commons.lang.StringUtils.chomp;
 import static ltd.qubit.commons.lang.StringUtils.chop;
@@ -21,9 +24,6 @@ import static ltd.qubit.commons.lang.StringUtils.removeSuffix;
 import static ltd.qubit.commons.lang.StringUtils.strip;
 import static ltd.qubit.commons.lang.StringUtils.stripEnd;
 import static ltd.qubit.commons.lang.StringUtils.stripStart;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Unit test for the modification functions in the Strings class.

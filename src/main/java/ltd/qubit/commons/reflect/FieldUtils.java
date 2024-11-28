@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -29,12 +29,15 @@ import javax.annotation.concurrent.ThreadSafe;
 import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.reflect.impl.GetterMethod;
 import ltd.qubit.commons.reflect.impl.SetterMethod;
+import ltd.qubit.commons.reflect.impl.SetterMethodBoolean;
+import ltd.qubit.commons.reflect.impl.SetterMethodByte;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.lang.StringUtils.isEmpty;
 import static ltd.qubit.commons.lang.StringUtils.uppercaseFirstChar;
 import static ltd.qubit.commons.reflect.AccessibleUtils.withAccessibleObject;
 import static ltd.qubit.commons.reflect.MethodUtils.getMethod;
+import static ltd.qubit.commons.reflect.Option.BEAN_FIELD;
 import static ltd.qubit.commons.reflect.Option.BEAN_METHOD;
 import static ltd.qubit.commons.reflect.PropertyUtils.GET_PREFIX;
 import static ltd.qubit.commons.reflect.PropertyUtils.IS_PREFIX;
@@ -50,6 +53,7 @@ import static ltd.qubit.commons.reflect.PropertyUtils.SET_PREFIX;
  * @author Haixing Hu
  * @since 1.0.0
  */
+@SuppressWarnings("overloads")
 @ThreadSafe
 public class FieldUtils {
 
@@ -104,28 +108,43 @@ public class FieldUtils {
     FIELD_CACHE.put(info, fields);
   }
 
-  private static synchronized List<FieldInfo> getAllFields(final Class<?> type) {
+  private static synchronized List<FieldInfo> getAllFieldsImpl(final Class<?> type) {
     final TypeInfo info = new TypeInfo(type);
     buildFieldCache(info);
     return FIELD_CACHE.get(info);
   }
 
   /**
-   * Gets all fields on a class.
+   * Gets all fields of a class.
+   *
+   * @param cls
+   *     The class on which to get the fields.
+   * @return
+   *     the list of all specified fields; or an empty list if no such field.
+   * @throws ReflectionException
+   *     if any error occurred.
+   */
+  public static List<Field> getAllFields(final Class<?> cls)
+      throws ReflectionException {
+    return getAllFields(cls, Option.DEFAULT);
+  }
+
+  /**
+   * Gets all fields of a class.
    *
    * @param cls
    *     The class on which to get the fields.
    * @param options
    *     A bitwise combination of reflection options defined in the {@link
    *     Option} class. The default value could be {@link Option#DEFAULT}.
-   * @return the array of all specified fields; or an empty array if no such
-   *     field.
+   * @return
+   *     the list of all specified fields; or an empty list if no such field.
    * @throws ReflectionException
    *     if any error occurred.
    */
   public static List<Field> getAllFields(final Class<?> cls, final int options)
       throws ReflectionException {
-    final List<FieldInfo> members = getAllFields(cls);
+    final List<FieldInfo> members = getAllFieldsImpl(cls);
     final List<Field> result = new ArrayList<>();
     for (final FieldInfo m : members) {
       if (Option.satisfy(cls, m.getField(), options)) {
@@ -136,21 +155,36 @@ public class FieldUtils {
   }
 
   /**
-   * Gets all field names on a class.
+   * Gets all field names of a class.
+   *
+   * @param cls
+   *     The class on which to get the fields.
+   * @return the list of all specified field names; or an empty list if no such
+   *     field.
+   * @throws ReflectionException
+   *     if any error occurred.
+   */
+  public static List<String> getAllFieldNames(final Class<?> cls)
+      throws ReflectionException {
+    return getAllFieldNames(cls, Option.DEFAULT);
+  }
+
+  /**
+   * Gets all field names of a class.
    *
    * @param cls
    *     The class on which to get the fields.
    * @param options
    *     A bitwise combination of reflection options defined in the {@link
    *     Option} class. The default value could be {@link Option#DEFAULT}.
-   * @return the array of all specified field names; or an empty array if no such
+   * @return the list of all specified field names; or an empty list if no such
    *     field.
    * @throws ReflectionException
    *     if any error occurred.
    */
   public static List<String> getAllFieldNames(final Class<?> cls,
       final int options) throws ReflectionException {
-    final List<FieldInfo> members = getAllFields(cls);
+    final List<FieldInfo> members = getAllFieldsImpl(cls);
     final List<String> result = new ArrayList<>();
     for (final FieldInfo m : members) {
       if (Option.satisfy(cls, m.getField(), options)) {
@@ -172,11 +206,36 @@ public class FieldUtils {
    *
    * @param cls
    *     The class on which to get the field.
+   * @param name
+   *     The name of the field to be got.
+   * @return the meta-information of the specified field, or {@code null} if
+   *     no such field.
+   * @throws ReflectionException
+   *     if any error occurred.
+   */
+  @Nullable
+  public static FieldInfo getFieldInfo(final Class<?> cls, final String name)
+      throws ReflectionException {
+    return getFieldInfo(cls, Option.DEFAULT, name);
+  }
+
+  /**
+   * Gets the meta-information of the field with a specified name on a class.
+   *
+   * <p>NOTE: if the {@code options} argument contains {@link Option#ANCESTOR}
+   * , and there is more than one field with the specified name declared in the
+   * specified class or its ancestor class or its ancestor interfaces, the
+   * function will try to return the field with the shallower depth; if there
+   * are more than one field has the specified name in the same depth, the
+   * function will throw an {@link AmbiguousMemberException}.
+   *
+   * @param cls
+   *     The class on which to get the field.
    * @param options
    *     A bitwise combination of reflection options defined in the {@link
    *     Option} class. The default value could be {@link Option#DEFAULT}.
    * @param name
-   *     The name of the field to be getten.
+   *     The name of the field to be got.
    * @return the meta-information of the specified field, or {@code null} if
    *     no such field.
    * @throws ReflectionException
@@ -186,7 +245,7 @@ public class FieldUtils {
   public static FieldInfo getFieldInfo(final Class<?> cls, final int options,
       final String name) throws ReflectionException {
     requireNonNull("name", name);
-    final List<FieldInfo> members = getAllFields(cls);
+    final List<FieldInfo> members = getAllFieldsImpl(cls);
     FieldInfo result = null;
     boolean ambiguous = false;
     for (final FieldInfo m : members) {
@@ -229,7 +288,7 @@ public class FieldUtils {
     if (name == null) {
       return null;
     } else {
-      return getFieldInfo(cls, Option.BEAN_FIELD, name);
+      return getFieldInfo(cls, BEAN_FIELD, name);
     }
   }
 
@@ -255,7 +314,57 @@ public class FieldUtils {
     if (name == null) {
       return null;
     } else {
-      return getFieldInfo(cls, Option.BEAN_FIELD, name);
+      return getFieldInfo(cls, BEAN_FIELD, name);
+    }
+  }
+
+
+  /**
+   * 根据指定的  Java Bean 的 setter 的方法引用，获取其对应的属性对象的元信息。
+   *
+   * @param <T>
+   *     指定的 Java Bean的类型。
+   * @param cls
+   *     指定的 Java Bean的类对象。
+   * @param setterRef
+   *     指定的 setter 的方法引用。
+   * @return
+   *     指定的 setter 对应的属性对象的元信息；若指定的方法引用不是合法的 Java Bean getter，
+   *     或者指定的 setter 没有对应的属性，返回{@code null}。
+   */
+  public static <T> FieldInfo getFieldInfo(final Class<T> cls,
+      final SetterMethodBoolean<T> setterRef) {
+    final Method setter = MethodUtils.getMethodByReference(cls, setterRef);
+    final String name = PropertyUtils.getPropertyNameFromSetter(setter);
+    if (name == null) {
+      return null;
+    } else {
+      return getFieldInfo(cls, BEAN_FIELD, name);
+    }
+  }
+
+
+  /**
+   * 根据指定的  Java Bean 的 setter 的方法引用，获取其对应的属性对象的元信息。
+   *
+   * @param <T>
+   *     指定的 Java Bean的类型。
+   * @param cls
+   *     指定的 Java Bean的类对象。
+   * @param setterRef
+   *     指定的 setter 的方法引用。
+   * @return
+   *     指定的 setter 对应的属性对象的元信息；若指定的方法引用不是合法的 Java Bean getter，
+   *     或者指定的 setter 没有对应的属性，返回{@code null}。
+   */
+  public static <T> FieldInfo getFieldInfo(final Class<T> cls,
+      final SetterMethodByte<T> setterRef) {
+    final Method setter = MethodUtils.getMethodByReference(cls, setterRef);
+    final String name = PropertyUtils.getPropertyNameFromSetter(setter);
+    if (name == null) {
+      return null;
+    } else {
+      return getFieldInfo(cls, BEAN_FIELD, name);
     }
   }
 
@@ -275,7 +384,7 @@ public class FieldUtils {
    *     A bitwise combination of reflection options defined in the {@link
    *     Option} class. The default value could be {@link Option#DEFAULT}.
    * @param name
-   *     The name of the field to be getten.
+   *     The name of the field to be got.
    * @return the specified field, or {@code null} if no such field.
    * @throws ReflectionException
    *     if any error occurred.
@@ -300,7 +409,7 @@ public class FieldUtils {
    * @param cls
    *     The class on which to get the field.
    * @param name
-   *     The name of the field to be getten.
+   *     The name of the field to be got.
    * @return the specified field, or {@code null} if no such field.
    * @throws ReflectionException
    *     if any error occurred.
@@ -353,6 +462,44 @@ public class FieldUtils {
   }
 
   /**
+   * 根据指定的  Java Bean 的 setter 的方法引用，获取其对应的属性对象。
+   *
+   * @param <T>
+   *     指定的 Java Bean的类型。
+   * @param cls
+   *     指定的 Java Bean的类对象。
+   * @param setterRef
+   *     指定的 setter 的方法引用。
+   * @return
+   *     指定的 setter 对应的属性对象；若指定的方法引用不是合法的 Java Bean getter，或者
+   *     指定的 setter 没有对应的属性，返回{@code null}。
+   */
+  public static <T> Field getField(final Class<T> cls,
+      final SetterMethodBoolean<T> setterRef) {
+    final FieldInfo info = getFieldInfo(cls, setterRef);
+    return (info == null ? null : info.getField());
+  }
+
+  /**
+   * 根据指定的  Java Bean 的 setter 的方法引用，获取其对应的属性对象。
+   *
+   * @param <T>
+   *     指定的 Java Bean的类型。
+   * @param cls
+   *     指定的 Java Bean的类对象。
+   * @param setterRef
+   *     指定的 setter 的方法引用。
+   * @return
+   *     指定的 setter 对应的属性对象；若指定的方法引用不是合法的 Java Bean getter，或者
+   *     指定的 setter 没有对应的属性，返回{@code null}。
+   */
+  public static <T> Field getField(final Class<T> cls,
+      final SetterMethodByte<T> setterRef) {
+    final FieldInfo info = getFieldInfo(cls, setterRef);
+    return (info == null ? null : info.getField());
+  }
+
+  /**
    * 根据指定的  Java Bean 的 getter 的方法引用，获取其对应的属性的名称。
    *
    * @param <T>
@@ -395,6 +542,66 @@ public class FieldUtils {
   }
 
   /**
+   * 根据指定的  Java Bean 的 setter 的方法引用，获取其对应的属性的名称。
+   *
+   * @param <T>
+   *     指定的 Java Bean的类型。
+   * @param cls
+   *     指定的 Java Bean的类对象。
+   * @param setterRef
+   *     指定的 setter 的方法引用。
+   * @return
+   *     指定的 setter 对应的属性的名称；若指定的方法引用不是合法的 Java Bean setter，返回
+   *     {@code null}。
+   */
+  public static <T> String getFieldName(final Class<T> cls,
+      final SetterMethodBoolean<T> setterRef) {
+    final Method setter = MethodUtils.getMethodByReference(cls, setterRef);
+    return PropertyUtils.getPropertyNameFromSetter(setter);
+  }
+
+  /**
+   * 根据指定的  Java Bean 的 setter 的方法引用，获取其对应的属性的名称。
+   *
+   * @param <T>
+   *     指定的 Java Bean的类型。
+   * @param cls
+   *     指定的 Java Bean的类对象。
+   * @param setterRef
+   *     指定的 setter 的方法引用。
+   * @return
+   *     指定的 setter 对应的属性的名称；若指定的方法引用不是合法的 Java Bean setter，返回
+   *     {@code null}。
+   */
+  public static <T> String getFieldName(final Class<T> cls,
+      final SetterMethodByte<T> setterRef) {
+    final Method setter = MethodUtils.getMethodByReference(cls, setterRef);
+    return PropertyUtils.getPropertyNameFromSetter(setter);
+  }
+
+  /**
+   * Gets the value of a field on the specified object.
+   * <p>
+   * The value is automatically wrapped in an object if it has a primitive
+   * type.
+   *
+   * @param getter
+   *     The getter of the field to be read.
+   * @param object
+   *     The object, which could be {@code null}.
+   * @return the value of the specified field of the specified object, or
+   *     {@code null} if the object is null.
+   */
+  public static <T, R> R getFieldValue(final GetterMethod<T, R> getter,
+      @Nullable final T object) {
+    if (object == null) {
+      return null;
+    } else {
+      return getter.invoke(object);
+    }
+  }
+
+  /**
    * Gets the value of a field on the specified object.
    *
    * <p>The value is automatically wrapped in an object if it has a primitive
@@ -413,7 +620,7 @@ public class FieldUtils {
    *     A bitwise combination of reflection options defined in the {@link
    *     Option} class. The default value could be {@link Option#DEFAULT}.
    * @param name
-   *     The name of the field.
+   *     The name of a field.
    * @param object
    *     The object of the specified class. If the field whose value is to be
    *     get is a static field, this argument may be {@code null}.
@@ -429,6 +636,34 @@ public class FieldUtils {
       throw new FieldNotExistException(cls, options, name);
     }
     return readField(field, object);
+  }
+
+  /**
+   * Gets the value of a bean field on the specified object.
+   *
+   * <p>The value is automatically wrapped in an object if it has a primitive
+   * type.
+   *
+   * <p>NOTE: if the {@code options} argument contains {@link Option#ANCESTOR}
+   * , and there is more than one field with the specified name declared in the
+   * specified class or its ancestor class or its ancestor interfaces, the
+   * function will try to read the field with the shallower depth; if there are
+   * more than one field has the specified name in the same depth, the function
+   * will throw an {@link AmbiguousMemberException}.
+   *
+   * @param cls
+   *     The class on which to get the field value.
+   * @param name
+   *     The name of a bean field.
+   * @param object
+   *     The object of the specified class.
+   * @return the value of the specified field.
+   * @throws ReflectionException
+   *     if any error occurred.
+   */
+  public static Object readField(final Class<?> cls,final String name,
+      final Object object) throws ReflectionException {
+    return readField(cls, BEAN_FIELD, name, object);
   }
 
   /**
@@ -451,7 +686,7 @@ public class FieldUtils {
   }
 
   /**
-   * Sets a field on the specified object to the specified new value.
+   * Sets a field of the specified object to the specified new value.
    *
    * <p>The new value is automatically unwrapped if the underlying field has a
    * primitive type.
@@ -469,7 +704,7 @@ public class FieldUtils {
    *     A bitwise combination of reflection options defined in the {@link
    *     Option} class. The default value could be {@link Option#DEFAULT}.
    * @param name
-   *     The name of the field.
+   *     The name of a field.
    * @param object
    *     The object of the specified class.
    * @param value
@@ -489,7 +724,37 @@ public class FieldUtils {
   }
 
   /**
-   * Sets a field on the specified object to the specified new value.
+   * Sets a bean field of the specified object to the specified new value.
+   *
+   * <p>The new value is automatically unwrapped if the underlying field has a
+   * primitive type.
+   *
+   * <p>NOTE: if the {@code options} argument contains {@link Option#ANCESTOR}
+   * , and there is more than one field with the specified name declared in the
+   * specified class or its ancestor class or its ancestor interfaces, the
+   * function will try to write the field with the shallower depth; if there are
+   * more than one field has the specified name in the same depth, the function
+   * will throw an {@link AmbiguousMemberException}.
+   *
+   * @param cls
+   *     The class on which to set the field value.
+   * @param name
+   *     The name of a bean field.
+   * @param object
+   *     The object of the specified class.
+   * @param value
+   *     The value to be set.
+   * @throws ReflectionException
+   *     if any error occurred.
+   */
+  public static void writeField(final Class<?> cls, final String name,
+      final Object object, @Nullable final Object value)
+      throws ReflectionException {
+    writeField(cls, BEAN_FIELD, name, object, value);
+  }
+
+  /**
+   * Sets a field of the specified object to the specified new value.
    *
    * <p>The new value is automatically unwrapped if the underlying field has a
    * primitive type.
@@ -584,8 +849,7 @@ public class FieldUtils {
     final String capitalizedFieldName = uppercaseFirstChar(fieldName);
     // try to find getProperty
     final String setterName = SET_PREFIX + capitalizedFieldName;
-    return getMethod(ownerClass, BEAN_METHOD, setterName,
-        new Class<?>[]{fieldClass});
+    return getMethod(ownerClass, BEAN_METHOD, setterName, new Class<?>[]{fieldClass});
   }
 
   /**
@@ -621,10 +885,10 @@ public class FieldUtils {
    *     null.
    */
   @SuppressWarnings("unchecked")
+  @Nullable
   public static <T extends Annotation> T getAnnotation(final Field field,
       final Class<T> annotationType) {
-    final AnnotationSignature key = new AnnotationSignature(field,
-        annotationType);
+    final AnnotationSignature key = new AnnotationSignature(field, annotationType);
     final Optional<Annotation> result = ANNOTATION_CACHE.computeIfAbsent(key,
         FieldUtils::getAnnotationImpl);
     return (T) result.orElse(null);
@@ -712,7 +976,7 @@ public class FieldUtils {
     if (isEmpty(fieldName)) {
       return false;
     }
-    final List<FieldInfo> fields = getAllFields(cls);
+    final List<FieldInfo> fields = getAllFieldsImpl(cls);
     for (final FieldInfo info : fields) {
       if (fieldName.equals(info.getName())) {
         return true;
@@ -740,7 +1004,7 @@ public class FieldUtils {
     if (isEmpty(fieldName)) {
       return false;
     }
-    final List<FieldInfo> fields = getAllFields(cls);
+    final List<FieldInfo> fields = getAllFieldsImpl(cls);
     for (final FieldInfo info : fields) {
       if (Option.satisfy(cls, info.getField(), options)
             && fieldName.equals(info.getName())) {
@@ -768,11 +1032,10 @@ public class FieldUtils {
    * @see <a href="https://stackoverflow.com/questions/3437897/how-do-i-get-a-class-instance-of-generic-type-t/5684761#5684761">How do I get a class instance of generic type T?</a>
    */
   public static Class<?> getActualType(final Class<?> ownerClass, final Field field) {
-    if (!(field.getGenericType() instanceof TypeVariable)) {
+    if (!(field.getGenericType() instanceof final TypeVariable<?> typeVar)) {
       // 若field的类型不是泛型，则直接返回其类型
       return field.getType();
     }
-    final TypeVariable<?> typeVar = (TypeVariable<?>) field.getGenericType();
     final Type result = resolveActualType(ownerClass, typeVar);
     if (result instanceof Class<?>) {
       return (Class<?>) result;
@@ -809,12 +1072,11 @@ public class FieldUtils {
       return typeVar;
     }
     // 现在 parent 是泛型类 genericType 的声明类，它也应该是个泛型类，child是其子类
-    if (!(child.getGenericSuperclass() instanceof ParameterizedType)) {
+    if (!(child.getGenericSuperclass() instanceof final ParameterizedType parameterizedType)) {
       // 此情况应该不会出现
       return typeVar;
     }
     // 依次检查 parent 的泛型参数名称，并且确定其所对应的实际参数类型
-    final ParameterizedType parameterizedType = (ParameterizedType) child.getGenericSuperclass();
     final Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
     final TypeVariable<?>[] typeParameters = parent.getTypeParameters();
     for (int i = 0; i < actualTypeArguments.length; ++i) {
@@ -842,11 +1104,10 @@ public class FieldUtils {
    *     array is {@code null}.
    */
   public static Class<?>[] getActualTypeArguments(final Class<?> ownerClass, final Field field) {
-    if (!(field.getGenericType() instanceof ParameterizedType)) {
+    if (!(field.getGenericType() instanceof final ParameterizedType parameterizedType)) {
       // 若field的类型不是带参数类型，返回空数组
       return ArrayUtils.EMPTY_CLASS_ARRAY;
     }
-    final ParameterizedType parameterizedType = (ParameterizedType) field.getGenericType();
     final Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
     final Class<?>[] result = new Class<?>[actualTypeArguments.length];
     for (int i = 0; i < actualTypeArguments.length; ++i) {

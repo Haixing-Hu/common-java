@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,26 +8,29 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.model;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import javax.annotation.Nullable;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
-import javax.annotation.Nullable;
-
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
+
 import static ltd.qubit.commons.text.CaseFormat.UPPER_CAMEL;
 import static ltd.qubit.commons.text.CaseFormat.UPPER_UNDERSCORE;
 
 /**
  * 此模型表示属于某个实体的可删除对象的基本信息。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @XmlRootElement(name = "info-with-entity")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -183,7 +186,7 @@ public class InfoWithEntity extends Info implements WithEntity {
   }
 
   @Override
-  public InfoWithEntity clone() {
+  public InfoWithEntity cloneEx() {
     return new InfoWithEntity(this);
   }
 

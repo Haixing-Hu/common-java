@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.translate;
 
-import ltd.qubit.commons.lang.CharUtils;
-
 import com.google.common.base.Ascii;
+
+import ltd.qubit.commons.lang.CharUtils;
 
 /**
  * The interface defining the constants used in CSV files.

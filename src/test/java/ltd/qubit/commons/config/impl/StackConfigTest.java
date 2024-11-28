@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -14,14 +14,12 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import ltd.qubit.commons.lang.Type;
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import ltd.qubit.commons.lang.Type;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Unit test for the {@link StackConfig} class.
@@ -30,15 +28,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class StackConfigTest {
 
+  @Test
   public void testIsStackEmpty() {
     final StackConfig config = new StackConfig();
     final DefaultConfig config1 = new DefaultConfig();
 
-    assertTrue(config.isStackEmpty());
+    assertEquals(true, config.isStackEmpty());
     config.push(config1);
-    assertFalse(config.isStackEmpty());
+    assertEquals(false, config.isStackEmpty());
   }
 
+  @Test
   public void testStackSize() {
     final StackConfig config = new StackConfig();
     final DefaultConfig config1 = new DefaultConfig();
@@ -54,24 +54,26 @@ public class StackConfigTest {
     assertEquals(3, config.stackSize());
   }
 
+  @Test
   public void testIsEmpty() {
     final StackConfig config = new StackConfig();
     final DefaultConfig config1 = new DefaultConfig();
     final DefaultConfig config2 = new DefaultConfig();
     final DefaultConfig config3 = new DefaultConfig();
 
-    assertTrue(config.isEmpty());
+    assertEquals(true, config.isEmpty());
     config.push(config1);
-    assertTrue(config.isEmpty());
+    assertEquals(true, config.isEmpty());
     config.push(config2);
-    assertTrue(config.isEmpty());
+    assertEquals(true, config.isEmpty());
     config.push(config3);
-    assertTrue(config.isEmpty());
+    assertEquals(true, config.isEmpty());
 
     config1.add("prop1", Type.INT);
-    assertFalse(config.isEmpty());
+    assertEquals(false, config.isEmpty());
   }
 
+  @Test
   public void testSize() {
     final StackConfig config = new StackConfig();
     final DefaultConfig config1 = new DefaultConfig();

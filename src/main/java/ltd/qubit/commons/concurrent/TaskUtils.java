@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2017 - 2024.
-//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
+//    Copyright (c) 2022 - 2024.
+//    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -65,7 +65,9 @@ public class TaskUtils {
    *     task after the specified delay. If the task throws an exception, the
    *     {@link CompletableFuture} will complete exceptionally with that exception.
    * @author Haixing Hu
+   * @deprecated Use {@link Delay#execute(Callable, long)} instead.
    */
+  @Deprecated
   public static <T> CompletableFuture<T> executeWithDelay(final Callable<T> task,
       final long minExecutionTime) {
     final CompletableFuture<T> future = new CompletableFuture<>();
@@ -132,9 +134,12 @@ public class TaskUtils {
    *     task after the specified delay. If the task throws an exception, the
    *     {@link CompletableFuture} will complete exceptionally with that exception.
    * @author Haixing Hu
+   * @deprecated Use {@link Delay#execute(Runnable, long)} instead.
    */
+  @Deprecated
   public static <T> CompletableFuture<T> executeWithDelay(final Runnable task,
       final long minExecutionTime) {
     return executeWithDelay(Executors.callable(task, null), minExecutionTime);
   }
+
 }

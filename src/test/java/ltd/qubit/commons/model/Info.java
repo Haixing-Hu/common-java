@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -22,7 +22,6 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import ltd.qubit.commons.annotation.Identifier;
 import ltd.qubit.commons.annotation.Unique;
@@ -38,7 +37,7 @@ import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
 /**
  * 此模型表示可删除对象的基本信息。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @XmlRootElement(name = "info")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -46,7 +45,7 @@ import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
                 getterVisibility = NONE,
                 isGetterVisibility = NONE,
                 setterVisibility = NONE)
-@JsonInclude(Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Info implements Identifiable, WithCode, WithName, Deletable,
     Emptyful, Normalizable, Assignable<Info> {
 
@@ -230,7 +229,7 @@ public class Info implements Identifiable, WithCode, WithName, Deletable,
   }
 
   @Override
-  public Info clone() {
+  public Info cloneEx() {
     return new Info(this);
   }
 
@@ -242,20 +241,23 @@ public class Info implements Identifiable, WithCode, WithName, Deletable,
     return params.toArray(new KeyValuePair[0]);
   }
 
+  @Override
   public boolean equals(final Object o) {
     if (this == o) {
       return true;
     }
-    if ((o == null) || (getClass() != o.getClass())) {
+    // 注意：允许Info的trivial子类和Info进行比较
+    if ((o == null) || (! (o instanceof Info))) {
       return false;
     }
     final Info other = (Info) o;
     return Equality.equals(id, other.id)
-        && Equality.equals(code, other.code)
-        && Equality.equals(name, other.name)
-        && Equality.equals(deleteTime, other.deleteTime);
+            && Equality.equals(code, other.code)
+            && Equality.equals(name, other.name)
+            && Equality.equals(deleteTime, other.deleteTime);
   }
 
+  @Override
   public int hashCode() {
     final int multiplier = 7;
     int result = 3;
@@ -266,12 +268,13 @@ public class Info implements Identifiable, WithCode, WithName, Deletable,
     return result;
   }
 
+  @Override
   public String toString() {
     return new ToStringBuilder(this)
-        .append("id", id)
-        .append("code", code)
-        .append("name", name)
-        .append("deleteTime", deleteTime)
-        .toString();
+            .append("id", id)
+            .append("code", code)
+            .append("name", name)
+            .append("deleteTime", deleteTime)
+            .toString();
   }
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -10,16 +10,16 @@ package ltd.qubit.commons.text;
 
 import javax.annotation.Nullable;
 
-import ltd.qubit.commons.util.filter.character.AcceptSpecifiedCharFilter;
-import ltd.qubit.commons.util.filter.character.CharFilter;
-import ltd.qubit.commons.util.filter.character.InRangeCharFilter;
-
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.KebabCaseStrategy;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.LowerCamelCaseStrategy;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.UpperCamelCaseStrategy;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.UpperSnakeCaseStrategy;
+
+import ltd.qubit.commons.util.filter.character.AcceptSpecifiedCharFilter;
+import ltd.qubit.commons.util.filter.character.CharFilter;
+import ltd.qubit.commons.util.filter.character.InRangeCharFilter;
 
 import static java.util.Objects.requireNonNull;
 
@@ -202,9 +202,6 @@ public enum CaseFormat {
     int i = 0;
     int j = -1;
     while ((j = searcher.startFrom(++j).findFirstIndexIn(str)) >= 0) {
-      if (i == j) {
-        continue;
-      }
       final String word = str.substring(i, j);
       if (i == 0) {
         final String normalizedWord = format.normalizeFirstWord(word);

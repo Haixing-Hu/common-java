@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -122,8 +122,8 @@ public class BasicNamedValue extends BasicValue implements NamedValue {
   }
 
   @Override
-  public BasicNamedValue clone() {
-    final BasicNamedValue result = (BasicNamedValue) super.clone();
+  public BasicNamedValue cloneEx() {
+    final BasicNamedValue result = (BasicNamedValue) super.cloneEx();
     result.name = name;
     return result;
   }

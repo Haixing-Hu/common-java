@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -99,8 +99,7 @@ public final class CompareToBuilder {
     return this;
   }
 
-  public CompareToBuilder append(@Nullable final Character[] lhs,
-      @Nullable final Character[] rhs) {
+  public CompareToBuilder append(@Nullable final Character[] lhs, @Nullable final Character[] rhs) {
     if (result == 0) {
       result = Comparison.compare(lhs, rhs);
     }
@@ -303,6 +302,22 @@ public final class CompareToBuilder {
       @Nullable final String[] rhs) {
     if (result == 0) {
       result = Comparison.compare(lhs, rhs);
+    }
+    return this;
+  }
+
+  public CompareToBuilder appendIgnoreCase(@Nullable final String lhs,
+      @Nullable final String rhs) {
+    if (result == 0) {
+      result = Comparison.compareIgnoreCase(lhs, rhs);
+    }
+    return this;
+  }
+
+  public CompareToBuilder appendIgnoreCase(@Nullable final String[] lhs,
+      @Nullable final String[] rhs) {
+    if (result == 0) {
+      result = Comparison.compareIgnoreCase(lhs, rhs);
     }
     return this;
   }
@@ -556,8 +571,7 @@ public final class CompareToBuilder {
     return this;
   }
 
-  public <T> CompareToBuilder append(@Nullable final Collection<T> lhs,
-      @Nullable final Collection<T> rhs) {
+  public <T> CompareToBuilder append(@Nullable final Collection<T> lhs, @Nullable final Collection<T> rhs) {
     if (result == 0) {
       result = Comparison.compare(lhs, rhs);
     }

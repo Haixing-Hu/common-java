@@ -72,8 +72,8 @@ import ltd.qubit.commons.lang.SystemUtils;
  * @author Haixing Hu
  * @see #setBasenames
  * @see ReloadableResourceBundleMessageSource
- * @see ResourceBundle
- * @see MessageFormat
+ * @see java.util.ResourceBundle
+ * @see java.text.MessageFormat
  */
 public class ResourceBundleMessageSource extends
     AbstractResourceBasedMessageSource {
@@ -238,7 +238,7 @@ public class ResourceBundleMessageSource extends
    * @return the corresponding ResourceBundle
    * @throws MissingResourceException
    *     if no matching bundle could be found
-   * @see ResourceBundle#getBundle(String, Locale, ClassLoader)
+   * @see java.util.ResourceBundle#getBundle(String, Locale, ClassLoader)
    * @see #getBundleClassLoader()
    */
   protected ResourceBundle doGetBundle(final String basename, final Locale locale)

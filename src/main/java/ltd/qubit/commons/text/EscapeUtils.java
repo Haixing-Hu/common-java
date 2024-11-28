@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -10,6 +10,7 @@ package ltd.qubit.commons.text;
 
 import java.util.Map;
 
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import ltd.qubit.commons.lang.StringUtils;
@@ -81,7 +82,7 @@ public class EscapeUtils {
      * @param input the String to append
      * @return {@code this}, to enable chaining
      */
-    public Builder append(final String input) {
+    public Builder append(@Nullable final String input) {
       builder.append(input);
       return this;
     }
@@ -92,7 +93,7 @@ public class EscapeUtils {
      * @param input the String to escape
      * @return {@code this}, to enable chaining
      */
-    public Builder escape(final String input) {
+    public Builder escape(@Nullable final String input) {
       translator.transform(input, builder);
       return this;
     }
@@ -108,9 +109,11 @@ public class EscapeUtils {
     }
   }
 
+
+
   /**
    * Translator object for escaping Java.
-   *
+   * <p>
    * While {@link #escapeJava(String)} is the expected method of use, this
    * object allows the Java escaping functionality to be used
    * as the foundation for a custom translator.
@@ -127,7 +130,7 @@ public class EscapeUtils {
 
   /**
    * Translator object for escaping EcmaScript/JavaScript.
-   *
+   * <p>
    * While {@link #escapeEcmaScript(String)} is the expected method of use, this
    * object allows the EcmaScript escaping functionality to be used
    * as the foundation for a custom translator.
@@ -146,7 +149,7 @@ public class EscapeUtils {
 
   /**
    * Translator object for escaping Json.
-   *
+   * <p>
    * While {@link #escapeJson(String)} is the expected method of use, this
    * object allows the Json escaping functionality to be used
    * as the foundation for a custom translator.
@@ -164,7 +167,7 @@ public class EscapeUtils {
 
   /**
    * Translator object for escaping XML 1.0.
-   *
+   * <p>
    * While {@link #escapeXml10(String)} is the expected method of use, this
    * object allows the XML escaping functionality to be used
    * as the foundation for a custom translator.
@@ -213,7 +216,7 @@ public class EscapeUtils {
 
   /**
    * Translator object for escaping XML 1.1.
-   *
+   * <p>
    * While {@link #escapeXml11(String)} is the expected method of use, this
    * object allows the XML escaping functionality to be used
    * as the foundation for a custom translator.
@@ -238,7 +241,7 @@ public class EscapeUtils {
 
   /**
    * Translator object for escaping HTML version 3.0.
-   *
+   * <p>
    * While {@link #escapeHtml3(String)} is the expected method of use, this
    * object allows the HTML escaping functionality to be used
    * as the foundation for a custom translator.
@@ -251,7 +254,7 @@ public class EscapeUtils {
 
   /**
    * Translator object for escaping HTML version 4.0.
-   *
+   * <p>
    * While {@link #escapeHtml4(String)} is the expected method of use, this
    * object allows the HTML escaping functionality to be used
    * as the foundation for a custom translator.
@@ -264,7 +267,7 @@ public class EscapeUtils {
       );
   /**
    * Translator object for escaping individual Comma Separated Values.
-   *
+   * <p>
    * While {@link #escapeCsv(String)} is the expected method of use, this
    * object allows the CSV escaping functionality to be used
    * as the foundation for a custom translator.
@@ -275,7 +278,7 @@ public class EscapeUtils {
 
   /**
    * Translator object for escaping Shell command language.
-   *
+   * <p>
    * @see <a href="http://pubs.opengroup.org/onlinepubs/7908799/xcu/chap2.html">Shell Command Language</a>
    */
   public static final CharSequenceTranslator ESCAPE_XSI =
@@ -307,7 +310,7 @@ public class EscapeUtils {
 
   /**
    * Translator object for unescaping escaped Java.
-   *
+   * <p>
    * While {@link #unescapeJava(String)} is the expected method of use, this
    * object allows the Java unescaping functionality to be used
    * as the foundation for a custom translator.
@@ -327,7 +330,7 @@ public class EscapeUtils {
 
   /**
    * Translator object for unescaping escaped EcmaScript.
-   *
+   * <p>
    * While {@link #unescapeEcmaScript(String)} is the expected method of use, this
    * object allows the EcmaScript unescaping functionality to be used
    * as the foundation for a custom translator.
@@ -336,7 +339,7 @@ public class EscapeUtils {
 
   /**
    * Translator object for unescaping escaped Json.
-   *
+   * <p>
    * While {@link #unescapeJson(String)} is the expected method of use, this
    * object allows the Json unescaping functionality to be used
    * as the foundation for a custom translator.
@@ -345,7 +348,7 @@ public class EscapeUtils {
 
   /**
    * Translator object for unescaping escaped HTML 3.0.
-   *
+   * <p>
    * While {@link #unescapeHtml3(String)} is the expected method of use, this
    * object allows the HTML unescaping functionality to be used
    * as the foundation for a custom translator.
@@ -359,7 +362,7 @@ public class EscapeUtils {
 
   /**
    * Translator object for unescaping escaped HTML 4.0.
-   *
+   * <p>
    * While {@link #unescapeHtml4(String)} is the expected method of use, this
    * object allows the HTML unescaping functionality to be used
    * as the foundation for a custom translator.
@@ -374,7 +377,7 @@ public class EscapeUtils {
 
   /**
    * Translator object for unescaping escaped XML.
-   *
+   * <p>
    * While {@link #unescapeXml(String)} is the expected method of use, this
    * object allows the XML unescaping functionality to be used
    * as the foundation for a custom translator.
@@ -387,8 +390,20 @@ public class EscapeUtils {
       );
 
   /**
+   * Translator object for escaping Java regular expressions.
+   */
+  public static final CharSequenceTranslator ESCAPE_JAVA_REGEX =
+      new LookupTranslator(EntityArrays.JAVA_REGEX_ESCAPE);
+
+  /**
+   * Translator object for unescaping Java regular expressions.
+   */
+  public static final CharSequenceTranslator UNESCAPE_JAVA_REGEX =
+      new LookupTranslator(EntityArrays.JAVA_REGEX_UNESCAPE);
+
+  /**
    * Translator object for unescaping escaped Comma Separated Value entries.
-   *
+   * <p>
    * While {@link #unescapeCsv(String)} is the expected method of use, this
    * object allows the CSV unescaping functionality to be used
    * as the foundation for a custom translator.
@@ -399,7 +414,7 @@ public class EscapeUtils {
 
   /**
    * Translator object for unescaping escaped XSI Value entries.
-   *
+   * <p>
    * While {@link #unescapeXSI(String)}  is the expected method of use, this
    * object allows the XSI unescaping functionality to be used
    * as the foundation for a custom translator.
@@ -418,23 +433,24 @@ public class EscapeUtils {
   /**
    * Returns a {@code String} value for a CSV column enclosed in double quotes,
    * if required.
-   *
-   * <p>If the value contains a comma, newline or double quote, then the
-   *    String value is returned enclosed in double quotes.</p>
-   *
-   * <p>Any double quote characters in the value are escaped with another double quote.</p>
-   *
-   * <p>If the value does not contain a comma, newline or double quote, then the
-   *    String value is returned unchanged.</p>
-   *
-   * see <a href="http://en.wikipedia.org/wiki/Comma-separated_values">Wikipedia</a> and
+   * <p>
+   * If the value contains a comma, newline or double quote, then the
+   * String value is returned enclosed in double quotes.
+   * <p>
+   * Any double quote characters in the value are escaped with another double quote.
+   * <p>
+   * If the value does not contain a comma, newline or double quote, then the
+   * String value is returned unchanged.
+   * <p>
+   * See <a href="http://en.wikipedia.org/wiki/Comma-separated_values">Wikipedia</a> and
    * <a href="http://tools.ietf.org/html/rfc4180">RFC 4180</a>.
    *
    * @param input the input CSV column String, may be null
    * @return The input String, enclosed in double quotes if the value contains a comma,
    * newline or double quote, {@code null} if null string input
    */
-  public static String escapeCsv(final String input) {
+  @Nullable
+  public static String escapeCsv(@Nullable final String input) {
     return ESCAPE_CSV.transform(input);
   }
 
@@ -468,7 +484,8 @@ public class EscapeUtils {
    * @param input  String to escape values in, may be null
    * @return String with escaped values, {@code null} if null string input
    */
-  public static String escapeEcmaScript(final String input) {
+  @Nullable
+  public static String escapeEcmaScript(@Nullable final String input) {
     return ESCAPE_ECMASCRIPT.transform(input);
   }
 
@@ -480,7 +497,8 @@ public class EscapeUtils {
    * @param input  the {@code String} to escape, may be null
    * @return a new escaped {@code String}, {@code null} if null string input
    */
-  public static String escapeHtml3(final String input) {
+  @Nullable
+  public static String escapeHtml3(@Nullable final String input) {
     return ESCAPE_HTML3.transform(input);
   }
 
@@ -510,7 +528,8 @@ public class EscapeUtils {
    * @see <a href="http://www.w3.org/TR/html401/charset.html#h-5.3">HTML 4.01 Character References</a>
    * @see <a href="http://www.w3.org/TR/html401/charset.html#code-position">HTML 4.01 Code positions</a>
    */
-  public static String escapeHtml4(final String input) {
+  @Nullable
+  public static String escapeHtml4(@Nullable final String input) {
     return ESCAPE_HTML4.transform(input);
   }
 
@@ -535,7 +554,8 @@ public class EscapeUtils {
    * @param input  String to escape values in, may be null
    * @return String with escaped values, {@code null} if null string input
    */
-  public static String escapeJava(final String input) {
+  @Nullable
+  public static String escapeJava(@Nullable final String input) {
     return ESCAPE_JAVA.transform(input);
   }
 
@@ -551,7 +571,7 @@ public class EscapeUtils {
    * <p>The only difference between Java strings and Json strings
    * is that in Json, forward-slash (/) is escaped.</p>
    *
-   * <p>See http://www.ietf.org/rfc/rfc4627.txt for further details.</p>
+   * <p>See <a href="http://www.ietf.org/rfc/rfc4627.txt">RFC 4627</a> for further details.</p>
    *
    * <p>Example:</p>
    * <pre>
@@ -562,7 +582,8 @@ public class EscapeUtils {
    * @param input  String to escape values in, may be null
    * @return String with escaped values, {@code null} if null string input
    */
-  public static String escapeJson(final String input) {
+  @Nullable
+  public static String escapeJson(@Nullable final String input) {
     return ESCAPE_JSON.transform(input);
   }
 
@@ -593,7 +614,8 @@ public class EscapeUtils {
    * @return a new escaped {@code String}, {@code null} if null string input
    * @see #unescapeXml(String)
    */
-  public static String escapeXml10(final String input) {
+  @Nullable
+  public static String escapeXml10(@Nullable final String input) {
     return ESCAPE_XML10.transform(input);
   }
 
@@ -622,12 +644,13 @@ public class EscapeUtils {
    * @return a new escaped {@code String}, {@code null} if null string input
    * @see #unescapeXml(String)
    */
-  public static String escapeXml11(final String input) {
+  @Nullable
+  public static String escapeXml11(@Nullable final String input) {
     return ESCAPE_XML11.transform(input);
   }
 
   /**
-   * Escapes the characters in a {@code String} using XSI rules.
+   * Escapes characters in a {@code String} using XSI rules.
    *
    * <p><b>Beware!</b> In most cases you don't want to escape shell commands but use multi-argument
    * methods provided by {@link java.lang.ProcessBuilder} or {@link java.lang.Runtime#exec(String[])}
@@ -643,8 +666,22 @@ public class EscapeUtils {
    * @param input  String to escape values in, may be null
    * @return String with escaped values, {@code null} if null string input
    */
-  public static String escapeXSI(final String input) {
+  @Nullable
+  public static String escapeXSI(@Nullable final String input) {
     return ESCAPE_XSI.transform(input);
+  }
+
+  /**
+   * Escapes characters in a {@code String} using Java regular expression rules.
+   *
+   * @param input
+   *     the input string to escape, may be {@code null}.
+   * @return
+   *     the string with escaped values, {@code null} if null string input.
+   */
+  @Nullable
+  public static String escapeJavaRegex(@Nullable final String input) {
+    return ESCAPE_JAVA_REGEX.transform(input);
   }
 
   /**
@@ -667,7 +704,8 @@ public class EscapeUtils {
    * @return The input String, with enclosing double quotes removed and embedded double
    * quotes unescaped, {@code null} if null string input
    */
-  public static String unescapeCsv(final String input) {
+  @Nullable
+  public static String unescapeCsv(@Nullable final String input) {
     return UNESCAPE_CSV.transform(input);
   }
 
@@ -682,7 +720,8 @@ public class EscapeUtils {
    * @param input  the {@code String} to unescape, may be null
    * @return A new unescaped {@code String}, {@code null} if null string input
    */
-  public static String unescapeEcmaScript(final String input) {
+  @Nullable
+  public static String unescapeEcmaScript(@Nullable final String input) {
     return UNESCAPE_ECMASCRIPT.transform(input);
   }
 
@@ -694,7 +733,8 @@ public class EscapeUtils {
    * @param input  the {@code String} to unescape, may be null
    * @return a new unescaped {@code String}, {@code null} if null string input
    */
-  public static String unescapeHtml3(final String input) {
+  @Nullable
+  public static String unescapeHtml3(@Nullable final String input) {
     return UNESCAPE_HTML3.transform(input);
   }
 
@@ -713,7 +753,8 @@ public class EscapeUtils {
    * @param input  the {@code String} to unescape, may be null
    * @return a new unescaped {@code String}, {@code null} if null string input
    */
-  public static String unescapeHtml4(final String input) {
+  @Nullable
+  public static String unescapeHtml4(@Nullable final String input) {
     return UNESCAPE_HTML4.transform(input);
   }
 
@@ -726,7 +767,8 @@ public class EscapeUtils {
    * @param input  the {@code String} to unescape, may be null
    * @return a new unescaped {@code String}, {@code null} if null string input
    */
-  public static String unescapeJava(final String input) {
+  @Nullable
+  public static String unescapeJava(@Nullable final String input) {
     return UNESCAPE_JAVA.transform(input);
   }
 
@@ -741,7 +783,8 @@ public class EscapeUtils {
    * @param input  the {@code String} to unescape, may be null
    * @return A new unescaped {@code String}, {@code null} if null string input
    */
-  public static String unescapeJson(final String input) {
+  @Nullable
+  public static String unescapeJson(@Nullable final String input) {
     return UNESCAPE_JSON.transform(input);
   }
 
@@ -761,7 +804,8 @@ public class EscapeUtils {
    * @see #escapeXml10(String)
    * @see #escapeXml11(String)
    */
-  public static String unescapeXml(final String input) {
+  @Nullable
+  public static String unescapeXml(@Nullable final String input) {
     return UNESCAPE_XML.transform(input);
   }
 
@@ -772,7 +816,21 @@ public class EscapeUtils {
    * @param input  the {@code String} to unescape, may be null
    * @return a new unescaped {@code String}, {@code null} if null string input
    */
-  public static String unescapeXSI(final String input) {
+  @Nullable
+  public static String unescapeXSI(@Nullable final String input) {
     return UNESCAPE_XSI.transform(input);
+  }
+
+  /**
+   * Escapes the characters in a {@code String} using Java regular expression rules.
+   *
+   * @param input
+   *     the {@code String} to escape, may be null.
+   * @return
+   *     a new escaped {@code String}, {@code null} if null string input.
+   */
+  @Nullable
+  public static String unescapeJavaRegex(@Nullable final String input) {
+    return UNESCAPE_JAVA_REGEX.transform(input);
   }
 }

@@ -26,10 +26,10 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.annotation.Nullable;
 
-import ltd.qubit.commons.io.resource.DefaultResourceLoader;
-import ltd.qubit.commons.io.resource.Resource;
-import ltd.qubit.commons.io.resource.ResourceLoader;
-import ltd.qubit.commons.io.resource.ResourceLoaderAware;
+import ltd.qubit.commons.io.io.resource.DefaultResourceLoader;
+import ltd.qubit.commons.io.io.resource.Resource;
+import ltd.qubit.commons.io.io.resource.ResourceLoader;
+import ltd.qubit.commons.io.io.resource.ResourceLoaderAware;
 import ltd.qubit.commons.util.properties.DefaultPropertiesPersister;
 import ltd.qubit.commons.util.properties.PropertiesPersister;
 
@@ -41,7 +41,7 @@ import static ltd.qubit.commons.lang.ArrayUtils.EMPTY_STRING_ARRAY;
  * {@link org.springframework.context.ApplicationContext}'s resource loading.
  * <p>
  * In contrast to the JDK-based {@link ResourceBundleMessageSource}, this class
- * uses {@link Properties} instances as its custom data structure for
+ * uses {@link java.util.Properties} instances as its custom data structure for
  * messages, loading them via a
  * {@link org.springframework.util.PropertiesPersister} strategy from Spring
  * {@link Resource} handles. This strategy is not only capable of reloading
@@ -359,7 +359,7 @@ public class ReloadableResourceBundleMessageSource
    * "messages_de_AT_OO",
    * "messages_de_AT", "messages_de".
    * <p>
-   * Follows the rules defined by {@link Locale#toString()}.
+   * Follows the rules defined by {@link java.util.Locale#toString()}.
    *
    * @param basename
    *     the basename of the bundle

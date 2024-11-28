@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -37,12 +37,12 @@ public interface RowProcessor {
    *
    * @param rs
    *     the ResultSet to process (pre-initialized for the current row).
-   * @param rowNum
+   * @param rowNumber
    *     the number of the current row. Note that the row number is count from
    *     1.
    * @throws SQLException
    *     if a SQLException is encountered getting column values (that is,
    *     there's no need to catch SQLException)
    */
-  void processRow(ResultSet rs, int rowNum) throws SQLException;
+  void processRow(ResultSet rs, int rowNumber) throws SQLException;
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,7 +15,7 @@ package ltd.qubit.commons.reflect.impl;
  *     方法所属的类的类型。
  * @param <P1>
  *     方法的第一个参数的类型。
- * @author Haixing Hu
+ * @author 胡海星
  */
 @FunctionalInterface
 public interface VoidMethod1<T, P1> extends MethodReference<T>  {

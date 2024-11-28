@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2017 - 2022.
-//    Nanjing Smart Medical Investment Operation Service Co. Ltd.
+//    Copyright (c) 2022 - 2024.
+//    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //
@@ -31,8 +31,8 @@ import javax.annotation.concurrent.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ltd.qubit.commons.io.FileUtils;
-import ltd.qubit.commons.io.IoUtils;
+import ltd.qubit.commons.io.io.FileUtils;
+import ltd.qubit.commons.io.io.IoUtils;
 
 import static ltd.qubit.commons.net.InetAddressUtils.isIPv4Address;
 
@@ -111,8 +111,8 @@ public final class UrlUtils {
 
   /**
    * Opens an {@link InputStream} for a {@link URL}.
-   *
-   * <p>This function does the same thing as {@link URL#openStream()}, except
+   * <p>
+   * This function does the same thing as {@link URL#openStream()}, except
    * that it will decode the compressed stream.
    *
    * @param url
@@ -131,14 +131,13 @@ public final class UrlUtils {
     final InputStream input = connection.getInputStream();
     if (encoding == null) {
       return input;
-    }
-    if ("gzip".equals(encoding) || "x-gzip".equals(encoding)) {
+    } else if ("gzip".equals(encoding) || "x-gzip".equals(encoding)) {
       return new GZIPInputStream(input);
     } else if ("deflate".equals(encoding)) {
       return new InflaterInputStream(input);
     } else {
-      LOGGER.warn("Unknown content encoding. "
-          + "The stream is returned without decoding: {}", url);
+      LOGGER.warn("Unknown content encoding '{}'."
+          + "The stream is returned without decoding: {}", encoding, url);
       return input;
     }
   }
@@ -158,13 +157,13 @@ public final class UrlUtils {
    *     if any error occurs.
    */
   public static InputStream openStream(final Url url) throws IOException {
-    final URL the_url;
+    final URL theUrl;
     try {
-      the_url = url.toURL();
+      theUrl = url.toURL();
     } catch (final MalformedURLException e) {
       throw new IOException(e);
     }
-    return openStream(the_url);
+    return openStream(theUrl);
   }
 
   /**
@@ -182,13 +181,13 @@ public final class UrlUtils {
    *     if any error occurs.
    */
   public static InputStream openStream(final URI uri) throws IOException {
-    final URL the_url;
+    final URL url;
     try {
-      the_url = uri.toURL();
+      url = uri.toURL();
     } catch (final MalformedURLException e) {
       throw new IOException(e);
     }
-    return openStream(the_url);
+    return openStream(url);
   }
 
   /**

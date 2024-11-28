@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import ltd.qubit.commons.config.error.ConfigurationError;
 import ltd.qubit.commons.config.impl.DefaultConfig;
-import ltd.qubit.commons.io.serialize.XmlSerialization;
+import ltd.qubit.commons.io.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.SystemUtils;
 import ltd.qubit.commons.text.xml.XmlException;
 
@@ -30,7 +30,7 @@ import ltd.qubit.commons.text.xml.XmlException;
  */
 public final class ConfigUtils {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(DefaultConfig.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(ConfigUtils.class);
 
   /**
    * Choose the non-null value of a specified value and a property value in a
@@ -918,7 +918,7 @@ public final class ConfigUtils {
         LOGGER.debug("Use the resource from system property '{}': {}",
             propertyName, resource);
       } else {
-        LOGGER.warn("No system property '{}', use the default resource: {}",
+        LOGGER.info("No system property '{}', use the default resource: {}",
             propertyName, defaultResource);
         resource = defaultResource;
       }
@@ -926,8 +926,8 @@ public final class ConfigUtils {
     try {
       return XmlSerialization.deserialize(DefaultConfig.class, resource, clazz);
     } catch (final XmlException e) {
-      LOGGER.error("Failed to load the configuration from the resource: {}, "
-          + "use an empty configuration: {}", resource, e.getMessage(), e);
+      // LOGGER.error("Failed to load the configuration from the resource: {}, "
+      //     + "use an empty configuration: {}", resource, e.getMessage(), e);
       return new DefaultConfig();
     }
   }

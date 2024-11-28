@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -44,7 +44,7 @@ public final class Assignment {
     if (obj == null) {
       return null;
     } else {
-      return (T) obj.clone();
+      return (T) obj.cloneEx();
     }
   }
 
@@ -260,6 +260,20 @@ public final class Assignment {
     } else {
       final String[] result = new String[array.length];
       System.arraycopy(array, 0, result, 0, array.length);
+      return result;
+    }
+  }
+
+  public static String[][] clone(@Nullable final String[][] array2d) {
+    if (array2d == null) {
+      return null;
+    } else if (array2d.length == 0) {
+      return ArrayUtils.EMPTY_STRING_ARRAY_2D;
+    } else {
+      final String[][] result = new String[array2d.length][];
+      for (int i = 0; i < array2d.length; ++i) {
+        result[i] = clone(array2d[i]);
+      }
       return result;
     }
   }
@@ -566,7 +580,7 @@ public final class Assignment {
       for (int i = 0; i < array.length; ++i) {
         final T obj = array[i];
         if (obj != null) {
-          result[i] = (T) obj.clone();
+          result[i] = (T) obj.cloneEx();
         } else {
           result[i] = null;
         }
@@ -597,7 +611,7 @@ public final class Assignment {
         if (t == null) {
           result.add(null);
         } else {
-          result.add((T) t.clone());
+          result.add((T) t.cloneEx());
         }
       }
       return result;
@@ -626,7 +640,7 @@ public final class Assignment {
         if (t == null) {
           result.add(null);
         } else {
-          result.add((T) t.clone());
+          result.add((T) t.cloneEx());
         }
       }
       return result;
@@ -660,7 +674,7 @@ public final class Assignment {
         if (value == null) {
           result.put(key, null);
         } else {
-          result.put(key, (V) value.clone());
+          result.put(key, (V) value.cloneEx());
         }
       }
       return result;
@@ -694,7 +708,7 @@ public final class Assignment {
         if (value == null) {
           result.put(key, null);
         } else {
-          result.put(key, (V) value.clone());
+          result.put(key, (V) value.cloneEx());
         }
       }
       return result;
@@ -708,7 +722,7 @@ public final class Assignment {
       return null;
     } else {
       if (left == null) {
-        return (T) right.clone();
+        return (T) right.cloneEx();
       } else {
         left.assign(right);
         return left;
@@ -1385,7 +1399,7 @@ public final class Assignment {
         if (right[i] == null) {
           result[i] = null;
         } else if (result[i] == null) {
-          result[i] = (T) right[i].clone();
+          result[i] = (T) right[i].cloneEx();
         } else {
           result[i].assign(right[i]);
         }
@@ -1412,7 +1426,7 @@ public final class Assignment {
         if (t == null) {
           result.add(null);
         } else {
-          result.add((T) t.clone());
+          result.add((T) t.cloneEx());
         }
       }
       return result;
@@ -1437,7 +1451,7 @@ public final class Assignment {
         if (t == null) {
           result.add(null);
         } else {
-          result.add((T) t.clone());
+          result.add((T) t.cloneEx());
         }
       }
       return result;
@@ -1465,7 +1479,7 @@ public final class Assignment {
         if (value == null) {
           result.put(key, null);
         } else {
-          result.put(key, (V) value.clone());
+          result.put(key, (V) value.cloneEx());
         }
       }
       return result;
@@ -1493,7 +1507,7 @@ public final class Assignment {
         if (value == null) {
           result.put(key, null);
         } else {
-          result.put(key, (V) value.clone());
+          result.put(key, (V) value.cloneEx());
         }
       }
       return result;

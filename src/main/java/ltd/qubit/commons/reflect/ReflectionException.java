@@ -1,12 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect;
+
+import java.io.Serial;
 
 /**
  * Thrown to indicate an exception occurs during a reflection operation.
@@ -15,6 +17,7 @@ package ltd.qubit.commons.reflect;
  */
 public class ReflectionException extends RuntimeException {
 
+  @Serial
   private static final long serialVersionUID = -4383352207393863063L;
 
   private static final String DEFAULT_MESSAGE =

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -14,7 +14,7 @@ import ltd.qubit.commons.util.codec.Decoder;
 import ltd.qubit.commons.util.codec.LongCodec;
 
 /**
- * The JSON deserializer which decodes {@link Long} values from strings.
+ * The JACKSON deserializer which decodes {@link Long} values from strings.
  *
  * @author Haixing Hu
  */

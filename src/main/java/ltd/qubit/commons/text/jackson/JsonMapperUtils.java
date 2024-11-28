@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,10 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.Writer;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
@@ -33,11 +36,52 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+import static ltd.qubit.commons.lang.StringUtils.addPrefixToEachLine;
+
 public class JsonMapperUtils {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(JsonMapperUtils.class);
 
   private JsonMapperUtils() {}
+
+  /**
+   * 从JSON字符串资源文件解析指定的对象。
+   *
+   * @param <T>
+   *     待解析的对象的类型。
+   * @param file
+   *     指定的资源文件。
+   * @param cls
+   *     待解析的对象的类对象。
+   * @return
+   *     解析出的对象。
+   * @throws IOException
+   *     若发生任何解析错误或I/O错误。
+   */
+  public static <T> T parse(final File file, final Class<T> cls)
+      throws IOException {
+    return parse(file, cls, new CustomizedJsonMapper());
+  }
+
+  /**
+   * 从JSON字符串资源文件解析指定的对象。
+   *
+   * @param <T>
+   *     待解析的对象的类型。
+   * @param file
+   *     指定的资源文件。
+   * @param cls
+   *     待解析的对象的类对象。
+   * @return
+   *     解析出的对象。
+   * @throws IOException
+   *     若发生任何解析错误或I/O错误。
+   */
+  public static <T> T parse(final File file, final Class<T> cls, final JsonMapper mapper)
+      throws IOException {
+    final URL url = file.toURI().toURL();
+    return parse(url, cls, mapper);
+  }
 
   /**
    * 从JSON字符串资源URL解析指定的对象。
@@ -242,6 +286,18 @@ public class JsonMapperUtils {
     }
   }
 
+  public static <T> List<T> parseList(final File file, final Class<T> cls)
+      throws IOException {
+    return parseList(file, cls, new CustomizedJsonMapper());
+  }
+
+  public static <T> List<T> parseList(final File file, final Class<T> cls,
+      final JsonMapper mapper) throws IOException {
+    try (final InputStream in = new FileInputStream(file)) {
+      return parseList(in, cls, mapper);
+    }
+  }
+
   public static <T> List<T> parseList(final URL url, final Class<T> cls)
       throws IOException {
     return parseList(url, cls, new CustomizedJsonMapper());
@@ -351,10 +407,43 @@ public class JsonMapperUtils {
     try {
       return mapper.writeValueAsString(obj);
     } catch (final JsonProcessingException e) {
-      LOGGER.error("Failed to format the object {} to JSON: {}",
-              obj.getClass().getName(), obj, e);
+      LOGGER.error("Failed to format the object {} to JSON: {}", obj.getClass().getName(), obj, e);
       return null;
     }
+  }
+
+  /**
+   * 将指定的对象格式化为JSON字符串。
+   *
+   * @param <T>
+   *     待序列化的对象的类型。
+   * @param obj
+   *     待序列化的对象。
+   * @return
+   *     该对象的pretty printed JSON字符形式；若出错则返回{@code null}。
+   */
+  @Nullable
+  public static <T> String prettyFormatNoThrow(final T obj) {
+    final CustomizedJsonMapper mapper = new CustomizedJsonMapper();
+    mapper.setPrettyPrint(true);
+    return formatNoThrow(obj, mapper);
+  }
+
+  /**
+   * 将指定的对象格式化为JSON字符串。
+   *
+   * @param <T>
+   *     待序列化的对象的类型。
+   * @param obj
+   *     待序列化的对象。
+   * @param pretty
+   *     是否进行 pretty print。
+   * @return
+   *     该对象的JSON字符形式；若出错则返回{@code null}。
+   */
+  @Nullable
+  public static <T> String formatNoThrow(final T obj, final boolean pretty) {
+    return (pretty ? prettyFormatNoThrow(obj) : formatNoThrow(obj));
   }
 
   // stop checkstyle: LineLength
@@ -699,5 +788,88 @@ public class JsonMapperUtils {
       return null;
     }
   }
+
+  public static <T> String formatList(final List<T> list)
+      throws JsonProcessingException {
+    return formatList(list, new CustomizedJsonMapper());
+  }
+
+  public static <T> String formatList(final List<T> list, final JsonMapper mapper)
+      throws JsonProcessingException {
+    return mapper.writeValueAsString(list);
+  }
+
+  public static <T> Writer formatList(final List<T> list, final JsonMapper mapper,
+      final Writer output) throws IOException {
+    outputJsonArrayOpenTag(output);
+    output.write('\n');
+    long count = 0;
+    for (final T obj : list) {
+      if (count > 0) {
+        output.write(",\n");
+      }
+      final String json = mapper.writeValueAsString(obj);
+      final String indentedJson = addPrefixToEachLine(json, " ");
+      output.write(indentedJson);
+      ++count;
+    }
+    if (count > 0) {
+      output.write('\n');
+    }
+    outputJsonArrayCloseTag(output);
+    return output;
+  }
+
+
+  @Nullable
+  public static <T> String formatListNoThrow(final List<T> list) {
+    try {
+      return formatList(list, new CustomizedJsonMapper());
+    } catch (final JsonProcessingException e) {
+      LOGGER.error("Failed to format the list to JSON: {}", list, e);
+      return null;
+    }
+  }
+
+  @Nullable
+  public static <T> String formatListNoThrow(final List<T> list, final JsonMapper mapper) {
+    try {
+      return formatList(list, mapper);
+    } catch (final JsonProcessingException e) {
+      LOGGER.error("Failed to format the list to JSON: {}", list, e);
+      return null;
+    }
+  }
+
+  /**
+   * 输出 JSON 数组的开始标记。
+   *
+   * @param writer
+   *     输出流。
+   * @return
+   *     输出流参数本身。
+   * @throws IOException
+   *     若发生 I/O 错误。
+   */
+  public static Writer outputJsonArrayOpenTag(final Writer writer) throws IOException {
+    writer.write('[');
+    return writer;
+  }
+
+  /**
+   * 输出 JSON 数组的结束标记。
+   *
+   * @param writer
+   *     输出流。
+   * @return
+   *     输出流参数本身。
+   * @throws IOException
+   *     若发生 I/O 错误。
+   */
+  public static Writer outputJsonArrayCloseTag(final Writer writer) throws IOException {
+    writer.write(']');
+    return writer;
+  }
+
   // resume checkstyle: LineLength
 }

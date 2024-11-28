@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2023.
+//    Copyright (c) 2022 - 2024.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,10 +11,15 @@ package ltd.qubit.commons.lang;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+
 import ltd.qubit.commons.datastructure.list.primitive.IntIterator;
 import ltd.qubit.commons.datastructure.list.primitive.impl.IntArrayList;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import static ltd.qubit.commons.lang.CharUtils.VISIBILITY_GRAPH;
 import static ltd.qubit.commons.lang.CharUtils.VISIBILITY_INLINE_BLANK;
@@ -38,11 +43,6 @@ import static ltd.qubit.commons.lang.CharUtils.toLongObject;
 import static ltd.qubit.commons.lang.CharUtils.toPrimitive;
 import static ltd.qubit.commons.lang.CharUtils.toShort;
 import static ltd.qubit.commons.lang.CharUtils.toShortObject;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Unit test of the Chars class.
