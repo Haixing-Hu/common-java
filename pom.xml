@@ -182,5 +182,10 @@
       <artifactId>logback-classic</artifactId>
       <scope>test</scope>     <!-- only need in unit test -->
     </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 </project>

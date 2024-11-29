@@ -74,6 +74,9 @@ public class CustomizedJsonMapper extends JsonMapper {
     this.registerModule(new Jdk8Module());
     // 增加自定义类型注册模块
     this.registerModule(TypeRegistrationModule.INSTANCE);
+    // 增加强制创建对象的模块
+    this.registerModule(ForceCreatorDeserializerModule.INSTANCE);
+
   }
 
   public final boolean isPrettyPrint() {
