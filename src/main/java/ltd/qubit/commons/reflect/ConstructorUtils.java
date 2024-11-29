@@ -26,7 +26,7 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import org.objenesis.ObjenesisHelper;
 
-import ltd.qubit.commons.io.io.IoUtils;
+import ltd.qubit.commons.io.IoUtils;
 import ltd.qubit.commons.lang.ClassUtils;
 import ltd.qubit.commons.lang.Equality;
 

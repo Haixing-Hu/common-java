@@ -26,10 +26,10 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.annotation.Nullable;
 
-import ltd.qubit.commons.io.io.resource.DefaultResourceLoader;
-import ltd.qubit.commons.io.io.resource.Resource;
-import ltd.qubit.commons.io.io.resource.ResourceLoader;
-import ltd.qubit.commons.io.io.resource.ResourceLoaderAware;
+import ltd.qubit.commons.io.resource.DefaultResourceLoader;
+import ltd.qubit.commons.io.resource.Resource;
+import ltd.qubit.commons.io.resource.ResourceLoader;
+import ltd.qubit.commons.io.resource.ResourceLoaderAware;
 import ltd.qubit.commons.util.properties.DefaultPropertiesPersister;
 import ltd.qubit.commons.util.properties.PropertiesPersister;
 

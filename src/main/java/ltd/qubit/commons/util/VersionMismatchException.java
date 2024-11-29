@@ -8,7 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util;
 
-import ltd.qubit.commons.io.io.error.InvalidFormatException;
+import ltd.qubit.commons.io.error.InvalidFormatException;
 
 /**
  * Thrown to indicate a version mismatch error.

@@ -19,10 +19,10 @@ import ltd.qubit.commons.lang.SystemUtils;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import static ltd.qubit.commons.io.io.FilenameUtils.getBasename;
-import static ltd.qubit.commons.io.io.FilenameUtils.getDotExtension;
-import static ltd.qubit.commons.io.io.FilenameUtils.getExtension;
-import static ltd.qubit.commons.io.io.FilenameUtils.getFilenameFromPath;
+import static ltd.qubit.commons.io.FilenameUtils.getBasename;
+import static ltd.qubit.commons.io.FilenameUtils.getDotExtension;
+import static ltd.qubit.commons.io.FilenameUtils.getExtension;
+import static ltd.qubit.commons.io.FilenameUtils.getFilenameFromPath;
 
 public class FilenameUtilsTest {
 

@@ -14,7 +14,7 @@ import java.security.PublicKey;
 
 import org.junit.jupiter.api.Test;
 
-import ltd.qubit.commons.io.io.IoUtils;
+import ltd.qubit.commons.io.IoUtils;
 import ltd.qubit.commons.util.codec.Base64Codec;
 import ltd.qubit.commons.util.codec.HexCodec;
 

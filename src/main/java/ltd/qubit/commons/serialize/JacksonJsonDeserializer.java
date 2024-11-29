@@ -14,7 +14,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
-import ltd.qubit.commons.io.io.error.SerializationException;
+import ltd.qubit.commons.io.error.SerializationException;
 import ltd.qubit.commons.text.jackson.CustomizedJsonMapper;
 import ltd.qubit.commons.text.jackson.JsonMapperUtils;
 

@@ -10,7 +10,7 @@ package ltd.qubit.commons.config.impl;
 
 import org.junit.jupiter.api.Test;
 
-import ltd.qubit.commons.io.io.serialize.XmlSerialization;
+import ltd.qubit.commons.io.serialize.XmlSerialization;
 import ltd.qubit.commons.text.xml.XmlException;
 
 /**

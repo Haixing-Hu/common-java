@@ -10,7 +10,7 @@ package ltd.qubit.commons.concurrent;
 
 import org.slf4j.Logger;
 
-import ltd.qubit.commons.io.io.LoggerPrinter;
+import ltd.qubit.commons.io.LoggerPrinter;
 
 /**
  * A {@link ProgressReporter} that reports the progress to a {@link Logger}.

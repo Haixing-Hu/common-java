@@ -20,8 +20,8 @@ import java.net.URL;
 
 import org.junit.jupiter.api.Test;
 
-import ltd.qubit.commons.io.io.error.InvalidFormatException;
-import ltd.qubit.commons.io.io.serialize.BinarySerialization;
+import ltd.qubit.commons.io.error.InvalidFormatException;
+import ltd.qubit.commons.io.serialize.BinarySerialization;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

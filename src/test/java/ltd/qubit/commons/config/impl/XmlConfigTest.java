@@ -22,7 +22,7 @@ import java.net.URL;
 
 import org.junit.jupiter.api.Test;
 
-import ltd.qubit.commons.io.io.IoUtils;
+import ltd.qubit.commons.io.IoUtils;
 import ltd.qubit.commons.lang.SystemUtils;
 import ltd.qubit.commons.net.Url;
 import ltd.qubit.commons.net.UrlUtils;

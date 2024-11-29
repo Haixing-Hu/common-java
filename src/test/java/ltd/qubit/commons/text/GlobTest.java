@@ -13,9 +13,9 @@ import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.Test;
 
-import ltd.qubit.commons.io.io.error.InvalidFormatException;
-import ltd.qubit.commons.io.io.serialize.BinarySerialization;
-import ltd.qubit.commons.io.io.serialize.XmlSerialization;
+import ltd.qubit.commons.io.error.InvalidFormatException;
+import ltd.qubit.commons.io.serialize.BinarySerialization;
+import ltd.qubit.commons.io.serialize.XmlSerialization;
 import ltd.qubit.commons.text.xml.XmlException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

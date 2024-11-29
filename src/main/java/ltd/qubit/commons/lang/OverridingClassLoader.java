@@ -13,7 +13,7 @@ import java.io.InputStream;
 
 import javax.annotation.Nullable;
 
-import ltd.qubit.commons.io.io.IoUtils;
+import ltd.qubit.commons.io.IoUtils;
 
 /**
  * {@code ClassLoader} that does <i>not</i> always delegate to the parent loader

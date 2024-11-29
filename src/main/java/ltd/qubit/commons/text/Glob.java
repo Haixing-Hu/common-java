@@ -17,8 +17,8 @@ import java.util.regex.Pattern;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import ltd.qubit.commons.error.TypeMismatchException;
-import ltd.qubit.commons.io.io.serialize.BinarySerialization;
-import ltd.qubit.commons.io.io.serialize.XmlSerialization;
+import ltd.qubit.commons.io.serialize.BinarySerialization;
+import ltd.qubit.commons.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Equality;

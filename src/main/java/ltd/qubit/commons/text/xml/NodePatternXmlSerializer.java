@@ -13,7 +13,7 @@ import javax.annotation.concurrent.Immutable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import ltd.qubit.commons.io.io.serialize.XmlSerializer;
+import ltd.qubit.commons.io.serialize.XmlSerializer;
 
 /**
  * The {@link XmlSerializer} for the {@link NodePattern} class.

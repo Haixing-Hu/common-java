@@ -15,7 +15,7 @@ import javax.annotation.concurrent.ThreadSafe;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import ltd.qubit.commons.io.io.serialize.XmlSerializer;
+import ltd.qubit.commons.io.serialize.XmlSerializer;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.net.Url;
 import ltd.qubit.commons.text.xml.DomUtils;

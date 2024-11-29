@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 import javax.annotation.Nullable;
 
-import ltd.qubit.commons.io.io.serialize.BinarySerialization;
+import ltd.qubit.commons.io.serialize.BinarySerialization;
 import ltd.qubit.commons.lang.Argument;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Equality;

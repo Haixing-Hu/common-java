@@ -11,7 +11,7 @@ package ltd.qubit.commons.text.xml.jaxb;
 import java.io.IOException;
 import java.net.URL;
 
-import ltd.qubit.commons.io.io.resource.Resource;
+import ltd.qubit.commons.io.resource.Resource;
 import ltd.qubit.commons.text.jackson.XmlMapperUtils;
 
 /**

@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
-import ltd.qubit.commons.io.io.IoUtils;
+import ltd.qubit.commons.io.IoUtils;
 import ltd.qubit.commons.lang.SystemUtils;
 import ltd.qubit.commons.net.UrlPattern;
 import ltd.qubit.commons.text.testbed.Organization;

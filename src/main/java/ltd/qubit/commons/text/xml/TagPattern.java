@@ -15,8 +15,8 @@ import javax.annotation.Nullable;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import ltd.qubit.commons.io.io.serialize.BinarySerialization;
-import ltd.qubit.commons.io.io.serialize.XmlSerialization;
+import ltd.qubit.commons.io.serialize.BinarySerialization;
+import ltd.qubit.commons.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;

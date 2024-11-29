@@ -15,11 +15,11 @@ import java.io.OutputStream;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import ltd.qubit.commons.io.io.error.SerializationException;
-import ltd.qubit.commons.io.io.serialize.BinarySerializer;
+import ltd.qubit.commons.io.error.SerializationException;
+import ltd.qubit.commons.io.serialize.BinarySerializer;
 
-import static ltd.qubit.commons.io.io.InputUtils.readIntArray;
-import static ltd.qubit.commons.io.io.OutputUtils.writeIntArray;
+import static ltd.qubit.commons.io.InputUtils.readIntArray;
+import static ltd.qubit.commons.io.OutputUtils.writeIntArray;
 
 /**
  * The {@link BinarySerializer} for {@code int[]} class.

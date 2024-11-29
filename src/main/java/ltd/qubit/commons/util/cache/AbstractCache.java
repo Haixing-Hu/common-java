@@ -14,8 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import ltd.qubit.commons.io.io.error.AlreadyOpenedException;
-import ltd.qubit.commons.io.io.error.NotOpenedException;
+import ltd.qubit.commons.io.error.AlreadyOpenedException;
+import ltd.qubit.commons.io.error.NotOpenedException;
 
 /**
  * The abstract base class for implementing the {@link Cache} interface.

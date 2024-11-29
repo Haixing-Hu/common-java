@@ -15,7 +15,7 @@ import javax.annotation.concurrent.Immutable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import ltd.qubit.commons.io.io.serialize.XmlSerializer;
+import ltd.qubit.commons.io.serialize.XmlSerializer;
 import ltd.qubit.commons.text.xml.DomUtils;
 import ltd.qubit.commons.text.xml.InvalidXmlNodeContentException;
 import ltd.qubit.commons.text.xml.XmlException;

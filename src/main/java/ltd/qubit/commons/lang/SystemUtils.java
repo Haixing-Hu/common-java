@@ -33,7 +33,7 @@ import javax.annotation.concurrent.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ltd.qubit.commons.io.io.IoUtils;
+import ltd.qubit.commons.io.IoUtils;
 import ltd.qubit.commons.reflect.ConstructorUtils;
 
 import static ltd.qubit.commons.lang.CharUtils.isAsciiDigit;

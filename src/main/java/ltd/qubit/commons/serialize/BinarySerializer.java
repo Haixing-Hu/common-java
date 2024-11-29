@@ -11,7 +11,7 @@ package ltd.qubit.commons.serialize;
 import java.io.OutputStream;
 import java.util.List;
 
-import ltd.qubit.commons.io.io.error.SerializationException;
+import ltd.qubit.commons.io.error.SerializationException;
 
 /**
  * The interface for serializing an object into a binary stream.

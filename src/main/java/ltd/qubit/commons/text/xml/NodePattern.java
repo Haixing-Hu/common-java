@@ -21,8 +21,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import ltd.qubit.commons.error.InitializationError;
-import ltd.qubit.commons.io.io.serialize.BinarySerialization;
-import ltd.qubit.commons.io.io.serialize.XmlSerialization;
+import ltd.qubit.commons.io.serialize.BinarySerialization;
+import ltd.qubit.commons.io.serialize.XmlSerialization;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 

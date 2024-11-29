@@ -26,7 +26,7 @@ import ltd.qubit.commons.util.expand.ExpansionPolicy;
 
 import static java.lang.System.arraycopy;
 
-import static ltd.qubit.commons.io.io.serialize.BinarySerialization.register;
+import static ltd.qubit.commons.io.serialize.BinarySerialization.register;
 import static ltd.qubit.commons.lang.Argument.checkBounds;
 import static ltd.qubit.commons.lang.Argument.requireGreaterEqual;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;

@@ -31,7 +31,7 @@ import com.fasterxml.jackson.databind.PropertyName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
-import ltd.qubit.commons.io.io.IoUtils;
+import ltd.qubit.commons.io.IoUtils;
 import ltd.qubit.commons.lang.ClassUtils;
 import ltd.qubit.commons.text.jackson.CustomizedXmlMapper;
 import ltd.qubit.commons.text.jackson.JacksonUtils;

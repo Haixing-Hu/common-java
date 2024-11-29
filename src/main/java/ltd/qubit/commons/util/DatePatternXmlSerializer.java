@@ -14,7 +14,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import ltd.qubit.commons.i18n.LocaleUtils;
-import ltd.qubit.commons.io.io.serialize.XmlSerializer;
+import ltd.qubit.commons.io.serialize.XmlSerializer;
 import ltd.qubit.commons.text.xml.DomUtils;
 import ltd.qubit.commons.text.xml.XmlException;
 import ltd.qubit.commons.text.xml.XmlSerializationException;

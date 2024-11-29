@@ -10,7 +10,7 @@ package ltd.qubit.commons.concurrent;
 
 import javax.annotation.concurrent.Immutable;
 
-import ltd.qubit.commons.io.io.PrintStreamPrinter;
+import ltd.qubit.commons.io.PrintStreamPrinter;
 
 /**
  * A {@link ProgressReporter} that reports the progress to the {@link System#out}.

@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Set;
 
-import ltd.qubit.commons.io.io.Openable;
+import ltd.qubit.commons.io.Openable;
 
 /**
  * The interface of a cache.

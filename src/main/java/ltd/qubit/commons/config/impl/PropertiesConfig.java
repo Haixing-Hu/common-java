@@ -25,7 +25,7 @@ import java.util.Properties;
 
 import ltd.qubit.commons.config.Config;
 import ltd.qubit.commons.config.error.ConfigurationError;
-import ltd.qubit.commons.io.io.IoUtils;
+import ltd.qubit.commons.io.IoUtils;
 import ltd.qubit.commons.net.Url;
 import ltd.qubit.commons.util.properties.PropertiesUtils;
 

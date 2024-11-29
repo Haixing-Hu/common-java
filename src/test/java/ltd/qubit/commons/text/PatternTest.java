@@ -15,8 +15,8 @@ import org.junit.jupiter.api.Test;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
-import ltd.qubit.commons.io.io.error.InvalidFormatException;
-import ltd.qubit.commons.io.io.serialize.BinarySerialization;
+import ltd.qubit.commons.io.error.InvalidFormatException;
+import ltd.qubit.commons.io.serialize.BinarySerialization;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.text.jackson.CustomizedXmlMapper;
 

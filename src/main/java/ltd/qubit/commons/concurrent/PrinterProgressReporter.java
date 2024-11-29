@@ -10,7 +10,7 @@ package ltd.qubit.commons.concurrent;
 
 import java.util.concurrent.TimeUnit;
 
-import ltd.qubit.commons.io.io.Printer;
+import ltd.qubit.commons.io.Printer;
 import ltd.qubit.commons.util.HumanReadable;
 import ltd.qubit.commons.util.clock.TimeMeter;
 

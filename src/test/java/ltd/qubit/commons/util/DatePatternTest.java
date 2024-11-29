@@ -14,7 +14,7 @@ import java.util.Locale;
 
 import org.junit.jupiter.api.Test;
 
-import ltd.qubit.commons.io.io.serialize.XmlSerialization;
+import ltd.qubit.commons.io.serialize.XmlSerialization;
 import ltd.qubit.commons.text.xml.XmlException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
