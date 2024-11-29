@@ -1429,6 +1429,9 @@ public final class SystemUtils {
     final List<String> classNames = IoUtils.readLines(url, StandardCharsets.UTF_8);
     final List<T> result = new ArrayList<>();
     for (final String className : classNames) {
+      if (className.startsWith("#")) {    // skip comments
+        continue;
+      }
       final Class<?> clazz = Class.forName(className, true, loader);
       if (cls.isAssignableFrom(clazz)) {
         final Object instance = ConstructorUtils.newInstance(clazz);
