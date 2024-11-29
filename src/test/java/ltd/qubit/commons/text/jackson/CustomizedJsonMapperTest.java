@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
+import ltd.qubit.commons.text.jackson.module.ForceCreatorDeserializerModule;
 import ltd.qubit.commons.text.testbed.Gender;
 import ltd.qubit.commons.text.testbed.OrganizationNoAnnotation;
 import ltd.qubit.commons.text.testbed.PersonNoAnnotation;
@@ -130,7 +131,6 @@ public class CustomizedJsonMapperTest {
     assertThrows(InvalidFormatException.class,
         () -> mapper.readValue(errorJson, WithEnum.class));
   }
-
 
   public static class Foo {
     private final String name;

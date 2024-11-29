@@ -9,6 +9,7 @@
 package ltd.qubit.commons.text.jackson.deserializer;
 
 import java.io.IOException;
+import java.io.Serial;
 
 import javax.annotation.concurrent.Immutable;
 
@@ -26,6 +27,7 @@ import ltd.qubit.commons.text.Stripper;
 @Immutable
 public class StripStringDeserializer extends StdDeserializer<String> {
 
+  @Serial
   private static final long serialVersionUID = -6141183135378178754L;
 
   public static final StripStringDeserializer INSTANCE = new StripStringDeserializer();

@@ -18,7 +18,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import ltd.qubit.commons.annotation.Scale;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
-import ltd.qubit.commons.text.jackson.type.TypeRegister;
+import ltd.qubit.commons.text.jackson.module.TypeRegistrationModule;
+import ltd.qubit.commons.text.jackson.module.type.TypeRegister;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

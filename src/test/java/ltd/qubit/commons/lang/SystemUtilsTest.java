@@ -13,7 +13,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import ltd.qubit.commons.text.jackson.type.TypeRegister;
+import ltd.qubit.commons.text.jackson.module.type.TypeRegister;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

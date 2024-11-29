@@ -16,6 +16,8 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 
 import ltd.qubit.commons.text.CaseFormat;
+import ltd.qubit.commons.text.jackson.module.ForceCreatorDeserializerModule;
+import ltd.qubit.commons.text.jackson.module.TypeRegistrationModule;
 
 import static ltd.qubit.commons.text.jackson.CustomizeJacksonUtils.customizeFeature;
 import static ltd.qubit.commons.text.jackson.CustomizeJacksonUtils.getNormalizedConfig;

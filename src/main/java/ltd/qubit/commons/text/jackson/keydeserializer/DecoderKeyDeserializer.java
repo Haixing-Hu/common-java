@@ -30,8 +30,7 @@ import static ltd.qubit.commons.lang.StringUtils.isEmpty;
  *     the type of values to be deserialized.
  */
 @Immutable
-public class DecoderKeyDeserializer<T> extends KeyDeserializer
-    implements Serializable {
+public class DecoderKeyDeserializer<T> extends KeyDeserializer implements Serializable {
 
   private static final long serialVersionUID = 2275892683881205502L;
 

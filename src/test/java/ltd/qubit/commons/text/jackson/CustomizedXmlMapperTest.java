@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -568,4 +569,75 @@ public class CustomizedXmlMapperTest {
                                  .build();
     assertFalse(diff.hasDifferences(), () -> "XMLs are different: " + diff);
   }
+
+  public static class Foo {
+    private final String name;
+    private final String value;
+
+    public Foo(final String name, final String value) {
+      this.name = name;
+      this.value = value;
+    }
+
+    public String getName() {
+      return name;
+    }
+
+    public String getValue() {
+      return value;
+    }
+  }
+
+  @Test
+  public void testMapperForClassWithoutDefaultConstructor() throws JsonProcessingException {
+    final XmlMapper mapper = new CustomizedXmlMapper();
+    final Foo foo = new Foo("foo", "bar");
+    final String xml = "<foo><name>foo</name><value>bar</value></foo>";
+    final Foo f1 = mapper.readValue(xml, Foo.class);
+    assertEquals(foo.getName(), f1.getName());
+    assertEquals(foo.getValue(), f1.getValue());
+  }
+
+
+  private static class ImmutableClass {
+    private String str;
+
+    public ImmutableClass(final String someStr) {
+      this.str = someStr;
+    }
+
+    public String getStr() {
+      return str;
+    }
+  }
+
+  private static class ImmutableMap {
+    private final Map<String, Object> params;
+
+    public ImmutableMap(final Map<String, Object> params) {
+      this.params = params;
+    }
+
+    public Map<String, Object> getParams() {
+      return params;
+    }
+  }
+
+  @Test
+  public void shouldSuccessDeserialize() throws IOException {
+    final XmlMapper mapper = new CustomizedXmlMapper();
+    final String ser = mapper.writeValueAsString(new ImmutableClass("Hi")); // => { "str": "Hi" }
+    final ImmutableClass deser = mapper.readValue(ser, ImmutableClass.class);
+    assertEquals(deser.getStr(), "Hi");
+  }
+
+  @Disabled
+  @Test
+  public void shouldSuccessDeserializeImmutableMap() throws IOException {
+    final XmlMapper mapper = new CustomizedXmlMapper();
+    final String ser = mapper.writeValueAsString(new ImmutableMap(Map.of("key", "value"))); // => { "params": { "key": "value" } }
+    final ImmutableMap deser = mapper.readValue(ser, ImmutableMap.class);
+    assertEquals(deser.getParams(), Map.of("key", "value"));
+  }
+
 }

@@ -13,18 +13,10 @@ import java.io.Serial;
 import javax.xml.stream.XMLOutputFactory;
 
 import com.fasterxml.jackson.databind.AnnotationIntrospector;
-import com.fasterxml.jackson.databind.BeanDescription;
-import com.fasterxml.jackson.databind.DeserializationConfig;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.SerializationConfig;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.deser.BeanDeserializerModifier;
 import com.fasterxml.jackson.databind.introspect.AnnotationIntrospectorPair;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.databind.ser.BeanSerializerModifier;
-import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
@@ -32,10 +24,10 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.module.jakarta.xmlbind.JakartaXmlBindAnnotationIntrospector;
 
 import ltd.qubit.commons.text.CaseFormat;
-import ltd.qubit.commons.text.jackson.deserializer.MapXmlDeserializer;
-import ltd.qubit.commons.text.jackson.deserializer.StripStringDeserializer;
-import ltd.qubit.commons.text.jackson.serializer.MapXmlSerializer;
-import ltd.qubit.commons.text.jackson.serializer.StripStringSerializer;
+import ltd.qubit.commons.text.jackson.module.ForceCreatorDeserializerModule;
+import ltd.qubit.commons.text.jackson.module.StripStringModule;
+import ltd.qubit.commons.text.jackson.module.TypeRegistrationModule;
+import ltd.qubit.commons.text.jackson.module.XmlMapModule;
 import ltd.qubit.commons.text.xml.XmlEscapingWriterFactory;
 
 import static org.codehaus.stax2.XMLOutputFactory2.P_ATTR_VALUE_ESCAPER;
@@ -133,26 +125,11 @@ public class CustomizedXmlMapper extends XmlMapper {
     // 增加自定义类型注册模块
     this.registerModule(TypeRegistrationModule.INSTANCE);
     // 增加自定义模块，对字符串字段值需要 strip 前后空白字符
-    final SimpleModule module = new SimpleModule();
-    module.addSerializer(String.class, StripStringSerializer.INSTANCE);
-    module.addDeserializer(String.class, StripStringDeserializer.INSTANCE);
-    module.addSerializer(String.class, StripStringSerializer.INSTANCE);
-    // 对 map 类型特殊处理
-    module.setSerializerModifier(new BeanSerializerModifier() {
-      @Override
-      public JsonSerializer<?> modifyMapSerializer(final SerializationConfig config,
-          final MapType type, final BeanDescription beanDesc, final JsonSerializer<?> serializer) {
-        return MapXmlSerializer.INSTANCE;
-      }
-    });
-    module.setDeserializerModifier(new BeanDeserializerModifier() {
-      @Override
-      public JsonDeserializer<?> modifyMapDeserializer(final DeserializationConfig config,
-          final MapType type, final BeanDescription beanDesc, final JsonDeserializer<?> deserializer) {
-        return new MapXmlDeserializer(type);
-      }
-    });
-    this.registerModule(module);
+    this.registerModule(StripStringModule.INSTANCE);
+    // 增加自定义模块，对 map 类型特殊处理
+    this.registerModule(XmlMapModule.INSTANCE);
+    // 增加强制创建对象的模块
+    this.registerModule(ForceCreatorDeserializerModule.INSTANCE);
   }
 
   public final boolean isPrettyPrint() {

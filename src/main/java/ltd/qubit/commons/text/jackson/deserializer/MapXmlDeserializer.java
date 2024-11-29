@@ -68,6 +68,7 @@ public class MapXmlDeserializer extends JsonDeserializer<Map> implements Context
     final XmlMapper mapper = (XmlMapper) jp.getCodec();
     final Class<? extends Map> mapClass = (Class<? extends Map>) mapType.getRawClass();
     final Map map = CollectionUtils.constructSameTypeOfMap(mapClass);
+    // final Map map = ConstructorUtils.newInstance(mapClass);
     // Ensure we're at the start of the map field
     ensureCurrentToken(jp, JsonToken.START_OBJECT);
     // move to the start of entry array

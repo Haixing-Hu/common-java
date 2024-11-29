@@ -35,7 +35,7 @@ import ltd.qubit.commons.io.IoUtils;
 import ltd.qubit.commons.lang.ClassUtils;
 import ltd.qubit.commons.text.jackson.CustomizedXmlMapper;
 import ltd.qubit.commons.text.jackson.JacksonUtils;
-import ltd.qubit.commons.text.jackson.TypeRegistrationModule;
+import ltd.qubit.commons.text.jackson.module.TypeRegistrationModule;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
