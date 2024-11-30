@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.module;
 
+import java.io.Serial;
+
 import javax.annotation.concurrent.Immutable;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -18,6 +20,8 @@ import ltd.qubit.commons.text.jackson.serializer.StripStringSerializer;
 
 @Immutable
 public class StripStringModule extends SimpleModule {
+  @Serial
+  private static final long serialVersionUID = -7300221967161392446L;
 
   public static final StripStringModule INSTANCE = new StripStringModule();
 

@@ -9,6 +9,7 @@
 package ltd.qubit.commons.text.jackson.module.impl;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InaccessibleObjectException;
 import java.lang.reflect.InvocationTargetException;
@@ -36,6 +37,9 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 
 public class ForceMapDeserializer extends MapDeserializer {
 
+  @Serial
+  private static final long serialVersionUID = -7548120101370175657L;
+
   public ForceMapDeserializer(final JavaType mapType,
       final ValueInstantiator valueInstantiator,
       final KeyDeserializer keyDeserializer,
@@ -58,7 +62,7 @@ public class ForceMapDeserializer extends MapDeserializer {
   }
 
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "rawtypes"})
   @Override
   public Map<Object, Object> deserialize(final JsonParser parser,
       final DeserializationContext context) throws IOException {

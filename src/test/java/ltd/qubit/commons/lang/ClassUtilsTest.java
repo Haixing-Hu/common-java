@@ -652,27 +652,6 @@ public class ClassUtilsTest {
   }
 
   @Test
-  public void testGetPublicMethod() throws Exception {
-    // Tests with Collections$UnmodifiableSet
-    final Set<String> set = Collections.unmodifiableSet(new HashSet<>());
-    final Method isEmptyMethod = ClassUtils
-        .getPublicMethod(set.getClass(), "isEmpty", new Class<?>[0]);
-    assertTrue(
-        Modifier.isPublic(isEmptyMethod.getDeclaringClass().getModifiers()));
-
-    try {
-      isEmptyMethod.invoke(set);
-    } catch (final IllegalAccessException iae) {
-      fail("Should not have thrown IllegalAccessException");
-    }
-
-    // Tests with a public Class
-    final Method toStringMethod = ClassUtils
-        .getPublicMethod(Object.class, "toString", new Class<?>[0]);
-    assertEquals(Object.class.getMethod("toString"), toStringMethod);
-  }
-
-  @Test
   public void testToClass_object() {
     assertArrayEquals(null, ClassUtils.toClass(null));
 

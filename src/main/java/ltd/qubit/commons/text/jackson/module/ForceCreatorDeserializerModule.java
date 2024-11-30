@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.module;
 
+import java.io.Serial;
+
 import javax.annotation.concurrent.Immutable;
 
 import com.fasterxml.jackson.databind.deser.BeanDeserializerModifier;
@@ -24,6 +26,8 @@ import ltd.qubit.commons.text.jackson.module.impl.ForceCreatorBeanDeserializerMo
  */
 @Immutable
 public class ForceCreatorDeserializerModule extends SimpleModule {
+  @Serial
+  private static final long serialVersionUID = 5141940734440493629L;
 
   public static final ForceCreatorDeserializerModule INSTANCE = new ForceCreatorDeserializerModule();
 

@@ -223,7 +223,7 @@ public class CustomizedJsonMapperTest {
         .enableDefaultTypingAsProperty(ObjectMapper.DefaultTyping.NON_FINAL, "@class")
         .registerModule(new ForceCreatorDeserializerModule());
 
-    final RequestEntity deser = objectMapper.readValue(json, RequestEntity.class);
+    final RequestEntity<?> deser = objectMapper.readValue(json, RequestEntity.class);
 
     assertEquals(objectMapper.writeValueAsString(deser), json);
   }

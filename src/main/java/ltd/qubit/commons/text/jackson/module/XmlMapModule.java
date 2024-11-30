@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.module;
 
+import java.io.Serial;
+
 import com.fasterxml.jackson.databind.BeanDescription;
 import com.fasterxml.jackson.databind.DeserializationConfig;
 import com.fasterxml.jackson.databind.JsonDeserializer;
@@ -22,6 +24,8 @@ import ltd.qubit.commons.text.jackson.deserializer.MapXmlDeserializer;
 import ltd.qubit.commons.text.jackson.serializer.MapXmlSerializer;
 
 public class XmlMapModule extends SimpleModule {
+  @Serial
+  private static final long serialVersionUID = 2497533104195765259L;
 
   public static final XmlMapModule INSTANCE = new XmlMapModule();
 

@@ -9,6 +9,7 @@
 package ltd.qubit.commons.text.jackson.module.impl;
 
 import java.io.IOException;
+import java.io.Serial;
 
 /**
  * Thrown when a bean creation error occurs.
@@ -16,6 +17,9 @@ import java.io.IOException;
  * @author Haixing Hu
  */
 public class BeanCreationException extends IOException {
+
+  @Serial
+  private static final long serialVersionUID = -5948216445929482392L;
 
   public BeanCreationException() {
   }
