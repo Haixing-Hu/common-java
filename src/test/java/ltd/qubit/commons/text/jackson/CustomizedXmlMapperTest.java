@@ -44,7 +44,10 @@ import ltd.qubit.commons.util.pair.KeyValuePair;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import static ltd.qubit.commons.test.XmlUnitUtils.assertXPathEquals;
 import static ltd.qubit.commons.test.XmlUnitUtils.assertXmlEqual;
@@ -640,4 +643,88 @@ public class CustomizedXmlMapperTest {
     assertEquals(deser.getParams(), Map.of("key", "value"));
   }
 
+  @Test
+  public void testDeserializeEmptyMapElement() throws JsonProcessingException {
+    final String xml = "<document>\n"
+        + "  <id>1234567</id>\n"
+        + "  <title>title</title>\n"
+        + "  <content>content</content>\n"
+        + "  <metadata/>\n"
+        + "  <score>0.382000</score>\n"
+        + "</document>\n";
+    final XmlMapper mapper = new CustomizedXmlMapper();
+    final Document doc = mapper.readValue(xml, Document.class);
+    assertEquals("1234567", doc.getId());
+    assertEquals("title", doc.getTitle());
+    assertEquals("content", doc.getContent());
+    assertNotNull(doc.getMetadata());
+    assertTrue(doc.getMetadata().isEmpty());
+    assertEquals(new BigDecimal("0.382000"), doc.getScore());
+  }
+
+  @Test
+  public void testDeserializeNullMapElement() throws JsonProcessingException {
+    final String xml = "<document>\n"
+        + "  <id>1234567</id>\n"
+        + "  <title>title</title>\n"
+        + "  <content>content</content>\n"
+        + "  <score>0.382000</score>\n"
+        + "</document>\n";
+    final XmlMapper mapper = new CustomizedXmlMapper();
+    final Document doc = mapper.readValue(xml, Document.class);
+    assertEquals("1234567", doc.getId());
+    assertEquals("title", doc.getTitle());
+    assertEquals("content", doc.getContent());
+    assertNull(doc.getMetadata());
+    assertEquals(new BigDecimal("0.382000"), doc.getScore());
+  }
+
+  @Test
+  public void testSerializeEmptyMapElement() throws JsonProcessingException {
+    final Document doc = new Document();
+    doc.setId("1234567");
+    doc.setTitle("title");
+    doc.setContent("content");
+    doc.setMetadata(new TreeMap<>());
+    doc.setScore(new BigDecimal("0.382000"));
+    final XmlMapper mapper = new CustomizedXmlMapper();
+    final String xml = mapper.writeValueAsString(doc);
+    final String expected = "<document>\n"
+        + "  <id>1234567</id>\n"
+        + "  <title>title</title>\n"
+        + "  <content>content</content>\n"
+        + "  <metadata/>\n"
+        + "  <score>0.382000</score>\n"
+        + "</document>\n";
+    final Diff diff = DiffBuilder.compare(expected).withTest(xml)
+                                 .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndText))
+                                 .ignoreWhitespace()
+                                 .checkForSimilar()
+                                 .build();
+    assertFalse(diff.hasDifferences(), () -> "XMLs are different: " + diff);
+  }
+
+  @Test
+  public void testSerializeNullMapElement() throws JsonProcessingException {
+    final Document doc = new Document();
+    doc.setId("1234567");
+    doc.setTitle("title");
+    doc.setContent("content");
+    doc.setMetadata(null);
+    doc.setScore(new BigDecimal("0.382000"));
+    final XmlMapper mapper = new CustomizedXmlMapper();
+    final String xml = mapper.writeValueAsString(doc);
+    final String expected = "<document>\n"
+        + "  <id>1234567</id>\n"
+        + "  <title>title</title>\n"
+        + "  <content>content</content>\n"
+        + "  <score>0.382000</score>\n"
+        + "</document>\n";
+    final Diff diff = DiffBuilder.compare(expected).withTest(xml)
+                                 .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndText))
+                                 .ignoreWhitespace()
+                                 .checkForSimilar()
+                                 .build();
+    assertFalse(diff.hasDifferences(), () -> "XMLs are different: " + diff);
+  }
 }
