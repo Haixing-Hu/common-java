@@ -18,14 +18,14 @@ import org.objenesis.ObjenesisStd;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.ValueInstantiator;
 
+import ltd.qubit.commons.reflect.ConstructorUtils;
+
 /**
  * A Jackson {@link ValueInstantiator} which uses Objenesis to instantiate objects.
  *
  * @author Haixing Hu
  */
 class ForceValueInstantiator extends ValueInstantiator {
-
-  private static final Objenesis OBJENESIS = new ObjenesisStd();
 
   private static final ConcurrentMap<Class<?>, ForceValueInstantiator>
       INSTANTIATOR_CACHE = new ConcurrentHashMap<>();
@@ -52,6 +52,6 @@ class ForceValueInstantiator extends ValueInstantiator {
 
   @Override
   public Object createUsingDefault(final DeserializationContext ctxt) throws IOException {
-    return OBJENESIS.newInstance(type);
+    return ConstructorUtils.newInstance(type);
   }
 }

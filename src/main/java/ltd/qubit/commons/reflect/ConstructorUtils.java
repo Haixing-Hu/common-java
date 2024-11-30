@@ -61,7 +61,7 @@ public class ConstructorUtils {
   private ConstructorUtils() {}
 
   private static final ClassValue<byte[]> SERIALIZED_DATA_CACHE =
-      new ClassValue<byte[]>() {
+      new ClassValue<>() {
         @Override
         protected byte[] computeValue(final Class<?> type) {
           try {
@@ -85,7 +85,7 @@ public class ConstructorUtils {
       };
 
   private static final ClassValue<List<Constructor<?>>> CONSTRUCTOR_CACHE =
-      new ClassValue<List<Constructor<?>>>() {
+      new ClassValue<>() {
         @Override
         protected List<Constructor<?>> computeValue(final Class<?> type) {
           final List<Constructor<?>> constructors = new ArrayList<>();
