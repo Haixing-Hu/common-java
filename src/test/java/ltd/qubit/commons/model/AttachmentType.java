@@ -94,7 +94,7 @@ public enum AttachmentType implements LocalizedEnum {
   }
 
   static {
-    registerLocalizedNames(AttachmentType.class, "i18n/attachment-type");
+    registerLocalizedNames(AttachmentType.class, "i18n.attachment-type");
   }
 
   public static AttachmentType forLocalizedName(final String name) {

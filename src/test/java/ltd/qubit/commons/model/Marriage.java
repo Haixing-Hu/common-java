@@ -89,7 +89,7 @@ public enum Marriage {
   }
 
   static {
-    registerLocalizedNames(Marriage.class, "i18n/marriage");
+    registerLocalizedNames(Marriage.class, "i18n.marriage");
   }
 
   public String getLocalizedName() {

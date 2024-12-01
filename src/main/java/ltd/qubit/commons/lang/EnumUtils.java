@@ -153,15 +153,21 @@ public class EnumUtils {
    *
    * @param cls
    *     枚举类型的类对象。
-   * @param bundle
-   *     存储本地化名称的resource bundle名称。
+   * @param basename
+   *     存储本地化名称的 Resource Bundle 的 basename。
    * @param <E>
    *     枚举类型。
    */
   public static <E extends Enum<E>>
-  void registerLocalizedNames(final Class<E> cls, final String bundle) {
+  void registerLocalizedNames(final Class<E> cls, final String basename) {
+    // 检查 basename 是否是完整的 class name
+    if (basename.contains("/")) {
+      throw new IllegalArgumentException("The basename of the resource bundle "
+          + "must be a fully qualified class name. So it has to be written "
+          + "separated with dots instead of '/': " + basename);
+    }
     final ClassKey key = new ClassKey(cls);
-    RESOURCE_BUNDLE_MAP.put(key, bundle);
+    RESOURCE_BUNDLE_MAP.put(key, basename);
     CLASS_LOCALIZED_NAME_MAP.put(key, new ConcurrentHashMap<>());
   }
 

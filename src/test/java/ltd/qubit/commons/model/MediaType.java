@@ -47,7 +47,7 @@ public enum MediaType {
   VIDEO;
 
   static {
-    registerLocalizedNames(MediaType.class, "i18n/media-type");
+    registerLocalizedNames(MediaType.class, "i18n.media-type");
   }
 
   public String getLocalizedName() {

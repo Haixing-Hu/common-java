@@ -29,7 +29,7 @@ import java.util.Locale;
  *   FEMALE;
  *
  *   static {
- *     EnumUtils.registerLocalizedNames(Gender.class, "i18n/gender");
+ *     EnumUtils.registerLocalizedNames(Gender.class, "i18n.gender");
  *   }
  * }
  * </code></pre>

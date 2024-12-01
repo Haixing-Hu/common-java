@@ -42,7 +42,7 @@ public enum MedicareType {
   OTHER;
 
   static {
-    registerLocalizedNames(MedicareType.class, "i18n/medicare-type");
+    registerLocalizedNames(MedicareType.class, "i18n.medicare-type");
   }
 
   public String getLocalizedName() {

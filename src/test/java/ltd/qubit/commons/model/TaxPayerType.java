@@ -40,7 +40,7 @@ public enum TaxPayerType {
   OTHER;
 
   static {
-    registerLocalizedNames(TaxPayerType.class, "i18n/tax-payer-type");
+    registerLocalizedNames(TaxPayerType.class, "i18n.tax-payer-type");
   }
 
   public String getLocalizedName() {

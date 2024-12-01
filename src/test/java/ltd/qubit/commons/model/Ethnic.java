@@ -330,7 +330,7 @@ public enum Ethnic {
   }
 
   static {
-    registerLocalizedNames(Ethnic.class, "i18n/ethnic");
+    registerLocalizedNames(Ethnic.class, "i18n.ethnic");
   }
 
   public String getLocalizedName() {
