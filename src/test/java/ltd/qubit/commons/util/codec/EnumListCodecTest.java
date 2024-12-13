@@ -13,8 +13,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import ltd.qubit.commons.datastructure.list.EnumList;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -52,12 +50,12 @@ public class EnumListCodecTest {
 
   @Test
   void decodeEmptyString() throws DecodingException {
-    assertEquals(new EnumList<>(), codec.decode(""));
+    assertEquals(new ArrayList<>(), codec.decode(""));
   }
 
   @Test
   void decodeEmptyJsonArray() throws DecodingException {
-    assertEquals(new EnumList<>(), codec.decode("[]"));
+    assertEquals(new ArrayList<>(), codec.decode("[]"));
   }
 
   @Test

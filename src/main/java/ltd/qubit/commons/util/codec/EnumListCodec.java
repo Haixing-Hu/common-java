@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.codec;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -15,11 +16,10 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
-import ltd.qubit.commons.datastructure.list.EnumList;
 import ltd.qubit.commons.text.Stripper;
 
 /**
- * {@link EnumList}类的编码解码器。
+ * 枚举{@link List}类的编码解码器。
  *
  * <p>此编码解码器将字符串列表以JSON方式进行编码和解码，从而可将字符串列表存入数据库的某个
  * 单独字段中。</p>
@@ -45,11 +45,11 @@ public class EnumListCodec<E extends Enum<E>> implements Codec<List<E>, String> 
       return null;
     }
     if (text.isEmpty() || "[]".equals(text)) {
-      return new EnumList<>();
+      return new ArrayList<>();
     }
     try {
       final TypeFactory tf = mapper.getTypeFactory();
-      final CollectionType type = tf.constructCollectionType(EnumList.class, enumClass);
+      final CollectionType type = tf.constructCollectionType(ArrayList.class, enumClass);
       return mapper.readValue(text, type);
     } catch (final JsonProcessingException e) {
       throw new DecodingException("Invalid string list JSON format: " + text, e);
