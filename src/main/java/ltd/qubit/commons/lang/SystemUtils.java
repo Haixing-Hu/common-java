@@ -14,14 +14,9 @@ import java.io.StringWriter;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadInfo;
 import java.lang.management.ThreadMXBean;
-import java.lang.reflect.Method;
 import java.net.URL;
-import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
-import java.security.AccessController;
-import java.security.PrivilegedActionException;
-import java.security.PrivilegedExceptionAction;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
@@ -1077,38 +1072,6 @@ public final class SystemUtils {
   }
 
   private static final int GC_LOOPS = 1024;
-
-  /**
-   * Try to unmap the buffer, this method silently fails if no support for that
-   * in the JVM.
-   *
-   * <p>On Windows, this leads to the fact, that mmapped files cannot be
-   * modified or deleted.
-   *
-   * @param buffer
-   *     the mmapped buffer.
-   * @throws IOException
-   *     if any I/O error occurs.
-   */
-  public static void cleanupMmapping(final ByteBuffer buffer)
-          throws IOException {
-    if (UNMAP_MMAP_SUPPORTED) {
-      try {
-        AccessController.doPrivileged((PrivilegedExceptionAction<Object>) () -> {
-          final Class<?> bufferClass = buffer.getClass();
-          final Method getCleanerMethod = bufferClass.getMethod("cleaner");
-          getCleanerMethod.setAccessible(true);
-          final Object cleaner = getCleanerMethod.invoke(buffer);
-          if (cleaner != null) {
-            cleaner.getClass().getMethod("clean").invoke(cleaner);
-          }
-          return null;
-        });
-      } catch (final PrivilegedActionException e) {
-        throw new IOException("Unable to unmap the mapped buffer", e.getCause());
-      }
-    }
-  }
 
   private static final String GETTING_CONTEXT_RESOURCE =
           "Getting resource {} using context class loader ...";
