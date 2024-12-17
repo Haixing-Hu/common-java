@@ -57,6 +57,7 @@ import static ltd.qubit.commons.reflect.Option.ALL_EXCLUDE_BRIDGE;
 import static ltd.qubit.commons.reflect.Option.DEFAULT;
 import static ltd.qubit.commons.reflect.impl.GetMethodByReferenceImpl.GETTER_METHOD_CACHES;
 import static ltd.qubit.commons.reflect.impl.GetMethodByReferenceImpl.findMethod;
+import static ltd.qubit.commons.reflect.impl.GetRecordMethodByReferenceImpl.findRecordMethod;
 
 /**
  * Provides utility reflection methods focused on methods, originally from
@@ -918,10 +919,14 @@ public class MethodUtils {
   @SuppressWarnings("unchecked")
   public static <T, R> Method getMethodByReference(final Class<T> clazz,
       final NonVoidMethod0<T, R> ref) {
-    final ReferenceToMethodCache<T> cache =
-        (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
-    return cache.computeIfAbsent(ref,
-        (g) -> findMethod(clazz, (NonVoidMethod0<T, R>) g));
+    final ReferenceToMethodCache<T> cache = (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+    return cache.computeIfAbsent(ref, (g) -> {
+      if (clazz.isRecord()) {
+        return findRecordMethod(clazz, (NonVoidMethod0<T, R>) g);
+      } else {
+        return findMethod(clazz, (NonVoidMethod0<T, R>) g);
+      }
+    });
   }
 
   @SuppressWarnings("unchecked")

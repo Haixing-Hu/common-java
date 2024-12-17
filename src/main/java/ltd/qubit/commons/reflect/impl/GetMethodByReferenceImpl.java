@@ -15,6 +15,11 @@ import ltd.qubit.commons.reflect.FieldUtils;
 import ltd.qubit.commons.reflect.Option;
 import ltd.qubit.commons.reflect.ReflectionException;
 
+/**
+ * Provides functions that get the method object by a reference to the method.
+ *
+ * @author Haixing Hu
+ */
 @SuppressWarnings("overloads")
 public class GetMethodByReferenceImpl {
 
@@ -32,8 +37,7 @@ public class GetMethodByReferenceImpl {
     try {
       final T proxy = ConstructorUtils.newInstance(proxyClass);
       // write the captor object to the MethodCaptor.FIELD_NAME of the proxy instance
-      FieldUtils.writeField(proxyClass, Option.ALL, MethodCaptor.FIELD_NAME,
-          proxy, captor);
+      FieldUtils.writeField(proxyClass, Option.ALL, MethodCaptor.FIELD_NAME, proxy, captor);
       return proxy;
     } catch (final IllegalAccessError e) {
       throw new ReflectionException("Failed to create proxy on " + clazz, e);

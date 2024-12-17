@@ -24,7 +24,9 @@ import ltd.qubit.commons.reflect.testbed.GenericMethod;
 import ltd.qubit.commons.reflect.testbed.GenericMethodParent;
 import ltd.qubit.commons.reflect.testbed.Info;
 import ltd.qubit.commons.reflect.testbed.MethodRefBean;
+import ltd.qubit.commons.reflect.testbed.MyRecord;
 import ltd.qubit.commons.reflect.testbed.ParentBean;
+import ltd.qubit.commons.reflect.testbed.State;
 import ltd.qubit.commons.reflect.testbed.WithInfo;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -422,5 +424,17 @@ public class MethodUtilsTest {
 
     assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::voidMethod9))
         .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "voidMethod9"));
+  }
+
+  @Test
+  public void testGetMethodByReferenceForRecord() {
+    final Method m = getMethodByReference(MyRecord.class, MyRecord::name);
+    assertEquals("name", m.getName());
+  }
+
+  @Test
+  public void testGetMethodByReferenceForEnumClass() throws NoSuchMethodException {
+    final Method m = getMethodByReference(State.class, State::getLocalizedName);
+    assertEquals(State.class.getDeclaredMethod("getLocalizedName"), m);
   }
 }

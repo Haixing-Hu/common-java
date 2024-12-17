@@ -289,6 +289,7 @@ public class ConstructorUtils {
     final Constructor<T> ctor = getConstructor(cls, options, null);
     if (ctor != null) {
       try {
+        ctor.setAccessible(true);
         return ctor.newInstance();
       } catch (final InstantiationException
           | IllegalAccessException
@@ -371,6 +372,7 @@ public class ConstructorUtils {
     final Constructor<T> ctor = getMatchingConstructor(cls, options, types);
     if (ctor != null) {
       try {
+        ctor.setAccessible(true);
         return ctor.newInstance(arguments);
       } catch (final IllegalArgumentException
           | InstantiationException
@@ -451,6 +453,7 @@ public class ConstructorUtils {
     final Constructor<T> ctor = getConstructor(cls, options, types);
     if (ctor != null) {
       try {
+        ctor.setAccessible(true);
         return ctor.newInstance(arguments);
       } catch (final IllegalArgumentException
               | InstantiationException
@@ -482,6 +485,31 @@ public class ConstructorUtils {
       return ObjenesisHelper.newInstance(cls);
     } catch (final Exception e) {
       throw new ConstructFailedException(cls, e);
+    }
+  }
+
+  /**
+   * Creates a new instance of the specified class with its constructor.
+   *
+   * @param <T>
+   *     the type of the objects in the specified class.
+   * @param ctor
+   *     The constructor to be invoked.
+   * @param arguments
+   *     The array of arguments. If the constructor has no arguments, it could
+   *     be {@code null} or empty.
+   * @return
+   *     A new instance of the class.
+   */
+  public static <T> T newInstance(final Constructor<T> ctor, final Object ... arguments) {
+    try {
+      ctor.setAccessible(true);
+      return ctor.newInstance(arguments);
+    } catch (final IllegalArgumentException
+        | InstantiationException
+        | IllegalAccessException
+        | InvocationTargetException e) {
+      throw new ConstructFailedException(ctor.getDeclaringClass(), e);
     }
   }
 }

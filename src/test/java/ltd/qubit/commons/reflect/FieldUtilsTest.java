@@ -34,6 +34,7 @@ import ltd.qubit.commons.reflect.testbed.Foo;
 import ltd.qubit.commons.reflect.testbed.Info;
 import ltd.qubit.commons.reflect.testbed.Interface;
 import ltd.qubit.commons.reflect.testbed.MethodRefBean;
+import ltd.qubit.commons.reflect.testbed.MyRecord;
 import ltd.qubit.commons.reflect.testbed.PrivatelyShadowedChild;
 import ltd.qubit.commons.reflect.testbed.PublicBase;
 import ltd.qubit.commons.reflect.testbed.PublicChild;
@@ -1245,5 +1246,11 @@ public class FieldUtilsTest {
         .isEqualTo(getField(MethodRefBean.class, "float"));
     assertThat(getField(MethodRefBean.class, MethodRefBean::setDouble))
         .isEqualTo(getField(MethodRefBean.class, "double"));
+  }
+
+  @Test
+  public void testGetFieldByGetterForRecord() {
+    final Field f = getField(MyRecord.class, MyRecord::name);
+    assertEquals("name", f.getName());
   }
 }

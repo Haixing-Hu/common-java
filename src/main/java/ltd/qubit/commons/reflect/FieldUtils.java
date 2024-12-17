@@ -284,7 +284,12 @@ public class FieldUtils {
   public static <T, R> FieldInfo getFieldInfo(final Class<T> cls,
       final GetterMethod<T, R> getterRef) {
     final Method getter = MethodUtils.getMethodByReference(cls, getterRef);
-    final String name = PropertyUtils.getPropertyNameFromGetter(getter);
+    final String name;
+    if (cls.isRecord()) {
+      name = getter.getName();
+    } else {
+      name = PropertyUtils.getPropertyNameFromGetter(getter);
+    }
     if (name == null) {
       return null;
     } else {
