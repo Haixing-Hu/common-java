@@ -1,12 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
-//    Haixing Hu, Qubit Co. Ltd.
+//    Copyright (c) 2024 - 2024.
+//    Nanjing Xinglin Digital Technology Co., Ltd.
 //
 //    All rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
-package ltd.qubit.commons.lang;
+package ltd.qubit.commons.i18n;
 
 import java.util.Locale;
 

@@ -10,6 +10,8 @@ package ltd.qubit.commons.lang;
 
 import java.util.Locale;
 
+import ltd.qubit.commons.i18n.Localized;
+
 /**
  * 此接口为枚举对象提供获取本地化名称的方法。
  * <p>
