@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect.testbed;
 
+import java.util.Locale;
+
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -65,6 +67,10 @@ public enum State {
       default:
         return "未知";
     }
+  }
+
+  public String getLocalizedNameFor(final Locale locale) {
+    return getLocalizedName();
   }
 
   public String method1(final String p1) {

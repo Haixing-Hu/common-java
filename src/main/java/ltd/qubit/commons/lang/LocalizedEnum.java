@@ -43,7 +43,7 @@ import java.util.Locale;
  *   MALE            = male
  *   FEMALE          = female
  * </code></pre>
- * 这样我们就可以通过{@link #getLocalizedName(Locale)}方法获取枚举对象的本地化名称。
+ * 这样我们就可以通过{@link #getLocalizedNameFor(Locale)}方法获取枚举对象的本地化名称。
  *
  * @author 胡海星
  */
@@ -57,7 +57,7 @@ public interface LocalizedEnum extends Localized {
    *     此枚举对象的本地化名称。
    */
   @Override
-  default String getLocalizedName(final Locale locale) {
+  default String getLocalizedNameFor(final Locale locale) {
     return EnumUtils.getLocalizedName(locale, (Enum<?>) this);
   }
 }

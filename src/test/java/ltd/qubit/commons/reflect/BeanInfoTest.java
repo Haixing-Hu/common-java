@@ -294,7 +294,6 @@ public class BeanInfoTest {
     assertEquals(new HashSet<>(Arrays.asList(
         Property.of(Info.class, "class"),
         Property.of(Info.class, "toParams"),
-        Property.of(Info.class, "hashCode"),
         Property.of(Info.class, "code"),
         Property.of(Info.class, "deleteTime"),
         Property.of(Info.class, "deleted"),

@@ -24,7 +24,7 @@ public interface Localized {
    *     此对象的本地化名称。
    */
   default String getLocalizedName() {
-    return getLocalizedName(Locale.getDefault());
+    return getLocalizedNameFor(Locale.getDefault());
   }
 
   /**
@@ -35,5 +35,5 @@ public interface Localized {
    * @return
    *     此对象的本地化名称。
    */
-  String getLocalizedName(Locale locale);
+  String getLocalizedNameFor(Locale locale);
 }
