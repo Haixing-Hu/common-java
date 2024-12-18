@@ -19,6 +19,7 @@ import ltd.qubit.commons.priv.PrivateDirect;
 import ltd.qubit.commons.reflect.testbed.App;
 import ltd.qubit.commons.reflect.testbed.Bean;
 import ltd.qubit.commons.reflect.testbed.BeanPublicSubclass;
+import ltd.qubit.commons.reflect.testbed.State;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -145,6 +146,8 @@ public class PropertyUtilTest {
         .isEqualTo("code");
     assertThat(getPropertyNameFromGetter(getMethodByName(App.class, "isPredefined")))
         .isEqualTo("predefined");
+    assertThat(getPropertyNameFromGetter(getMethodByName(State.class, "name")))
+        .isEqualTo("name");
   }
 
   @Test

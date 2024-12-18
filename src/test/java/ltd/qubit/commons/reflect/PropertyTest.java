@@ -212,4 +212,11 @@ public class PropertyTest {
     p2.setValue(foo, 200);
     assertEquals(200, p2.getValue(foo));
   }
+
+  @Test
+  public void testPropertyOf() throws NoSuchMethodException {
+    final Property prop = Property.of(String.class, "length");
+    assertNotNull(prop);
+    assertEquals(String.class.getDeclaredMethod("length"), prop.getReadMethod());
+  }
 }

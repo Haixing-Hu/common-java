@@ -235,6 +235,7 @@ public class Option {
       | NON_BRIDGE
       | NATIVE | NON_NATIVE
       | NON_PRIVATE_NATIVE
+      | ANCESTOR
       | ALL_ACCESS
       | SERIALIZATION;
 

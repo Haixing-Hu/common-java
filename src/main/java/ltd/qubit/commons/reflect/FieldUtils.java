@@ -284,12 +284,7 @@ public class FieldUtils {
   public static <T, R> FieldInfo getFieldInfo(final Class<T> cls,
       final GetterMethod<T, R> getterRef) {
     final Method getter = MethodUtils.getMethodByReference(cls, getterRef);
-    final String name;
-    if (cls.isRecord()) {
-      name = getter.getName();
-    } else {
-      name = PropertyUtils.getPropertyNameFromGetter(getter);
-    }
+    final String name = PropertyUtils.getPropertyNameFromGetter(getter);
     if (name == null) {
       return null;
     } else {
@@ -810,16 +805,24 @@ public class FieldUtils {
   public static Method getReadMethod(final Class<?> ownerClass,
       final String fieldName) {
     final String capitalizedFieldName = uppercaseFirstChar(fieldName);
-    // try to find getProperty
+    // try to find "get${FieldName}"
     final String getterName = GET_PREFIX + capitalizedFieldName;
     final Method getter = getMethod(ownerClass, BEAN_METHOD, getterName, null);
     if (getter != null) {
       return getter;
     }
-    // try to find isProperty for boolean properties
+    // try to find "is${FieldName}" for boolean properties
     final String testerName = IS_PREFIX + capitalizedFieldName;
     final Method tester = getMethod(ownerClass, BEAN_METHOD, testerName, null);
-    return tester;
+    if (tester != null) {
+      return tester;
+    }
+    // try to find "${fieldName} for properties
+    final Method prop = getMethod(ownerClass, BEAN_METHOD, fieldName, null);
+    if (prop != null) {
+      return prop;
+    }
+    return null;
   }
 
   /**

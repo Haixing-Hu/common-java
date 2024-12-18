@@ -10,4 +10,8 @@ package ltd.qubit.commons.reflect.testbed;
 
 public record MyRecord(String name, int age) {
   //  empty
+
+  public String getClassName() {
+    return "MyRecord";
+  }
 }

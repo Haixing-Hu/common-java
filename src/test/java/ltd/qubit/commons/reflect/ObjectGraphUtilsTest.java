@@ -10,10 +10,13 @@ package ltd.qubit.commons.reflect;
 
 import org.junit.jupiter.api.Test;
 
+import ltd.qubit.commons.reflect.testbed.App;
 import ltd.qubit.commons.reflect.testbed.City;
 import ltd.qubit.commons.reflect.testbed.Country;
 import ltd.qubit.commons.reflect.testbed.Info;
+import ltd.qubit.commons.reflect.testbed.MyRecord;
 import ltd.qubit.commons.reflect.testbed.Province;
+import ltd.qubit.commons.reflect.testbed.State;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -23,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import static ltd.qubit.commons.reflect.ObjectGraphUtils.getPropertyPath;
 import static ltd.qubit.commons.reflect.ObjectGraphUtils.getPropertyType;
 import static ltd.qubit.commons.reflect.ObjectGraphUtils.getPropertyValue;
 import static ltd.qubit.commons.reflect.ObjectGraphUtils.hasProperty;
@@ -309,5 +313,45 @@ public class ObjectGraphUtilsTest {
     assertEquals("CN", province.getCountry().getCode());
     assertNull(province.getCountry().getId());
     assertNull(province.getCountry().getName());
+  }
+
+  @Test
+  public void getPropertyPathOfRecord() throws NoSuchMethodException {
+    final String path = getPropertyPath(MyRecord.class, MyRecord::name);
+    assertEquals("name", path);
+  }
+
+  @Test
+  public void getPropertyPathOfEnumClass() {
+    final String path = getPropertyPath(State.class, State::getLocalizedName);
+    assertEquals("localizedName", path);
+  }
+
+  @Test
+  public void getPropertyPathOfEnumClass2() {
+    final String path = getPropertyPath(App.class, App::getState, State::getLocalizedName);
+    assertEquals("state.localizedName", path);
+  }
+
+  @Test
+  public void testHasPropertyForEnumClass() {
+    final boolean result = hasProperty(App.class, "state.localizedName");
+    assertTrue(result);
+  }
+
+  @Test
+  public void testHasPropertyForEnumClass1() {
+    final boolean result = hasProperty(App.class, "state.localizedName.length");
+    assertTrue(result);
+  }
+
+  @Test
+  public void testGetPropertyValueForEnumClass1() {
+    final App app = new App();
+    app.setState(State.NORMAL);
+    final Object v1 = getPropertyValue(app, "state.localizedName");
+    assertEquals("正常", v1);
+    final Object v2 = getPropertyValue(app, "state.localizedName.length");
+    assertEquals(2, v2);
   }
 }

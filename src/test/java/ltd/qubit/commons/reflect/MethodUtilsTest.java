@@ -16,6 +16,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import ltd.qubit.commons.lang.SystemUtils;
+import ltd.qubit.commons.reflect.impl.GetMethodByReferenceThroughSerialization;
 import ltd.qubit.commons.reflect.testbed.ChildBean;
 import ltd.qubit.commons.reflect.testbed.Country;
 import ltd.qubit.commons.reflect.testbed.CustomList;
@@ -435,6 +436,133 @@ public class MethodUtilsTest {
   @Test
   public void testGetMethodByReferenceForEnumClass() throws NoSuchMethodException {
     final Method m = getMethodByReference(State.class, State::getLocalizedName);
-    assertEquals(State.class.getDeclaredMethod("getLocalizedName"), m);
+    final Method expected = getMethodByName(State.class, "getLocalizedName");
+    assertEquals(expected, m);
   }
+
+  @Test
+  public void testGetMethodByReferenceForEnumClass1() throws NoSuchMethodException {
+    final Method m = getMethodByReference(State.class, State::method1);
+    final Method expected = getMethodByName(State.class, "method1");
+    assertEquals(expected, m);
+  }
+
+  @Test
+  public void testGetMethodByReferenceForEnumClass1Boolean() throws NoSuchMethodException {
+    final Method m = getMethodByReference(State.class, State::method1boolean);
+    final Method expected = getMethodByName(State.class, "method1boolean");
+    assertEquals(expected, m);
+  }
+
+  @Test
+  public void testGetMethodByReferenceForEnumClass1Char() throws NoSuchMethodException {
+    final Method m = getMethodByReference(State.class, State::method1char);
+    final Method expected = getMethodByName(State.class, "method1char");
+    assertEquals(expected, m);
+  }
+
+  @Test
+  public void testGetMethodByReferenceForEnumClass1Byte() throws NoSuchMethodException {
+    final Method m = getMethodByReference(State.class, State::method1byte);
+    final Method expected = getMethodByName(State.class, "method1byte");
+    assertEquals(expected, m);
+  }
+
+  @Test
+  public void testGetMethodByReferenceForEnumClass1Short() throws NoSuchMethodException {
+    final Method m = getMethodByReference(State.class, State::method1short);
+    final Method expected = getMethodByName(State.class, "method1short");
+    assertEquals(expected, m);
+  }
+
+  @Test
+  public void testGetMethodByReferenceForEnumClass1Int() throws NoSuchMethodException {
+    final Method m = getMethodByReference(State.class, State::method1int);
+    final Method expected = getMethodByName(State.class, "method1int");
+    assertEquals(expected, m);
+  }
+
+  @Test
+  public void testGetMethodByReferenceForEnumClass1Long() throws NoSuchMethodException {
+    final Method m = getMethodByReference(State.class, State::method1long);
+    final Method expected = getMethodByName(State.class, "method1long");
+    assertEquals(expected, m);
+  }
+
+  @Test
+  public void testGetMethodByReferenceForEnumClass1Float() throws NoSuchMethodException {
+    final Method m = getMethodByReference(State.class, State::method1float);
+    final Method expected = getMethodByName(State.class, "method1float");
+    assertEquals(expected, m);
+  }
+
+  @Test
+  public void testGetMethodByReferenceForEnumClass1Double() throws NoSuchMethodException {
+    final Method m = getMethodByReference(State.class, State::method1double);
+    final Method expected = getMethodByName(State.class, "method1double");
+    assertEquals(expected, m);
+  }
+
+  @Test
+  public void testGetMethodByReferenceForEnumClass2() throws NoSuchMethodException {
+    final Method m = getMethodByReference(State.class, State::method2);
+    final Method expected = getMethodByName(State.class, "method2");
+    assertEquals(expected, m);
+  }
+
+  @Test
+  public void testGetMethodByReferenceForEnumClass3() throws NoSuchMethodException {
+    final Method m = getMethodByReference(State.class, State::method3);
+    final Method expected = getMethodByName(State.class, "method3");
+    assertEquals(expected, m);
+  }
+
+  @Test
+  public void testGetMethodByReferenceForEnumClass4() throws NoSuchMethodException {
+    final Method m = getMethodByReference(State.class, State::method4);
+    final Method expected = getMethodByName(State.class, "method4");
+    assertEquals(expected, m);
+  }
+
+  @Test
+  public void testGetMethodByReferenceForEnumClass5() throws NoSuchMethodException {
+    final Method m = getMethodByReference(State.class, State::method5);
+    final Method expected = getMethodByName(State.class, "method5");
+    assertEquals(expected, m);
+  }
+
+  @Test
+  public void testGetMethodByReferenceForEnumClass6() throws NoSuchMethodException {
+    final Method m = getMethodByReference(State.class, State::method6);
+    final Method expected = getMethodByName(State.class, "method6");
+    assertEquals(expected, m);
+  }
+
+  @Test
+  public void testGetMethodByReferenceForEnumClass7() throws NoSuchMethodException {
+    final Method m = getMethodByReference(State.class, State::method7);
+    final Method expected = getMethodByName(State.class, "method7");
+    assertEquals(expected, m);
+  }
+
+  @Test
+  public void testGetMethodByReferenceForEnumClass8() throws NoSuchMethodException {
+    final Method m = getMethodByReference(State.class, State::method8);
+    final Method expected = getMethodByName(State.class, "method8");
+    assertEquals(expected, m);
+  }
+
+  @Test
+  public void testGetMethodByReferenceForEnumClass9() throws NoSuchMethodException {
+    final Method m = getMethodByReference(State.class, State::method9);
+    final Method expected = getMethodByName(State.class, "method9");
+    assertEquals(expected, m);
+  }
+
+  @Test
+  public void test2() throws Exception {
+    final String name = GetMethodByReferenceThroughSerialization.getMethodNameBySerialization(State::getLocalizedName);
+    assertEquals("getLocalizedName", name);
+  }
+
 }

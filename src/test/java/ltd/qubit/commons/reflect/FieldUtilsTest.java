@@ -1229,7 +1229,6 @@ public class FieldUtilsTest {
     assertThat(getField(MethodRefBean.class, MethodRefBean::setPrimitiveDouble))
         .isEqualTo(getField(MethodRefBean.class, "primitiveDouble"));
 
-
     assertThat(getField(MethodRefBean.class, MethodRefBean::setBoolean))
         .isEqualTo(getField(MethodRefBean.class, "boolean"));
     assertThat(getField(MethodRefBean.class, MethodRefBean::setByte))
@@ -1250,7 +1249,22 @@ public class FieldUtilsTest {
 
   @Test
   public void testGetFieldByGetterForRecord() {
-    final Field f = getField(MyRecord.class, MyRecord::name);
-    assertEquals("name", f.getName());
+    final Field f1 = getField(MyRecord.class, MyRecord::name);
+    assertEquals("name", f1.getName());
+    final Field f2 = getField(MyRecord.class, MyRecord::age);
+    assertEquals("age", f2.getName());
+  }
+
+  @Test
+  public void testGetFieldByGetterForRecordMethod() {
+    final String f = getFieldName(MyRecord.class, MyRecord::getClassName);
+    assertNotNull(f);
+    assertEquals("className", f);
+  }
+
+  @Test
+  public void testGetReadMethodForNonStandardGetter() throws NoSuchMethodException {
+    final Method m = getReadMethod(String.class, "length");
+    assertEquals(String.class.getDeclaredMethod("length"), m);
   }
 }

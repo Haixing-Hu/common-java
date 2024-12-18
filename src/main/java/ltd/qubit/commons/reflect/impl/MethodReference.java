@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.reflect.impl;
 
+import java.io.Serializable;
+
 /**
  * 所有方法引用的接口的父接口。
  *
@@ -15,6 +17,6 @@ package ltd.qubit.commons.reflect.impl;
  *     方法所属的类的类型。
  * @author 胡海星
  */
-public interface MethodReference<T> {
+public interface MethodReference<T> extends Serializable {
   //  empty
 }

@@ -77,7 +77,13 @@ public class BeanInfo {
       if ((propertyName == null) || propertyMap.containsKey(propertyName)) {
         continue;
       }
-      final Property property = Property.of(type, propertyName);
+      final Property property;
+      try {
+        property = Property.of(type, propertyName);
+      } catch (final IllegalArgumentException e) {
+        // no such property
+        continue;
+      }
       properties.add(property);
       propertyMap.put(propertyName, property);
     }

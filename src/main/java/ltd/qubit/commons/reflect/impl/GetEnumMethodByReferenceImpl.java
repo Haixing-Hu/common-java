@@ -27,41 +27,29 @@ import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.reflect.ConstructorUtils;
 import ltd.qubit.commons.reflect.ReflectionException;
 
-import static ltd.qubit.commons.reflect.impl.GetMethodByReferenceThroughSerialization.findMethodBySerialization;
-
-public class GetRecordMethodByReferenceImpl {
+public class GetEnumMethodByReferenceImpl {
 
   private static final ClassValue<Class<?>> DUMMY_SUBCLASSES =
-      ClassValues.create(GetRecordMethodByReferenceImpl::createDummyProxyClass);
+      ClassValues.create(GetEnumMethodByReferenceImpl::createDummyProxyClass);
 
   private static Class<?> createDummyProxyClass(final Class<?> type) {
     try (final DynamicType.Unloaded<?> unloadedType = new ByteBuddy()
         .subclass(type)
         .make()) {
       return unloadedType
-          .load(GetRecordMethodByReferenceImpl.class.getClassLoader())
+          .load(GetEnumMethodByReferenceImpl.class.getClassLoader())
           .getLoaded();
     }
   }
 
-  public static <T, R> Method findRecordMethod(final Class<T> clazz,
+  public static <T, R> Method findEnumMethod(final Class<T> clazz,
       final NonVoidMethod0<T, R> ref) {
-    if (!clazz.isRecord()) {
-      throw new IllegalArgumentException(clazz + " is not a record");
+    if (!clazz.isEnum()) {
+      throw new IllegalArgumentException(clazz + " is not a enum.");
     }
-    final Method result = findRecordMethodImpl(clazz, ref);
-    if (result == null) {
-      return findMethodBySerialization(clazz, ref);
-    } else {
-      return result;
-    }
-  }
-
-  static <T, R> Method findRecordMethodImpl(final Class<T> clazz,
-      final NonVoidMethod0<T, R> ref) {
     final Object[] uniqueValues = buildUniqueValues(clazz);
     try {
-      final Constructor<T> ctor = getRecordConstructor(clazz);
+      final Constructor<T> ctor = getEnumConstructor(clazz);
       final T record = ConstructorUtils.newInstance(ctor, uniqueValues);
       final Object value = ref.invoke(record);
       if (needsFallbackToComponentSearch(uniqueValues, value)) {
@@ -69,7 +57,9 @@ public class GetRecordMethodByReferenceImpl {
       }
       final int componentIndex = ArrayUtils.indexOf(uniqueValues, value);
       if (componentIndex < 0) {
-        return null;
+        throw new IllegalArgumentException("Failed to find a component in "
+            + clazz.getName()
+            + " for the given component accessor.");
       }
       return getRecordComponentAccessor(clazz, componentIndex);
     } catch (final ReflectiveOperationException e) {
@@ -77,21 +67,23 @@ public class GetRecordMethodByReferenceImpl {
     }
   }
 
-
-  static Stream<RecordComponent> getRecordComponents(final Class<?> clazz) {
-    return Arrays.stream(clazz.getRecordComponents());
-  }
-
-  static <T> Constructor<T> getRecordConstructor(final Class<T> clazz)
+  static <T> Constructor<T> getEnumConstructor(final Class<T> clazz)
       throws NoSuchMethodException {
-    final Class<?>[] ctorTypes = getRecordComponents(clazz)
+    final Class<?>[] ctorTypes = getEnumComponents(clazz)
         .map(RecordComponent::getType)
         .toArray(Class[]::new);
     return clazz.getDeclaredConstructor(ctorTypes);
   }
 
+  static Stream<RecordComponent> getEnumComponents(final Class<?> clazz) {
+    if (!clazz.isRecord()) {
+      throw new IllegalArgumentException(clazz + " is not a record");
+    }
+    return Arrays.stream(clazz.getRecordComponents());
+  }
+
   private static Object[] buildUniqueValues(final Class<?> recordClass) {
-    return getRecordComponents(recordClass)
+    return getEnumComponents(recordClass)
         .map(RecordComponent::getType)
         .map(uniqueValueBuilder())
         .toArray(Object[]::new);
@@ -99,7 +91,7 @@ public class GetRecordMethodByReferenceImpl {
 
   private static Function<Class<?>, Object> uniqueValueBuilder() {
     final Map<Class<?>, Long> index = new IdentityHashMap<>();
-    return (type) -> {
+    return type -> {
       if (type.isAssignableFrom(boolean.class)) {
         // Note: When the record has more than one primitive boolean component,
         //       we need to fall back to an exhaustive component search via exhaustiveComponentSearch(…)
@@ -189,7 +181,7 @@ public class GetRecordMethodByReferenceImpl {
 
   private static Method getRecordComponentAccessor(final Class<?> recordClass,
       final int componentIndex) {
-    return getRecordComponents(recordClass)
+    return getEnumComponents(recordClass)
         .skip(componentIndex)
         .findFirst()
         .map(RecordComponent::getAccessor)

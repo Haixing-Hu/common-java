@@ -10,6 +10,7 @@ package ltd.qubit.commons.reflect;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
+import ltd.qubit.commons.lang.ClassUtils;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.reflect.impl.NonVoidMethod0;
 import ltd.qubit.commons.reflect.impl.NonVoidMethod1;
@@ -57,6 +59,7 @@ import static ltd.qubit.commons.reflect.Option.ALL_EXCLUDE_BRIDGE;
 import static ltd.qubit.commons.reflect.Option.DEFAULT;
 import static ltd.qubit.commons.reflect.impl.GetMethodByReferenceImpl.GETTER_METHOD_CACHES;
 import static ltd.qubit.commons.reflect.impl.GetMethodByReferenceImpl.findMethod;
+import static ltd.qubit.commons.reflect.impl.GetMethodByReferenceThroughSerialization.findMethodBySerialization;
 import static ltd.qubit.commons.reflect.impl.GetRecordMethodByReferenceImpl.findRecordMethod;
 
 /**
@@ -415,8 +418,7 @@ public class MethodUtils {
     boolean ambiguous = false;
     for (final MethodInfo m : methodInfos) {
       final Method method = m.getMethod();
-      if (Option.satisfy(type, method, options)
-          && name.equals(method.getName())) {
+      if (Option.satisfy(type, method, options) && name.equals(method.getName())) {
         if (result == null) {
           result = m;
           ambiguous = false;
@@ -923,6 +925,10 @@ public class MethodUtils {
     return cache.computeIfAbsent(ref, (g) -> {
       if (clazz.isRecord()) {
         return findRecordMethod(clazz, (NonVoidMethod0<T, R>) g);
+      } else if (ClassUtils.isEnumType(clazz)) {
+        return findMethodBySerialization(clazz, (NonVoidMethod0<T, R>) g);
+      } else if (Modifier.isFinal(clazz.getModifiers())) {
+        return findMethodBySerialization(clazz, (NonVoidMethod0<T, R>) g);
       } else {
         return findMethod(clazz, (NonVoidMethod0<T, R>) g);
       }
@@ -932,19 +938,31 @@ public class MethodUtils {
   @SuppressWarnings("unchecked")
   public static <T, R, P1> Method getMethodByReference(final Class<T> clazz,
       final NonVoidMethod1<T, R, P1> ref) {
-    final ReferenceToMethodCache<T> cache =
-        (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
-    return cache.computeIfAbsent(ref,
-        (g) -> findMethod(clazz, (NonVoidMethod1<T, R, P1>) g));
+    final ReferenceToMethodCache<T> cache = (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+    return cache.computeIfAbsent(ref, (g) -> {
+          if (ClassUtils.isEnumType(clazz)) {
+            return findMethodBySerialization(clazz, (NonVoidMethod1<T, R, P1>) g);
+          } else if (Modifier.isFinal(clazz.getModifiers())) {
+            return findMethodBySerialization(clazz, (NonVoidMethod1<T, R, P1>) g);
+          } else {
+            return findMethod(clazz, (NonVoidMethod1<T, R, P1>) g);
+          }
+        });
   }
 
   @SuppressWarnings("unchecked")
   public static <T, R> Method getMethodByReference(final Class<T> clazz,
       final NonVoidMethod1Boolean<T, R> ref) {
-    final ReferenceToMethodCache<T> cache =
-        (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
-    return cache.computeIfAbsent(ref,
-        (g) -> findMethod(clazz, (NonVoidMethod1Boolean<T, R>) g));
+    final ReferenceToMethodCache<T> cache = (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+    return cache.computeIfAbsent(ref, (g) -> {
+      if (ClassUtils.isEnumType(clazz)) {
+        return findMethodBySerialization(clazz, (NonVoidMethod1Boolean<T, R>) g);
+      } else if (Modifier.isFinal(clazz.getModifiers())) {
+        return findMethodBySerialization(clazz, (NonVoidMethod1Boolean<T, R>) g);
+      } else {
+        return findMethod(clazz, (NonVoidMethod1Boolean<T, R>) g);
+      }
+    });
   }
 
   // @SuppressWarnings("unchecked")
@@ -959,10 +977,16 @@ public class MethodUtils {
   @SuppressWarnings("unchecked")
   public static <T, R> Method getMethodByReference(final Class<T> clazz,
       final NonVoidMethod1Byte<T, R> ref) {
-    final ReferenceToMethodCache<T> cache =
-        (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
-    return cache.computeIfAbsent(ref,
-        (g) -> findMethod(clazz, (NonVoidMethod1Byte<T, R>) g));
+    final ReferenceToMethodCache<T> cache = (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+    return cache.computeIfAbsent(ref, (g) -> {
+      if (ClassUtils.isEnumType(clazz)) {
+        return findMethodBySerialization(clazz, (NonVoidMethod1Byte<T, R>) g);
+      } else if (Modifier.isFinal(clazz.getModifiers())) {
+        return findMethodBySerialization(clazz, (NonVoidMethod1Byte<T, R>) g);
+      } else {
+        return findMethod(clazz, (NonVoidMethod1Byte<T, R>) g);
+      }
+    });
   }
 
   // @SuppressWarnings("unchecked")
@@ -1013,73 +1037,121 @@ public class MethodUtils {
   @SuppressWarnings("unchecked")
   public static <T, R, P1, P2> Method getMethodByReference(final Class<T> clazz,
       final NonVoidMethod2<T, R, P1, P2> ref) {
-    final ReferenceToMethodCache<T> cache =
-        (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
-    return cache.computeIfAbsent(ref,
-        (g) -> findMethod(clazz, (NonVoidMethod2<T, R, P1, P2>) g));
+    final ReferenceToMethodCache<T> cache = (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+    return cache.computeIfAbsent(ref, (g) -> {
+      if (ClassUtils.isEnumType(clazz)) {
+        return findMethodBySerialization(clazz, (NonVoidMethod2<T, R, P1, P2>) g);
+      } else if (Modifier.isFinal(clazz.getModifiers())) {
+        return findMethodBySerialization(clazz, (NonVoidMethod2<T, R, P1, P2>) g);
+      } else {
+        return findMethod(clazz, (NonVoidMethod2<T, R, P1, P2>) g);
+      }
+    });
   }
 
   @SuppressWarnings("unchecked")
   public static <T, R, P1, P2, P3> Method getMethodByReference(final Class<T> clazz,
       final NonVoidMethod3<T, R, P1, P2, P3> ref) {
-    final ReferenceToMethodCache<T> cache =
-        (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
-    return cache.computeIfAbsent(ref,
-        (g) -> findMethod(clazz, (NonVoidMethod3<T, R, P1, P2, P3>) g));
+    final ReferenceToMethodCache<T> cache = (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+    return cache.computeIfAbsent(ref, (g) -> {
+      if (ClassUtils.isEnumType(clazz)) {
+        return findMethodBySerialization(clazz, (NonVoidMethod3<T, R, P1, P2, P3>) g);
+      } else if (Modifier.isFinal(clazz.getModifiers())) {
+        return findMethodBySerialization(clazz, (NonVoidMethod3<T, R, P1, P2, P3>) g);
+      } else {
+        return findMethod(clazz, (NonVoidMethod3<T, R, P1, P2, P3>) g);
+      }
+    });
   }
 
   @SuppressWarnings("unchecked")
   public static <T, R, P1, P2, P3, P4> Method getMethodByReference(final Class<T> clazz,
       final NonVoidMethod4<T, R, P1, P2, P3, P4> ref) {
-    final ReferenceToMethodCache<T> cache =
-        (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
-    return cache.computeIfAbsent(ref,
-        (g) -> findMethod(clazz, (NonVoidMethod4<T, R, P1, P2, P3, P4>) g));
+    final ReferenceToMethodCache<T> cache = (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+    return cache.computeIfAbsent(ref, (g) -> {
+      if (ClassUtils.isEnumType(clazz)) {
+        return findMethodBySerialization(clazz, (NonVoidMethod4<T, R, P1, P2, P3, P4>) g);
+      } else if (Modifier.isFinal(clazz.getModifiers())) {
+        return findMethodBySerialization(clazz, (NonVoidMethod4<T, R, P1, P2, P3, P4>) g);
+      } else {
+        return findMethod(clazz, (NonVoidMethod4<T, R, P1, P2, P3, P4>) g);
+      }
+    });
   }
 
   @SuppressWarnings("unchecked")
   public static <T, R, P1, P2, P3, P4, P5> Method getMethodByReference(final Class<T> clazz,
       final NonVoidMethod5<T, R, P1, P2, P3, P4, P5> ref) {
-    final ReferenceToMethodCache<T> cache =
-        (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
-    return cache.computeIfAbsent(ref,
-        (g) -> findMethod(clazz, (NonVoidMethod5<T, R, P1, P2, P3, P4, P5>) g));
+    final ReferenceToMethodCache<T> cache = (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+    return cache.computeIfAbsent(ref, (g) -> {
+      if (ClassUtils.isEnumType(clazz)) {
+        return findMethodBySerialization(clazz, (NonVoidMethod5<T, R, P1, P2, P3, P4, P5>) g);
+      } else if (Modifier.isFinal(clazz.getModifiers())) {
+        return findMethodBySerialization(clazz, (NonVoidMethod5<T, R, P1, P2, P3, P4, P5>) g);
+      } else {
+        return findMethod(clazz, (NonVoidMethod5<T, R, P1, P2, P3, P4, P5>) g);
+      }
+    });
   }
 
   @SuppressWarnings("unchecked")
   public static <T, R, P1, P2, P3, P4, P5, P6> Method getMethodByReference(final Class<T> clazz,
       final NonVoidMethod6<T, R, P1, P2, P3, P4, P5, P6> ref) {
-    final ReferenceToMethodCache<T> cache =
-        (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
-    return cache.computeIfAbsent(ref,
-        (g) -> findMethod(clazz, (NonVoidMethod6<T, R, P1, P2, P3, P4, P5, P6>) g));
+    final ReferenceToMethodCache<T> cache = (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+    return cache.computeIfAbsent(ref, (g) -> {
+      if (ClassUtils.isEnumType(clazz)) {
+        return findMethodBySerialization(clazz, (NonVoidMethod6<T, R, P1, P2, P3, P4, P5, P6>) g);
+      } else if (Modifier.isFinal(clazz.getModifiers())) {
+        return findMethodBySerialization(clazz, (NonVoidMethod6<T, R, P1, P2, P3, P4, P5, P6>) g);
+      } else {
+        return findMethod(clazz, (NonVoidMethod6<T, R, P1, P2, P3, P4, P5, P6>) g);
+      }
+    });
   }
 
   @SuppressWarnings("unchecked")
   public static <T, R, P1, P2, P3, P4, P5, P6, P7> Method getMethodByReference(final Class<T> clazz,
       final NonVoidMethod7<T, R, P1, P2, P3, P4, P5, P6, P7> ref) {
-    final ReferenceToMethodCache<T> cache =
-        (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
-    return cache.computeIfAbsent(ref,
-        (g) -> findMethod(clazz, (NonVoidMethod7<T, R, P1, P2, P3, P4, P5, P6, P7>) g));
+    final ReferenceToMethodCache<T> cache = (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+    return cache.computeIfAbsent(ref, (g) -> {
+      if (ClassUtils.isEnumType(clazz)) {
+        return findMethodBySerialization(clazz, (NonVoidMethod7<T, R, P1, P2, P3, P4, P5, P6, P7>) g);
+      } else if (Modifier.isFinal(clazz.getModifiers())) {
+        return findMethodBySerialization(clazz, (NonVoidMethod7<T, R, P1, P2, P3, P4, P5, P6, P7>) g);
+      } else {
+        return findMethod(clazz, (NonVoidMethod7<T, R, P1, P2, P3, P4, P5, P6, P7>) g);
+      }
+    });
   }
 
   @SuppressWarnings("unchecked")
   public static <T, R, P1, P2, P3, P4, P5, P6, P7, P8> Method getMethodByReference(
       final Class<T> clazz, final NonVoidMethod8<T, R, P1, P2, P3, P4, P5, P6, P7, P8> ref) {
-    final ReferenceToMethodCache<T> cache =
-        (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
-    return cache.computeIfAbsent(ref,
-        (g) -> findMethod(clazz, (NonVoidMethod8<T, R, P1, P2, P3, P4, P5, P6, P7, P8>) g));
+    final ReferenceToMethodCache<T> cache = (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+    return cache.computeIfAbsent(ref, (g) -> {
+      if (ClassUtils.isEnumType(clazz)) {
+        return findMethodBySerialization(clazz, (NonVoidMethod8<T, R, P1, P2, P3, P4, P5, P6, P7, P8>) g);
+      } else if (Modifier.isFinal(clazz.getModifiers())) {
+        return findMethodBySerialization(clazz, (NonVoidMethod8<T, R, P1, P2, P3, P4, P5, P6, P7, P8>) g);
+      } else {
+        return findMethod(clazz, (NonVoidMethod8<T, R, P1, P2, P3, P4, P5, P6, P7, P8>) g);
+      }
+    });
   }
 
   @SuppressWarnings("unchecked")
   public static <T, R, P1, P2, P3, P4, P5, P6, P7, P8, P9> Method getMethodByReference(
       final Class<T> clazz, final NonVoidMethod9<T, R, P1, P2, P3, P4, P5, P6, P7, P8, P9> ref) {
-    final ReferenceToMethodCache<T> cache =
-        (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
-    return cache.computeIfAbsent(ref,
-        (g) -> findMethod(clazz, (NonVoidMethod9<T, R, P1, P2, P3, P4, P5, P6, P7, P8, P9>) g));
+    final ReferenceToMethodCache<T> cache = (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
+    return cache.computeIfAbsent(ref, (g) -> {
+      if (ClassUtils.isEnumType(clazz)) {
+        return findMethodBySerialization(clazz, (NonVoidMethod9<T, R, P1, P2, P3, P4, P5, P6, P7, P8, P9>) g);
+      } else if (Modifier.isFinal(clazz.getModifiers())) {
+        return findMethodBySerialization(clazz, (NonVoidMethod9<T, R, P1, P2, P3, P4, P5, P6, P7, P8, P9>) g);
+      } else {
+        return findMethod(clazz, (NonVoidMethod9<T, R, P1, P2, P3, P4, P5, P6, P7, P8, P9>) g);
+      }
+    });
   }
 
   /**

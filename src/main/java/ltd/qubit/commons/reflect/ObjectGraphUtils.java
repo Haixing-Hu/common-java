@@ -16,7 +16,8 @@ import javax.annotation.Nullable;
 import ltd.qubit.commons.reflect.impl.GetterMethod;
 
 import static ltd.qubit.commons.lang.StringUtils.isEmpty;
-import static ltd.qubit.commons.reflect.FieldUtils.getField;
+import static ltd.qubit.commons.reflect.MethodUtils.getMethodByReference;
+import static ltd.qubit.commons.reflect.PropertyUtils.getPropertyNameFromGetter;
 
 /**
  * Provides functions to handle object graphs.
@@ -28,7 +29,7 @@ public class ObjectGraphUtils {
   private static <T, R> void ensureFieldExists(@Nullable final Field field,
       final Class<T> type, final GetterMethod<T, R> getter) {
     if (field == null) {
-      final Method m = MethodUtils.getMethodByReference(type, getter);
+      final Method m = getMethodByReference(type, getter);
       throw new IllegalArgumentException("No field found for the getter: " + m.getName());
     }
   }
@@ -49,10 +50,12 @@ public class ObjectGraphUtils {
    */
   public static <T, R> String getPropertyPath(final Class<T> type,
       final GetterMethod<T, R> getter) {
-    final Field field = getField(type, getter);
-    ensureFieldExists(field, type, getter);
-    assert field != null;
-    return field.getName();
+    // final Field field = getField(type, getter);
+    // ensureFieldExists(field, type, getter);
+    // assert field != null;
+    // return field.getName();
+    final Method m = getMethodByReference(type, getter);
+    return getPropertyNameFromGetter(m);
   }
 
   /**
@@ -75,17 +78,24 @@ public class ObjectGraphUtils {
    * @return
    *     the path of the property specified by the chain of getter methods.
    */
-  public static <T, P, R> String getPropertyPath(final Class<T> type,
-      final GetterMethod<T, P> g1, final GetterMethod<P, R> g2) {
-    final Field f1 = getField(type, g1);
-    ensureFieldExists(f1, type, g1);
-    assert f1 != null;
+  public static <T, P1, R> String getPropertyPath(final Class<T> type,
+      final GetterMethod<T, P1> g1, final GetterMethod<P1, R> g2) {
+    // final Field f1 = getField(type, g1);
+    // ensureFieldExists(f1, type, g1);
+    // assert f1 != null;
+    // @SuppressWarnings("unchecked")
+    // final Class<P1> c1 = (Class<P1>) f1.getType();
+    // final Field f2 = getField(c1, g2);
+    // ensureFieldExists(f2, c1, g2);
+    // assert f2 != null;
+    // return f1.getName() + '.' + f2.getName();
+    final Method m1 = getMethodByReference(type, g1);
+    final String n1 = getPropertyNameFromGetter(m1);
     @SuppressWarnings("unchecked")
-    final Class<P> c1 = (Class<P>) f1.getType();
-    final Field f2 = getField(c1, g2);
-    ensureFieldExists(f2, c1, g2);
-    assert f2 != null;
-    return f1.getName() + '.' + f2.getName();
+    final Class<P1> r1 = (Class<P1>) m1.getReturnType();
+    final Method m2 = getMethodByReference(r1, g2);
+    final String n2 = getPropertyNameFromGetter(m2);
+    return n1 + '.' + n2;
   }
 
   /**
@@ -118,20 +128,31 @@ public class ObjectGraphUtils {
   public static <T, P1, P2, R> String getPropertyPath(final Class<T> type,
       final GetterMethod<T, P1> g1, final GetterMethod<P1, P2> g2,
       final GetterMethod<P2, R> g3) {
-    final Field f1 = getField(type, g1);
-    ensureFieldExists(f1, type, g1);
-    assert f1 != null;
+    // final Field f1 = getField(type, g1);
+    // ensureFieldExists(f1, type, g1);
+    // assert f1 != null;
+    // @SuppressWarnings("unchecked")
+    // final Class<P1> c1 = (Class<P1>) f1.getType();
+    // final Field f2 = getField(c1, g2);
+    // ensureFieldExists(f2, c1, g2);
+    // assert f2 != null;
+    // @SuppressWarnings("unchecked")
+    // final Class<P2> c2 = (Class<P2>) f2.getType();
+    // final Field f3 = getField(c2, g3);
+    // assert f3 != null;
+    // ensureFieldExists(f3, c2, g3);
+    // return f1.getName() + '.' + f2.getName() + '.' + f3.getName();
+    final Method m1 = getMethodByReference(type, g1);
+    final String n1 = getPropertyNameFromGetter(m1);
     @SuppressWarnings("unchecked")
-    final Class<P1> c1 = (Class<P1>) f1.getType();
-    final Field f2 = getField(c1, g2);
-    ensureFieldExists(f2, c1, g2);
-    assert f2 != null;
+    final Class<P1> r1 = (Class<P1>) m1.getReturnType();
+    final Method m2 = getMethodByReference(r1, g2);
+    final String n2 = getPropertyNameFromGetter(m2);
     @SuppressWarnings("unchecked")
-    final Class<P2> c2 = (Class<P2>) f2.getType();
-    final Field f3 = getField(c2, g3);
-    assert f3 != null;
-    ensureFieldExists(f3, c2, g3);
-    return f1.getName() + '.' + f2.getName() + '.' + f3.getName();
+    final Class<P2> r2 = (Class<P2>) m2.getReturnType();
+    final Method m3 = getMethodByReference(r2, g3);
+    final String n3 = getPropertyNameFromGetter(m3);
+    return n1 + '.' + n2 + "." + n3;
   }
 
   /**
@@ -170,25 +191,40 @@ public class ObjectGraphUtils {
   public static <T, P1, P2, P3, R> String getPropertyPath(final Class<T> type,
       final GetterMethod<T, P1> g1, final GetterMethod<P1, P2> g2,
       final GetterMethod<P2, P3> g3, final GetterMethod<P3, R> g4) {
-    final Field f1 = getField(type, g1);
-    ensureFieldExists(f1, type, g1);
-    assert f1 != null;
+    // final Field f1 = getField(type, g1);
+    // ensureFieldExists(f1, type, g1);
+    // assert f1 != null;
+    // @SuppressWarnings("unchecked")
+    // final Class<P1> c1 = (Class<P1>) f1.getType();
+    // final Field f2 = getField(c1, g2);
+    // ensureFieldExists(f2, c1, g2);
+    // assert f2 != null;
+    // @SuppressWarnings("unchecked")
+    // final Class<P2> c2 = (Class<P2>) f2.getType();
+    // final Field f3 = getField(c2, g3);
+    // ensureFieldExists(f3, c2, g3);
+    // assert f3 != null;
+    // @SuppressWarnings("unchecked")
+    // final Class<P3> c3 = (Class<P3>) f3.getType();
+    // final Field f4 = getField(c3, g4);
+    // ensureFieldExists(f4, c3, g4);
+    // assert f4 != null;
+    // return f1.getName() + '.' + f2.getName() + '.' + f3.getName() + '.' + f4.getName();
+    final Method m1 = getMethodByReference(type, g1);
+    final String n1 = getPropertyNameFromGetter(m1);
     @SuppressWarnings("unchecked")
-    final Class<P1> c1 = (Class<P1>) f1.getType();
-    final Field f2 = getField(c1, g2);
-    ensureFieldExists(f2, c1, g2);
-    assert f2 != null;
+    final Class<P1> r1 = (Class<P1>) m1.getReturnType();
+    final Method m2 = getMethodByReference(r1, g2);
+    final String n2 = getPropertyNameFromGetter(m2);
     @SuppressWarnings("unchecked")
-    final Class<P2> c2 = (Class<P2>) f2.getType();
-    final Field f3 = getField(c2, g3);
-    ensureFieldExists(f3, c2, g3);
-    assert f3 != null;
+    final Class<P2> r2 = (Class<P2>) m2.getReturnType();
+    final Method m3 = getMethodByReference(r2, g3);
+    final String n3 = getPropertyNameFromGetter(m3);
     @SuppressWarnings("unchecked")
-    final Class<P3> c3 = (Class<P3>) f3.getType();
-    final Field f4 = getField(c3, g4);
-    ensureFieldExists(f4, c3, g4);
-    assert f4 != null;
-    return f1.getName() + '.' + f2.getName() + '.' + f3.getName() + '.' + f4.getName();
+    final Class<P3> r3 = (Class<P3>) m3.getReturnType();
+    final Method m4 = getMethodByReference(r3, g4);
+    final String n4 = getPropertyNameFromGetter(m4);
+    return n1 + '.' + n2 + "." + n3 + "." + n4;
   }
 
   /**
@@ -234,31 +270,50 @@ public class ObjectGraphUtils {
       final GetterMethod<T, P1> g1, final GetterMethod<P1, P2> g2,
       final GetterMethod<P2, P3> g3, final GetterMethod<P3, P4> g4,
       final GetterMethod<P4, R> g5) {
-    final Field f1 = getField(type, g1);
-    ensureFieldExists(f1, type, g1);
-    assert f1 != null;
+    // final Field f1 = getField(type, g1);
+    // ensureFieldExists(f1, type, g1);
+    // assert f1 != null;
+    // @SuppressWarnings("unchecked")
+    // final Class<P1> c1 = (Class<P1>) f1.getType();
+    // final Field f2 = getField(c1, g2);
+    // ensureFieldExists(f2, c1, g2);
+    // assert f2 != null;
+    // @SuppressWarnings("unchecked")
+    // final Class<P2> c2 = (Class<P2>) f2.getType();
+    // final Field f3 = getField(c2, g3);
+    // ensureFieldExists(f3, c2, g3);
+    // assert f3 != null;
+    // @SuppressWarnings("unchecked")
+    // final Class<P3> c3 = (Class<P3>) f3.getType();
+    // final Field f4 = getField(c3, g4);
+    // ensureFieldExists(f4, c3, g4);
+    // assert f4 != null;
+    // @SuppressWarnings("unchecked")
+    // final Class<P4> c4 = (Class<P4>) f4.getType();
+    // final Field f5 = getField(c4, g5);
+    // ensureFieldExists(f5, c4, g5);
+    // assert f5 != null;
+    // return f1.getName() + '.' + f2.getName() + '.' + f3.getName()
+    //     + '.' + f4.getName() + '.' + f5.getName();
+    final Method m1 = getMethodByReference(type, g1);
+    final String n1 = getPropertyNameFromGetter(m1);
     @SuppressWarnings("unchecked")
-    final Class<P1> c1 = (Class<P1>) f1.getType();
-    final Field f2 = getField(c1, g2);
-    ensureFieldExists(f2, c1, g2);
-    assert f2 != null;
+    final Class<P1> r1 = (Class<P1>) m1.getReturnType();
+    final Method m2 = getMethodByReference(r1, g2);
+    final String n2 = getPropertyNameFromGetter(m2);
     @SuppressWarnings("unchecked")
-    final Class<P2> c2 = (Class<P2>) f2.getType();
-    final Field f3 = getField(c2, g3);
-    ensureFieldExists(f3, c2, g3);
-    assert f3 != null;
+    final Class<P2> r2 = (Class<P2>) m2.getReturnType();
+    final Method m3 = getMethodByReference(r2, g3);
+    final String n3 = getPropertyNameFromGetter(m3);
     @SuppressWarnings("unchecked")
-    final Class<P3> c3 = (Class<P3>) f3.getType();
-    final Field f4 = getField(c3, g4);
-    ensureFieldExists(f4, c3, g4);
-    assert f4 != null;
+    final Class<P3> r3 = (Class<P3>) m3.getReturnType();
+    final Method m4 = getMethodByReference(r3, g4);
+    final String n4 = getPropertyNameFromGetter(m4);
     @SuppressWarnings("unchecked")
-    final Class<P4> c4 = (Class<P4>) f4.getType();
-    final Field f5 = getField(c4, g5);
-    ensureFieldExists(f5, c4, g5);
-    assert f5 != null;
-    return f1.getName() + '.' + f2.getName() + '.' + f3.getName()
-        + '.' + f4.getName() + '.' + f5.getName();
+    final Class<P4> r4 = (Class<P4>) m4.getReturnType();
+    final Method m5 = getMethodByReference(r4, g5);
+    final String n5 = getPropertyNameFromGetter(m5);
+    return n1 + '.' + n2 + "." + n3 + "." + n4 + "." + n5;
   }
 
   /**

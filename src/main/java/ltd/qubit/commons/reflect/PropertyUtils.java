@@ -267,19 +267,20 @@ public final class PropertyUtils {
    * 根据 Java Bean 的 getter 方法获取其对应的属性名称。
    *
    * @param getter
-   *     指定的属性的 getter 方法，其名称必须是形如 getXxx() 或 isXxx() 的形式，且没有参数。
+   *     指定的属性的 getter 方法，其名称必须是形如 getXxx() 或 isXxx() 的形式，
+   *     或者是 "xxx()" 的形式，且没有参数。
    * @return
    *     指定的 getter 方法所对应的属性的名称；若指定的方法不是标准的Java Bean的getter方法，
    *     返回{@code null}。
    */
   public static String getPropertyNameFromGetter(final Method getter) {
     final String getterName = getter.getName();
-    if (getterName.startsWith(GET_PREFIX)
-        && getter.getParameterCount() == 0) { // this is a getter
+    if (getterName.startsWith(GET_PREFIX) && getter.getParameterCount() == 0) { // this is a getter
       return parsePropertyName(getterName, GET_PREFIX);
-    } else if (getterName.startsWith(IS_PREFIX)
-        && getter.getParameterCount() == 0) { // this is a isXxxx
+    } else if (getterName.startsWith(IS_PREFIX) && getter.getParameterCount() == 0) { // this is a isXxxx
       return parsePropertyName(getterName, IS_PREFIX);
+    } else if (getter.getParameterCount() == 0) { // this is a xxx()
+      return getterName;
     } else {
       return null;
     }
