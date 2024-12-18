@@ -143,6 +143,66 @@ public class RowMapperBuilder<T> {
    * <pre><code>
    * final RowMapper&lt;User&gt; mapper = new RowMapperBuilder&lt;&gt;(User.class)
    *    .add("姓名", User::getName)
+   *    .add("生日", User::getBirthday)
+   *    .addLambda("年龄", (user) -&gt; Period.between(user.getBirthday(), LocalDate.now()).getYears())
+   *    .build();
+   * </code></pre>
+   *
+   * @param <R>
+   *     该列数据所对应的实体属性的类型。
+   * @param header
+   *     列头名称。
+   * @param lambda
+   *     一个lambda表达式，用于获取某个实体对应于该列的数据。
+   * @return
+   *     此{@link RowMapperBuilder}。
+   */
+  public <R> RowMapperBuilder<T> addLambda(final String header, final GetterMethod<T, R> lambda) {
+    return addLambda(header, lambda, false);
+  }
+
+  /**
+   * 添加一个列的映射。
+   * <p>
+   * 使用例子：
+   * <pre><code>
+   * final RowMapper&lt;User&gt; mapper = new RowMapperBuilder&lt;&gt;(User.class)
+   *    .add("姓名", User::getName)
+   *    .add("生日", User::getBirthday)
+   *    .addLambda("年龄", (user) -&gt; Period.between(user.getBirthday(), LocalDate.now()).getYears())
+   *    .build();
+   * </code></pre>
+   *
+   * @param <R>
+   *     该列数据所对应的实体属性的类型。
+   * @param header
+   *     列头名称。
+   * @param lambda
+   *     一个lambda表达式，用于获取某个实体对应于该列的数据。
+   * @param continueLastRow
+   *     该列是否延续上一行的数据。
+   * @return
+   *     此{@link RowMapperBuilder}。
+   */
+  public <R> RowMapperBuilder<T> addLambda(final String header, final GetterMethod<T, R> lambda,
+      final boolean continueLastRow) {
+    headers.add(header);
+    getterMap.put(header, lambda);
+    if (continueLastRow) {
+      continueLastRowHeaders.add(header);
+    } else {
+      continueLastRowHeaders.remove(header);
+    }
+    return this;
+  }
+
+  /**
+   * 添加一个列的映射。
+   * <p>
+   * 使用例子：
+   * <pre><code>
+   * final RowMapper&lt;User&gt; mapper = new RowMapperBuilder&lt;&gt;(User.class)
+   *    .add("姓名", User::getName)
    *    .add("年龄", User::getAge)
    *    .build();
    * </code></pre>
