@@ -564,5 +564,4 @@ public class MethodUtilsTest {
     final String name = GetMethodByReferenceThroughSerialization.getMethodNameBySerialization(State::getLocalizedName);
     assertEquals("getLocalizedName", name);
   }
-
 }

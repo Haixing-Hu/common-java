@@ -55,6 +55,7 @@ import static ltd.qubit.commons.lang.ArrayUtils.EMPTY_CLASS_ARRAY;
 import static ltd.qubit.commons.lang.ArrayUtils.EMPTY_OBJECT_ARRAY;
 import static ltd.qubit.commons.lang.ClassUtils.isAssignable;
 import static ltd.qubit.commons.lang.ObjectUtils.defaultIfNull;
+import static ltd.qubit.commons.reflect.MemberUtils.compareParameterTypes;
 import static ltd.qubit.commons.reflect.Option.ALL_EXCLUDE_BRIDGE;
 import static ltd.qubit.commons.reflect.Option.DEFAULT;
 import static ltd.qubit.commons.reflect.impl.GetMethodByReferenceImpl.GETTER_METHOD_CACHES;
@@ -332,20 +333,52 @@ public class MethodUtils {
    *
    * @param type
    *     The class on which to get the method.
+   * @param name
+   *     The name of the method to be get.
+   * @param paramTypes
+   *     The types of the compatible parameters of the method to be get, or an
+   *     empty array if the method to be get has no parameter.
+   * @return the specified method, or {@code null} if no such method.
+   * @throws AmbiguousMemberException
+   *     if tow or more matching methods found.
+   * @throws ReflectionException
+   *     if any error occurred.
+   */
+  @Nullable
+  public static Method getMatchingMethod(final Class<?> type, final String name,
+      @Nullable final Class<?>[] paramTypes) throws ReflectionException {
+    return getMatchingMethod(type, DEFAULT, name, paramTypes);
+  }
+
+  /**
+   * Gets a method of a class that matches the given name and the compatible
+   * parameter types.
+   *
+   * <p>NOTE: if the {@code options} argument contains {@link Option#ANCESTOR}
+   * , and there is more than one method with the specified name and parameter
+   * types declared in the specified class or its ancestor class or its ancestor
+   * interfaces, the function will try to return the method with the shallower
+   * depth; if there are more than one method has the specified name in the same
+   * depth, the function will returns the one with a more precise returned type;
+   * otherwise, the function will throw an {@link AmbiguousMemberException}.
+   *
+   * @param type
+   *     The class on which to get the method.
    * @param options
    *     A bitwise combination of reflection options defined in the {@link
    *     Option} class. The default value could be {@link Option#DEFAULT}.
    * @param name
    *     The name of the method to be get.
    * @param paramTypes
-   *     The types of the compatible parameters of the method to be get, or an
+   *     The types of the compatible parameters of the method to be gotten, or an
    *     empty array if the method to be get has no parameter.
-   * @return the specified method, or {@code null} if no such field.
+   * @return the specified method, or {@code null} if no such method.
    * @throws AmbiguousMemberException
    *     if tow or more matching methods found.
    * @throws ReflectionException
    *     if any error occurred.
    */
+  @Nullable
   public static Method getMatchingMethod(final Class<?> type, final int options,
       final String name, @Nullable final Class<?>[] paramTypes)
       throws ReflectionException {
@@ -363,7 +396,7 @@ public class MethodUtils {
           result = current;
           ambiguous = false;
         } else {
-          final int rc = MemberUtils.compareParameterTypes(current.getActualParameterType(),
+          final int rc = compareParameterTypes(current.getActualParameterType(),
               result.getActualParameterType(), theParamTypes);
           if (rc < 0) {
             // the parameter types of new method is better than the result
@@ -399,17 +432,45 @@ public class MethodUtils {
    *
    * @param type
    *     The class on which to get the method.
-   * @param options
-   *     A bitwise combination of reflection options defined in the {@link
-   *     Option} class. The default value could be {@link Option#DEFAULT}.
    * @param name
    *     The name of the method to be get.
-   * @return the specified method, or {@code null} if no such field.
+   * @return the specified method, or {@code null} if no such method.
    * @throws AmbiguousMemberException
    *     if tow or more matching methods found.
    * @throws ReflectionException
    *     if any error occurred.
    */
+  @Nullable
+  public static Method getMethodByName(final Class<?> type, final String name)
+      throws ReflectionException {
+    return getMethodByName(type, DEFAULT, name);
+  }
+
+  /**
+   * Gets a method of a class that matches the given name.
+   *
+   * <p>NOTE: if the {@code options} argument contains {@link Option#ANCESTOR}
+   * , and there is more than one method with the specified name declared in the
+   * specified class or its ancestor class or its ancestor interfaces, the
+   * function will try to return the method with the shallower depth; if there
+   * are more than one method has the specified name in the same depth, the
+   * function will return the one with a more precise returned type; otherwise,
+   * the function will throw an {@link AmbiguousMemberException}.
+   *
+   * @param type
+   *     The class on which to get the method.
+   * @param options
+   *     A bitwise combination of reflection options defined in the {@link
+   *     Option} class. The default value could be {@link Option#DEFAULT}.
+   * @param name
+   *     The name of the method to be get.
+   * @return the specified method, or {@code null} if no such method.
+   * @throws AmbiguousMemberException
+   *     if tow or more matching methods found.
+   * @throws ReflectionException
+   *     if any error occurred.
+   */
+  @Nullable
   public static Method getMethodByName(final Class<?> type, final int options,
       final String name) throws ReflectionException {
     requireNonNull("name", name);
@@ -441,32 +502,6 @@ public class MethodUtils {
       throw new AmbiguousMemberException(type, name);
     }
     return (result == null ? null : result.getMethod());
-  }
-
-  /**
-   * Gets a method of a class that matches the given name.
-   *
-   * <p>NOTE: if the {@code options} argument contains {@link Option#ANCESTOR}
-   * , and there is more than one method with the specified name declared in the
-   * specified class or its ancestor class or its ancestor interfaces, the
-   * function will try to return the method with the shallower depth; if there
-   * are more than one method has the specified name in the same depth, the
-   * function will return the one with a more precise returned type; otherwise,
-   * the function will throw an {@link AmbiguousMemberException}.
-   *
-   * @param type
-   *     The class on which to get the method.
-   * @param name
-   *     The name of the method to be get.
-   * @return the specified method, or {@code null} if no such field.
-   * @throws AmbiguousMemberException
-   *     if tow or more matching methods found.
-   * @throws ReflectionException
-   *     if any error occurred.
-   */
-  public static Method getMethodByName(final Class<?> type, final String name)
-      throws ReflectionException {
-    return getMethodByName(type, DEFAULT, name);
   }
 
   /**
@@ -875,7 +910,7 @@ public class MethodUtils {
   /**
    * 根据某个类的指定的方法引用，获取其 {@link Method} 对象。
    *
-   * <p><b>注意：</b>指定的方法不能是 final 的或 non-public 的！！！</p>
+   * <p><b>注意：</b>指定的方法不能是 non-public 的！！！</p>
    *
    * <p>例如：</p>
    * <pre><code>

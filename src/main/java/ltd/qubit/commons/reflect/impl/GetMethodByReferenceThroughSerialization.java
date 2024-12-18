@@ -17,6 +17,8 @@ import java.lang.reflect.Method;
 import ltd.qubit.commons.reflect.MethodUtils;
 import ltd.qubit.commons.reflect.ReflectionException;
 
+import static ltd.qubit.commons.reflect.MethodUtils.getMatchingMethod;
+
 /**
  * Provide functions to get the method name from a lambda expression using
  * serialization hacks.
@@ -197,6 +199,10 @@ public class GetMethodByReferenceThroughSerialization {
 
   public static <T, R> Method findMethodBySerialization(final Class<T> cls, final NonVoidMethod0<T, R> ref) {
     final String methodName = getMethodNameBySerialization(ref);
+    final Method method = getMatchingMethod(cls, methodName, new Class<?>[0]);
+    if (method == null) {
+      throw new IllegalArgumentException("Cannot find the method " + cls.getName() + "." + methodName + "()");
+    }
     return MethodUtils.getMethodByName(cls, methodName);
   }
 

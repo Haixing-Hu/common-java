@@ -34,6 +34,13 @@ public class ObjectGraphUtils {
     }
   }
 
+  private static <T, R> void ensureMethodExists(final String name, @Nullable final Method method,
+      final Class<T> type, final GetterMethod<T, R> getter) {
+    if (method == null) {
+      throw new IllegalArgumentException("No field found for the getter: " + type.getName() + "." + name);
+    }
+  }
+
   /**
    * Gets the path of a property specified by a getter method.
    *
@@ -63,7 +70,7 @@ public class ObjectGraphUtils {
    *
    * @param <T>
    *     the type of the object.
-   * @param <P>
+   * @param <P1>
    *     the return type of the first getter, which is the type of the property
    *     of the original object specified by the first getter.
    * @param <R>

@@ -18,7 +18,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
  * @author 胡海星
  */
 @XmlRootElement(name = "state")
-public enum State {
+public enum State implements WithFoo {
 
   /**
    * 未激活。
@@ -67,6 +67,10 @@ public enum State {
       default:
         return "未知";
     }
+  }
+
+  public String goo(final String p1) {
+    return "goo: " + p1;
   }
 
   public String getLocalizedNameFor(final Locale locale) {
