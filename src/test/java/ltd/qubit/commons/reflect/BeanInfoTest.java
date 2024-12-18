@@ -315,6 +315,7 @@ public class BeanInfoTest {
     assertSame(Foo.class, info.getType());
     final List<Property> expectedProperties = Arrays.asList(
         Property.of(Foo.class, "class"),
+        Property.of(Foo.class, "hashCode"),
         Property.of(Foo.class, "m_boolean"),
         Property.of(Foo.class, "m_char"),
         Property.of(Foo.class, "m_byte"),

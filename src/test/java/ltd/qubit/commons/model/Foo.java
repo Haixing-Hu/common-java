@@ -102,4 +102,8 @@ public class Foo {
         .append("m_child", m_child)
         .toString();
   }
+
+  public Foo cloneEx() {
+    return this;
+  }
 }

@@ -12,8 +12,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -37,7 +39,25 @@ public class BeanInfo {
 
   public static final String DEFAULT_ID_PROPERTY_NAME = "id";
 
-  private static final ClassValue<BeanInfo> CACHE = new ClassValue<BeanInfo>() {
+  /**
+   * The list of names of excluded property methods.
+   */
+  public static final Set<String> EXCLUDED_PROPERTY_METHODS = new HashSet<>();
+  static {
+    // allow hashCode() and getClass()
+    EXCLUDED_PROPERTY_METHODS.add("clone");
+    EXCLUDED_PROPERTY_METHODS.add("notify");
+    EXCLUDED_PROPERTY_METHODS.add("notifyAll");
+    EXCLUDED_PROPERTY_METHODS.add("wait");
+    EXCLUDED_PROPERTY_METHODS.add("finalize");
+    EXCLUDED_PROPERTY_METHODS.add("equals");
+    EXCLUDED_PROPERTY_METHODS.add("toString");
+    // add customized methods
+    EXCLUDED_PROPERTY_METHODS.add("cloneEx");
+    EXCLUDED_PROPERTY_METHODS.add("assign");
+  };
+
+  private static final ClassValue<BeanInfo> CACHE = new ClassValue<>() {
     @Override
     protected BeanInfo computeValue(final Class<?> type) {
       return new BeanInfo(type);
@@ -73,6 +93,9 @@ public class BeanInfo {
   private void collectPropertiesFromBeanMethods() {
     final List<Method> methods = getAllMethods(type, Option.BEAN_METHOD);
     for (final Method method : methods) {
+      if (EXCLUDED_PROPERTY_METHODS.contains(method.getName())) {
+        continue; // ignore the excluded methods.
+      }
       final String propertyName = getPropertyNameFromGetter(method);
       if ((propertyName == null) || propertyMap.containsKey(propertyName)) {
         continue;
