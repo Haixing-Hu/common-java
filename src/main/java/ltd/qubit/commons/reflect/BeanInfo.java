@@ -44,13 +44,14 @@ public class BeanInfo {
    */
   public static final Set<String> EXCLUDED_PROPERTY_METHODS = new HashSet<>();
   static {
-    // allow hashCode() and getClass()
+    // allow getClass()
     EXCLUDED_PROPERTY_METHODS.add("clone");
     EXCLUDED_PROPERTY_METHODS.add("notify");
     EXCLUDED_PROPERTY_METHODS.add("notifyAll");
     EXCLUDED_PROPERTY_METHODS.add("wait");
     EXCLUDED_PROPERTY_METHODS.add("finalize");
     EXCLUDED_PROPERTY_METHODS.add("equals");
+    EXCLUDED_PROPERTY_METHODS.add("hashCode");
     EXCLUDED_PROPERTY_METHODS.add("toString");
     // add customized methods
     EXCLUDED_PROPERTY_METHODS.add("cloneEx");

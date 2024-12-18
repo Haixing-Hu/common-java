@@ -1122,8 +1122,7 @@ public class FieldUtilsTest {
         .isEqualTo("createTime");
     assertThat(getFieldName(App.class, App::isPredefined))
         .isEqualTo("predefined");
-    assertThat(getFieldName(App.class, App::toString))
-        .isNull();
+    assertThat(getFieldName(App.class, App::toString)).isEqualTo("toString");
   }
 
   @Test
@@ -1150,8 +1149,7 @@ public class FieldUtilsTest {
         .isEqualTo("createTime");
    assertThat(getFieldName(App.class, App::setPredefined))
        .isEqualTo("predefined");
-    assertThat(getFieldName(App.class, App::toString))
-        .isNull();
+    assertThat(getFieldName(App.class, App::toString)).isEqualTo("toString");
   }
 
   @Test

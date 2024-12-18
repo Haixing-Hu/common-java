@@ -293,6 +293,8 @@ public class BeanInfoTest {
     assertNotNull(properties);
     assertEquals(new HashSet<>(Arrays.asList(
         Property.of(Info.class, "class"),
+        Property.of(Info.class, "toParams"),
+        Property.of(Info.class, "hashCode"),
         Property.of(Info.class, "code"),
         Property.of(Info.class, "deleteTime"),
         Property.of(Info.class, "deleted"),
@@ -315,7 +317,6 @@ public class BeanInfoTest {
     assertSame(Foo.class, info.getType());
     final List<Property> expectedProperties = Arrays.asList(
         Property.of(Foo.class, "class"),
-        Property.of(Foo.class, "hashCode"),
         Property.of(Foo.class, "m_boolean"),
         Property.of(Foo.class, "m_char"),
         Property.of(Foo.class, "m_byte"),
