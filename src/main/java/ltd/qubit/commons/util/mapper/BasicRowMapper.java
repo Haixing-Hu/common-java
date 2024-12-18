@@ -45,6 +45,8 @@ public class BasicRowMapper<T> implements RowMapper<T> {
 
   private final Class<T> type;
 
+  private final String entityName;
+
   private final List<String> headers;
 
   private final Map<String, GetterMethod<T, ?>> getterMap;
@@ -73,6 +75,7 @@ public class BasicRowMapper<T> implements RowMapper<T> {
    */
   public BasicRowMapper(final RowMapperBuilder<T> builder) {
     this.type = builder.type;
+    this.entityName = builder.type.getSimpleName();
     this.headers = new ArrayList<>(builder.headers);
     this.getterMap = new HashMap<>(builder.getterMap);
     this.setterMap = new HashMap<>(builder.setterMap);
@@ -86,6 +89,10 @@ public class BasicRowMapper<T> implements RowMapper<T> {
   @Override
   public Class<T> getType() {
     return type;
+  }
+
+  public String getEntityName() {
+    return entityName;
   }
 
   @Override
@@ -142,6 +149,8 @@ public class BasicRowMapper<T> implements RowMapper<T> {
       } else {
         continue;
       }
+      logger.trace("Map the property value of entity {} to row column {}: {}",
+          entityName, header, value);
       row.put(header, value == null ? "" : value.toString());
     }
     return row;
