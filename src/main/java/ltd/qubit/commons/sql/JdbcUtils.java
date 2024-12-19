@@ -501,10 +501,15 @@ public final class JdbcUtils {
    *     the name of the database opened by the data source.
    */
   public static String getDatabaseName(final DataSource dataSource) throws SQLException {
-    final Connection connection = dataSource.getConnection();
-    final DatabaseMetaData metaData = connection.getMetaData();
-    final String url = metaData.getURL();
-    return extractDatabaseNameFromUrl(url);
+    try {
+      final Connection connection = dataSource.getConnection();
+      final DatabaseMetaData metaData = connection.getMetaData();
+      final String url = metaData.getURL();
+      return extractDatabaseNameFromUrl(url);
+    } catch (final SQLException e) {
+      LOGGER.error("An error occurred while getting database name from data source: {}", dataSource, e);
+      throw e;
+    }
   }
 
   private static String extractDatabaseNameFromUrl(final String url) {
@@ -548,10 +553,15 @@ public final class JdbcUtils {
    *     the host of the database opened by the data source.
    */
   public static String getDatabaseHost(final DataSource dataSource) throws SQLException {
-    final Connection connection = dataSource.getConnection();
-    final DatabaseMetaData metaData = connection.getMetaData();
-    final String url = metaData.getURL();
-    return extractDatabaseHostFromUrl(url);
+    try {
+      final Connection connection = dataSource.getConnection();
+      final DatabaseMetaData metaData = connection.getMetaData();
+      final String url = metaData.getURL();
+      return extractDatabaseHostFromUrl(url);
+    } catch (final SQLException e) {
+      LOGGER.error("An error occurred while getting database host from data source: {}", dataSource, e);
+      throw e;
+    }
   }
 
   private static String extractDatabaseHostFromUrl(final String url) {
