@@ -197,6 +197,15 @@ public class GetMethodByReferenceThroughSerialization {
     return getMethodNameBySerializationImpl(ref);
   }
 
+  public static <T> Method findMethodBySerialization(final Class<T> cls, final VoidMethod0<T> ref) {
+    final String methodName = getMethodNameBySerialization(ref);
+    final Method method = getMatchingMethod(cls, methodName, new Class<?>[0]);
+    if (method == null) {
+      throw new IllegalArgumentException("Cannot find the method " + cls.getName() + "." + methodName + "()");
+    }
+    return MethodUtils.getMethodByName(cls, methodName);
+  }
+
   public static <T, R> Method findMethodBySerialization(final Class<T> cls, final NonVoidMethod0<T, R> ref) {
     final String methodName = getMethodNameBySerialization(ref);
     final Method method = getMatchingMethod(cls, methodName, new Class<?>[0]);
