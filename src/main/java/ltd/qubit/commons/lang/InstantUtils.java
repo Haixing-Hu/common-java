@@ -11,9 +11,11 @@ package ltd.qubit.commons.lang;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.ByteOrder;
+import java.time.DateTimeException;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 
 import javax.annotation.Nullable;
 
@@ -317,5 +319,65 @@ public class InstantUtils {
    */
   public static Instant truncatedToSecond(@Nullable final Instant instant) {
     return truncatedTo(instant, ChronoUnit.SECONDS);
+  }
+
+  /**
+   * Safely plus a specified amount of time to an {@link Instant} object.
+   * <p>
+   * This function does <b>NOT</b> throw any exception. If the result of the
+   * operation is out of the range of the {@link Instant} object, it will return
+   * {@link Instant#MAX} or {@link Instant#MIN} instead.
+   *
+   * @param instant
+   *    the {@link Instant} object to be operated.
+   * @param amount
+   *    the amount of time to be added, measured in terms of the specified unit.
+   * @param unit
+   *    the unit of the amount of time to be added.
+   * @return
+   *    the result of the operation. If the result is out of the range of the
+   *    {@link Instant} object, it will return {@link Instant#MAX} or
+   *    {@link Instant#MIN} instead.
+   */
+  public static Instant safePlus(final Instant instant, final long amount, final TemporalUnit unit) {
+    try {
+      return instant.plus(amount, unit);
+    } catch (final DateTimeException | ArithmeticException e) {
+      if (amount >= 0) {
+        return Instant.MAX;
+      } else {
+        return Instant.MIN;
+      }
+    }
+  }
+
+  /**
+   * Safely minus a specified amount of time to an {@link Instant} object.
+   * <p>
+   * This function does <b>NOT</b> throw any exception. If the result of the
+   * operation is out of the range of the {@link Instant} object, it will return
+   * {@link Instant#MAX} or {@link Instant#MIN} instead.
+   *
+   * @param instant
+   *    the {@link Instant} object to be operated.
+   * @param amount
+   *    the amount of time to be minus, measured in terms of the specified unit.
+   * @param unit
+   *    the unit of the amount of time to be minus.
+   * @return
+   *    the result of the operation. If the result is out of the range of the
+   *    {@link Instant} object, it will return {@link Instant#MAX} or
+   *    {@link Instant#MIN} instead.
+   */
+  public static Instant safeMinus(final Instant instant, final long amount, final TemporalUnit unit) {
+    try {
+      return instant.minus(amount, unit);
+    } catch (final DateTimeException | ArithmeticException e) {
+      if (amount <= 0) {
+        return Instant.MAX;
+      } else {
+        return Instant.MIN;
+      }
+    }
   }
 }
