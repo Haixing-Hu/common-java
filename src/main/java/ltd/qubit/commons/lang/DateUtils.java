@@ -28,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.Nullable;
 
 import ltd.qubit.commons.text.DateFormat;
+import ltd.qubit.commons.util.codec.IsoDateCodec;
 
 import static ltd.qubit.commons.lang.ByteArrayUtils.DEFAULT_BYTE_ORDER;
 
@@ -252,6 +253,14 @@ public class DateUtils {
     }
     final DateFormat df = new DateFormat(pattern);
     return df.format(value);
+  }
+
+  public static String toISOString(@Nullable final Date value) {
+    if (value == null) {
+      return "<null>";
+    } else {
+      return IsoDateCodec.INSTANCE.encode(value);
+    }
   }
 
   public static byte[] toByteArray(@Nullable final Date value) {
