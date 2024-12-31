@@ -19,6 +19,8 @@ import ltd.qubit.commons.lang.DateUtils;
  */
 public class IsoDateCodec extends DateCodec {
 
+  public static final IsoDateCodec INSTANCE = new IsoDateCodec();
+
   public IsoDateCodec() {
     // NOTE that 'u' represent the year, while 'y' represent the year-of-era.
     // see: https://stackoverflow.com/questions/29014225/what-is-the-difference-between-year-and-year-of-era
