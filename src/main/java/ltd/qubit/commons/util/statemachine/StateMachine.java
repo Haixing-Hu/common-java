@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import ltd.qubit.commons.util.pair.Pair;
@@ -260,6 +261,7 @@ public class StateMachine<S extends Enum<S>, E extends Enum<E>> {
    *     the target state of the transition, or {@code null} if the transition
    *     does not exist.
    */
+  @Nullable
   public S getTarget(final S source, final E event) {
     final Pair<S, E> key = new Pair<>(source, event);
     return transitionMap.get(key);
