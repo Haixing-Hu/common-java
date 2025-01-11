@@ -195,6 +195,31 @@ public class SortRequest<T> implements Serializable {
    *     待排序的实体的类型。
    * @param entityClass
    *     待排序的实体的类对象。
+   * @param params
+   *     排序请求参数。
+   * @param defaultPropertyGetter
+   *     默认的排序属性的Getter函数，当{@code property}为{@code null}时使用。
+   * @param defaultSortOrder
+   *     默认的正反序要求，当{@code order}为{@code null}时使用。
+   * @return
+   *     排序要求；若{@code property}为{@code null}则返回{@code null}。
+   */
+  public static <T, R> SortRequest<T> create(final Class<T> entityClass,
+      final WithSortRequestParams params,
+      final GetterMethod<T, R> defaultPropertyGetter,
+      final SortOrder defaultSortOrder) {
+    final String defaultProperty = getFieldName(entityClass, defaultPropertyGetter);
+    return create(entityClass, params.getSortField(), defaultProperty,
+        params.getSortOrder(), defaultSortOrder, params.getNullSortOption());
+  }
+
+  /**
+   * 创建一个排序要求。
+   *
+   * @param <T>
+   *     待排序的实体的类型。
+   * @param entityClass
+   *     待排序的实体的类对象。
    * @param property
    *     排序所依据的属性路径。
    * @param defaultPropertyGetter

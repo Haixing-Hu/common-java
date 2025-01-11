@@ -26,11 +26,28 @@ import static ltd.qubit.commons.lang.Argument.requirePositive;
  */
 public final class PageRequest {
 
-  public static final int DEFAULT_PAGE_SIZE = 20;
+  /**
+   * The default page size.
+   */
+  public static final int DEFAULT_PAGE_SIZE = 10;
 
   private int pageIndex;
 
   private int pageSize;
+
+  /**
+   * Creates a {@link PageRequest} with the specified or default page index and
+   * page size.
+   *
+   * @param params
+   *     the parameters of the page request.
+   * @return
+   *     a {@link PageRequest} with the specified or default page index and page
+   *     size.
+   */
+  public static PageRequest create(final WithPageRequestParams params) {
+    return create(params.getPageIndex(), params.getPageSize());
+  }
 
   /**
    * Creates a {@link PageRequest}.
