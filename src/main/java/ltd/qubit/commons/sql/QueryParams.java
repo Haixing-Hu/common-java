@@ -27,6 +27,8 @@ public abstract class QueryParams<T> implements WithPageRequestParams, WithSortR
 
   private final GetterMethod<T, ?> defaultSortFieldGetter;
 
+  private final SortOrder defaultSortOrder;
+
   /**
    * 分页的索引，从0开始编号。若为{@code null}则默认0。
    */
@@ -66,10 +68,15 @@ public abstract class QueryParams<T> implements WithPageRequestParams, WithSortR
    *     the class of the entity to be queried.
    * @param defaultSortFieldGetter
    *     the getter function of the default sorting field.
+   * @param defaultSortOrder
+   *     the default sorting order.
    */
-  protected QueryParams(final Class<T> entityClass, final GetterMethod<T, ?> defaultSortFieldGetter) {
+  protected QueryParams(final Class<T> entityClass,
+      final GetterMethod<T, ?> defaultSortFieldGetter,
+      final SortOrder defaultSortOrder) {
     this.entityClass = entityClass;
     this.defaultSortFieldGetter = defaultSortFieldGetter;
+    this.defaultSortOrder = defaultSortOrder;
   }
 
   @Override
@@ -169,7 +176,7 @@ public abstract class QueryParams<T> implements WithPageRequestParams, WithSortR
 
   @Computed
   public SortRequest<T> getSortRequest() {
-    return SortRequest.create(entityClass, this, defaultSortFieldGetter, SortOrder.DESC);
+    return SortRequest.create(entityClass, this, defaultSortFieldGetter, defaultSortOrder);
   }
 
   @Computed
