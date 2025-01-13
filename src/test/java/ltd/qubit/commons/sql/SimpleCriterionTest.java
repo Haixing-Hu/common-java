@@ -32,7 +32,7 @@ import ltd.qubit.commons.lang.LocalTimeUtils;
 import ltd.qubit.commons.lang.LongUtils;
 import ltd.qubit.commons.lang.ShortUtils;
 import ltd.qubit.commons.lang.StringUtils;
-import ltd.qubit.commons.model.Foo;
+import ltd.qubit.commons.testbed.model.Foo;
 import ltd.qubit.commons.reflect.testbed.State;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;

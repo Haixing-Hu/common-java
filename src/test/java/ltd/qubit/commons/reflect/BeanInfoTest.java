@@ -17,7 +17,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import ltd.qubit.commons.model.Foo;
+import ltd.qubit.commons.testbed.model.Foo;
 import ltd.qubit.commons.reflect.testbed.ChildBean;
 import ltd.qubit.commons.reflect.testbed.Info;
 import ltd.qubit.commons.reflect.testbed.ParentBean;

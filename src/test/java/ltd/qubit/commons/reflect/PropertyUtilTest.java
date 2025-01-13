@@ -14,8 +14,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ltd.qubit.commons.priv.PrivateBeanFactory;
-import ltd.qubit.commons.priv.PrivateDirect;
+import ltd.qubit.commons.testbed.priv.PrivateBeanFactory;
+import ltd.qubit.commons.testbed.priv.PrivateDirect;
 import ltd.qubit.commons.reflect.testbed.App;
 import ltd.qubit.commons.reflect.testbed.Bean;
 import ltd.qubit.commons.reflect.testbed.BeanPublicSubclass;

@@ -12,7 +12,7 @@ import java.util.Locale;
 
 import org.junit.jupiter.api.Test;
 
-import ltd.qubit.commons.model.CredentialType;
+import ltd.qubit.commons.testbed.model.CredentialType;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -99,7 +99,7 @@ public class EnumUtilsTest {
 
   @Test
   void getEnumClass_shouldReturnEnumClass_whenClassNameIsValid() {
-    assertEquals(CredentialType.class, EnumUtils.getEnumClass("ltd.qubit.commons.model.CredentialType"));
+    assertEquals(CredentialType.class, EnumUtils.getEnumClass("ltd.qubit.commons.testbed.model.CredentialType"));
   }
 
   @Test

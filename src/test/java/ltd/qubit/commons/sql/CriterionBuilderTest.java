@@ -13,15 +13,15 @@ import java.time.Instant;
 
 import org.junit.jupiter.api.Test;
 
-import ltd.qubit.commons.model.Address;
-import ltd.qubit.commons.model.Contact;
-import ltd.qubit.commons.model.Device;
-import ltd.qubit.commons.model.Info;
-import ltd.qubit.commons.model.InfoWithEntity;
-import ltd.qubit.commons.model.Organization;
-import ltd.qubit.commons.model.PersonInfo;
-import ltd.qubit.commons.model.State;
-import ltd.qubit.commons.model.StatefulInfo;
+import ltd.qubit.commons.testbed.model.Address;
+import ltd.qubit.commons.testbed.model.Contact;
+import ltd.qubit.commons.testbed.model.Device;
+import ltd.qubit.commons.testbed.model.Info;
+import ltd.qubit.commons.testbed.model.InfoWithEntity;
+import ltd.qubit.commons.testbed.model.Organization;
+import ltd.qubit.commons.testbed.model.PersonInfo;
+import ltd.qubit.commons.testbed.model.State;
+import ltd.qubit.commons.testbed.model.StatefulInfo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

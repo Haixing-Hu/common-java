@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.math;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -103,6 +104,7 @@ public class RandomEx extends Random {
    *     the exclusive upper bound of the generated random number.
    * @return a random integer between [lowerBound, upperBound).
    */
+  @Override
   public final int nextInt(final int lowerBound, final int upperBound) {
     if (lowerBound >= upperBound) {
       throw new IllegalArgumentException(
@@ -237,6 +239,7 @@ public class RandomEx extends Random {
    *     positive.
    * @return a random long between [0, bound).
    */
+  @Override
   public final long nextLong(final long bound) {
     if (bound <= 0) {
       throw new IllegalArgumentException("bound must be positive");
@@ -260,6 +263,7 @@ public class RandomEx extends Random {
    *     the exclusive upper bound of the generated random number.
    * @return a random long between [lowerBound, upperBound).
    */
+  @Override
   public final long nextLong(final long lowerBound, final long upperBound) {
     if (lowerBound >= upperBound) {
       throw new IllegalArgumentException(
@@ -300,11 +304,12 @@ public class RandomEx extends Random {
    * Return a random double between {@code [lowerBound, upperBound)}.
    *
    * @param lowerBound
-   *     the inclusive lower bound value
+   *     the inclusive lower bound value.
    * @param upperBound
-   *     the exclusive upper bound value
-   * @return a random double in the given range
+   *     the exclusive upper bound value.
+   * @return a random double in the given range.
    */
+  @Override
   public final double nextDouble(final double lowerBound,
       final double upperBound) {
     if (lowerBound >= upperBound) {
@@ -327,7 +332,7 @@ public class RandomEx extends Random {
    *
    * @param range
    *     the closed range.
-   * @return a random double in the given range
+   * @return a random double in the given range.
    */
   public final double nextDouble(final CloseRange<Double> range) {
     range.check();
@@ -343,6 +348,7 @@ public class RandomEx extends Random {
     }
   }
 
+  @Override
   public final float nextFloat(final float lowerBound, final float upperBound) {
     return (float) nextDouble(lowerBound, upperBound);
   }
@@ -351,6 +357,40 @@ public class RandomEx extends Random {
     final double min = range.getMin();
     final double max = range.getMax();
     return (float) nextDouble(new CloseRange<>(min, max));
+  }
+
+  /**
+   * Return a random {@link BigDecimal}.
+   *
+   * @return a random {@link BigDecimal}.
+   */
+  public final BigDecimal nextBigDecimal() {
+    return BigDecimal.valueOf(nextDouble());
+  }
+
+  /**
+   * Return a random {@link BigDecimal} between {@code [lowerBound, upperBound)}.
+   *
+   * @param lowerBound
+   *     the inclusive lower bound value.
+   * @param upperBound
+   *     the exclusive upper bound value.
+   * @return a random {@link BigDecimal} in the given range.
+   */
+  public final BigDecimal nextBigDecimal(final double lowerBound,
+      final double upperBound) {
+    return BigDecimal.valueOf(nextDouble(lowerBound, upperBound));
+  }
+
+  /**
+   * Return a random {@link BigDecimal} between {@code [range.min, range.max]}.
+   *
+   * @param range
+   *     the closed range.
+   * @return a random {@link BigDecimal} in the given range.
+   */
+  public final BigDecimal nextBigDecimal(final CloseRange<Double> range) {
+    return BigDecimal.valueOf(nextDouble(range));
   }
 
   public final char nextDigitChar() {
