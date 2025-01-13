@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.testbed.model;
 
+import java.io.Serial;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,7 @@ import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
 public class Info implements Identifiable, WithCode, WithName, Deletable,
     Emptyful, Normalizable, Assignable<Info> {
 
+  @Serial
   private static final long serialVersionUID = 7281371900014761423L;
 
   /**

@@ -8,9 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.serialize;
 
+import java.io.IOException;
 import java.util.List;
-
-import ltd.qubit.commons.io.error.SerializationException;
 
 /**
  * The interface for deserializing an object from a source.
@@ -23,17 +22,39 @@ import ltd.qubit.commons.io.error.SerializationException;
  */
 public interface Deserializer<E, SOURCE> {
   /**
+   * Initializes this deserializer.
+   *
+   * @param source
+   *     the source from which the object is to be deserialized.
+   * @throws IOException
+   *     if an error occurs during deserialization, including but not limited to
+   *     database access errors, I/O errors, deserialization errors.
+   */
+  default void init(final SOURCE source) throws IOException {}
+
+  /**
+   * Closes this deserializer.
+   *
+   * @param source
+   *     the source from which the object is to be deserialized.
+   * @throws IOException
+   *     if an error occurs during deserialization, including but not limited to
+   *     database access errors, I/O errors, deserialization errors.
+   */
+  default void close(final SOURCE source) throws IOException {}
+
+  /**
    * Deserializes an object from the specified text stream.
    *
    * @param source
    *     the source from which the object is to be deserialized.
    * @return
    *     the deserialized object.
-   * @throws SerializationException
+   * @throws IOException
    *     if an error occurs during deserialization, including but not limited to
-   *     database access errors, I/O errors, serialization/deserialization errors.
+   *     database access errors, I/O errors, deserialization errors.
    */
-  E deserialize(SOURCE source) throws SerializationException;
+  E deserialize(SOURCE source) throws IOException;
 
   /**
    * Deserializes a list of objects from the specified text stream.
@@ -42,9 +63,9 @@ public interface Deserializer<E, SOURCE> {
    *     the source from which the objects are to be deserialized.
    * @return
    *     the deserialized list of objects.
-   * @throws SerializationException
+   * @throws IOException
    *     if an error occurs during deserialization, including but not limited to
-   *     database access errors, I/O errors, serialization/deserialization errors.
+   *     database access errors, I/O errors, deserialization errors.
    */
-  List<E> deserializeList(final SOURCE source) throws SerializationException;
+  List<E> deserializeList(final SOURCE source) throws IOException;
 }

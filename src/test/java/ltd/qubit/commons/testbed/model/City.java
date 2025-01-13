@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.testbed.model;
 
+import java.io.Serial;
 import java.time.Instant;
 import java.util.concurrent.TimeUnit;
 
@@ -34,6 +35,7 @@ import ltd.qubit.commons.text.tostring.ToStringBuilder;
 public class City implements HasInfo, Auditable, Emptyful, Normalizable,
     Predefinable, Assignable<City> {
 
+  @Serial
   private static final long serialVersionUID = 6194796107777707261L;
 
   /**

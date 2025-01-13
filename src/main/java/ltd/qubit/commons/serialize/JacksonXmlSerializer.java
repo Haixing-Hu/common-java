@@ -14,7 +14,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
-import ltd.qubit.commons.io.error.SerializationException;
 import ltd.qubit.commons.text.jackson.CustomizedXmlMapper;
 import ltd.qubit.commons.text.jackson.XmlMapperUtils;
 
@@ -58,21 +57,13 @@ public class JacksonXmlSerializer<E> implements TextSerializer<E> {
   }
 
   @Override
-  public void serialize(final Writer writer, final E obj) throws SerializationException {
-    try {
-      mapper.writeValue(writer, obj);
-    } catch (final IOException e) {
-      throw new SerializationException(e);
-    }
+  public void serialize(final Writer writer, final E obj) throws IOException {
+    mapper.writeValue(writer, obj);
   }
 
   @Override
-  public void serializeList(final Writer writer, final List<E> list) throws SerializationException {
-    try {
-      final String xml = XmlMapperUtils.formatList(list, type, mapper);
-      writer.write(xml);
-    } catch (final IOException e) {
-      throw new SerializationException(e);
-    }
+  public void serializeList(final Writer writer, final List<E> list) throws IOException {
+    final String xml = XmlMapperUtils.formatList(list, type, mapper);
+    writer.write(xml);
   }
 }

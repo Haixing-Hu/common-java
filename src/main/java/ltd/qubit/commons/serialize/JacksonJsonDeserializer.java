@@ -14,7 +14,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
-import ltd.qubit.commons.io.error.SerializationException;
 import ltd.qubit.commons.text.jackson.CustomizedJsonMapper;
 import ltd.qubit.commons.text.jackson.JsonMapperUtils;
 
@@ -58,20 +57,12 @@ public class JacksonJsonDeserializer<E> implements TextDeserializer<E> {
   }
 
   @Override
-  public E deserialize(final Reader reader) throws SerializationException {
-    try {
-      return mapper.readValue(reader, type);
-    } catch (final IOException e) {
-      throw new SerializationException(e);
-    }
+  public E deserialize(final Reader reader) throws IOException {
+    return mapper.readValue(reader, type);
   }
 
   @Override
-  public List<E> deserializeList(final Reader reader) throws SerializationException {
-    try {
-      return JsonMapperUtils.parseList(reader, type, mapper);
-    } catch (final IOException e) {
-      throw new SerializationException(e);
-    }
+  public List<E> deserializeList(final Reader reader) throws IOException {
+    return JsonMapperUtils.parseList(reader, type, mapper);
   }
 }
