@@ -75,13 +75,13 @@ public class ForceCreatorDeserializerModuleTest {
         .enableDefaultTypingAsProperty(ObjectMapper.DefaultTyping.NON_FINAL, "@class")
         .registerModule(new ForceCreatorDeserializerModule());
 
-    final RequestEntity deser = objectMapper.readValue(json, RequestEntity.class);
+    final RequestEntity<?> deser = objectMapper.readValue(json, RequestEntity.class);
 
-    assertEquals(objectMapper.writeValueAsString(deser), json);
+    assertEquals(json, objectMapper.writeValueAsString(deser));
   }
 
   private static class ImmutableClass {
-    private String str;
+    private final String str;
 
     public ImmutableClass(final String someStr) {
       this.str = someStr;
