@@ -225,7 +225,7 @@ public final class FileUtils {
    * @throws IOException
    *     if any error occurs.
    */
-  public static File createTempFile(final String prefix) throws IOException {
+  public static File createTempFile(@Nullable final String prefix) throws IOException {
     return createTempFile(prefix, null, DEFAULT_TEMP_FILE_RETRIES);
   }
 
@@ -242,7 +242,7 @@ public final class FileUtils {
    * @throws IOException
    *     if any error occurs.
    */
-  public static File createTempFile(final String prefix, final String suffix)
+  public static File createTempFile(@Nullable final String prefix, @Nullable final String suffix)
       throws IOException {
     return createTempFile(prefix, suffix, DEFAULT_TEMP_FILE_RETRIES);
   }
