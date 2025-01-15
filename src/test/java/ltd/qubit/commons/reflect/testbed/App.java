@@ -290,6 +290,7 @@ public class App implements Serializable {
     this.deleteTime = deleteTime;
   }
 
+  @Override
   public boolean equals(final Object o) {
     if (this == o) {
       return true;
@@ -317,6 +318,7 @@ public class App implements Serializable {
         && Equality.equals(deleteTime, other.deleteTime);
   }
 
+  @Override
   public int hashCode() {
     final int multiplier = 7;
     int result = 3;
@@ -340,6 +342,7 @@ public class App implements Serializable {
     return result;
   }
 
+  @Override
   public String toString() {
     return new ToStringBuilder(this)
         .append("id", id)
@@ -360,5 +363,9 @@ public class App implements Serializable {
         .append("modifyTime", modifyTime)
         .append("deleteTime", deleteTime)
         .toString();
+  }
+
+  public void hello() {
+    System.out.println("hello");
   }
 }

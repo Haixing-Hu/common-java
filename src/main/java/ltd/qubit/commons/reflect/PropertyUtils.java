@@ -279,7 +279,9 @@ public final class PropertyUtils {
       return parsePropertyName(getterName, GET_PREFIX);
     } else if (getterName.startsWith(IS_PREFIX) && getter.getParameterCount() == 0) { // this is a isXxxx
       return parsePropertyName(getterName, IS_PREFIX);
-    } else if (getter.getParameterCount() == 0) { // this is a xxx()
+    } else if ((getter.getParameterCount() == 0)
+        && (getter.getReturnType() != void.class)
+        && (getter.getReturnType() != Void.class)) { // this is a xxx() and has return type
       return getterName;
     } else {
       return null;

@@ -14,16 +14,16 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ltd.qubit.commons.testbed.priv.PrivateBeanFactory;
-import ltd.qubit.commons.testbed.priv.PrivateDirect;
 import ltd.qubit.commons.reflect.testbed.App;
 import ltd.qubit.commons.reflect.testbed.Bean;
 import ltd.qubit.commons.reflect.testbed.BeanPublicSubclass;
 import ltd.qubit.commons.reflect.testbed.State;
+import ltd.qubit.commons.testbed.priv.PrivateBeanFactory;
+import ltd.qubit.commons.testbed.priv.PrivateDirect;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import static ltd.qubit.commons.reflect.MethodUtils.getMethodByName;
@@ -140,23 +140,21 @@ public class PropertyUtilTest {
 
   @Test
   public void testGetPropertyNameFromGetter() {
-    assertThat(getPropertyNameFromGetter(getMethodByName(App.class, "getId")))
-        .isEqualTo("id");
-    assertThat(getPropertyNameFromGetter(getMethodByName(App.class, "getCode")))
-        .isEqualTo("code");
-    assertThat(getPropertyNameFromGetter(getMethodByName(App.class, "isPredefined")))
-        .isEqualTo("predefined");
-    assertThat(getPropertyNameFromGetter(getMethodByName(State.class, "name")))
-        .isEqualTo("name");
+    assertEquals("id", getPropertyNameFromGetter(getMethodByName(App.class, "getId")));
+    assertEquals("code", getPropertyNameFromGetter(getMethodByName(App.class, "getCode")));
+    assertEquals("predefined", getPropertyNameFromGetter(getMethodByName(App.class, "isPredefined")));
+    assertEquals("name", getPropertyNameFromGetter(getMethodByName(State.class, "name")));
   }
 
   @Test
   public void testGetPropertyNameFromSetter() {
-    assertThat(getPropertyNameFromSetter(getMethodByName(App.class, "setId")))
-        .isEqualTo("id");
-    assertThat(getPropertyNameFromSetter(getMethodByName(App.class, "setCode")))
-        .isEqualTo("code");
-    assertThat(getPropertyNameFromSetter(getMethodByName(App.class, "setPredefined")))
-        .isEqualTo("predefined");
+    assertEquals("id", getPropertyNameFromSetter(getMethodByName(App.class, "setId")));
+    assertEquals("code", getPropertyNameFromSetter(getMethodByName(App.class, "setCode")));
+    assertEquals("predefined", getPropertyNameFromSetter(getMethodByName(App.class, "setPredefined")));
+  }
+
+  @Test
+  public void testGetPropertyNameFromGetterIgnoreNoReturnMethod() {
+    assertNull(getPropertyNameFromGetter(getMethodByName(App.class, "hello")));
   }
 }
