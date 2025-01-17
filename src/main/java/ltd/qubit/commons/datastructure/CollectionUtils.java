@@ -501,4 +501,33 @@ public class CollectionUtils {
     Collections.addAll(result, elements);
     return result;
   }
+
+  /**
+   * Converts a collections of objects to a map.
+   *
+   * @param <K>
+   *     the type of the key.
+   * @param <V>
+   *     the type of the value.
+   * @param col
+   *     the collection of objects, which could be {@code null}.
+   * @param keyGetter
+   *     the getter method to get the key from the object.
+   * @return
+   *     a hash map, where the key is gotten from the object by the {@code keyGetter}.
+   *     and the value is object with the same key. A {@code null} collection
+   *     will return an empty map.
+   */
+  public static <K, V>
+  Map<K, V> toMap(@Nullable final Collection<V> col,
+      final GetterMethod<V, K> keyGetter) {
+    final Map<K, V> result = new HashMap<>();
+    if (col != null) {
+      for (final V value : col) {
+        final K key = keyGetter.invoke(value);
+        result.put(key, value);
+      }
+    }
+    return result;
+  }
 }
