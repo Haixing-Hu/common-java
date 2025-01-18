@@ -728,6 +728,23 @@ public class ComposedCriterionBuilder<T> {
     return this;
   }
 
+  public ComposedCriterionBuilder<T> append(@Nullable final Criterion<T> criterion) {
+    if (criterion != null) {
+      if (criterion instanceof SimpleCriterion<T>) {
+        criteria.add((SimpleCriterion<T>) criterion);
+      } else if (criterion instanceof final ComposedCriterion<T> composedCriterion) {
+        if (composedCriterion.getRelation() != relation) {
+          throw new IllegalArgumentException("Mismatched composed criterion relation: "
+              + "expect " + relation + ", but got " + composedCriterion.getRelation());
+        }
+        criteria.addAll(composedCriterion.getCriteria());
+      } else {
+        throw new IllegalArgumentException("Unsupported criterion type: " + criterion.getClass().getName());
+      }
+    }
+    return this;
+  }
+
   public ComposedCriterion<T> build() {
     return new ComposedCriterion<T>(type, relation, criteria);
   }
