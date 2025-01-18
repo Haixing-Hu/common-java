@@ -188,77 +188,69 @@ public class CriterionBuilder {
 
   public static <T, R> SimpleCriterion<T> like(final Class<T> type,
       final GetterMethod<T, R> getter, final String value) {
-    return new SimpleCriterion<>(type, getPropertyPath(type, getter), LIKE,
-        '%' + value + '%');
+    return new SimpleCriterion<>(type, getPropertyPath(type, getter), LIKE, '%' + value + '%');
   }
 
   public static <T, P, R> SimpleCriterion<T> like(final Class<T> type,
       final GetterMethod<T, P> g1, final GetterMethod<P, R> g2, final String value) {
-    return new SimpleCriterion<>(type, getPropertyPath(type, g1, g2), LIKE,
-        '%' + value + '%');
+    return new SimpleCriterion<>(type, getPropertyPath(type, g1, g2), LIKE, '%' + value + '%');
   }
 
   public static <T, P1, P2, R> SimpleCriterion<T> like(final Class<T> type,
       final GetterMethod<T, P1> g1, final GetterMethod<P1, P2> g2,
       final GetterMethod<P2, R> g3, final String value) {
-    return new SimpleCriterion<>(type, getPropertyPath(type, g1, g2, g3), LIKE,
-        '%' + value + '%');
+    return new SimpleCriterion<>(type, getPropertyPath(type, g1, g2, g3), LIKE, '%' + value + '%');
   }
 
   public static <T, R> SimpleCriterion<T> notLike(final Class<T> type,
       final GetterMethod<T, R> getter, final String value) {
-    return new SimpleCriterion<>(type, getPropertyPath(type, getter), NOT_LIKE,
-        '%' + value + '%');
+    return new SimpleCriterion<>(type, getPropertyPath(type, getter), NOT_LIKE, '%' + value + '%');
   }
 
   public static <T, P, R> SimpleCriterion<T> notLike(final Class<T> type,
       final GetterMethod<T, P> g1, final GetterMethod<P, R> g2, final String value) {
-    return new SimpleCriterion<>(type, getPropertyPath(type, g1, g2), NOT_LIKE,
-        '%' + value + '%');
+    return new SimpleCriterion<>(type, getPropertyPath(type, g1, g2), NOT_LIKE, '%' + value + '%');
   }
 
   public static <T, P1, P2, R> SimpleCriterion<T> notLike(final Class<T> type,
       final GetterMethod<T, P1> g1, final GetterMethod<P1, P2> g2,
       final GetterMethod<P2, R> g3, final String value) {
-    return new SimpleCriterion<>(type, getPropertyPath(type, g1, g2, g3), NOT_LIKE,
-        '%' + value + '%');
+    return new SimpleCriterion<>(type, getPropertyPath(type, g1, g2, g3), NOT_LIKE, '%' + value + '%');
   }
 
-  public static <T, R> Criterion<T> allEqual(final Class<T> type,
+  public static <T> Criterion<T> allEqual(final Class<T> type,
       final Map<String, Object> params) {
     final List<SimpleCriterion<T>> criteria = new ArrayList<>();
     for (final Map.Entry<String, Object> entry : params.entrySet()) {
-      criteria.add(new SimpleCriterion<>(type, entry.getKey(),
-          EQUAL, entry.getValue()));
+      criteria.add(new SimpleCriterion<>(type, entry.getKey(), EQUAL, entry.getValue()));
     }
     return new ComposedCriterion<>(type, AND, criteria);
   }
 
-  public static <T, R> Criterion<T> anyEqual(final Class<T> type,
+  public static <T> Criterion<T> anyEqual(final Class<T> type,
       final Map<String, Object> params) {
     final List<SimpleCriterion<T>> criteria = new ArrayList<>();
     for (final Map.Entry<String, Object> entry : params.entrySet()) {
-      criteria.add(new SimpleCriterion<>(type, entry.getKey(),
-          EQUAL, entry.getValue()));
+      criteria.add(new SimpleCriterion<>(type, entry.getKey(), EQUAL, entry.getValue()));
     }
     return new ComposedCriterion<>(type, OR, criteria);
   }
 
   @SuppressWarnings("varargs")
   @SafeVarargs
-  public static <T, R> ComposedCriterion<T> and(final Class<T> type,
+  public static <T> ComposedCriterion<T> and(final Class<T> type,
       final SimpleCriterion<T>... criteria) {
     return new ComposedCriterion<>(type, AND, criteria);
   }
 
   @SuppressWarnings("varargs")
   @SafeVarargs
-  public static <T, R> ComposedCriterion<T> or(final Class<T> type,
+  public static <T> ComposedCriterion<T> or(final Class<T> type,
       final SimpleCriterion<T>... criteria) {
     return new ComposedCriterion<>(type, OR, criteria);
   }
 
-  public static <T, R> ComposedCriterion<T> not(final Class<T> type,
+  public static <T> ComposedCriterion<T> not(final Class<T> type,
       final SimpleCriterion<T> criterion) {
     return new ComposedCriterion<>(type, NOT, criterion);
   }
