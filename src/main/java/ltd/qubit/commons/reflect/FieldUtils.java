@@ -520,6 +520,33 @@ public class FieldUtils {
     return PropertyUtils.getPropertyNameFromGetter(getter);
   }
 
+
+  /**
+   * 根据指定的  Java Bean 的 getter 的方法引用数组，获取其对应的属性的名称列表。
+   *
+   * @param <T>
+   *     指定的 Java Bean的类型。
+   * @param cls
+   *     指定的 Java Bean的类对象。
+   * @param getterRefs
+   *     指定的 getter 的方法引用数组。
+   * @return
+   *     指定的 getter 对应的属性的名称列表。
+   */
+  @SafeVarargs
+  public static <T> List<String> getFieldNames(final Class<T> cls,
+      final GetterMethod<T, ?> ... getterRefs ) {
+    final List<String> result = new ArrayList<>();
+    for (final GetterMethod<T, ?> getterRef : getterRefs) {
+      final Method getter = MethodUtils.getMethodByReference(cls, getterRef);
+      final String name = PropertyUtils.getPropertyNameFromGetter(getter);
+      if (name != null) {
+        result.add(name);
+      }
+    }
+    return result;
+  }
+
   /**
    * 根据指定的  Java Bean 的 setter 的方法引用，获取其对应的属性的名称。
    *
@@ -819,10 +846,7 @@ public class FieldUtils {
     }
     // try to find "${fieldName} for properties
     final Method prop = getMethod(ownerClass, BEAN_METHOD, fieldName, null);
-    if (prop != null) {
-      return prop;
-    }
-    return null;
+    return prop;
   }
 
   /**
