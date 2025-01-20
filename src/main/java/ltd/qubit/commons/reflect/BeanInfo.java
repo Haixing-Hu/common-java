@@ -56,7 +56,7 @@ public class BeanInfo {
     // add customized methods
     EXCLUDED_PROPERTY_METHODS.add("cloneEx");
     EXCLUDED_PROPERTY_METHODS.add("assign");
-  };
+  }
 
   private static final ClassValue<BeanInfo> CACHE = new ClassValue<>() {
     @Override
@@ -275,6 +275,19 @@ public class BeanInfo {
   public List<Property> getNonComputedProperties() {
     return properties.stream()
                      .filter(Property::isNonComputed)
+                     .collect(Collectors.toList());
+  }
+
+  /**
+   * Gets the list of properties of the beans that are unique properties.
+   *
+   * @return
+   *     the list of properties of the beans that are unique properties. Note
+   *     that the ID property is <b>INCLUDED</b> in the result.
+   */
+  public List<Property> getUniqueProperties() {
+    return properties.stream()
+                     .filter(Property::isUnique)
                      .collect(Collectors.toList());
   }
 

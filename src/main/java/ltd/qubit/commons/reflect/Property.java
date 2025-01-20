@@ -530,6 +530,8 @@ public class Property {
 
   /**
    * Tests whether the bean property is unique.
+   * <p>
+   * <b>NOTE: </b> The ID property is also considered as an unique property.
    *
    * @return
    *     {@code true} if the bean property is unique; {@code false} otherwise.

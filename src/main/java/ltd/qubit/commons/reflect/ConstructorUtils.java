@@ -158,6 +158,62 @@ public class ConstructorUtils {
   }
 
   /**
+   * Gets a default constructor of a class.
+   *
+   * @param <T>
+   *     the type of the objects in the specified class.
+   * @param cls
+   *     The class on which to get the constructor.
+   * @throws ReflectionException
+   *     if any error occurred.
+   */
+  public static <T> Constructor<T> getConstructor(final Class<T> cls) {
+    return getConstructor(cls, Option.DEFAULT, null);
+  }
+
+  /**
+   * Gets a constructor of a class.
+   *
+   * @param <T>
+   *     the type of the objects in the specified class.
+   * @param cls
+   *     The class on which to get the constructor.
+   * @param paramType
+   *     The type of the parameter of the constructor.
+   * @return
+   *     The specified constructor, or {@code null} if no such constructor.
+   * @throws ReflectionException
+   *     if any error occurred.
+   */
+  @Nullable
+  public static <T> Constructor<T> getConstructor(final Class<T> cls,
+      final Class<?> paramType) {
+    return getConstructor(cls, Option.DEFAULT, new Class<?>[] { paramType });
+  }
+
+  /**
+   * Gets a constructor of a class.
+   *
+   * @param <T>
+   *     the type of the objects in the specified class.
+   * @param cls
+   *     The class on which to get the constructor.
+   * @param paramType1
+   *     The type of the first parameter of the constructor.
+   * @param paramType2
+   *     The type of the second parameter of the constructor.
+   * @return
+   *     The specified constructor, or {@code null} if no such constructor.
+   * @throws ReflectionException
+   *     if any error occurred.
+   */
+  @Nullable
+  public static <T> Constructor<T> getConstructor(final Class<T> cls,
+      final Class<?> paramType1, final Class<?> paramType2) {
+    return getConstructor(cls, Option.DEFAULT, new Class<?>[] { paramType1, paramType2 });
+  }
+
+  /**
    * Gets a constructor of a class that matches the given parameter types.
    *
    * @param <T>
@@ -170,11 +226,13 @@ public class ConstructorUtils {
    * @param paramTypes
    *     The types of the parameters of the constructor to be get, or an empty
    *     array if the constructor to be get has no parameter.
-   * @return the specified constructor, or {@code null} if no such field.
+   * @return
+   *     The specified constructor, or {@code null} if no such constructor.
    * @throws ReflectionException
    *     if any error occurred.
    */
   @SuppressWarnings("unchecked")
+  @Nullable
   public static <T> Constructor<T> getConstructor(final Class<T> cls,
       final int options, @Nullable final Class<?>[] paramTypes)
       throws ReflectionException {
@@ -212,11 +270,13 @@ public class ConstructorUtils {
    * @param paramTypes
    *     The types of the compatible parameters of the constructor to be get, or
    *     an empty array if the constructor to be get has no parameter.
-   * @return the specified constructor, or {@code null} if no such field.
+   * @return
+   *     The specified constructor, or {@code null} if no such constructor.
    * @throws ReflectionException
    *     if any error occurred.
    */
   @SuppressWarnings("unchecked")
+  @Nullable
   public static <T> Constructor<T> getMatchingConstructor(final Class<T> cls,
       final int options, final Class<?>[] paramTypes)
       throws ReflectionException {
