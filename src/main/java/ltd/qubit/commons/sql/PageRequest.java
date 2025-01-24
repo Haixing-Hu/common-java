@@ -43,9 +43,15 @@ public final class PageRequest {
    *     the parameters of the page request.
    * @return
    *     a {@link PageRequest} with the specified or default page index and page
-   *     size.
+   *     size. If {@link params#isRequestAll()} is {@code true}, then this
+   *     function will return {@code null}, indicating that all entities should
+   *     be returned.
    */
+  @Nullable
   public static PageRequest create(final WithPageRequestParams params) {
+    if (params.isRequestAll()) {
+      return null;
+    }
     return create(params.getPageIndex(), params.getPageSize());
   }
 

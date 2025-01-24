@@ -33,4 +33,14 @@ public interface WithPageRequestParams {
    */
   @Nullable
   Integer getPageSize();
+
+  /**
+   * 是否请求所有数据。
+   * <p>
+   * 若为{@code true}，则忽略{@code pageIndex}和{@code pageSize}，
+   *
+   * @return
+   *     {@code true}表示请求所有数据；{@code false}表示请求分页数据。
+   */
+  boolean isRequestAll();
 }

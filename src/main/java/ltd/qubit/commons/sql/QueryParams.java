@@ -17,7 +17,7 @@ import ltd.qubit.commons.reflect.impl.GetterMethod;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * 查询参数的基类。
+ * 分页查询参数的基类。
  *
  * @author 胡海星
  */
@@ -51,6 +51,13 @@ public abstract class QueryParams<T> implements WithPageRequestParams, WithSortR
    */
   @Nullable
   protected Integer pageSize;
+
+  /**
+   * 是否请求所有数据。
+   * <p>
+   * 若为{@code true}，则忽略{@code pageIndex}和{@code pageSize}，
+   */
+  protected boolean requestAll = false;
 
   /**
    * 用于排序的属性名称（CamelCase形式）。若为{@code null}则使用默认排序。
@@ -109,6 +116,15 @@ public abstract class QueryParams<T> implements WithPageRequestParams, WithSortR
   }
 
   @Override
+  public boolean isRequestAll() {
+    return requestAll;
+  }
+
+  public void setRequestAll(final boolean requestAll) {
+    this.requestAll = requestAll;
+  }
+
+  @Override
   @Nullable
   public String getSortField() {
     return sortField;
@@ -150,6 +166,7 @@ public abstract class QueryParams<T> implements WithPageRequestParams, WithSortR
     final QueryParams<T> other = (QueryParams<T>) o;
     return Equality.equals(pageIndex, other.pageIndex)
         && Equality.equals(pageSize, other.pageSize)
+        && Equality.equals(requestAll, other.requestAll)
         && Equality.equals(sortField, other.sortField)
         && Equality.equals(sortOrder, other.sortOrder)
         && Equality.equals(nullSortOption, other.nullSortOption);
@@ -161,6 +178,7 @@ public abstract class QueryParams<T> implements WithPageRequestParams, WithSortR
     int result = 3;
     result = Hash.combine(result, multiplier, pageIndex);
     result = Hash.combine(result, multiplier, pageSize);
+    result = Hash.combine(result, multiplier, requestAll);
     result = Hash.combine(result, multiplier, sortField);
     result = Hash.combine(result, multiplier, sortOrder);
     result = Hash.combine(result, multiplier, nullSortOption);
@@ -172,6 +190,7 @@ public abstract class QueryParams<T> implements WithPageRequestParams, WithSortR
     return new ToStringBuilder(this)
         .append("pageIndex", pageIndex)
         .append("pageSize", pageSize)
+        .append("requestAll", requestAll)
         .append("sortField", sortField)
         .append("sortOrder", sortOrder)
         .append("nullSortOption", nullSortOption)
