@@ -18,14 +18,13 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.reflect.impl.GetterMethod;
 import ltd.qubit.commons.text.SqlLikePattern;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
+import ltd.qubit.commons.util.ComparisonOperator;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.reflect.FieldUtils.getFieldName;
 import static ltd.qubit.commons.reflect.ObjectGraphUtils.getPropertyType;
 import static ltd.qubit.commons.reflect.ObjectGraphUtils.getPropertyValue;
 import static ltd.qubit.commons.reflect.ObjectGraphUtils.hasProperty;
-import static ltd.qubit.commons.sql.ComparisonOperator.EQUAL;
-import static ltd.qubit.commons.sql.ComparisonOperator.NOT_EQUAL;
 import static ltd.qubit.commons.sql.impl.CriterionImplUtils.arrayToSql;
 import static ltd.qubit.commons.sql.impl.CriterionImplUtils.fieldToSql;
 import static ltd.qubit.commons.sql.impl.CriterionImplUtils.isComparable;
@@ -33,6 +32,8 @@ import static ltd.qubit.commons.sql.impl.CriterionImplUtils.isSupportedDataType;
 import static ltd.qubit.commons.sql.impl.CriterionImplUtils.toComparableValue;
 import static ltd.qubit.commons.sql.impl.CriterionImplUtils.valueToSql;
 import static ltd.qubit.commons.text.NamingStyleUtils.propertyPathToDatabaseField;
+import static ltd.qubit.commons.util.ComparisonOperator.EQUAL;
+import static ltd.qubit.commons.util.ComparisonOperator.NOT_EQUAL;
 
 /**
  * 此模型表示用于过滤实体的简单条件表达式。

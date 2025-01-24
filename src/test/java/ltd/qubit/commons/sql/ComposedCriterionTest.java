@@ -10,6 +10,7 @@ package ltd.qubit.commons.sql;
 
 import java.sql.SQLSyntaxErrorException;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -17,10 +18,10 @@ import ltd.qubit.commons.reflect.testbed.Foo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import static ltd.qubit.commons.sql.ComparisonOperator.EQUAL;
-import static ltd.qubit.commons.sql.ComparisonOperator.IN;
-import static ltd.qubit.commons.sql.ComparisonOperator.LESS;
-import static ltd.qubit.commons.sql.ComparisonOperator.NOT_EQUAL;
+import static ltd.qubit.commons.util.ComparisonOperator.EQUAL;
+import static ltd.qubit.commons.util.ComparisonOperator.IN;
+import static ltd.qubit.commons.util.ComparisonOperator.LESS;
+import static ltd.qubit.commons.util.ComparisonOperator.NOT_EQUAL;
 import static ltd.qubit.commons.util.LogicRelation.AND;
 import static ltd.qubit.commons.util.LogicRelation.NOT;
 
@@ -57,8 +58,7 @@ public class ComposedCriterionTest {
     assertEquals("(`field1` < 'value') AND (`field2` IS NULL) AND "
             + "(`field3` != `field4`) AND (`field5` IN (1, 2, 3))", cc1.toSql());
 
-    final ComposedCriterion<Foo> cc2 = new ComposedCriterion<>(Foo.class, NOT,
-        Arrays.asList(c1));
+    final ComposedCriterion<Foo> cc2 = new ComposedCriterion<>(Foo.class, NOT, List.of(c1));
     assertEquals("NOT (`field1` < 'value')", cc2.toSql());
 
   }

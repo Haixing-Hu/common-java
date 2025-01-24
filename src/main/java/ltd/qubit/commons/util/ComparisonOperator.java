@@ -1,12 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
-package ltd.qubit.commons.sql;
+package ltd.qubit.commons.util;
 
 /**
  * 此枚举表示表达式左右之间的比较操作符。
@@ -67,6 +67,42 @@ public enum ComparisonOperator {
    * <p>通配符表达式使用标准SQL的语法。</p>
    */
   NOT_LIKE("NOT LIKE");
+
+  /**
+   * 返回指定数据类型所支持的所有比较操作符。
+   *
+   * @param dataType
+   *     指定的数据类型。
+   * @return
+   *     指定数据类型所支持的所有比较操作符。
+   */
+  ComparisonOperator[] forDataType(final DataType dataType) {
+    switch (dataType) {
+      case INTEGER:
+      case DECIMAL:
+      case DATE:
+      case TIME:
+      case DATETIME:
+      case TIMESTAMP:
+        return new ComparisonOperator[] {
+            EQUAL, NOT_EQUAL, LESS, LESS_EQUAL, GREATER, GREATER_EQUAL, IN, NOT_IN
+        };
+      case STRING:
+        return new ComparisonOperator[] {
+            EQUAL, NOT_EQUAL, LIKE, NOT_LIKE, IN, NOT_IN
+        };
+      case BOOLEAN:
+        return new ComparisonOperator[] {
+            EQUAL, NOT_EQUAL
+        };
+      case ENUM:
+        return new ComparisonOperator[] {
+            EQUAL, NOT_EQUAL, IN, NOT_IN
+        };
+      default:
+        throw new IllegalArgumentException("Unsupported data type: " + dataType);
+    }
+  }
 
   private final String symbol;
 

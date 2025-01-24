@@ -32,8 +32,9 @@ import ltd.qubit.commons.lang.LocalTimeUtils;
 import ltd.qubit.commons.lang.LongUtils;
 import ltd.qubit.commons.lang.ShortUtils;
 import ltd.qubit.commons.lang.StringUtils;
-import ltd.qubit.commons.testbed.model.Foo;
 import ltd.qubit.commons.reflect.testbed.State;
+import ltd.qubit.commons.testbed.model.Foo;
+import ltd.qubit.commons.util.ComparisonOperator;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -50,17 +51,17 @@ import static ltd.qubit.commons.reflect.FieldUtils.writeField;
 import static ltd.qubit.commons.reflect.ObjectGraphUtils.getPropertyValue;
 import static ltd.qubit.commons.reflect.ObjectGraphUtils.setPropertyValue;
 import static ltd.qubit.commons.reflect.Option.BEAN_FIELD;
-import static ltd.qubit.commons.sql.ComparisonOperator.EQUAL;
-import static ltd.qubit.commons.sql.ComparisonOperator.GREATER;
-import static ltd.qubit.commons.sql.ComparisonOperator.GREATER_EQUAL;
-import static ltd.qubit.commons.sql.ComparisonOperator.IN;
-import static ltd.qubit.commons.sql.ComparisonOperator.LESS;
-import static ltd.qubit.commons.sql.ComparisonOperator.LESS_EQUAL;
-import static ltd.qubit.commons.sql.ComparisonOperator.LIKE;
-import static ltd.qubit.commons.sql.ComparisonOperator.NOT_EQUAL;
-import static ltd.qubit.commons.sql.ComparisonOperator.NOT_IN;
-import static ltd.qubit.commons.sql.ComparisonOperator.NOT_LIKE;
 import static ltd.qubit.commons.sql.impl.CriterionImplUtils.isSupportedDataType;
+import static ltd.qubit.commons.util.ComparisonOperator.EQUAL;
+import static ltd.qubit.commons.util.ComparisonOperator.GREATER;
+import static ltd.qubit.commons.util.ComparisonOperator.GREATER_EQUAL;
+import static ltd.qubit.commons.util.ComparisonOperator.IN;
+import static ltd.qubit.commons.util.ComparisonOperator.LESS;
+import static ltd.qubit.commons.util.ComparisonOperator.LESS_EQUAL;
+import static ltd.qubit.commons.util.ComparisonOperator.LIKE;
+import static ltd.qubit.commons.util.ComparisonOperator.NOT_EQUAL;
+import static ltd.qubit.commons.util.ComparisonOperator.NOT_IN;
+import static ltd.qubit.commons.util.ComparisonOperator.NOT_LIKE;
 
 public class SimpleCriterionTest {
 

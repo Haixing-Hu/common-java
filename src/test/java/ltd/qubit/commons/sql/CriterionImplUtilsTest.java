@@ -48,6 +48,7 @@ import ltd.qubit.commons.lang.ShortUtils;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.testbed.model.Foo;
 import ltd.qubit.commons.testbed.model.Gender;
+import ltd.qubit.commons.util.ComparisonOperator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -61,21 +62,21 @@ import static ltd.qubit.commons.lang.DateUtils.getTime;
 import static ltd.qubit.commons.lang.DateUtils.getTimestamp;
 import static ltd.qubit.commons.reflect.FieldUtils.getAllFields;
 import static ltd.qubit.commons.reflect.Option.BEAN_FIELD;
-import static ltd.qubit.commons.sql.ComparisonOperator.EQUAL;
-import static ltd.qubit.commons.sql.ComparisonOperator.GREATER;
-import static ltd.qubit.commons.sql.ComparisonOperator.GREATER_EQUAL;
-import static ltd.qubit.commons.sql.ComparisonOperator.IN;
-import static ltd.qubit.commons.sql.ComparisonOperator.LESS;
-import static ltd.qubit.commons.sql.ComparisonOperator.LESS_EQUAL;
-import static ltd.qubit.commons.sql.ComparisonOperator.LIKE;
-import static ltd.qubit.commons.sql.ComparisonOperator.NOT_EQUAL;
-import static ltd.qubit.commons.sql.ComparisonOperator.NOT_IN;
-import static ltd.qubit.commons.sql.ComparisonOperator.NOT_LIKE;
 import static ltd.qubit.commons.sql.impl.CriterionImplUtils.boolToSql;
 import static ltd.qubit.commons.sql.impl.CriterionImplUtils.isComparable;
 import static ltd.qubit.commons.sql.impl.CriterionImplUtils.isSupportedDataType;
 import static ltd.qubit.commons.sql.impl.CriterionImplUtils.stringToSql;
 import static ltd.qubit.commons.sql.impl.CriterionImplUtils.valueToSql;
+import static ltd.qubit.commons.util.ComparisonOperator.EQUAL;
+import static ltd.qubit.commons.util.ComparisonOperator.GREATER;
+import static ltd.qubit.commons.util.ComparisonOperator.GREATER_EQUAL;
+import static ltd.qubit.commons.util.ComparisonOperator.IN;
+import static ltd.qubit.commons.util.ComparisonOperator.LESS;
+import static ltd.qubit.commons.util.ComparisonOperator.LESS_EQUAL;
+import static ltd.qubit.commons.util.ComparisonOperator.LIKE;
+import static ltd.qubit.commons.util.ComparisonOperator.NOT_EQUAL;
+import static ltd.qubit.commons.util.ComparisonOperator.NOT_IN;
+import static ltd.qubit.commons.util.ComparisonOperator.NOT_LIKE;
 
 public class CriterionImplUtilsTest {
 
@@ -123,7 +124,7 @@ public class CriterionImplUtilsTest {
     assertEquals("-123", valueToSql((byte) -123));
     assertEquals("123", valueToSql((short) +123));
     assertEquals("12345", valueToSql(12345));
-    assertEquals("1234567890", valueToSql(1234567890l));
+    assertEquals("1234567890", valueToSql(1234567890L));
     assertEquals("123.45", valueToSql(123.45f));
     assertEquals("123.45", valueToSql(123.45));
     assertEquals("12345678901234567890",
