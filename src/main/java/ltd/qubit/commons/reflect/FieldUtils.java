@@ -414,6 +414,7 @@ public class FieldUtils {
    * @throws ReflectionException
    *     if any error occurred.
    */
+  @Nullable
   public static Field getField(final Class<?> cls, final String name)
       throws ReflectionException {
     return getField(cls, Option.DEFAULT, name);
@@ -434,8 +435,8 @@ public class FieldUtils {
    *     指定的 getter 对应的属性对象；若指定的方法引用不是合法的 Java Bean getter，或者
    *     指定的 getter 没有对应的属性，返回{@code null}。
    */
-  public static <T, R> Field getField(final Class<T> cls,
-      final GetterMethod<T, R> getterRef) {
+  @Nullable
+  public static <T, R> Field getField(final Class<T> cls, final GetterMethod<T, R> getterRef) {
     final FieldInfo info = getFieldInfo(cls, getterRef);
     return (info == null ? null : info.getField());
   }
@@ -455,8 +456,8 @@ public class FieldUtils {
    *     指定的 setter 对应的属性对象；若指定的方法引用不是合法的 Java Bean getter，或者
    *     指定的 setter 没有对应的属性，返回{@code null}。
    */
-  public static <T, P> Field getField(final Class<T> cls,
-      final SetterMethod<T, P> setterRef) {
+  @Nullable
+  public static <T, P> Field getField(final Class<T> cls, final SetterMethod<T, P> setterRef) {
     final FieldInfo info = getFieldInfo(cls, setterRef);
     return (info == null ? null : info.getField());
   }
@@ -474,8 +475,8 @@ public class FieldUtils {
    *     指定的 setter 对应的属性对象；若指定的方法引用不是合法的 Java Bean getter，或者
    *     指定的 setter 没有对应的属性，返回{@code null}。
    */
-  public static <T> Field getField(final Class<T> cls,
-      final SetterMethodBoolean<T> setterRef) {
+  @Nullable
+  public static <T> Field getField(final Class<T> cls, final SetterMethodBoolean<T> setterRef) {
     final FieldInfo info = getFieldInfo(cls, setterRef);
     return (info == null ? null : info.getField());
   }
@@ -493,8 +494,8 @@ public class FieldUtils {
    *     指定的 setter 对应的属性对象；若指定的方法引用不是合法的 Java Bean getter，或者
    *     指定的 setter 没有对应的属性，返回{@code null}。
    */
-  public static <T> Field getField(final Class<T> cls,
-      final SetterMethodByte<T> setterRef) {
+  @Nullable
+  public static <T> Field getField(final Class<T> cls, final SetterMethodByte<T> setterRef) {
     final FieldInfo info = getFieldInfo(cls, setterRef);
     return (info == null ? null : info.getField());
   }
@@ -514,12 +515,33 @@ public class FieldUtils {
    *     指定的 getter 对应的属性的名称；若指定的方法引用不是合法的 Java Bean getter，返回
    *     {@code null}。
    */
-  public static <T, R> String getFieldName(final Class<T> cls,
-      final GetterMethod<T, R> getterRef) {
+  @Nullable
+  public static <T, R> String getFieldName(final Class<T> cls, final GetterMethod<T, R> getterRef) {
     final Method getter = MethodUtils.getMethodByReference(cls, getterRef);
     return PropertyUtils.getPropertyNameFromGetter(getter);
   }
 
+  /**
+   * 根据指定的  Java Bean 的 getter 的方法引用，获取其对应的属性的名称。
+   *
+   * @param cls
+   *     指定的 Java Bean的类对象。
+   * @param getterRef
+   *     指定的 getter 的方法引用。
+   * @return
+   *     指定的 getter 对应的属性的名称。
+   * @throws IllegalArgumentException
+   *     若指定的方法引用不是合法的 Java Bean getter.
+   */
+  @SuppressWarnings("unchecked")
+  public static <T> String getFieldNameGeneric(final Class<?> cls,
+      final GetterMethod<T, ?> getterRef) {
+    final String name = getFieldName((Class<T>) cls, (GetterMethod<T, ?>) getterRef);
+    if (name == null) {
+      throw new IllegalArgumentException("The getter method reference is not a valid getter of the specified class.");
+    }
+    return name;
+  }
 
   /**
    * 根据指定的  Java Bean 的 getter 的方法引用数组，获取其对应的属性的名称列表。
@@ -534,8 +556,7 @@ public class FieldUtils {
    *     指定的 getter 对应的属性的名称列表。
    */
   @SafeVarargs
-  public static <T> List<String> getFieldNames(final Class<T> cls,
-      final GetterMethod<T, ?> ... getterRefs ) {
+  public static <T> List<String> getFieldNames(final Class<T> cls, final GetterMethod<T, ?> ... getterRefs ) {
     final List<String> result = new ArrayList<>();
     for (final GetterMethod<T, ?> getterRef : getterRefs) {
       final Method getter = MethodUtils.getMethodByReference(cls, getterRef);
@@ -562,11 +583,33 @@ public class FieldUtils {
    *     指定的 setter 对应的属性的名称；若指定的方法引用不是合法的 Java Bean setter，返回
    *     {@code null}。
    */
-  public static <T, R> String getFieldName(final Class<T> cls,
-      final SetterMethod<T, R> setterRef) {
+  @Nullable
+  public static <T, R> String getFieldName(final Class<T> cls, final SetterMethod<T, R> setterRef) {
     final Method setter = MethodUtils.getMethodByReference(cls, setterRef);
     return PropertyUtils.getPropertyNameFromSetter(setter);
   }
+
+  /**
+   * 根据指定的  Java Bean 的 setter 的方法引用，获取其对应的属性的名称。
+   *
+   * @param cls
+   *     指定的 Java Bean的类对象。
+   * @param setterRef
+   *     指定的 setter 的方法引用。
+   * @return
+   *     指定的 setter 对应的属性的名称。
+   * @throws IllegalArgumentException
+   *     若指定的方法引用不是合法的 Java Bean getter.
+   */
+  @SuppressWarnings("unchecked")
+  public static <T> String getFieldNameGeneric(final Class<?> cls, final SetterMethod<T, ?> setterRef) {
+    final String name = getFieldName((Class<Object>) cls, (SetterMethod<Object, Object>) setterRef);
+    if (name == null) {
+      throw new IllegalArgumentException("The getter method reference is not a valid getter of the specified class.");
+    }
+    return name;
+  }
+
 
   /**
    * 根据指定的  Java Bean 的 setter 的方法引用，获取其对应的属性的名称。

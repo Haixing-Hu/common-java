@@ -56,6 +56,7 @@ import static ltd.qubit.commons.reflect.FieldUtils.getAllFields;
 import static ltd.qubit.commons.reflect.FieldUtils.getAnnotation;
 import static ltd.qubit.commons.reflect.FieldUtils.getField;
 import static ltd.qubit.commons.reflect.FieldUtils.getFieldName;
+import static ltd.qubit.commons.reflect.FieldUtils.getFieldNameGeneric;
 import static ltd.qubit.commons.reflect.FieldUtils.getReadMethod;
 import static ltd.qubit.commons.reflect.FieldUtils.getWriteMethod;
 import static ltd.qubit.commons.reflect.FieldUtils.hasField;
@@ -116,8 +117,7 @@ public class FieldUtilsTest {
     final HashSet<Field> expected = new HashSet<>();
     final HashSet<Field> actual = new HashSet<>();
 
-    fillSet(expected,
-        Arrays.asList(Interface.class.getDeclaredField("VALUE1")));
+    fillSet(expected, List.of(Interface.class.getDeclaredField("VALUE1")));
     fillSet(actual, getAllFields(Interface.class, ALL));
     assertEquals(expected, actual);
 
@@ -133,8 +133,7 @@ public class FieldUtilsTest {
     fillSet(actual, getAllFields(Interface.class, STATIC | PROTECTED));
     assertEquals(expected, actual);
 
-    fillSet(expected,
-        Arrays.asList(Interface.class.getDeclaredField("VALUE1")));
+    fillSet(expected, List.of(Interface.class.getDeclaredField("VALUE1")));
     fillSet(actual, getAllFields(Interface.class, STATIC | PUBLIC));
     assertEquals(expected, actual);
 
@@ -1123,6 +1122,20 @@ public class FieldUtilsTest {
     assertThat(getFieldName(App.class, App::isPredefined))
         .isEqualTo("predefined");
     assertThat(getFieldName(App.class, App::toString)).isEqualTo("toString");
+  }
+
+
+  @Test
+  public void testGetFieldNameGenericByGetter() {
+    assertThat(getFieldNameGeneric(App.class, App::getId))
+        .isEqualTo("id");
+    assertThat(getFieldNameGeneric(App.class, App::getCode))
+        .isEqualTo("code");
+    assertThat(getFieldNameGeneric(App.class, App::getCreateTime))
+        .isEqualTo("createTime");
+    assertThat(getFieldNameGeneric(App.class, App::isPredefined))
+        .isEqualTo("predefined");
+    assertThat(getFieldNameGeneric(App.class, App::toString)).isEqualTo("toString");
   }
 
   @Test

@@ -14,8 +14,11 @@ import java.util.HashMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ltd.qubit.commons.reflect.testbed.City;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Unit test for the ToStringBuilder class.
@@ -598,6 +601,27 @@ public class ToStringBuilderTest {
     final ToStringBuilder builder = new ToStringBuilder(MultiLineToStringStyle.INSTANCE);
     builder.reset(this).appendToString(obj.toString());
     assertEquals(builder.toString().indexOf("testInt=31337"), - 1);
+  }
+
+  @Test
+  public void testToStringBuilderWithGetter() {
+    final City city = new City();
+    city.setId(123L);
+    city.setCode("NJ");
+    city.setName("Nanjing");
+    city.setLevel(1);
+    city.setPhoneArea("025");
+    city.setPostalcode("210000");
+    final String result = new ToStringBuilder(city)
+        .append(City::getId, city.getId())
+        .append(City::getCode, city.getCode())
+        .append(City::getName, city.getName())
+        .append(City::getLevel, city.getLevel())
+        .append(City::getPhoneArea, city.getPhoneArea())
+        .append(City::getPostalcode, city.getPostalcode())
+        .toString();
+    assertTrue(result.startsWith("ltd.qubit.commons.reflect.testbed.City@"));
+    assertTrue(result.endsWith("[id=123,code=\"NJ\",name=\"Nanjing\",level=1,phoneArea=\"025\",postalcode=\"210000\"]"));
   }
 
 }

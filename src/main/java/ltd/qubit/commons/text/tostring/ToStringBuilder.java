@@ -19,6 +19,12 @@ import jakarta.xml.bind.DatatypeConverter;
 
 import ltd.qubit.commons.lang.Argument;
 import ltd.qubit.commons.lang.DateUtils;
+import ltd.qubit.commons.reflect.impl.GetterMethod;
+
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
+import static ltd.qubit.commons.reflect.FieldUtils.getFieldNameGeneric;
 
 /**
  * This class assists in implementing {@link Object#toString()} methods.
@@ -90,10 +96,7 @@ public class ToStringBuilder {
   }
 
   public ToStringBuilder(@Nullable final Object object) {
-    builder = new StringBuilder(INITIAL_BUFFER_SIZE);
-    style = ToStringStyle.getDefault();
-    this.object = object;
-    style.appendStart(builder, this.object);
+    this(ToStringStyle.getDefault(), object);
   }
 
   public ToStringBuilder(final ToStringStyle style,
@@ -223,16 +226,13 @@ public class ToStringBuilder {
     return this;
   }
 
-  public ToStringBuilder append(final String name,
-      @Nullable final boolean[] value) {
+  public ToStringBuilder append(final String name, @Nullable final boolean[] value) {
     style.append(builder, name, value, null);
     return this;
   }
 
-  public ToStringBuilder append(final String name,
-      @Nullable final boolean[] value, final boolean fullDetail) {
-    style.append(builder, name, value, (fullDetail ? Boolean.TRUE
-                                                   : Boolean.FALSE));
+  public ToStringBuilder append(final String name, @Nullable final boolean[] value, final boolean fullDetail) {
+    style.append(builder, name, value, (fullDetail ? TRUE : FALSE));
     return this;
   }
 
@@ -241,16 +241,13 @@ public class ToStringBuilder {
     return this;
   }
 
-  public ToStringBuilder append(final String name,
-      @Nullable final char[] value) {
+  public ToStringBuilder append(final String name, @Nullable final char[] value) {
     style.append(builder, name, value, null);
     return this;
   }
 
-  public ToStringBuilder append(final String name,
-      @Nullable final char[] value, final boolean fullDetail) {
-    style.append(builder, name, value, (fullDetail ? Boolean.TRUE
-                                                   : Boolean.FALSE));
+  public ToStringBuilder append(final String name, @Nullable final char[] value, final boolean fullDetail) {
+    style.append(builder, name, value, (fullDetail ? TRUE : FALSE));
     return this;
   }
 
@@ -259,16 +256,13 @@ public class ToStringBuilder {
     return this;
   }
 
-  public ToStringBuilder append(final String name,
-      @Nullable final byte[] value) {
+  public ToStringBuilder append(final String name, @Nullable final byte[] value) {
     style.append(builder, name, value, null);
     return this;
   }
 
-  public ToStringBuilder append(final String name,
-      @Nullable final byte[] value, final boolean fullDetail) {
-    style.append(builder, name, value, (fullDetail ? Boolean.TRUE
-                                                   : Boolean.FALSE));
+  public ToStringBuilder append(final String name, @Nullable final byte[] value, final boolean fullDetail) {
+    style.append(builder, name, value, (fullDetail ? TRUE : FALSE));
     return this;
   }
 
@@ -277,16 +271,13 @@ public class ToStringBuilder {
     return this;
   }
 
-  public ToStringBuilder append(final String name,
-      @Nullable final short[] value) {
+  public ToStringBuilder append(final String name, @Nullable final short[] value) {
     style.append(builder, name, value, null);
     return this;
   }
 
-  public ToStringBuilder append(final String name,
-      @Nullable final short[] value, final boolean fullDetail) {
-    style.append(builder, name, value, (fullDetail ? Boolean.TRUE
-                                                   : Boolean.FALSE));
+  public ToStringBuilder append(final String name, @Nullable final short[] value, final boolean fullDetail) {
+    style.append(builder, name, value, (fullDetail ? TRUE : FALSE));
     return this;
   }
 
@@ -295,16 +286,13 @@ public class ToStringBuilder {
     return this;
   }
 
-  public ToStringBuilder append(final String name,
-      @Nullable final int[] value) {
+  public ToStringBuilder append(final String name, @Nullable final int[] value) {
     style.append(builder, name, value, null);
     return this;
   }
 
-  public ToStringBuilder append(final String name, @Nullable final int[] value,
-      final boolean fullDetail) {
-    style.append(builder, name, value, (fullDetail ? Boolean.TRUE
-                                                   : Boolean.FALSE));
+  public ToStringBuilder append(final String name, @Nullable final int[] value, final boolean fullDetail) {
+    style.append(builder, name, value, (fullDetail ? TRUE : FALSE));
     return this;
   }
 
@@ -319,10 +307,8 @@ public class ToStringBuilder {
     return this;
   }
 
-  public ToStringBuilder append(final String name,
-      @Nullable final long[] value, final boolean fullDetail) {
-    style.append(builder, name, value, (fullDetail ? Boolean.TRUE
-                                                   : Boolean.FALSE));
+  public ToStringBuilder append(final String name, @Nullable final long[] value, final boolean fullDetail) {
+    style.append(builder, name, value, (fullDetail ? TRUE : FALSE));
     return this;
   }
 
@@ -337,10 +323,8 @@ public class ToStringBuilder {
     return this;
   }
 
-  public ToStringBuilder append(final String name,
-      @Nullable final float[] value, final boolean fullDetail) {
-    style.append(builder, name, value, (fullDetail ? Boolean.TRUE
-                                                   : Boolean.FALSE));
+  public ToStringBuilder append(final String name, @Nullable final float[] value, final boolean fullDetail) {
+    style.append(builder, name, value, (fullDetail ? TRUE : FALSE));
     return this;
   }
 
@@ -355,10 +339,8 @@ public class ToStringBuilder {
     return this;
   }
 
-  public ToStringBuilder append(final String name,
-      @Nullable final double[] value, final boolean fullDetail) {
-    style.append(builder, name, value, (fullDetail ? Boolean.TRUE
-                                                   : Boolean.FALSE));
+  public ToStringBuilder append(final String name, @Nullable final double[] value, final boolean fullDetail) {
+    style.append(builder, name, value, (fullDetail ? TRUE : FALSE));
     return this;
   }
 
@@ -374,22 +356,18 @@ public class ToStringBuilder {
     return this;
   }
 
-  public ToStringBuilder append(final String name,
-      @Nullable final String value) {
+  public ToStringBuilder append(final String name, @Nullable final String value) {
     style.append(builder, name, value, null);
     return this;
   }
 
-  public ToStringBuilder append(final String name,
-      @Nullable final Object value) {
+  public ToStringBuilder append(final String name, @Nullable final Object value) {
     style.append(builder, name, value, null);
     return this;
   }
 
-  public ToStringBuilder append(final String name,
-      @Nullable final Object value, final boolean fullDetail) {
-    style.append(builder, name, value, (fullDetail ? Boolean.TRUE
-                                                   : Boolean.FALSE));
+  public ToStringBuilder append(final String name, @Nullable final Object value, final boolean fullDetail) {
+    style.append(builder, name, value, (fullDetail ? TRUE : FALSE));
     return this;
   }
 
@@ -399,10 +377,195 @@ public class ToStringBuilder {
     return this;
   }
 
-  public ToStringBuilder append(final String name,
-      @Nullable final Object[] value, final boolean fullDetail) {
-    style.append(builder, name, value, (fullDetail ? Boolean.TRUE
-                                                   : Boolean.FALSE));
+  public ToStringBuilder append(final String name, @Nullable final Object[] value, final boolean fullDetail) {
+    style.append(builder, name, value, (fullDetail ? TRUE : FALSE));
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, final boolean value) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value);
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, @Nullable final boolean[] value) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value, null);
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, @Nullable final boolean[] value, final boolean fullDetail) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value, (fullDetail ? TRUE : FALSE));
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, final char value) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value);
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, @Nullable final char[] value) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value, null);
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, @Nullable final char[] value, final boolean fullDetail) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value, (fullDetail ? TRUE : FALSE));
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, final byte value) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value);
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, @Nullable final byte[] value) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value, null);
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, @Nullable final byte[] value, final boolean fullDetail) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value, (fullDetail ? TRUE : FALSE));
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, final short value) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value);
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, @Nullable final short[] value) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value, null);
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, @Nullable final short[] value, final boolean fullDetail) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value, (fullDetail ? TRUE : FALSE));
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, final int value) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value);
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, @Nullable final int[] value) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value, null);
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, @Nullable final int[] value, final boolean fullDetail) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value, (fullDetail ? TRUE : FALSE));
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, final long value) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value);
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, @Nullable final long[] value) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value, null);
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, @Nullable final long[] value, final boolean fullDetail) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value, (fullDetail ? TRUE : FALSE));
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, final float value) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value);
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, @Nullable final float[] value) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value, null);
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, @Nullable final float[] value, final boolean fullDetail) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value, (fullDetail ? TRUE : FALSE));
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, final double value) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value);
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, @Nullable final double[] value) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value, null);
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, @Nullable final double[] value, final boolean fullDetail) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value, (fullDetail ? TRUE : FALSE));
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, @Nullable final Date value) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    if (value == null) {
+      style.append(builder, name, (String) null, null);
+    } else {
+      final Calendar cal = new GregorianCalendar(DateUtils.UTC);
+      cal.setTime(value);
+      final String str = DatatypeConverter.printDateTime(cal);
+      style.append(builder, name, str, null);
+    }
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, @Nullable final String value) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value, null);
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, @Nullable final Object value) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value, null);
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, @Nullable final Object value, final boolean fullDetail) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value, (fullDetail ? TRUE : FALSE));
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, @Nullable final Object[] value) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value, null);
+    return this;
+  }
+
+  public <T> ToStringBuilder append(final GetterMethod<T,?> getter, @Nullable final Object[] value, final boolean fullDetail) {
+    final String name = getFieldNameGeneric(object.getClass(), getter);
+    style.append(builder, name, value, (fullDetail ? TRUE : FALSE));
     return this;
   }
 

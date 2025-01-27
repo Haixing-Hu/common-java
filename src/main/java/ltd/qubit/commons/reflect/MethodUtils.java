@@ -954,8 +954,7 @@ public class MethodUtils {
    *     该方法引用对应的方法的{@link Method}对象。
    */
   @SuppressWarnings("unchecked")
-  public static <T, R> Method getMethodByReference(final Class<T> clazz,
-      final NonVoidMethod0<T, R> ref) {
+  public static <T, R> Method getMethodByReference(final Class<T> clazz, final NonVoidMethod0<T, R> ref) {
     final ReferenceToMethodCache<T> cache = (ReferenceToMethodCache<T>) GETTER_METHOD_CACHES.get(clazz);
     return cache.computeIfAbsent(ref, (g) -> {
       if (clazz.isRecord()) {
@@ -965,7 +964,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (NonVoidMethod0<T, R>) g);
       } else {
-        return findMethod(clazz, (NonVoidMethod0<T, R>) g);
+        try {
+          return findMethod(clazz, (NonVoidMethod0<T, R>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (NonVoidMethod0<T, R>) g);
+        }
       }
     });
   }
@@ -980,7 +983,11 @@ public class MethodUtils {
           } else if (Modifier.isFinal(clazz.getModifiers())) {
             return findMethodBySerialization(clazz, (NonVoidMethod1<T, R, P1>) g);
           } else {
-            return findMethod(clazz, (NonVoidMethod1<T, R, P1>) g);
+            try {
+              return findMethod(clazz, (NonVoidMethod1<T, R, P1>) g);
+            } catch (final IllegalArgumentException e) {
+              return findMethodBySerialization(clazz, (NonVoidMethod1<T, R, P1>) g);
+            }
           }
         });
   }
@@ -995,7 +1002,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (NonVoidMethod1Boolean<T, R>) g);
       } else {
-        return findMethod(clazz, (NonVoidMethod1Boolean<T, R>) g);
+        try {
+          return findMethod(clazz, (NonVoidMethod1Boolean<T, R>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (NonVoidMethod1Boolean<T, R>) g);
+        }
       }
     });
   }
@@ -1019,7 +1030,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (NonVoidMethod1Byte<T, R>) g);
       } else {
-        return findMethod(clazz, (NonVoidMethod1Byte<T, R>) g);
+        try {
+          return findMethod(clazz, (NonVoidMethod1Byte<T, R>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (NonVoidMethod1Byte<T, R>) g);
+        }
       }
     });
   }
@@ -1079,7 +1094,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (NonVoidMethod2<T, R, P1, P2>) g);
       } else {
-        return findMethod(clazz, (NonVoidMethod2<T, R, P1, P2>) g);
+        try {
+          return findMethod(clazz, (NonVoidMethod2<T, R, P1, P2>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (NonVoidMethod2<T, R, P1, P2>) g);
+        }
       }
     });
   }
@@ -1094,7 +1113,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (NonVoidMethod3<T, R, P1, P2, P3>) g);
       } else {
-        return findMethod(clazz, (NonVoidMethod3<T, R, P1, P2, P3>) g);
+        try {
+          return findMethod(clazz, (NonVoidMethod3<T, R, P1, P2, P3>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (NonVoidMethod3<T, R, P1, P2, P3>) g);
+        }
       }
     });
   }
@@ -1109,7 +1132,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (NonVoidMethod4<T, R, P1, P2, P3, P4>) g);
       } else {
-        return findMethod(clazz, (NonVoidMethod4<T, R, P1, P2, P3, P4>) g);
+        try {
+          return findMethod(clazz, (NonVoidMethod4<T, R, P1, P2, P3, P4>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (NonVoidMethod4<T, R, P1, P2, P3, P4>) g);
+        }
       }
     });
   }
@@ -1124,7 +1151,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (NonVoidMethod5<T, R, P1, P2, P3, P4, P5>) g);
       } else {
-        return findMethod(clazz, (NonVoidMethod5<T, R, P1, P2, P3, P4, P5>) g);
+        try {
+          return findMethod(clazz, (NonVoidMethod5<T, R, P1, P2, P3, P4, P5>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (NonVoidMethod5<T, R, P1, P2, P3, P4, P5>) g);
+        }
       }
     });
   }
@@ -1139,7 +1170,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (NonVoidMethod6<T, R, P1, P2, P3, P4, P5, P6>) g);
       } else {
-        return findMethod(clazz, (NonVoidMethod6<T, R, P1, P2, P3, P4, P5, P6>) g);
+        try {
+          return findMethod(clazz, (NonVoidMethod6<T, R, P1, P2, P3, P4, P5, P6>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (NonVoidMethod6<T, R, P1, P2, P3, P4, P5, P6>) g);
+        }
       }
     });
   }
@@ -1154,7 +1189,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (NonVoidMethod7<T, R, P1, P2, P3, P4, P5, P6, P7>) g);
       } else {
-        return findMethod(clazz, (NonVoidMethod7<T, R, P1, P2, P3, P4, P5, P6, P7>) g);
+        try {
+          return findMethod(clazz, (NonVoidMethod7<T, R, P1, P2, P3, P4, P5, P6, P7>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (NonVoidMethod7<T, R, P1, P2, P3, P4, P5, P6, P7>) g);
+        }
       }
     });
   }
@@ -1169,7 +1208,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (NonVoidMethod8<T, R, P1, P2, P3, P4, P5, P6, P7, P8>) g);
       } else {
-        return findMethod(clazz, (NonVoidMethod8<T, R, P1, P2, P3, P4, P5, P6, P7, P8>) g);
+        try {
+          return findMethod(clazz, (NonVoidMethod8<T, R, P1, P2, P3, P4, P5, P6, P7, P8>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (NonVoidMethod8<T, R, P1, P2, P3, P4, P5, P6, P7, P8>) g);
+        }
       }
     });
   }
@@ -1184,7 +1227,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (NonVoidMethod9<T, R, P1, P2, P3, P4, P5, P6, P7, P8, P9>) g);
       } else {
-        return findMethod(clazz, (NonVoidMethod9<T, R, P1, P2, P3, P4, P5, P6, P7, P8, P9>) g);
+        try {
+          return findMethod(clazz, (NonVoidMethod9<T, R, P1, P2, P3, P4, P5, P6, P7, P8, P9>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (NonVoidMethod9<T, R, P1, P2, P3, P4, P5, P6, P7, P8, P9>) g);
+        }
       }
     });
   }
@@ -1249,7 +1296,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (VoidMethod0<T>) g);
       } else {
-        return findMethod(clazz, (VoidMethod0<T>) g);
+        try {
+          return findMethod(clazz, (VoidMethod0<T>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (VoidMethod0<T>) g);
+        }
       }
     });
   }
@@ -1267,7 +1318,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (VoidMethod1<T, P1>) g);
       } else {
-        return findMethod(clazz, (VoidMethod1<T, P1>) g);
+        try {
+          return findMethod(clazz, (VoidMethod1<T, P1>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (VoidMethod1<T, P1>) g);
+        }
       }
     });
   }
@@ -1285,7 +1340,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (VoidMethod1Boolean<T>) g);
       } else {
-        return findMethod(clazz, (VoidMethod1Boolean<T>) g);
+        try {
+          return findMethod(clazz, (VoidMethod1Boolean<T>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (VoidMethod1Boolean<T>) g);
+        }
       }
     });
   }
@@ -1312,7 +1371,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (VoidMethod1Byte<T>) g);
       } else {
-        return findMethod(clazz, (VoidMethod1Byte<T>) g);
+        try {
+          return findMethod(clazz, (VoidMethod1Byte<T>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (VoidMethod1Byte<T>) g);
+        }
       }
     });
   }
@@ -1375,7 +1438,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (VoidMethod2<T, P1, P2>) g);
       } else {
-        return findMethod(clazz, (VoidMethod2<T, P1, P2>) g);
+        try {
+          return findMethod(clazz, (VoidMethod2<T, P1, P2>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (VoidMethod2<T, P1, P2>) g);
+        }
       }
     });
   }
@@ -1393,7 +1460,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (VoidMethod3<T, P1, P2, P3>) g);
       } else {
-        return findMethod(clazz, (VoidMethod3<T, P1, P2, P3>) g);
+        try {
+          return findMethod(clazz, (VoidMethod3<T, P1, P2, P3>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (VoidMethod3<T, P1, P2, P3>) g);
+        }
       }
     });
   }
@@ -1411,7 +1482,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (VoidMethod4<T, P1, P2, P3, P4>) g);
       } else {
-        return findMethod(clazz, (VoidMethod4<T, P1, P2, P3, P4>) g);
+        try {
+          return findMethod(clazz, (VoidMethod4<T, P1, P2, P3, P4>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (VoidMethod4<T, P1, P2, P3, P4>) g);
+        }
       }
     });
   }
@@ -1429,7 +1504,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (VoidMethod5<T, P1, P2, P3, P4, P5>) g);
       } else {
-        return findMethod(clazz, (VoidMethod5<T, P1, P2, P3, P4, P5>) g);
+        try {
+          return findMethod(clazz, (VoidMethod5<T, P1, P2, P3, P4, P5>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (VoidMethod5<T, P1, P2, P3, P4, P5>) g);
+        }
       }
     });
   }
@@ -1447,7 +1526,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (VoidMethod6<T, P1, P2, P3, P4, P5, P6>) g);
       } else {
-        return findMethod(clazz, (VoidMethod6<T, P1, P2, P3, P4, P5, P6>) g);
+        try {
+          return findMethod(clazz, (VoidMethod6<T, P1, P2, P3, P4, P5, P6>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (VoidMethod6<T, P1, P2, P3, P4, P5, P6>) g);
+        }
       }
     });
   }
@@ -1465,7 +1548,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (VoidMethod7<T, P1, P2, P3, P4, P5, P6, P7>) g);
       } else {
-        return findMethod(clazz, (VoidMethod7<T, P1, P2, P3, P4, P5, P6, P7>) g);
+        try {
+          return findMethod(clazz, (VoidMethod7<T, P1, P2, P3, P4, P5, P6, P7>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (VoidMethod7<T, P1, P2, P3, P4, P5, P6, P7>) g);
+        }
       }
     });
   }
@@ -1483,7 +1570,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (VoidMethod8<T, P1, P2, P3, P4, P5, P6, P7, P8>) g);
       } else {
-        return findMethod(clazz, (VoidMethod8<T, P1, P2, P3, P4, P5, P6, P7, P8>) g);
+        try {
+          return findMethod(clazz, (VoidMethod8<T, P1, P2, P3, P4, P5, P6, P7, P8>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (VoidMethod8<T, P1, P2, P3, P4, P5, P6, P7, P8>) g);
+        }
       }
     });
   }
@@ -1501,7 +1592,11 @@ public class MethodUtils {
       } else if (Modifier.isFinal(clazz.getModifiers())) {
         return findMethodBySerialization(clazz, (VoidMethod9<T, P1, P2, P3, P4, P5, P6, P7, P8, P9>) g);
       } else {
-        return findMethod(clazz, (VoidMethod9<T, P1, P2, P3, P4, P5, P6, P7, P8, P9>) g);
+        try {
+          return findMethod(clazz, (VoidMethod9<T, P1, P2, P3, P4, P5, P6, P7, P8, P9>) g);
+        } catch (final IllegalArgumentException e) {
+          return findMethodBySerialization(clazz, (VoidMethod9<T, P1, P2, P3, P4, P5, P6, P7, P8, P9>) g);
+        }
       }
     });
   }
