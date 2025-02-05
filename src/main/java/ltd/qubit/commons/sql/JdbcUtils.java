@@ -594,4 +594,26 @@ public final class JdbcUtils {
       throw new IllegalArgumentException("Unsupported database URL: " + url);
     }
   }
+
+  /**
+   * Tests whether the database supports WITH RECURSIVE CTE.
+   *
+   * @param dataSource
+   *    a {@link DataSource}.
+   * @return
+   *    {@code true} if the database supports WITH RECURSIVE CTE; {@code false} otherwise.
+   */
+  public static boolean supportsWithRecursiveCTE(final DataSource dataSource) {
+    final String query = "WITH RECURSIVE test AS (SELECT 1 AS n UNION ALL SELECT n+1 FROM test WHERE n < 2) SELECT * FROM test;";
+    try (final Connection connection = dataSource.getConnection();
+        final Statement statement = connection.createStatement();
+        final ResultSet resultSet = statement.executeQuery(query)) {
+      // 如果查询执行成功，说明数据库支持 WITH RECURSIVE
+      return true;
+    } catch (final SQLException e) {
+      // 处理异常，如果是数据库不支持的错误，则返回 false
+      LOGGER.debug("The database does not support WITH RECURSIVE CTE: {}", e.getMessage());
+      return false;
+    }
+  }
 }
