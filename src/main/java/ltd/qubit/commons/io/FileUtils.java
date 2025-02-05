@@ -42,6 +42,7 @@ import ltd.qubit.commons.io.error.DirectoryCannotCreateException;
 import ltd.qubit.commons.io.error.DirectoryCannotListException;
 import ltd.qubit.commons.io.error.DirectoryCannotWriteException;
 import ltd.qubit.commons.io.error.DirectoryNotExistException;
+import ltd.qubit.commons.io.error.FileAlreadyExistException;
 import ltd.qubit.commons.io.error.FileCannotDeleteException;
 import ltd.qubit.commons.io.error.FileCannotReadException;
 import ltd.qubit.commons.io.error.FileCannotWriteException;
@@ -660,14 +661,26 @@ public final class FileUtils {
    * @param options
    *     a bitwise combination of the constants defined in the
    *     {@link OperationOption} class.
-   * @return true if the copying succeed; false otherwise.
    * @throws FileNotExistException
-   *     if the srcFile does not exist.
+   *     if the {@code srcFile} does not exist.
+   * @throws FileAlreadyExistException
+   *     if the {@code destFile} already exists, and the {@link OperationOption#OVERWRITE}
+   *     option is not provided.
+   * @throws FileIsDirectoryException
+   *     if the {@code srcFile} is a directory.
+   * @throws FileCannotWriteException
+   *     if the {@code srcFile} cannot be written.
+   * @throws DirectoryNotExistException
+   *     if the parent directory of the {@code destFile} does not exist, and the
+   *     {@link OperationOption#MAKE_DIRS} option is not provided.
+   * @throws DirectoryCannotCreateException
+   *     if the parent directory of the {@code destFile} does not exist and cannot
+   *     be created.
    * @throws IOException
-   *     if an IO error occurs during copying
+   *     if any other IO error occurs during copying.
    * @see OperationOption
    */
-  public static boolean copyFile(final File srcFile, final File destFile,
+  public static void copyFile(final File srcFile, final File destFile,
       final int options) throws IOException {
     if (!srcFile.exists()) {
       throw new FileNotExistException(srcFile);
@@ -677,8 +690,7 @@ public final class FileUtils {
     }
     if (destFile.exists()) {
       if ((options & OVERWRITE) == 0) {
-        // do not overwrite the existing file
-        return false;
+        throw new FileAlreadyExistException(destFile);
       }
       if (!destFile.canWrite()) {
         throw new FileCannotWriteException(destFile);
@@ -692,7 +704,7 @@ public final class FileUtils {
       if ((destParent != null) && (!destParent.exists())) {
         if ((options & MAKE_DIRS) == 0) {
           // do not create the parent directories
-          return false;
+          throw new DirectoryNotExistException(destParent);
         }
         if (!destParent.mkdirs()) {
           throw new DirectoryCannotCreateException(destParent);
@@ -705,7 +717,6 @@ public final class FileUtils {
     // now perform the copying
     final boolean preserveDate = ((options & PRESERVE_DATE) != 0);
     doCopyFile(srcFile, destFile, preserveDate);
-    return true;
   }
 
   private static void doCopyFile(final File srcFile, final File destFile,
@@ -745,14 +756,26 @@ public final class FileUtils {
    * @param options
    *     a bitwise combination of the constants defined in the
    *     {@link OperationOption} class.
-   * @return true if the copying succeed; false otherwise.
    * @throws FileNotExistException
-   *     if the srcFile does not exist.
+   *     if the {@code srcFile} does not exist.
+   * @throws FileAlreadyExistException
+   *     if the {@code destFile} already exists, and the {@link OperationOption#OVERWRITE}
+   *     option is not provided.
+   * @throws FileIsDirectoryException
+   *     if the {@code srcFile} is a directory.
+   * @throws FileCannotWriteException
+   *     if the {@code srcFile} cannot be written.
+   * @throws DirectoryNotExistException
+   *     if the parent directory of the {@code destFile} does not exist, and the
+   *     {@link OperationOption#MAKE_DIRS} option is not provided.
+   * @throws DirectoryCannotCreateException
+   *     if the parent directory of the {@code destFile} does not exist and cannot
+   *     be created.
    * @throws IOException
-   *     if an IO error occurs during copying
+   *     if any other IO error occurs during copying.
    * @see OperationOption
    */
-  public static boolean copyFileToDirectory(final File srcFile,
+  public static void copyFileToDirectory(final File srcFile,
       final File destDir, final int options) throws IOException {
     if (destDir.exists()) {
       if (!destDir.isDirectory()) {
@@ -760,7 +783,7 @@ public final class FileUtils {
       }
     }
     final File destFile = new File(destDir, srcFile.getName());
-    return copyFile(srcFile, destFile, options);
+    copyFile(srcFile, destFile, options);
   }
 
   /**
