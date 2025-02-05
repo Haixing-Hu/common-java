@@ -606,8 +606,8 @@ public final class JdbcUtils {
   public static boolean supportsWithRecursiveCTE(final DataSource dataSource) {
     final String query = "WITH RECURSIVE test AS (SELECT 1 AS n UNION ALL SELECT n+1 FROM test WHERE n < 2) SELECT * FROM test;";
     try (final Connection connection = dataSource.getConnection();
-        final Statement statement = connection.createStatement();
-        final ResultSet resultSet = statement.executeQuery(query)) {
+        final Statement statement = connection.createStatement()) {
+      statement.executeQuery(query);
       // 如果查询执行成功，说明数据库支持 WITH RECURSIVE
       return true;
     } catch (final SQLException e) {
