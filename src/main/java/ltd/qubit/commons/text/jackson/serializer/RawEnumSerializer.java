@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
+import java.io.Serial;
+
 import javax.annotation.concurrent.Immutable;
 
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -23,11 +25,13 @@ import ltd.qubit.commons.util.codec.RawEnumCodec;
 @Immutable
 public class RawEnumSerializer extends EncoderSerializer<Enum> {
 
+  @Serial
   private static final long serialVersionUID = -2540120793385986043L;
 
   public static final RawEnumSerializer INSTANCE = new RawEnumSerializer();
 
   public RawEnumSerializer() {
-    super(Enum.class, new RawEnumCodec(), JsonGenerator::writeString);
+    // make the RawEnumCodec support @JsonValue annotation
+    super(Enum.class, new RawEnumCodec(true), JsonGenerator::writeString);
   }
 }

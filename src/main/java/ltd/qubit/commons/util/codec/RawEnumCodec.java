@@ -14,6 +14,8 @@ import java.lang.reflect.Method;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import ltd.qubit.commons.lang.ArrayUtils;
@@ -31,12 +33,24 @@ import static ltd.qubit.commons.lang.StringUtils.isEmpty;
 @Immutable
 public class RawEnumCodec implements Codec<Enum, String> {
 
+  /**
+   * A cache used to store the value getter method of each enumeration class.
+   */
+  private static final ClassValue<Method> VALUE_GETTER_CACHE = new ClassValue<>() {
+    @Override
+    protected Method computeValue(@NotNull final Class<?> type) {
+      for (final Method method : type.getDeclaredMethods()) {
+        if ((method.getParameterCount() == 0) && method.isAnnotationPresent(JsonValue.class)) {
+          return method;
+        }
+      }
+      return null;
+    }
+  };
+
   private final Class<? extends Enum> enumClass;
 
   private final boolean supportJsonValue;
-
-  @Nullable
-  private final Method valueGetter;
 
   /**
    * Constructs a {@link RawEnumCodec} object.
@@ -76,11 +90,6 @@ public class RawEnumCodec implements Codec<Enum, String> {
   public RawEnumCodec(final Class<? extends Enum> enumClass, final boolean supportJsonValue) {
     this.enumClass = requireNonNull("enumClass", enumClass);
     this.supportJsonValue = supportJsonValue;
-    if (supportJsonValue) {
-      this.valueGetter = getValueGetter(enumClass);
-    } else {
-      this.valueGetter = null;
-    }
   }
 
   private static Method getValueGetter(final Class<? extends Enum> enumClass) {
@@ -118,7 +127,8 @@ public class RawEnumCodec implements Codec<Enum, String> {
     if (isEmpty(str)) {
       return null;
     }
-    final Enum result = (valueGetter == null ? decodeWithName(str) : decodeWithValue(str));
+    final Method valueGetter = VALUE_GETTER_CACHE.get(enumClass);
+    final Enum result = (valueGetter == null ? decodeWithName(str) : decodeWithValue(str, valueGetter));
     if (result != null) {
       return result;
     }
@@ -141,12 +151,13 @@ public class RawEnumCodec implements Codec<Enum, String> {
     return null;
   }
 
-  private Enum decodeWithValue(final String value) throws DecodingException {
-    assert valueGetter != null;
+  private Enum decodeWithValue(final String value, final Method valueGetter)
+      throws DecodingException {
     final Enum[] values = enumClass.getEnumConstants();
     for (final Enum e : values) {
       final Object v;
       try {
+        valueGetter.setAccessible(true);
         v = valueGetter.invoke(e);
       } catch (final IllegalAccessException | InvocationTargetException ex) {
         throw new DecodingException(ex);
@@ -162,8 +173,12 @@ public class RawEnumCodec implements Codec<Enum, String> {
   public String encode(final Enum source) throws EncodingException {
     if (source == null) {
       return null;
-    } else if (valueGetter != null) {
+    }
+    // Note that we must use the actual class of the enumerator to get the value getter method.
+    final Method valueGetter = VALUE_GETTER_CACHE.get(source.getClass());
+    if (valueGetter != null) {
       try {
+        valueGetter.setAccessible(true);
         final Object value = valueGetter.invoke(source);
         return (value == null ? null : value.toString());
       } catch (final IllegalAccessException | InvocationTargetException e) {

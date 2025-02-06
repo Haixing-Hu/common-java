@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.RequestEntity;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -162,7 +163,7 @@ public class CustomizedJsonMapperTest {
 
 
   private static class ImmutableClass {
-    private String str;
+    private final String str;
 
     public ImmutableClass(final String someStr) {
       this.str = someStr;
@@ -226,5 +227,54 @@ public class CustomizedJsonMapperTest {
     final RequestEntity<?> deser = objectMapper.readValue(json, RequestEntity.class);
 
     assertEquals(objectMapper.writeValueAsString(deser), json);
+  }
+
+  @Test
+  public void testSupportJsonValueAnnotation() throws JsonProcessingException {
+    enum TestEnum {
+      VALUE_1("x1"),
+      VALUE_2("x2"),
+      VALUE_3("x3");
+
+      private final String value;
+
+      TestEnum(final String value) {
+        this.value = value;
+      }
+
+      @JsonValue
+      public String getValue() {
+        return value;
+      }
+    }
+
+    class Foo {
+      private Long id;
+      private TestEnum goo;
+
+      public Long getId() {
+        return id;
+      }
+
+      public void setId(final Long id) {
+        this.id = id;
+      }
+
+      public TestEnum getGoo() {
+        return goo;
+      }
+
+      public void setGoo(final TestEnum goo) {
+        this.goo = goo;
+      }
+    }
+
+    final JsonMapper mapper = new CustomizedJsonMapper();
+    final Foo foo = new Foo();
+    foo.setId(123L);
+    foo.setGoo(TestEnum.VALUE_2);
+    final String json = mapper.writeValueAsString(foo);
+    System.out.println(json);
+    assertEquals("{\"id\":123,\"goo\":\"x2\"}", json);
   }
 }

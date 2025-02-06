@@ -38,11 +38,13 @@ public class RawEnumKeyDeserializer extends DecoderKeyDeserializer<Enum>
   public static final RawEnumKeyDeserializer INSTANCE = new RawEnumKeyDeserializer();
 
   public RawEnumKeyDeserializer() {
-    super(Enum.class, new RawEnumCodec());
+    // make RawEnumCodec support @JsonValue annotation
+    super(Enum.class, new RawEnumCodec(true));
   }
 
   public RawEnumKeyDeserializer(final Class<? extends Enum> enumClass) {
-    super(Enum.class, new RawEnumCodec(enumClass));
+    // make RawEnumCodec support @JsonValue annotation
+    super(Enum.class, new RawEnumCodec(enumClass, true));
   }
 
   @SuppressWarnings("unchecked")
