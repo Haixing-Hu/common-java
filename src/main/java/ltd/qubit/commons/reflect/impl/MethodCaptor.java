@@ -11,6 +11,8 @@ package ltd.qubit.commons.reflect.impl;
 import java.lang.reflect.Method;
 import java.util.concurrent.atomic.AtomicReference;
 
+import javax.annotation.Nonnull;
+
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.description.modifier.Visibility;
 import net.bytebuddy.dynamic.scaffold.subclass.ConstructorStrategy;
@@ -58,9 +60,9 @@ public class MethodCaptor {
     return getDefaultValueObject(method.getReturnType());
   }
 
-  private static final ClassValue<Class<?>> PROXY_CLASS_CACHE = new ClassValue<Class<?>>() {
+  private static final ClassValue<Class<?>> PROXY_CLASS_CACHE = new ClassValue<>() {
     @Override
-    protected Class<?> computeValue(final Class<?> type) {
+    protected Class<?> computeValue(@Nonnull final Class<?> type) {
       return createProxyClass(type);
     }
   };
