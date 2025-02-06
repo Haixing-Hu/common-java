@@ -55,6 +55,7 @@ public class ClassKey implements Comparable<ClassKey> {
     }
   }
 
+  @Override
   public boolean equals(final Object o) {
     if (this == o) {
       return true;
@@ -66,6 +67,7 @@ public class ClassKey implements Comparable<ClassKey> {
     return Equality.equals(className, other.className);
   }
 
+  @Override
   public int hashCode() {
     final int multiplier = 7;
     int result = 3;
@@ -73,6 +75,7 @@ public class ClassKey implements Comparable<ClassKey> {
     return result;
   }
 
+  @Override
   public String toString() {
     return new ToStringBuilder(this)
         .append("className", className)
