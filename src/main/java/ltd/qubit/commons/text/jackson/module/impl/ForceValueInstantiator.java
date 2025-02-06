@@ -9,11 +9,8 @@
 package ltd.qubit.commons.text.jackson.module.impl;
 
 import java.io.IOException;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
-import org.objenesis.Objenesis;
-import org.objenesis.ObjenesisStd;
+import javax.annotation.Nonnull;
 
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.ValueInstantiator;
@@ -27,16 +24,16 @@ import ltd.qubit.commons.reflect.ConstructorUtils;
  */
 class ForceValueInstantiator extends ValueInstantiator {
 
-  private static final ConcurrentMap<Class<?>, ForceValueInstantiator>
-      INSTANTIATOR_CACHE = new ConcurrentHashMap<>();
+  private static final ClassValue<ForceValueInstantiator> INSTANTIATOR_CACHE =
+      new ClassValue<>() {
+    @Override
+    protected ForceValueInstantiator computeValue(@Nonnull final Class<?> type) {
+      return new ForceValueInstantiator(type);
+    }
+  };
 
   public static ForceValueInstantiator getInstance(final Class<?> type) {
-    final ForceValueInstantiator instantiator =
-        INSTANTIATOR_CACHE.putIfAbsent(type, new ForceValueInstantiator(type));
-    if (instantiator == null) {
-      return INSTANTIATOR_CACHE.get(type);
-    }
-    return instantiator;
+    return INSTANTIATOR_CACHE.get(type);
   }
 
   private final Class<?> type;
