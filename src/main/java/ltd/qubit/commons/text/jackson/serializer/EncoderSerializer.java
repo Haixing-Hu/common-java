@@ -9,6 +9,7 @@
 package ltd.qubit.commons.text.jackson.serializer;
 
 import java.io.IOException;
+import java.io.Serial;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -23,6 +24,7 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 public class EncoderSerializer<T> extends StdSerializer<T> {
 
+  @Serial
   private static final long serialVersionUID = 44431662165308463L;
 
   protected final Encoder<T, String> encoder;
