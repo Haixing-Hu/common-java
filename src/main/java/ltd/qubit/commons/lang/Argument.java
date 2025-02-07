@@ -2557,6 +2557,18 @@ public final class Argument {
         + "], but it is " + arg);
   }
 
+  public static String requireInEnum(final String name, final String arg,
+      final String[] allowedValues) {
+    for (final String allowedValue : allowedValues) {
+      if (Equality.equals(arg, allowedValue)) {
+        return arg;
+      }
+    }
+    throw new IllegalArgumentException(name + " must in enumeration ["
+        + new Joiner(',').addAll(allowedValues).toString()
+        + "], but it is " + arg);
+  }
+
   public static int requireValidUnicode(final String name, final int codePoint) {
     if (!Unicode.isValidUnicode(codePoint)) {
       throw new IllegalArgumentException(name
