@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import ltd.qubit.commons.io.FileUtils;
 import ltd.qubit.commons.io.IoUtils;
 
+import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.net.InetAddressUtils.isIPv4Address;
 
 /**
@@ -274,31 +275,28 @@ public final class UrlUtils {
    * @param base64String
    *     the BASE-64 encoded string.
    * @return
-   *     the built URL.
+   *     the built URL, represented as a string. Note that the URL cannot be
+   *     represented as a {@link URL} object, since the old {@link URL} class
+   *     does not support the {@code data:} protocol.
    */
-  public static URL buildBase64DataUrl(final String mimeType, final String base64String) {
-    try {
-      return new URL("data:" + mimeType + ";base64," + base64String);
-    } catch (final MalformedURLException e) {
-      throw new RuntimeException(e);
-    }
+  public static String buildBase64DataUrl(final String mimeType, final String base64String) {
+    requireNonNull("mimeType", mimeType);
+    requireNonNull("base64String", base64String);
+    return "data:" + mimeType + ";base64," + base64String;
   }
 
   /**
-   * Build a BASE-64 encoded Data URL
+   * Build a BASE-64 encoded Data URI
    *
    * @param mimeType
    *     the MIME type of the data.
    * @param base64String
    *     the BASE-64 encoded string.
    * @return
-   *     the built URL.
+   *     the built URI.
    */
   public static URI buildBase64DataUri(final String mimeType, final String base64String) {
-    try {
-      return new URI("data:" + mimeType + ";base64," + base64String);
-    } catch (final URISyntaxException e) {
-      throw new RuntimeException(e);
-    }
+    final String url = buildBase64DataUrl(mimeType, base64String);
+    return URI.create(url);
   }
 }

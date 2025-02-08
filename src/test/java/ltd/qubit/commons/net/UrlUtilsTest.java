@@ -8,10 +8,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.net;
 
+import java.net.URI;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Unit test of the UrlUtils class.
@@ -46,5 +49,77 @@ public class UrlUtilsTest {
 
     assertNull(UrlUtils.getDomainSuffix(""));
     assertNull(UrlUtils.getDomainSuffix("a"));
+  }
+
+  @Test
+  void buildBase64DataUrlWithValidInput() {
+    final String mimeType = "text/plain";
+    final String base64String = "SGVsbG8sIFdvcmxkIQ==";
+    final String expectedUrl = "data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==";
+    assertEquals(expectedUrl, UrlUtils.buildBase64DataUrl(mimeType, base64String));
+  }
+
+  @Test
+  void buildBase64DataUrlWithEmptyMimeType() {
+    final String mimeType = "";
+    final String base64String = "SGVsbG8sIFdvcmxkIQ==";
+    final String expectedUrl = "data:;base64,SGVsbG8sIFdvcmxkIQ==";
+    assertEquals(expectedUrl, UrlUtils.buildBase64DataUrl(mimeType, base64String));
+  }
+
+  @Test
+  void buildBase64DataUrlWithEmptyBase64String() {
+    final String mimeType = "text/plain";
+    final String base64String = "";
+    final String expectedUrl = "data:text/plain;base64,";
+    assertEquals(expectedUrl, UrlUtils.buildBase64DataUrl(mimeType, base64String));
+  }
+
+  @Test
+  void buildBase64DataUrlWithNullMimeType() {
+    final String base64String = "SGVsbG8sIFdvcmxkIQ==";
+    assertThrows(NullPointerException.class, () -> UrlUtils.buildBase64DataUrl(null, base64String));
+  }
+
+  @Test
+  void buildBase64DataUrlWithNullBase64String() {
+    final String mimeType = "text/plain";
+    assertThrows(NullPointerException.class, () -> UrlUtils.buildBase64DataUrl(mimeType, null));
+  }
+
+  @Test
+  void buildBase64DataUriWithValidInput() {
+    final String mimeType = "text/plain";
+    final String base64String = "SGVsbG8sIFdvcmxkIQ==";
+    final URI expectedUri = URI.create("data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==");
+    assertEquals(expectedUri, UrlUtils.buildBase64DataUri(mimeType, base64String));
+  }
+
+  @Test
+  void buildBase64DataUriWithEmptyMimeType() {
+    final String mimeType = "";
+    final String base64String = "SGVsbG8sIFdvcmxkIQ==";
+    final URI expectedUri = URI.create("data:;base64,SGVsbG8sIFdvcmxkIQ==");
+    assertEquals(expectedUri, UrlUtils.buildBase64DataUri(mimeType, base64String));
+  }
+
+  @Test
+  void buildBase64DataUriWithEmptyBase64String() {
+    final String mimeType = "text/plain";
+    final String base64String = "";
+    final URI expectedUri = URI.create("data:text/plain;base64,");
+    assertEquals(expectedUri, UrlUtils.buildBase64DataUri(mimeType, base64String));
+  }
+
+  @Test
+  void buildBase64DataUriWithNullMimeType() {
+    final String base64String = "SGVsbG8sIFdvcmxkIQ==";
+    assertThrows(NullPointerException.class, () -> UrlUtils.buildBase64DataUri(null, base64String));
+  }
+
+  @Test
+  void buildBase64DataUriWithNullBase64String() {
+    final String mimeType = "text/plain";
+    assertThrows(NullPointerException.class, () -> UrlUtils.buildBase64DataUri(mimeType, null));
   }
 }
