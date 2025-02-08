@@ -265,4 +265,40 @@ public final class UrlUtils {
       throw new RuntimeException(e);
     }
   }
+
+  /**
+   * Build a BASE-64 encoded Data URL
+   *
+   * @param mimeType
+   *     the MIME type of the data.
+   * @param base64String
+   *     the BASE-64 encoded string.
+   * @return
+   *     the built URL.
+   */
+  public static URL buildBase64DataUrl(final String mimeType, final String base64String) {
+    try {
+      return new URL("data:" + mimeType + ";base64," + base64String);
+    } catch (final MalformedURLException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  /**
+   * Build a BASE-64 encoded Data URL
+   *
+   * @param mimeType
+   *     the MIME type of the data.
+   * @param base64String
+   *     the BASE-64 encoded string.
+   * @return
+   *     the built URL.
+   */
+  public static URI buildBase64DataUri(final String mimeType, final String base64String) {
+    try {
+      return new URI("data:" + mimeType + ";base64," + base64String);
+    } catch (final URISyntaxException e) {
+      throw new RuntimeException(e);
+    }
+  }
 }
