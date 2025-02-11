@@ -32,9 +32,11 @@ public class TimeMeter {
    * Constructs a new meter with the system default clock.
    */
   public TimeMeter() {
-    this.startTime = 0;
-    this.endTime = 0;
-    this.clock = Clock.systemUTC();
+    this(Clock.systemUTC(), false);
+  }
+
+  public TimeMeter(final boolean startNow) {
+    this(Clock.systemUTC(), startNow);
   }
 
   /**
@@ -44,9 +46,24 @@ public class TimeMeter {
    *     the clock used by this meter.
    */
   public TimeMeter(final Clock clock) {
+    this(clock, false);
+  }
+
+  /**
+   * Constructs a new meter with the specified clock.
+   *
+   * @param clock
+   *     the clock used by this meter.
+   * @param startNow
+   *     whether to start the meter immediately after creating this object.
+   */
+  public TimeMeter(final Clock clock, final boolean startNow) {
     this.startTime = 0;
     this.endTime = 0;
     this.clock = clock;
+    if (startNow) {
+      this.start();
+    }
   }
 
   /**
