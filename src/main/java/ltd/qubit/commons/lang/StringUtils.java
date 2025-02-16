@@ -45,6 +45,7 @@ import ltd.qubit.commons.text.Splitter;
 import ltd.qubit.commons.text.Stripper;
 import ltd.qubit.commons.text.Unicode;
 import ltd.qubit.commons.util.codec.HexCodec;
+import ltd.qubit.commons.util.filter.character.AcceptSpecifiedCharFilter;
 import ltd.qubit.commons.util.filter.character.AsciiCharFilter;
 import ltd.qubit.commons.util.filter.character.AsciiPrintableCharFilter;
 import ltd.qubit.commons.util.filter.character.BlankCharFilter;
@@ -66,6 +67,7 @@ import static ltd.qubit.commons.lang.ObjectUtils.defaultIfNull;
 import static ltd.qubit.commons.lang.SplitOption.CAMEL_CASE;
 import static ltd.qubit.commons.lang.SplitOption.IGNORE_EMPTY;
 import static ltd.qubit.commons.lang.SplitOption.TRIM;
+import static ltd.qubit.commons.text.impl.SearcherImpl.endsWithSubstring;
 import static ltd.qubit.commons.text.impl.SearcherImpl.firstIndexOf;
 
 /**
@@ -289,7 +291,7 @@ public class StringUtils {
    *     the string to check, may be null
    * @return {@code true} if the string is null, empty or all blanks.
    */
-  public static boolean isBlank(@Nullable final String str) {
+  public static boolean isBlank(@Nullable final CharSequence str) {
     return (str == null) || containsOnly(str, BlankCodePointFilter.INSTANCE);
   }
 
@@ -308,9 +310,9 @@ public class StringUtils {
    *     the string to check, may be null
    * @return {@code true} if the string is not {@code null}, not empty and not
    *     contains only blanks; {@code false}otherwise.
-   * @see #isBlank(String)
+   * @see #isBlank(CharSequence)
    */
-  public static boolean isNotBlank(@Nullable final String str) {
+  public static boolean isNotBlank(@Nullable final CharSequence str) {
     return (str != null) && (!containsOnly(str, BlankCodePointFilter.INSTANCE));
   }
 
@@ -373,7 +375,7 @@ public class StringUtils {
    *     the string to check, may be null
    * @return {@code true} if the string is null, empty or all whitespace.
    */
-  public static boolean isWhitespace(@Nullable final String str) {
+  public static boolean isWhitespace(@Nullable final CharSequence str) {
     return (str == null) || containsOnly(str, WhitespaceCodePointFilter.INSTANCE);
   }
 
@@ -395,7 +397,7 @@ public class StringUtils {
    *     the string to check, which may be null.
    * @return {@code true} if only contains letters, and is non-null.
    */
-  public static boolean isLetter(@Nullable final String str) {
+  public static boolean isLetter(@Nullable final CharSequence str) {
     return containsOnly(str, LetterCodePointFilter.INSTANCE);
   }
 
@@ -420,7 +422,7 @@ public class StringUtils {
    *     the string to check, may be null
    * @return {@code true} if only contains letters and space, and is non-null
    */
-  public static boolean isLetterSpace(@Nullable final String str) {
+  public static boolean isLetterSpace(@Nullable final CharSequence str) {
     return containsOnly(str, LetterSpaceCodePointFilter.INSTANCE);
   }
 
@@ -443,7 +445,7 @@ public class StringUtils {
    *     the string to check, may be null
    * @return {@code true} if only contains letters or digits, and is non-null
    */
-  public static boolean isLetterDigit(@Nullable final String str) {
+  public static boolean isLetterDigit(@Nullable final CharSequence str) {
     return containsOnly(str, LetterDigitCodePointFilter.INSTANCE);
   }
 
@@ -468,7 +470,7 @@ public class StringUtils {
    * @return {@code true} if only contains letters, digits or space, and is
    *     non-null
    */
-  public static boolean isLetterDigitSpace(@Nullable final String str) {
+  public static boolean isLetterDigitSpace(@Nullable final CharSequence str) {
     return containsOnly(str, LetterDigitSpaceCodePointFilter.INSTANCE);
   }
 
@@ -539,7 +541,7 @@ public class StringUtils {
    * @return {@code true} if only contains digits, and is non-null. If the
    *     string is null, returns false.
    */
-  public static boolean isDigit(@Nullable final String str) {
+  public static boolean isDigit(@Nullable final CharSequence str) {
     return containsOnly(str, DigitCodePointFilter.INSTANCE);
   }
 
@@ -566,7 +568,7 @@ public class StringUtils {
    * @return {@code true} if only contains digits or space. If the string is
    *     null, returns false.
    */
-  public static boolean isDigitSpace(@Nullable final String str) {
+  public static boolean isDigitSpace(@Nullable final CharSequence str) {
     return containsOnly(str, DigitSpaceCodePointFilter.INSTANCE);
   }
 
@@ -780,15 +782,9 @@ public class StringUtils {
    * @see String#equals(Object)
    * @see String#equalsIgnoreCase(String)
    */
-  public static boolean equals(@Nullable final String str1,
-      @Nullable final String str2) {
-    if (str1 == null) {
-      return (str2 == null);
-    } else if (str2 == null) {
-      return false;
-    } else {
-      return str1.equals(str2);
-    }
+  public static boolean equals(@Nullable final CharSequence str1,
+      @Nullable final CharSequence str2) {
+    return Equality.equals(str1, str2);
   }
 
   /**
@@ -809,16 +805,12 @@ public class StringUtils {
    * @see String#equals(Object)
    * @see String#equalsIgnoreCase(String)
    */
-  public static boolean equals(@Nullable final String str1,
-      @Nullable final String str2, final boolean ignoreCase) {
-    if (str1 == null) {
-      return (str2 == null);
-    } else if (str2 == null) {
-      return false;
-    } else if (ignoreCase) {
-      return str1.equalsIgnoreCase(str2);
+  public static boolean equals(@Nullable final CharSequence str1,
+      @Nullable final CharSequence str2, final boolean ignoreCase) {
+    if (ignoreCase) {
+      return Equality.equalsIgnoreCase(str1, str2);
     } else {
-      return str1.equals(str2);
+      return Equality.equals(str1, str2);
     }
   }
 
@@ -848,15 +840,8 @@ public class StringUtils {
    * @see String#equals(Object)
    * @see String#equalsIgnoreCase(String)
    */
-  public static boolean equalsIgnoreCase(@Nullable final String str1,
-      @Nullable final String str2) {
-    if (str1 == null) {
-      return (str2 == null);
-    } else if (str2 == null) {
-      return false;
-    } else {
-      return str1.equalsIgnoreCase(str2);
-    }
+  public static boolean equalsIgnoreCase(@Nullable final CharSequence str1, @Nullable final CharSequence str2) {
+    return Equality.equalsIgnoreCase(str1, str2);
   }
 
   /**
@@ -958,8 +943,8 @@ public class StringUtils {
    * @see String#startsWith(String)
    * @see Searcher#isAtStartOf(CharSequence)
    */
-  public static boolean startsWith(@Nullable final String str,
-      @Nullable final String prefix) {
+  public static boolean startsWith(@Nullable final CharSequence str,
+      @Nullable final CharSequence prefix) {
     return new Searcher()
         .forSubstring(prefix)
         .ignoreCase(false)
@@ -995,8 +980,8 @@ public class StringUtils {
    * @see String#startsWith(String)
    * @see Searcher#isAtStartOf(CharSequence)
    */
-  public static boolean startsWithIgnoreCase(@Nullable final String str,
-      @Nullable final String prefix) {
+  public static boolean startsWithIgnoreCase(@Nullable final CharSequence str,
+      @Nullable final CharSequence prefix) {
     return new Searcher()
         .forSubstring(prefix)
         .ignoreCase(true)
@@ -1104,8 +1089,8 @@ public class StringUtils {
    * @see String#endsWith(String)
    * @see Searcher#isAtEndOf(CharSequence)
    */
-  public static boolean endsWith(@Nullable final String str,
-      @Nullable final String suffix) {
+  public static boolean endsWith(@Nullable final CharSequence str,
+      @Nullable final CharSequence suffix) {
     return new Searcher()
         .forSubstring(suffix)
         .ignoreCase(false)
@@ -1143,8 +1128,8 @@ public class StringUtils {
    * @see String#endsWith(String)
    * @see Searcher#isAtEndOf(CharSequence)
    */
-  public static boolean endsWithIgnoreCase(@Nullable final String str,
-      @Nullable final String suffix) {
+  public static boolean endsWithIgnoreCase(@Nullable final CharSequence str,
+      @Nullable final CharSequence suffix) {
     return new Searcher()
         .forSubstring(suffix)
         .ignoreCase(true)
@@ -3811,7 +3796,7 @@ public class StringUtils {
    *     stripped to an empty string.
    * @see Stripper#stripToEmpty(CharSequence)
    */
-  public static String stripToEmpty(@Nullable final String str) {
+  public static String stripToEmpty(@Nullable final CharSequence str) {
     return new Stripper()
         .ofBlank()
         .fromBothSide()
@@ -3898,7 +3883,7 @@ public class StringUtils {
   }
 
   public static void strip(@Nullable final CharSequence str,
-      @Nullable final String stripChars, final Appendable output)
+      @Nullable final CharSequence stripChars, final Appendable output)
       throws IOException {
     new Stripper()
         .ofCharsIn(stripChars)
@@ -4169,8 +4154,8 @@ public class StringUtils {
    * @return String without trailing separator, {@code null} if null String
    *     input
    */
-  public static String chomp(@Nullable final String str,
-      @Nullable final String separator) {
+  public static String chomp(@Nullable final CharSequence str,
+      @Nullable final CharSequence separator) {
     if (str == null) {
       return null;
     }
@@ -4181,21 +4166,21 @@ public class StringUtils {
     final int sepLen;
     if ((separator == null)
         || ((sepLen = separator.length()) == 0)) {
-      return str;
+      return str.toString();
     }
-    if (str.endsWith(separator)) {
+    if (endsWithSubstring(str, 0, str.length(), separator, false)) {
       if (strLen == sepLen) {
         return EMPTY;
       } else {
-        return str.substring(0, strLen - sepLen);
+        return str.subSequence(0, strLen - sepLen).toString();
       }
     } else {
-      return str;
+      return str.toString();
     }
   }
 
-  public static void chomp(@Nullable final String str,
-      @Nullable final String separator, final StringBuilder output) {
+  public static void chomp(@Nullable final CharSequence str,
+      @Nullable final CharSequence separator, final StringBuilder output) {
     final int strLen;
     final int sepLen;
     if ((str == null) || ((strLen = str.length()) == 0)) {
@@ -4205,7 +4190,7 @@ public class StringUtils {
       output.append(str);
       return;
     }
-    if (str.endsWith(separator)) {
+    if (endsWithSubstring(str, 0, str.length(), separator, false)) {
       if (strLen > sepLen) {
         output.append(str, 0, strLen - sepLen);
       }
@@ -4244,8 +4229,8 @@ public class StringUtils {
    * @see Remover#forPrefix(CharSequence)
    * @see Remover#removeFrom(CharSequence)
    */
-  public static String removePrefix(@Nullable final String str,
-      @Nullable final String prefix) {
+  public static String removePrefix(@Nullable final CharSequence str,
+      @Nullable final CharSequence prefix) {
     return new Remover()
         .forPrefix(prefix)
         .ignoreCase(false)
@@ -4288,8 +4273,8 @@ public class StringUtils {
    * @see Remover#forPrefix(CharSequence)
    * @see Remover#removeFrom(CharSequence)
    */
-  public static String removePrefix(@Nullable final String str,
-      @Nullable final String prefix, final boolean ignoreCase) {
+  public static String removePrefix(@Nullable final CharSequence str,
+      @Nullable final CharSequence prefix, final boolean ignoreCase) {
     return new Remover()
         .forPrefix(prefix)
         .ignoreCase(ignoreCase)
@@ -4328,8 +4313,8 @@ public class StringUtils {
    * @see Remover#forSuffix(CharSequence)
    * @see Remover#removeFrom(CharSequence)
    */
-  public static String removeSuffix(@Nullable final String str,
-      @Nullable final String suffix) {
+  public static String removeSuffix(@Nullable final CharSequence str,
+      @Nullable final CharSequence suffix) {
     return new Remover()
         .forSuffix(suffix)
         .ignoreCase(false)
@@ -4371,16 +4356,16 @@ public class StringUtils {
    * @see Remover#forSuffix(CharSequence)
    * @see Remover#removeFrom(CharSequence)
    */
-  public static String removeSuffix(@Nullable final String str,
-      @Nullable final String suffix, final boolean ignoreCase) {
+  public static String removeSuffix(@Nullable final CharSequence str,
+      @Nullable final CharSequence suffix, final boolean ignoreCase) {
     return new Remover()
         .forSuffix(suffix)
         .ignoreCase(ignoreCase)
         .removeFrom(str);
   }
 
-  public static String removePrefixAndSuffix(@Nullable final String str,
-      final String prefix, final String suffix) {
+  public static String removePrefixAndSuffix(@Nullable final CharSequence str,
+      final CharSequence prefix, final String suffix) {
     return new Remover()
         .forPrefix(prefix)
         .forSuffix(suffix)
@@ -4388,8 +4373,8 @@ public class StringUtils {
         .removeFrom(str);
   }
 
-  public static String removePrefixAndSuffix(@Nullable final String str,
-      final String prefix, final String suffix, final boolean ignoreCase) {
+  public static String removePrefixAndSuffix(@Nullable final CharSequence str,
+      final CharSequence prefix, final CharSequence suffix, final boolean ignoreCase) {
     return new Remover()
         .forPrefix(prefix)
         .forSuffix(suffix)
@@ -4418,7 +4403,7 @@ public class StringUtils {
    *     String input
    * @see Remover#removeFrom(CharSequence)
    */
-  public static String removeChar(@Nullable final String str, final char ch) {
+  public static String removeChar(@Nullable final CharSequence str, final char ch) {
     return new Remover()
         .forChar(ch)
         .limit(-1)
@@ -4449,7 +4434,7 @@ public class StringUtils {
    *     String input
    * @see Remover#removeFrom(CharSequence)
    */
-  public static String removeChar(@Nullable final String str, final char ch,
+  public static String removeChar(@Nullable final CharSequence str, final char ch,
       final int max) {
     return new Remover()
         .forChar(ch)
@@ -4478,7 +4463,7 @@ public class StringUtils {
    *     String input
    * @see Remover#removeFrom(CharSequence)
    */
-  public static String removeCodePoint(@Nullable final String str, final int codePoint) {
+  public static String removeCodePoint(@Nullable final CharSequence str, final int codePoint) {
     return new Remover()
         .forCodePoint(codePoint)
         .limit(-1)
@@ -4509,7 +4494,7 @@ public class StringUtils {
    *     String input
    * @see Remover#removeFrom(CharSequence)
    */
-  public static String removeCodePoint(@Nullable final String str, final int codePoint,
+  public static String removeCodePoint(@Nullable final CharSequence str, final int codePoint,
       final int max) {
     return new Remover()
         .forCodePoint(codePoint)
@@ -4517,7 +4502,7 @@ public class StringUtils {
         .removeFrom(str);
   }
 
-  public static String removeChar(@Nullable final String str,
+  public static String removeChar(@Nullable final CharSequence str,
       @Nullable final CharFilter filter) {
     return new Remover()
         .forCharsSatisfy(filter)
@@ -4525,7 +4510,7 @@ public class StringUtils {
         .removeFrom(str);
   }
 
-  public static String removeChar(@Nullable final String str,
+  public static String removeChar(@Nullable final CharSequence str,
       @Nullable final CharFilter filter, final int max) {
     return new Remover()
         .forCharsSatisfy(filter)
@@ -4564,8 +4549,8 @@ public class StringUtils {
    *     null String input
    * @see Remover#removeFrom(CharSequence)
    */
-  public static String removeSubstring(@Nullable final String str,
-      @Nullable final String remove, final int max, final boolean ignoreCase) {
+  public static String removeSubstring(@Nullable final CharSequence str,
+      @Nullable final CharSequence remove, final int max, final boolean ignoreCase) {
     return new Remover()
         .forSubstring(remove)
         .ignoreCase(ignoreCase)
@@ -4597,7 +4582,7 @@ public class StringUtils {
    * @see Replacer#replaceWithChar(char)
    * @see Replacer#applyTo(CharSequence)
    */
-  public static String replaceChar(@Nullable final String str,
+  public static String replaceChar(@Nullable final CharSequence str,
       final char search, final char replacement) {
     return new Replacer()
         .searchForChar(search)
@@ -4605,7 +4590,7 @@ public class StringUtils {
         .applyTo(str);
   }
 
-  public static void replaceChar(@Nullable final String str, final char search,
+  public static void replaceChar(@Nullable final CharSequence str, final char search,
       final char replacement, final StringBuilder builder) {
     new Replacer()
         .searchForChar(search)
@@ -4649,41 +4634,46 @@ public class StringUtils {
    * @see Replacer#replaceWithChar(char)
    * @see Replacer#applyTo(CharSequence)
    */
-  public static String replaceChars(@Nullable final String str,
-      @Nullable final String searchChars, @Nullable final String replaceChars) {
-    if ((str == null) || (str.length() == 0) || (searchChars == null)
-        || (searchChars.length() == 0)) {
-      return str;
+  @Nullable
+  public static String replaceChars(@Nullable final CharSequence str,
+      @Nullable final CharSequence searchChars, @Nullable final String replaceChars) {
+    if (str == null) {
+      return null;
+    }
+    if (str.isEmpty() || (searchChars == null) || searchChars.isEmpty()) {
+      return str.toString();
     }
     final StringBuilder builder = new StringBuilder();
     final int count = replaceChars(str, searchChars, replaceChars, builder);
     if (count == 0) {
-      return str;
-    } else if (builder.length() == 0) {
+      return str.toString();
+    } else if (builder.isEmpty()) {
       return EMPTY;
     } else {
       return builder.toString();
     }
   }
 
-  public static int replaceChars(@Nullable final String str,
-      @Nullable final String searchChars, @Nullable final String replaceChars,
+  public static int replaceChars(@Nullable final CharSequence str,
+      @Nullable final CharSequence searchChars, @Nullable final String replaceChars,
       final StringBuilder builder) {
     final int len;
     if ((str == null) || ((len = str.length()) == 0)) {
       return 0;
     }
-    if ((searchChars == null) || (searchChars.length() == 0)) {
+    if ((searchChars == null) || (searchChars.isEmpty())) {
       builder.append(str);
       return 0;
     }
     final String replace = defaultIfNull(replaceChars, EMPTY);
     final int replaceLen = replace.length();
+    final int searchCharsLen = searchChars.length();
     int count = 0;
     for (int i = 0; i < len; i++) {
       final char ch = str.charAt(i);
-      final int index = searchChars.indexOf(ch);
-      if (index >= 0) {
+      final CharFilter filter = new AcceptSpecifiedCharFilter(ch);
+      final int index = firstIndexOf(searchChars, 0, searchCharsLen, filter);
+      if (index < searchCharsLen) {
         ++count;
         if (index < replaceLen) {
           builder.append(replace.charAt(index));
@@ -4827,25 +4817,26 @@ public class StringUtils {
    *     if the lengths of the arrays are not the same (null is ok, and/or size
    *     0)
    */
-  public static String replaceEach(@Nullable final String str,
-      @Nullable final String[] searches, @Nullable final String[] replaces,
+  @Nullable
+  public static String replaceEach(@Nullable final CharSequence str,
+      @Nullable final CharSequence[] searches, @Nullable final String[] replaces,
       final boolean ignoreCase) {
-    if ((str == null) || (str.length() == 0) || (searches == null)
-        || (searches.length == 0) || (replaces == null)
-        || (replaces.length == 0)) {
-      return str;
+    if (str == null) {
+      return null;
+    }
+    if ((str.isEmpty()) || (searches == null) || (searches.length == 0)
+        || (replaces == null) || (replaces.length == 0)) {
+      return str.toString();
     }
     requireEqual("searches.length", searches.length,
         "replaces.length", replaces.length);
     final boolean[] noMoreMatches = new boolean[searches.length];
     final StringBuilder builder = new StringBuilder();
-    final int modified =
-        replaceEachImpl(str, searches, replaces, ignoreCase, builder,
-            noMoreMatches);
+    final int modified = replaceEachImpl(str, searches, replaces, ignoreCase, builder, noMoreMatches);
     if (modified == 0) {
-      return str;
+      return str.toString();
     }
-    if (builder.length() == 0) {
+    if (builder.isEmpty()) {
       return EMPTY;
     } else {
       return builder.toString();
@@ -4855,7 +4846,7 @@ public class StringUtils {
   public static int replaceEach(@Nullable final String str,
       @Nullable final String[] searches, @Nullable final String[] replaces,
       final boolean ignoreCase, final StringBuilder builder) {
-    if ((str == null) || (str.length() == 0)) {
+    if ((str == null) || str.isEmpty()) {
       return 0;
     }
     if ((searches == null) || (searches.length == 0) || (replaces == null)
@@ -4915,7 +4906,7 @@ public class StringUtils {
       @Nullable final String[] searches, @Nullable final String[] replaces,
       final boolean ignoreCase) {
     if ((str == null)
-        || (str.length() == 0)
+        || str.isEmpty()
         || (searches == null)
         || (searches.length == 0)
         || (replaces == null)
@@ -5009,8 +5000,8 @@ public class StringUtils {
    *     the same length as the {@code searches} array.
    * @return the text with any replacements processed.
    */
-  private static int replaceEachImpl(final String str, final String[] searches,
-      final String[] replaces, final boolean ignoreCase,
+  private static int replaceEachImpl(final CharSequence str, final CharSequence[] searches,
+      final CharSequence[] replaces, final boolean ignoreCase,
       final StringBuilder builder, final boolean[] noMoreMatches) {
     // assume searches.length == replaces.length == noMoreMathes.length
     final int searchLen = searches.length;
@@ -5027,8 +5018,7 @@ public class StringUtils {
       int replaceIndex = -1;
       int replacePos = Integer.MAX_VALUE;
       for (int i = 0; i < searchLen; ++i) {
-        if (noMoreMatches[i] || (searches[i] == null)
-            || (searches[i].length() == 0) || (replaces[i] == null)) {
+        if (noMoreMatches[i] || (searches[i] == null) || searches[i].isEmpty() || (replaces[i] == null)) {
           continue;
         }
         final int pos = firstIndexOf(str, start, strLen, searches[i], ignoreCase);
