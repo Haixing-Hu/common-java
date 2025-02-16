@@ -13,9 +13,9 @@ import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
-import ltd.qubit.commons.lang.SystemUtils;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static ltd.qubit.commons.lang.SystemUtils.LINE_SEPARATOR;
 
 /**
  * Unit test for the ToStringBuilder and MultiLineToStringStyle class.
@@ -30,48 +30,157 @@ public class MultiLineToStringStyleTest {
 
   private static final ToStringStyle STYLE = MultiLineToStringStyle.INSTANCE;
 
-  @Test
-  public void testBlank() {
-    final ToStringBuilder builder = new ToStringBuilder(STYLE);
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).toString());
+  private static String getStartPrefix(final Object obj) {
+    final StringBuilder builder = new StringBuilder();
+    STYLE.appendClassName(builder, obj);
+    STYLE.appendIdentityHashCode(builder, obj);
+    return builder.toString();
   }
 
   @Test
-  public void testAppendSuper() {
+  public void testBlank() {
+    final ToStringBuilder tb = new ToStringBuilder(STYLE);
+    final String actual = tb.reset(base).build();
+    assertEquals(baseStr + "[" + LINE_SEPARATOR + "]", actual);
+  }
+
+  @Test
+  public void testSingleField() {
+    final ToStringBuilder tb = new ToStringBuilder(STYLE);
+    final String actual = tb.reset(base)
+                            .append("foo", 123)
+                            .build();
+    assertEquals(baseStr
+        + "[" + LINE_SEPARATOR
+        + "  foo=123" + LINE_SEPARATOR
+        + "]", actual);
+  }
+
+  @Test
+  public void testAppendSuper_emptySuper() {
     final ToStringBuilder builder = new ToStringBuilder(STYLE);
+    assertEquals(baseStr
+            + "[" + LINE_SEPARATOR + "]",
+        builder
+            .reset(base)
+            .appendSuper("Integer@8888[" + LINE_SEPARATOR + "]")
+            .build()
+    );
+  }
 
-    assertEquals(
-        baseStr + "[" + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).appendSuper(
-            "Integer@8888[" + SystemUtils.LINE_SEPARATOR + "]").toString());
+  @Test
+  public void testAppendSuper_nullSuper() {
+    final ToStringBuilder builder = new ToStringBuilder(STYLE);
+    assertEquals(baseStr
+            + "[" + LINE_SEPARATOR
+            + "  <null>" + LINE_SEPARATOR
+            + "]",
+        builder
+            .reset(base)
+            .appendSuper("Integer@8888[" + LINE_SEPARATOR + "  <null>" + LINE_SEPARATOR + "]")
+            .build()
+    );
+  }
 
-    assertEquals(
-        baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  <null>"
-            + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).appendSuper(
-            "Integer@8888[" + SystemUtils.LINE_SEPARATOR + "  <null>"
-                + SystemUtils.LINE_SEPARATOR + "]").toString());
+  @Test
+  public void testAppendSuper_singleElementSuper() {
+    final ToStringBuilder builder = new ToStringBuilder(STYLE);
+    assertEquals(baseStr
+            + "[" + LINE_SEPARATOR
+            + "  a=\"hello\"" + LINE_SEPARATOR
+            + "]",
+        builder
+            .reset(base)
+            .appendSuper("Integer@8888[" + LINE_SEPARATOR + "  a=\"hello\"" + LINE_SEPARATOR + "]")
+            .build()
+    );
+  }
 
-    assertEquals(
-        baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  a=\"hello\""
-            + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).appendSuper(
-            "Integer@8888[" + SystemUtils.LINE_SEPARATOR + "]").append("a",
-            "hello").toString());
 
-    assertEquals(
-        baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  <null>"
-            + SystemUtils.LINE_SEPARATOR + "  a=\"hello\""
-            + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).appendSuper(
-            "Integer@8888[" + SystemUtils.LINE_SEPARATOR + "  <null>"
-                + SystemUtils.LINE_SEPARATOR + "]").append("a", "hello")
-               .toString());
+  @Test
+  public void testAppendSuper_multiElementsSuper() {
+    final ToStringBuilder builder = new ToStringBuilder(STYLE);
+    assertEquals(baseStr
+            + "[" + LINE_SEPARATOR
+            + "  a=\"hello\"" + LINE_SEPARATOR
+            + "  b=123" + LINE_SEPARATOR
+            + "  c=456" + LINE_SEPARATOR
+            + "]",
+        builder
+            .reset(base)
+            .appendSuper("Integer@8888[" + LINE_SEPARATOR
+                + "  a=\"hello\"" + LINE_SEPARATOR
+                + "  b=123" + LINE_SEPARATOR
+                + "]")
+            .append("c", 456)
+            .build()
+    );
+  }
 
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  a=\"hello\""
-            + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).appendSuper(null).append("a", "hello").toString());
+  @Test
+  public void testAppendSuper_nestedElementsSuper() {
+    final ToStringBuilder builder = new ToStringBuilder(STYLE);
+    assertEquals(baseStr
+            + "[" + LINE_SEPARATOR
+            + "  a=\"hello\"" + LINE_SEPARATOR
+            + "  b=123" + LINE_SEPARATOR
+            + "  c=[" + LINE_SEPARATOR
+            + "    d=\"world\"" + LINE_SEPARATOR
+            + "  ]" + LINE_SEPARATOR
+            + "  e=789" + LINE_SEPARATOR
+            + "]",
+        builder
+            .reset(base)
+            .appendSuper("Integer@8888[" + LINE_SEPARATOR
+                + "  a=\"hello\"" + LINE_SEPARATOR
+                + "  b=123" + LINE_SEPARATOR
+                + "  c=[" + LINE_SEPARATOR
+                + "    d=\"world\"" + LINE_SEPARATOR
+                + "  ]" + LINE_SEPARATOR
+                + "]")
+            .append("e", 789)
+            .build()
+    );
+  }
+
+  @Test
+  public void testAppendSuper_emptySuperWithSingleField() {
+    final ToStringBuilder builder = new ToStringBuilder(STYLE);
+    assertEquals(baseStr + "[" + LINE_SEPARATOR
+            + "  a=\"hello\"" + LINE_SEPARATOR
+            + "]",
+        builder.reset(base).appendSuper("Integer@8888[" + LINE_SEPARATOR + "]").append("a", "hello").build());
+  }
+
+  @Test
+  public void testAppendSuper_nullSupeWithSingleField() {
+    final ToStringBuilder builder = new ToStringBuilder(STYLE);
+    assertEquals(baseStr
+            + "[" + LINE_SEPARATOR
+            + "  <null>" + LINE_SEPARATOR
+            + "  a=\"hello\"" + LINE_SEPARATOR
+            + "]",
+        builder
+            .reset(base)
+            .appendSuper("Integer@8888[" + LINE_SEPARATOR + "  <null>" + LINE_SEPARATOR + "]")
+            .append("a", "hello")
+            .build()
+    );
+  }
+
+  @Test
+  public void testAppendSuper_appendSuperNullWithSingleField() {
+    final ToStringBuilder builder = new ToStringBuilder(STYLE);
+    assertEquals(baseStr
+            + "[" + LINE_SEPARATOR
+            + "  a=\"hello\"" + LINE_SEPARATOR
+            + "]",
+        builder
+            .reset(base)
+            .appendSuper(null)
+            .append("a", "hello")
+            .build()
+    );
   }
 
   @Test
@@ -80,64 +189,64 @@ public class MultiLineToStringStyleTest {
     final Integer i3 = 3;
     final Integer i4 = 4;
 
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  <null>"
-            + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).append((Object) null).toString());
+    assertEquals(baseStr + "[" + LINE_SEPARATOR + "  <null>"
+            + LINE_SEPARATOR + "]",
+        builder.reset(base).append((Object) null).build());
 
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  3"
-            + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).append(i3).toString());
+    assertEquals(baseStr + "[" + LINE_SEPARATOR + "  3"
+            + LINE_SEPARATOR + "]",
+        builder.reset(base).append(i3).build());
 
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  a=<null>"
-            + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).append("a", (Object) null).toString());
+    assertEquals(baseStr + "[" + LINE_SEPARATOR + "  a=<null>"
+            + LINE_SEPARATOR + "]",
+        builder.reset(base).append("a", (Object) null).build());
 
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  a=3"
-            + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).append("a", i3).toString());
+    assertEquals(baseStr + "[" + LINE_SEPARATOR + "  a=3"
+            + LINE_SEPARATOR + "]",
+        builder.reset(base).append("a", i3).build());
 
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  a=3"
-        + SystemUtils.LINE_SEPARATOR + "  b=4" + SystemUtils.LINE_SEPARATOR
-        + "]", builder.reset(base).append("a", i3).append("b", i4).toString());
+    assertEquals(baseStr + "[" + LINE_SEPARATOR + "  a=3"
+        + LINE_SEPARATOR + "  b=4" + LINE_SEPARATOR
+        + "]", builder.reset(base).append("a", i3).append("b", i4).build());
 
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  a=<Integer>"
-            + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).append("a", i3, false).toString());
+    assertEquals(baseStr + "[" + LINE_SEPARATOR + "  a=<Integer>"
+            + LINE_SEPARATOR + "]",
+        builder.reset(base).append("a", i3, false).build());
 
     assertEquals(
-        baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  a=<size=0>"
-            + SystemUtils.LINE_SEPARATOR + "]",
+        baseStr + "[" + LINE_SEPARATOR + "  a=<size=0>"
+            + LINE_SEPARATOR + "]",
         builder.reset(base).append("a", new ArrayList<Byte>(), false)
-               .toString());
+               .build());
 
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  a=[]"
-            + SystemUtils.LINE_SEPARATOR + "]",
+    assertEquals(baseStr + "[" + LINE_SEPARATOR + "  a=[]"
+            + LINE_SEPARATOR + "]",
         builder.reset(base).append("a", new ArrayList<Byte>(), true)
-               .toString());
+               .build());
 
     assertEquals(
-        baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  a=<size=0>"
-            + SystemUtils.LINE_SEPARATOR + "]",
+        baseStr + "[" + LINE_SEPARATOR + "  a=<size=0>"
+            + LINE_SEPARATOR + "]",
         builder.reset(base).append("a", new HashMap<Byte, Byte>(), false)
-               .toString());
+               .build());
 
     assertEquals(
-        baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  a={}"
-            + SystemUtils.LINE_SEPARATOR + "]",
+        baseStr + "[" + LINE_SEPARATOR + "  a={}"
+            + LINE_SEPARATOR + "]",
         builder.reset(base).append("a", new HashMap<Byte, Byte>(), true)
-               .toString());
+               .build());
 
     assertEquals(
-        baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  a=<size=0>"
-            + SystemUtils.LINE_SEPARATOR + "]",
+        baseStr + "[" + LINE_SEPARATOR + "  a=<size=0>"
+            + LINE_SEPARATOR + "]",
         builder.reset(base).append("a", (Object) new String[0], false)
-               .toString());
+               .build());
 
     assertEquals(
-        baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  a={}"
-            + SystemUtils.LINE_SEPARATOR + "]",
+        baseStr + "[" + LINE_SEPARATOR + "  a={}"
+            + LINE_SEPARATOR + "]",
         builder.reset(base).append("a", (Object) new String[0], true)
-               .toString());
+               .build());
   }
 
   @Test
@@ -151,29 +260,33 @@ public class MultiLineToStringStyleTest {
         + Integer.toHexString(System.identityHashCode(p));
 
     assertEquals(
-        str + "[" + SystemUtils.LINE_SEPARATOR + "  name=\"Jane Doe\""
-            + SystemUtils.LINE_SEPARATOR + "  age=25"
-            + SystemUtils.LINE_SEPARATOR + "  smoker=true"
-            + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(p).append("name", p.name).append("age", p.age).append(
-            "smoker", p.smoker).toString());
+        str + "[" + LINE_SEPARATOR
+            + "  name=\"Jane Doe\"" + LINE_SEPARATOR
+            + "  age=25" + LINE_SEPARATOR
+            + "  smoker=true" + LINE_SEPARATOR
+            + "]",
+        builder.reset(p)
+               .append("name", p.name)
+               .append("age", p.age)
+               .append("smoker", p.smoker)
+               .build());
   }
 
   @Test
   public void testLong() {
     final ToStringBuilder builder = new ToStringBuilder(STYLE);
 
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  3"
-            + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).append(3L).toString());
+    assertEquals(baseStr + "[" + LINE_SEPARATOR + "  3"
+            + LINE_SEPARATOR + "]",
+        builder.reset(base).append(3L).build());
 
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  a=3"
-            + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).append("a", 3L).toString());
+    assertEquals(baseStr + "[" + LINE_SEPARATOR + "  a=3"
+            + LINE_SEPARATOR + "]",
+        builder.reset(base).append("a", 3L).build());
 
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  a=3"
-        + SystemUtils.LINE_SEPARATOR + "  b=4" + SystemUtils.LINE_SEPARATOR
-        + "]", builder.reset(base).append("a", 3L).append("b", 4L).toString());
+    assertEquals(baseStr + "[" + LINE_SEPARATOR + "  a=3"
+        + LINE_SEPARATOR + "  b=4" + LINE_SEPARATOR
+        + "]", builder.reset(base).append("a", 3L).append("b", 4L).build());
   }
 
   @Test
@@ -181,65 +294,184 @@ public class MultiLineToStringStyleTest {
     final ToStringBuilder builder = new ToStringBuilder(STYLE);
     Object[] array = {null, base, new int[]{3, 6}};
 
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR
-            + "  {<null>,5,{3,6}}" + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).append(array).toString());
+    assertEquals(baseStr + "[" + LINE_SEPARATOR
+            + "  {<null>,5,{3,6}}" + LINE_SEPARATOR + "]",
+        builder.reset(base).append(array).build());
 
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR
-            + "  {<null>,5,{3,6}}" + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).append((Object) array).toString());
+    assertEquals(baseStr + "[" + LINE_SEPARATOR
+            + "  {<null>,5,{3,6}}" + LINE_SEPARATOR + "]",
+        builder.reset(base).append((Object) array).build());
 
     array = null;
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  <null>"
-            + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).append(array).toString());
+    assertEquals(baseStr + "[" + LINE_SEPARATOR + "  <null>"
+            + LINE_SEPARATOR + "]",
+        builder.reset(base).append(array).build());
 
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  <null>"
-            + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).append((Object) array).toString());
+    assertEquals(baseStr + "[" + LINE_SEPARATOR + "  <null>"
+            + LINE_SEPARATOR + "]",
+        builder.reset(base).append((Object) array).build());
   }
 
   @Test
   public void testLongArray() {
     final ToStringBuilder builder = new ToStringBuilder(STYLE);
     long[] array = {1, 2, -3, 4};
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  {1,2,-3,4}"
-            + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).append(array).toString());
+    assertEquals(baseStr + "[" + LINE_SEPARATOR + "  {1,2,-3,4}"
+            + LINE_SEPARATOR + "]",
+        builder.reset(base).append(array).build());
 
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  {1,2,-3,4}"
-            + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).append((Object) array).toString());
+    assertEquals(baseStr + "[" + LINE_SEPARATOR + "  {1,2,-3,4}"
+            + LINE_SEPARATOR + "]",
+        builder.reset(base).append((Object) array).build());
 
     array = null;
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  <null>"
-            + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).append(array).toString());
+    assertEquals(baseStr + "[" + LINE_SEPARATOR + "  <null>"
+            + LINE_SEPARATOR + "]",
+        builder.reset(base).append(array).build());
 
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  <null>"
-            + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).append((Object) array).toString());
+    assertEquals(baseStr + "[" + LINE_SEPARATOR + "  <null>"
+            + LINE_SEPARATOR + "]",
+        builder.reset(base).append((Object) array).build());
   }
 
   @Test
   public void testLongArrayArray() {
     final ToStringBuilder builder = new ToStringBuilder(STYLE);
     long[][] array = {{1, 2}, null, {5}};
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR
-            + "  {{1,2},<null>,{5}}" + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).append(array).toString());
+    assertEquals(baseStr + "[" + LINE_SEPARATOR
+            + "  {{1,2},<null>,{5}}" + LINE_SEPARATOR + "]",
+        builder.reset(base).append(array).build());
 
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR
-            + "  {{1,2},<null>,{5}}" + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).append((Object) array).toString());
+    assertEquals(baseStr + "[" + LINE_SEPARATOR
+            + "  {{1,2},<null>,{5}}" + LINE_SEPARATOR + "]",
+        builder.reset(base).append((Object) array).build());
 
     array = null;
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  <null>"
-            + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).append(array).toString());
+    assertEquals(baseStr + "[" + LINE_SEPARATOR + "  <null>"
+            + LINE_SEPARATOR + "]",
+        builder.reset(base).append(array).build());
 
-    assertEquals(baseStr + "[" + SystemUtils.LINE_SEPARATOR + "  <null>"
-            + SystemUtils.LINE_SEPARATOR + "]",
-        builder.reset(base).append((Object) array).toString());
+    assertEquals(baseStr + "[" + LINE_SEPARATOR + "  <null>"
+            + LINE_SEPARATOR + "]",
+        builder.reset(base).append((Object) array).build());
+  }
+
+  @Test
+  public void testNestedObjects() {
+    final ToStringBuilder builder = new ToStringBuilder(STYLE);
+
+    class Country {
+      String name;
+      String code;
+
+      @Override
+      public String toString() {
+        return new ToStringBuilder(STYLE, this)
+            .append("name", name)
+            .append("code", code)
+            .build();
+      }
+    }
+
+    class Address {
+      String street;
+      String city;
+      Country country;
+
+      @Override
+      public String toString() {
+        return new ToStringBuilder(STYLE, this)
+            .append("street", street)
+            .append("city", city)
+            .append("country", country)
+            .build();
+      }
+    }
+
+    class Foo {
+      Address address;
+
+      @Override
+      public String toString() {
+        return new ToStringBuilder(STYLE, this)
+            .append("address", address)
+            .build();
+      }
+    }
+
+    final Country country = new Country();
+    country.name = "USA";
+    country.code = "US";
+    final Address address = new Address();
+    address.street = "123 Main St";
+    address.city = "Springfield";
+    address.country = country;
+    final Foo foo = new Foo();
+    foo.address = address;
+
+    final String expected = getStartPrefix(foo) + "[" + LINE_SEPARATOR
+        + "  address=" + getStartPrefix(address) + "[" + LINE_SEPARATOR
+        + "    street=\"123 Main St\"" + LINE_SEPARATOR
+        + "    city=\"Springfield\"" + LINE_SEPARATOR
+        + "    country=" + getStartPrefix(country) + "[" + LINE_SEPARATOR
+        + "      name=\"USA\"" + LINE_SEPARATOR
+        + "      code=\"US\"" + LINE_SEPARATOR
+        + "    ]" + LINE_SEPARATOR
+        + "  ]" + LINE_SEPARATOR
+        + "]";
+
+    assertEquals(expected, foo.toString());
+  }
+
+  @Test
+  public void testNestedMap() {
+    final ToStringBuilder builder = new ToStringBuilder(STYLE);
+    final HashMap<String, Object> address = new HashMap<>();
+    address.put("street", "123 Main St");
+    address.put("city", "Springfield");
+
+    final HashMap<String, Object> country = new HashMap<>();
+    country.put("name", "USA");
+    country.put("code", "US");
+    address.put("country", country);
+
+    final String expected = baseStr + "[" + LINE_SEPARATOR
+        + "  address=" + "{" + LINE_SEPARATOR
+        + "    street=\"123 Main St\"," + LINE_SEPARATOR
+        + "    city=\"Springfield\"," + LINE_SEPARATOR
+        + "    country={" + LINE_SEPARATOR
+        + "      name=\"USA\"," + LINE_SEPARATOR
+        + "      code=\"US\"" + LINE_SEPARATOR
+        + "    }" + LINE_SEPARATOR
+        + "  }" + LINE_SEPARATOR
+        + "]";
+
+    assertEquals(expected,
+        builder.reset(base)
+               .append("address", address)
+               .build());
+  }
+
+  @Test
+  public void testNestedArrays() {
+    final ToStringBuilder builder = new ToStringBuilder(STYLE);
+    final Object[] array = {
+        "first",
+        new int[]{1, 2, 3},
+        new String[]{"nested", "array"}
+    };
+
+    final String expected = baseStr + "[" + LINE_SEPARATOR
+        + "  array={" + LINE_SEPARATOR
+        + "    \"first\"," + LINE_SEPARATOR
+        + "    {1,2,3}," + LINE_SEPARATOR
+        + "    {\"nested\",\"array\"}" + LINE_SEPARATOR
+        + "  }" + LINE_SEPARATOR
+        + "]";
+
+    assertEquals(expected,
+        builder.reset(base)
+               .append("array", array)
+               .build());
   }
 }
