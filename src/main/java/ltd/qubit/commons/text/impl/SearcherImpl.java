@@ -128,14 +128,9 @@ public class SearcherImpl {
   public static boolean matchIgnoreCase(final CharSequence str,
       final int startIndex, final CharSequence substring) {
     final int endIndex = startIndex + substring.length();
-    for (int i = startIndex; i < endIndex; ++i) {
-      final char c1 = str.charAt(i);
-      final char c2 = substring.charAt(i - startIndex);
-      if (Character.toUpperCase(c1) != Character.toUpperCase(c2)) {
-        return false;
-      }
-    }
-    return true;
+    final String s1 = str.subSequence(startIndex, endIndex).toString();
+    final String s2 = substring.toString();
+    return s1.regionMatches(true, 0, s2, 0, s2.length());
   }
 
   public static int lastIndexOf(final CharSequence str, final int start,
