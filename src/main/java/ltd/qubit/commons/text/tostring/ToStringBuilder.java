@@ -79,7 +79,7 @@ public class ToStringBuilder {
 
   private static final int INITIAL_BUFFER_SIZE = 128;
 
-  private final StringBuilder builder;
+  public final StringBuilder builder;
   private ToStringStyle style;
   private Object object;
 
@@ -676,13 +676,17 @@ public class ToStringBuilder {
     return this;
   }
 
-  @Override
-  public String toString() {
-    if ((object == null) && (builder.length() == 0)) {
+  public String build() {
+    if ((object == null) && builder.isEmpty()) {
       builder.append(style.getNullText());
     } else {
       style.appendEnd(builder, object);
     }
     return builder.toString();
+  }
+
+  @Override
+  public String toString() {
+    return build();
   }
 }
