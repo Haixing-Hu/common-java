@@ -189,103 +189,103 @@ public class ToStringStyle implements Serializable {
   /**
    * Whether to use the field names, the default is {@code true}.
    */
-  private boolean useFieldNames = true;
+  protected boolean useFieldNames = true;
 
   /**
    * Whether to use the class name, the default is {@code true}.
    */
-  private boolean useClassName = true;
+  protected boolean useClassName = true;
 
   /**
    * Whether to use short class names, the default is {@code false}.
    */
-  private boolean useShortClassName = false;
+  protected boolean useShortClassName = false;
 
   /**
    * Whether to use the identity hash code, the default is {@code true}.
    */
-  private boolean useIdentityHashCode = true;
+  protected boolean useIdentityHashCode = true;
 
   /**
    * The content start {@code '['}.
    */
-  private String contentStart = "[";
+  protected String contentStart = "[";
 
   /**
    * The content end {@code ']'}.
    */
-  private String contentEnd = "]";
+  protected String contentEnd = "]";
 
   /**
    * The field name value separator {@code '='}.
    */
-  private String fieldNameValueSeparator = "=";
+  protected String fieldNameValueSeparator = "=";
 
   /**
    * Whether the field separator should be added before any other fields.
    */
-  private boolean fieldSeparatorAtStart = false;
+  protected boolean fieldSeparatorAtStart = false;
 
   /**
    * Whether the field separator should be added after any other fields.
    */
-  private boolean fieldSeparatorAtEnd = false;
+  protected boolean fieldSeparatorAtEnd = false;
 
   /**
    * The field separator {@code ','}.
    */
-  private String fieldSeparator = ",";
+  protected String fieldSeparator = ",";
 
   /**
    * The array start {@code '&lbrace;'}.
    */
-  private String arrayStart = "{";
+  protected String arrayStart = "{";
 
   /**
    * The array separator {@code ','}.
    */
-  private String arraySeparator = ",";
+  protected String arraySeparator = ",";
 
   /**
    * The detail for array content.
    */
-  private boolean arrayContentDetail = true;
+  protected boolean arrayContentDetail = true;
 
   /**
    * The array end {@code '&rbrace;'}.
    */
-  private String arrayEnd = "}";
+  protected String arrayEnd = "}";
 
   /**
    * The value to use when fullDetail is {@code null}, the default value is
    * {@code true}.
    */
-  private boolean defaultFullDetail = true;
+  protected boolean defaultFullDetail = true;
 
   /**
    * The {@code null} text {@code '&lt;null&gt;'}.
    */
-  private String nullText = "<null>";
+  protected String nullText = "<null>";
 
   /**
    * The summary size text start {@code '&lt;size='}.
    */
-  private String sizeStartText = "<size=";
+  protected String sizeStartText = "<size=";
 
   /**
    * The summary size text start {@code '&gt;'}.
    */
-  private String sizeEndText = ">";
+  protected String sizeEndText = ">";
 
   /**
    * The summary object text start {@code '&lt;'}.
    */
-  private String summaryObjectStartText = "<";
+  protected String summaryObjectStartText = "<";
 
   /**
    * The summary object text start {@code '&gt;'}.
    */
-  private String summaryObjectEndText = ">";
+  protected String summaryObjectEndText = ">";
 
   /**
    * Protected constructor.
