@@ -2610,36 +2610,18 @@ public final class Equality {
    * @return true if the two objects are equal ignoring the case or both null;
    *     false otherwise.
    */
-  public static boolean equalsIgnoreCase(@Nullable final String value1,
-      @Nullable final String value2) {
-    if (value1 == null) {
-      return (value2 == null);
-    } else if (value2 == null) {
-      return false;
-    } else {
-      return value1.equalsIgnoreCase(value2);
-    }
-  }
-
-  /**
-   * Tests the equality of two {@link String} objects ignoring the case.
-   *
-   * @param value1
-   *     the first object, which may be null.
-   * @param value2
-   *     the second object, which may be null.
-   * @return true if the two objects are equal ignoring the case or both null;
-   *     false otherwise.
-   */
   public static boolean equalsIgnoreCase(@Nullable final CharSequence value1,
       @Nullable final CharSequence value2) {
-    if (value1 == null) {
-      return (value2 == null);
-    } else if (value2 == null) {
+    if (value1 == value2) {
+      return true;
+    } else if (value1 == null || value2 == null) {
+      return false;
+    } else if (value1.length() != value2.length()) {
       return false;
     } else {
-      // FIXME: the implementation is not efficient
-      return value1.toString().equalsIgnoreCase(value2.toString());
+      final String str1 = value1.toString();
+      final String str2 = value2.toString();
+      return str1.regionMatches(true, 0, str2, 0, str1.length());
     }
   }
 
