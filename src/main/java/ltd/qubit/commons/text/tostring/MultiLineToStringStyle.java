@@ -35,11 +35,56 @@ public final class MultiLineToStringStyle extends ToStringStyle {
 
   public static final MultiLineToStringStyle INSTANCE = new MultiLineToStringStyle();
 
+  private static final ThreadLocal<String> CURRENT_INDENT = ThreadLocal.withInitial(() -> "");
+
+  private static final String INDENT_UNIT = "  ";
+
+  protected void increaseIndent() {
+    CURRENT_INDENT.set(CURRENT_INDENT.get() + INDENT_UNIT);
+  }
+
+  protected void decreaseIndent() {
+    String current = CURRENT_INDENT.get();
+    if (current.length() >= 2) {
+      CURRENT_INDENT.set(current.substring(2));
+    }
+  }
+
+  protected String getCurrentIndent() {
+    return CURRENT_INDENT.get();
+  }
+
+  @Override
+  public void appendStart(StringBuilder builder, Object object) {
+    super.appendStart(builder, object);
+    increaseIndent();
+  }
+
+  @Override
+  public void appendEnd(StringBuilder builder, Object object) {
+    decreaseIndent();
+    super.appendEnd(builder, object);
+  }
+
   public MultiLineToStringStyle() {
-    setContentStart("[");
-    setFieldSeparator(SystemUtils.LINE_SEPARATOR + "  ");
+    setContentStart(contentStart);
+    setFieldSeparator(SystemUtils.LINE_SEPARATOR + getCurrentIndent() + INDENT_UNIT);
     setFieldSeparatorAtStart(true);
-    setContentEnd(SystemUtils.LINE_SEPARATOR + "]");
+    setContentEnd(SystemUtils.LINE_SEPARATOR + getCurrentIndent() + contentEnd);
+  }
+
+  @Override
+  protected void appendFieldSeparator(StringBuilder builder) {
+    builder.append(SystemUtils.LINE_SEPARATOR)
+          .append(getCurrentIndent())
+          .append(INDENT_UNIT);
+  }
+
+  @Override
+  protected void appendContentEnd(StringBuilder builder) {
+    builder.append(SystemUtils.LINE_SEPARATOR)
+          .append(getCurrentIndent())
+          .append(getContentEnd());
   }
 
   @Override
