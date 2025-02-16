@@ -1243,6 +1243,48 @@ public final class Equality {
   }
 
   /**
+   * Tests the equality of two {@link CharSequence} objects.
+   *
+   * @param value1
+   *     the first object, which may be null.
+   * @param value2
+   *     the second object, which may be null.
+   * @return true if the two objects are equal or both null; false otherwise.
+   */
+  public static boolean equals(@Nullable final CharSequence value1,
+      @Nullable final CharSequence value2) {
+    if (value1 == null) {
+      return (value2 == null);
+    } else if (value2 == null) {
+      return false;
+    } else {
+      return value1.equals(value2);
+    }
+  }
+
+  /**
+   * Tests the equality of two {@link Long} arrays.
+   *
+   * @param array1
+   *     the first array, which could be null.
+   * @param array2
+   *     the second array, which could be null.
+   * @return true if two arrays are equal or both null; false otherwise.
+   */
+  public static boolean equals(@Nullable final CharSequence[] array1,
+      @Nullable final CharSequence[] array2) {
+    if (array1 == array2) {
+      return true;
+    } else if ((array1 == null) || (array2 == null)) {
+      return false;
+    } else if (array1.length != array2.length) {
+      return false;
+    } else {
+      return equals(array1, 0, array2, 0, array1.length);
+    }
+  }
+
+  /**
    * Tests the equality of two {@link Enum} objects.
    *
    * @param <E>
@@ -1815,108 +1857,87 @@ public final class Equality {
       } else if (class1.isArray()) {
         // 'Switch' on type of array, to dispatch to the correct handler
         // This handles multi-dimensional arrays
-        if (value1 instanceof boolean[]) {
-          final boolean[] array1 = (boolean[]) value1;
+        if (value1 instanceof final boolean[] array1) {
           final boolean[] array2 = (boolean[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof char[]) {
-          final char[] array1 = (char[]) value1;
+        } else if (value1 instanceof final char[] array1) {
           final char[] array2 = (char[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof byte[]) {
-          final byte[] array1 = (byte[]) value1;
+        } else if (value1 instanceof final byte[] array1) {
           final byte[] array2 = (byte[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof short[]) {
-          final short[] array1 = (short[]) value1;
+        } else if (value1 instanceof final short[] array1) {
           final short[] array2 = (short[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof int[]) {
-          final int[] array1 = (int[]) value1;
+        } else if (value1 instanceof final int[] array1) {
           final int[] array2 = (int[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof long[]) {
-          final long[] array1 = (long[]) value1;
+        } else if (value1 instanceof final long[] array1) {
           final long[] array2 = (long[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof float[]) {
-          final float[] array1 = (float[]) value1;
+        } else if (value1 instanceof final float[] array1) {
           final float[] array2 = (float[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof double[]) {
-          final double[] array1 = (double[]) value1;
+        } else if (value1 instanceof final double[] array1) {
           final double[] array2 = (double[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof String[]) {
-          final String[] array1 = (String[]) value1;
+        } else if (value1 instanceof final String[] array1) {
           final String[] array2 = (String[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof Boolean[]) {
-          final Boolean[] array1 = (Boolean[]) value1;
+        } else if (value1 instanceof final Boolean[] array1) {
           final Boolean[] array2 = (Boolean[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof Character[]) {
-          final Character[] array1 = (Character[]) value1;
+        } else if (value1 instanceof final Character[] array1) {
           final Character[] array2 = (Character[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof Byte[]) {
-          final Byte[] array1 = (Byte[]) value1;
+        } else if (value1 instanceof final Byte[] array1) {
           final Byte[] array2 = (Byte[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof Short[]) {
-          final Short[] array1 = (Short[]) value1;
+        } else if (value1 instanceof final Short[] array1) {
           final Short[] array2 = (Short[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof Integer[]) {
-          final Integer[] array1 = (Integer[]) value1;
+        } else if (value1 instanceof final Integer[] array1) {
           final Integer[] array2 = (Integer[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof Long[]) {
-          final Long[] array1 = (Long[]) value1;
+        } else if (value1 instanceof final Long[] array1) {
           final Long[] array2 = (Long[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof Float[]) {
-          final Float[] array1 = (Float[]) value1;
+        } else if (value1 instanceof final Float[] array1) {
           final Float[] array2 = (Float[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof Double[]) {
-          final Double[] array1 = (Double[]) value1;
+        } else if (value1 instanceof final Double[] array1) {
           final Double[] array2 = (Double[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof Class<?>[]) {
-          final Class<?>[] array1 = (Class<?>[]) value1;
+        } else if (value1 instanceof final Class<?>[] array1) {
           final Class<?>[] array2 = (Class<?>[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof Date[]) {
-          final Date[] array1 = (Date[]) value1;
+        } else if (value1 instanceof final Date[] array1) {
           final Date[] array2 = (Date[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof BigInteger[]) {
-          final BigInteger[] array1 = (BigInteger[]) value1;
+        } else if (value1 instanceof final BigInteger[] array1) {
           final BigInteger[] array2 = (BigInteger[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof BigDecimal[]) {
-          final BigDecimal[] array1 = (BigDecimal[]) value1;
+        } else if (value1 instanceof final BigDecimal[] array1) {
           final BigDecimal[] array2 = (BigDecimal[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
@@ -2601,6 +2622,28 @@ public final class Equality {
   }
 
   /**
+   * Tests the equality of two {@link String} objects ignoring the case.
+   *
+   * @param value1
+   *     the first object, which may be null.
+   * @param value2
+   *     the second object, which may be null.
+   * @return true if the two objects are equal ignoring the case or both null;
+   *     false otherwise.
+   */
+  public static boolean equalsIgnoreCase(@Nullable final CharSequence value1,
+      @Nullable final CharSequence value2) {
+    if (value1 == null) {
+      return (value2 == null);
+    } else if (value2 == null) {
+      return false;
+    } else {
+      // FIXME: the implementation is not efficient
+      return value1.toString().equalsIgnoreCase(value2.toString());
+    }
+  }
+
+  /**
    * Tests the equality of two {@link String} arrays ignoring the case.
    *
    * @param array1
@@ -3265,110 +3308,89 @@ public final class Equality {
       } else if (class1.isArray()) {
         // 'Switch' on type of array, to dispatch to the correct handler
         // This handles multi-dimensional arrays
-        if (value1 instanceof boolean[]) {
-          final boolean[] array1 = (boolean[]) value1;
+        if (value1 instanceof final boolean[] array1) {
           final boolean[] array2 = (boolean[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof char[]) {
-          final char[] array1 = (char[]) value1;
+        } else if (value1 instanceof final char[] array1) {
           final char[] array2 = (char[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof byte[]) {
-          final byte[] array1 = (byte[]) value1;
+        } else if (value1 instanceof final byte[] array1) {
           final byte[] array2 = (byte[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof short[]) {
-          final short[] array1 = (short[]) value1;
+        } else if (value1 instanceof final short[] array1) {
           final short[] array2 = (short[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof int[]) {
-          final int[] array1 = (int[]) value1;
+        } else if (value1 instanceof final int[] array1) {
           final int[] array2 = (int[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof long[]) {
-          final long[] array1 = (long[]) value1;
+        } else if (value1 instanceof final long[] array1) {
           final long[] array2 = (long[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof float[]) {
-          final float[] array1 = (float[]) value1;
+        } else if (value1 instanceof final float[] array1) {
           final float[] array2 = (float[]) value2;
           return (array1.length == array2.length)
               && valueEquals(array1, 0, array2, 0, array1.length,
               (float) epsilon);
-        } else if (value1 instanceof double[]) {
-          final double[] array1 = (double[]) value1;
+        } else if (value1 instanceof final double[] array1) {
           final double[] array2 = (double[]) value2;
           return (array1.length == array2.length)
               && valueEquals(array1, 0, array2, 0, array1.length, epsilon);
-        } else if (value1 instanceof String[]) {
-          final String[] array1 = (String[]) value1;
+        } else if (value1 instanceof final String[] array1) {
           final String[] array2 = (String[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof Boolean[]) {
-          final Boolean[] array1 = (Boolean[]) value1;
+        } else if (value1 instanceof final Boolean[] array1) {
           final Boolean[] array2 = (Boolean[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof Character[]) {
-          final Character[] array1 = (Character[]) value1;
+        } else if (value1 instanceof final Character[] array1) {
           final Character[] array2 = (Character[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof Byte[]) {
-          final Byte[] array1 = (Byte[]) value1;
+        } else if (value1 instanceof final Byte[] array1) {
           final Byte[] array2 = (Byte[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof Short[]) {
-          final Short[] array1 = (Short[]) value1;
+        } else if (value1 instanceof final Short[] array1) {
           final Short[] array2 = (Short[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof Integer[]) {
-          final Integer[] array1 = (Integer[]) value1;
+        } else if (value1 instanceof final Integer[] array1) {
           final Integer[] array2 = (Integer[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof Long[]) {
-          final Long[] array1 = (Long[]) value1;
+        } else if (value1 instanceof final Long[] array1) {
           final Long[] array2 = (Long[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof Float[]) {
-          final Float[] array1 = (Float[]) value1;
+        } else if (value1 instanceof final Float[] array1) {
           final Float[] array2 = (Float[]) value2;
           return (array1.length == array2.length)
               && valueEquals(array1, 0, array2, 0, array1.length,
               (float) epsilon);
-        } else if (value1 instanceof Double[]) {
-          final Double[] array1 = (Double[]) value1;
+        } else if (value1 instanceof final Double[] array1) {
           final Double[] array2 = (Double[]) value2;
           return (array1.length == array2.length)
               && valueEquals(array1, 0, array2, 0, array1.length, epsilon);
-        } else if (value1 instanceof Class<?>[]) {
-          final Class<?>[] array1 = (Class<?>[]) value1;
+        } else if (value1 instanceof final Class<?>[] array1) {
           final Class<?>[] array2 = (Class<?>[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof Date[]) {
-          final Date[] array1 = (Date[]) value1;
+        } else if (value1 instanceof final Date[] array1) {
           final Date[] array2 = (Date[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof BigInteger[]) {
-          final BigInteger[] array1 = (BigInteger[]) value1;
+        } else if (value1 instanceof final BigInteger[] array1) {
           final BigInteger[] array2 = (BigInteger[]) value2;
           return (array1.length == array2.length)
               && equals(array1, 0, array2, 0, array1.length);
-        } else if (value1 instanceof BigDecimal[]) {
-          final BigDecimal[] array1 = (BigDecimal[]) value1;
+        } else if (value1 instanceof final BigDecimal[] array1) {
           final BigDecimal[] array2 = (BigDecimal[]) value2;
           return (array1.length == array2.length)
               && valueEquals(array1, 0, array2, 0, array1.length);
@@ -3382,9 +3404,8 @@ public final class Equality {
         final Collection<?> col1 = (Collection<?>) value1;
         final Collection<?> col2 = (Collection<?>) value2;
         return valueEquals(col1, col2, epsilon);
-      } else if (value1 instanceof BigDecimal) {
+      } else if (value1 instanceof final BigDecimal x) {
         // the BigDecimal should be treated specially.
-        final BigDecimal x = (BigDecimal) value1;
         final BigDecimal y = (BigDecimal) value2;
         return x.compareTo(y) == 0;
       } else {
