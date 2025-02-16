@@ -33,6 +33,7 @@ import ltd.qubit.commons.annotation.Unique;
 import ltd.qubit.commons.lang.ClassUtils;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
+import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.reflect.impl.GetterMethod;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import ltd.qubit.commons.util.range.CloseRange;
@@ -602,7 +603,7 @@ public class Property {
    * @see #getReferencePath()
    */
   public boolean isIndirectReference() {
-    return (! isDirectReference());
+    return (referenceEntity != null) && referenceEntity.equals(Object.class);
   }
 
   /**
@@ -620,6 +621,22 @@ public class Property {
    */
   public boolean isReferenceExisting() {
     return referenceExisting;
+  }
+
+  /**
+   * Tests whether this bean property is a reference to a property of the
+   * referenced entity of another property of this bean.
+   *
+   * @return
+   *     {@code true} if this bean property is a reference to a property of the
+   *     referenced entity of another property of this bean; {@code false} otherwise.
+   * @see #isReference()
+   * @see #getReferenceEntity()
+   * @see #getReferenceProperty()
+   * @see #getReferencePath()
+   */
+  public boolean isReferenceToPath() {
+    return (!StringUtils.isEmpty(referencePath));
   }
 
   /**
