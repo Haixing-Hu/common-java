@@ -127,8 +127,17 @@ public class RawEnumCodec implements Codec<Enum, String> {
     if (isEmpty(str)) {
       return null;
     }
-    final Method valueGetter = VALUE_GETTER_CACHE.get(enumClass);
-    final Enum result = (valueGetter == null ? decodeWithName(str) : decodeWithValue(str, valueGetter));
+    final Enum result;
+    if (supportJsonValue) {
+      final Method valueGetter = VALUE_GETTER_CACHE.get(enumClass);
+      if (valueGetter != null) {
+        result = decodeWithValue(str, valueGetter);
+      } else {
+        result = decodeWithName(str);
+      }
+    } else {
+      result = decodeWithName(str);
+    }
     if (result != null) {
       return result;
     }
@@ -176,7 +185,7 @@ public class RawEnumCodec implements Codec<Enum, String> {
     }
     // Note that we must use the actual class of the enumerator to get the value getter method.
     final Method valueGetter = VALUE_GETTER_CACHE.get(source.getClass());
-    if (valueGetter != null) {
+    if (supportJsonValue && (valueGetter != null)) {
       try {
         valueGetter.setAccessible(true);
         final Object value = valueGetter.invoke(source);
