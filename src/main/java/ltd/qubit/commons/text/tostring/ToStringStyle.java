@@ -389,7 +389,7 @@ public class ToStringStyle implements Serializable {
    *     the {@code Object} to build a {@code toString} for.
    */
   public void appendEnd(final StringBuilder builder, final Object object) {
-    if (fieldSeparatorAtEnd == false) {
+    if (!fieldSeparatorAtEnd) {
       removeLastFieldSeparator(builder);
     }
     appendContentEnd(builder);
@@ -1045,9 +1045,8 @@ public class ToStringStyle implements Serializable {
     //    } else {
     //      builder.append(value.toString());
     //    }
-    if (value instanceof String) {
+    if (value instanceof final String str) {
       // 对字符串值加上双引号
-      final String str = (String) value;
       appendDetail(builder, fieldName, str);
     } else if (value instanceof Character) {
       // 对字符值加上单引号并打印其Unicode编码值
