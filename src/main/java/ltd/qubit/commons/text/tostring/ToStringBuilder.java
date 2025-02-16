@@ -676,6 +676,12 @@ public class ToStringBuilder {
     return this;
   }
 
+  /**
+   * Build the string representation formatted by this builder.
+   *
+   * @return
+   *     the string representation formatted by this builder.
+   */
   public String build() {
     if ((object == null) && builder.isEmpty()) {
       builder.append(style.getNullText());
