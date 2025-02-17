@@ -8,11 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.tostring;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import ltd.qubit.commons.text.tostring.ToStringStyleTest.Person;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -78,7 +81,9 @@ public class MultiLineToStringStyleTest {
             + "]",
         builder
             .reset(base)
-            .appendSuper("Integer@8888[" + LINE_SEPARATOR + "  <null>" + LINE_SEPARATOR + "]")
+            .appendSuper("Integer@8888[" + LINE_SEPARATOR
+                + "    <null>" + LINE_SEPARATOR
+                + "  ]")
             .build()
     );
   }
@@ -92,7 +97,9 @@ public class MultiLineToStringStyleTest {
             + "]",
         builder
             .reset(base)
-            .appendSuper("Integer@8888[" + LINE_SEPARATOR + "  a=\"hello\"" + LINE_SEPARATOR + "]")
+            .appendSuper("Integer@8888[" + LINE_SEPARATOR
+                + "    a=\"hello\"" + LINE_SEPARATOR
+                + "  ]")
             .build()
     );
   }
@@ -110,9 +117,9 @@ public class MultiLineToStringStyleTest {
         builder
             .reset(base)
             .appendSuper("Integer@8888[" + LINE_SEPARATOR
-                + "  a=\"hello\"" + LINE_SEPARATOR
-                + "  b=123" + LINE_SEPARATOR
-                + "]")
+                + "    a=\"hello\"" + LINE_SEPARATOR
+                + "    b=123" + LINE_SEPARATOR
+                + "  ]")
             .append("c", 456)
             .build()
     );
@@ -133,12 +140,12 @@ public class MultiLineToStringStyleTest {
         builder
             .reset(base)
             .appendSuper("Integer@8888[" + LINE_SEPARATOR
-                + "  a=\"hello\"" + LINE_SEPARATOR
-                + "  b=123" + LINE_SEPARATOR
-                + "  c=[" + LINE_SEPARATOR
-                + "    d=\"world\"" + LINE_SEPARATOR
-                + "  ]" + LINE_SEPARATOR
-                + "]")
+                + "    a=\"hello\"" + LINE_SEPARATOR
+                + "    b=123" + LINE_SEPARATOR
+                + "    c=[" + LINE_SEPARATOR
+                + "      d=\"world\"" + LINE_SEPARATOR
+                + "    ]" + LINE_SEPARATOR
+                + "  ]")
             .append("e", 789)
             .build()
     );
@@ -150,7 +157,9 @@ public class MultiLineToStringStyleTest {
     assertEquals(baseStr + "[" + LINE_SEPARATOR
             + "  a=\"hello\"" + LINE_SEPARATOR
             + "]",
-        builder.reset(base).appendSuper("Integer@8888[" + LINE_SEPARATOR + "]").append("a", "hello").build());
+        builder.reset(base)
+               .appendSuper("Integer@8888[" + LINE_SEPARATOR + "]")
+               .append("a", "hello").build());
   }
 
   @Test
@@ -163,7 +172,9 @@ public class MultiLineToStringStyleTest {
             + "]",
         builder
             .reset(base)
-            .appendSuper("Integer@8888[" + LINE_SEPARATOR + "  <null>" + LINE_SEPARATOR + "]")
+            .appendSuper("Integer@8888[" + LINE_SEPARATOR
+                + "    <null>" + LINE_SEPARATOR
+                + "  ]")
             .append("a", "hello")
             .build()
     );
@@ -253,7 +264,7 @@ public class MultiLineToStringStyleTest {
   @Test
   public void testPerson() {
     final ToStringBuilder builder = new ToStringBuilder(STYLE);
-    final ToStringStyleTest.Person p = new ToStringStyleTest.Person();
+    final Person p = new Person();
     p.name = "Jane Doe";
     p.age = 25;
     p.smoker = true;
@@ -478,5 +489,109 @@ public class MultiLineToStringStyleTest {
         builder.reset(base)
                .append("array", array)
                .build());
+  }
+
+  @Test
+  public void testNestedObject_2() {
+    class Info {
+      public Long id;
+      public String code;
+      public String name;
+
+      @Override
+      public String toString() {
+        return new ToStringBuilder(STYLE, this)
+            .append("id", id)
+            .append("code", code)
+            .append("name", name)
+            .toString();
+      }
+    }
+
+    class StatefulInfo extends Info {
+      public String state;
+
+      @Override
+      public String toString() {
+        return new ToStringBuilder(STYLE, this)
+            .appendSuper(super.toString())
+            .append("state", state)
+            .toString();
+      }
+    }
+
+    final StatefulInfo info = new StatefulInfo();
+    info.id = 123L;
+    info.code = "abc";
+    info.name = "hello";
+    info.state = "NORMAL";
+    final String str = info.toString();
+
+    final String expected = getStartPrefix(info) + "[" + LINE_SEPARATOR
+        + "  id=123" + LINE_SEPARATOR
+        + "  code=\"abc\"" + LINE_SEPARATOR
+        + "  name=\"hello\"" + LINE_SEPARATOR
+        + "  state=\"NORMAL\"" + LINE_SEPARATOR
+        + "]";
+    assertEquals(expected, str);
+  }
+
+  @Test
+  public void testNestedNestedObject() {
+    class Info {
+      public Long id;
+      public String code;
+      public String name;
+
+      @Override
+      public String toString() {
+        return new ToStringBuilder(STYLE, this)
+            .append("id", id)
+            .append("code", code)
+            .append("name", name)
+            .toString();
+      }
+    }
+
+    class StatefulInfo extends Info {
+      public String state;
+
+      @Override
+      public String toString() {
+        return new ToStringBuilder(STYLE, this)
+            .appendSuper(super.toString())
+            .append("state", state)
+            .toString();
+      }
+    }
+
+    class DeleteableStatefulInfo extends StatefulInfo {
+      public LocalDate deleteDate;
+
+      @Override
+      public String toString() {
+        return new ToStringBuilder(STYLE, this)
+            .appendSuper(super.toString())
+            .append("deleteDate", deleteDate)
+            .toString();
+      }
+    }
+
+    final DeleteableStatefulInfo info = new DeleteableStatefulInfo();
+    info.id = 123L;
+    info.code = "abc";
+    info.name = "hello";
+    info.state = "NORMAL";
+    info.deleteDate = LocalDate.of(2025, 1, 1);
+    final String str = info.toString();
+
+    final String expected = getStartPrefix(info) + "[" + LINE_SEPARATOR
+        + "  id=123" + LINE_SEPARATOR
+        + "  code=\"abc\"" + LINE_SEPARATOR
+        + "  name=\"hello\"" + LINE_SEPARATOR
+        + "  state=\"NORMAL\"" + LINE_SEPARATOR
+        + "  deleteDate=2025-01-01" + LINE_SEPARATOR
+        + "]";
+    assertEquals(expected, str);
   }
 }

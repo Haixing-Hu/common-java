@@ -12,6 +12,8 @@ import java.io.Serial;
 
 import javax.annotation.concurrent.Immutable;
 
+import ltd.qubit.commons.lang.StringUtils;
+
 import static ltd.qubit.commons.lang.SystemUtils.LINE_SEPARATOR;
 
 /**
@@ -105,11 +107,11 @@ public final class MultiLineToStringStyle extends ToStringStyle {
   public void appendSuper(final StringBuilder builder,
       final String superToString) {
     if (superToString != null) {
-      final int pos1 = superToString.indexOf(originalContentStart)
-          + originalContentStart.length();
-      final int pos2 = superToString.lastIndexOf(LINE_SEPARATOR + originalContentEnd);
+      final int pos1 = superToString.indexOf(contentStart) + contentStart.length();
+      final int pos2 = superToString.lastIndexOf(contentEnd);
       if ((pos1 != pos2) && (pos1 >= 0) && (pos2 >= 0)) {
-        final String data = superToString.substring(pos1, pos2);
+        String data = superToString.substring(pos1, pos2);
+        data = StringUtils.removePrefixFromEachLine(data, INDENT_UNIT);
         builder.append(data);
       }
     }
