@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -9656,10 +9657,36 @@ public class StringUtils {
    *     the string with the specified prefix added to each line.
    */
   public static String addPrefixToEachLine(final String input, final String prefix) {
+    if (input == null || prefix == null || prefix.isEmpty()) {
+      return input; // 如果输入或前缀为空，直接返回原始字符串
+    }
     // 使用正则表达式来匹配每行的开头，并添加前缀
     // 正则表达式解释:
     // ^ 表示一行的开始
     // (?m) 是多行模式，它使 ^ 和 $ 匹配每行的开始和结束
     return input.replaceAll("(?m)^", prefix);
+  }
+
+  /**
+   * Removes a prefix from each line of the input string.
+   * <p>
+   * The line break characters include {@code '\n'}, {@code '\r'}, and {@code '\r\n'}.
+   *
+   * @param input
+   *     the input string.
+   * @param prefix
+   *     the prefix to be added to each line.
+   * @return
+   *     the string with the specified prefix added to each line.
+   */
+  public static String removePrefixFromEachLine(final String input, final String prefix) {
+    if (input == null || prefix == null || prefix.isEmpty()) {
+      return input; // 如果输入或前缀为空，直接返回原始字符串
+    }
+    // 使用正则表达式替换每行开头的prefix，确保按行进行匹配
+    // ^ 表示一行的开始
+    // (?m) 是多行模式，它使 ^ 和 $ 匹配每行的开始和结束
+    final String regex = "(?m)^" + Pattern.quote(prefix);
+    return input.replaceAll(regex, "");
   }
 }
