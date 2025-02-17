@@ -966,7 +966,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (NonVoidMethod0<T, R>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (NonVoidMethod0<T, R>) g);
         }
       }
@@ -985,7 +985,7 @@ public class MethodUtils {
           } else {
             try {
               return findMethod(clazz, (NonVoidMethod1<T, R, P1>) g);
-            } catch (final IllegalArgumentException e) {
+            } catch (final Exception e) {
               return findMethodBySerialization(clazz, (NonVoidMethod1<T, R, P1>) g);
             }
           }
@@ -1004,7 +1004,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (NonVoidMethod1Boolean<T, R>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (NonVoidMethod1Boolean<T, R>) g);
         }
       }
@@ -1032,7 +1032,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (NonVoidMethod1Byte<T, R>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (NonVoidMethod1Byte<T, R>) g);
         }
       }
@@ -1096,7 +1096,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (NonVoidMethod2<T, R, P1, P2>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (NonVoidMethod2<T, R, P1, P2>) g);
         }
       }
@@ -1115,7 +1115,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (NonVoidMethod3<T, R, P1, P2, P3>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (NonVoidMethod3<T, R, P1, P2, P3>) g);
         }
       }
@@ -1134,7 +1134,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (NonVoidMethod4<T, R, P1, P2, P3, P4>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (NonVoidMethod4<T, R, P1, P2, P3, P4>) g);
         }
       }
@@ -1153,7 +1153,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (NonVoidMethod5<T, R, P1, P2, P3, P4, P5>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (NonVoidMethod5<T, R, P1, P2, P3, P4, P5>) g);
         }
       }
@@ -1172,7 +1172,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (NonVoidMethod6<T, R, P1, P2, P3, P4, P5, P6>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (NonVoidMethod6<T, R, P1, P2, P3, P4, P5, P6>) g);
         }
       }
@@ -1191,7 +1191,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (NonVoidMethod7<T, R, P1, P2, P3, P4, P5, P6, P7>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (NonVoidMethod7<T, R, P1, P2, P3, P4, P5, P6, P7>) g);
         }
       }
@@ -1210,7 +1210,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (NonVoidMethod8<T, R, P1, P2, P3, P4, P5, P6, P7, P8>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (NonVoidMethod8<T, R, P1, P2, P3, P4, P5, P6, P7, P8>) g);
         }
       }
@@ -1229,7 +1229,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (NonVoidMethod9<T, R, P1, P2, P3, P4, P5, P6, P7, P8, P9>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (NonVoidMethod9<T, R, P1, P2, P3, P4, P5, P6, P7, P8, P9>) g);
         }
       }
@@ -1298,7 +1298,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (VoidMethod0<T>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (VoidMethod0<T>) g);
         }
       }
@@ -1320,7 +1320,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (VoidMethod1<T, P1>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (VoidMethod1<T, P1>) g);
         }
       }
@@ -1342,7 +1342,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (VoidMethod1Boolean<T>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (VoidMethod1Boolean<T>) g);
         }
       }
@@ -1373,7 +1373,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (VoidMethod1Byte<T>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (VoidMethod1Byte<T>) g);
         }
       }
@@ -1440,7 +1440,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (VoidMethod2<T, P1, P2>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (VoidMethod2<T, P1, P2>) g);
         }
       }
@@ -1462,7 +1462,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (VoidMethod3<T, P1, P2, P3>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (VoidMethod3<T, P1, P2, P3>) g);
         }
       }
@@ -1484,7 +1484,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (VoidMethod4<T, P1, P2, P3, P4>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (VoidMethod4<T, P1, P2, P3, P4>) g);
         }
       }
@@ -1506,7 +1506,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (VoidMethod5<T, P1, P2, P3, P4, P5>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (VoidMethod5<T, P1, P2, P3, P4, P5>) g);
         }
       }
@@ -1528,7 +1528,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (VoidMethod6<T, P1, P2, P3, P4, P5, P6>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (VoidMethod6<T, P1, P2, P3, P4, P5, P6>) g);
         }
       }
@@ -1550,7 +1550,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (VoidMethod7<T, P1, P2, P3, P4, P5, P6, P7>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (VoidMethod7<T, P1, P2, P3, P4, P5, P6, P7>) g);
         }
       }
@@ -1572,7 +1572,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (VoidMethod8<T, P1, P2, P3, P4, P5, P6, P7, P8>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (VoidMethod8<T, P1, P2, P3, P4, P5, P6, P7, P8>) g);
         }
       }
@@ -1594,7 +1594,7 @@ public class MethodUtils {
       } else {
         try {
           return findMethod(clazz, (VoidMethod9<T, P1, P2, P3, P4, P5, P6, P7, P8, P9>) g);
-        } catch (final IllegalArgumentException e) {
+        } catch (final Exception e) {
           return findMethodBySerialization(clazz, (VoidMethod9<T, P1, P2, P3, P4, P5, P6, P7, P8, P9>) g);
         }
       }
