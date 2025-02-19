@@ -33,7 +33,7 @@ public class DateSequenceCodeGenerator implements CodeGenerator {
 
   private final Map<LocalDate, AtomicLong> sequence = new ConcurrentHashMap<>();
 
-  private final Clock clock;
+  private Clock clock;
 
   public DateSequenceCodeGenerator() {
     this(Clock.systemDefaultZone());
@@ -45,6 +45,10 @@ public class DateSequenceCodeGenerator implements CodeGenerator {
 
   public Clock getClock() {
     return clock;
+  }
+
+  public void setClock(final Clock clock) {
+    this.clock = clock;
   }
 
   @Override
