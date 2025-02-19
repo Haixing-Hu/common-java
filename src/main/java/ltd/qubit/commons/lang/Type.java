@@ -11,16 +11,14 @@ package ltd.qubit.commons.lang;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nullable;
-
-import static java.util.Map.entry;
-
-import static ltd.qubit.commons.datastructure.map.MapUtils.invertAsUnmodifiable;
 
 /**
  * The enumeration of common data types.
@@ -63,34 +61,65 @@ public enum Type {
   TIME,
   DATETIME,
   TIMESTAMP,
+  INSTANT,
   BYTE_ARRAY,
   CLASS,
   BIG_INTEGER,
   BIG_DECIMAL;
 
-  private static final Map<ClassKey, Type>  CLASS_TYPE_MAP =
-      Map.ofEntries(
-          entry(new ClassKey(Boolean.class), BOOL),
-          entry(new ClassKey(Character.class), CHAR),
-          entry(new ClassKey(Byte.class), BYTE),
-          entry(new ClassKey(Short.class), SHORT),
-          entry(new ClassKey(Integer.class), INT),
-          entry(new ClassKey(Long.class), LONG),
-          entry(new ClassKey(Float.class), FLOAT),
-          entry(new ClassKey(Double.class), DOUBLE),
-          entry(new ClassKey(String.class), STRING),
-          entry(new ClassKey(LocalDate.class), DATE),
-          entry(new ClassKey(LocalTime.class), TIME),
-          entry(new ClassKey(LocalDateTime.class), DATETIME),
-          entry(new ClassKey(Timestamp.class), TIMESTAMP),
-          entry(new ClassKey(byte[].class), BYTE_ARRAY),
-          entry(new ClassKey(Class.class), CLASS),
-          entry(new ClassKey(BigInteger.class), BIG_INTEGER),
-          entry(new ClassKey(BigDecimal.class), BIG_DECIMAL)
-      );
+  private static final Map<ClassKey, Type>  CLASS_TYPE_MAP = new HashMap<>();
 
-  private static final Map<Type, ClassKey>  TYPE_CLASS_MAP =
-      invertAsUnmodifiable(CLASS_TYPE_MAP);
+  static {
+    CLASS_TYPE_MAP.put(new ClassKey(Boolean.class), BOOL);
+    CLASS_TYPE_MAP.put(new ClassKey(Character.class), CHAR);
+    CLASS_TYPE_MAP.put(new ClassKey(Byte.class), BYTE);
+    CLASS_TYPE_MAP.put(new ClassKey(Short.class), SHORT);
+    CLASS_TYPE_MAP.put(new ClassKey(Integer.class), INT);
+    CLASS_TYPE_MAP.put(new ClassKey(Long.class), LONG);
+    CLASS_TYPE_MAP.put(new ClassKey(Float.class), FLOAT);
+    CLASS_TYPE_MAP.put(new ClassKey(Double.class), DOUBLE);
+    CLASS_TYPE_MAP.put(new ClassKey(String.class), STRING);
+    CLASS_TYPE_MAP.put(new ClassKey(LocalDate.class), DATE);
+    CLASS_TYPE_MAP.put(new ClassKey(LocalTime.class), TIME);
+    CLASS_TYPE_MAP.put(new ClassKey(LocalDateTime.class), DATETIME);
+    CLASS_TYPE_MAP.put(new ClassKey(Timestamp.class), TIMESTAMP);
+    CLASS_TYPE_MAP.put(new ClassKey(Instant.class), INSTANT);
+    CLASS_TYPE_MAP.put(new ClassKey(byte[].class), BYTE_ARRAY);
+    CLASS_TYPE_MAP.put(new ClassKey(Class.class), CLASS);
+    CLASS_TYPE_MAP.put(new ClassKey(BigInteger.class), BIG_INTEGER);
+    CLASS_TYPE_MAP.put(new ClassKey(BigDecimal.class), BIG_DECIMAL);
+    // add support of primitive types
+    CLASS_TYPE_MAP.put(new ClassKey(boolean.class), BOOL);
+    CLASS_TYPE_MAP.put(new ClassKey(char.class), CHAR);
+    CLASS_TYPE_MAP.put(new ClassKey(byte.class), BYTE);
+    CLASS_TYPE_MAP.put(new ClassKey(short.class), SHORT);
+    CLASS_TYPE_MAP.put(new ClassKey(int.class), INT);
+    CLASS_TYPE_MAP.put(new ClassKey(long.class), LONG);
+    CLASS_TYPE_MAP.put(new ClassKey(float.class), FLOAT);
+    CLASS_TYPE_MAP.put(new ClassKey(double.class), DOUBLE);
+  }
+
+  private static final Map<Type, ClassKey>  TYPE_CLASS_MAP = new HashMap<>();
+  static {
+    TYPE_CLASS_MAP.put(BOOL, new ClassKey(Boolean.class));
+    TYPE_CLASS_MAP.put(CHAR, new ClassKey(Character.class));
+    TYPE_CLASS_MAP.put(BYTE, new ClassKey(Byte.class));
+    TYPE_CLASS_MAP.put(SHORT, new ClassKey(Short.class));
+    TYPE_CLASS_MAP.put(INT, new ClassKey(Integer.class));
+    TYPE_CLASS_MAP.put(LONG, new ClassKey(Long.class));
+    TYPE_CLASS_MAP.put(FLOAT, new ClassKey(Float.class));
+    TYPE_CLASS_MAP.put(DOUBLE, new ClassKey(Double.class));
+    TYPE_CLASS_MAP.put(STRING, new ClassKey(String.class));
+    TYPE_CLASS_MAP.put(DATE, new ClassKey(LocalDate.class));
+    TYPE_CLASS_MAP.put(TIME, new ClassKey(LocalTime.class));
+    TYPE_CLASS_MAP.put(DATETIME, new ClassKey(LocalDateTime.class));
+    TYPE_CLASS_MAP.put(TIMESTAMP, new ClassKey(Timestamp.class));
+    TYPE_CLASS_MAP.put(INSTANT, new ClassKey(Instant.class));
+    TYPE_CLASS_MAP.put(BYTE_ARRAY, new ClassKey(byte[].class));
+    TYPE_CLASS_MAP.put(CLASS, new ClassKey(Class.class));
+    TYPE_CLASS_MAP.put(BIG_INTEGER, new ClassKey(BigInteger.class));
+    TYPE_CLASS_MAP.put(BIG_DECIMAL, new ClassKey(BigDecimal.class));
+  }
 
   @Nullable
   public static Type forClass(final Class<?> clazz) {
@@ -139,6 +168,8 @@ public enum Type {
         return LocalDateTime.parse(text);
       case TIMESTAMP:
         return Timestamp.valueOf(text);
+      case INSTANT:
+        return Instant.parse(text);
       case BYTE_ARRAY:
         return text.getBytes();
       case CLASS:
