@@ -140,7 +140,7 @@ public class CollectionUtils {
   public static <T> List<T> findAll(@Nullable final Collection<T> col,
       @Nonnull final Filter<T> filter) {
     if (col == null || col.isEmpty()) {
-      return null;
+      return new ArrayList<>();
     }
     final List<T> result = new ArrayList<>();
     for (final T value : col) {
@@ -527,6 +527,53 @@ public class CollectionUtils {
         final K key = keyGetter.invoke(value);
         result.put(key, value);
       }
+    }
+    return result;
+  }
+
+
+  /**
+   * Process a collection of elements in batches.
+   *
+   * @param <T>
+   *     the type of the elements.
+   * @param col
+   *     the collection of elements to be processed.
+   * @param batchSize
+   *     the size of each batch, which must be positive.
+   * @param action
+   *     the action to be applied to each batch of elements, which accepts a
+   *     collection of elements and returns the number of elements successfully
+   *     processed.
+   * @return
+   *     the total number of elements processed.
+   */
+  public static <T> int batchProcess(final Collection<T> col,
+      final int batchSize, final Function<List<T>, Integer> action) {
+    if (batchSize <= 0) {
+      throw new IllegalArgumentException("The batch size must be positive.");
+    }
+    if (col == null || col.isEmpty()) {
+      return 0;
+    }
+    if (col.size() <= batchSize) {
+      if (col instanceof List) {
+        return action.apply((List<T>) col);
+      } else {
+        return action.apply(new ArrayList<>(col));
+      }
+    }
+    final List<T> list = new ArrayList<>();
+    int result = 0;
+    for (final T element : col) {
+      if (list.size() == batchSize) {
+        result += action.apply(list);
+        list.clear();
+      }
+      list.add(element);
+    }
+    if (!list.isEmpty()) {
+      result += action.apply(list);
     }
     return result;
   }
