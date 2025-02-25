@@ -30,10 +30,12 @@ import ltd.qubit.commons.annotation.Identifier;
 import ltd.qubit.commons.annotation.KeyIndex;
 import ltd.qubit.commons.annotation.Reference;
 import ltd.qubit.commons.annotation.Unique;
+import ltd.qubit.commons.error.UnsupportedDataTypeException;
 import ltd.qubit.commons.lang.ClassUtils;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.lang.StringUtils;
+import ltd.qubit.commons.lang.Type;
 import ltd.qubit.commons.reflect.impl.GetterMethod;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import ltd.qubit.commons.util.range.CloseRange;
@@ -832,6 +834,28 @@ public class Property {
       }
     } else {
       throw new ReflectionException("Cannot write a read-only or computed property: " + getFullQualifiedName());
+    }
+  }
+
+  /**
+   * Sets the value of this bean property of the specified object as a string.
+   *
+   * @param owner
+   *     the specified object.
+   * @param stringValue
+   *     the string representation of the value to be set.
+   *
+   */
+  public void setValueAsString(final Object owner, @Nullable final String stringValue) {
+    if (stringValue == null) {
+      setValue(owner, null);
+    } else {
+      final Type theType = Type.forClass(type);
+      if (theType == null) {
+        throw new UnsupportedDataTypeException(type);
+      }
+      final Object value = theType.parse(stringValue);
+      setValue(owner, value);
     }
   }
 
