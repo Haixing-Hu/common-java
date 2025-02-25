@@ -20,6 +20,9 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
+import ltd.qubit.commons.util.codec.Base64Codec;
+import ltd.qubit.commons.util.codec.DecodingException;
+
 /**
  * The enumeration of common data types.
  *
@@ -65,7 +68,8 @@ public enum Type {
   BYTE_ARRAY,
   CLASS,
   BIG_INTEGER,
-  BIG_DECIMAL;
+  BIG_DECIMAL,
+  STRING_ARRAY;
 
   private static final Map<ClassKey, Type>  CLASS_TYPE_MAP = new HashMap<>();
 
@@ -88,6 +92,7 @@ public enum Type {
     CLASS_TYPE_MAP.put(new ClassKey(Class.class), CLASS);
     CLASS_TYPE_MAP.put(new ClassKey(BigInteger.class), BIG_INTEGER);
     CLASS_TYPE_MAP.put(new ClassKey(BigDecimal.class), BIG_DECIMAL);
+    CLASS_TYPE_MAP.put(new ClassKey(String[].class), STRING_ARRAY);
     // add support of primitive types
     CLASS_TYPE_MAP.put(new ClassKey(boolean.class), BOOL);
     CLASS_TYPE_MAP.put(new ClassKey(char.class), CHAR);
@@ -119,6 +124,7 @@ public enum Type {
     TYPE_CLASS_MAP.put(CLASS, new ClassKey(Class.class));
     TYPE_CLASS_MAP.put(BIG_INTEGER, new ClassKey(BigInteger.class));
     TYPE_CLASS_MAP.put(BIG_DECIMAL, new ClassKey(BigDecimal.class));
+    TYPE_CLASS_MAP.put(STRING_ARRAY, new ClassKey(String[].class));
   }
 
   @Nullable
@@ -171,7 +177,11 @@ public enum Type {
       case INSTANT:
         return Instant.parse(text);
       case BYTE_ARRAY:
-        return text.getBytes();
+        try {
+          return Base64Codec.INSTANCE.decode(text);
+        } catch (final DecodingException e) {
+          throw new RuntimeException(e);
+        }
       case CLASS:
         try {
           return Class.forName(text);
@@ -182,6 +192,53 @@ public enum Type {
         return new BigInteger(text);
       case BIG_DECIMAL:
         return new BigDecimal(text);
+      case STRING_ARRAY:
+        return text.split(",");
+      default:
+        throw new UnsupportedOperationException("Unsupported type: " + this);
+    }
+  }
+
+  public String format(final Object value) {
+    switch (this) {
+      case BOOL:
+        return Boolean.toString((Boolean) value);
+      case CHAR:
+        return Character.toString((Character) value);
+      case BYTE:
+        return Byte.toString((Byte) value);
+      case SHORT:
+        return Short.toString((Short) value);
+      case INT:
+        return Integer.toString((Integer) value);
+      case LONG:
+        return Long.toString((Long) value);
+      case FLOAT:
+        return Float.toString((Float) value);
+      case DOUBLE:
+        return Double.toString((Double) value);
+      case STRING:
+        return (String) value;
+      case DATE:
+        return ((LocalDate) value).toString();
+      case TIME:
+        return ((LocalTime) value).toString();
+      case DATETIME:
+        return ((LocalDateTime) value).toString();
+      case TIMESTAMP:
+        return value.toString();
+      case INSTANT:
+        return ((Instant) value).toString();
+      case BYTE_ARRAY:
+        return Base64Codec.INSTANCE.encode((byte[]) value);
+      case CLASS:
+        return ((Class<?>) value).getName();
+      case BIG_INTEGER:
+        return value.toString();
+      case BIG_DECIMAL:
+        return value.toString();
+      case STRING_ARRAY:
+        return String.join(",", (String[]) value);
       default:
         throw new UnsupportedOperationException("Unsupported type: " + this);
     }
