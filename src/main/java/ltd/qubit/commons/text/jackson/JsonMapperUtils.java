@@ -16,6 +16,9 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Writer;
 import java.net.URL;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -28,10 +31,13 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.SerializationConfig;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -72,6 +78,8 @@ public class JsonMapperUtils {
    *     指定的资源文件。
    * @param cls
    *     待解析的对象的类对象。
+   * @param mapper
+   *     用于进行JSON反序列化的mapper。
    * @return
    *     解析出的对象。
    * @throws IOException
@@ -781,6 +789,9 @@ public class JsonMapperUtils {
   public static <T> String formatNormalizedNoThrow(final T obj,
       final JsonMapper mapper) {
     try {
+      if (obj == null) {
+        return null;  // 对于 null 输入，返回 null 而不是空 Map
+      }
       return formatNormalized(obj, mapper);
     } catch (final JsonProcessingException e) {
       LOGGER.error("Failed to format the object {} to normalized JSON: {}",
@@ -869,6 +880,121 @@ public class JsonMapperUtils {
   public static Writer outputJsonArrayCloseTag(final Writer writer) throws IOException {
     writer.write(']');
     return writer;
+  }
+
+  /**
+   * 将对象转换为属性路径-值映射。
+   *
+   * @param <T>
+   *     对象的类型。
+   * @param obj
+   *     要转换的对象。
+   * @param mapper
+   *     用于序列化的 JsonMapper。
+   * @return
+   *     属性路径-值映射，其中键是属性路径（用点号分隔的嵌套属性），值是属性值的字符串表示。
+   *     如果输入对象为 null，则返回空 Map。
+   * @throws JsonProcessingException
+   *     如果序列化过程中发生错误。
+   */
+  public static <T> Map<String, String> toPathValueMap(@Nullable final T obj,
+      @NotNull final JsonMapper mapper) throws JsonProcessingException {
+    if (obj == null) {
+      return Collections.emptyMap();
+    }
+    final Map<String, String> result = new HashMap<>();
+    final JsonNode node = mapper.valueToTree(obj);
+    addPathValues("", node, result);
+    return result;
+  }
+
+  /**
+   * 将对象转换为属性路径-值映射。
+   *
+   * @param <T>
+   *     对象的类型。
+   * @param obj
+   *     要转换的对象。
+   * @return
+   *     属性路径-值映射，其中键是属性路径（用点号分隔的嵌套属性），值是属性值的字符串表示。
+   *     如果输入对象为 null，则返回空 Map。
+   * @throws JsonProcessingException
+   *     如果序列化过程中发生错误。
+   */
+  public static <T> Map<String, String> toPathValueMap(@Nullable final T obj)
+      throws JsonProcessingException {
+    return toPathValueMap(obj, new CustomizedJsonMapper());
+  }
+
+  /**
+   * 将对象转换为属性路径-值映射，不抛出异常。
+   *
+   * @param <T>
+   *     对象的类型。
+   * @param obj
+   *     要转换的对象。
+   * @return
+   *     属性路径-值映射，其中键是属性路径（用点号分隔的嵌套属性），值是属性值的字符串表示。
+   *     如果输入对象为 null 则返回空Map；如果发生错误，则返回 null。
+   */
+  @Nullable
+  public static <T> Map<String, String> toPathValueMapNoThrow(@Nullable final T obj) {
+    return toPathValueMapNoThrow(obj, new CustomizedJsonMapper());
+  }
+
+  /**
+   * 将对象转换为属性路径-值映射，不抛出异常。
+   *
+   * @param <T>
+   *     对象的类型。
+   * @param obj
+   *     要转换的对象。
+   * @param mapper
+   *     用于序列化的 JsonMapper。
+   * @return
+   *     属性路径-值映射，其中键是属性路径（用点号分隔的嵌套属性），值是属性值的字符串表示。
+   *     如果输入对象为 null 则返回空Map；如果发生错误，则返回 null。
+   */
+  @Nullable
+  public static <T> Map<String, String> toPathValueMapNoThrow(@Nullable final T obj,
+      @NotNull final JsonMapper mapper) {
+    if (obj == null) {
+      return Collections.emptyMap();
+    }
+    try {
+      return toPathValueMap(obj, mapper);
+    } catch (final Exception e) {
+      LOGGER.error("Failed to convert object to path-value map", e);
+      return null;
+    }
+  }
+
+  private static void addPathValues(final String path,
+                                  final JsonNode node,
+                                  final Map<String, String> result) {
+    if (node == null || node.isNull()) {
+      result.put(path, "null");
+      return;
+    }
+    if (node.isValueNode()) {
+      final String value = node.isNull() ? "null" : node.asText();
+      result.put(path, (value == null ? "null" : value));
+    } else if (node.isObject()) {
+      final ObjectNode obj = (ObjectNode) node;
+      final Iterator<Map.Entry<String, JsonNode>> fields = obj.fields();
+      while (fields.hasNext()) {
+        final Map.Entry<String, JsonNode> entry = fields.next();
+        final String fieldName = entry.getKey();
+        final String newPath = path.isEmpty() ? fieldName : path + "." + fieldName;
+        addPathValues(newPath, entry.getValue(), result);
+      }
+    } else if (node.isArray()) {
+      final ArrayNode array = (ArrayNode) node;
+      for (int i = 0; i < array.size(); i++) {
+        final String newPath = path + "[" + i + "]";
+        addPathValues(newPath, array.get(i), result);
+      }
+    }
   }
 
   // resume checkstyle: LineLength
