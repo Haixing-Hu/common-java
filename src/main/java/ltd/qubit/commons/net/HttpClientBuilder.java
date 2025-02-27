@@ -36,6 +36,9 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
  * A builder of clients.
+ * <p>
+ * <b>NOTE:</b> This class is <b>NOT</b> thread-safe. But the built client is
+ * thread-safe.
  *
  * @author Haixing Hu
  */
@@ -87,6 +90,11 @@ public class HttpClientBuilder {
   public static final String KEY_PROXY_PASSWORD = "http.proxy.password";
 
   /**
+   * The configuration key of whether to use the logging interceptor.
+   */
+  public static final String KEY_USE_LOGGING = "http.logging.use";
+
+  /**
    * The default timeout for the connection in seconds.
    */
   public static final int DEFAULT_CONNECTION_TIMEOUT = 10;
@@ -111,13 +119,16 @@ public class HttpClientBuilder {
    */
   public static final String DEFAULT_PROXY_TYPE = "http";
 
+  /**
+   * The default value of whether to use the logging interceptor.
+   */
+  public static final boolean DEFAULT_USE_LOGGING = true;
+
   private final List<Interceptor> interceptors = new ArrayList<>();
 
   private Logger logger;
 
   private DefaultConfig config;
-
-  private boolean useLogging = true;
 
   /**
    * Construct a provider of the HTTP client.
@@ -257,11 +268,11 @@ public class HttpClientBuilder {
   }
 
   public boolean isUseLogging() {
-    return useLogging;
+    return config.getBoolean(KEY_USE_LOGGING, DEFAULT_USE_LOGGING);
   }
 
   public HttpClientBuilder setUseLogging(final boolean useLogging) {
-    this.useLogging = useLogging;
+    config.setBoolean(KEY_USE_LOGGING, useLogging);
     return this;
   }
 
@@ -347,7 +358,7 @@ public class HttpClientBuilder {
     for (final Interceptor interceptor : interceptors) {
       builder.addInterceptor(interceptor);
     }
-    if (useLogging) {
+    if (isUseLogging()) {
       final HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
         @Override
         public void log(@NotNull final String message) {
