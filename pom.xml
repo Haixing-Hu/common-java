@@ -33,11 +33,26 @@
       <artifactId>common-annotation</artifactId>
     </dependency>
 
-
     <!-- Apache commons -->
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-exec</artifactId>
+    </dependency>
+
+    <!-- retry -->
+    <dependency>
+      <groupId>dev.failsafe</groupId>
+      <artifactId>failsafe</artifactId>
+    </dependency>
+
+    <!-- http -->
+    <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>okhttp</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>logging-interceptor</artifactId>
     </dependency>
 
     <!-- logging -->
