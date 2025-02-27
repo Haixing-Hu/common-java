@@ -69,18 +69,24 @@ public class ErrorResponseInterceptor<E> implements Interceptor {
     final Request request = chain.request();
     final Response response = chain.proceed(request);
     final ResponseBody responseBody = response.body();
-    if (responseBody != null) {
-      try {
-        // try to convert the response body to an error response object
-        final E error = responseBodyConverter.convert(responseBody);
-        if (error != null) {
-          // if the error response object is not null, process it
-          errorConsumer.accept(error);
-        }
-      } catch (final IOException e) {
-        // ignore the conversion error
-      }
+    if (responseBody == null) {
+      return response;
     }
-    return response;
+    // 复制响应体，以便可以多次读取
+    final byte[] bytes = responseBody.source().readByteArray();
+    // 使用复制的 Buffer 来获取内容
+    final ResponseBody bufferedBody = ResponseBody.create(responseBody.contentType(), bytes);
+    try {
+      // try to convert the response body to an error response object
+      final E error = responseBodyConverter.convert(bufferedBody);
+      if (error != null) {
+        // if the error response object is not null, process it
+        errorConsumer.accept(error);
+      }
+    } catch (final IOException e) {
+      // ignore the conversion error
+    }
+    final ResponseBody newBody = ResponseBody.create(responseBody.contentType(), bytes);
+    return response.newBuilder().body(newBody).build();
   }
 }
