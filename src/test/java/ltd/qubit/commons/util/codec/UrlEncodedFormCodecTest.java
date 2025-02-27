@@ -52,9 +52,9 @@ public class UrlEncodedFormCodecTest {
     params.put("email", "test@example.com");
     params.put("url", "http://example.com/path?param=value");
     final String result = codec.encode(params);
-    assertTrue(result.contains("name=" + UrlCodec.INSTANCE.encode("张三")));
-    assertTrue(result.contains("email=" + UrlCodec.INSTANCE.encode("test@example.com")));
-    assertTrue(result.contains("url=" + UrlCodec.INSTANCE.encode("http://example.com/path?param=value")));
+    assertTrue(result.contains("name=" + UrlEncodingCodec.INSTANCE.encode("张三")));
+    assertTrue(result.contains("email=" + UrlEncodingCodec.INSTANCE.encode("test@example.com")));
+    assertTrue(result.contains("url=" + UrlEncodingCodec.INSTANCE.encode("http://example.com/path?param=value")));
   }
 
   @Test

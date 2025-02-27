@@ -20,9 +20,9 @@ import javax.annotation.concurrent.Immutable;
  * @author 胡海星
  */
 @Immutable
-public class UrlCodec implements Codec<String, String> {
+public class UrlEncodingCodec implements Codec<String, String> {
 
-  public static final UrlCodec INSTANCE = new UrlCodec();
+  public static final UrlEncodingCodec INSTANCE = new UrlEncodingCodec();
 
   @Override
   public String decode(final String source) {

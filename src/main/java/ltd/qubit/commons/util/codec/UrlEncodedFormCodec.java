@@ -28,7 +28,7 @@ public class UrlEncodedFormCodec implements Codec<Map<String, String>, String> {
     if (source == null || source.isEmpty()) {
       return "";
     }
-    final UrlCodec urlCodec = UrlCodec.INSTANCE;
+    final UrlEncodingCodec urlEncodingCodec = UrlEncodingCodec.INSTANCE;
     final StringBuilder builder = new StringBuilder();
     boolean first = true;
     for (final Map.Entry<String, String> entry : source.entrySet()) {
@@ -38,11 +38,11 @@ public class UrlEncodedFormCodec implements Codec<Map<String, String>, String> {
       final String key = entry.getKey();
       final String value = entry.getValue();
       if (key != null) {
-        builder.append(urlCodec.encode(key));
+        builder.append(urlEncodingCodec.encode(key));
       }
       if (value != null) {
         builder.append('=')
-               .append(urlCodec.encode(value));
+               .append(urlEncodingCodec.encode(value));
       }
       first = false;
     }
@@ -54,17 +54,17 @@ public class UrlEncodedFormCodec implements Codec<Map<String, String>, String> {
     if (source == null || source.isEmpty()) {
       return Map.of();
     }
-    final UrlCodec urlCodec = UrlCodec.INSTANCE;
+    final UrlEncodingCodec urlEncodingCodec = UrlEncodingCodec.INSTANCE;
     final Map<String, String> result = new HashMap<>();
     final String[] pairs = source.split("&");
     for (final String pair : pairs) {
       final int pos = pair.indexOf('=');
       if (pos < 0) {
-        final String key = urlCodec.decode(pair);
+        final String key = urlEncodingCodec.decode(pair);
         result.put(key, null);
       } else {
-        final String key = urlCodec.decode(pair.substring(0, pos));
-        final String value = urlCodec.decode(pair.substring(pos + 1));
+        final String key = urlEncodingCodec.decode(pair.substring(0, pos));
+        final String value = urlEncodingCodec.decode(pair.substring(pos + 1));
         result.put(key, value);
       }
     }
