@@ -433,6 +433,11 @@ public class UriBuilder {
    * <p>
    * Please note query parameters and custom query component are mutually
    * exclusive. This method will remove custom query if present.
+   *
+   * @param param
+   *     the parameter name.
+   * @param value
+   *     the parameter value.
    */
   public UriBuilder addParameter(final String param, final String value) {
     if (queryParams == null) {
@@ -451,12 +456,41 @@ public class UriBuilder {
    * <p>
    * Please note query parameters and custom query component are mutually
    * exclusive. This method will remove custom query if present.
+   *
+   * @param pairs
+   *     the parameters to add.
    */
-  public UriBuilder addParameters(final List<NameValuePair> nvps) {
+  public UriBuilder addParameters(final List<NameValuePair> pairs) {
     if (queryParams == null) {
       queryParams = new ArrayList<>();
     }
-    queryParams.addAll(nvps);
+    queryParams.addAll(pairs);
+    encodedQuery = null;
+    encodedSchemeSpecificPart = null;
+    query = null;
+    return this;
+  }
+
+  /**
+   * Adds parameter to URI query. The parameter name and value are expected to
+   * be unescaped and may contain non ASCII characters.
+   * <p>
+   * Please note query parameters and custom query component are mutually
+   * exclusive. This method will remove custom query if present.
+   *
+   * @param <T>
+   *     the type of the parameter value.
+   * @param params
+   *     the parameters to add.
+   */
+  public <T> UriBuilder addParameter(final Map<String, T> params) {
+    if (queryParams == null) {
+      queryParams = new ArrayList<>();
+    }
+    for (final Map.Entry<String, T> entry : params.entrySet()) {
+      final String value = entry.getValue() != null ? entry.getValue().toString() : null;
+      queryParams.add(new NameValuePair(entry.getKey(), value));
+    }
     encodedQuery = null;
     encodedSchemeSpecificPart = null;
     query = null;
