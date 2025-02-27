@@ -25,6 +25,9 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
  * A build of retry executors.
+ * <p>
+ * <b>NOTE:</b> This class is <b>NOT</b> thread-safe. But the retry executors
+ * built by this class are thread-safe.
  *
  * @author Haixing Hu
  */
