@@ -31,6 +31,7 @@ import ltd.qubit.commons.annotation.KeyIndex;
 import ltd.qubit.commons.annotation.Reference;
 import ltd.qubit.commons.annotation.Unique;
 import ltd.qubit.commons.error.UnsupportedDataTypeException;
+import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.lang.ClassUtils;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
@@ -856,6 +857,40 @@ public class Property {
       }
       final Object value = theType.parse(stringValue);
       setValue(owner, value);
+    }
+  }
+
+  /**
+   * Sets the values of this bean property of the specified object as a string.
+   *
+   * @param owner
+   *     the specified object.
+   * @param stringValues
+   *     the string representation of the values to be set.
+   */
+  public void setValueAsStrings(final Object owner, @Nullable final String[] stringValues) {
+    if (!type.isArray()) {
+      throw new IllegalArgumentException("The property is not an array: " + getFullQualifiedName());
+    }
+    if (stringValues == null) {
+      setValue(owner, null);
+      return;
+    }
+    final int n = stringValues.length;
+    final Class<?> componentType = type.getComponentType();
+    if (n == 0) {
+      final Object[] values = ArrayUtils.createArray(componentType, 0);
+      setValue(owner, values);
+    } else {
+      final Type theType = Type.forClass(componentType);
+      if (theType == null) {
+        throw new UnsupportedDataTypeException(componentType);
+      }
+      final Object[] values = ArrayUtils.createArray(componentType, n);
+      for (int i = 0; i < n; ++i) {
+        values[i] = theType.parse(stringValues[i]);
+      }
+      setValue(owner, values);
     }
   }
 
