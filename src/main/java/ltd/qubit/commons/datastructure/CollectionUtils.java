@@ -251,8 +251,8 @@ public class CollectionUtils {
    *     return an empty map.
    */
   public static <K, V>
-  Map<K, V> toHashMap(@Nullable final Collection<V> col, final GetterMethod<V, K> keyGetter) {
-    final Map<K, V> map = new HashMap<>();
+  HashMap<K, V> toHashMap(@Nullable final Collection<V> col, final GetterMethod<V, K> keyGetter) {
+    final HashMap<K, V> map = new HashMap<>();
     if (col != null) {
       for (final V value : col) {
         final K key = keyGetter.invoke(value);
@@ -283,10 +283,10 @@ public class CollectionUtils {
    *     {@code null} collection will return an empty map.
    */
   public static <T, K, V>
-  Map<K, V> toHashMap(@Nullable final Collection<T> col,
+  HashMap<K, V> toHashMap(@Nullable final Collection<T> col,
       final GetterMethod<T, K> keyGetter,
       final GetterMethod<T, V> valueGetter) {
-    final Map<K, V> map = new HashMap<>();
+    final HashMap<K, V> map = new HashMap<>();
     if (col != null) {
       for (final T o : col) {
         final K key = keyGetter.invoke(o);
@@ -295,6 +295,38 @@ public class CollectionUtils {
       }
     }
     return map;
+  }
+
+  /**
+   * Converts a list of objects to a map from its key to its position.
+   *
+   * @param <K>
+   *     the type of the key.
+   * @param <V>
+   *     the type of values in the list.
+   * @param list
+   *     the list of objects, which could be {@code null}.
+   * @param keyGetter
+   *     the getter method to get the key from the object.
+   * @return
+   *     a hash map, where the key is gotten from the object by the {@code keyGetter}.
+   *     and the value is position of the object with the key in the list,
+   *     converted to the {@code long} type. The position is 0-based.
+   *     A {@code null} list will return an empty map.
+   */
+  public static <K, V>
+  HashMap<K, Long> getKeyToPositionMap(@Nullable final List<V> list,
+      final GetterMethod<V, K> keyGetter) {
+    final HashMap<K, Long> result = new HashMap<>();
+    if (list != null) {
+      final int n = list.size();
+      for (int i = 0; i < n; ++i) {
+        final V value = list.get(i);
+        final K key = keyGetter.invoke(value);
+        result.put(key, (long) i);
+      }
+    }
+    return result;
   }
 
   /**
@@ -501,36 +533,6 @@ public class CollectionUtils {
     Collections.addAll(result, elements);
     return result;
   }
-
-  /**
-   * Converts a collections of objects to a map.
-   *
-   * @param <K>
-   *     the type of the key.
-   * @param <V>
-   *     the type of the value.
-   * @param col
-   *     the collection of objects, which could be {@code null}.
-   * @param keyGetter
-   *     the getter method to get the key from the object.
-   * @return
-   *     a hash map, where the key is gotten from the object by the {@code keyGetter}.
-   *     and the value is object with the same key. A {@code null} collection
-   *     will return an empty map.
-   */
-  public static <K, V>
-  Map<K, V> toMap(@Nullable final Collection<V> col,
-      final GetterMethod<V, K> keyGetter) {
-    final Map<K, V> result = new HashMap<>();
-    if (col != null) {
-      for (final V value : col) {
-        final K key = keyGetter.invoke(value);
-        result.put(key, value);
-      }
-    }
-    return result;
-  }
-
 
   /**
    * Process a collection of elements in batches.
