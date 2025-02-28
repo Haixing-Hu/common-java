@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.value;
 
+import java.io.Serial;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
@@ -28,6 +29,7 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
 public class BasicNamedMultiValues extends BasicMultiValues
     implements NamedMultiValues {
 
+  @Serial
   private static final long serialVersionUID = 5507620034233294778L;
 
   protected String name;
@@ -148,10 +150,9 @@ public class BasicNamedMultiValues extends BasicMultiValues
     if (obj == null) {
       return false;
     }
-    if (! (obj instanceof BasicNamedMultiValues)) {
+    if (! (obj instanceof final BasicNamedMultiValues other)) {
       return false;
     }
-    final BasicNamedMultiValues other = (BasicNamedMultiValues) obj;
     return (super.equals(other))
           && Equality.equals(name, other.name);
   }

@@ -2158,4 +2158,121 @@ public interface MultiValues extends CloneableEx<MultiValues> {
    */
   @Override
   MultiValues cloneEx();
+
+  /**
+   * Gets the first value of this object as a {@code Enum} value.
+   *
+   * @param <E>
+   *     the type of the enum.
+   * @param enumClass
+   *     the class of the enum.
+   * @return the first value of this object as a {@code Enum} value.
+   * @throws TypeMismatchException
+   *     if the type of this object is not {@link Type#STRING}.
+   * @throws NoSuchElementException
+   *     if this object has no value.
+   * @throws IllegalArgumentException
+   *     if the string value cannot be converted to the specified enum type.
+   */
+  <E extends Enum<E>> E getEnumValue(Class<E> enumClass) throws TypeMismatchException,
+      NoSuchElementException, IllegalArgumentException;
+
+  /**
+   * Sets a single {@code Enum} value to this object.
+   *
+   * <p>After calling this function, the type of this object is set to {@link
+   * Type#STRING}, all previous values of this object is cleared, and the new
+   * value is set to this object.
+   *
+   * @param value
+   *     the new {@code Enum} value to be set to this object.
+   */
+  void setEnumValue(@Nullable Enum<?> value);
+
+  /**
+   * Gets the values of this object as {@code Enum} values.
+   *
+   * @param <E>
+   *     the type of the enum.
+   * @param enumClass
+   *     the class of the enum.
+   * @return the values of this object as an array of the specified {@code Enum} type;
+   *     or an empty array if this object has no value.
+   * @throws TypeMismatchException
+   *     if the type of this object is not {@link Type#STRING}.
+   * @throws IllegalArgumentException
+   *     if any string value cannot be converted to the specified enum type.
+   */
+  <E extends Enum<E>> E[] getEnumValues(Class<E> enumClass) throws TypeMismatchException,
+      IllegalArgumentException;
+
+  /**
+   * Sets {@code Enum} values to this object.
+   *
+   * <p>After calling this function, the type of this object is set to {@link
+   * Type#STRING}, all previous values of this object is cleared, and the new
+   * values is set to this object.
+   *
+   * @param values
+   *     the array of new {@code Enum} values to be set to this object.
+   */
+  void setEnumValues(Enum<?>... values);
+
+  /**
+   * Sets {@code Enum} values to this object.
+   *
+   * <p>After calling this function, the type of this object is set to {@link
+   * Type#STRING}, all previous values of this object is cleared, and the new
+   * values is set to this object.
+   *
+   * @param values
+   *     the collection of new {@code Enum} values to be set to this object.
+   */
+  void setEnumValues(Collection<? extends Enum<?>> values);
+
+  /**
+   * Adds an {@code Enum} value to this object.
+   *
+   * <p>If the type of this object is not {@link Type#STRING}, an {@link
+   * TypeMismatchException} will be thrown; otherwise, the specified {@code
+   * Enum} value will be add to this object.
+   *
+   * @param value
+   *     the {@code Enum} value to be add to this object.
+   * @throws TypeMismatchException
+   *     if the type of this object is not {@link Type#STRING} and there is old
+   *     value in this object.
+   */
+  void addEnumValue(@Nullable Enum<?> value) throws TypeMismatchException;
+
+  /**
+   * Adds {@code Enum} values to this object.
+   *
+   * <p>If the type of this object is not {@link Type#STRING}, an {@link
+   * TypeMismatchException} will be thrown; otherwise, the specified {@code
+   * Enum} values will be add to this object.
+   *
+   * @param values
+   *     the array of {@code Enum} values to be add to this object.
+   * @throws TypeMismatchException
+   *     if the type of this object is not {@link Type#STRING} and there is old
+   *     value in this object.
+   */
+  void addEnumValues(Enum<?>... values) throws TypeMismatchException;
+
+  /**
+   * Adds {@code Enum} values to this object.
+   *
+   * <p>If the type of this object is not {@link Type#STRING}, an {@link
+   * TypeMismatchException} will be thrown; otherwise, the specified {@code
+   * Enum} values will be add to this object.
+   *
+   * @param values
+   *     the collection of {@code Enum} values to be add to this object.
+   * @throws TypeMismatchException
+   *     if the type of this object is not {@link Type#STRING} and there is old
+   *     value in this object.
+   */
+  void addEnumValues(Collection<? extends Enum<?>> values)
+      throws TypeMismatchException;
 }

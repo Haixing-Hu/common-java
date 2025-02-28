@@ -3741,7 +3741,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
   @Override
   public BasicMultiValues cloneEx() {
     try {
-      final BasicMultiValues result = (BasicMultiValues) super.clone();
+      final BasicMultiValues result = (BasicMultiValues) clone();
       result.assignValues(this);
       return result;
     } catch (final CloneNotSupportedException e) {
@@ -3797,5 +3797,103 @@ public class BasicMultiValues implements MultiValues, Serializable {
                .append("count", count)
                .append("valueOrValues", valueOrValues)
                .toString();
+  }
+
+  @Override
+  public <E extends Enum<E>> E getEnumValue(final Class<E> enumClass)
+      throws TypeMismatchException, NoSuchElementException, IllegalArgumentException {
+    final String name = getStringValue();
+    return Enum.valueOf(enumClass, name);
+  }
+
+  @Override
+  public void setEnumValue(final @Nullable Enum<?> value) {
+    if (value == null) {
+      setStringValue(null);
+    } else {
+      setStringValue(value.name());
+    }
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public <E extends Enum<E>> E[] getEnumValues(final Class<E> enumClass)
+      throws TypeMismatchException, IllegalArgumentException {
+    final String[] names = getStringValues();
+    final E[] result = (E[]) java.lang.reflect.Array.newInstance(enumClass, names.length);
+    for (int i = 0; i < names.length; ++i) {
+      result[i] = Enum.valueOf(enumClass, names[i]);
+    }
+    return result;
+  }
+
+  @Override
+  public void setEnumValues(final Enum<?>... values) {
+    if (values == null || values.length == 0) {
+      type = Type.STRING;
+      count = 0;
+      valueOrValues = null;
+    } else {
+      final String[] names = new String[values.length];
+      for (int i = 0; i < values.length; ++i) {
+        final Enum<?> value = values[i];
+        names[i] = (value == null ? null : value.name());
+      }
+      setStringValues(names);
+    }
+  }
+
+  @Override
+  public void setEnumValues(final Collection<? extends Enum<?>> values) {
+    if (values == null || values.isEmpty()) {
+      type = Type.STRING;
+      count = 0;
+      valueOrValues = null;
+    } else {
+      final String[] names = new String[values.size()];
+      int i = 0;
+      for (final Enum<?> value : values) {
+        names[i++] = (value == null ? null : value.name());
+      }
+      setStringValues(names);
+    }
+  }
+
+  @Override
+  public void addEnumValue(final @Nullable Enum<?> value)
+      throws TypeMismatchException {
+    if (value == null) {
+      addStringValue(null);
+    } else {
+      addStringValue(value.name());
+    }
+  }
+
+  @Override
+  public void addEnumValues(final Enum<?>... values)
+      throws TypeMismatchException {
+    if (values == null || values.length == 0) {
+      return;
+    }
+    final String[] names = new String[values.length];
+    for (int i = 0; i < values.length; ++i) {
+      final Enum<?> value = values[i];
+      names[i] = (value == null ? null : value.name());
+    }
+    addStringValues(names);
+  }
+
+  @Override
+  public void addEnumValues(final Collection<? extends Enum<?>> values)
+      throws TypeMismatchException {
+    if (values == null || values.isEmpty()) {
+      return;
+    }
+    final String[] names = new String[values.size()];
+    int i = 0;
+    for (final Enum<?> value : values) {
+      names[i++] = (value == null ? null : value.name());
+    }
+    addStringValues(names);
   }
 }

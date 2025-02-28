@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.config.impl;
 
+import java.io.Serial;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
@@ -33,6 +34,7 @@ import ltd.qubit.commons.util.value.BasicNamedMultiValues;
  */
 public class DefaultProperty extends BasicNamedMultiValues implements Property {
 
+  @Serial
   private static final long serialVersionUID = 3586004753799522564L;
 
   protected static final Logger LOGGER = LoggerFactory.getLogger(DefaultProperty.class);

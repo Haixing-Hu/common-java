@@ -26,6 +26,7 @@ import ltd.qubit.commons.config.AbstractConfig;
 import ltd.qubit.commons.config.Config;
 import ltd.qubit.commons.config.MergingPolicy;
 import ltd.qubit.commons.config.Property;
+import ltd.qubit.commons.config.WritableConfig;
 import ltd.qubit.commons.datastructure.list.primitive.BooleanCollection;
 import ltd.qubit.commons.datastructure.list.primitive.ByteCollection;
 import ltd.qubit.commons.datastructure.list.primitive.CharCollection;
@@ -47,7 +48,7 @@ import ltd.qubit.commons.text.tostring.ToStringBuilder;
  *
  * @author Haixing Hu
  */
-public class DefaultConfig extends AbstractConfig {
+public class DefaultConfig extends AbstractConfig implements WritableConfig {
 
   @Serial
   private static final long serialVersionUID = 3519879255214071861L;
@@ -82,10 +83,12 @@ public class DefaultConfig extends AbstractConfig {
    * @param description
    *     the new description to set, or {@code null} if none.
    */
+  @Override
   public void setDescription(@Nullable final String description) {
     this.description = description;
   }
 
+  @Override
   public void setDescription(final String name, final String description) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -211,10 +214,12 @@ public class DefaultConfig extends AbstractConfig {
     return prop;
   }
 
+  @Override
   public DefaultProperty remove(final String name) {
     return properties.remove(name);
   }
 
+  @Override
   public void setFinal(final String name, final boolean isFinal) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -223,6 +228,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setFinal(isFinal);
   }
 
+  @Override
   public void setType(final String name, final Type type) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -231,6 +237,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setType(type);
   }
 
+  @Override
   public void setBoolean(final String name, final boolean value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -239,6 +246,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setBooleanValue(value);
   }
 
+  @Override
   public void setBooleans(final String name, final boolean... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -247,6 +255,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setBooleanValues(values);
   }
 
+  @Override
   public void setBooleans(final String name, final BooleanCollection values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -255,6 +264,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setBooleanValues(values);
   }
 
+  @Override
   public void addBoolean(final String name, final boolean value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -263,6 +273,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addBooleanValue(value);
   }
 
+  @Override
   public void addBooleans(final String name, final boolean... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -271,6 +282,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addBooleanValues(values);
   }
 
+  @Override
   public void addBooleans(final String name, final BooleanCollection values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -279,6 +291,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addBooleanValues(values);
   }
 
+  @Override
   public void setChar(final String name, final char value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -287,6 +300,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setCharValue(value);
   }
 
+  @Override
   public void setChars(final String name, final char... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -295,6 +309,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setCharValues(values);
   }
 
+  @Override
   public void setChars(final String name, final CharCollection values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -303,6 +318,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setCharValues(values);
   }
 
+  @Override
   public void addChar(final String name, final char value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -311,6 +327,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addCharValue(value);
   }
 
+  @Override
   public void addChars(final String name, final char... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -319,6 +336,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addCharValues(values);
   }
 
+  @Override
   public void addChars(final String name, final CharCollection values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -327,6 +345,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addCharValues(values);
   }
 
+  @Override
   public void setByte(final String name, final byte value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -335,6 +354,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setByteValue(value);
   }
 
+  @Override
   public void setBytes(final String name, final byte... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -343,6 +363,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setByteValues(values);
   }
 
+  @Override
   public void setBytes(final String name, final ByteCollection values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -351,6 +372,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setByteValues(values);
   }
 
+  @Override
   public void addByte(final String name, final byte value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -359,6 +381,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addByteValue(value);
   }
 
+  @Override
   public void addBytes(final String name, final byte... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -367,6 +390,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addByteValues(values);
   }
 
+  @Override
   public void addBytes(final String name, final ByteCollection values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -375,6 +399,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addByteValues(values);
   }
 
+  @Override
   public void setShort(final String name, final short value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -383,6 +408,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setShortValue(value);
   }
 
+  @Override
   public void setShorts(final String name, final short... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -391,6 +417,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setShortValues(values);
   }
 
+  @Override
   public void setShorts(final String name, final ShortCollection values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -399,6 +426,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setShortValues(values);
   }
 
+  @Override
   public void addShort(final String name, final short value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -407,6 +435,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addShortValue(value);
   }
 
+  @Override
   public void addShorts(final String name, final short... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -415,6 +444,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addShortValues(values);
   }
 
+  @Override
   public void addShorts(final String name, final ShortCollection values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -423,6 +453,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addShortValues(values);
   }
 
+  @Override
   public void setInt(final String name, final int value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -431,6 +462,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setIntValue(value);
   }
 
+  @Override
   public void setInts(final String name, final int... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -439,6 +471,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setIntValues(values);
   }
 
+  @Override
   public void setInts(final String name, final IntCollection values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -447,6 +480,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setIntValues(values);
   }
 
+  @Override
   public void addInt(final String name, final int value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -455,6 +489,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addIntValue(value);
   }
 
+  @Override
   public void addInts(final String name, final int... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -463,6 +498,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addIntValues(values);
   }
 
+  @Override
   public void addInts(final String name, final IntCollection values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -471,6 +507,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addIntValues(values);
   }
 
+  @Override
   public void setLong(final String name, final long value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -479,6 +516,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setLongValue(value);
   }
 
+  @Override
   public void setLongs(final String name, final long... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -487,6 +525,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setLongValues(values);
   }
 
+  @Override
   public void setLongs(final String name, final LongCollection values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -495,6 +534,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setLongValues(values);
   }
 
+  @Override
   public void addLong(final String name, final long value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -503,6 +543,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addLongValue(value);
   }
 
+  @Override
   public void addLongs(final String name, final long... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -511,6 +552,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addLongValues(values);
   }
 
+  @Override
   public void addLongs(final String name, final LongCollection values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -519,6 +561,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addLongValues(values);
   }
 
+  @Override
   public void setFloat(final String name, final float value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -527,6 +570,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setFloatValue(value);
   }
 
+  @Override
   public void setFloats(final String name, final float... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -535,6 +579,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setFloatValues(values);
   }
 
+  @Override
   public void setFloats(final String name, final FloatCollection values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -543,6 +588,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setFloatValues(values);
   }
 
+  @Override
   public void addFloat(final String name, final float value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -551,6 +597,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addFloatValue(value);
   }
 
+  @Override
   public void addFloats(final String name, final float... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -559,6 +606,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addFloatValues(values);
   }
 
+  @Override
   public void addFloats(final String name, final FloatCollection values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -567,6 +615,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addFloatValues(values);
   }
 
+  @Override
   public void setDouble(final String name, final double value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -575,6 +624,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setDoubleValue(value);
   }
 
+  @Override
   public void setDoubles(final String name, final double... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -583,6 +633,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setDoubleValues(values);
   }
 
+  @Override
   public void setDoubles(final String name, final DoubleCollection values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -591,6 +642,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setDoubleValues(values);
   }
 
+  @Override
   public void addDouble(final String name, final double value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -599,6 +651,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addDoubleValue(value);
   }
 
+  @Override
   public void addDoubles(final String name, final double... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -607,6 +660,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addDoubleValues(values);
   }
 
+  @Override
   public void addDoubles(final String name, final DoubleCollection values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -615,6 +669,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addDoubleValues(values);
   }
 
+  @Override
   public void setString(final String name, final String value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -623,6 +678,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setStringValue(value);
   }
 
+  @Override
   public void setStrings(final String name, final String... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -631,6 +687,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setStringValues(values);
   }
 
+  @Override
   public void setStrings(final String name, final Collection<String> values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -639,6 +696,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setStringValues(values);
   }
 
+  @Override
   public void addString(final String name, final String value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -647,6 +705,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addStringValue(value);
   }
 
+  @Override
   public void addStrings(final String name, final String... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -655,6 +714,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addStringValues(values);
   }
 
+  @Override
   public void addStrings(final String name, final Collection<String> values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -663,6 +723,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addStringValues(values);
   }
 
+  @Override
   public void setDate(final String name, final Date value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -671,6 +732,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setDateValue(value);
   }
 
+  @Override
   public void setDates(final String name, final Date... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -679,6 +741,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setDateValues(values);
   }
 
+  @Override
   public void setDates(final String name, final Collection<Date> values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -687,6 +750,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setDateValues(values);
   }
 
+  @Override
   public void addDate(final String name, final Date value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -695,6 +759,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addDateValue(value);
   }
 
+  @Override
   public void addDates(final String name, final Date... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -703,6 +768,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addDateValues(values);
   }
 
+  @Override
   public void addDates(final String name, final Collection<Date> values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -711,6 +777,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addDateValues(values);
   }
 
+  @Override
   public void setBigInteger(final String name, final BigInteger value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -719,6 +786,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setBigIntegerValue(value);
   }
 
+  @Override
   public void setBigIntegers(final String name, final BigInteger... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -727,6 +795,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setBigIntegerValues(values);
   }
 
+  @Override
   public void setBigIntegers(final String name,
       final Collection<BigInteger> values) {
     DefaultProperty prop = get(name);
@@ -736,6 +805,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setBigIntegerValues(values);
   }
 
+  @Override
   public void addBigInteger(final String name, final BigInteger value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -744,6 +814,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addBigIntegerValue(value);
   }
 
+  @Override
   public void addBigIntegers(final String name, final BigInteger... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -752,6 +823,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addBigIntegerValues(values);
   }
 
+  @Override
   public void addBigIntegers(final String name,
       final Collection<BigInteger> values) {
     DefaultProperty prop = get(name);
@@ -761,6 +833,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addBigIntegerValues(values);
   }
 
+  @Override
   public void setBigDecimal(final String name, final BigDecimal value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -769,6 +842,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setBigDecimalValue(value);
   }
 
+  @Override
   public void setBigDecimals(final String name, final BigDecimal... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -777,6 +851,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setBigDecimalValues(values);
   }
 
+  @Override
   public void setBigDecimals(final String name,
       final Collection<BigDecimal> values) {
     DefaultProperty prop = get(name);
@@ -786,6 +861,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setBigDecimalValues(values);
   }
 
+  @Override
   public void addBigDecimal(final String name, final BigDecimal value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -794,6 +870,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addBigDecimalValue(value);
   }
 
+  @Override
   public void addBigDecimals(final String name, final BigDecimal... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -802,6 +879,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addBigDecimalValues(values);
   }
 
+  @Override
   public void addBigDecimals(final String name,
       final Collection<BigDecimal> values) {
     DefaultProperty prop = get(name);
@@ -811,6 +889,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addBigDecimalValues(values);
   }
 
+  @Override
   public void setByteArray(final String name, final byte[] value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -819,6 +898,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setByteArrayValue(value);
   }
 
+  @Override
   public void setByteArrays(final String name, final byte[]... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -827,6 +907,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setByteArrayValues(values);
   }
 
+  @Override
   public void setByteArrays(final String name, final Collection<byte[]> values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -835,6 +916,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setByteArrayValues(values);
   }
 
+  @Override
   public void addByteArray(final String name, final byte[] value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -843,6 +925,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addByteArrayValue(value);
   }
 
+  @Override
   public void addByteArrays(final String name, final byte[]... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -851,6 +934,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addByteArrayValues(values);
   }
 
+  @Override
   public void addByteArrays(final String name, final Collection<byte[]> values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -859,26 +943,91 @@ public class DefaultConfig extends AbstractConfig {
     prop.addByteArrayValues(values);
   }
 
-  public void setEnum(final String name, final Enum<?> value) {
+  @Override
+  public void setEnum(final String name, @Nullable final Enum<?> value) {
+    setEnum(name, value, false);
+  }
+
+  @Override
+  public void setEnum(final String name, @Nullable final Enum<?> value, final boolean isFinal) {
     DefaultProperty prop = get(name);
     if (prop == null) {
       prop = add(name);
     }
-    prop.setStringValue(value.name());
+    prop.setEnumValue(value);
+    prop.setFinal(isFinal);
   }
 
-  public final void setEnums(final String name, final Enum<?>... values) {
+  @Override
+  public void setEnums(final String name, @Nullable final Enum<?>... values) {
+    setEnums(name, values, false);
+  }
+
+  @Override
+  public void setEnums(final String name, @Nullable final Enum<?>[] values, final boolean isFinal) {
     DefaultProperty prop = get(name);
     if (prop == null) {
       prop = add(name);
     }
-    final String[] strValues = new String[values.length];
-    for (int i = 0; i < values.length; ++i) {
-      strValues[i] = values[i].name();
-    }
-    prop.setStringValues(strValues);
+    prop.setEnumValues(values);
+    prop.setFinal(isFinal);
   }
 
+  @Override
+  public void setEnums(final String name,
+      @Nullable final Collection<? extends Enum<?>> values) {
+    setEnums(name, values, false);
+  }
+
+  @Override
+  public void setEnums(final String name,
+      @Nullable final Collection<? extends Enum<?>> values,
+      final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setEnumValues(values);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void addEnum(final String name, final Enum<?> value) {
+    Argument.requireNonNull("value", value);
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+      prop.setEnumValue(value);
+    } else {
+      prop.addEnumValue(value);
+    }
+  }
+
+  @Override
+  public void addEnums(final String name, final Enum<?>... values) {
+    Argument.requireNonNull("values", values);
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+      prop.setEnumValues(values);
+    } else {
+      prop.addEnumValues(values);
+    }
+  }
+
+  @Override
+  public void addEnums(final String name, final Collection<? extends Enum<?>> values) {
+    Argument.requireNonNull("values", values);
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+      prop.setEnumValues(values);
+    } else {
+      prop.addEnumValues(values);
+    }
+  }
+
+  @Override
   public void setClass(final String name, final Class<?> value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -887,6 +1036,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setClassValue(value);
   }
 
+  @Override
   public void setClasses(final String name, final Class<?>... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -895,6 +1045,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setClassValues(values);
   }
 
+  @Override
   public void setClasses(final String name, final Collection<Class<?>> values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -903,6 +1054,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.setClassValues(values);
   }
 
+  @Override
   public void addClass(final String name, final Class<?> value) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -911,6 +1063,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addClassValue(value);
   }
 
+  @Override
   public void addClasses(final String name, final Class<?>... values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -919,6 +1072,7 @@ public class DefaultConfig extends AbstractConfig {
     prop.addClassValues(values);
   }
 
+  @Override
   public void addClasses(final String name, final Collection<Class<?>> values) {
     DefaultProperty prop = get(name);
     if (prop == null) {
@@ -927,10 +1081,12 @@ public class DefaultConfig extends AbstractConfig {
     prop.addClassValues(values);
   }
 
+  @Override
   public void merge(final Config config, final MergingPolicy policy) {
     merge(config, StringUtils.EMPTY, policy);
   }
 
+  @Override
   public void merge(final Config config, final String prefix,
       final MergingPolicy policy) {
     Argument.requireNonNull("config", config);
@@ -1004,6 +1160,7 @@ public class DefaultConfig extends AbstractConfig {
     LOGGER.trace("Merging finished.");
   }
 
+  @Override
   public void assign(final Config config) {
     LOGGER.trace("Start Assignment with another configuration ...");
     if (this != config) {
@@ -1019,6 +1176,7 @@ public class DefaultConfig extends AbstractConfig {
     LOGGER.trace("Assignment finished.");
   }
 
+  @Override
   public void assign(final Config config, final String prefix) {
     LOGGER.trace("Start Assignment with another configuration ...");
     if (this != config) {
@@ -1044,6 +1202,7 @@ public class DefaultConfig extends AbstractConfig {
     LOGGER.trace("Assignment finished.");
   }
 
+  @Override
   public DefaultProperty clear(final String name) {
     final DefaultProperty prop = get(name);
     if (prop != null) {
@@ -1093,6 +1252,291 @@ public class DefaultConfig extends AbstractConfig {
     return new ToStringBuilder(this)
         .append("properties", properties)
         .toString();
+  }
+
+  @Override
+  public void setBoolean(final String name, final boolean value, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setBooleanValue(value);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setBooleans(final String name, final boolean[] values, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setBooleanValues(values);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setChar(final String name, final char value, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setCharValue(value);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setChars(final String name, final char[] values, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setCharValues(values);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setByte(final String name, final byte value, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setByteValue(value);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setBytes(final String name, final byte[] values, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setByteValues(values);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setShort(final String name, final short value, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setShortValue(value);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setShorts(final String name, final short[] values, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setShortValues(values);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setInt(final String name, final int value, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setIntValue(value);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setInts(final String name, final int[] values, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setIntValues(values);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setLong(final String name, final long value, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setLongValue(value);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setLongs(final String name, final long[] values, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setLongValues(values);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setFloat(final String name, final float value, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setFloatValue(value);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setFloats(final String name, final float[] values, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setFloatValues(values);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setDouble(final String name, final double value, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setDoubleValue(value);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setDoubles(final String name, final double[] values, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setDoubleValues(values);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setString(final String name, @Nullable final String value, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setStringValue(value);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setStrings(final String name, @Nullable final String[] values, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setStringValues(values);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setBigDecimal(final String name, @Nullable final BigDecimal value, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setBigDecimalValue(value);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setBigDecimals(final String name, @Nullable final BigDecimal[] values, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setBigDecimalValues(values);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setBigInteger(final String name, @Nullable final BigInteger value, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setBigIntegerValue(value);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setBigIntegers(final String name, @Nullable final BigInteger[] values, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setBigIntegerValues(values);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setDate(final String name, @Nullable final Date value, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setDateValue(value);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setDates(final String name, @Nullable final Date[] values, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setDateValues(values);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setByteArray(final String name, @Nullable final byte[] value, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setByteArrayValue(value);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setByteArrays(final String name, @Nullable final byte[][] values, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setByteArrayValues(values);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setClass(final String name, @Nullable final Class<?> value, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setClassValue(value);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void setClasses(final String name, @Nullable final Class<?>[] values, final boolean isFinal) {
+    DefaultProperty prop = get(name);
+    if (prop == null) {
+      prop = add(name);
+    }
+    prop.setClassValues(values);
+    prop.setFinal(isFinal);
+  }
+
+  @Override
+  public void clear() {
+    removeAll();
   }
 
 }
