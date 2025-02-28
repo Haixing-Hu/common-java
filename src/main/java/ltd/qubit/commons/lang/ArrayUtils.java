@@ -7776,4 +7776,51 @@ public class ArrayUtils {
       }
     }
   }
+
+  /**
+   * Returns a new array containing specified copies of the specified object.
+   * <p>
+   * This function perform the shallow copy of the specified object.
+   *
+   * @param <T>
+   *     the type of the elements in the array.
+   * @param value
+   *     the object to be copied.
+   * @param n
+   *     the number of copies to be made.
+   * @return
+   *     an array containing {@code n} copies of the specified object.
+   */
+  public static <T> T[] duplicate(final T value, final int n) {
+    @SuppressWarnings("unchecked")
+    final Class<T> elementType = (Class<T>) value.getClass();
+    final T[] result = createArray(elementType, n);
+    Arrays.fill(result, value);
+    return result;
+  }
+
+  /**
+   * Returns a new array containing specified copies of deep clones of the
+   * specified object.
+   * <p>
+   * This function perform the deep clone of the specified object.
+   *
+   * @param <T>
+   *     the type of the elements in the array.
+   * @param value
+   *     the object to be copied.
+   * @param n
+   *     the number of copies to be made.
+   * @return
+   *     an array containing {@code n} copies of deep clone of the specified object.
+   */
+  public static <T extends CloneableEx<T>> T[] deepDuplicate(final T value, final int n) {
+    @SuppressWarnings("unchecked")
+    final Class<T> elementType = (Class<T>) value.getClass();
+    final T[] result = createArray(elementType, n);
+    for (int i = 0; i < n; ++i) {
+      result[i] = value.cloneEx();
+    }
+    return result;
+  }
 }
