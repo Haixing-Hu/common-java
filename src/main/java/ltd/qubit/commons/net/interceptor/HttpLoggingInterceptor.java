@@ -28,12 +28,10 @@ import okhttp3.logging.HttpLoggingInterceptor.Level;
  */
 public class HttpLoggingInterceptor implements Interceptor {
 
-  private final Logger logger;
   private final okhttp3.logging.HttpLoggingInterceptor.Logger delegateLogger;
   private final okhttp3.logging.HttpLoggingInterceptor delegate;
 
   public HttpLoggingInterceptor(final Logger logger) {
-    this.logger = logger;
     delegateLogger = new okhttp3.logging.HttpLoggingInterceptor.Logger() {
       @Override
       public void log(@Nonnull final String message) {
@@ -41,14 +39,16 @@ public class HttpLoggingInterceptor implements Interceptor {
       }
     };
     this.delegate = new okhttp3.logging.HttpLoggingInterceptor(this.delegateLogger);
+    if (logger.isTraceEnabled()) {
+      delegate.setLevel(Level.BODY);
+    } else {
+      delegate.setLevel(Level.HEADERS);
+    }
   }
 
   @Nonnull
   @Override
   public Response intercept(@Nonnull final Chain chain) throws IOException {
-    if (logger.isTraceEnabled()) {
-      delegate.setLevel(Level.BODY);
-    }
     return delegate.intercept(chain);
   }
 }
