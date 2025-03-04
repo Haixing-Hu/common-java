@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
@@ -57,7 +58,7 @@ import static ltd.qubit.commons.net.HttpClientBuilder.KEY_WRITE_TIMEOUT;
  *
  * @author Haixing Hu
  */
-public class ApiClientBuilder {
+public class ApiBuilder {
 
   private Logger logger;
 
@@ -66,6 +67,8 @@ public class ApiClientBuilder {
   private JsonMapper jsonMapper;
 
   private String baseUrl;
+
+  private OkHttpClient httpClient;
 
   @Nullable
   private Executor callbackExecutor;
@@ -79,19 +82,19 @@ public class ApiClientBuilder {
 
   private final List<CallAdapter.Factory> callAdapterFactories = new ArrayList<>();
 
-  public ApiClientBuilder() {
-    this(LoggerFactory.getLogger(ApiClientBuilder.class), new DefaultConfig());
+  public ApiBuilder() {
+    this(LoggerFactory.getLogger(ApiBuilder.class), new DefaultConfig());
   }
 
-  public ApiClientBuilder(final Logger logger) {
+  public ApiBuilder(final Logger logger) {
     this(logger, new DefaultConfig());
   }
 
-  public ApiClientBuilder(final Logger logger, final DefaultConfig config) {
+  public ApiBuilder(final Logger logger, final DefaultConfig config) {
     this(logger, config, new CustomizedJsonMapper());
   }
 
-  public ApiClientBuilder(final Logger logger, final DefaultConfig config, final JsonMapper jsonMapper) {
+  public ApiBuilder(final Logger logger, final DefaultConfig config, final JsonMapper jsonMapper) {
     this.logger = requireNonNull("logger", logger);
     this.config = requireNonNull("config", config);
     this.jsonMapper = requireNonNull("jsonMapper", jsonMapper);
@@ -101,7 +104,7 @@ public class ApiClientBuilder {
     return logger;
   }
 
-  public ApiClientBuilder setLogger(final Logger logger) {
+  public ApiBuilder setLogger(final Logger logger) {
     this.logger = requireNonNull("logger", logger);
     return this;
   }
@@ -110,7 +113,7 @@ public class ApiClientBuilder {
     return config;
   }
 
-  public ApiClientBuilder setConfig(final DefaultConfig config) {
+  public ApiBuilder setConfig(final DefaultConfig config) {
     this.config = requireNonNull("config", config);
     return this;
   }
@@ -119,7 +122,7 @@ public class ApiClientBuilder {
     return jsonMapper;
   }
 
-  public ApiClientBuilder setJsonMapper(final JsonMapper jsonMapper) {
+  public ApiBuilder setJsonMapper(final JsonMapper jsonMapper) {
     this.jsonMapper = requireNonNull("jsonMapper", jsonMapper);
     return this;
   }
@@ -128,7 +131,7 @@ public class ApiClientBuilder {
     return config.getBoolean(KEY_USE_PROXY, DEFAULT_USE_PROXY);
   }
 
-  public ApiClientBuilder setUseProxy(final boolean useProxy) {
+  public ApiBuilder setUseProxy(final boolean useProxy) {
     config.setBoolean(KEY_USE_PROXY, useProxy);
     return this;
   }
@@ -137,12 +140,12 @@ public class ApiClientBuilder {
     return config.getString(KEY_PROXY_TYPE, DEFAULT_PROXY_TYPE);
   }
 
-  public ApiClientBuilder setProxyType(final String proxyType) {
+  public ApiBuilder setProxyType(final String proxyType) {
     config.setString(KEY_PROXY_TYPE, proxyType);
     return this;
   }
 
-  public ApiClientBuilder setProxyType(final Proxy.Type proxyType) {
+  public ApiBuilder setProxyType(final Proxy.Type proxyType) {
     config.setString(KEY_PROXY_TYPE, proxyType.name());
     return this;
   }
@@ -152,7 +155,7 @@ public class ApiClientBuilder {
     return config.getString(KEY_PROXY_HOST, null);
   }
 
-  public ApiClientBuilder setProxyHost(@Nullable final String proxyHost) {
+  public ApiBuilder setProxyHost(@Nullable final String proxyHost) {
     config.setString(KEY_PROXY_HOST, proxyHost);
     return this;
   }
@@ -161,7 +164,7 @@ public class ApiClientBuilder {
     return config.getInt(KEY_PROXY_PORT, 0);
   }
 
-  public ApiClientBuilder setProxyPort(final int proxyPort) {
+  public ApiBuilder setProxyPort(final int proxyPort) {
     config.setInt(KEY_PROXY_PORT, proxyPort);
     return this;
   }
@@ -171,7 +174,7 @@ public class ApiClientBuilder {
     return config.getString(KEY_PROXY_USERNAME, null);
   }
 
-  public ApiClientBuilder setProxyUsername(@Nullable final String proxyUsername) {
+  public ApiBuilder setProxyUsername(@Nullable final String proxyUsername) {
     config.setString(KEY_PROXY_USERNAME, proxyUsername);
     return this;
   }
@@ -181,7 +184,7 @@ public class ApiClientBuilder {
     return config.getString(KEY_PROXY_PASSWORD, null);
   }
 
-  public ApiClientBuilder setProxyPassword(@Nullable final String proxyPassword) {
+  public ApiBuilder setProxyPassword(@Nullable final String proxyPassword) {
     config.setString(KEY_PROXY_PASSWORD, proxyPassword);
     return this;
   }
@@ -190,7 +193,7 @@ public class ApiClientBuilder {
     return config.getInt(KEY_CONNECTION_TIMEOUT, DEFAULT_CONNECTION_TIMEOUT);
   }
 
-  public ApiClientBuilder setConnectionTimeout(final int connectionTimeout) {
+  public ApiBuilder setConnectionTimeout(final int connectionTimeout) {
     config.setInt(KEY_CONNECTION_TIMEOUT, connectionTimeout);
     return this;
   }
@@ -199,7 +202,7 @@ public class ApiClientBuilder {
     return config.getInt(KEY_READ_TIMEOUT, DEFAULT_READ_TIMEOUT);
   }
 
-  public ApiClientBuilder setReadTimeout(final int readTimeout) {
+  public ApiBuilder setReadTimeout(final int readTimeout) {
     config.setInt(KEY_READ_TIMEOUT, readTimeout);
     return this;
   }
@@ -208,7 +211,7 @@ public class ApiClientBuilder {
     return config.getInt(KEY_WRITE_TIMEOUT, DEFAULT_WRITE_TIMEOUT);
   }
 
-  public ApiClientBuilder setWriteTimeout(final int writeTimeout) {
+  public ApiBuilder setWriteTimeout(final int writeTimeout) {
     config.setInt(KEY_WRITE_TIMEOUT, writeTimeout);
     return this;
   }
@@ -217,31 +220,31 @@ public class ApiClientBuilder {
     return config.getBoolean(KEY_USE_LOGGING, DEFAULT_USE_LOGGING);
   }
 
-  public ApiClientBuilder setUseLogging(final boolean useLogging) {
+  public ApiBuilder setUseLogging(final boolean useLogging) {
     config.setBoolean(KEY_USE_LOGGING, useLogging);
     return this;
   }
 
-  public ApiClientBuilder addInterceptor(final Interceptor interceptor) {
+  public ApiBuilder addInterceptor(final Interceptor interceptor) {
     interceptors.add(requireNonNull("interceptor", interceptor));
     return this;
   }
 
-  public ApiClientBuilder addInterceptors(final Interceptor ... interceptors) {
+  public ApiBuilder addInterceptors(final Interceptor ... interceptors) {
     for (final Interceptor interceptor : interceptors) {
       this.interceptors.add(requireNonNull("interceptor", interceptor));
     }
     return this;
   }
 
-  public ApiClientBuilder addInterceptors(final Collection<Interceptor> interceptors) {
+  public ApiBuilder addInterceptors(final Collection<Interceptor> interceptors) {
     for (final Interceptor interceptor : interceptors) {
       this.interceptors.add(requireNonNull("interceptor", interceptor));
     }
     return this;
   }
 
-  public ApiClientBuilder clearInterceptors() {
+  public ApiBuilder clearInterceptors() {
     interceptors.clear();
     return this;
   }
@@ -250,8 +253,17 @@ public class ApiClientBuilder {
     return baseUrl;
   }
 
-  public ApiClientBuilder setBaseUrl(final String baseUrl) {
+  public ApiBuilder setBaseUrl(final String baseUrl) {
     this.baseUrl = requireNonNull("baseUrl", baseUrl);
+    return this;
+  }
+
+  public OkHttpClient getHttpClient() {
+    return httpClient;
+  }
+
+  public ApiBuilder setHttpClient(final OkHttpClient httpClient) {
+    this.httpClient = httpClient;
     return this;
   }
 
@@ -260,7 +272,7 @@ public class ApiClientBuilder {
     return callbackExecutor;
   }
 
-  public ApiClientBuilder setCallbackExecutor(@Nullable final Executor callbackExecutor) {
+  public ApiBuilder setCallbackExecutor(@Nullable final Executor callbackExecutor) {
     this.callbackExecutor = callbackExecutor;
     return this;
   }
@@ -270,54 +282,55 @@ public class ApiClientBuilder {
     return validateEagerly;
   }
 
-  public void setValidateEagerly(@Nullable final Boolean validateEagerly) {
+  public ApiBuilder setValidateEagerly(@Nullable final Boolean validateEagerly) {
     this.validateEagerly = validateEagerly;
+    return this;
   }
 
-  public ApiClientBuilder addConverterFactory(final Converter.Factory converterFactory) {
+  public ApiBuilder addConverterFactory(final Converter.Factory converterFactory) {
     converterFactories.add(requireNonNull("converterFactory", converterFactory));
     return this;
   }
 
-  public ApiClientBuilder addConverterFactories(final Converter.Factory ... converterFactories) {
+  public ApiBuilder addConverterFactories(final Converter.Factory ... converterFactories) {
     for (final Converter.Factory converterFactory : converterFactories) {
       this.converterFactories.add(requireNonNull("converterFactory", converterFactory));
     }
     return this;
   }
 
-  public ApiClientBuilder addConverterFactories(final Collection<Converter.Factory> converterFactories) {
+  public ApiBuilder addConverterFactories(final Collection<Converter.Factory> converterFactories) {
     for (final Converter.Factory converterFactory : converterFactories) {
       this.converterFactories.add(requireNonNull("converterFactory", converterFactory));
     }
     return this;
   }
 
-  public ApiClientBuilder clearConverterFactories() {
+  public ApiBuilder clearConverterFactories() {
     converterFactories.clear();
     return this;
   }
 
-  public ApiClientBuilder addCallAdapterFactory(final CallAdapter.Factory callAdapterFactory) {
+  public ApiBuilder addCallAdapterFactory(final CallAdapter.Factory callAdapterFactory) {
     callAdapterFactories.add(requireNonNull("callAdapterFactory", callAdapterFactory));
     return this;
   }
 
-  public ApiClientBuilder addCallAdapterFactories(final CallAdapter.Factory ... callAdapterFactories) {
+  public ApiBuilder addCallAdapterFactories(final CallAdapter.Factory ... callAdapterFactories) {
     for (final CallAdapter.Factory callAdapterFactory : callAdapterFactories) {
       this.callAdapterFactories.add(requireNonNull("callAdapterFactory", callAdapterFactory));
     }
     return this;
   }
 
-  public ApiClientBuilder addCallAdapterFactories(final Collection<CallAdapter.Factory> callAdapterFactories) {
+  public ApiBuilder addCallAdapterFactories(final Collection<CallAdapter.Factory> callAdapterFactories) {
     for (final CallAdapter.Factory callAdapterFactory : callAdapterFactories) {
       this.callAdapterFactories.add(requireNonNull("callAdapterFactory", callAdapterFactory));
     }
     return this;
   }
 
-  public ApiClientBuilder clearCallAdapterFactories() {
+  public ApiBuilder clearCallAdapterFactories() {
     callAdapterFactories.clear();
     return this;
   }
@@ -333,11 +346,15 @@ public class ApiClientBuilder {
    *     the API client.
    */
   public <API> API build(final Class<API> apiClass) {
-    final HttpClientBuilder httpClientBuilder = new HttpClientBuilder(logger, config);
-    httpClientBuilder.addInterceptors(interceptors);
     final Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
-        .baseUrl(baseUrl)
-        .client(httpClientBuilder.build());
+        .baseUrl(baseUrl);
+    if (httpClient != null) {
+      retrofitBuilder.client(httpClient);
+    } else {
+      final HttpClientBuilder builder = new HttpClientBuilder(logger, config);
+      builder.addInterceptors(interceptors);
+      retrofitBuilder.client(builder.build());
+    }
     if (callbackExecutor != null) {
       retrofitBuilder.callbackExecutor(callbackExecutor);
     }
