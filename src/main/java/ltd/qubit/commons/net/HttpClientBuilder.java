@@ -8,9 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.net;
 
-import java.net.Authenticator;
 import java.net.InetSocketAddress;
-import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,23 +17,21 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nullable;
 
-import jakarta.validation.constraints.NotNull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
-import okhttp3.logging.HttpLoggingInterceptor.Level;
 
 import ltd.qubit.commons.config.Config;
 import ltd.qubit.commons.config.impl.DefaultConfig;
+import ltd.qubit.commons.net.interceptor.HttpLoggingInterceptor;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * A builder of clients.
+ * A builder of {@link OkHttpClient} clients which is much easier to use
+ * than the {@link OkHttpClient.Builder} class.
  * <p>
  * <b>NOTE:</b> This class is <b>NOT</b> thread-safe. But the built client is
  * thread-safe.
@@ -318,28 +314,6 @@ public class HttpClientBuilder {
     }
   }
 
-  protected Authenticator getProxyAuthenticator() {
-    final String username = getProxyUsername();
-    if (username == null) {
-      return null;
-    }
-    final String password = getProxyPassword();
-    if (password == null) {
-      return null;
-    }
-    return new Authenticator() {
-      @Override
-      protected PasswordAuthentication getPasswordAuthentication() {
-        if (getRequestorType() == RequestorType.PROXY) {
-          return new PasswordAuthentication(username, password.toCharArray());
-        } else {
-          return null;
-        }
-      }
-    };
-  }
-
-
   private OkHttpClient.Builder getHttpClientBuilder() {
     final OkHttpClient.Builder builder = new OkHttpClient.Builder();
     builder.connectTimeout(getConnectionTimeout(), TimeUnit.SECONDS) //自定义超时时间
@@ -347,30 +321,45 @@ public class HttpClientBuilder {
            .writeTimeout(getWriteTimeout(), TimeUnit.SECONDS);   //自定义超时时间
     final Proxy proxy = getProxy();
     if (proxy != null) {
-      logger.info("Using proxy: {}", proxy);
-      builder.proxy(proxy);
-      // FIXME: The following code is commented out because the Authenticator class is not found.
-      // final Authenticator authenticator = parameters.getProxyAuthenticator();
-      // if (authenticator != null) {
-      //   builder.proxyAuthenticator(authenticator);
-      // }
+      addProxy(builder, proxy);
     }
     for (final Interceptor interceptor : interceptors) {
       builder.addInterceptor(interceptor);
     }
     if (isUseLogging()) {
-      final HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-        @Override
-        public void log(@NotNull final String message) {
-          logger.debug(message);
-        }
-      });
-      if (logger.isTraceEnabled()) {
-        interceptor.setLevel(Level.BODY);
-      }
-      builder.addInterceptor(interceptor);
+      addLoggingInterceptor(builder);
     }
     return builder;
+  }
+
+  private void addProxy(final OkHttpClient.Builder builder, final Proxy proxy) {
+    logger.info("Using proxy: {}", proxy);
+    builder.proxy(proxy);
+    // add proxy authentication
+    final String username = getProxyUsername();
+    if (username != null) {
+      final String password = getProxyPassword();
+      // password may be null, in which case it will be treated as an empty string
+      final String passwordToUse = (password != null) ? password : "";
+      logger.info("Using proxy authentication with username: {}", username);
+      builder.proxyAuthenticator((route, response) -> {
+        final String credential = okhttp3.Credentials.basic(username, passwordToUse);
+        return response.request().newBuilder()
+                       .header("Proxy-Authorization", credential)
+                       .build();
+      });
+    }
+  }
+
+  private void addLoggingInterceptor(final OkHttpClient.Builder builder) {
+    // check whether there is a HttpLoggingInterceptor exists
+    for (final Interceptor interceptor : builder.interceptors()) {
+      if (interceptor instanceof HttpLoggingInterceptor) {
+        return;
+      }
+    }
+    // add a HttpLoggingInterceptor
+    builder.addInterceptor(new HttpLoggingInterceptor(logger));
   }
 
   /**
