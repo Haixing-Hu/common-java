@@ -222,11 +222,11 @@ public class JsonMapperUtils {
    *     待解析的对象的类对象。
    * @return
    *     解析出的对象。
-   * @throws IOException
-   *     若发生任何解析错误或I/O错误。
+   * @throws JsonProcessingException
+   *     若发生任何解析错误。
    */
   public static <T> T parse(final String json, final Class<T> cls)
-      throws IOException {
+      throws JsonProcessingException {
     return parse(json, cls, new CustomizedJsonMapper());
   }
 
@@ -243,11 +243,11 @@ public class JsonMapperUtils {
    *     用于进行JSON反序列化的mapper。
    * @return
    *     解析出的对象。
-   * @throws IOException
-   *     若发生任何解析错误或I/O错误。
+   * @throws JsonProcessingException
+   *     若发生任何解析错误。
    */
   public static <T> T parse(final String json, final Class<T> cls,
-      final JsonMapper mapper) throws IOException {
+      final JsonMapper mapper) throws JsonProcessingException {
     return mapper.readValue(json, cls);
   }
 
