@@ -753,35 +753,98 @@ public final class CharUtils {
   }
 
   /**
-   * Convert a {@code char} value into hex string.
+   * Convert a {@code char} value into a 4-digits Unicode hex string.
    *
    * @param value
    *     the value to be converted.
    * @param builder
-   *     a {@link StringBuilder} where to append the hex string.
+   *     a {@link StringBuilder} where to append the 4-digits Unicode hex string,
+   *     including the leading "\\u".
+   * @deprecated Use {@link #toUnicodeHexString(char, StringBuilder)} instead.
    */
+  @Deprecated
   public static void toHexString(final char value,
+      final StringBuilder builder) {
+    toUnicodeHexString(value, builder);
+  }
+
+  /**
+   * Convert a {@code char} value into a 4-digits Unicode hex string.
+   *
+   * @param value
+   *     the value to be converted.
+   * @return
+   *     the 4-digits hex Unicode string of the value, including the leading "\\u".
+   * @deprecated Use {@link #toUnicodeHexString(char)} instead.
+   */
+  @Deprecated
+  public static String toHexString(final char value) {
+    return toUnicodeHexString(value);
+  }
+
+  /**
+   * Convert a {@code char} value into a 4-digits Unicode hex string.
+   *
+   * @param value
+   *     the value to be converted.
+   * @param builder
+   *     a {@link StringBuilder} where to append the 4-digits Unicode hex string,
+   *     including the leading "\\u".
+   */
+  public static void toUnicodeHexString(final char value,
       final StringBuilder builder) {
     // stop checkstyle: MagicNumberCheck
     builder.append("\\u")
-        .append(DEFAULT_UPPERCASE_DIGITS[(value >>> 12) & 0x0F])
-        .append(DEFAULT_UPPERCASE_DIGITS[(value >>> 8) & 0x0F])
-        .append(DEFAULT_UPPERCASE_DIGITS[(value >>> 4) & 0x0F])
-        .append(DEFAULT_UPPERCASE_DIGITS[value & 0x0F]);
+           .append(DEFAULT_UPPERCASE_DIGITS[(value >>> 12) & 0x0F])
+           .append(DEFAULT_UPPERCASE_DIGITS[(value >>> 8) & 0x0F])
+           .append(DEFAULT_UPPERCASE_DIGITS[(value >>> 4) & 0x0F])
+           .append(DEFAULT_UPPERCASE_DIGITS[value & 0x0F]);
     // resume checkstyle: MagicNumberCheck
   }
 
   /**
-   * Convert a {@code char} value into hex string.
+   * Convert a {@code char} value into a 4-digits Unicode hex string.
    *
    * @param value
    *     the value to be converted.
-   * @return the hex string of the value.
+   * @return
+   *     the 4-digits hex Unicode string of the value, including the leading "\\u".
    */
-  public static String toHexString(final char value) {
+  public static String toUnicodeHexString(final char value) {
     final StringBuilder builder = new StringBuilder();
-    toHexString(value, builder);
+    toUnicodeHexString(value, builder);
     return builder.toString();
+  }
+
+  /**
+   * Escape the control character.
+   *
+   * @param value
+   *     the character to be escaped.
+   * @return
+   *     the escaped string of the control character, or the string of the
+   *     original character if it is not a control character.
+   */
+  public static String escapeControlChar(final char value) {
+    if (value <= 0x1F) {  // Control character (ASCII 0-31)
+      switch (value) {
+        case '\b':
+          return "\\b";
+        case '\f':
+          return "\\f";
+        case '\n':
+          return "\\n";
+        case '\r':
+          return "\\r";
+        case '\t':
+          return "\\t";
+        default:
+          // For other control characters, append the Unicode Hex string
+          return toUnicodeHexString(value);
+      }
+    } else {
+      return String.valueOf(value);
+    }
   }
 
   public static Date toDate(final char value) {
