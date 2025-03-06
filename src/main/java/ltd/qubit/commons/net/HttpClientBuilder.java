@@ -25,6 +25,7 @@ import okhttp3.OkHttpClient;
 
 import ltd.qubit.commons.config.Config;
 import ltd.qubit.commons.config.impl.DefaultConfig;
+import ltd.qubit.commons.net.interceptor.ConnectionLoggingEventListener;
 import ltd.qubit.commons.net.interceptor.HttpLoggingInterceptor;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
@@ -327,7 +328,8 @@ public class HttpClientBuilder {
       builder.addInterceptor(interceptor);
     }
     if (isUseLogging()) {
-      addLoggingInterceptor(builder);
+      builder.addInterceptor(new HttpLoggingInterceptor(logger));
+      builder.eventListener(new ConnectionLoggingEventListener(logger));
     }
     return builder;
   }
@@ -349,17 +351,6 @@ public class HttpClientBuilder {
                        .build();
       });
     }
-  }
-
-  private void addLoggingInterceptor(final OkHttpClient.Builder builder) {
-    // check whether there is a HttpLoggingInterceptor exists
-    for (final Interceptor interceptor : builder.interceptors()) {
-      if (interceptor instanceof HttpLoggingInterceptor) {
-        return;
-      }
-    }
-    // add a HttpLoggingInterceptor
-    builder.addInterceptor(new HttpLoggingInterceptor(logger));
   }
 
   /**
