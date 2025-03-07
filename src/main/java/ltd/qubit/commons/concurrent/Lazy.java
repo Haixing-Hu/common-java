@@ -26,6 +26,16 @@ public class Lazy<T> {
     this.supplier = supplier;
   }
 
+  /**
+   * Creates a new lazy initialized value.
+   *
+   * @param <T>
+   *     the type of the value.
+   * @param supplier
+   *     the supplier of the value.
+   * @return
+   *     the created lazy initialized value.
+   */
   public static <T> Lazy<T> of(final Supplier<T> supplier) {
     if (supplier == null) {
       throw new IllegalArgumentException("The supplier is null.");
@@ -33,6 +43,12 @@ public class Lazy<T> {
     return new Lazy<>(supplier);
   }
 
+  /**
+   * Gets the lazy initialized value.
+   *
+   * @return
+   *     the lazy initialized value.
+   */
   public T get() {
     // use double-checked locking trick to ensure the value is initialized only once.
     if (supplier != null) {
@@ -42,6 +58,21 @@ public class Lazy<T> {
           supplier = null; // Release the supplier
         }
       }
+    }
+    return value;
+  }
+
+  /**
+   * Refreshes the lazy initialized value.
+   * <p>
+   * This method will re-evaluate the supplier to get the new value.
+   *
+   * @return
+   *     the refreshed lazy initialized value.
+   */
+  public T refresh() {
+    synchronized (this) {
+      value = supplier.get();
     }
     return value;
   }
