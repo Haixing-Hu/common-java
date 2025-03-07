@@ -320,9 +320,11 @@ public class HttpClientBuilder {
     builder.connectTimeout(getConnectionTimeout(), TimeUnit.SECONDS) //自定义超时时间
            .readTimeout(getReadTimeout(), TimeUnit.SECONDS)    //自定义超时时间
            .writeTimeout(getWriteTimeout(), TimeUnit.SECONDS);   //自定义超时时间
-    final Proxy proxy = getProxy();
-    if (proxy != null) {
-      addProxy(builder, proxy);
+    if (isUseProxy()) {
+      final Proxy proxy = getProxy();
+      if (proxy != null) {
+        addProxy(builder, proxy);
+      }
     }
     for (final Interceptor interceptor : interceptors) {
       builder.addInterceptor(interceptor);
