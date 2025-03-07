@@ -21,7 +21,9 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import ltd.qubit.commons.util.codec.Base64Codec;
-import ltd.qubit.commons.util.codec.DecodingException;
+import ltd.qubit.commons.util.codec.IsoInstantCodec;
+import ltd.qubit.commons.util.codec.LocalDateTimeCodec;
+import ltd.qubit.commons.util.codec.TimestampCodec;
 
 /**
  * The enumeration of common data types.
@@ -167,21 +169,17 @@ public enum Type {
       case STRING:
         return text;
       case DATE:
-        return LocalDate.parse(text);
+        return LocalDateTimeCodec.INSTANCE.decodeNoThrow(text);
       case TIME:
-        return LocalTime.parse(text);
+        return LocalDateTimeCodec.INSTANCE.decodeNoThrow(text);
       case DATETIME:
-        return LocalDateTime.parse(text);
+        return LocalDateTimeCodec.INSTANCE.decodeNoThrow(text);
       case TIMESTAMP:
-        return Timestamp.valueOf(text);
+        return TimestampCodec.INSTANCE.decodeNoThrow(text);
       case INSTANT:
-        return Instant.parse(text);
+        return IsoInstantCodec.INSTANCE.decodeNoThrow(text);
       case BYTE_ARRAY:
-        try {
-          return Base64Codec.INSTANCE.decode(text);
-        } catch (final DecodingException e) {
-          throw new RuntimeException(e);
-        }
+        return Base64Codec.INSTANCE.decodeNoThrow(text);
       case CLASS:
         try {
           return Class.forName(text);

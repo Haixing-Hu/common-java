@@ -64,6 +64,8 @@ public class LocalDateTimeCodec implements Codec<LocalDateTime, String> {
 
   public static final boolean DEFAULT_STRIP_BEFORE_PARSING = true;
 
+  public static final LocalDateTimeCodec INSTANCE = new LocalDateTimeCodec();
+
   private String encodePattern;
   private String[] decodePatterns;
   private boolean emptyForNull;

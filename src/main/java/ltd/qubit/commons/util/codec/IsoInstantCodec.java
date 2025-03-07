@@ -23,6 +23,8 @@ import ltd.qubit.commons.lang.DateUtils;
  */
 public class IsoInstantCodec extends InstantCodec {
 
+  public static IsoInstantCodec INSTANCE = new IsoInstantCodec();
+
   public static String encodeTimestamp(@Nullable final Long epochMillis) {
     if (epochMillis == null) {
       return null;
@@ -41,6 +43,7 @@ public class IsoInstantCodec extends InstantCodec {
             DateUtils.UTC_ZONE_ID, false);
   }
 
+  @Override
   public String encode(@Nullable final Instant value) {
     final String result = super.encode(value);
     return (result == null ? null : fixTrailingZeroMicroseconds(result));
