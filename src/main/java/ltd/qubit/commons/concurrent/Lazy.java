@@ -18,12 +18,16 @@ import java.util.function.Supplier;
  */
 public class Lazy<T> {
 
-  private volatile Supplier<T> supplier;
+  private final Supplier<T> supplier;
+
+  private volatile boolean initialized;
 
   private volatile T value;
 
   private Lazy(final Supplier<T> supplier) {
     this.supplier = supplier;
+    this.initialized = false;
+    this.value = null;
   }
 
   /**
@@ -51,11 +55,11 @@ public class Lazy<T> {
    */
   public T get() {
     // use double-checked locking trick to ensure the value is initialized only once.
-    if (supplier != null) {
+    if (! initialized) {
       synchronized (this) {
-        if (supplier != null) {
+        if (! initialized) {
           value = supplier.get();
-          supplier = null; // Release the supplier
+          initialized = true;
         }
       }
     }
@@ -65,15 +69,14 @@ public class Lazy<T> {
   /**
    * Refreshes the lazy initialized value.
    * <p>
-   * This method will re-evaluate the supplier to get the new value.
-   *
-   * @return
-   *     the refreshed lazy initialized value.
+   * If the value has not been initialized, this method does nothing.
+   * Otherwise, this method will re-evaluate the supplier to get the refreshed value.
    */
-  public T refresh() {
-    synchronized (this) {
-      value = supplier.get();
+  public void refresh() {
+    if (initialized) {
+      synchronized (this) {
+        value = supplier.get();
+      }
     }
-    return value;
   }
 }
