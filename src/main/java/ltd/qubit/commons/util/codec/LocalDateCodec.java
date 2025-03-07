@@ -10,11 +10,6 @@ package ltd.qubit.commons.util.codec;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.time.temporal.TemporalAccessor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,163 +19,102 @@ import org.slf4j.LoggerFactory;
 
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
-import ltd.qubit.commons.lang.StringUtils;
-import ltd.qubit.commons.text.Stripper;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
-
-import static java.time.LocalDateTime.ofInstant;
-
-import static ltd.qubit.commons.lang.Argument.requireNonNull;
-import static ltd.qubit.commons.lang.StringUtils.isEmpty;
 
 /**
  * The codec which encode/decode {@link LocalDate} objects to/from strings.
  *
  * @author Haixing Hu
- * @see <a href="https://stackoverflow.com/questions/29014225/what-is-the-difference-between-year-and-year-of-era">
- * What is the difference between year and year-of-era?</a>
+ * @see LocalDateTimeCodec
  */
 public class LocalDateCodec implements Codec<LocalDate, String> {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(LocalDateCodec.class);
 
-  // NOTE that 'u' represent the year, while 'y' represent the year-of-era.
-  // see: https://stackoverflow.com/questions/29014225/what-is-the-difference-between-year-and-year-of-era
   public static final String DEFAULT_ENCODE_PATTERN = "uuuu-MM-dd";
 
-  public static final String DEFAULT_DECODE_PATTERN = "uuuu-M-d[[' ']['T']HH:mm[':'ss[.SSS]]]";
-
-  public static final boolean DEFAULT_TRIM = true;
-
-  public static final boolean DEFAULT_EMPTY_FOR_NULL = false;
-
-  private String encodePattern;
-  private String decodePattern;
-  private boolean emptyForNull;
-  private boolean trim;
-  private transient DateTimeFormatter encodeFormatter;
-  private transient DateTimeFormatter decodeFormatter;
+  private final LocalDateTimeCodec delegate;
 
   public LocalDateCodec() {
-    this(DEFAULT_ENCODE_PATTERN, DEFAULT_DECODE_PATTERN, DEFAULT_EMPTY_FOR_NULL,
-        DEFAULT_TRIM);
+    delegate = new LocalDateTimeCodec();
+    delegate.setEncodePattern(DEFAULT_ENCODE_PATTERN);
   }
 
   public LocalDateCodec(@Nonnull final String pattern, final boolean emptyForNull) {
-    this(pattern, pattern, emptyForNull, DEFAULT_TRIM);
+    delegate = new LocalDateTimeCodec(pattern, emptyForNull);
   }
 
   public LocalDateCodec(@Nonnull final String pattern, final boolean emptyForNull,
           final boolean stripBeforeParsing) {
-    this(pattern, pattern, emptyForNull, stripBeforeParsing);
+    delegate = new LocalDateTimeCodec(pattern, pattern, emptyForNull, stripBeforeParsing);
   }
 
   public LocalDateCodec(final boolean emptyForNull) {
-    this(DEFAULT_ENCODE_PATTERN, DEFAULT_DECODE_PATTERN, emptyForNull,
-        DEFAULT_TRIM);
+    delegate = new LocalDateTimeCodec(emptyForNull);
   }
 
   public LocalDateCodec(final boolean emptyForNull, final boolean trim) {
-    this(DEFAULT_ENCODE_PATTERN, DEFAULT_DECODE_PATTERN, emptyForNull,
-        trim);
+    delegate = new LocalDateTimeCodec(emptyForNull, trim);
   }
 
   public LocalDateCodec(@Nonnull final String encodePattern,
       @Nonnull final String decodePattern, final boolean emptyForNull) {
-    this(encodePattern, decodePattern, emptyForNull, DEFAULT_TRIM);
+    delegate = new LocalDateTimeCodec(encodePattern, decodePattern, emptyForNull);
   }
 
   public LocalDateCodec(@Nonnull final String encodePattern,
       @Nonnull final String decodePattern, final boolean emptyForNull,
       final boolean trim) {
-    this.encodePattern = requireNonNull("encodePattern", encodePattern);
-    this.decodePattern = requireNonNull("decodePattern", decodePattern);
-    this.emptyForNull = emptyForNull;
-    this.trim = trim;
-    this.encodeFormatter = DateTimeFormatter.ofPattern(encodePattern);
-    this.decodeFormatter = DateTimeFormatter.ofPattern(decodePattern);
+    delegate = new LocalDateTimeCodec(encodePattern, decodePattern, emptyForNull, trim);
   }
 
   public final String getEncodePattern() {
-    return encodePattern;
+    return delegate.getEncodePattern();
   }
 
   public final LocalDateCodec setEncodePattern(final String encodePattern) {
-    this.encodePattern = requireNonNull("encodePattern", encodePattern);
-    this.encodeFormatter = DateTimeFormatter.ofPattern(encodePattern);
+    this.delegate.setEncodePattern(encodePattern);
     return this;
   }
 
-  public final String getDecodePattern() {
-    return decodePattern;
+  public final String[] getDecodePatterns() {
+    return delegate.getDecodePatterns();
   }
 
-  public final LocalDateCodec setDecodePattern(final String decodePattern) {
-    this.decodePattern = requireNonNull("decodePattern", decodePattern);
-    this.decodeFormatter = DateTimeFormatter.ofPattern(decodePattern);
+  public final LocalDateCodec setDecodePatterns(final String[] decodePatterns) {
+    this.delegate.setDecodePatterns(decodePatterns);
     return this;
   }
 
   public final boolean isEmptyForNull() {
-    return emptyForNull;
+    return delegate.isEmptyForNull();
   }
 
   public final LocalDateCodec setEmptyForNull(final boolean emptyForNull) {
-    this.emptyForNull = emptyForNull;
+    this.delegate.setEmptyForNull(emptyForNull);
     return this;
   }
 
   public final boolean isTrim() {
-    return trim;
+    return delegate.isTrim();
   }
 
   public final LocalDateCodec setTrim(final boolean trim) {
-    this.trim = trim;
+    this.delegate.setTrim(trim);
     return this;
   }
 
   @Override
   public String encode(@Nullable final LocalDate value) {
-    if (value == null) {
-      return (emptyForNull ? StringUtils.EMPTY : null);
-    } else {
-      return value.format(encodeFormatter);
-    }
+    final LocalDateTime dateTime =
+        (value == null ? null : LocalDateTime.of(value.getYear(), value.getMonth(), value.getDayOfMonth(), 0, 0));
+    return delegate.encode(dateTime);
   }
 
   @Override
   public LocalDate decode(@Nullable final String str) throws DecodingException {
-    final String text = (trim ? new Stripper().strip(str) : str);
-    if (isEmpty(text)) {
-      return null;
-    } else {
-      LOGGER.debug("Parsing date: {}", text);
-      try {
-        final TemporalAccessor temporal = decodeFormatter.parseBest(text,
-                ZonedDateTime::from,
-                LocalDateTime::from, LocalDate::from);
-        if (temporal instanceof LocalDate) {
-          return (LocalDate) temporal;
-        } else if (temporal instanceof LocalDateTime) {
-          final LocalDateTime datetime = (LocalDateTime) temporal;
-          return datetime.toLocalDate();
-        } else if (temporal instanceof ZonedDateTime) {
-          final ZonedDateTime datetime = (ZonedDateTime) temporal;
-          // use the system default time zone.
-          final LocalDateTime localDateTime = ofInstant(datetime.toInstant(),
-              ZoneId.systemDefault());
-          return localDateTime.toLocalDate();
-        } else {
-          LOGGER.error("Unsupported time type {} while parsing {}",
-                  temporal.getClass(), text);
-          throw new DecodingException("Unsupported time type "
-            + temporal.getClass() + " while parsing " + text);
-        }
-      } catch (final DateTimeParseException e) {
-        LOGGER.error("Invalid date format: {}, expected {}", text, decodePattern);
-        throw new DecodingException(e);
-      }
-    }
+    final LocalDateTime dateTime = delegate.decode(str);
+    return (dateTime == null ? null : LocalDate.from(dateTime));
   }
 
   @Override
@@ -192,30 +126,21 @@ public class LocalDateCodec implements Codec<LocalDate, String> {
       return false;
     }
     final LocalDateCodec other = (LocalDateCodec) o;
-    return Equality.equals(emptyForNull, other.emptyForNull)
-            && Equality.equals(trim, other.trim)
-            && Equality.equals(encodePattern, other.encodePattern)
-            && Equality.equals(decodePattern, other.decodePattern);
+    return Equality.equals(delegate, other.delegate);
   }
 
   @Override
   public int hashCode() {
     final int multiplier = 7;
     int result = 3;
-    result = Hash.combine(result, multiplier, encodePattern);
-    result = Hash.combine(result, multiplier, decodePattern);
-    result = Hash.combine(result, multiplier, emptyForNull);
-    result = Hash.combine(result, multiplier, trim);
+    result = Hash.combine(result, multiplier, delegate);
     return result;
   }
 
   @Override
   public String toString() {
     return new ToStringBuilder(this)
-            .append("encodePattern", encodePattern)
-            .append("decodePattern", decodePattern)
-            .append("emptyForNull", emptyForNull)
-            .append("trim", trim)
-            .toString();
+        .append("delegate", delegate)
+        .toString();
   }
 }

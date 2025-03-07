@@ -23,7 +23,9 @@ public class LocalDateTimeCodecTest {
     LocalDateTimeCodec codec = new LocalDateTimeCodec();
 
     assertEquals(LocalDateTime.of(2018, 1, 10, 23, 18, 45), codec.decode("2018-01-10 23:18:45"));
-    assertEquals(LocalDateTime.of(2018, 1, 10, 23, 18, 0), codec.decode("2018-01-10 23:18"));
+    assertEquals(LocalDateTime.of(2018, 1, 10, 23, 18, 0), codec.decode("2018-1-10 23:18"));
+    assertEquals(LocalDateTime.of(2018, 1, 10, 23, 8, 45), codec.decode("2018-01-10 23:8:45"));
+    assertEquals(LocalDateTime.of(2018, 1, 10, 3, 8, 3), codec.decode("2018-1-10 3:8:3"));
     assertEquals(LocalDateTime.of(2018, 1, 10, 0, 0, 0), codec.decode("2018-01-10"));
     assertEquals(LocalDateTime.of(2018, 1, 10, 23, 18, 45, 123 * 1000000),
         codec.decode("2018-01-10 23:18:45.123"));
@@ -31,7 +33,7 @@ public class LocalDateTimeCodecTest {
         codec.decode("2018-01-10 23:18:45.12"));
     assertEquals(LocalDateTime.of(2018, 1, 10, 23, 18, 45, 100 * 1000000),
         codec.decode("2018-01-10 23:18:45.1"));
-    assertEquals(LocalDateTime.of(1936, 8, 5, 0, 0, 0), codec.decode("1936-08-05 00:00:00.0"));
+    assertEquals(LocalDateTime.of(1936, 8, 5, 0, 0, 0), codec.decode("1936-08-5 00:00:00.0"));
 
 
     codec = new LocalDateTimeCodec("yyyyMMdd",
@@ -39,6 +41,24 @@ public class LocalDateTimeCodecTest {
     assertEquals(LocalDateTime.of(2018, 1, 10, 0, 0, 0), codec.decode("20180110"));
     assertEquals(LocalDateTime.of(2018, 1, 10, 23, 18, 45), codec.decode("20180110231845"));
     assertEquals(LocalDateTime.of(2018, 1, 10, 23, 18, 0), codec.decode("201801102318"));
+  }
+
+  @Test
+  public void testDecode_slashStyle() throws Exception {
+    final LocalDateTimeCodec codec = new LocalDateTimeCodec();
+
+    assertEquals(LocalDateTime.of(2018, 1, 10, 23, 18, 45), codec.decode("2018/01/10 23:18:45"));
+    assertEquals(LocalDateTime.of(2018, 1, 10, 23, 18, 0), codec.decode("2018/01/10 23:18"));
+    assertEquals(LocalDateTime.of(2018, 1, 10, 23, 18, 5), codec.decode("2018/1/10 23:18:5"));
+    assertEquals(LocalDateTime.of(2018, 1, 10, 3, 8, 0), codec.decode("2018/01/10 3:8"));
+    assertEquals(LocalDateTime.of(2018, 1, 10, 0, 0, 0), codec.decode("2018/1/10"));
+    assertEquals(LocalDateTime.of(2018, 1, 10, 23, 18, 45, 123 * 1000000),
+        codec.decode("2018/1/10 23:18:45.123"));
+    assertEquals(LocalDateTime.of(2018, 1, 10, 23, 18, 45, 120 * 1000000),
+        codec.decode("2018/01/10 23:18:45.12"));
+    assertEquals(LocalDateTime.of(2018, 1, 10, 23, 18, 45, 100 * 1000000),
+        codec.decode("2018/1/10 23:18:45.1"));
+    assertEquals(LocalDateTime.of(1936, 8, 5, 0, 0, 0), codec.decode("1936/8/5 00:00:00.0"));
   }
 
   @Test

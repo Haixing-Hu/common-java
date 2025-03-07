@@ -27,7 +27,18 @@ public class LocalDateCodecTest {
   public void testDecode() throws Exception {
     final LocalDateCodec codec = new LocalDateCodec();
     assertEquals(LocalDate.of(2018, 1, 10), codec.decode("2018-01-10"));
+    assertEquals(LocalDate.of(2018, 1, 10), codec.decode("2018-1-10"));
     assertEquals(LocalDate.of(18, 12, 1), codec.decode("0018-12-01"));
+    assertEquals(LocalDate.of(18, 12, 1), codec.decode("0018-12-1"));
+  }
+
+  @Test
+  public void testDecode_slashStyle() throws Exception {
+    final LocalDateCodec codec = new LocalDateCodec();
+    assertEquals(LocalDate.of(2018, 1, 10), codec.decode("2018/01/10"));
+    assertEquals(LocalDate.of(2018, 1, 10), codec.decode("2018/1/10"));
+    assertEquals(LocalDate.of(18, 12, 1), codec.decode("0018/12/01"));
+    assertEquals(LocalDate.of(18, 12, 1), codec.decode("0018/12/1"));
   }
 
   @Test
