@@ -298,21 +298,17 @@ public class HttpClientBuilder {
   }
 
   protected Proxy getProxy() {
-    if (isUseProxy()) {
-      final String typeName = getProxyType();
-      final Proxy.Type proxyType = Proxy.Type.valueOf(typeName.toUpperCase());
-      final String proxyHost = getProxyHost();
-      if (proxyHost == null) {
-        throw new IllegalArgumentException("The proxy host is not specified.");
-      }
-      final int proxyPort = getProxyPort();
-      if (proxyPort <= 0) {
-        throw new IllegalArgumentException("The proxy port is not specified.");
-      }
-      return new Proxy(proxyType, new InetSocketAddress(proxyHost, proxyPort));
-    } else {
-      return null;
+    final String typeName = getProxyType();
+    final Proxy.Type proxyType = Proxy.Type.valueOf(typeName.toUpperCase());
+    final String proxyHost = getProxyHost();
+    if (proxyHost == null) {
+      throw new IllegalArgumentException("The proxy host is not specified.");
     }
+    final int proxyPort = getProxyPort();
+    if (proxyPort <= 0) {
+      throw new IllegalArgumentException("The proxy port is not specified.");
+    }
+    return new Proxy(proxyType, new InetSocketAddress(proxyHost, proxyPort));
   }
 
   private OkHttpClient.Builder getHttpClientBuilder() {
@@ -321,15 +317,15 @@ public class HttpClientBuilder {
            .readTimeout(getReadTimeout(), TimeUnit.SECONDS)    //自定义超时时间
            .writeTimeout(getWriteTimeout(), TimeUnit.SECONDS);   //自定义超时时间
     if (isUseProxy()) {
+      logger.info("Configuring a proxy for the HTTP client.");
       final Proxy proxy = getProxy();
-      if (proxy != null) {
-        addProxy(builder, proxy);
-      }
+      addProxy(builder, proxy);
     }
     for (final Interceptor interceptor : interceptors) {
       builder.addInterceptor(interceptor);
     }
     if (isUseLogging()) {
+      logger.info("Using logging for the HTTP client.");
       builder.addInterceptor(new HttpLoggingInterceptor(logger));
       builder.eventListener(new ConnectionLoggingEventListener(logger));
     }
@@ -337,7 +333,7 @@ public class HttpClientBuilder {
   }
 
   private void addProxy(final OkHttpClient.Builder builder, final Proxy proxy) {
-    logger.info("Using proxy: {}", proxy);
+    logger.info("Using the proxy for the HTTP client: {}", proxy);
     builder.proxy(proxy);
     // add proxy authentication
     final String username = getProxyUsername();
