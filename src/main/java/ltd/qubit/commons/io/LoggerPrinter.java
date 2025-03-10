@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
 
 /**
- * A simple print stream that logs all printed messages to a logger.
+ * A simple printer that logs all printed messages to a logger.
  *
  * @author Haixing Hu
  */
