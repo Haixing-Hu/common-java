@@ -33,26 +33,38 @@ public class MultiplePrinter implements Printer {
     Collections.addAll(this.printers, printers);
   }
 
-  public Printer add(final Printer printer) {
+  public MultiplePrinter add(final Printer printer) {
     printers.add(printer);
     return this;
   }
 
-  public Printer add(final PrintStream stream) {
+  public MultiplePrinter add(final PrintStream stream) {
     printers.add(new PrintStreamPrinter(stream));
     return this;
   }
 
-  public Printer add(final Logger logger, final Level level) {
+  public MultiplePrinter add(final Logger logger, final Level level) {
     printers.add(new LoggerPrinter(logger, level));
     return this;
   }
 
   @Override
-  public Printer println(final String line) {
+  public MultiplePrinter println(final String line) {
     for (final Printer printer : printers) {
       printer.println(line);
     }
+    return this;
+  }
+
+  @Override
+  public MultiplePrinter println() {
+    Printer.super.println();
+    return this;
+  }
+
+  @Override
+  public MultiplePrinter printf(final String format, final Object... args) {
+    Printer.super.printf(format, args);
     return this;
   }
 }

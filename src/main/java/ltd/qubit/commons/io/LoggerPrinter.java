@@ -75,4 +75,16 @@ public class LoggerPrinter implements Printer {
     log.accept(message);
     return this;
   }
+
+  @Override
+  public LoggerPrinter println() {
+    Printer.super.println();
+    return this;
+  }
+
+  @Override
+  public LoggerPrinter printf(final String format, final Object... args) {
+    Printer.super.printf(format, args);
+    return this;
+  }
 }

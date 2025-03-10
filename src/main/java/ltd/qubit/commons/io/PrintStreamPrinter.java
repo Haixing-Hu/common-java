@@ -28,4 +28,16 @@ public class PrintStreamPrinter implements Printer {
     stream.println(message);
     return this;
   }
+
+  @Override
+  public PrintStreamPrinter println() {
+    Printer.super.println();
+    return this;
+  }
+
+  @Override
+  public PrintStreamPrinter printf(final String format, final Object... args) {
+    Printer.super.printf(format, args);
+    return this;
+  }
 }
