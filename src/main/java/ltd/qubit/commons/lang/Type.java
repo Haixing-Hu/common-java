@@ -222,6 +222,9 @@ public enum Type {
    */
   public static Object parse(final Class<?> cls, final String text) {
     final Type type = forClass(cls);
+    if (type == null) {
+      throw new IllegalArgumentException("Unsupported class: " + cls.getName());
+    }
     switch (type) {
       case ENUM:
         return parseEnum(cls, text);
