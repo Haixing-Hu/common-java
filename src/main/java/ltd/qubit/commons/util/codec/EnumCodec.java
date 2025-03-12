@@ -81,21 +81,27 @@ public class EnumCodec<T extends Enum<T>> implements Codec<T, String> {
   }
 
   @Override
-  public T decode(@Nullable final String str) {
+  public T decode(@Nullable final String str) throws DecodingException {
     final String text = new Stripper().strip(str);
     if (text == null) {
-      return null;
-    } else if (text.length() == 0) {
       if (emptyForNull) {
         return null;
+      } else {
+        throw new DecodingException("Cannot decode null enumeration value");
+      }
+    } else if (text.isEmpty()) {
+      if (emptyForNull) {
+        return null;
+      } else {
+        throw new DecodingException("Cannot decode empty enumeration value");
       }
     }
     if (nameToValue.containsKey(text)) {
       return nameToValue.get(text);
     } else {
-      LOGGER.error("{} cannot deserialize enumeration value: {}",
+      LOGGER.error("{} cannot decode enumeration value: {}",
               ClassUtils.getShortClassName(this.getClass()), text);
-      return null;
+      throw new DecodingException("Cannot decode enumeration value: " + text);
     }
   }
 }

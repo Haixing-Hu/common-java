@@ -42,4 +42,23 @@ public interface Encoder<FROM, TO> {
       return null;
     }
   }
+
+  /**
+   * Encodes an object to another, and throws a {@link RuntimeException} if any
+   * encoding error occurred.
+   *
+   * @param source
+   *     the source object to be encoded.
+   * @return
+   *     the encoding result.
+   * @throws RuntimeException
+   *     if any encoding error occurred.
+   */
+  default TO encodeThrowRuntime(final FROM source) {
+    try {
+      return encode(source);
+    } catch (final EncodingException e) {
+      throw new RuntimeException(e);
+    }
+  }
 }

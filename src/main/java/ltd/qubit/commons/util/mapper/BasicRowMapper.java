@@ -177,11 +177,7 @@ public class BasicRowMapper<T> implements RowMapper<T> {
         final String path = propertyMap.get(header);
         // 设置指定路径的值
         final Class<?> propertyType = getPropertyType(type, path);
-        final Type expectedType = Type.forClass(propertyType);
-        if (expectedType == null) {
-          throw new UnsupportedDataTypeException(propertyType);
-        }
-        final Object value = expectedType.parse(valueText);
+        final Object value = Type.parse(propertyType, valueText);
         // 设置值时，自动创建为null的中间对象
         setPropertyValue(entity, path, value, true);
       } else if (setterMap.containsKey(header)){

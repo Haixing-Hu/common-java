@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Timestamp;
@@ -21,6 +22,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import ltd.qubit.commons.util.codec.Base64Codec;
+import ltd.qubit.commons.util.codec.EnumCodec;
 import ltd.qubit.commons.util.codec.IsoInstantCodec;
 import ltd.qubit.commons.util.codec.LocalDateTimeCodec;
 import ltd.qubit.commons.util.codec.TimestampCodec;
@@ -71,7 +73,9 @@ public enum Type {
   CLASS,
   BIG_INTEGER,
   BIG_DECIMAL,
-  STRING_ARRAY;
+  STRING_ARRAY,
+  ENUM,
+  ENUM_ARRAY;
 
   private static final Map<ClassKey, Type>  CLASS_TYPE_MAP = new HashMap<>();
 
@@ -127,10 +131,18 @@ public enum Type {
     TYPE_CLASS_MAP.put(BIG_INTEGER, new ClassKey(BigInteger.class));
     TYPE_CLASS_MAP.put(BIG_DECIMAL, new ClassKey(BigDecimal.class));
     TYPE_CLASS_MAP.put(STRING_ARRAY, new ClassKey(String[].class));
+    TYPE_CLASS_MAP.put(ENUM, new ClassKey(Enum.class));
+    TYPE_CLASS_MAP.put(ENUM_ARRAY, new ClassKey(Enum[].class));
   }
 
   @Nullable
   public static Type forClass(final Class<?> clazz) {
+    if (clazz.isEnum()) {
+      return ENUM;
+    }
+    if (clazz.isArray() && clazz.getComponentType().isEnum()) {
+      return ENUM_ARRAY;
+    }
     return CLASS_TYPE_MAP.get(new ClassKey(clazz));
   }
 
@@ -195,6 +207,44 @@ public enum Type {
       default:
         throw new UnsupportedOperationException("Unsupported type: " + this);
     }
+  }
+
+
+  /**
+   * Parses a text to an object of this type.
+   *
+   * @param cls
+   *     the class of the object to be parsed.
+   * @param text
+   *     the text to be parsed, which must be trimmed if necessary.
+   * @return
+   *     the parsed object.
+   */
+  public static Object parse(final Class<?> cls, final String text) {
+    final Type type = forClass(cls);
+    switch (type) {
+      case ENUM:
+        return parseEnum(cls, text);
+      case ENUM_ARRAY:
+        return parseEnumArray(cls, text);
+      default:
+        return type.parse(text);
+    }
+  }
+
+  private static Object parseEnum(final Class<?> enumClass, final String text) {
+    final EnumCodec<?> codec = new EnumCodec(enumClass);
+    return codec.decodeThrowRuntime(text);
+  }
+
+  private static Object parseEnumArray(final Class<?> enumClass, final String text) {
+    final String[] values = text.split(",");
+    final EnumCodec<?> codec = new EnumCodec(enumClass);
+    final Enum<?>[] result = (Enum<?>[]) Array.newInstance(enumClass, values.length);
+    for (int i = 0; i < values.length; ++i) {
+      result[i] = codec.decodeThrowRuntime(values[i]);
+    }
+    return result;
   }
 
   public String format(final Object value) {

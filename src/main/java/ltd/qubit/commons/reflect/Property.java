@@ -30,7 +30,6 @@ import ltd.qubit.commons.annotation.Identifier;
 import ltd.qubit.commons.annotation.KeyIndex;
 import ltd.qubit.commons.annotation.Reference;
 import ltd.qubit.commons.annotation.Unique;
-import ltd.qubit.commons.error.UnsupportedDataTypeException;
 import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.lang.ClassUtils;
 import ltd.qubit.commons.lang.Equality;
@@ -851,11 +850,7 @@ public class Property {
     if (stringValue == null) {
       setValue(owner, null);
     } else {
-      final Type theType = Type.forClass(type);
-      if (theType == null) {
-        throw new UnsupportedDataTypeException(type);
-      }
-      final Object value = theType.parse(stringValue);
+      final Object value = Type.parse(type, stringValue);
       setValue(owner, value);
     }
   }
@@ -882,13 +877,9 @@ public class Property {
       final Object[] values = ArrayUtils.createArray(componentType, 0);
       setValue(owner, values);
     } else {
-      final Type theType = Type.forClass(componentType);
-      if (theType == null) {
-        throw new UnsupportedDataTypeException(componentType);
-      }
       final Object[] values = ArrayUtils.createArray(componentType, n);
       for (int i = 0; i < n; ++i) {
-        values[i] = theType.parse(stringValues[i]);
+        values[i] = Type.parse(componentType, stringValues[i]);
       }
       setValue(owner, values);
     }

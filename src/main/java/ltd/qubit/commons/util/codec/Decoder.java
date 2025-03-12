@@ -45,4 +45,24 @@ public interface Decoder<FROM, TO> {
       return null;
     }
   }
+
+  /**
+   * Decodes an object to another, and throws a {@link RuntimeException} if any
+   * decoding error occurred.
+   *
+   * @param source
+   *     the source object to be decoded.
+   * @return
+   *     the decoding result.
+   * @throws RuntimeException
+   *     if any decoding error occurred.
+   */
+  @Nullable
+  default TO decodeThrowRuntime(final FROM source) {
+    try {
+      return decode(source);
+    } catch (final DecodingException e) {
+      throw new RuntimeException(e);
+    }
+  }
 }
