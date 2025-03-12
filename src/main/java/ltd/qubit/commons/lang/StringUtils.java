@@ -16,6 +16,7 @@ import java.nio.CharBuffer;
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -137,56 +138,134 @@ import static ltd.qubit.commons.text.impl.SearcherImpl.firstIndexOf;
 @ThreadSafe
 public class StringUtils {
 
+  /**
+   * Represents an empty string constant.
+   */
   public static final String EMPTY = "";
 
+  /**
+   * String representation of boolean true value.
+   */
   public static final String TRUE = "true";
 
+  /**
+   * String representation of boolean false value.
+   */
   public static final String FALSE = "false";
 
+  /**
+   * String representation of affirmative response.
+   */
   public static final String YES = "yes";
 
+  /**
+   * String representation of negative response.
+   */
   public static final String NO = "no";
 
+  /**
+   * String representation of enabled state.
+   */
   public static final String ON = "on";
 
+  /**
+   * String representation of disabled state.
+   */
   public static final String OFF = "off";
 
+  /**
+   * Represents an ellipsis string constant.
+   */
   public static final String ELLIPSES = "...";
 
+  /**
+   * Represents a single space character.
+   */
   public static final String SPACE = " ";
 
+  /**
+   * Represents a tab character.
+   */
   public static final String TAB = "\t";
 
+  /**
+   * String representation of minimum byte value (-128).
+   */
   public static final String BYTE_MIN = "-128";
 
+  /**
+   * String representation of absolute value of minimum byte (128).
+   */
   public static final String BYTE_MIN_ABS = "128";
 
+  /**
+   * String representation of maximum byte value (127).
+   */
   public static final String BYTE_MAX = "127";
 
+  /**
+   * String representation of minimum short value (-32768).
+   */
   public static final String SHORT_MIN = "-32768";
 
+  /**
+   * String representation of absolute value of minimum short (32768).
+   */
   public static final String SHORT_MIN_ABS = "32768";
 
+  /**
+   * String representation of maximum short value (32767).
+   */
   public static final String SHORT_MAX = "32767";
 
+  /**
+   * String representation of minimum integer value (-2147483648).
+   */
   public static final String INT_MIN = "-2147483648";
 
+  /**
+   * String representation of absolute value of minimum integer (2147483648).
+   */
   public static final String INT_MIN_ABS = "2147483648";
 
+  /**
+   * String representation of maximum integer value (2147483647).
+   */
   public static final String INT_MAX = "2147483647";
 
+  /**
+   * String representation of minimum long value (-9223372036854775808).
+   */
   public static final String LONG_MIN = "-9223372036854775808";
 
+  /**
+   * String representation of absolute value of minimum long (9223372036854775808).
+   */
   public static final String LONG_MIN_ABS = "9223372036854775808";
 
+  /**
+   * String representation of maximum long value (9223372036854775807).
+   */
   public static final String LONG_MAX = "9223372036854775807";
 
+  /**
+   * String representation of minimum float value (1.4E-45).
+   */
   public static final String FLOAT_MIN = "1.4E-45";
 
+  /**
+   * String representation of maximum float value (3.4028235E38).
+   */
   public static final String FLOAT_MAX = "3.4028235E38";
 
+  /**
+   * String representation of minimum double value (4.9E-324).
+   */
   public static final String DOUBLE_MIN = "4.9E-324";
 
+  /**
+   * String representation of maximum double value (1.7976931348623157E308).
+   */
   public static final String DOUBLE_MAX = "1.7976931348623157E308";
 
   /**
@@ -408,15 +487,15 @@ public class StringUtils {
    * <p>{@code null} will return {@code false} An empty String ("") will return
    * {@code true}.
    * <pre>
-   * StringUtils.isAlphaSpace(null)   = false
-   * StringUtils.isAlphaSpace("")     = true
-   * StringUtils.isAlphaSpace("  ")   = true
-   * StringUtils.isAlphaSpace("abc")  = true
-   * StringUtils.isAlphaSpace("ab c") = true
-   * StringUtils.isAlphaSpace("ab \tc") = true
-   * StringUtils.isAlphaSpace("ab \f\nc") = true
-   * StringUtils.isAlphaSpace("ab2c") = false
-   * StringUtils.isAlphaSpace("ab-c") = false
+   * StringUtils.isLetterSpace(null)   = false
+   * StringUtils.isLetterSpace("")     = true
+   * StringUtils.isLetterSpace("  ")   = true
+   * StringUtils.isLetterSpace("abc")  = true
+   * StringUtils.isLetterSpace("ab c") = true
+   * StringUtils.isLetterSpace("ab \tc") = true
+   * StringUtils.isLetterSpace("ab \f\nc") = true
+   * StringUtils.isLetterSpace("ab2c") = false
+   * StringUtils.isLetterSpace("ab-c") = false
    * </pre>
    *
    * @param str
@@ -480,11 +559,19 @@ public class StringUtils {
    *
    * <p>{@code null} will return {@code false}. An empty String ("") will
    * return {@code true}.
+   * <pre>
+   * StringUtils.isAscii(null)   = false
+   * StringUtils.isAscii("")     = true
+   * StringUtils.isAscii("  ")   = true
+   * StringUtils.isAscii("abc")  = true
+   * StringUtils.isAscii("ab2c") = true
+   * StringUtils.isAscii("ab-c") = true
+   * StringUtils.isAscii("中文") = false
+   * </pre>
    *
    * @param str
    *     the string to check, may be null
-   * @return {@code true} if every character is an ASCII character. If the
-   *     string is null, returns false.
+   * @return {@code true} if only contains ASCII characters, and is non-null
    */
   public static boolean isAscii(@Nullable final CharSequence str) {
     return containsOnly(str, AsciiCharFilter.INSTANCE);
@@ -493,8 +580,8 @@ public class StringUtils {
   /**
    * Checks if the string contains only ASCII printable characters.
    *
-   * <p>{@code null} will return {@code false}. An empty String ("") will
-   * return {@code false}.
+   * <p>{@code null} will return {@code false}. An empty String ("") will return
+   * {@code false}.
    *
    * <pre>
    * StringUtils.isAsciiPrintable(null)     = false
@@ -1018,8 +1105,8 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether a character sequence is ending with a character accepted by
-   * a {@link CharFilter}.
+   * Tests whether a character sequence is ending with a character accepted
+   * by a {@link CharFilter}.
    *
    * @param str
    *     the character sequence to be tested, which may be null.
@@ -1039,8 +1126,8 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether a character sequence is ending with a code point accepted by
-   * a {@link CharFilter}.
+   * Tests whether a character sequence is ending with a code point accepted
+   * by a {@link CharFilter}.
    *
    * @param str
    *     the character sequence to be tested, which may be null.
@@ -1531,8 +1618,8 @@ public class StringUtils {
      * cost counts as required by the algorithm (taking the minimum of the cost
      * count to the left, up one, and diagonally up and to the left of the
      * current cost count being calculated). (Note that the arrays aren't really
-     * copied anymore, just switched...this is clearly much better than cloning
-     * an array or doing a System.arraycopy() each time through the outer loop.)
+     * copied anymore, just switched...this is clearly better than cloning an array or
+     * doing a System.arraycopy() each time through the outer loop.)
      * Effectively, the difference between the two implementations is this one
      * does not cause an out of memory condition when calculating the LD over
      * two very large strings.
@@ -2097,36 +2184,6 @@ public class StringUtils {
         .findFirstIndexIn(str);
   }
 
-  // /**
-  //  * Searchs the index of the first occurrence of a substring in a string.
-  //  *
-  //  * @param str
-  //  *     the source string, which can't be null nor empty.
-  //  * @param search
-  //  *     the substring to be seearched, which can't be null nor empty.
-  //  * @param fromIndex
-  //  *     the index of the source string where to start searching.
-  //  * @param ignoreCase
-  //  *     whether to ignore case while comparing strings.
-  //  * @return the index of the first occurrence of a substring in the source
-  //  *     string.
-  //  */
-  // private static int indexOfImpl(final CharSequence str,
-  //     final CharSequence search, final int fromIndex, final boolean ignoreCase) {
-  //   // assume str != null && search != null && str.length() > 0 &&
-  //   // search.length() > 0 && fromIndex >= 0 && fromIndex < str.length()
-  //   final int searchLen = search.length();
-  //   final int endIndex = str.length() - searchLen;
-  //   final String text = str.toString();
-  //   final String searchStr = search.toString();
-  //   for (int i = fromIndex; i <= endIndex; ++i) {
-  //     if (text.regionMatches(ignoreCase, i, searchStr, 0, searchLen)) {
-  //       return i;
-  //     }
-  //   }
-  //   return -1;
-  // }
-
   /**
    * Find the first occurrence of any of a set of potential substrings.
    *
@@ -2325,7 +2382,7 @@ public class StringUtils {
    * StringUtils.lastIndexOfAnyChar("zzabyycdxxz", "za", 1)     = 1
    * StringUtils.lastIndexOfAnyChar("zzabyycdxxz", "za", 2)     = 2
    * StringUtils.lastIndexOfAnyChar("zzabyycdxxz", "za", 5)     = 10
-   * StringUtils.lastIndexOfAnyChar("zzabyycdxxz", "by", 1)     = 3
+   * StringUtils.lastIndexOfAnyChar("zzabyycdxx", "by", 1)     = 3
    * StringUtils.lastIndexOfAnyChar("aba", "z", *)              = -1
    * </pre>
    *
@@ -2479,37 +2536,9 @@ public class StringUtils {
     return new Searcher()
         .forSubstring(search)
         .endBefore(Math.min(Integer.MAX_VALUE - 1, fromIndex) + 1)
+        .ignoreCase(ignoreCase)
         .findLastIndexIn(str);
   }
-
-  // /**
-  //  * Searchs the index of the last occurrence of a substring in a string.
-  //  *
-  //  * @param str
-  //  *     the source string, which can't be null nor empty.
-  //  * @param search
-  //  *     the substring to be seearched, which can't be null nor empty.
-  //  * @param fromIndex
-  //  *     the index of the source string where to start searching backward.
-  //  * @param ignoreCase
-  //  *     whether to ignore case while comparing strings.
-  //  * @return the index of the last occurrence of a substring in the source
-  //  *     string.
-  //  */
-  // private static int lastIndexOfImpl(final CharSequence str,
-  //     final CharSequence search, final int fromIndex, final boolean ignoreCase) {
-  //   // assume str != null && search != null && str.length() > 0 &&
-  //   // search.length() > 0 && fromIndex >= 0 && fromIndex < str.length()
-  //   final int len = search.length();
-  //   final String text = str.toString();
-  //   final String searchStr = search.toString();
-  //   for (int i = fromIndex; i >= 0; --i) {
-  //     if (text.regionMatches(ignoreCase, i, searchStr, 0, len)) {
-  //       return i;
-  //     }
-  //   }
-  //   return -1;
-  // }
 
   /**
    * Find the latest current of any of a set of potential substrings.
@@ -2873,7 +2902,7 @@ public class StringUtils {
   }
 
   /**
-   * Checks if the string does not contain any of the invalid characters.
+   * Checks if the string contains none of the invalid characters.
    *
    * <p>A {@code null} string will return {@code true}. A {@code null} invalid
    * character array will return {@code true}. An empty String ("") will
@@ -2893,7 +2922,7 @@ public class StringUtils {
    * @param invalidChars
    *     an array of invalid characters, may be null or empty.
    * @return
-   *     {@code true} if the specified string does not contain any invalid
+   *     {@code true} if the specified string contains none of the invalid
    *     characters.
    * @see Searcher#forCharsIn(char...)
    * @see Searcher#isNotContainedIn(CharSequence)
@@ -2906,7 +2935,7 @@ public class StringUtils {
   }
 
   /**
-   * Checks if the string does not contain any of the invalid characters.
+   * Checks if the string contains none of the invalid characters.
    *
    * <p>A {@code null} string will return {@code true}. A {@code null} invalid
    * character array will return {@code true}. An empty String ("") will
@@ -3402,6 +3431,39 @@ public class StringUtils {
         .strip(str);
   }
 
+  /**
+   * Strips any of a set of characters from the start of a string.
+   *
+   * <p>A {@code null} input String returns {@code null}. An empty string ("")
+   * input returns the empty string.
+   *
+   * <p>If the stripChars String is {@code null}, it is treated as an empty
+   * string,
+   * and the original string is returned.
+   * <pre>
+   * StringUtils.stripStart(null, *)          = null
+   * StringUtils.stripStart("", *)            = ""
+   * StringUtils.stripStart(" abc ", null)    = " abc "
+   * StringUtils.stripStart(" abc ", "")      = " abc "
+   * StringUtils.stripStart("abc", "a")       = "bc"
+   * StringUtils.stripStart("abc", "bc")      = "abc"
+   * StringUtils.stripStart("  abc", " a")    = "bc"
+   * StringUtils.stripStart("abc  ", "abc")   = "  "
+   * StringUtils.stripStart(" abc ", "abc ")  = ""
+   * StringUtils.stripStart("yxabc  ", "xyz") = "abc  "
+   * </pre>
+   *
+   * @param str
+   *     the string to remove characters from, may be null
+   * @param stripChars
+   *     the characters to remove, null treated as an empty string, and the
+   *     original string is returned.
+   * @param output
+   *     the output where to append the stripped String.
+   * @throws IOException
+   *     if any I/O error occurs.
+   * @see Stripper#strip(CharSequence, Appendable)
+   */
   public static void stripStart(@Nullable final CharSequence str,
       @Nullable final CharSequence stripChars, final Appendable output)
       throws IOException {
@@ -3455,6 +3517,8 @@ public class StringUtils {
    *     returned.
    * @param output
    *     the output where to append the stripped string.
+   * @throws IOException
+   *     if any I/O error occurs.
    * @see Stripper#strip(CharSequence, Appendable)
    */
   public static void stripStart(@Nullable final CharSequence str,
@@ -3510,6 +3574,8 @@ public class StringUtils {
    *     string is returned.
    * @param output
    *     the output where to append the stripped string.
+   * @throws IOException
+   *     if any I/O error occurs.
    * @see Stripper#strip(CharSequence, Appendable)
    */
   public static void stripStart(@Nullable final CharSequence str,
@@ -3552,6 +3618,33 @@ public class StringUtils {
         .strip(str);
   }
 
+  /**
+   * Strips whitespace and non-printable characters from the end of a string.
+   *
+   * <p>The function use {@link CharUtils#isGraph(int)} to determinate wheter a
+   * code point is a printable non-whitespace character.
+   *
+   * <p>A {@code null} input String returns {@code null}. An empty string ("")
+   * input returns the empty string.
+   * <pre>
+   * StringUtils.stripEnd(null)           = null
+   * StringUtils.stripEnd("")             = ""
+   * StringUtils.stripEnd("abc")          = "abc"
+   * StringUtils.stripEnd("abc  ")        = "abc"
+   * StringUtils.stripEnd("  abc")        = "  abc"
+   * StringUtils.stripEnd("  abc  ")      = "  abc"
+   * StringUtils.stripEnd(" abc xy")      = " abc xy"
+   * StringUtils.stripEnd("  abcyx xz  ") = "  abcyx xz"
+   * </pre>
+   *
+   * @param str
+   *     the string to remove characters from, may be null
+   * @param output
+   *     the output where to append the result string.
+   * @throws IOException
+   *     if any I/O error occurs.
+   * @see Stripper#strip(CharSequence, Appendable)
+   */
   public static void stripEnd(@Nullable final CharSequence str,
       final Appendable output) throws IOException {
     new Stripper()
@@ -3613,6 +3706,8 @@ public class StringUtils {
    *     the character to remove.
    * @param output
    *     the output where to append the stripped string.
+   * @throws IOException
+   *     if any I/O error occurs.
    * @see Stripper#strip(CharSequence, Appendable)
    */
   public static void stripEnd(@Nullable final CharSequence str,
@@ -3659,6 +3754,37 @@ public class StringUtils {
         .strip(str);
   }
 
+  /**
+   * Strips any of a set of characters from the end of a string.
+   *
+   * <p>A {@code null} input String returns {@code null}. An empty string ("")
+   * input returns the empty string.
+   *
+   * <p>If the stripChars String is {@code null}, it is treated as an empty
+   * string,
+   * and the original string is returned.
+   * <pre>
+   * StringUtils.stripEnd(null, *)          = null
+   * StringUtils.stripEnd("", *)            = ""
+   * StringUtils.stripEnd("abc", "")        = "abc"
+   * StringUtils.stripEnd("abc", null)      = "abc"
+   * StringUtils.stripEnd("  abc", null)    = "  abc"
+   * StringUtils.stripEnd("abc  ", null)    = "abc"
+   * StringUtils.stripEnd(" abc ", null)    = " abc"
+   * StringUtils.stripEnd("  abcyx", "xyz") = "  abc"
+   * </pre>
+   *
+   * @param str
+   *     the string to remove characters from, may be null
+   * @param stripChars
+   *     the characters to remove, null treated as an empty string, and the
+   *     original string is returned.
+   * @param output
+   *     the output where to append the stripped String.
+   * @throws IOException
+   *     if any I/O error occurs.
+   * @see Stripper#strip(CharSequence, Appendable)
+   */
   public static void stripEnd(@Nullable final CharSequence str,
       @Nullable final CharSequence stripChars, final StringBuilder output) {
     new Stripper()
@@ -3693,6 +3819,27 @@ public class StringUtils {
         .strip(str);
   }
 
+  /**
+   * Strips any of the characters accepted by a CharFilter from the end of a
+   * String.
+   *
+   * <p>A {@code null} input String returns {@code null}. An empty string ("")
+   * input returns the empty string.
+   *
+   * <p>If the filter is null, the original string is returned.
+   *
+   * @param str
+   *     the string to remove characters from, may be null.
+   * @param filter
+   *     a CharFilter. The characters accepted by this filter is striped from
+   *     the end of {@code str}. If it is null, the original string is
+   *     returned.
+   * @param output
+   *     the output where to append the stripped String.
+   * @throws IOException
+   *     if any I/O error occurs.
+   * @see Stripper#strip(CharSequence, Appendable)
+   */
   public static void stripEnd(@Nullable final CharSequence str,
       @Nullable final CharFilter filter, final StringBuilder output) {
     new Stripper()
@@ -3727,6 +3874,27 @@ public class StringUtils {
         .strip(str);
   }
 
+  /**
+   * Strips any of the characters accepted by a CharFilter from the end of a
+   * String.
+   *
+   * <p>A {@code null} input String returns {@code null}. An empty string ("")
+   * input returns the empty string.
+   *
+   * <p>If the filter is null, the original string is returned.
+   *
+   * @param str
+   *     the string to remove characters from, may be null.
+   * @param filter
+   *     a CharFilter. The characters accepted by this filter is striped from
+   *     the end of {@code str}. If it is null, the original string is
+   *     returned.
+   * @param output
+   *     the output where to append the stripped String.
+   * @throws IOException
+   *     if any I/O error occurs.
+   * @see Stripper#strip(CharSequence, Appendable)
+   */
   public static void stripEnd(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter, final StringBuilder output) {
     new Stripper()
@@ -3748,13 +3916,13 @@ public class StringUtils {
    * input returns {@code null} too.
    *
    * <pre>
-   * StringUtils.strip(null)           = null
-   * StringUtils.strip("")             = null
-   * StringUtils.strip("abc")          = "abc"
-   * StringUtils.strip("  abc")        = "abc"
-   * StringUtils.strip("abc  ")        = "abc"
-   * StringUtils.strip(" abc        ") = "abc"
-   * StringUtils.strip("  abc yx ")    = "abc yx"
+   * StringUtils.stripToNull(null)           = null
+   * StringUtils.stripToNull("")             = null
+   * StringUtils.stripToNull("abc")          = "abc"
+   * StringUtils.stripToNull("  abc")        = "abc"
+   * StringUtils.stripToNull("abc  ")        = "abc"
+   * StringUtils.stripToNull(" abc        ") = "abc"
+   * StringUtils.stripToNull("  abc yx ")    = "abc yx"
    * </pre>
    *
    * @param str
@@ -3782,13 +3950,13 @@ public class StringUtils {
    * returns "" too.
    *
    * <pre>
-   * StringUtils.strip(null)           = ""
-   * StringUtils.strip("")             = ""
-   * StringUtils.strip("abc")          = "abc"
-   * StringUtils.strip("  abc")        = "abc"
-   * StringUtils.strip("abc  ")        = "abc"
-   * StringUtils.strip(" abc        ") = "abc"
-   * StringUtils.strip("  abc yx ")    = "abc yx"
+   * StringUtils.stripToEmpty(null)           = ""
+   * StringUtils.stripToEmpty("")             = ""
+   * StringUtils.stripToEmpty("abc")          = "abc"
+   * StringUtils.stripToEmpty("  abc")        = "abc"
+   * StringUtils.stripToEmpty("abc  ")        = "abc"
+   * StringUtils.stripToEmpty(" abc        ") = "abc"
+   * StringUtils.stripToEmpty("  abc yx ")    = "abc yx"
    * </pre>
    *
    * @param str
@@ -3838,6 +4006,36 @@ public class StringUtils {
         .strip(str);
   }
 
+  /**
+   * Strips whitespace and non-printable characters from the start and end of a
+   * String.
+   *
+   * <p>This is similar to {@link String#trim()} but use
+   * {@link CharUtils#isGraph(int)} to determinate whether a code point is a
+   * printable non-whitespace character.
+   *
+   * <p>A {@code null} input String returns {@code null}. An empty string ("")
+   * input returns the empty string.
+   *
+   * <pre>
+   * StringUtils.strip(null)           = null
+   * StringUtils.strip("")             = ""
+   * StringUtils.strip("abc")          = "abc"
+   * StringUtils.strip("  abc")        = "abc"
+   * StringUtils.strip("abc  ")        = "abc"
+   * StringUtils.strip(" abc        ") = "abc"
+   * StringUtils.strip("  abc yx ")    = "abc yx"
+   * </pre>
+   *
+   * @param str
+   *     the string to remove characters from, may be null
+   * @param output
+   *     the output where to append the result string.
+   * @throws IOException
+   *     if any I/O error occurs.
+   * @see Stripper#strip(CharSequence, Appendable)
+   * @see String#strip()
+   */
   public static void strip(@Nullable final CharSequence str,
       final Appendable output) throws IOException {
     new Stripper()
@@ -3883,6 +4081,38 @@ public class StringUtils {
         .strip(str);
   }
 
+  /**
+   * Strips any of a set of characters from the start and end of a string. This
+   * is similar to {@link String#trim()} but allows the characters to be
+   * stripped to be controlled.
+   *
+   * <p>A {@code null} input String returns {@code null}. An empty string ("")
+   * input returns the empty string.
+   *
+   * <p>If the strip character string is {@code null} or empty, the original
+   * string
+   * is returned.
+   * <pre>
+   * StringUtils.strip(null, *)          = null
+   * StringUtils.strip("", *)            = ""
+   * StringUtils.strip("abc", null)      = "abc"
+   * StringUtils.strip("  abc", null)    = "  abc"
+   * StringUtils.strip("abc  ", null)    = "abc  "
+   * StringUtils.strip(" abc ", null)    = "  abc "
+   * StringUtils.strip("  abcyx", "xyz") = "  abc"
+   * </pre>
+   *
+   * @param str
+   *     the string to remove characters from, which may be null.
+   * @param stripChars
+   *     the characters to remove; if it is null or empty, the original string
+   *     is returned.
+   * @param output
+   *     the output where to append the result string.
+   * @throws IOException
+   *     if any I/O error occurs.
+   * @see Stripper#strip(CharSequence, Appendable)
+   */
   public static void strip(@Nullable final CharSequence str,
       @Nullable final CharSequence stripChars, final Appendable output)
       throws IOException {
@@ -3918,6 +4148,27 @@ public class StringUtils {
         .strip(str);
   }
 
+  /**
+   * Strips any of the characters accepted by a CharFilter from both end of a
+   * String.
+   *
+   * <p>A {@code null} input string returns {@code null}. An empty string ("")
+   * input returns the empty string.
+   *
+   * <p>If the filter is {@code null}, the original string is returned.
+   *
+   * @param str
+   *     the string to remove characters from, which may be null.
+   * @param filter
+   *     a CharFilter. The characters accepted by this filter is striped from
+   *     both end of {@code str}. If it is null, the original string is
+   *     returned.
+   * @param output
+   *     the output where to append the result string.
+   * @throws IOException
+   *     if any I/O error occurs.
+   * @see Stripper#strip(CharSequence, Appendable)
+   */
   public static void strip(@Nullable final CharSequence str,
       @Nullable final CharFilter filter, final Appendable output)
       throws IOException {
@@ -4520,29 +4771,29 @@ public class StringUtils {
   }
 
   /**
-   * Removes all occurrences of a substring from within the source string.
+   * Removes a substring from a string.
    *
-   * <p>A {@code null} source string will return {@code null}. An empty ("")
-   * source
-   * string will return the empty string. A {@code null} remove string will
-   * return the source string. An empty ("") remove string will return the
-   * source string.
+   * <p>A {@code null} string input returns {@code null}. An empty ("") string
+   * input returns an empty string. A {@code null} remove string returns the
+   * input string. A {@code null} output {@link StringBuilder} throws a {@link
+   * NullPointerException}.
+   *
    * <pre>
-   * StringUtils.remove(null, *)        = null
-   * StringUtils.remove("", *)          = ""
-   * StringUtils.remove(*, null)        = *
-   * StringUtils.remove(*, "")          = *
-   * StringUtils.remove("queued", "ue") = "qd"
-   * StringUtils.remove("queued", "zz") = "queued"
+   * StringUtils.removeSubstring(null, *, *)        = null
+   * StringUtils.removeSubstring("", *, *)          = ""
+   * StringUtils.removeSubstring("queued", null, *) = "queued"
+   * StringUtils.removeSubstring("queued", "", *)   = "queued"
+   * StringUtils.removeSubstring("queued", "ue", 1) = "qd"
+   * StringUtils.removeSubstring("queued", "ue", 2) = "q"
+   * StringUtils.removeSubstring("queued", "ue", 3) = ""
    * </pre>
    *
    * @param str
-   *     the source String to search, which may be null.
+   *     the string to remove from, may be null
    * @param remove
-   *     the string to search for and remove, which may be null. A null value
-   *     has the same effect as an empty string.
+   *     the string to remove, may be null
    * @param max
-   *     the maximum number of substrings could be removed; -1 means no limit.
+   *     maximum number of occurrences to remove, or {@code -1} if no limit
    * @param ignoreCase
    *     indicates whether the compare should ignore case (case insensitive) or
    *     not.
@@ -5405,6 +5656,7 @@ public class StringUtils {
    * <pre>
    * StringUtils.substringAfterLast(null, *)      = null
    * StringUtils.substringAfterLast("", *)        = ""
+   * StringUtils.substringAfterLast("", "")        = ""
    * StringUtils.substringAfterLast(*, "")        = ""
    * StringUtils.substringAfterLast(*, null)      = ""
    * StringUtils.substringAfterLast("abc", "a")   = "bc"
@@ -5470,16 +5722,11 @@ public class StringUtils {
    * open/close returns {@code null} (no match). An empty ("") open and close
    * returns an empty string.
    * <pre>
-   * StringUtils.substringBetween("wx[b]yz", "[", "]") = "b"
-   * StringUtils.substringBetween(null, *, *)          = null
-   * StringUtils.substringBetween(*, null, *)          = null
-   * StringUtils.substringBetween(*, *, null)          = null
-   * StringUtils.substringBetween("", "", "")          = ""
-   * StringUtils.substringBetween("", "", "]")         = null
-   * StringUtils.substringBetween("", "[", "]")        = null
-   * StringUtils.substringBetween("yabcz", "", "")     = ""
-   * StringUtils.substringBetween("yabcz", "y", "z")   = "abc"
-   * StringUtils.substringBetween("yabczyabcz", "y", "z")   = "abc"
+   * StringUtils.substringBetween("[a][b][c]", "[", "]") = ["a","b","c"]
+   * StringUtils.substringBetween(null, *, *)            = null
+   * StringUtils.substringBetween(*, null, *)            = null
+   * StringUtils.substringBetween(*, *, null)            = null
+   * StringUtils.substringBetween("", "[", "]")          = []
    * </pre>
    *
    * @param str
@@ -6079,14 +6326,8 @@ public class StringUtils {
    *
    * <p>No delimiter is added before or after the list. Null objects or empty
    * strings within the array are represented by empty strings.
-   * <pre>
-   * StringUtils.join(*, null, *, *)               = null
-   * StringUtils.join(*, [], *, *)                 = ""
-   * StringUtils.join(*, [null], *, *)             = ""
-   * StringUtils.join(';', ["a", "b", "c"], 0, 3)  = "a;b;c"
-   * StringUtils.join(' ', ["a", "b", "c"], 0, 2)  = "a b"
-   * StringUtils.join(';', [null, "", "a"], -1, 5) = ";;a"
-   * </pre>
+   *
+   * <p>See the examples here: {@link #join(char, Object[])}.
    *
    * @param <T>
    *     the type of elements to be joined.
@@ -6176,7 +6417,7 @@ public class StringUtils {
    * StringUtils.join("--", ["a", "b", "c"])  = "a--b--c"
    * StringUtils.join(null, ["a", "b", "c"])  = "abc"
    * StringUtils.join("", ["a", "b", "c"])    = "abc"
-   * StringUtils.join(",", [null, "", "a"])   = ",,a"
+   * StringUtils.join(',', [null, "", "a"])   = ",,a"
    * </pre>
    *
    * @param separator
@@ -6913,12 +7154,12 @@ public class StringUtils {
    *
    * <p>Examples:
    * <pre>
-   * StringUtils.split(null, *)         = null
-   * StringUtils.split("", *)           = null
-   * StringUtils.split("a.b.c", '.')    = {"a", "b", "c"}
-   * StringUtils.split("a..b.c", '.')   = {"a", "b", "c"}
-   * StringUtils.split("a:b:c", '.')    = {"a:b:c"}
-   * StringUtils.split("a b c", ' ')    = {"a", "b", "c"}
+   * StringUtils.split(null, *, null)         = null
+   * StringUtils.split("", *, null)           = null
+   * StringUtils.split("a.b.c", '.', null)    = {"a", "b", "c"}
+   * StringUtils.split("a..b.c", '.', null)   = {"a", "b", "c"}
+   * StringUtils.split("a:b:c", '.', null)    = {"a:b:c"}
+   * StringUtils.split("a b c", ' ', null)    = {"a", "b", "c"}
    * </pre>
    *
    * @param str
@@ -6955,12 +7196,12 @@ public class StringUtils {
    *
    * <p>Examples:
    * <pre>
-   * StringUtils.split(null, *, null)         = null
-   * StringUtils.split("", *, null)           = null
-   * StringUtils.split("a.b.c", '.', null)    = {"a", "b", "c"}
-   * StringUtils.split("a..b.c", '.', null)   = {"a", "b", "c"}
-   * StringUtils.split("a:b:c", '.', null)    = {"a:b:c"}
-   * StringUtils.split("a b c", ' ', null)    = {"a", "b", "c"}
+   * StringUtils.split(null, *, null, null)         = null
+   * StringUtils.split("", *, null, null)           = null
+   * StringUtils.split("a.b.c", '.', null, null)    = {"a", "b", "c"}
+   * StringUtils.split("a..b.c", '.', null, null)   = {"a", "b", "c"}
+   * StringUtils.split("a:b:c", '.', null, null)    = {"a:b:c"}
+   * StringUtils.split("a b c", ' ', null, null)    = {"a", "b", "c"}
    * </pre>
    *
    * @param str
@@ -7050,12 +7291,12 @@ public class StringUtils {
    *
    * <p>Examples:
    * <pre>
-   * StringUtils.split(null, *, null)            = null
-   * StringUtils.split("", *, null)              = null
-   * StringUtils.split("a.b.c", ".", null)       = {"a", "b", "c"}
-   * StringUtils.split("a..b.c:d", ".:", null)   = {"a", "b", "c", "d"}
-   * StringUtils.split("a:b,c", ",.", null)      = {"a:b:c"}
-   * StringUtils.split("a b c.d", " .", null)    = {"a", "b", "c", "d"}
+   * StringUtils.split(null, *, null, null)            = null
+   * StringUtils.split("", *, null, null)              = null
+   * StringUtils.split("a.b.c", ".", null, null)       = {"a", "b", "c"}
+   * StringUtils.split("a..b.c:d", ".:", null, null)   = {"a", "b", "c", "d"}
+   * StringUtils.split("a:b,c", ",.", null, null)      = {"a:b:c"}
+   * StringUtils.split("a b c.d", " .", null, null)    = {"a", "b", "c", "d"}
    * </pre>
    *
    * @param str
@@ -7478,7 +7719,7 @@ public class StringUtils {
    *     the string to be used as the delimiter. If it is null or empty, the
    *     string is split such that each character become a substring.
    * @return a new linked list of string stores the split sub-strings. Each
-   *     split substring will be stripped and the empty substrings will be
+   *     split substring will be stripped and the empty strings will be
    *     ignored. Note that the returned list may be empty if the splitting
    *     result has no non-blank substring. The returned list will never be
    *     {@code null}.
@@ -7842,15 +8083,15 @@ public class StringUtils {
    *
    * <p>The String is padded to the size of {@code size}.
    * <pre>
-   * StringUtils.rightPad(null, *, *)      = null
-   * StringUtils.rightPad("", 3, "z")      = "zzz"
-   * StringUtils.rightPad("bat", 3, "yz")  = "bat"
-   * StringUtils.rightPad("bat", 5, "yz")  = "batyz"
-   * StringUtils.rightPad("bat", 8, "yz")  = "batyzyzy"
-   * StringUtils.rightPad("bat", 1, "yz")  = "bat"
-   * StringUtils.rightPad("bat", -1, "yz") = "bat"
-   * StringUtils.rightPad("bat", 5, null)  = "bat  "
-   * StringUtils.rightPad("bat", 5, "")    = "bat  "
+   * StringUtils.rightPad(null, *, *, *)      = null
+   * StringUtils.rightPad("", 3, "z", *)      = "zzz"
+   * StringUtils.rightPad("bat", 3, "yz", *)  = "bat"
+   * StringUtils.rightPad("bat", 5, "yz", *)  = "batyz"
+   * StringUtils.rightPad("bat", 8, "yz", *)  = "batyzyzy"
+   * StringUtils.rightPad("bat", 1, "yz", *)  = "bat"
+   * StringUtils.rightPad("bat", -1, "yz", *) = "bat"
+   * StringUtils.rightPad("bat", 5, null, *)  = "bat  "
+   * StringUtils.rightPad("bat", 5, "", *)    = "bat  "
    * </pre>
    *
    * @param str
@@ -9311,10 +9552,32 @@ public class StringUtils {
     }
   }
 
+  /**
+   * Converts a string to a {@link BigInteger} value.
+   *
+   * @param str
+   *     the string to be converted, may be null.
+   * @return
+   *     the {@link BigInteger} value of the string, or {@code null} if the
+   *     string is null or cannot be converted to a {@link BigInteger}.
+   */
   public static BigInteger toBigInteger(@Nullable final String str) {
     return toBigInteger(str, null);
   }
 
+  /**
+   * Converts a string to a {@link BigInteger} value, with a default value if
+   * the string is null or cannot be converted.
+   *
+   * @param str
+   *     the string to be converted, may be null.
+   * @param defaultValue
+   *     the default value to be returned if the string is null or cannot be
+   *     converted to a {@link BigInteger}, may be null.
+   * @return
+   *     the {@link BigInteger} value of the string, or the default value if the
+   *     string is null or cannot be converted to a {@link BigInteger}.
+   */
   public static BigInteger toBigInteger(@Nullable final String str,
       @Nullable final BigInteger defaultValue) {
     if (str == null) {
@@ -9329,10 +9592,32 @@ public class StringUtils {
     }
   }
 
+  /**
+   * Converts a string to a {@link BigDecimal} value.
+   *
+   * @param str
+   *     the string to be converted, may be null.
+   * @return
+   *     the {@link BigDecimal} value of the string, or {@code null} if the
+   *     string is null or cannot be converted to a {@link BigDecimal}.
+   */
   public static BigDecimal toBigDecimal(@Nullable final String str) {
     return toBigDecimal(str, null);
   }
 
+  /**
+   * Converts a string to a {@link BigDecimal} value, with a default value if
+   * the string is null or cannot be converted.
+   *
+   * @param str
+   *     the string to be converted, may be null.
+   * @param defaultValue
+   *     the default value to be returned if the string is null or cannot be
+   *     converted to a {@link BigDecimal}, may be null.
+   * @return
+   *     the {@link BigDecimal} value of the string, or the default value if the
+   *     string is null or cannot be converted to a {@link BigDecimal}.
+   */
   public static BigDecimal toBigDecimal(@Nullable final String str,
       @Nullable final BigDecimal defaultValue) {
     if (str == null) {
@@ -9347,6 +9632,22 @@ public class StringUtils {
     }
   }
 
+  /**
+   * Converts a string to an enum value of the specified enum class.
+   *
+   * @param <E>
+   *     the type of the enum class.
+   * @param cls
+   *     the enum class.
+   * @param str
+   *     the string to be converted, may be null.
+   * @param defaultValue
+   *     the default value to be returned if the string is null or cannot be
+   *     converted to an enum value, may be null.
+   * @return
+   *     the enum value of the string, or the default value if the string is
+   *     null or cannot be converted to an enum value.
+   */
   public static <E extends Enum<E>> E toEnum(final Class<E> cls,
       @Nullable final String str,
       @Nullable final E defaultValue) {
@@ -9358,6 +9659,20 @@ public class StringUtils {
     return defaultValue;
   }
 
+  /**
+   * Converts a string to an XML node with the specified tag name and value.
+   *
+   * @param doc
+   *     the XML document.
+   * @param tagName
+   *     the tag name of the XML node.
+   * @param prevSpaceAttr
+   *     the attribute name for the previous space, may be null.
+   * @param value
+   *     the value of the XML node, may be null.
+   * @return
+   *     the XML node.
+   */
   public static Element toXmlNode(final Document doc, final String tagName,
       @Nullable final String prevSpaceAttr, @Nullable final String value) {
     final Element node = doc.createElement(tagName);
@@ -9371,10 +9686,31 @@ public class StringUtils {
     return node;
   }
 
+  /**
+   * Normalizes the line breaks in a string.
+   *
+   * @param str
+   *     the string to be normalized, may be null.
+   * @return
+   *     the normalized string, or the original string if it is null.
+   */
   public static String normalizeLines(final String str) {
     return normalizeLines(str, true, true);
   }
 
+  /**
+   * Normalizes the line breaks in a string, with options to trim and ignore
+   * empty lines.
+   *
+   * @param str
+   *     the string to be normalized, may be null.
+   * @param trim
+   *     whether to trim the lines.
+   * @param ignoreEmpty
+   *     whether to ignore empty lines.
+   * @return
+   *     the normalized string, or the original string if it is null.
+   */
   public static String normalizeLines(final String str, final boolean trim,
       final boolean ignoreEmpty) {
     if (isEmpty(str)) {
@@ -9388,6 +9724,19 @@ public class StringUtils {
     return join('\n', lines);
   }
 
+  /**
+   * Concatenates the lines in a string into a single line, with options to trim
+   * and ignore empty lines.
+   *
+   * @param str
+   *     the string to be concatenated, may be null.
+   * @param trim
+   *     whether to trim the lines.
+   * @param ignoreEmpty
+   *     whether to ignore empty lines.
+   * @return
+   *     the concatenated string, or the original string if it is null.
+   */
   public static String concatLines(final String str, final boolean trim,
       final boolean ignoreEmpty) {
     if (isEmpty(str)) {
@@ -9401,6 +9750,17 @@ public class StringUtils {
     return join(' ', lines);
   }
 
+  /**
+   * Truncates a string before the first occurrence of a specified substring.
+   *
+   * @param str
+   *     the string to be truncated, may be null.
+   * @param substr
+   *     the substring to truncate before, may be null.
+   * @return
+   *     the truncated string, or the original string if the substring is not
+   *     found or if the input string is null.
+   */
   public static String truncateBefore(final String str, final String substr) {
     final int pos = str.indexOf(substr);
     if (pos >= 0) {
@@ -9410,6 +9770,17 @@ public class StringUtils {
     }
   }
 
+  /**
+   * Truncates a string after the first occurrence of a specified substring.
+   *
+   * @param str
+   *     the string to be truncated, may be null.
+   * @param substr
+   *     the substring to truncate after, may be null.
+   * @return
+   *     the truncated string, or the original string if the substring is not
+   *     found or if the input string is null.
+   */
   public static String truncateAfter(final String str, final String substr) {
     final int pos = str.indexOf(substr);
     if (pos >= 0) {
@@ -9419,6 +9790,14 @@ public class StringUtils {
     }
   }
 
+  /**
+   * Concatenates multiple strings into a single string.
+   *
+   * @param strings
+   *     the strings to be concatenated.
+   * @return
+   *     the concatenated string.
+   */
   public static String concat(final String... strings) {
     final StringBuilder builder = new StringBuilder();
     for (final String str : strings) {
@@ -9427,10 +9806,27 @@ public class StringUtils {
     return builder.toString();
   }
 
+  /**
+   * Converts an object to a string representation.
+   *
+   * @param obj
+   *     the object to be converted, may be null.
+   * @return
+   *     the string representation of the object, or {@code null} if the object
+   *     is null.
+   */
   public static String valueOf(@Nullable final Object obj) {
     return (obj == null ? null : obj.toString());
   }
 
+  /**
+   * Converts the first character of a string to uppercase.
+   *
+   * @param str
+   *     the string to be converted, may be null.
+   * @return
+   *     the converted string, or the original string if it is null or empty.
+   */
   public static String uppercaseFirstChar(final String str) {
     if (str == null || str.length() == 0) {
       return str;
@@ -9439,6 +9835,14 @@ public class StringUtils {
     }
   }
 
+  /**
+   * Converts the first character of a string to lowercase.
+   *
+   * @param str
+   *     the string to be converted, may be null.
+   * @return
+   *     the converted string, or the original string if it is null or empty.
+   */
   public static String lowercaseFirstChar(final String str) {
     if (str == null || str.length() == 0) {
       return str;
@@ -9451,7 +9855,7 @@ public class StringUtils {
    * Converts a string to a string representation.
    *
    * @param value
-   *     the value to be converted.
+   *     the value to be converted, may be null.
    * @return
    *     the string representation of the value, or {@code null} if the value is
    *     {@code null}.
@@ -9465,9 +9869,9 @@ public class StringUtils {
    * value is {@code null}.
    *
    * @param value
-   *     the value to be converted.
+   *     the value to be converted, may be null.
    * @param defaultValue
-   *     the default value.
+   *     the default value to be returned if the value is null.
    * @return
    *     the string representation of the value, or the default value if the
    *     value is {@code null}.
@@ -9477,6 +9881,14 @@ public class StringUtils {
     return (value == null ? defaultValue : toStringImpl(value));
   }
 
+  /**
+   * Converts a value to a string representation.
+   *
+   * @param value
+   *     the value to be converted.
+   * @return
+   *     the string representation of the value.
+   */
   private static String toStringImpl(final Object value) {
     if (value instanceof String) {
       return (String) value;
@@ -9492,13 +9904,14 @@ public class StringUtils {
   }
 
   /**
-   * 测试指定的类型的值是否可以和{@code String}类型的值进行比较。
+   * Checks whether the specified type of values can be compared with {@code
+   * String} type values.
    *
    * @param type
-   *     指定的类型。
+   *     the specified type.
    * @return
-   *     如果指定的类型的值可以和{@code String}类型的值进行比较，返回{@code true}；否则返
-   *     回{@code false}。
+   *     {@code true} if the values of the specified type can be compared with
+   *     {@code String} type values; {@code false} otherwise.
    */
   public static boolean isComparable(final Class<?> type) {
     return (type == String.class)
@@ -9528,10 +9941,10 @@ public class StringUtils {
    * Converts an empty string to {@code null} value.
    *
    * @param str
-   *     the string to be converted, which may be {@code null}.
+   *     the string to be converted, may be null.
    * @return
-   *     {@code null} if the specified string is {@code null} or empty; otherwise
-   *     returns the original string.
+   *     {@code null} if the specified string is null or empty; otherwise returns
+   *     the original string.
    */
   @Nullable
   public static String emptyToNull(@Nullable final String str) {
@@ -9548,9 +9961,9 @@ public class StringUtils {
    * @param defaultValue
    *     the specified default value.
    * @param str
-   *     the string to be converted, which may be {@code null}.
+   *     the string to be converted, may be null.
    * @return
-   *     {@code null} if the specified string is {@code null} or equals to the
+   *     {@code null} if the specified string is null or equals to the
    *     specified default value; otherwise returns the original string.
    */
   @Nullable
@@ -9566,10 +9979,10 @@ public class StringUtils {
    * Converts null string to empty string.
    *
    * @param str
-   *     the string to be converted, which may be {@code null}.
+   *     the string to be converted, may be null.
    * @return
-   *     an empty string if the specified string is {@code null}; otherwise
-   *     returns the original string.
+   *     an empty string if the specified string is null; otherwise returns the
+   *     original string.
    */
   @Nonnull
   public static String nullToEmpty(@Nullable final String str) {
@@ -9580,10 +9993,10 @@ public class StringUtils {
    * Converts null character sequence to empty string.
    *
    * @param str
-   *     the character sequence to be converted, which may be {@code null}.
+   *     the character sequence to be converted, may be null.
    * @return
-   *     an empty string if the specified character sequence is {@code null};
-   *     otherwise returns the original character sequence.
+   *     an empty string if the specified character sequence is null; otherwise
+   *     returns the original character sequence.
    */
   @Nonnull
   public static CharSequence nullToEmpty(@Nullable final CharSequence str) {
@@ -9591,14 +10004,14 @@ public class StringUtils {
   }
 
   /**
-   * Split the specified character sequence into Unicode code points.
+   * Splits the specified character sequence into Unicode code points.
    *
    * @param str
-   *     the specified character sequence.
+   *     the specified character sequence, may be null.
    * @return
    *     the list of Unicode code points in the specified character sequence.
-   *     Returns an empty list if the specified character sequence is {@code null}
-   *     or empty.
+   *     Returns an empty list if the specified character sequence is null or
+   *     empty.
    */
   public static IntList splitCodePoints(@Nullable final CharSequence str) {
     final IntList result = new IntArrayList();
@@ -9616,54 +10029,145 @@ public class StringUtils {
   }
 
   /**
-   * Split the specified character sequence into Unicode code points.
+   * Splits the specified character sequence into Unicode code points.
    *
    * @param str
-   *     the specified character sequence.
+   *     the specified character sequence, may be null.
    * @return
-   *     the list of Unicode code points in the specified character sequence.
-   *     Returns an empty list if the specified character sequence is {@code null}
-   *     or empty.
+   *     the array of Unicode code points in the specified character sequence.
+   *     Returns an empty array if the specified character sequence is null or
+   *     empty.
    */
   public static int[] splitCodePointsToArray(@Nullable final CharSequence str) {
     return splitCodePoints(str).toArray();
   }
 
+  /**
+   * Formats a double value as a percentage string.
+   *
+   * @param value
+   *     the double value to be formatted.
+   * @return
+   *     the formatted percentage string.
+   */
   public static String formatPercent(final double value) {
     return formatPercent(value, 2, Locale.getDefault());
   }
 
+  /**
+   * Formats a double value as a percentage string with the specified number of
+   * fraction digits.
+   *
+   * @param value
+   *     the double value to be formatted.
+   * @param fractionDigits
+   *     the number of fraction digits to be displayed.
+   * @return
+   *     the formatted percentage string.
+   */
   public static String formatPercent(final double value, final int fractionDigits) {
     return formatPercent(value, fractionDigits, Locale.getDefault());
   }
 
+  /**
+   * Formats a double value as a percentage string with the specified number of
+   * fraction digits and locale.
+   *
+   * @param value
+   *     the double value to be formatted.
+   * @param fractionDigits
+   *     the number of fraction digits to be displayed.
+   * @param locale
+   *     the locale to be used for formatting.
+   * @return
+   *     the formatted percentage string.
+   */
   public static String formatPercent(final double value, final int fractionDigits,
       final Locale locale) {
     final java.text.NumberFormat nf = java.text.NumberFormat.getPercentInstance(locale);
     nf.setMaximumFractionDigits(fractionDigits);
+    nf.setMinimumFractionDigits(fractionDigits);
     return nf.format(value);
   }
 
   /**
-   * Add a prefix to each line of the input string.
+   * Parses a percentage string into a double value.
+   *
+   * @param str
+   *     the percentage string to be parsed.
+   * @return
+   *     the parsed double value.
+   * @throws ParseException
+   *     if the string cannot be parsed as a percentage.
+   */
+  public static double parsePercent(@Nullable final String str) throws ParseException {
+    return parsePercent(str, 2, Locale.getDefault());
+  }
+
+  /**
+   * Parses a percentage string into a double value with the specified number of
+   * fraction digits.
+   *
+   * @param str
+   *     the percentage string to be parsed.
+   * @param fractionDigits
+   *     the number of fraction digits expected in the percentage string.
+   * @return
+   *     the parsed double value.
+   * @throws ParseException
+   *     if the string cannot be parsed as a percentage.
+   */
+  public static double parsePercent(@Nullable final String str, final int fractionDigits)
+      throws ParseException {
+    return parsePercent(str, fractionDigits, Locale.getDefault());
+  }
+
+  /**
+   * Parses a percentage string into a double value with the specified number of
+   * fraction digits and locale.
+   *
+   * @param str
+   *     the percentage string to be parsed.
+   * @param fractionDigits
+   *     the number of fraction digits expected in the percentage string.
+   * @param locale
+   *     the locale to be used for parsing.
+   * @return
+   *     the parsed double value.
+   * @throws ParseException
+   *     if the string cannot be parsed as a percentage.
+   */
+  public static double parsePercent(@Nullable final String str, final int fractionDigits,
+      final Locale locale) throws ParseException {
+    if (str == null || str.isEmpty()) {
+      throw new ParseException("Cannot parse null or empty string as percentage", 0);
+    }
+    final java.text.NumberFormat nf = java.text.NumberFormat.getPercentInstance(locale);
+    nf.setMaximumFractionDigits(fractionDigits);
+    return nf.parse(str).doubleValue();
+  }
+
+  /**
+   * Adds a prefix to each line of the input string.
    * <p>
    * The line break characters include {@code '\n'}, {@code '\r'}, and {@code '\r\n'}.
    *
    * @param input
-   *     the input string.
+   *     the input string, may be null.
    * @param prefix
-   *     the prefix to be added to each line.
+   *     the prefix to be added to each line, may be null or empty.
    * @return
-   *     the string with the specified prefix added to each line.
+   *     the string with the specified prefix added to each line, or the original
+   *     string if the input or prefix is null or empty.
    */
   public static String addPrefixToEachLine(final String input, final String prefix) {
     if (input == null || prefix == null || prefix.isEmpty()) {
-      return input; // 如果输入或前缀为空，直接返回原始字符串
+      return input; // If input or prefix is null or empty, return the original string
     }
-    // 使用正则表达式来匹配每行的开头，并添加前缀
-    // 正则表达式解释:
-    // ^ 表示一行的开始
-    // (?m) 是多行模式，它使 ^ 和 $ 匹配每行的开始和结束
+    // Use regular expression to match the beginning of each line and add the prefix
+    // Regular expression explanation:
+    // ^ represents the beginning of a line
+    // (?m) is the multiline mode, which makes ^ and $ match the beginning and end of each line
     return input.replaceAll("(?m)^", prefix);
   }
 
@@ -9673,19 +10177,20 @@ public class StringUtils {
    * The line break characters include {@code '\n'}, {@code '\r'}, and {@code '\r\n'}.
    *
    * @param input
-   *     the input string.
+   *     the input string, may be null.
    * @param prefix
-   *     the prefix to be added to each line.
+   *     the prefix to be removed from each line, may be null or empty.
    * @return
-   *     the string with the specified prefix added to each line.
+   *     the string with the specified prefix removed from each line, or the original
+   *     string if the input or prefix is null or empty.
    */
   public static String removePrefixFromEachLine(final String input, final String prefix) {
     if (input == null || prefix == null || prefix.isEmpty()) {
-      return input; // 如果输入或前缀为空，直接返回原始字符串
+      return input; // If input or prefix is null or empty, return the original string
     }
-    // 使用正则表达式替换每行开头的prefix，确保按行进行匹配
-    // ^ 表示一行的开始
-    // (?m) 是多行模式，它使 ^ 和 $ 匹配每行的开始和结束
+    // Use regular expression to replace the prefix at the beginning of each line, ensuring line-by-line matching
+    // ^ represents the beginning of a line
+    // (?m) is the multiline mode, which makes ^ and $ match the beginning and end of each line
     final String regex = "(?m)^" + Pattern.quote(prefix);
     return input.replaceAll(regex, "");
   }
