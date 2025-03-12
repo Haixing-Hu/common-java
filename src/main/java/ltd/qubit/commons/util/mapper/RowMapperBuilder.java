@@ -8,7 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.mapper;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -20,7 +19,6 @@ import ltd.qubit.commons.reflect.impl.GetterMethod;
 import ltd.qubit.commons.reflect.impl.SetterMethod;
 import ltd.qubit.commons.reflect.impl.SetterMethodWithType;
 
-import static ltd.qubit.commons.reflect.FieldUtils.getField;
 import static ltd.qubit.commons.reflect.ObjectGraphUtils.getPropertyPath;
 
 /**
@@ -211,13 +209,13 @@ public class RowMapperBuilder<T> {
    *     该列数据所对应的实体属性的类型。
    * @param header
    *     列头名称。
-   * @param getter
-   *     该列数据所对应的实体属性的getter方法。
+   * @param getterRef
+   *     该列数据所对应的实体属性的getter方法引用。
    * @return
    *     此{@link RowMapperBuilder}。
    */
-  public <R> RowMapperBuilder<T> add(final String header, final GetterMethod<T, R> getter) {
-    return add(header, getter, false);
+  public <R> RowMapperBuilder<T> add(final String header, final GetterMethod<T, R> getterRef) {
+    return add(header, getterRef, false);
   }
 
   /**
@@ -235,22 +233,19 @@ public class RowMapperBuilder<T> {
    *     该列数据所对应的实体属性的类型。
    * @param header
    *     列头名称。
-   * @param getter
-   *     该列数据所对应的实体属性的getter方法。
+   * @param getterRef
+   *     该列数据所对应的实体属性的getter方法引用。
    * @param continueLastRow
    *     该列是否延续上一行的数据。
    * @return
    *     此{@link RowMapperBuilder}。
    */
-  public <R> RowMapperBuilder<T> add(final String header, final GetterMethod<T, R> getter,
+  public <R> RowMapperBuilder<T> add(final String header, final GetterMethod<T, R> getterRef,
       final boolean continueLastRow) {
     headers.add(header);
-    getterMap.put(header, getter);
-    // try to get the field from the getter
-    final Field field = getField(type, getter);
-    if (field != null) {
-      propertyMap.put(header, field.getName());
-    }
+    getterMap.put(header, getterRef);
+    final String path = getPropertyPath(type, getterRef);
+    propertyMap.put(header, path);
     if (continueLastRow) {
       continueLastRowHeaders.add(header);
     } else {
@@ -276,14 +271,14 @@ public class RowMapperBuilder<T> {
    *     列头名称。
    * @param argumentClass
    *     该列数据所对应的实体属性的Setter方法的参数的类对象。
-   * @param setter
-   *     该列数据所对应的实体属性的setter方法。
+   * @param setterRef
+   *     该列数据所对应的实体属性的setter方法引用。
    * @return
    *     此{@link RowMapperBuilder}。
    */
   public <R> RowMapperBuilder<T> add(final String header, final Class<R> argumentClass,
-      final SetterMethod<T, R> setter) {
-    return add(header, argumentClass, setter, false);
+      final SetterMethod<T, R> setterRef) {
+    return add(header, argumentClass, setterRef, false);
   }
 
   /**
@@ -303,22 +298,19 @@ public class RowMapperBuilder<T> {
    *     列头名称。
    * @param argumentClass
    *     该列数据所对应的实体属性的Setter方法的参数的类对象。
-   * @param setter
-   *     该列数据所对应的实体属性的setter方法。
+   * @param setterRef
+   *     该列数据所对应的实体属性的setter方法引用。
    * @param continueLastRow
    *     该列是否延续上一行的数据。
    * @return
    *     此{@link RowMapperBuilder}。
    */
   public <R> RowMapperBuilder<T> add(final String header, final Class<R> argumentClass,
-      final SetterMethod<T, R> setter, final boolean continueLastRow) {
+      final SetterMethod<T, R> setterRef, final boolean continueLastRow) {
     headers.add(header);
-    setterMap.put(header, new SetterMethodWithType<>(argumentClass, setter));
-    // try to get the field from the setter
-    final Field field = getField(type, setter);
-    if (field != null) {
-      propertyMap.put(header, field.getName());
-    }
+    setterMap.put(header, new SetterMethodWithType<>(argumentClass, setterRef));
+    final String path = getPropertyPath(type, setterRef);
+    propertyMap.put(header, path);
     if (continueLastRow) {
       continueLastRowHeaders.add(header);
     } else {

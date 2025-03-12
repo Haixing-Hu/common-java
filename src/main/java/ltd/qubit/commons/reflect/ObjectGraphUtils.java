@@ -14,6 +14,7 @@ import java.lang.reflect.Method;
 import javax.annotation.Nullable;
 
 import ltd.qubit.commons.reflect.impl.GetterMethod;
+import ltd.qubit.commons.reflect.impl.SetterMethod;
 
 import static ltd.qubit.commons.lang.StringUtils.isEmpty;
 import static ltd.qubit.commons.reflect.MethodUtils.getMethodByReference;
@@ -57,11 +58,27 @@ public class ObjectGraphUtils {
    */
   public static <T, R> String getPropertyPath(final Class<T> type,
       final GetterMethod<T, R> getter) {
-    // final Field field = getField(type, getter);
-    // ensureFieldExists(field, type, getter);
-    // assert field != null;
-    // return field.getName();
     final Method m = getMethodByReference(type, getter);
+    return getPropertyNameFromGetter(m);
+  }
+
+  /**
+   * Gets the path of a property specified by a setter method.
+   *
+   * @param <T>
+   *     the type of the object.
+   * @param <R>
+   *     the type of the property.
+   * @param type
+   *     the class of the object.
+   * @param setter
+   *     the setter method of the property.
+   * @return
+   *     the path of the property specified by the setter method.
+   */
+  public static <T, R> String getPropertyPath(final Class<T> type,
+      final SetterMethod<T, R> setter) {
+    final Method m = getMethodByReference(type, setter);
     return getPropertyNameFromGetter(m);
   }
 
