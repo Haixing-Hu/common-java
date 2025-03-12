@@ -173,14 +173,7 @@ public class BasicRowMapper<T> implements RowMapper<T> {
       if (valueText == null) {
         continue;  // 忽略不存在的列
       }
-      if (propertyMap.containsKey(header)) {
-        final String path = propertyMap.get(header);
-        // 设置指定路径的值
-        final Class<?> propertyType = getPropertyType(type, path);
-        final Object value = Type.parse(propertyType, valueText);
-        // 设置值时，自动创建为null的中间对象
-        setPropertyValue(entity, path, value, true);
-      } else if (setterMap.containsKey(header)){
+      if (setterMap.containsKey(header)){
         final SetterMethodWithType<T, ?> setterWithType = setterMap.get(header);
         final Class<?> argumentClass = setterWithType.getArgumentClass();
         final SetterMethod<T, ?> setter = setterWithType.getSetter();
@@ -192,6 +185,13 @@ public class BasicRowMapper<T> implements RowMapper<T> {
         @SuppressWarnings("unchecked")
         final SetterMethod<T, Object> genericSetter = (SetterMethod<T, Object>) setter;
         genericSetter.invoke(entity, value);
+      } else if (propertyMap.containsKey(header)) {
+        final String path = propertyMap.get(header);
+        // 设置指定路径的值
+        final Class<?> propertyType = getPropertyType(type, path);
+        final Object value = Type.parse(propertyType, valueText);
+        // 设置值时，自动创建为null的中间对象
+        setPropertyValue(entity, path, value, true);
       }
     }
     if (rowNumberSetter != null) {
