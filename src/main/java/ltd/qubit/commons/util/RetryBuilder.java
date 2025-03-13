@@ -60,12 +60,12 @@ public class RetryBuilder {
   /**
    * The default minimum interval between retries in seconds.
    */
-  public static final int DEFAULT_RETRY_MIN_DELAY = 2;
+  public static final int DEFAULT_RETRY_MIN_DELAY = 1;
 
   /**
    * The default maximum interval between retries in seconds.
    */
-  public static final int DEFAULT_RETRY_MAX_DELAY = 10;
+  public static final int DEFAULT_RETRY_MAX_DELAY = 60;
 
   private Logger logger;
 
@@ -160,11 +160,16 @@ public class RetryBuilder {
     final RetryPolicy<T> policy = RetryPolicy
         .<T>builder()
         .withMaxAttempts(getMaxAttempts())
-        .withDelay(Duration.ofSeconds(getRetryMinDelay()), Duration.ofSeconds(getRetryMaxDelay()))
+        .withBackoff(Duration.ofSeconds(getRetryMinDelay()), Duration.ofSeconds(getRetryMaxDelay()))
         .handle(exceptions)
-        .onRetry(e -> logger.warn("Failure #{}. Reason: {}. Retrying...",
-            e.getAttemptCount(), e.getLastException().getMessage()))
-        .onFailure(e -> logger.error("Failure #{}. Giving up...", e.getAttemptCount()))
+        .onRetry((event) -> {
+          final Throwable lastError = event.getLastException();
+          logger.error("Failure #{}. Reason: {}. Retrying...", event.getAttemptCount(),
+              lastError.getMessage(), lastError);
+        })
+        .onFailure((event) -> {
+          logger.error("Failure {} times. Giving up...", event.getAttemptCount());
+        })
         .build();
     return Failsafe.with(policy);
   }
