@@ -11,6 +11,8 @@ package ltd.qubit.commons.datastructure.map;
 
 import java.util.function.Function;
 
+import ltd.qubit.commons.lang.Equality;
+import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
@@ -50,21 +52,33 @@ public class KeyWrapper<K> {
   }
 
   @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) return true;
-    if (!(obj instanceof final KeyWrapper<?> other)) return false;
-    return key.equals(other.key); // 仍然用原对象的 equals 方法
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if ((o == null) || (getClass() != o.getClass())) {
+      return false;
+    }
+    @SuppressWarnings("unchecked")
+    final KeyWrapper<K> other = (KeyWrapper<K>) o;
+    return Equality.equals(key, other.key)
+        && Equality.equals(hashFunction, other.hashFunction);
   }
 
   @Override
   public int hashCode() {
-    return hashFunction.apply(key); // 使用自定义哈希函数
+    final int multiplier = 7;
+    int result = 3;
+    result = Hash.combine(result, multiplier, key);
+    result = Hash.combine(result, multiplier, hashFunction);
+    return result;
   }
 
   @Override
   public String toString() {
     return new ToStringBuilder(this)
         .append("key", key)
+        .append("hashFunction", hashFunction)
         .toString();
   }
 }
