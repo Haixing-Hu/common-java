@@ -130,21 +130,25 @@ public final class ObjectUtils {
   }
 
   /**
-   * Gets the hash code of an object returning zero when the object is {@code
-   * null}.
+   * Gets the hash code of an object.
    *
    * <pre>
    * ObjectUtils.hashCode(null)   = 0
+   * ObjectUtils.hashCode(array)  = ArrayUtils.hashCode(array)
    * ObjectUtils.hashCode(obj)    = obj.hashCode()
    * </pre>
    *
    * @param obj
    *     the object to obtain the hash code of, may be {@code null}
-   * @return the hash code of the object, or zero if null
+   * @return
+   *     the hash code of the object, or zero if null. If the object is an array,
+   *     this method will delegate to {@link ArrayUtils#hashCode(Object)}.
    */
   public static int hashCode(final Object obj) {
     if (obj == null) {
       return 0;
+    } else if (obj.getClass().isArray()) {
+      return ArrayUtils.hashCode(obj);
     } else {
       return obj.hashCode();
     }
