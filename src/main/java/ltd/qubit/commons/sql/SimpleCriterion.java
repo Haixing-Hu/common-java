@@ -442,16 +442,48 @@ public class SimpleCriterion<T> implements Criterion<T> {
   }
 
   /**
+   * Extracts a criterion for a sub-entity.
+   * <p>
+   * If the property path of the current criterion starts with the property path
+   * of the sub-entity, extracts a criterion for the sub-entity.
+   * For example:
+   * <ul>
+   *   <li>Current criterion: customer.country.name = "USA"
+   *   <li>Sub-entity path: customer.country
+   *   <li>Result: name = "USA"
+   * </ul>
+   * <p>
+   * If the property path of the current criterion exactly equals the property
+   * path of the sub-entity, returns null.
+   * For example:
+   * <ul>
+   *   <li>Current criterion: name = "John"
+   *   <li>Sub-entity path: name
+   *   <li>Result: null
+   * </ul>
+   *
+   * @param subEntityClass the class of the sub-entity
+   * @param propertyPath the property path of the sub-entity
+   * @return the criterion for the sub-entity, or null if there is no sub-path
+   */
+  public <S> SimpleCriterion<S> extractSubEntityCriterion(final Class<S> subEntityClass,
+      final String propertyPath) {
+    final String prefix = propertyPath + ".";
+    if (!property.startsWith(prefix)) {
+      return null;
+    }
+    final String subEntityPropertyPath = property.substring(prefix.length());
+    return new SimpleCriterion<>(
+        subEntityClass,
+        subEntityPropertyPath,
+        operator,
+        value,
+        compareProperties
+    );
+  }
+
+  /**
    * Extracts a criterion for a sub-entity from the current criterion.
-   * <p>
-   * This method is useful when dealing with nested entity properties. It checks
-   * if the current criterion's property path starts with the given sub-entity's
-   * property path. If it does, it creates a new criterion for the sub-entity by
-   * removing the common prefix from the property path.
-   * <p>
-   * For example, if the current criterion is "order.customer.name = 'John'" and
-   * we want to get a criterion for the Customer entity, this method will return
-   * "name = 'John'".
    *
    * @param <P>
    *     The type of the sub-entity.
@@ -460,11 +492,12 @@ public class SimpleCriterion<T> implements Criterion<T> {
    * @param propertyGetter
    *     The getter method for the sub-entity property.
    * @return
-   *     A new criterion for the sub-entity if the current criterion's property
-   *     path starts with the sub-entity's property path, or null otherwise.
+   *     A new criterion for the sub-entity containing all matching criteria, or
+   *     {@code null} if no matching criteria are found.
    */
   @Nullable
-  public <P> SimpleCriterion<P> extractSubEntityCriterion(final Class<P> propertyClass,
+  public <P>
+  SimpleCriterion<P> extractSubEntityCriterion(final Class<P> propertyClass,
       final GetterMethod<T, P> propertyGetter) {
     final String path = getPropertyPath(entityClass, propertyGetter);
     return extractSubEntityCriterion(propertyClass, path);
@@ -472,101 +505,62 @@ public class SimpleCriterion<T> implements Criterion<T> {
 
   /**
    * Extracts a criterion for a sub-entity from the current criterion.
-   * <p>
-   * This method is useful when dealing with nested entity properties. It checks
-   * if the current criterion's property path starts with the given sub-entity's
-   * property path. If it does, it creates a new criterion for the sub-entity by
-   * removing the common prefix from the property path.
-   * <p>
-   * For example, if the current criterion is "order.customer.name = 'John'" and
-   * we want to get a criterion for the Customer entity, this method will return
-   * "name = 'John'".
    *
    * @param <P>
    *     The type of the sub-entity.
+   * @param <P1>
+   *     The type of the first intermediate property.
+   * @param <P2>
+   *     The type of the second intermediate property.
    * @param propertyClass
    *     The class of the sub-entity.
-   * @param propertyPath
-   *     The property path string for the sub-entity.
+   * @param getter1
+   *     The first getter method in the property path.
+   * @param getter2
+   *     The second getter method in the property path.
    * @return
-   *     A new criterion for the sub-entity if the current criterion's property
-   *     path starts with the sub-entity's property path, or null otherwise.
+   *     A new criterion for the sub-entity containing all matching criteria, or
+   *     {@code null} if no matching criteria are found.
    */
   @Nullable
-  public <P> SimpleCriterion<P> extractSubEntityCriterion(final Class<P> propertyClass,
-      final String propertyPath) {
-    if (property.startsWith(propertyPath + ".") || property.equals(propertyPath)) {
-      final String subPath = property.equals(propertyPath) ? ""
-          : property.substring(propertyPath.length() + 1);  // +1 to skip the dot
-      return new SimpleCriterion<>(propertyClass, subPath,
-          operator, value, compareProperties);
-    } else {
-      return null;
-    }
-  }
-
-  /**
-   * Extracts a criterion for a deeply nested sub-entity from the current criterion.
-   * <p>
-   * This method is similar to {@link #extractSubEntityCriterion(Class, GetterMethod)} but
-   * supports deeper property paths through multiple getters.
-   * <p>
-   * For example, if the current criterion is "order.customer.address.city = 'Beijing'"
-   * and we want to get a criterion for the Address entity, this method will return
-   * "city = 'Beijing'".
-   *
-   * @param <P>
-   *     The type of the sub-entity.
-   * @param propertyClass
-   *     The class of the sub-entity.
-   * @param g1
-   *     The first getter method.
-   * @param g2
-   *     The second getter method.
-   * @return
-   *     A new criterion for the sub-entity if the current criterion's property path starts with
-   *     the sub-entity's property path, or null otherwise.
-   */
-  @Nullable
-  public <P, P1, P2> SimpleCriterion<P> extractSubEntityCriterion(
-      final Class<P> propertyClass,
-      final GetterMethod<T, P1> g1,
-      final GetterMethod<P1, P2> g2) {
-    final String path = getPropertyPath(entityClass, g1, g2);
+  public <P, P1, P2>
+  SimpleCriterion<P> extractSubEntityCriterion(final Class<P> propertyClass,
+      final GetterMethod<T, P1> getter1,
+      final GetterMethod<P1, P2> getter2) {
+    final String path = getPropertyPath(entityClass, getter1, getter2);
     return extractSubEntityCriterion(propertyClass, path);
   }
 
   /**
-   * Extracts a criterion for a deeply nested sub-entity from the current criterion.
-   * <p>
-   * This method is similar to {@link #extractSubEntityCriterion(Class, GetterMethod)} but
-   * supports deeper property paths through multiple getters.
-   * <p>
-   * For example, if the current criterion is "order.customer.address.city.country = 'China'"
-   * and we want to get a criterion for the Country entity, this method will return
-   * "name = 'China'".
+   * Extracts a criterion for a sub-entity from the current criterion.
    *
    * @param <P>
    *     The type of the sub-entity.
+   * @param <P1>
+   *     The type of the first intermediate property.
+   * @param <P2>
+   *     The type of the second intermediate property.
+   * @param <P3>
+   *     The type of the third intermediate property.
    * @param propertyClass
    *     The class of the sub-entity.
-   * @param g1
-   *     The first getter method.
-   * @param g2
-   *     The second getter method.
-   * @param g3
-   *     The third getter method.
+   * @param getter1
+   *     The first getter method in the property path.
+   * @param getter2
+   *     The second getter method in the property path.
+   * @param getter3
+   *     The third getter method in the property path.
    * @return
-   *     A new criterion for the sub-entity if the current criterion's property path starts with
-   *     the sub-entity's property path, or null otherwise.
+   *     A new criterion for the sub-entity containing all matching criteria, or
+   *     {@code null} if no matching criteria are found.
    */
   @Nullable
-  public <P, P1, P2, P3> SimpleCriterion<P> extractSubEntityCriterion(
-      final Class<P> propertyClass,
-      final GetterMethod<T, P1> g1,
-      final GetterMethod<P1, P2> g2,
-      final GetterMethod<P2, P3> g3) {
-    final String path = getPropertyPath(entityClass, g1, g2, g3);
+  public <P, P1, P2, P3>
+  SimpleCriterion<P> extractSubEntityCriterion(final Class<P> propertyClass,
+      final GetterMethod<T, P1> getter1,
+      final GetterMethod<P1, P2> getter2,
+      final GetterMethod<P2, P3> getter3) {
+    final String path = getPropertyPath(entityClass, getter1, getter2, getter3);
     return extractSubEntityCriterion(propertyClass, path);
   }
 }

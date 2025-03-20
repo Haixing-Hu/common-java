@@ -1573,4 +1573,195 @@ public class SimpleCriterionTest {
     final Criterion<Foo> c11 = new SimpleCriterion<>(Foo.class, "m_child.m_double", GREATER, 300L);
     assertTrue(c11.accept(foo));
   }
+
+  /**
+   * Test entity class representing an Order.
+   */
+  private static class Order {
+    private Customer customer;
+    private String status;
+
+    public Customer getCustomer() {
+      return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+      this.customer = customer;
+    }
+
+    public String getStatus() {
+      return status;
+    }
+
+    public void setStatus(String status) {
+      this.status = status;
+    }
+  }
+
+  /**
+   * Test entity class representing a Customer.
+   */
+  private static class Customer {
+    private Address address;
+    private String name;
+
+    public Address getAddress() {
+      return address;
+    }
+
+    public void setAddress(Address address) {
+      this.address = address;
+    }
+
+    public String getName() {
+      return name;
+    }
+
+    public void setName(String name) {
+      this.name = name;
+    }
+  }
+
+  /**
+   * Test entity class representing an Address.
+   */
+  private static class Address {
+    private Country country;
+    private String city;
+
+    public Country getCountry() {
+      return country;
+    }
+
+    public void setCountry(Country country) {
+      this.country = country;
+    }
+
+    public String getCity() {
+      return city;
+    }
+
+    public void setCity(String city) {
+      this.city = city;
+    }
+  }
+
+  /**
+   * Test entity class representing a Country.
+   */
+  private static class Country {
+    private String name;
+
+    public String getName() {
+      return name;
+    }
+
+    public void setName(String name) {
+      this.name = name;
+    }
+  }
+
+  @Test
+  public void testExtractSubEntityCriterion_SingleLevel() {
+    // Test case: order.customer.name = 'John'
+    final SimpleCriterion<Order> criterion = new SimpleCriterion<>(
+        Order.class, "customer.name", ComparisonOperator.EQUAL, "John");
+
+    // Extract criterion for Customer
+    final SimpleCriterion<Customer> customerCriterion = criterion.extractSubEntityCriterion(
+        Customer.class, Order::getCustomer);
+
+    // Verify the extracted criterion
+    assertEquals(Customer.class, customerCriterion.getEntityClass());
+    assertEquals("name", customerCriterion.getProperty());
+    assertEquals(ComparisonOperator.EQUAL, customerCriterion.getOperator());
+    assertEquals("John", customerCriterion.getValue());
+  }
+
+  @Test
+  public void testExtractSubEntityCriterion_TwoLevels() {
+    // Test case: order.customer.address.city = 'Beijing'
+    final SimpleCriterion<Order> criterion = new SimpleCriterion<>(
+        Order.class, "customer.address.city", ComparisonOperator.EQUAL, "Beijing");
+
+    // Extract criterion for Address using two-level path
+    final SimpleCriterion<Address> addressCriterion = criterion.extractSubEntityCriterion(
+        Address.class,
+        Order::getCustomer,
+        Customer::getAddress);
+
+    // Verify the extracted criterion
+    assertEquals(Address.class, addressCriterion.getEntityClass());
+    assertEquals("city", addressCriterion.getProperty());
+    assertEquals(ComparisonOperator.EQUAL, addressCriterion.getOperator());
+    assertEquals("Beijing", addressCriterion.getValue());
+  }
+
+  @Test
+  public void testExtractSubEntityCriterion_ThreeLevels() {
+    // Test case: order.customer.address.country.name = 'China'
+    final SimpleCriterion<Order> criterion = new SimpleCriterion<>(
+        Order.class, "customer.address.country.name", ComparisonOperator.EQUAL, "China");
+
+    // Extract criterion for Country using three-level path
+    final SimpleCriterion<Country> countryCriterion = criterion.extractSubEntityCriterion(
+        Country.class,
+        Order::getCustomer,
+        Customer::getAddress,
+        Address::getCountry);
+
+    // Verify the extracted criterion
+    assertEquals(Country.class, countryCriterion.getEntityClass());
+    assertEquals("name", countryCriterion.getProperty());
+    assertEquals(ComparisonOperator.EQUAL, countryCriterion.getOperator());
+    assertEquals("China", countryCriterion.getValue());
+  }
+
+  @Test
+  public void testExtractSubEntityCriterion_NoMatch() {
+    // Test case: order.status = 'NEW'
+    final SimpleCriterion<Order> criterion = new SimpleCriterion<>(
+        Order.class, "status", ComparisonOperator.EQUAL, "NEW");
+
+    // Try to extract criterion for Customer (should return null)
+    final SimpleCriterion<Customer> customerCriterion = criterion.extractSubEntityCriterion(
+        Customer.class, Order::getCustomer);
+
+    // Verify that no criterion was extracted
+    assertNull(customerCriterion);
+  }
+
+  @Test
+  public void testExtractSubEntityCriterion_WithStringPath() {
+    // Test case: order.customer.address.city = 'Beijing'
+    final SimpleCriterion<Order> criterion = new SimpleCriterion<>(
+        Order.class, "customer.address.city", ComparisonOperator.EQUAL, "Beijing");
+
+    // Extract criterion for Address using string path
+    final SimpleCriterion<Address> addressCriterion = criterion.extractSubEntityCriterion(
+        Address.class, "customer.address");
+
+    // Verify the extracted criterion
+    assertEquals(Address.class, addressCriterion.getEntityClass());
+    assertEquals("city", addressCriterion.getProperty());
+    assertEquals(ComparisonOperator.EQUAL, addressCriterion.getOperator());
+    assertEquals("Beijing", addressCriterion.getValue());
+  }
+
+  @Test
+  public void testExtractSubEntityCriterion_PartialMatch() {
+    // Test case: order.customer.name.prefix = 'J'
+    final SimpleCriterion<Order> criterion = new SimpleCriterion<>(
+        Order.class, "customer.name.prefix", ComparisonOperator.EQUAL, "J");
+
+    // Extract criterion for Customer
+    final SimpleCriterion<Customer> customerCriterion = criterion.extractSubEntityCriterion(
+        Customer.class, Order::getCustomer);
+
+    // Verify the extracted criterion
+    assertEquals(Customer.class, customerCriterion.getEntityClass());
+    assertEquals("name.prefix", customerCriterion.getProperty());
+    assertEquals(ComparisonOperator.EQUAL, customerCriterion.getOperator());
+    assertEquals("J", customerCriterion.getValue());
+  }
 }
