@@ -8,16 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.testbed.model;
 
+import java.io.Serial;
+import java.util.Objects;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import ltd.qubit.commons.lang.Equality;
-import ltd.qubit.commons.lang.Hash;
-import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
@@ -36,40 +35,71 @@ import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class StatefulInfo extends Info implements Stateful {
 
-  private static final long serialVersionUID = 2919962686331957698L;
+  @Serial
+  private static final long serialVersionUID = 1L;
 
   /**
    * 状态。
    */
   protected State state;
 
+  /**
+   * 创建一个新的实例。
+   */
   public StatefulInfo() {
-    //  empty
   }
 
+  /**
+   * 创建一个新的实例。
+   *
+   * @param id 标识符
+   */
   public StatefulInfo(final Long id) {
     super(id, null, null);
-    this.state = null;
   }
 
+  /**
+   * 创建一个新的实例。
+   *
+   * @param id 标识符
+   * @param code 编码
+   */
   public StatefulInfo(final Long id, final String code) {
     super(id, code, null);
-    this.state = null;
   }
 
+  /**
+   * 创建一个新的实例。
+   *
+   * @param id 标识符
+   * @param code 编码
+   * @param name 名称
+   */
   public StatefulInfo(final Long id, final String code, final String name) {
     super(id, code, name);
-    this.state = null;
   }
 
+  /**
+   * 创建一个新的实例。
+   *
+   * @param id 标识符
+   * @param code 编码
+   * @param name 名称
+   * @param state 状态
+   */
   public StatefulInfo(final Long id, final String code, final String name,
       final State state) {
     super(id, code, name);
     this.state = state;
   }
 
-  public StatefulInfo(final StatefulInfo other) {
-    assign(other);
+  /**
+   * 创建一个新的实例。
+   *
+   * @param source 源对象
+   */
+  public StatefulInfo(final StatefulInfo source) {
+    assign(source);
   }
 
   @Override
@@ -83,14 +113,23 @@ public class StatefulInfo extends Info implements Stateful {
   }
 
   @Override
-  public void assign(final StatefulInfo other) {
-    super.assign(other);
-    state = other.state;
-  }
-
-  @Override
   public StatefulInfo cloneEx() {
     return new StatefulInfo(this);
+  }
+
+  /**
+   * 将指定的对象的属性复制到当前对象。
+   *
+   * @param source 源对象
+   */
+  public void assign(final StatefulInfo source) {
+    if (source == null) {
+      super.assign(null);
+      this.state = null;
+    } else {
+      super.assign(source);
+      this.state = source.state;
+    }
   }
 
   @Override
@@ -98,28 +137,28 @@ public class StatefulInfo extends Info implements Stateful {
     if (this == o) {
       return true;
     }
-    if ((o == null) || (getClass() != o.getClass())) {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    final StatefulInfo other = (StatefulInfo) o;
-    return Equality.equals(state, other.state)
-            && super.equals(other);
+    if (!super.equals(o)) {
+      return false;
+    }
+    final StatefulInfo that = (StatefulInfo) o;
+    return state == that.state;
   }
 
   @Override
   public int hashCode() {
-    final int multiplier = 7;
-    int result = 3;
-    result = Hash.combine(result, multiplier, super.hashCode());
-    result = Hash.combine(result, multiplier, state);
-    return result;
+    return Objects.hash(super.hashCode(), state);
   }
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this)
-            .appendSuper(super.toString())
-            .append("state", state)
-            .toString();
+    return "StatefulInfo{"
+        + "id=" + getId()
+        + ", code='" + getCode() + '\''
+        + ", name='" + getName() + '\''
+        + ", state=" + state
+        + '}';
   }
 }

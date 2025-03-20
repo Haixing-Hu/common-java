@@ -9,225 +9,99 @@
 package ltd.qubit.commons.testbed.model;
 
 import java.io.Serial;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
+import java.util.Objects;
 
-import javax.annotation.Nullable;
-
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlRootElement;
-
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonInclude;
-
-import ltd.qubit.commons.annotation.Identifier;
-import ltd.qubit.commons.annotation.Unique;
 import ltd.qubit.commons.lang.Assignable;
-import ltd.qubit.commons.lang.Equality;
-import ltd.qubit.commons.lang.Hash;
-import ltd.qubit.commons.text.tostring.ToStringBuilder;
-import ltd.qubit.commons.util.pair.KeyValuePair;
-
-import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
-import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
 
 /**
- * 此模型表示可删除对象的基本信息。
+ * A test model class representing basic information.
  *
- * @author 胡海星
+ * @author Haixing Hu
  */
-@XmlRootElement(name = "info")
-@XmlAccessorType(XmlAccessType.FIELD)
-@JsonAutoDetect(fieldVisibility = ANY,
-                getterVisibility = NONE,
-                isGetterVisibility = NONE,
-                setterVisibility = NONE)
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class Info implements Identifiable, WithCode, WithName, Deletable,
-    Emptyful, Normalizable, Assignable<Info> {
+public class Info implements Serializable, Assignable<Info> {
 
   @Serial
-  private static final long serialVersionUID = 7281371900014761423L;
+  private static final long serialVersionUID = 1L;
 
   /**
-   * 唯一标识。
+   * 标识符。
    */
-  @Identifier
   protected Long id;
 
   /**
-   * 编码，通常全局唯一。
+   * 编码。
    */
-  @Size(min = 1, max = 64)
-  @Unique
-  @NotBlank
   protected String code;
 
   /**
    * 名称。
    */
-  @Size(min = 1, max = 128)
-  @NotBlank
   protected String name;
 
   /**
-   * 标记删除时间。
+   * 创建一个新的实例。
    */
-  @Nullable
-  protected Instant deleteTime;
-
-  /**
-   * 创建一个{@link Info}对象。
-   *
-   * @param id
-   *     对象ID，可以为{@code null}.
-   * @return
-   *     若{@code id}不为{@code null}，则返回一个指定ID的{@link Info}对象，否则返回
-   *     {@code null}.
-   */
-  public static Info create(@Nullable final Long id) {
-    if (id == null) {
-      return null;
-    } else {
-      return new Info(id);
-    }
-  }
-
-  /**
-   * 创建一个{@link Info}对象。
-   *
-   * @param id
-   *     对象ID，可以为{@code null}.
-   * @param code
-   *     对象编码，可以为{@code null}.
-   * @return
-   *     若{@code id}和{@code code}不全为{@code null}，则返回一个指定ID和编码的{@link
-   *     Info}对象，否则返回{@code null}.
-   */
-  public static Info create(@Nullable final Long id, @Nullable final String code) {
-    if (id == null && code == null) {
-      return null;
-    } else {
-      return new Info(id, code);
-    }
-  }
-
-  /**
-   * 创建一个{@link Info}对象。
-   *
-   * @param id
-   *     对象ID，可以为{@code null}.
-   * @param code
-   *     对象编码，可以为{@code null}.
-   * @param name
-   *     对象名称，可以为{@code null}.
-   * @return
-   *     若{@code id}，{@code code}和{@code name}不全为{@code null}，则返回一个指定
-   *     ID、编码和名称的{@link Info}对象，否则返回{@code null}.
-   */
-  public static Info create(@Nullable final Long id,
-      @Nullable final String code, @Nullable final String name) {
-    if (id == null && code == null && name == null) {
-      return null;
-    } else {
-      return new Info(id, code, name);
-    }
-  }
-
   public Info() {
     // empty
   }
 
-  public Info(@Nullable final Long id) {
-    this.id = id;
-  }
-
-  public Info(@Nullable final Long id, @Nullable final String code) {
-    this.id = id;
-    this.code = code;
-  }
-
-  public Info(@Nullable final Long id, @Nullable final String code,
-      @Nullable final String name) {
-    this.id = id;
-    this.code = code;
+  /**
+   * 创建一个新的实例。
+   *
+   * @param name
+   *    名称
+   */
+  public Info(final String name) {
     this.name = name;
   }
 
-  public Info(@Nullable final Long id, @Nullable final String code,
-      @Nullable final String name, @Nullable final Instant deleteTime) {
+  /**
+   * 创建一个新的实例。
+   *
+   * @param id 标识符
+   * @param code 编码
+   * @param name 名称
+   */
+  public Info(final Long id, final String code, final String name) {
     this.id = id;
     this.code = code;
     this.name = name;
-    this.deleteTime = deleteTime;
   }
 
   public Info(final Info other) {
     assign(other);
   }
 
-  public Info(final StatefulInfo other) {
-    assign(other);
-  }
-
-  @Override
   public Long getId() {
     return id;
   }
 
-  @Override
   public void setId(final Long id) {
     this.id = id;
   }
 
-  @Override
   public String getCode() {
     return code;
   }
 
-  @Override
   public void setCode(final String code) {
     this.code = code;
   }
 
-  @Override
   public String getName() {
     return name;
   }
 
-  @Override
   public void setName(final String name) {
     this.name = name;
   }
 
   @Override
-  @Nullable
-  public Instant getDeleteTime() {
-    return deleteTime;
-  }
-
-  @Override
-  public void setDeleteTime(@Nullable final Instant deleteTime) {
-    this.deleteTime = deleteTime;
-  }
-
-  @Override
   public void assign(final Info other) {
-    id = other.id;
-    code = other.code;
-    name = other.name;
-    deleteTime = other.deleteTime;
-  }
-
-  public void assign(final StatefulInfo other) {
-    id = other.getId();
-    code = other.getCode();
-    name = other.getName();
-    deleteTime = other.getDeleteTime();
+    this.id = other.id;
+    this.code = other.code;
+    this.name = other.name;
   }
 
   @Override
@@ -235,47 +109,31 @@ public class Info implements Identifiable, WithCode, WithName, Deletable,
     return new Info(this);
   }
 
-  public KeyValuePair[] toParams() {
-    final List<KeyValuePair> params = new ArrayList<>();
-    params.add(new KeyValuePair("id", id));
-    params.add(new KeyValuePair("name", name));
-    params.add(new KeyValuePair("code", code));
-    return params.toArray(new KeyValuePair[0]);
-  }
-
   @Override
   public boolean equals(final Object o) {
     if (this == o) {
       return true;
     }
-    // 注意：允许Info的trivial子类和Info进行比较
-    if ((o == null) || (! (o instanceof final Info other))) {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    return Equality.equals(id, other.id)
-            && Equality.equals(code, other.code)
-            && Equality.equals(name, other.name)
-            && Equality.equals(deleteTime, other.deleteTime);
+    final Info other = (Info) o;
+    return Objects.equals(id, other.id)
+        && Objects.equals(code, other.code)
+        && Objects.equals(name, other.name);
   }
 
   @Override
   public int hashCode() {
-    final int multiplier = 7;
-    int result = 3;
-    result = Hash.combine(result, multiplier, id);
-    result = Hash.combine(result, multiplier, code);
-    result = Hash.combine(result, multiplier, name);
-    result = Hash.combine(result, multiplier, deleteTime);
-    return result;
+    return Objects.hash(id, code, name);
   }
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this)
-            .append("id", id)
-            .append("code", code)
-            .append("name", name)
-            .append("deleteTime", deleteTime)
-            .toString();
+    return "Info{"
+        + "id=" + id
+        + ", code='" + code + '\''
+        + ", name='" + name + '\''
+        + '}';
   }
 }
