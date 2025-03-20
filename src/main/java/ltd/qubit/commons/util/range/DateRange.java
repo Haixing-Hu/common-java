@@ -10,6 +10,9 @@ package ltd.qubit.commons.util.range;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.Nullable;
+
+import ltd.qubit.commons.annotation.Computed;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
@@ -27,14 +30,16 @@ public class DateRange {
   }
 
   private Type type;
-  private long start;
-  private long end;
   private TimeUnit unit;
+  @Nullable
+  private Long start;
+  @Nullable
+  private Long end;
 
   public DateRange() {
     type = Type.ABSOLUTE;
-    start = -1;
-    end = -1;
+    start = null;
+    end = null;
     unit = TimeUnit.MILLISECONDS;
   }
 
@@ -46,19 +51,21 @@ public class DateRange {
     this.type = type;
   }
 
-  public long getStart() {
+  @Nullable
+  public Long getStart() {
     return start;
   }
 
-  public void setStart(final long start) {
+  public void setStart(@Nullable final Long start) {
     this.start = start;
   }
 
-  public long getEnd() {
+  @Nullable
+  public Long getEnd() {
     return end;
   }
 
-  public void setEnd(final long end) {
+  public void setEnd(@Nullable final Long end) {
     this.end = end;
   }
 
@@ -104,5 +111,10 @@ public class DateRange {
             .append("end", end)
             .append("unit", unit)
             .toString();
+  }
+
+  @Computed({"start", "end"})
+  public boolean isEmpty() {
+    return (start == null) && (end == null);
   }
 }

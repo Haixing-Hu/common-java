@@ -10,6 +10,7 @@ package ltd.qubit.commons.util.range;
 
 import javax.annotation.Nullable;
 
+import ltd.qubit.commons.annotation.Computed;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
@@ -104,5 +105,10 @@ public class IntRange {
             .append("start", start)
             .append("end", end)
             .toString();
+  }
+
+  @Computed({"start", "end"})
+  public boolean isEmpty() {
+    return (start == null) && (end == null);
   }
 }

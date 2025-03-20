@@ -172,4 +172,9 @@ public class LocalDateRange implements Serializable, CloneableEx<LocalDateRange>
     }
     return result;
   }
+
+  @Computed({"start", "end"})
+  public boolean isEmpty() {
+    return (start == null) && (end == null);
+  }
 }

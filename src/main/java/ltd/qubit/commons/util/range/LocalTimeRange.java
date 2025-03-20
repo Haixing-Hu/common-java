@@ -14,6 +14,7 @@ import java.time.LocalTime;
 
 import javax.annotation.Nullable;
 
+import ltd.qubit.commons.annotation.Computed;
 import ltd.qubit.commons.lang.Assignable;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Equality;
@@ -111,5 +112,10 @@ public class LocalTimeRange implements Serializable, Assignable<LocalTimeRange>,
             .append("start", start)
             .append("end", end)
             .toString();
+  }
+
+  @Computed({"start", "end"})
+  public boolean isEmpty() {
+    return (start == null) && (end == null);
   }
 }

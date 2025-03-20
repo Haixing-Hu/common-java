@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 
 import javax.annotation.Nullable;
 
+import ltd.qubit.commons.annotation.Computed;
 import ltd.qubit.commons.annotation.Money;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
@@ -110,5 +111,10 @@ public class MoneyRange {
             .append("start", start)
             .append("end", end)
             .toString();
+  }
+
+  @Computed({"start", "end"})
+  public boolean isEmpty() {
+    return (start == null) && (end == null);
   }
 }

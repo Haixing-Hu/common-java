@@ -23,10 +23,12 @@ public final class UnmodifiableCloseRange<T> extends CloseRange<T> {
     super(min, max);
   }
 
+  @Override
   public void setMin(final T min) {
     throw new UnsupportedOperationException("Cannot modify unmodifiable range.");
   }
 
+  @Override
   public void setMax(final T max) {
     throw new UnsupportedOperationException("Cannot modify unmodifiable range.");
   }

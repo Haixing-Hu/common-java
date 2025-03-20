@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.range;
 
+import ltd.qubit.commons.annotation.Computed;
 import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
@@ -103,5 +104,10 @@ public class CloseRange<T> implements CloneableEx<CloseRange<T>> {
         .append("min", min)
         .append("max", max)
         .toString();
+  }
+
+  @Computed({"min", "max"})
+  public boolean isEmpty() {
+    return (min == null) && (max == null);
   }
 }
