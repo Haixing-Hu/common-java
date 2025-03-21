@@ -69,12 +69,17 @@ public class ComposedCriterion<T> implements Criterion<T> {
     return entityClass;
   }
 
-  public final LogicRelation getRelation() {
+  public LogicRelation getRelation() {
     return relation;
   }
 
-  public final List<SimpleCriterion<T>> getCriteria() {
+  public List<SimpleCriterion<T>> getCriteria() {
     return criteria;
+  }
+
+  public ComposedCriterion<T> addCriterion(final SimpleCriterion<T> criterion) {
+    criteria.add(requireNonNull("criterion", criterion));
+    return this;
   }
 
   @Override
