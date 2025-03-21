@@ -10,6 +10,8 @@ package ltd.qubit.commons.io;
 
 import java.util.function.Consumer;
 
+import javax.annotation.Nonnull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
@@ -71,20 +73,8 @@ public class LoggerPrinter implements Printer {
   }
 
   @Override
-  public LoggerPrinter println(final String message) {
+  public LoggerPrinter println(@Nonnull final String message) {
     log.accept(message);
-    return this;
-  }
-
-  @Override
-  public LoggerPrinter println() {
-    Printer.super.println();
-    return this;
-  }
-
-  @Override
-  public LoggerPrinter printf(final String format, final Object... args) {
-    Printer.super.printf(format, args);
     return this;
   }
 }

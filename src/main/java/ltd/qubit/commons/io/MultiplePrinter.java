@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.slf4j.Logger;
 import org.slf4j.event.Level;
 
@@ -49,22 +51,10 @@ public class MultiplePrinter implements Printer {
   }
 
   @Override
-  public MultiplePrinter println(final String line) {
+  public MultiplePrinter println(@Nonnull final String line) {
     for (final Printer printer : printers) {
       printer.println(line);
     }
-    return this;
-  }
-
-  @Override
-  public MultiplePrinter println() {
-    Printer.super.println();
-    return this;
-  }
-
-  @Override
-  public MultiplePrinter printf(final String format, final Object... args) {
-    Printer.super.printf(format, args);
     return this;
   }
 }

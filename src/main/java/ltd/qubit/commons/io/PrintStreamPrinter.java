@@ -10,6 +10,8 @@ package ltd.qubit.commons.io;
 
 import java.io.PrintStream;
 
+import javax.annotation.Nonnull;
+
 /**
  * A {@link Printer} that prints the messages to a {@link PrintStream}.
  *
@@ -24,20 +26,8 @@ public class PrintStreamPrinter implements Printer {
   }
 
   @Override
-  public PrintStreamPrinter println(final String message) {
+  public PrintStreamPrinter println(@Nonnull final String message) {
     stream.println(message);
-    return this;
-  }
-
-  @Override
-  public PrintStreamPrinter println() {
-    Printer.super.println();
-    return this;
-  }
-
-  @Override
-  public PrintStreamPrinter printf(final String format, final Object... args) {
-    Printer.super.printf(format, args);
     return this;
   }
 }

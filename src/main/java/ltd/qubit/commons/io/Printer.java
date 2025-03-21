@@ -8,7 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.io;
 
-import jakarta.validation.constraints.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * A simple printer that prints messages to a destination.
@@ -36,7 +36,7 @@ public interface Printer {
    * @return
    *     this printer.
    */
-  Printer println(String line);
+  Printer println(@Nonnull String line);
 
   /**
    * Prints a line of formatted message to the destination.
@@ -50,7 +50,7 @@ public interface Printer {
    * @return
    *     this printer.
    */
-  default Printer printf(@NotNull final String format, final Object... args) {
+  default Printer println(@Nonnull final String format, final Object... args) {
     return println(String.format(format, args));
   }
 }
