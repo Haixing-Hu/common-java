@@ -42,7 +42,7 @@ public class PrinterProgressReporter implements ProgressReporter {
     printer.println("Current active tasks: %d", activeCount);
     printer.println("Current completed tasks: %d", completedCount);
     printer.println("Current tasks in queue: %d", (totalCount - completedCount - activeCount));
-    printer.println("Progress: %.2f%%", (double) completedCount / totalCount);
+    printer.println("Progress: %.2f%%", completedCount * 100.0 / totalCount);
     printProcessSpeed(completedCount, totalCount - completedCount, meter);
   }
 

@@ -18,8 +18,7 @@ public interface Configurable {
   /**
    * Gets the configuration used by this object.
    *
-   * @return the configuration used by this object. It should never returns
-   *     null.
+   * @return the configuration used by this object. It should never return null.
    */
   Config getConfig();
 

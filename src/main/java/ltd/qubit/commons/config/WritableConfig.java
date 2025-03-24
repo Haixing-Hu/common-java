@@ -56,7 +56,8 @@ public interface WritableConfig extends Config {
    *
    * @param name
    *     the name of the property to remove.
-   * @return the removed property, or null if no such property.
+   * @return
+   *     the removed property, or null if no such property.
    */
   Property remove(String name);
 
