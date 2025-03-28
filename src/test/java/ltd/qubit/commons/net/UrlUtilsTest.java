@@ -84,7 +84,7 @@ public class UrlUtilsTest {
   @Test
   void buildBase64DataUrlWithNullBase64String() {
     final String mimeType = "text/plain";
-    assertThrows(NullPointerException.class, () -> UrlUtils.buildBase64DataUrl(mimeType, null));
+    assertThrows(NullPointerException.class, () -> UrlUtils.buildBase64DataUrl(mimeType, (String) null));
   }
 
   @Test
@@ -120,6 +120,6 @@ public class UrlUtilsTest {
   @Test
   void buildBase64DataUriWithNullBase64String() {
     final String mimeType = "text/plain";
-    assertThrows(NullPointerException.class, () -> UrlUtils.buildBase64DataUri(mimeType, null));
+    assertThrows(NullPointerException.class, () -> UrlUtils.buildBase64DataUri(mimeType, (String) null));
   }
 }

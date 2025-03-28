@@ -65,6 +65,44 @@ public class Base64Utils {
   }
 
   /**
+   * Encodes bytes into a Base64 string.
+   * <p>
+   * <b>NOTE:</b> This function does not close the input stream.
+   *
+   * @param input
+   *     the input data.
+   * @return
+   *     the encoded Base64 string.
+   * @throws IOException
+   *     if an I/O error occurs.
+   */
+  public static String encodeToString(final byte[] input) throws IOException {
+    final Base64.Encoder encoder = Base64.getEncoder();
+    final ByteArrayOutputStream output = new ByteArrayOutputStream();
+    IoUtils.copy(input, encoder.wrap(output));
+    return output.toString(ISO_8859_1);
+  }
+
+  /**
+   * Encodes bytes into a Base64 byte array.
+   * <p>
+   * <b>NOTE:</b> This function does not close the input stream.
+   *
+   * @param input
+   *     the input data.
+   * @return
+   *     the encoded Base64 byte array.
+   * @throws IOException
+   *     if an I/O error occurs.
+   */
+  public static byte[] encodeToBytes(final byte[] input) throws IOException {
+    final Base64.Encoder encoder = Base64.getEncoder();
+    final ByteArrayOutputStream output = new ByteArrayOutputStream();
+    IoUtils.copy(input, encoder.wrap(output));
+    return output.toByteArray();
+  }
+
+  /**
    * Decodes a Base64 string into bytes and writes them to an output stream.
    *
    * @param source

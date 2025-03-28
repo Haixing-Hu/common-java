@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
 
 import ltd.qubit.commons.io.FileUtils;
 import ltd.qubit.commons.io.IoUtils;
+import ltd.qubit.commons.util.codec.Base64Utils;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.net.InetAddressUtils.isIPv4Address;
@@ -268,7 +269,8 @@ public final class UrlUtils {
   }
 
   /**
-   * Build a BASE-64 encoded Data URL
+   * Build a BASE-64 encoded data URL from the binary data represented as a
+   * BASE-64 encoded string.
    *
    * @param mimeType
    *     the MIME type of the data.
@@ -286,7 +288,8 @@ public final class UrlUtils {
   }
 
   /**
-   * Build a BASE-64 encoded Data URI
+   * Build a BASE-64 encoded data URI from the binary data represented as a
+   * BASE-64 encoded string.
    *
    * @param mimeType
    *     the MIME type of the data.
@@ -297,6 +300,46 @@ public final class UrlUtils {
    */
   public static URI buildBase64DataUri(final String mimeType, final String base64String) {
     final String url = buildBase64DataUrl(mimeType, base64String);
+    return URI.create(url);
+  }
+
+  /**
+   * Build a BASE-64 encoded data URL from the binary data.
+   *
+   * @param mimeType
+   *     the MIME type of the data.
+   * @param data
+   *     the binary data.
+   * @return
+   *     the built URL, represented as a string. Note that the URL cannot be
+   *     represented as a {@link URL} object, since the old {@link URL} class
+   *     does not support the {@code data:} protocol.
+   * @throws RuntimeException
+   *     if any I/O error occurs.
+   */
+  public static String buildBase64DataUrl(final String mimeType, final byte[] data) {
+    requireNonNull("mimeType", mimeType);
+    requireNonNull("data", data);
+    try {
+      final String base64String = Base64Utils.encodeToString(data);
+      return "data:" + mimeType + ";base64," + base64String;
+    } catch (final IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  /**
+   * Build a BASE-64 encoded data URL from the binary data.
+   *
+   * @param mimeType
+   *     the MIME type of the data.
+   * @param data
+   *     the binary data.
+   * @return
+   *     the built URI.
+   */
+  public static URI buildBase64DataUri(final String mimeType, final byte[] data) {
+    final String url = buildBase64DataUrl(mimeType, data);
     return URI.create(url);
   }
 }
