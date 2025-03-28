@@ -301,8 +301,7 @@ public final class SystemUtils {
    * <p>The field will return {@code null} if {@link #JAVA_VERSION} is
    * {@code null}.
    */
-  public static final String JAVA_VERSION_TRIMMED =
-      getJavaVersionTrimmed(JAVA_VERSION);
+  public static final String JAVA_VERSION_TRIMMED = getJavaVersionTrimmed(JAVA_VERSION);
 
   /**
    * Gets the Java version as a {@code float}.
@@ -315,8 +314,7 @@ public final class SystemUtils {
    *
    * <p>The field will return zero if {@link #JAVA_VERSION} is {@code null}.
    */
-  public static final float JAVA_VERSION_FLOAT =
-      getJavaVersionAsFloat(JAVA_VERSION);
+  public static final float JAVA_VERSION_FLOAT = getJavaVersionAsFloat(JAVA_VERSION);
 
   /**
    * Gets the Java version as an {@code int}.
