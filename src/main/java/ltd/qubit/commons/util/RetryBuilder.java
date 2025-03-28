@@ -19,6 +19,7 @@ import dev.failsafe.FailsafeExecutor;
 import dev.failsafe.RetryPolicy;
 
 import ltd.qubit.commons.config.Config;
+import ltd.qubit.commons.config.WritableConfig;
 import ltd.qubit.commons.config.impl.DefaultConfig;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
@@ -31,45 +32,11 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
  *
  * @author Haixing Hu
  */
-public class RetryBuilder {
-  /**
-   * The configuration key of the maximum number of attempts.
-   * <p>
-   * Note that the number of attempts is one more than the number of retries.
-   * That is, if the number of attempts is 1, then there is no retry. If the
-   * number of attempts is 2, then there is one retry. If the number of attempts
-   * is 3, then there are two retries, and so on.
-   */
-  public static final String KEY_MAX_ATTEMPTS = "retry.max_attempts";
-
-  /**
-   * The configuration key of the minimum delay between retries, in seconds.
-   */
-  public static final String KEY_RETRY_MIN_DELAY = "retry.min_delay";
-
-  /**
-   * The configuration key of the maximum delay between retries, in seconds.
-   */
-  public static final String KEY_RETRY_MAX_DELAY = "retry.max_delay";
-
-  /**
-   * The default maximum number of attempts for the retry mechanism.
-   */
-  public static final int DEFAULT_MAX_ATTEMPTS = 5;
-
-  /**
-   * The default minimum interval between retries in seconds.
-   */
-  public static final int DEFAULT_RETRY_MIN_DELAY = 1;
-
-  /**
-   * The default maximum interval between retries in seconds.
-   */
-  public static final int DEFAULT_RETRY_MAX_DELAY = 60;
+public class RetryBuilder implements RetryOptions {
 
   private Logger logger;
 
-  private DefaultConfig config;
+  private final DefaultRetryOptions options;
 
   /**
    * Constructs a retry builder.
@@ -98,7 +65,27 @@ public class RetryBuilder {
    */
   public RetryBuilder(final Logger logger, final DefaultConfig config) {
     this.logger = requireNonNull("logger", logger);
-    this.config = requireNonNull("config", config);
+    this.options = new DefaultRetryOptions(requireNonNull("config", config));
+  }
+
+  /**
+   * Constructs a retry builder.
+   *
+   * @param logger
+   *     the logger used by the retry builder.
+   * @param options
+   *     the retry options used by the retry builder.
+   */
+  public RetryBuilder(final Logger logger, final RetryOptions options) {
+    this.logger = requireNonNull("logger", logger);
+    if (options instanceof DefaultRetryOptions) {
+      this.options = (DefaultRetryOptions) options;
+    } else {
+      this.options = new DefaultRetryOptions();
+      this.options.setMaxAttempts(options.getMaxAttempts());
+      this.options.setRetryMinDelay(options.getRetryMinDelay());
+      this.options.setRetryMaxDelay(options.getRetryMaxDelay());
+    }
   }
 
   public Logger getLogger() {
@@ -111,38 +98,44 @@ public class RetryBuilder {
   }
 
   public Config getConfig() {
-    return config;
+    return options.getConfig();
   }
 
-  public RetryBuilder setConfig(final DefaultConfig config) {
-    this.config = requireNonNull("config", config);
+  public RetryBuilder setConfig(final WritableConfig config) {
+    options.setConfig(requireNonNull("config", config));
     return this;
   }
 
+  @Override
   public int getMaxAttempts() {
-    return config.getInt(KEY_MAX_ATTEMPTS, DEFAULT_MAX_ATTEMPTS);
+    return options.getMaxAttempts();
   }
 
+  @Override
   public RetryBuilder setMaxAttempts(final int maxAttempts) {
-    config.setInt(KEY_MAX_ATTEMPTS, maxAttempts);
+    options.setMaxAttempts(maxAttempts);
     return this;
   }
 
+  @Override
   public int getRetryMinDelay() {
-    return config.getInt(KEY_RETRY_MIN_DELAY, DEFAULT_RETRY_MIN_DELAY);
+    return options.getRetryMinDelay();
   }
 
+  @Override
   public RetryBuilder setRetryMinDelay(final int retryMinDelay) {
-    config.setInt(KEY_RETRY_MIN_DELAY, retryMinDelay);
+    options.setRetryMinDelay(retryMinDelay);
     return this;
   }
 
+  @Override
   public int getRetryMaxDelay() {
-    return config.getInt(KEY_RETRY_MAX_DELAY, DEFAULT_RETRY_MAX_DELAY);
+    return options.getRetryMaxDelay();
   }
 
+  @Override
   public RetryBuilder setRetryMaxDelay(final int retryMaxDelay) {
-    config.setInt(KEY_RETRY_MAX_DELAY, retryMaxDelay);
+    options.setRetryMaxDelay(retryMaxDelay);
     return this;
   }
 
