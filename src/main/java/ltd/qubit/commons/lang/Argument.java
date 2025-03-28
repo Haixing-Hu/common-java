@@ -9,6 +9,9 @@
 package ltd.qubit.commons.lang;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Nullable;
 
@@ -160,6 +163,39 @@ public final class Argument {
       throw new NullPointerException("The '" + name + "' can not be null.");
     }
     if (arg.length() == 0) {
+      throw new IllegalArgumentException("The '" + name + "' can not be empty.");
+    }
+    return arg;
+  }
+
+  public static <T> List<T> requireNonEmpty(final String name,
+      final List<T> arg) {
+    if (arg == null) {
+      throw new NullPointerException("The '" + name + "' can not be null.");
+    }
+    if (arg.isEmpty()) {
+      throw new IllegalArgumentException("The '" + name + "' can not be empty.");
+    }
+    return arg;
+  }
+
+  public static <T> Set<T> requireNonEmpty(final String name,
+      final Set<T> arg) {
+    if (arg == null) {
+      throw new NullPointerException("The '" + name + "' can not be null.");
+    }
+    if (arg.isEmpty()) {
+      throw new IllegalArgumentException("The '" + name + "' can not be empty.");
+    }
+    return arg;
+  }
+
+  public static <K, V> Map<K, V> requireNonEmpty(final String name,
+      final Map<K, V> arg) {
+    if (arg == null) {
+      throw new NullPointerException("The '" + name + "' can not be null.");
+    }
+    if (arg.isEmpty()) {
       throw new IllegalArgumentException("The '" + name + "' can not be empty.");
     }
     return arg;
