@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 
-import ltd.qubit.commons.config.Config;
+import ltd.qubit.commons.config.WritableConfig;
 import ltd.qubit.commons.config.impl.DefaultConfig;
 import ltd.qubit.commons.net.interceptor.ConnectionLoggingEventListener;
 import ltd.qubit.commons.net.interceptor.HttpLoggingInterceptor;
@@ -39,99 +39,19 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
  *
  * @author Haixing Hu
  */
-public class HttpClientBuilder {
-  /**
-   * The configuration key of the connection timeout, in seconds.
-   */
-  public static final String KEY_CONNECTION_TIMEOUT = "http.timeout.connection";
-
-  /**
-   * The configuration key of the read timeout, in seconds.
-   */
-  public static final String KEY_READ_TIMEOUT = "http.timeout.read";
-
-  /**
-   * The configuration key of the write timeout, in seconds.
-   */
-  public static final String KEY_WRITE_TIMEOUT = "http.timeout.write";
-
-  /**
-   * The configuration key of whether to use the proxy server while connecting
-   * to the model provider.
-   */
-  public static final String KEY_USE_PROXY = "http.proxy.use";
-
-  /**
-   * The configuration key of the proxy server type.
-   */
-  public static final String KEY_PROXY_TYPE = "http.proxy.type";
-
-  /**
-   * The configuration key of the proxy server host.
-   */
-  public static final String KEY_PROXY_HOST = "http.proxy.host";
-
-  /**
-   * The configuration key of the proxy server port.
-   */
-  public static final String KEY_PROXY_PORT = "http.proxy.port";
-
-  /**
-   * The configuration key of the proxy server username.
-   */
-  public static final String KEY_PROXY_USERNAME = "http.proxy.username";
-
-  /**
-   * The configuration key of the proxy server password.
-   */
-  public static final String KEY_PROXY_PASSWORD = "http.proxy.password";
-
-  /**
-   * The configuration key of whether to use the logging interceptor.
-   */
-  public static final String KEY_USE_LOGGING = "http.logging.use";
-
-  /**
-   * The default timeout for the connection in seconds.
-   */
-  public static final int DEFAULT_CONNECTION_TIMEOUT = 10;
-
-  /**
-   * The default timeout for the read in seconds.
-   */
-  public static final int DEFAULT_READ_TIMEOUT = 120;
-
-  /**
-   * The default timeout for the write out seconds.
-   */
-  public static final int DEFAULT_WRITE_TIMEOUT = 120;
-
-  /**
-   * The default value of whether to use the proxy server.
-   */
-  public static final boolean DEFAULT_USE_PROXY = false;
-
-  /**
-   * The default value of the proxy server type.
-   */
-  public static final String DEFAULT_PROXY_TYPE = "http";
-
-  /**
-   * The default value of whether to use the logging interceptor.
-   */
-  public static final boolean DEFAULT_USE_LOGGING = true;
+public class HttpClientBuilder implements HttpClientOptions {
 
   private final List<Interceptor> interceptors = new ArrayList<>();
 
   private Logger logger;
 
-  private DefaultConfig config;
+  private final HttpClientOptions options;
 
   /**
    * Construct a provider of the HTTP client.
    */
   public HttpClientBuilder() {
-    this(LoggerFactory.getLogger(HttpClientBuilder.class), new DefaultConfig());
+    this(LoggerFactory.getLogger(HttpClientBuilder.class), new DefaultHttpClientOptions());
   }
 
   /**
@@ -141,7 +61,7 @@ public class HttpClientBuilder {
    *     the logger used by the provided http client.
    */
   public HttpClientBuilder(final Logger logger) {
-    this(logger, new DefaultConfig());
+    this(logger, new DefaultHttpClientOptions());
   }
 
   /**
@@ -152,9 +72,21 @@ public class HttpClientBuilder {
    * @param config
    *     the configuration used by the provided http client.
    */
-  public HttpClientBuilder(final Logger logger, final DefaultConfig config) {
+  public HttpClientBuilder(final Logger logger, final WritableConfig config) {
+    this(logger, new DefaultHttpClientOptions(config));
+  }
+
+  /**
+   * Construct a provider of the HTTP client.
+   *
+   * @param logger
+   *     the logger used by the provided http client.
+   * @param options
+   *     the HTTP client options used by the provided http client.
+   */
+  public HttpClientBuilder(final Logger logger, final HttpClientOptions options) {
     this.logger = requireNonNull("logger", logger);
-    this.config = requireNonNull("config", config);
+    this.options = requireNonNull("options", options);
   }
 
   public Logger getLogger() {
@@ -166,118 +98,179 @@ public class HttpClientBuilder {
     return this;
   }
 
-  public Config getConfig() {
-    return config;
+  /**
+   * Gets the HTTP client options used by this builder.
+   *
+   * @return
+   *     the HTTP client options used by this builder.
+   */
+  public HttpClientOptions getOptions() {
+    return options;
   }
 
-  public HttpClientBuilder setConfig(final DefaultConfig config) {
-    this.config = requireNonNull("config", config);
+  /**
+   * Sets the HTTP client options used by this builder.
+   *
+   * @param options
+   *     the HTTP client options to be used, must not be {@code null}.
+   * @return
+   *     this builder, to support method chaining.
+   * @throws NullPointerException
+   *     if the options is {@code null}.
+   */
+  public HttpClientBuilder setOptions(final HttpClientOptions options) {
+    this.options = requireNonNull("options", options);
     return this;
   }
 
+  @Override
   public boolean isUseProxy() {
-    return config.getBoolean(KEY_USE_PROXY, DEFAULT_USE_PROXY);
+    return options.isUseProxy();
   }
 
+  @Override
   public HttpClientBuilder setUseProxy(final boolean useProxy) {
-    config.setBoolean(KEY_USE_PROXY, useProxy);
+    options.setUseProxy(useProxy);
     return this;
   }
 
+  @Override
   public String getProxyType() {
-    return config.getString(KEY_PROXY_TYPE, DEFAULT_PROXY_TYPE);
+    return options.getProxyType();
   }
 
+  @Override
   public HttpClientBuilder setProxyType(final String proxyType) {
-    config.setString(KEY_PROXY_TYPE, proxyType);
+    options.setProxyType(proxyType);
     return this;
   }
 
+  @Override
   public HttpClientBuilder setProxyType(final Proxy.Type proxyType) {
-    config.setString(KEY_PROXY_TYPE, proxyType.name());
+    options.setProxyType(proxyType);
     return this;
   }
 
+  @Override
   @Nullable
   public String getProxyHost() {
-    return config.getString(KEY_PROXY_HOST, null);
+    return options.getProxyHost();
   }
 
+  @Override
   public HttpClientBuilder setProxyHost(@Nullable final String proxyHost) {
-    config.setString(KEY_PROXY_HOST, proxyHost);
+    options.setProxyHost(proxyHost);
     return this;
   }
 
+  @Override
   public int getProxyPort() {
-    return config.getInt(KEY_PROXY_PORT, 0);
+    return options.getProxyPort();
   }
 
+  @Override
   public HttpClientBuilder setProxyPort(final int proxyPort) {
-    config.setInt(KEY_PROXY_PORT, proxyPort);
+    options.setProxyPort(proxyPort);
     return this;
   }
 
+  @Override
   @Nullable
   public String getProxyUsername() {
-    return config.getString(KEY_PROXY_USERNAME, null);
+    return options.getProxyUsername();
   }
 
+  @Override
   public HttpClientBuilder setProxyUsername(@Nullable final String proxyUsername) {
-    config.setString(KEY_PROXY_USERNAME, proxyUsername);
+    options.setProxyUsername(proxyUsername);
     return this;
   }
 
+  @Override
   @Nullable
   public String getProxyPassword() {
-    return config.getString(KEY_PROXY_PASSWORD, null);
+    return options.getProxyPassword();
   }
 
+  @Override
   public HttpClientBuilder setProxyPassword(@Nullable final String proxyPassword) {
-    config.setString(KEY_PROXY_PASSWORD, proxyPassword);
+    options.setProxyPassword(proxyPassword);
     return this;
   }
 
+  @Override
   public int getConnectionTimeout() {
-    return config.getInt(KEY_CONNECTION_TIMEOUT, DEFAULT_CONNECTION_TIMEOUT);
+    return options.getConnectionTimeout();
   }
 
+  @Override
   public HttpClientBuilder setConnectionTimeout(final int connectionTimeout) {
-    config.setInt(KEY_CONNECTION_TIMEOUT, connectionTimeout);
+    options.setConnectionTimeout(connectionTimeout);
     return this;
   }
 
+  @Override
   public int getReadTimeout() {
-    return config.getInt(KEY_READ_TIMEOUT, DEFAULT_READ_TIMEOUT);
+    return options.getReadTimeout();
   }
 
+  @Override
   public HttpClientBuilder setReadTimeout(final int readTimeout) {
-    config.setInt(KEY_READ_TIMEOUT, readTimeout);
+    options.setReadTimeout(readTimeout);
     return this;
   }
 
+  @Override
   public int getWriteTimeout() {
-    return config.getInt(KEY_WRITE_TIMEOUT, DEFAULT_WRITE_TIMEOUT);
+    return options.getWriteTimeout();
   }
 
+  @Override
   public HttpClientBuilder setWriteTimeout(final int writeTimeout) {
-    config.setInt(KEY_WRITE_TIMEOUT, writeTimeout);
+    options.setWriteTimeout(writeTimeout);
     return this;
   }
 
-  public boolean isUseLogging() {
-    return config.getBoolean(KEY_USE_LOGGING, DEFAULT_USE_LOGGING);
+  @Override
+  public boolean isUseHttpLogging() {
+    return options.isUseHttpLogging();
   }
 
-  public HttpClientBuilder setUseLogging(final boolean useLogging) {
-    config.setBoolean(KEY_USE_LOGGING, useLogging);
+  @Override
+  public HttpClientBuilder setUseHttpLogging(final boolean useHttpLogging) {
+    options.setUseHttpLogging(useHttpLogging);
     return this;
   }
 
+  /**
+   * Adds an interceptor to the HTTP client.
+   * <p>
+   * Interceptors can be used to monitor, modify, or retry HTTP requests and responses.
+   *
+   * @param interceptor
+   *     the interceptor to add, must not be {@code null}.
+   * @return
+   *     this builder, to support method chaining.
+   * @throws NullPointerException
+   *     if the interceptor is {@code null}.
+   */
   public HttpClientBuilder addInterceptor(final Interceptor interceptor) {
     interceptors.add(requireNonNull("interceptor", interceptor));
     return this;
   }
 
+  /**
+   * Adds multiple interceptors to the HTTP client.
+   * <p>
+   * Interceptors can be used to monitor, modify, or retry HTTP requests and responses.
+   *
+   * @param interceptors
+   *     the array of interceptors to add, elements must not be {@code null}.
+   * @return
+   *     this builder, to support method chaining.
+   * @throws NullPointerException
+   *     if any of the interceptors is {@code null}.
+   */
   public HttpClientBuilder addInterceptors(final Interceptor ... interceptors) {
     for (final Interceptor interceptor : interceptors) {
       this.interceptors.add(requireNonNull("interceptor", interceptor));
@@ -285,6 +278,18 @@ public class HttpClientBuilder {
     return this;
   }
 
+  /**
+   * Adds a collection of interceptors to the HTTP client.
+   * <p>
+   * Interceptors can be used to monitor, modify, or retry HTTP requests and responses.
+   *
+   * @param interceptors
+   *     the collection of interceptors to add, elements must not be {@code null}.
+   * @return
+   *     this builder, to support method chaining.
+   * @throws NullPointerException
+   *     if any of the interceptors is {@code null}.
+   */
   public HttpClientBuilder addInterceptors(final Collection<Interceptor> interceptors) {
     for (final Interceptor interceptor : interceptors) {
       this.interceptors.add(requireNonNull("interceptor", interceptor));
@@ -292,6 +297,12 @@ public class HttpClientBuilder {
     return this;
   }
 
+  /**
+   * Clears all interceptors previously added to this builder.
+   *
+   * @return
+   *     this builder, to support method chaining.
+   */
   public HttpClientBuilder clearInterceptors() {
     interceptors.clear();
     return this;
@@ -311,46 +322,6 @@ public class HttpClientBuilder {
     return new Proxy(proxyType, new InetSocketAddress(proxyHost, proxyPort));
   }
 
-  private OkHttpClient.Builder getHttpClientBuilder() {
-    final OkHttpClient.Builder builder = new OkHttpClient.Builder();
-    builder.connectTimeout(getConnectionTimeout(), TimeUnit.SECONDS) //自定义超时时间
-           .readTimeout(getReadTimeout(), TimeUnit.SECONDS)    //自定义超时时间
-           .writeTimeout(getWriteTimeout(), TimeUnit.SECONDS);   //自定义超时时间
-    if (isUseProxy()) {
-      logger.info("Configuring a proxy for the HTTP client.");
-      final Proxy proxy = getProxy();
-      addProxy(builder, proxy);
-    }
-    for (final Interceptor interceptor : interceptors) {
-      builder.addInterceptor(interceptor);
-    }
-    if (isUseLogging()) {
-      logger.info("Using logging for the HTTP client.");
-      builder.addInterceptor(new HttpLoggingInterceptor(logger));
-      builder.eventListener(new ConnectionLoggingEventListener(logger));
-    }
-    return builder;
-  }
-
-  private void addProxy(final OkHttpClient.Builder builder, final Proxy proxy) {
-    logger.info("Using the proxy for the HTTP client: {}", proxy);
-    builder.proxy(proxy);
-    // add proxy authentication
-    final String username = getProxyUsername();
-    if (username != null) {
-      final String password = getProxyPassword();
-      // password may be null, in which case it will be treated as an empty string
-      final String passwordToUse = (password != null) ? password : "";
-      logger.info("Using proxy authentication with username: {}", username);
-      builder.proxyAuthenticator((route, response) -> {
-        final String credential = okhttp3.Credentials.basic(username, passwordToUse);
-        return response.request().newBuilder()
-                       .header("Proxy-Authorization", credential)
-                       .build();
-      });
-    }
-  }
-
   /**
    * Build a pre-configured HTTP client.
    *
@@ -358,7 +329,44 @@ public class HttpClientBuilder {
    *    A pre-configured HTTP client.
    */
   public OkHttpClient build() {
-    final OkHttpClient.Builder builder = getHttpClientBuilder();
+    final OkHttpClient.Builder builder = new OkHttpClient.Builder();
+    builder.connectTimeout(getConnectionTimeout(), TimeUnit.SECONDS)
+           .readTimeout(getReadTimeout(), TimeUnit.SECONDS)
+           .writeTimeout(getWriteTimeout(), TimeUnit.SECONDS);
+
+    // Configure proxy if needed
+    if (isUseProxy()) {
+      logger.info("Configuring a proxy for the HTTP client.");
+      final Proxy proxy = getProxy();
+      builder.proxy(proxy);
+
+      // Add proxy authentication if needed
+      final String username = getProxyUsername();
+      if (username != null) {
+        final String password = getProxyPassword();
+        final String passwordToUse = (password != null) ? password : "";
+        logger.info("Using proxy authentication with username: {}", username);
+        builder.proxyAuthenticator((route, response) -> {
+          final String credential = okhttp3.Credentials.basic(username, passwordToUse);
+          return response.request().newBuilder()
+                         .header("Proxy-Authorization", credential)
+                         .build();
+        });
+      }
+    }
+
+    // Add interceptors
+    for (final Interceptor interceptor : interceptors) {
+      builder.addInterceptor(interceptor);
+    }
+
+    // Add logging if enabled
+    if (isUseHttpLogging()) {
+      logger.info("Using logging for the HTTP client.");
+      builder.addInterceptor(new HttpLoggingInterceptor(logger));
+      builder.eventListener(new ConnectionLoggingEventListener(logger));
+    }
+
     return builder.build();
   }
 }
