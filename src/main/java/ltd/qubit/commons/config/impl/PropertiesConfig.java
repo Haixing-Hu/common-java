@@ -370,8 +370,8 @@ public class PropertiesConfig extends DefaultConfig {
   public void load(final String resource) {
     LOGGER.debug("Loading properties configuration from {}", resource);
     try {
-      final Properties properties = PropertiesUtils.load(resource, charset);
-      load(properties);
+      final Properties props = PropertiesUtils.load(resource, charset);
+      load(props);
     } catch (final IOException e) {
       throw new ConfigurationError(e);
     }
@@ -390,9 +390,8 @@ public class PropertiesConfig extends DefaultConfig {
   public void load(final String resource, final Class<?> loaderClass) {
     LOGGER.debug("Loading properties configuration from {}", resource);
     try {
-      final Properties properties = PropertiesUtils.load(resource, loaderClass,
-          charset);
-      load(properties);
+      final Properties props = PropertiesUtils.load(resource, loaderClass, charset);
+      load(props);
     } catch (final IOException e) {
       throw new ConfigurationError(e);
     }
@@ -643,7 +642,7 @@ public class PropertiesConfig extends DefaultConfig {
         .entrySet()) {
       final String name = entry.getKey();
       final DefaultProperty property = entry.getValue();
-      result.put(name, property.getValueAsString());
+      result.setProperty(name, property.getValueAsString());
     }
     return result;
   }
