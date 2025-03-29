@@ -10,7 +10,6 @@ package ltd.qubit.commons.net;
 
 import java.net.InetSocketAddress;
 import java.net.Proxy;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,6 +27,7 @@ import ltd.qubit.commons.net.interceptor.HttpLoggingInterceptor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -57,7 +57,7 @@ public class HttpClientBuilderTest {
     assertEquals(HttpClientBuilder.DEFAULT_WRITE_TIMEOUT, builder.getWriteTimeout());
     assertEquals(HttpClientBuilder.DEFAULT_USE_PROXY, builder.isUseProxy());
     assertEquals(HttpClientBuilder.DEFAULT_PROXY_TYPE, builder.getProxyType());
-    assertEquals(HttpClientBuilder.DEFAULT_USE_LOGGING, builder.isUseLogging());
+    assertEquals(HttpClientBuilder.DEFAULT_USE_HTTP_LOGGING, builder.isUseHttpLogging());
     assertNull(builder.getProxyHost());
     assertEquals(0, builder.getProxyPort());
     assertNull(builder.getProxyUsername());
@@ -76,7 +76,7 @@ public class HttpClientBuilderTest {
            .setProxyPort(8080)
            .setProxyUsername("user")
            .setProxyPassword("pass")
-           .setUseLogging(false);
+           .setUseHttpLogging(false);
 
     assertEquals(30, builder.getConnectionTimeout());
     assertEquals(60, builder.getReadTimeout());
@@ -87,7 +87,7 @@ public class HttpClientBuilderTest {
     assertEquals(8080, builder.getProxyPort());
     assertEquals("user", builder.getProxyUsername());
     assertEquals("pass", builder.getProxyPassword());
-    assertFalse(builder.isUseLogging());
+    assertFalse(builder.isUseHttpLogging());
   }
 
   @Test
@@ -118,7 +118,7 @@ public class HttpClientBuilderTest {
     builder.setConnectionTimeout(30)
            .setReadTimeout(60)
            .setWriteTimeout(90)
-           .setUseLogging(false);
+           .setUseHttpLogging(false);
 
     final OkHttpClient client = builder.build();
 
@@ -149,7 +149,7 @@ public class HttpClientBuilderTest {
     final Proxy proxy = builder.getProxy();
     assertNotNull(proxy);
     assertEquals(Proxy.Type.HTTP, proxy.type());
-    assertTrue(proxy.address() instanceof InetSocketAddress);
+    assertInstanceOf(InetSocketAddress.class, proxy.address());
     final InetSocketAddress address = (InetSocketAddress) proxy.address();
     assertEquals("proxy.example.com", address.getHostName());
     assertEquals(8080, address.getPort());
@@ -214,7 +214,7 @@ public class HttpClientBuilderTest {
   @Test
   public void testActualHttpRequest() throws Exception {
     // Test making an actual HTTP request with the built client
-    try (MockWebServer server = new MockWebServer()) {
+    try (final MockWebServer server = new MockWebServer()) {
       // Setup mock server
       server.enqueue(new MockResponse()
           .setResponseCode(200)
@@ -232,7 +232,7 @@ public class HttpClientBuilderTest {
           .url(server.url("/"))
           .build();
 
-      try (Response response = client.newCall(request).execute()) {
+      try (final Response response = client.newCall(request).execute()) {
         assertEquals(200, response.code());
         assertEquals("Hello, World!", response.body().string());
       }

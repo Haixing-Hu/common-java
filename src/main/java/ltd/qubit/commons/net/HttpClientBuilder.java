@@ -24,7 +24,6 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 
 import ltd.qubit.commons.config.WritableConfig;
-import ltd.qubit.commons.config.impl.DefaultConfig;
 import ltd.qubit.commons.net.interceptor.ConnectionLoggingEventListener;
 import ltd.qubit.commons.net.interceptor.HttpLoggingInterceptor;
 
@@ -45,7 +44,7 @@ public class HttpClientBuilder implements HttpClientOptions {
 
   private Logger logger;
 
-  private final HttpClientOptions options;
+  private HttpClientOptions options;
 
   /**
    * Construct a provider of the HTTP client.
