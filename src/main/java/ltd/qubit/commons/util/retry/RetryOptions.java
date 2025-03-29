@@ -6,14 +6,16 @@
 //    All rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
-package ltd.qubit.commons.util;
+package ltd.qubit.commons.util.retry;
+
+import java.io.Serializable;
 
 /**
  * The interface of configurations for retry operations.
  *
  * @author Haixing Hu
  */
-public interface RetryOptions {
+public interface RetryOptions extends Serializable {
 
   /**
    * The configuration key of the maximum number of attempts.
@@ -23,32 +25,32 @@ public interface RetryOptions {
    * number of attempts is 2, then there is one retry. If the number of attempts
    * is 3, then there are two retries, and so on.
    */
-  String KEY_MAX_ATTEMPTS = "retry.max_attempts";
+  String KEY_MAX_RETRY_ATTEMPTS = "retry.max_attempts";
 
   /**
    * The configuration key of the minimum delay between retries, in seconds.
    */
-  String KEY_RETRY_MIN_DELAY = "retry.min_delay";
+  String KEY_MIN_RETRY_DELAY = "retry.min_delay";
 
   /**
    * The configuration key of the maximum delay between retries, in seconds.
    */
-  String KEY_RETRY_MAX_DELAY = "retry.max_delay";
+  String KEY_MAX_RETRY_DELAY = "retry.max_delay";
 
   /**
    * The default maximum number of attempts for the retry mechanism.
    */
-  int DEFAULT_MAX_ATTEMPTS = 5;
+  int DEFAULT_MAX_RETRY_ATTEMPTS = 5;
 
   /**
    * The default minimum interval between retries in seconds.
    */
-  int DEFAULT_RETRY_MIN_DELAY = 1;
+  int DEFAULT_MIN_RETRY_DELAY = 1;
 
   /**
    * The default maximum interval between retries in seconds.
    */
-  int DEFAULT_RETRY_MAX_DELAY = 60;
+  int DEFAULT_MAX_RETRY_DELAY = 60;
 
   /**
    * Gets the maximum number of attempts.
@@ -56,17 +58,17 @@ public interface RetryOptions {
    * @return
    *     the maximum number of attempts.
    */
-  int getMaxAttempts();
+  int getMaxRetryAttempts();
 
   /**
    * Sets the maximum number of attempts.
    *
-   * @param maxAttempts
+   * @param maxRetryAttempts
    *     the maximum number of attempts.
    * @return
    *     this object, to support method chaining.
    */
-  RetryOptions setMaxAttempts(int maxAttempts);
+  RetryOptions setMaxRetryAttempts(int maxRetryAttempts);
 
   /**
    * Gets the minimum delay between retries, in seconds.
@@ -74,17 +76,17 @@ public interface RetryOptions {
    * @return
    *     the minimum delay between retries, in seconds.
    */
-  int getRetryMinDelay();
+  int getMinRetryDelay();
 
   /**
    * Sets the minimum delay between retries, in seconds.
    *
-   * @param retryMinDelay
+   * @param minRetryDelay
    *     the minimum delay between retries, in seconds.
    * @return
    *     this object, to support method chaining.
    */
-  RetryOptions setRetryMinDelay(int retryMinDelay);
+  RetryOptions setMinRetryDelay(int minRetryDelay);
 
   /**
    * Gets the maximum delay between retries, in seconds.
@@ -92,15 +94,15 @@ public interface RetryOptions {
    * @return
    *     the maximum delay between retries, in seconds.
    */
-  int getRetryMaxDelay();
+  int getMaxRetryDelay();
 
   /**
    * Sets the maximum delay between retries, in seconds.
    *
-   * @param retryMaxDelay
+   * @param maxRetryDelay
    *     the maximum delay between retries, in seconds.
    * @return
    *     this object, to support method chaining.
    */
-  RetryOptions setRetryMaxDelay(int retryMaxDelay);
+  RetryOptions setMaxRetryDelay(int maxRetryDelay);
 }

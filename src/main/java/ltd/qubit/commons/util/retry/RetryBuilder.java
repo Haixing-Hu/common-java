@@ -6,8 +6,9 @@
 //    All rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
-package ltd.qubit.commons.util;
+package ltd.qubit.commons.util.retry;
 
+import java.io.Serial;
 import java.time.Duration;
 import java.util.List;
 
@@ -18,8 +19,6 @@ import dev.failsafe.Failsafe;
 import dev.failsafe.FailsafeExecutor;
 import dev.failsafe.RetryPolicy;
 
-import ltd.qubit.commons.config.Config;
-import ltd.qubit.commons.config.WritableConfig;
 import ltd.qubit.commons.config.impl.DefaultConfig;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
@@ -34,9 +33,12 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
  */
 public class RetryBuilder implements RetryOptions {
 
+  @Serial
+  private static final long serialVersionUID = -8559936643904509389L;
+
   private Logger logger;
 
-  private final DefaultRetryOptions options;
+  private RetryOptions options;
 
   /**
    * Constructs a retry builder.
@@ -64,8 +66,7 @@ public class RetryBuilder implements RetryOptions {
    *     the configuration used by the retry builder.
    */
   public RetryBuilder(final Logger logger, final DefaultConfig config) {
-    this.logger = requireNonNull("logger", logger);
-    this.options = new DefaultRetryOptions(requireNonNull("config", config));
+    this(logger, new DefaultRetryOptions(config));
   }
 
   /**
@@ -78,14 +79,7 @@ public class RetryBuilder implements RetryOptions {
    */
   public RetryBuilder(final Logger logger, final RetryOptions options) {
     this.logger = requireNonNull("logger", logger);
-    if (options instanceof DefaultRetryOptions) {
-      this.options = (DefaultRetryOptions) options;
-    } else {
-      this.options = new DefaultRetryOptions();
-      this.options.setMaxAttempts(options.getMaxAttempts());
-      this.options.setRetryMinDelay(options.getRetryMinDelay());
-      this.options.setRetryMaxDelay(options.getRetryMaxDelay());
-    }
+    this.options = requireNonNull("options", options);
   }
 
   public Logger getLogger() {
@@ -97,45 +91,45 @@ public class RetryBuilder implements RetryOptions {
     return this;
   }
 
-  public Config getConfig() {
-    return options.getConfig();
+  public RetryOptions getOptions() {
+    return options;
   }
 
-  public RetryBuilder setConfig(final WritableConfig config) {
-    options.setConfig(requireNonNull("config", config));
+  public RetryBuilder setOptions(final RetryOptions options) {
+    this.options = options;
     return this;
   }
 
   @Override
-  public int getMaxAttempts() {
-    return options.getMaxAttempts();
+  public int getMaxRetryAttempts() {
+    return options.getMaxRetryAttempts();
   }
 
   @Override
-  public RetryBuilder setMaxAttempts(final int maxAttempts) {
-    options.setMaxAttempts(maxAttempts);
+  public RetryBuilder setMaxRetryAttempts(final int maxRetryAttempts) {
+    options.setMaxRetryAttempts(maxRetryAttempts);
     return this;
   }
 
   @Override
-  public int getRetryMinDelay() {
-    return options.getRetryMinDelay();
+  public int getMinRetryDelay() {
+    return options.getMinRetryDelay();
   }
 
   @Override
-  public RetryBuilder setRetryMinDelay(final int retryMinDelay) {
-    options.setRetryMinDelay(retryMinDelay);
+  public RetryBuilder setMinRetryDelay(final int minRetryDelay) {
+    options.setMinRetryDelay(minRetryDelay);
     return this;
   }
 
   @Override
-  public int getRetryMaxDelay() {
-    return options.getRetryMaxDelay();
+  public int getMaxRetryDelay() {
+    return options.getMaxRetryDelay();
   }
 
   @Override
-  public RetryBuilder setRetryMaxDelay(final int retryMaxDelay) {
-    options.setRetryMaxDelay(retryMaxDelay);
+  public RetryBuilder setMaxRetryDelay(final int maxRetryDelay) {
+    options.setMaxRetryDelay(maxRetryDelay);
     return this;
   }
 
@@ -152,8 +146,8 @@ public class RetryBuilder implements RetryOptions {
   public <T> FailsafeExecutor<T> build(final List<Class<? extends Throwable>> exceptions) {
     final RetryPolicy<T> policy = RetryPolicy
         .<T>builder()
-        .withMaxAttempts(getMaxAttempts())
-        .withBackoff(Duration.ofSeconds(getRetryMinDelay()), Duration.ofSeconds(getRetryMaxDelay()))
+        .withMaxAttempts(getMaxRetryAttempts())
+        .withBackoff(Duration.ofSeconds(getMinRetryDelay()), Duration.ofSeconds(getMaxRetryDelay()))
         .handle(exceptions)
         .onRetry((event) -> {
           final Throwable lastError = event.getLastException();

@@ -6,10 +6,9 @@
 //    All rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
-package ltd.qubit.commons.util;
+package ltd.qubit.commons.util.retry;
 
 import java.io.Serial;
-import java.io.Serializable;
 
 import javax.annotation.concurrent.ThreadSafe;
 
@@ -26,10 +25,10 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
  * @author Haixing Hu
  */
 @ThreadSafe
-public class DefaultRetryOptions implements RetryOptions, WritableConfigurable, Serializable {
+public class DefaultRetryOptions implements RetryOptions, WritableConfigurable {
 
   @Serial
-  private static final long serialVersionUID = -2754856329120638742L;
+  private static final long serialVersionUID = 7533987052518912462L;
 
   private WritableConfig config;
 
@@ -58,40 +57,41 @@ public class DefaultRetryOptions implements RetryOptions, WritableConfigurable, 
   }
 
   @Override
-  public void setConfig(final WritableConfig config) {
+  public DefaultRetryOptions setConfig(final WritableConfig config) {
     this.config = requireNonNull("config", config);
-  }
-
-  @Override
-  public int getMaxAttempts() {
-    return config.getInt(KEY_MAX_ATTEMPTS, DEFAULT_MAX_ATTEMPTS);
-  }
-
-  @Override
-  public RetryOptions setMaxAttempts(final int maxAttempts) {
-    config.setInt(KEY_MAX_ATTEMPTS, maxAttempts);
     return this;
   }
 
   @Override
-  public int getRetryMinDelay() {
-    return config.getInt(KEY_RETRY_MIN_DELAY, DEFAULT_RETRY_MIN_DELAY);
+  public int getMaxRetryAttempts() {
+    return config.getInt(KEY_MAX_RETRY_ATTEMPTS, DEFAULT_MAX_RETRY_ATTEMPTS);
   }
 
   @Override
-  public RetryOptions setRetryMinDelay(final int retryMinDelay) {
-    config.setInt(KEY_RETRY_MIN_DELAY, retryMinDelay);
+  public RetryOptions setMaxRetryAttempts(final int maxRetryAttempts) {
+    config.setInt(KEY_MAX_RETRY_ATTEMPTS, maxRetryAttempts);
     return this;
   }
 
   @Override
-  public int getRetryMaxDelay() {
-    return config.getInt(KEY_RETRY_MAX_DELAY, DEFAULT_RETRY_MAX_DELAY);
+  public int getMinRetryDelay() {
+    return config.getInt(KEY_MIN_RETRY_DELAY, DEFAULT_MIN_RETRY_DELAY);
   }
 
   @Override
-  public RetryOptions setRetryMaxDelay(final int retryMaxDelay) {
-    config.setInt(KEY_RETRY_MAX_DELAY, retryMaxDelay);
+  public RetryOptions setMinRetryDelay(final int minRetryDelay) {
+    config.setInt(KEY_MIN_RETRY_DELAY, minRetryDelay);
+    return this;
+  }
+
+  @Override
+  public int getMaxRetryDelay() {
+    return config.getInt(KEY_MAX_RETRY_DELAY, DEFAULT_MAX_RETRY_DELAY);
+  }
+
+  @Override
+  public RetryOptions setMaxRetryDelay(final int maxRetryDelay) {
+    config.setInt(KEY_MAX_RETRY_DELAY, maxRetryDelay);
     return this;
   }
 }
