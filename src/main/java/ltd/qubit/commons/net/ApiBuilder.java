@@ -45,7 +45,7 @@ public class ApiBuilder implements HttpClientOptions {
 
   private Logger logger;
 
-  private HttpClientOptions options;
+  private HttpClientOptions httpOptions;
 
   private JsonMapper jsonMapper;
 
@@ -89,11 +89,11 @@ public class ApiBuilder implements HttpClientOptions {
    *
    * @param logger
    *     the logger used by this builder, must not be {@code null}.
-   * @param options
+   * @param httpOptions
    *     the HTTP client options used by this builder, must not be {@code null}.
    */
-  public ApiBuilder(final Logger logger, final HttpClientOptions options) {
-    this(logger, options, new CustomizedJsonMapper());
+  public ApiBuilder(final Logger logger, final HttpClientOptions httpOptions) {
+    this(logger, httpOptions, new CustomizedJsonMapper());
   }
 
   /**
@@ -129,14 +129,14 @@ public class ApiBuilder implements HttpClientOptions {
    *
    * @param logger
    *     the logger used by this builder, must not be {@code null}.
-   * @param options
+   * @param httpOptions
    *     the HTTP client options used by this builder, must not be {@code null}.
    * @param jsonMapper
    *     the JSON mapper used by this builder, must not be {@code null}.
    */
-  public ApiBuilder(final Logger logger, final HttpClientOptions options, final JsonMapper jsonMapper) {
+  public ApiBuilder(final Logger logger, final HttpClientOptions httpOptions, final JsonMapper jsonMapper) {
     this.logger = requireNonNull("logger", logger);
-    this.options = requireNonNull("options", options);
+    this.httpOptions = requireNonNull("options", httpOptions);
     this.jsonMapper = requireNonNull("jsonMapper", jsonMapper);
   }
 
@@ -171,22 +171,22 @@ public class ApiBuilder implements HttpClientOptions {
    * @return
    *     the HTTP client options used by this builder.
    */
-  public HttpClientOptions getOptions() {
-    return options;
+  public HttpClientOptions getHttpOptions() {
+    return httpOptions;
   }
 
   /**
    * Sets the HTTP client options used by this builder.
    *
-   * @param options
+   * @param httpOptions
    *     the HTTP client options to be used, must not be {@code null}.
    * @return
    *     this builder, to support method chaining.
    * @throws NullPointerException
    *     if the options is {@code null}.
    */
-  public ApiBuilder setOptions(final HttpClientOptions options) {
-    this.options = requireNonNull("options", options);
+  public ApiBuilder setHttpOptions(final HttpClientOptions httpOptions) {
+    this.httpOptions = requireNonNull("options", httpOptions);
     return this;
   }
 
@@ -217,120 +217,120 @@ public class ApiBuilder implements HttpClientOptions {
 
   @Override
   public boolean isUseProxy() {
-    return options.isUseProxy();
+    return httpOptions.isUseProxy();
   }
 
   @Override
   public ApiBuilder setUseProxy(final boolean useProxy) {
-    options.setUseProxy(useProxy);
+    httpOptions.setUseProxy(useProxy);
     return this;
   }
 
   @Override
   public String getProxyType() {
-    return options.getProxyType();
+    return httpOptions.getProxyType();
   }
 
   @Override
   public ApiBuilder setProxyType(final String proxyType) {
-    options.setProxyType(proxyType);
+    httpOptions.setProxyType(proxyType);
     return this;
   }
 
   @Override
   public ApiBuilder setProxyType(final Proxy.Type proxyType) {
-    options.setProxyType(proxyType);
+    httpOptions.setProxyType(proxyType);
     return this;
   }
 
   @Override
   @Nullable
   public String getProxyHost() {
-    return options.getProxyHost();
+    return httpOptions.getProxyHost();
   }
 
   @Override
   public ApiBuilder setProxyHost(@Nullable final String proxyHost) {
-    options.setProxyHost(proxyHost);
+    httpOptions.setProxyHost(proxyHost);
     return this;
   }
 
   @Override
   public int getProxyPort() {
-    return options.getProxyPort();
+    return httpOptions.getProxyPort();
   }
 
   @Override
   public ApiBuilder setProxyPort(final int proxyPort) {
-    options.setProxyPort(proxyPort);
+    httpOptions.setProxyPort(proxyPort);
     return this;
   }
 
   @Override
   @Nullable
   public String getProxyUsername() {
-    return options.getProxyUsername();
+    return httpOptions.getProxyUsername();
   }
 
   @Override
   public ApiBuilder setProxyUsername(@Nullable final String proxyUsername) {
-    options.setProxyUsername(proxyUsername);
+    httpOptions.setProxyUsername(proxyUsername);
     return this;
   }
 
   @Override
   @Nullable
   public String getProxyPassword() {
-    return options.getProxyPassword();
+    return httpOptions.getProxyPassword();
   }
 
   @Override
   public ApiBuilder setProxyPassword(@Nullable final String proxyPassword) {
-    options.setProxyPassword(proxyPassword);
+    httpOptions.setProxyPassword(proxyPassword);
     return this;
   }
 
   @Override
   public int getConnectionTimeout() {
-    return options.getConnectionTimeout();
+    return httpOptions.getConnectionTimeout();
   }
 
   @Override
   public ApiBuilder setConnectionTimeout(final int connectionTimeout) {
-    options.setConnectionTimeout(connectionTimeout);
+    httpOptions.setConnectionTimeout(connectionTimeout);
     return this;
   }
 
   @Override
   public int getReadTimeout() {
-    return options.getReadTimeout();
+    return httpOptions.getReadTimeout();
   }
 
   @Override
   public ApiBuilder setReadTimeout(final int readTimeout) {
-    options.setReadTimeout(readTimeout);
+    httpOptions.setReadTimeout(readTimeout);
     return this;
   }
 
   @Override
   public int getWriteTimeout() {
-    return options.getWriteTimeout();
+    return httpOptions.getWriteTimeout();
   }
 
   @Override
   public ApiBuilder setWriteTimeout(final int writeTimeout) {
-    options.setWriteTimeout(writeTimeout);
+    httpOptions.setWriteTimeout(writeTimeout);
     return this;
   }
 
   @Override
   public boolean isUseHttpLogging() {
-    return options.isUseHttpLogging();
+    return httpOptions.isUseHttpLogging();
   }
 
   @Override
   public ApiBuilder setUseHttpLogging(final boolean useHttpLogging) {
-    options.setUseHttpLogging(useHttpLogging);
+    httpOptions.setUseHttpLogging(useHttpLogging);
     return this;
   }
 
@@ -681,7 +681,7 @@ public class ApiBuilder implements HttpClientOptions {
     if (httpClient != null) {
       retrofitBuilder.client(httpClient);
     } else {
-      final OkHttpClient client = new HttpClientBuilder(logger, options)
+      final OkHttpClient client = new HttpClientBuilder(logger, httpOptions)
           .addInterceptors(interceptors)
           .build();
       retrofitBuilder.client(client);
