@@ -8,16 +8,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.codec;
 
+import java.util.List;
+
 /**
- * The interface of codecs which can convert objects of one type to another and
- * vice versa.
+ * Provides the interface to decode an source object to list of target objects.
  *
  * @param <FROM>
- *     the type of the source objects.
+ *     the type of the source object to be decoded.
  * @param <TO>
- *     the type of the target objects.
+ *     the type of the elements in the target list to be decoded to.
  * @author Haixing Hu
  */
-public interface Codec<FROM, TO> extends Encoder<FROM, TO>, Decoder<TO, FROM> {
-  // empty
+public interface ListDecoder<FROM, TO> extends Decoder<FROM, List<TO>> {
+  //  empty
 }

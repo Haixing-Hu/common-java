@@ -11,8 +11,12 @@ package ltd.qubit.commons.util.codec;
 import javax.annotation.Nullable;
 
 /**
- * Provides the interface to decode an object to another.
+ * Provides the interface to decode a source object to another target object.
  *
+ * @param <FROM>
+ *     the type of the source object to be decoded.
+ * @param <TO>
+ *     the type of the target object to be decoded to.
  * @author Haixing Hu
  */
 public interface Decoder<FROM, TO> {

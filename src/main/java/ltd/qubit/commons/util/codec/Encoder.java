@@ -9,8 +9,12 @@
 package ltd.qubit.commons.util.codec;
 
 /**
- * Provides the interface to encode an object to another.
+ * Provides the interface to encode a source object to another target object.
  *
+ * @param <FROM>
+ *     the type of the source object to be encoded.
+ * @param <TO>
+ *     the type of the target object to be encoded to.
  * @author Haixing Hu
  */
 public interface Encoder<FROM, TO> {

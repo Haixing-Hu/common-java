@@ -9,11 +9,11 @@
 package ltd.qubit.commons.util.codec;
 
 /**
- * The interface of codecs which convert objects to strings and vice versa.
+ * The interface of decoder which convert strings into objects.
  *
  * @param <T>
- *     the type of the objects to be converted.
+ *     the type of the objects to be converted to.
  */
-public interface ObjectCodec<T> extends ObjectDecoder<T>, ObjectEncoder<T> {
+public interface ObjectDecoder<T> extends Decoder<String, T> {
   //  empty
 }
