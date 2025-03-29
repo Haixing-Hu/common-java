@@ -12,26 +12,34 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import ltd.qubit.commons.text.jackson.CustomizedJsonMapper;
+import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * The class of codecs which convert objects to strings and vice versa using JSON
- * format.
+ * The class of codecs which convert strings to objects using JSON format.
  *
  * @param <T>
  *     the type of the objects to be converted.
  */
-public class ObjectJsonCodec<T> implements ObjectCodec<T> {
+public class JsonObjectDecoder<T> implements ObjectDecoder<T> {
 
   private final JsonMapper mapper;
   private final Class<T> type;
 
-  public ObjectJsonCodec(final Class<T> type) {
+  public JsonObjectDecoder(final Class<T> type) {
     this(type, new CustomizedJsonMapper());
   }
 
-  public ObjectJsonCodec(final Class<T> type, final JsonMapper mapper) {
+  public JsonObjectDecoder(final Class<T> type, final JsonMapper mapper) {
     this.mapper = mapper;
     this.type = type;
+  }
+
+  public JsonMapper getMapper() {
+    return mapper;
+  }
+
+  public Class<T> getType() {
+    return type;
   }
 
   @Override
@@ -44,11 +52,10 @@ public class ObjectJsonCodec<T> implements ObjectCodec<T> {
   }
 
   @Override
-  public String encode(final T source) throws EncodingException {
-    try {
-      return mapper.writeValueAsString(source);
-    } catch (final JsonProcessingException e) {
-      throw new EncodingException(e);
-    }
+  public String toString() {
+    return new ToStringBuilder(this)
+        .append("mapper", mapper)
+        .append("type", type)
+        .toString();
   }
 }
