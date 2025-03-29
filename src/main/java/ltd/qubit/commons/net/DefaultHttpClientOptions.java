@@ -61,8 +61,9 @@ public class DefaultHttpClientOptions implements HttpClientOptions,
   }
 
   @Override
-  public void setConfig(final WritableConfig config) {
+  public DefaultHttpClientOptions setConfig(final WritableConfig config) {
     this.config = requireNonNull("config", config);
+    return this;
   }
 
   @Override

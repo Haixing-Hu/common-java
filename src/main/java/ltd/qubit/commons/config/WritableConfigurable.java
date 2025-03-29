@@ -27,7 +27,9 @@ public interface WritableConfigurable {
    *
    * @param config
    *     the configuration to be set to this object. It can't be null.
+   * @return
+   *     the current instance of this object.
    */
-  void setConfig(WritableConfig config);
+  WritableConfigurable setConfig(WritableConfig config);
 
 }
