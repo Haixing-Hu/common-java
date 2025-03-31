@@ -1900,7 +1900,7 @@ public class ComposedCriterionBuilder<T> {
    */
   public <R> ComposedCriterionBuilder<T> in(final String path,
       @Nullable final List<R> values) {
-    if (values != null && !values.isEmpty()) { // 注意：允许values为空列表
+    if (values != null) { // 注意：允许values为空列表
       criteria.add(new SimpleCriterion<>(entityClass, path, IN, values));
     }
     return this;
@@ -1923,7 +1923,7 @@ public class ComposedCriterionBuilder<T> {
    */
   public <R> ComposedCriterionBuilder<T> in(final GetterMethod<T, R> getter,
       @Nullable final List<R> values) {
-    if (values != null && !values.isEmpty()) { // 注意：允许values为空列表
+    if (values != null) { // 注意：允许values为空列表
       final String path = getPropertyPath(entityClass, getter);
       criteria.add(new SimpleCriterion<>(entityClass, path, IN, values));
     }
@@ -1951,7 +1951,7 @@ public class ComposedCriterionBuilder<T> {
    */
   public <P, R> ComposedCriterionBuilder<T> in(final GetterMethod<T, P> g1,
       final GetterMethod<P, R> g2, @Nullable final List<R> values) {
-    if (values != null && !values.isEmpty()) { // 注意：允许values为空列表
+    if (values != null) { // 注意：允许values为空列表
       final String path = getPropertyPath(entityClass, g1, g2);
       criteria.add(new SimpleCriterion<>(entityClass, path, IN, values));
     }
@@ -1984,7 +1984,7 @@ public class ComposedCriterionBuilder<T> {
   public <P1, P2, R> ComposedCriterionBuilder<T> in(final GetterMethod<T, P1> g1,
       final GetterMethod<P1, P2> g2, final GetterMethod<P2, R> g3,
       @Nullable final List<R> values) {
-    if (values != null && !values.isEmpty()) { // 注意：允许values为空列表
+    if (values != null)      { // 注意：允许values为空列表
       final String path = getPropertyPath(entityClass, g1, g2, g3);
       criteria.add(new SimpleCriterion<>(entityClass, path, IN, values));
     }
@@ -2021,7 +2021,7 @@ public class ComposedCriterionBuilder<T> {
   public <P1, P2, P3, R> ComposedCriterionBuilder<T> in(final GetterMethod<T, P1> g1,
       final GetterMethod<P1, P2> g2, final GetterMethod<P2, P3> g3,
       final GetterMethod<P3, R> g4, @Nullable final List<R> values) {
-    if (values != null && !values.isEmpty()) { // 注意：允许values为空列表
+    if (values != null)      { // 注意：允许values为空列表
       final String path = getPropertyPath(entityClass, g1, g2, g3, g4);
       criteria.add(new SimpleCriterion<>(entityClass, path, IN, values));
     }
@@ -2063,7 +2063,7 @@ public class ComposedCriterionBuilder<T> {
       final GetterMethod<P1, P2> g2, final GetterMethod<P2, P3> g3,
       final GetterMethod<P3, P4> g4, final GetterMethod<P4, R> g5,
       @Nullable final List<R> values) {
-    if (values != null && !values.isEmpty()) { // 注意：允许values为空列表
+    if (values != null)      { // 注意：允许values为空列表
       final String path = getPropertyPath(entityClass, g1, g2, g3, g4, g5);
       criteria.add(new SimpleCriterion<>(entityClass, path, IN, values));
     }
@@ -2087,7 +2087,7 @@ public class ComposedCriterionBuilder<T> {
    */
   public <R> ComposedCriterionBuilder<T> notIn(final String path,
       @Nullable final List<R> values) {
-    if (values != null && !values.isEmpty()) { // 注意：允许values为空列表
+    if (values != null)      { // 注意：允许values为空列表
       criteria.add(new SimpleCriterion<>(entityClass, path, NOT_IN, values));
     }
     return this;
@@ -2110,7 +2110,7 @@ public class ComposedCriterionBuilder<T> {
    */
   public <R> ComposedCriterionBuilder<T> notIn(final GetterMethod<T, R> getter,
       @Nullable final List<R> values) {
-    if (values != null && !values.isEmpty()) { // 注意：允许values为空列表
+    if (values != null)      { // 注意：允许values为空列表
       final String path = getPropertyPath(entityClass, getter);
       criteria.add(new SimpleCriterion<>(entityClass, path, NOT_IN, values));
     }
@@ -2138,7 +2138,7 @@ public class ComposedCriterionBuilder<T> {
    */
   public <P, R> ComposedCriterionBuilder<T> notIn(final GetterMethod<T, P> g1,
       final GetterMethod<P, R> g2, @Nullable final List<R> values) {
-    if (values != null && !values.isEmpty()) { // 注意：允许values为空列表
+    if (values != null)      { // 注意：允许values为空列表
       final String path = getPropertyPath(entityClass, g1, g2);
       criteria.add(new SimpleCriterion<>(entityClass, path, NOT_IN, values));
     }
@@ -2171,7 +2171,7 @@ public class ComposedCriterionBuilder<T> {
   public <P1, P2, R> ComposedCriterionBuilder<T> notIn(final GetterMethod<T, P1> g1,
       final GetterMethod<P1, P2> g2, final GetterMethod<P2, R> g3,
       @Nullable final List<R> values) {
-    if (values != null && !values.isEmpty()) { // 注意：允许values为空列表
+    if (values != null)      { // 注意：允许values为空列表
       final String path = getPropertyPath(entityClass, g1, g2, g3);
       criteria.add(new SimpleCriterion<>(entityClass, path, NOT_IN, values));
     }
@@ -2208,7 +2208,7 @@ public class ComposedCriterionBuilder<T> {
   public <P1, P2, P3, R> ComposedCriterionBuilder<T> notIn(final GetterMethod<T, P1> g1,
       final GetterMethod<P1, P2> g2, final GetterMethod<P2, P3> g3,
       final GetterMethod<P3, R> g4, @Nullable final List<R> values) {
-    if (values != null && !values.isEmpty()) { // 注意：允许values为空列表
+    if (values != null)      { // 注意：允许values为空列表
       final String path = getPropertyPath(entityClass, g1, g2, g3, g4);
       criteria.add(new SimpleCriterion<>(entityClass, path, NOT_IN, values));
     }
@@ -2250,7 +2250,7 @@ public class ComposedCriterionBuilder<T> {
       final GetterMethod<P1, P2> g2, final GetterMethod<P2, P3> g3,
       final GetterMethod<P3, P4> g4, final GetterMethod<P4, R> g5,
       @Nullable final List<R> values) {
-    if (values != null && !values.isEmpty()) { // 注意：允许values为空列表
+    if (values != null)      { // 注意：允许values为空列表
       final String path = getPropertyPath(entityClass, g1, g2, g3, g4, g5);
       criteria.add(new SimpleCriterion<>(entityClass, path, NOT_IN, values));
     }
