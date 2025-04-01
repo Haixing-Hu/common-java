@@ -223,7 +223,7 @@ public class ComposedCriterion<T> implements Criterion<T> {
    *     {@code null} if no matching criteria are found.
    */
   @Nullable
-  public <P> ComposedCriterion<P> extractSubEntityCriterion(final Class<P> propertyClass,
+  public <P, Q> ComposedCriterion<Q> extractSubEntityCriterion(final Class<Q> propertyClass,
       final GetterMethod<T, P> propertyGetter) {
     final String path = getPropertyPath(entityClass, propertyGetter);
     return extractSubEntityCriterion(propertyClass, path);
@@ -287,7 +287,7 @@ public class ComposedCriterion<T> implements Criterion<T> {
    *     or {@code null} if all criteria match the sub-entity path.
    */
   @Nullable
-  public <P> ComposedCriterion<T> excludeSubEntityCriterion(final Class<P> propertyClass,
+  public <P, Q> ComposedCriterion<T> excludeSubEntityCriterion(final Class<Q> propertyClass,
       final GetterMethod<T, P> propertyGetter) {
     final String path = getPropertyPath(entityClass, propertyGetter);
     return excludeSubEntityCriterion(propertyClass, path);
