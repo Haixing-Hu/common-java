@@ -10,7 +10,7 @@ package ltd.qubit.commons.config;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -749,19 +749,18 @@ public class ConfigTest {
   @Test
   public void testDate() {
     final DefaultConfig config = new DefaultConfig();
-    final Date date = new Date();
+    LocalDate date = LocalDate.of(2020, 1, 1);
 
-    date.setTime(0L);
     config.setDate("prop1", date);
     assertEquals(date, config.getDate("prop1"));
     assertNotSame(date, config.getDate("prop1"));
 
-    date.setTime(1L);
+    date = LocalDate.of(2021, 1, 2);
     config.setDate("prop2", date);
     assertEquals(date, config.getDate("prop2"));
     assertNotSame(date, config.getDate("prop2"));
 
-    date.setTime(2L);
+    date = LocalDate.of(2022, 1, 3);
     // note the the Date set to the configuration must be cloned.
     config.setDate("prop1", date);
     assertEquals(date, config.getDate("prop1"));
@@ -769,7 +768,7 @@ public class ConfigTest {
 
     // add an empty property, then set the value
     config.setFinal("prop3", true);
-    date.setTime(3L);
+    date = LocalDate.of(2023, 1, 4);
     config.setDate("prop3", date);
     assertEquals(date, config.getDate("prop3"));
     assertNotSame(date, config.getDate("prop3"));
@@ -780,53 +779,53 @@ public class ConfigTest {
   @Test
   public void testDates() {
     final DefaultConfig config = new DefaultConfig();
-    final Date date0 = new Date(0L);
-    final Date date1 = new Date(1L);
-    final Date date2 = new Date(2L);
-    final Date date3 = new Date(3L);
-    final Date date4 = new Date(4L);
-    final Date date5 = new Date(5L);
+    final LocalDate date0 = LocalDate.of(2020, 1, 1);
+    final LocalDate date1 = LocalDate.of(2021, 1, 2);
+    final LocalDate date2 = LocalDate.of(2022, 1, 3);
+    final LocalDate date3 = LocalDate.of(2023, 1, 4);
+    final LocalDate date4 = LocalDate.of(2024, 1, 5);
+    final LocalDate date5 = LocalDate.of(2025, 1, 6);
 
     config.addDate("prop1", date0);
     assertEquals(date0, config.getDate("prop1"));
     assertNotSame(date0, config.getDate("prop1"));
-    assertArrayEquals(new Date[]{date0},
+    assertArrayEquals(new LocalDate[]{date0},
         config.getDates("prop1"));
 
     config.addDate("prop1", date1);
     assertEquals(date0, config.getDate("prop1"));
-    assertArrayEquals(new Date[]{date0, date1},
+    assertArrayEquals(new LocalDate[]{date0, date1},
         config.getDates("prop1"));
 
     // set the value of a exist list property
     config.setFinal("prop1", true);
     config.setDate("prop1", date0);
     assertEquals(date0, config.getDate("prop1"));
-    assertArrayEquals(new Date[]{date0},
+    assertArrayEquals(new LocalDate[]{date0},
         config.getDates("prop1"));
     assertTrue(config.isFinal("prop1"));
 
     // add an array of values
     config.addDates("prop1", date1, date2);
-    assertArrayEquals(new Date[]{date0, date1, date2},
+    assertArrayEquals(new LocalDate[]{date0, date1, date2},
         config.getDates("prop1"));
 
     config.addDates("prop2", date0);
-    assertArrayEquals(new Date[]{date0},
+    assertArrayEquals(new LocalDate[]{date0},
         config.getDates("prop2"));
 
     config.addDates("prop3", date0, date1, date2);
-    assertArrayEquals(new Date[]{date0, date1, date2},
+    assertArrayEquals(new LocalDate[]{date0, date1, date2},
         config.getDates("prop3"));
 
     // add a collection of values
-    final List<Date> list = new LinkedList<Date>();
+    final List<LocalDate> list = new LinkedList<>();
     list.add(date3);
     list.add(date4);
     list.add(date5);
 
     config.addDates("prop1", list);
-    assertArrayEquals(new Date[]{date0, date1, date2, date3, date4, date5},
+    assertArrayEquals(new LocalDate[]{date0, date1, date2, date3, date4, date5},
         config.getDates("prop1"));
   }
 

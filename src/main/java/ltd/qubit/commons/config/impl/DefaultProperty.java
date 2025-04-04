@@ -11,7 +11,9 @@ package ltd.qubit.commons.config.impl;
 import java.io.Serial;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import javax.annotation.Nullable;
 
@@ -122,7 +124,19 @@ public class DefaultProperty extends BasicNamedMultiValues implements Property {
     isFinal = DEFAULT_IS_FINAL;
   }
 
-  public DefaultProperty(final String name, final Date value) {
+  public DefaultProperty(final String name, final LocalDate value) {
+    super(name, value);
+    description = null;
+    isFinal = DEFAULT_IS_FINAL;
+  }
+
+  public DefaultProperty(final String name, final LocalTime value) {
+    super(name, value);
+    description = null;
+    isFinal = DEFAULT_IS_FINAL;
+  }
+
+  public DefaultProperty(final String name, final LocalDateTime value) {
     super(name, value);
     description = null;
     isFinal = DEFAULT_IS_FINAL;

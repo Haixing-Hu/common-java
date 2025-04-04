@@ -10,7 +10,7 @@ package ltd.qubit.commons.util.value;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
@@ -35,10 +35,10 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class BasicMultiValuesTest {
 
   /**
-   * Test method for {@link BasicMultiValues#BasicVariants()}.
+   * Test method for {@link BasicMultiValues#BasicMultiValues()}.
    */
   @Test
-  public void testBasicVariants() {
+  public void testBasicMultiValues() {
     BasicMultiValues prop = null;
 
     prop = new BasicMultiValues();
@@ -47,10 +47,10 @@ public class BasicMultiValuesTest {
   }
 
   /**
-   * Test method for {@link BasicMultiValues#BasicVariants(Type)}.
+   * Test method for {@link BasicMultiValues#BasicMultiValues(Type)}.
    */
   @Test
-  public void testBasicVariantsType() {
+  public void testBasicMultiValuesType() {
     BasicMultiValues prop = null;
 
     prop = new BasicMultiValues(Type.STRING);
@@ -75,10 +75,10 @@ public class BasicMultiValuesTest {
   }
 
   /**
-   * Test method for {@link BasicMultiValues#BasicVariants(boolean)}.
+   * Test method for {@link BasicMultiValues#BasicMultiValues(boolean)}.
    */
   @Test
-  public void testBasicVariantsBoolean() {
+  public void testBasicMultiValuesBoolean() {
     BasicMultiValues prop = null;
 
     prop = new BasicMultiValues(true);
@@ -95,10 +95,10 @@ public class BasicMultiValuesTest {
   }
 
   /**
-   * Test method for {@link BasicMultiValues#BasicVariants(char)}.
+   * Test method for {@link BasicMultiValues#BasicMultiValues(char)}.
    */
   @Test
-  public void testBasicVariantsChar() {
+  public void testBasicMultiValuesChar() {
     BasicMultiValues prop = null;
 
     prop = new BasicMultiValues('x');
@@ -115,10 +115,10 @@ public class BasicMultiValuesTest {
   }
 
   /**
-   * Test method for {@link BasicMultiValues#BasicVariants(byte)}.
+   * Test method for {@link BasicMultiValues#BasicMultiValues(byte)}.
    */
   @Test
-  public void testBasicVariantsByte() {
+  public void testBasicMultiValuesByte() {
     BasicMultiValues prop = null;
     byte value = 0;
 
@@ -159,10 +159,10 @@ public class BasicMultiValuesTest {
   }
 
   /**
-   * Test method for {@link BasicMultiValues#BasicVariants(short)}.
+   * Test method for {@link BasicMultiValues#BasicMultiValues(short)}.
    */
   @Test
-  public void testBasicVariantsShort() {
+  public void testBasicMultiValuesShort() {
     BasicMultiValues prop = null;
     short value = 0;
 
@@ -203,10 +203,10 @@ public class BasicMultiValuesTest {
   }
 
   /**
-   * Test method for {@link BasicMultiValues#BasicVariants(int)}.
+   * Test method for {@link BasicMultiValues#BasicMultiValues(int)}.
    */
   @Test
-  public void testBasicVariantsInt() {
+  public void testBasicMultiValuesInt() {
     BasicMultiValues prop = null;
     int value = 0;
 
@@ -247,10 +247,10 @@ public class BasicMultiValuesTest {
   }
 
   /**
-   * Test method for {@link BasicMultiValues#BasicVariants(long)}.
+   * Test method for {@link BasicMultiValues#BasicMultiValues(long)}.
    */
   @Test
-  public void testBasicVariantsLong() {
+  public void testBasicMultiValuesLong() {
     BasicMultiValues prop = null;
     long value = 0;
 
@@ -291,10 +291,10 @@ public class BasicMultiValuesTest {
   }
 
   /**
-   * Test method for {@link BasicMultiValues#BasicVariants(float)}.
+   * Test method for {@link BasicMultiValues#BasicMultiValues(float)}.
    */
   @Test
-  public void testBasicVariantsFloat() {
+  public void testBasicMultiValuesFloat() {
     BasicMultiValues prop = null;
     float value = 0;
 
@@ -363,10 +363,10 @@ public class BasicMultiValuesTest {
   }
 
   /**
-   * Test method for {@link BasicMultiValues#BasicVariants(double)}.
+   * Test method for {@link BasicMultiValues#BasicMultiValues(double)}.
    */
   @Test
-  public void testBasicVariantsDouble() {
+  public void testBasicMultiValuesDouble() {
     BasicMultiValues prop = null;
     double value = 0;
 
@@ -435,10 +435,10 @@ public class BasicMultiValuesTest {
   }
 
   /**
-   * Test method for {@link BasicMultiValues#BasicVariants(String)}.
+   * Test method for {@link BasicMultiValues#BasicMultiValues(String)}.
    */
   @Test
-  public void testBasicVariantsString() {
+  public void testBasicMultiValuesString() {
     BasicMultiValues prop = null;
 
     prop = new BasicMultiValues("value1");
@@ -462,41 +462,41 @@ public class BasicMultiValuesTest {
   }
 
   /**
-   * Test method for {@link BasicMultiValues#BasicVariants(Date)}.
+   * Test method for {@link BasicMultiValues#BasicMultiValues(LocalDate)}.
    */
   @Test
-  public void testBasicVariantsDate() {
+  public void testBasicMultiValuesDate() {
     BasicMultiValues prop = null;
-    Date date = new Date();
+    LocalDate date = LocalDate.of(2020, 1, 1);
 
     prop = new BasicMultiValues(date);
     assertEquals(Type.DATE, prop.getType());
     assertEquals(1, prop.getCount());
     assertEquals(date, prop.getDateValue());
     assertNotSame(date, prop.getDateValue());
-    assertArrayEquals(new Date[]{date}, prop.getDateValues());
+    assertArrayEquals(new LocalDate[]{date}, prop.getDateValues());
 
-    date.setTime(200);
+    date = LocalDate.of(2020, 1, 2);
     prop = new BasicMultiValues(date);
     assertEquals(Type.DATE, prop.getType());
     assertEquals(1, prop.getCount());
     assertEquals(date, prop.getDateValue());
     assertNotSame(date, prop.getDateValue());
-    assertArrayEquals(new Date[]{date}, prop.getDateValues());
+    assertArrayEquals(new LocalDate[]{date}, prop.getDateValues());
 
     date = null;
     prop = new BasicMultiValues(date);
     assertEquals(Type.DATE, prop.getType());
     assertEquals(1, prop.getCount());
     assertEquals(date, prop.getDateValue());
-    assertArrayEquals(new Date[]{date}, prop.getDateValues());
+    assertArrayEquals(new LocalDate[]{date}, prop.getDateValues());
   }
 
   /**
-   * Test method for {@link BasicMultiValues#BasicVariants(byte[])}.
+   * Test method for {@link BasicMultiValues#BasicMultiValues(byte[])}.
    */
   @Test
-  public void testBasicVariantsByteArray() {
+  public void testBasicMultiValuesByteArray() {
     BasicMultiValues prop = null;
     byte[] bytes = new byte[]{1, 2, 3};
 
@@ -524,10 +524,10 @@ public class BasicMultiValuesTest {
   }
 
   /**
-   * Test method for {@link BasicMultiValues#BasicVariants(Class)}.
+   * Test method for {@link BasicMultiValues#BasicMultiValues(Class)}.
    */
   @Test
-  public void testBasicVariantsClass() {
+  public void testBasicMultiValuesClass() {
     BasicMultiValues prop = null;
     Class<?> cls = String.class;
 
@@ -556,10 +556,10 @@ public class BasicMultiValuesTest {
   }
 
   /**
-   * Test method for {@link BasicMultiValues#BasicVariants(BigInteger)}.
+   * Test method for {@link BasicMultiValues#BasicMultiValues(BigInteger)}.
    */
   @Test
-  public void testBasicVariantsBigInteger() {
+  public void testBasicMultiValuesBigInteger() {
     BasicMultiValues prop = null;
     BigInteger value = null;
 
@@ -586,10 +586,10 @@ public class BasicMultiValuesTest {
   }
 
   /**
-   * Test method for {@link BasicMultiValues#BasicVariants(BigDecimal)}.
+   * Test method for {@link BasicMultiValues#BasicMultiValues(BigDecimal)}.
    */
   @Test
-  public void testBasicVariantsBigDecimal() {
+  public void testBasicMultiValuesBigDecimal() {
     BasicMultiValues prop = null;
     BigDecimal value = null;
 
