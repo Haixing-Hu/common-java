@@ -13,6 +13,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.NoSuchElementException;
@@ -202,7 +205,7 @@ public interface MultiValues extends CloneableEx<MultiValues> {
    * @throws NoSuchElementException
    *     if this object has no value.
    */
-  boolean getBooleanValue() throws TypeMismatchException,
+  boolean getBoolean() throws TypeMismatchException,
       NoSuchElementException;
 
   /**
@@ -215,7 +218,7 @@ public interface MultiValues extends CloneableEx<MultiValues> {
    * @param value
    *     the new {@code boolean} value to be set to this object.
    */
-  void setBooleanValue(boolean value);
+  void setBoolean(boolean value);
 
   /**
    * Gets the values of this object as a {@code boolean} value.
@@ -225,7 +228,7 @@ public interface MultiValues extends CloneableEx<MultiValues> {
    * @throws TypeMismatchException
    *     if the type of this object is not {@link Type#BOOL}.
    */
-  boolean[] getBooleanValues() throws TypeMismatchException;
+  boolean[] getBooleans() throws TypeMismatchException;
 
   /**
    * Sets {@code boolean} values to this object.
@@ -237,7 +240,7 @@ public interface MultiValues extends CloneableEx<MultiValues> {
    * @param values
    *     the array of new {@code boolean} values to be set to this object.
    */
-  void setBooleanValues(boolean... values);
+  void setBooleans(boolean... values);
 
   /**
    * Sets {@code boolean} values to this object.
@@ -249,7 +252,7 @@ public interface MultiValues extends CloneableEx<MultiValues> {
    * @param values
    *     the collection of new {@code boolean} values to be set to this object.
    */
-  void setBooleanValues(BooleanCollection values);
+  void setBooleans(BooleanCollection values);
 
   /**
    * Adds a {@code boolean} value to this object.
@@ -1127,123 +1130,363 @@ public interface MultiValues extends CloneableEx<MultiValues> {
       throws TypeMismatchException;
 
   /**
-   * Gets the first value of this object as a {@link Date} value.
+   * Gets the first value of this object as a {@link LocalDate} value.
    *
-   * @return the first value of this object as a {@link Date} value, which may
+   * @return the first value of this object as a {@link LocalDate} value, which may
    *     be null. Note that the returned object is the cloned copy of the first
-   *     {@link Date} object stored in this object.
+   *     {@link LocalDate} object stored in this object.
    * @throws TypeMismatchException
    *     if the type of this object is not {@link Type#DATE}.
    * @throws NoSuchElementException
    *     if this object has no value.
    */
-  Date getDateValue() throws TypeMismatchException,
+  LocalDate getDateValue() throws TypeMismatchException,
       NoSuchElementException;
 
   /**
-   * Sets a single {@link Date} value to this object.
+   * Sets a single {@link LocalDate} value to this object.
    *
    * <p>After calling this function, the type of this object is set to {@link
    * Type#DATE}, all previous values of this object is cleared, and the new
    * value is set to this object.
    *
    * @param value
-   *     the new {@link Date} value to be set to this object, which may be null.
+   *     the new {@link LocalDate} value to be set to this object, which may be null.
    *     Note that the cloned copy of this object will be stored in this
    *     object.
    */
-  void setDateValue(@Nullable Date value);
+  void setDateValue(@Nullable LocalDate value);
 
   /**
-   * Gets the values of this object as a {@link Date} value.
+   * Gets the values of this object as a {@link LocalDate} value.
    *
-   * @return the values of this object as a {@link Date} array, whose elements
+   * @return the values of this object as a {@link LocalDate} array, whose elements
    *     may be null; or an empty array if this object has no value. Note that
    *     the objects in returned array is the cloned copies of the {@link Date}
    *     objects stored in this object.
    * @throws TypeMismatchException
    *     if the type of this object is not {@link Type#DATE}.
    */
-  Date[] getDateValues() throws TypeMismatchException;
+  LocalDate[] getDateValues() throws TypeMismatchException;
 
   /**
-   * Sets {@link Date} values to this object.
+   * Sets {@link LocalDate} values to this object.
    *
    * <p>After calling this function, the type of this object is set to {@link
    * Type#DATE}, all previous values of this object is cleared, and the new
    * values is set to this object.
    *
    * @param values
-   *     the array of new {@link Date} values to be set to this object, whose
+   *     the array of new {@link LocalDate} values to be set to this object, whose
    *     elements may be null. Note that the cloned copy of this array will be
    *     stored in this object.
    */
-  void setDateValues(Date... values);
+  void setDateValues(@Nullable LocalDate... values);
 
   /**
-   * Sets {@link Date} values to this object.
+   * Sets {@link LocalDate} values to this object.
    *
    * <p>After calling this function, the type of this object is set to {@link
    * Type#DATE}, all previous values of this object is cleared, and the new
    * values is set to this object.
    *
    * @param values
-   *     the collection of new {@link Date} values to be set to this object,
+   *     the collection of new {@link LocalDate} values to be set to this object,
    *     whose elements may be null. Note that the cloned copy of this
    *     collection will be stored in this object.
    */
-  void setDateValues(Collection<Date> values);
+  void setDateValues(@Nullable Collection<LocalDate> values);
 
   /**
-   * Adds a {@link Date} value to this object.
+   * Adds a {@link LocalDate} value to this object.
    *
    * <p>If the type of this object is not {@link Type#DATE}, an {@link
    * TypeMismatchException} will be thrown; otherwise, the specified {@link
-   * Date} value will be add to this object.
+   * LocalDate} value will be add to this object.
    *
    * @param value
-   *     the {@link Date} value to be add to this object, which may be null.
+   *     the {@link LocalDate} value to be add to this object, which may be null.
    *     Note that the cloned copy of this object will be stored in this
    *     object.
    * @throws TypeMismatchException
    *     if the type of this object is not {@link Type#DATE} and there is old
    *     value in this object.
    */
-  void addDateValue(@Nullable Date value) throws TypeMismatchException;
+  void addDateValue(@Nullable LocalDate value) throws TypeMismatchException;
 
   /**
-   * Adds {@link Date} values to this object.
+   * Adds {@link LocalDate} values to this object.
    *
    * <p>If the type of this object is not {@link Type#DATE}, an {@link
    * TypeMismatchException} will be thrown; otherwise, the specified {@link
-   * Date} values will be add to this object.
+   * LocalDate} values will be add to this object.
    *
    * @param values
-   *     the array of {@link Date} values to be add to this object, whose
+   *     the array of {@link LocalDate} values to be add to this object, whose
    *     elements may be null. Note that the cloned copy of this array will be
    *     stored in this object.
    * @throws TypeMismatchException
    *     if the type of this object is not {@link Type#DATE} and there is old
    *     value in this object.
    */
-  void addDateValues(Date... values) throws TypeMismatchException;
+  void addDateValues(@Nullable LocalDate... values) throws TypeMismatchException;
 
   /**
-   * Adds {@link Date} values to this object.
+   * Adds {@link LocalDate} values to this object.
    *
    * <p>If the type of this object is not {@link Type#DATE}, an {@link
    * TypeMismatchException} will be thrown; otherwise, the specified {@link
-   * Date} values will be add to this object.
+   * LocalDate} values will be add to this object.
    *
    * @param values
-   *     the collection of {@link Date} values to be add to this object, whose
+   *     the collection of {@link LocalDate} values to be add to this object, whose
    *     elements may be null. Note that the cloned copy of this collection will
    *     be stored in this object.
    * @throws TypeMismatchException
    *     if the type of this object is not {@link Type#DATE} and there is old
    *     value in this object.
    */
-  void addDateValues(Collection<Date> values)
+  void addDateValues(@Nullable Collection<LocalDate> values)
+      throws TypeMismatchException;
+
+  /**
+   * Gets the first value of this object as a {@link LocalTime} value.
+   *
+   * @return the first value of this object as a {@link LocalDate} value, which may
+   *     be null. Note that the returned object is the cloned copy of the first
+   *     {@link LocalTime} object stored in this object.
+   * @throws TypeMismatchException
+   *     if the type of this object is not {@link Type#TIME}.
+   * @throws NoSuchElementException
+   *     if this object has no value.
+   */
+  LocalTime getTimeValue() throws TypeMismatchException,
+      NoSuchElementException;
+
+  /**
+   * Sets a single {@link LocalTime} value to this object.
+   *
+   * <p>After calling this function, the type of this object is set to {@link
+   * Type#TIME}, all previous values of this object is cleared, and the new
+   * value is set to this object.
+   *
+   * @param value
+   *     the new {@link LocalTime} value to be set to this object, which may be null.
+   *     Note that the cloned copy of this object will be stored in this
+   *     object.
+   */
+  void setTimeValue(@Nullable LocalTime value);
+
+  /**
+   * Gets the values of this object as a {@link LocalTime} value.
+   *
+   * @return the values of this object as a {@link LocalTime} array, whose elements
+   *     may be null; or an empty array if this object has no value. Note that
+   *     the objects in returned array is the cloned copies of the {@link LocalTime}
+   *     objects stored in this object.
+   * @throws TypeMismatchException
+   *     if the type of this object is not {@link Type#TIME}.
+   */
+  LocalTime[] getTimeValues() throws TypeMismatchException;
+
+  /**
+   * Sets {@link LocalTime} values to this object.
+   *
+   * <p>After calling this function, the type of this object is set to {@link
+   * Type#TIME}, all previous values of this object is cleared, and the new
+   * values is set to this object.
+   *
+   * @param values
+   *     the array of new {@link LocalTime} values to be set to this object, whose
+   *     elements may be null. Note that the cloned copy of this array will be
+   *     stored in this object.
+   */
+  void setTimeValues(@Nullable LocalTime... values);
+
+  /**
+   * Sets {@link LocalTime} values to this object.
+   *
+   * <p>After calling this function, the type of this object is set to {@link
+   * Type#TIME}, all previous values of this object is cleared, and the new
+   * values is set to this object.
+   *
+   * @param values
+   *     the collection of new {@link LocalTime} values to be set to this object,
+   *     whose elements may be null. Note that the cloned copy of this
+   *     collection will be stored in this object.
+   */
+  void setTimeValues(@Nullable Collection<LocalTime> values);
+
+  /**
+   * Adds a {@link LocalTime} value to this object.
+   *
+   * <p>If the type of this object is not {@link Type#TIME}, an {@link
+   * TypeMismatchException} will be thrown; otherwise, the specified {@link
+   * LocalTime} value will be add to this object.
+   *
+   * @param value
+   *     the {@link LocalTime} value to be add to this object, which may be null.
+   *     Note that the cloned copy of this object will be stored in this
+   *     object.
+   * @throws TypeMismatchException
+   *     if the type of this object is not {@link Type#TIME} and there is old
+   *     value in this object.
+   */
+  void addTimeValue(@Nullable LocalTime value) throws TypeMismatchException;
+
+  /**
+   * Adds {@link LocalTime} values to this object.
+   *
+   * <p>If the type of this object is not {@link Type#TIME}, an {@link
+   * TypeMismatchException} will be thrown; otherwise, the specified {@link
+   * LocalTime} values will be add to this object.
+   *
+   * @param values
+   *     the array of {@link LocalTime} values to be add to this object, whose
+   *     elements may be null. Note that the cloned copy of this array will be
+   *     stored in this object.
+   * @throws TypeMismatchException
+   *     if the type of this object is not {@link Type#TIME} and there is old
+   *     value in this object.
+   */
+  void addTimeValues(@Nullable LocalTime... values) throws TypeMismatchException;
+
+  /**
+   * Adds {@link LocalTime} values to this object.
+   *
+   * <p>If the type of this object is not {@link Type#TIME}, an {@link
+   * TypeMismatchException} will be thrown; otherwise, the specified {@link
+   * LocalTime} values will be add to this object.
+   *
+   * @param values
+   *     the collection of {@link LocalTime} values to be add to this object, whose
+   *     elements may be null. Note that the cloned copy of this collection will
+   *     be stored in this object.
+   * @throws TypeMismatchException
+   *     if the type of this object is not {@link Type#TIME} and there is old
+   *     value in this object.
+   */
+  void addTimeValues(@Nullable Collection<LocalTime> values)
+      throws TypeMismatchException;
+
+  /**
+   * Gets the first value of this object as a {@link LocalDateTime} value.
+   *
+   * @return the first value of this object as a {@link LocalDateTime} value, which may
+   *     be null. Note that the returned object is the cloned copy of the first
+   *     {@link LocalDateTime} object stored in this object.
+   * @throws TypeMismatchException
+   *     if the type of this object is not {@link Type#DATETIME}.
+   * @throws NoSuchElementException
+   *     if this object has no value.
+   */
+  LocalDateTime getDateTimeValue() throws TypeMismatchException,
+      NoSuchElementException;
+
+  /**
+   * Sets a single {@link LocalDateTime} value to this object.
+   *
+   * <p>After calling this function, the type of this object is set to {@link
+   * Type#DATETIME}, all previous values of this object is cleared, and the new
+   * value is set to this object.
+   *
+   * @param value
+   *     the new {@link LocalDateTime} value to be set to this object, which may be null.
+   *     Note that the cloned copy of this object will be stored in this
+   *     object.
+   */
+  void setDateTimeValue(@Nullable LocalDateTime value);
+
+  /**
+   * Gets the values of this object as a {@link LocalDateTime} value.
+   *
+   * @return the values of this object as a {@link LocalDateTime} array, whose elements
+   *     may be null; or an empty array if this object has no value. Note that
+   *     the objects in returned array is the cloned copies of the {@link LocalDateTime}
+   *     objects stored in this object.
+   * @throws TypeMismatchException
+   *     if the type of this object is not {@link Type#DATETIME}.
+   */
+  LocalDateTime[] getDateTimeValues() throws TypeMismatchException;
+
+  /**
+   * Sets {@link LocalDateTime} values to this object.
+   *
+   * <p>After calling this function, the type of this object is set to {@link
+   * Type#DATETIME}, all previous values of this object is cleared, and the new
+   * values is set to this object.
+   *
+   * @param values
+   *     the array of new {@link LocalDateTime} values to be set to this object, whose
+   *     elements may be null. Note that the cloned copy of this array will be
+   *     stored in this object.
+   */
+  void setDateTimeValues(@Nullable LocalDateTime... values);
+
+  /**
+   * Sets {@link LocalDateTime} values to this object.
+   *
+   * <p>After calling this function, the type of this object is set to {@link
+   * Type#DATETIME}, all previous values of this object is cleared, and the new
+   * values is set to this object.
+   *
+   * @param values
+   *     the collection of new {@link LocalDateTime} values to be set to this object,
+   *     whose elements may be null. Note that the cloned copy of this
+   *     collection will be stored in this object.
+   */
+  void setDateTimeValues(@Nullable Collection<LocalDateTime> values);
+
+  /**
+   * Adds a {@link LocalDateTime} value to this object.
+   *
+   * <p>If the type of this object is not {@link Type#DATETIME}, an {@link
+   * TypeMismatchException} will be thrown; otherwise, the specified {@link
+   * LocalDateTime} value will be add to this object.
+   *
+   * @param value
+   *     the {@link LocalDateTime} value to be add to this object, which may be null.
+   *     Note that the cloned copy of this object will be stored in this
+   *     object.
+   * @throws TypeMismatchException
+   *     if the type of this object is not {@link Type#DATETIME} and there is old
+   *     value in this object.
+   */
+  void addDateTimeValue(@Nullable LocalDateTime value) throws TypeMismatchException;
+
+  /**
+   * Adds {@link LocalDateTime} values to this object.
+   *
+   * <p>If the type of this object is not {@link Type#DATETIME}, an {@link
+   * TypeMismatchException} will be thrown; otherwise, the specified {@link
+   * LocalDateTime} values will be add to this object.
+   *
+   * @param values
+   *     the array of {@link LocalDateTime} values to be add to this object, whose
+   *     elements may be null. Note that the cloned copy of this array will be
+   *     stored in this object.
+   * @throws TypeMismatchException
+   *     if the type of this object is not {@link Type#DATETIME} and there is old
+   *     value in this object.
+   */
+  void addDateTimeValues(@Nullable LocalDateTime... values) throws TypeMismatchException;
+
+  /**
+   * Adds {@link LocalDateTime} values to this object.
+   *
+   * <p>If the type of this object is not {@link Type#DATETIME}, an {@link
+   * TypeMismatchException} will be thrown; otherwise, the specified {@link
+   * LocalDateTime} values will be add to this object.
+   *
+   * @param values
+   *     the collection of {@link LocalDateTime} values to be add to this object, whose
+   *     elements may be null. Note that the cloned copy of this collection will
+   *     be stored in this object.
+   * @throws TypeMismatchException
+   *     if the type of this object is not {@link Type#DATETIME} and there is old
+   *     value in this object.
+   */
+  void addDateTimeValues(@Nullable Collection<LocalDateTime> values)
       throws TypeMismatchException;
 
   /**
@@ -1990,35 +2233,97 @@ public interface MultiValues extends CloneableEx<MultiValues> {
   String[] getValuesAsString() throws TypeConvertException;
 
   /**
-   * Gets the first value of this object as a {@link Date} value.
+   * Gets the first value of this object as a {@link LocalDate} value.
    *
    * <p>If the type of this object is not {@link Type#DATE}, the value will be
-   * converted into a {@link Date} value.
+   * converted into a {@link LocalDate} value.
    *
-   * @return the first value of this object as a {@link Date} value.
+   * @return the first value of this object as a {@link LocalDate} value.
    * @throws TypeConvertException
-   *     if the first value of this object can not be converted into a {@link
-   *     Date} value.
+   *     if the first value of this object can not be converted into a
+   *     {@link LocalDate} value.
    * @throws NoSuchElementException
    *     if this object has no value.
    */
-  Date getValueAsDate() throws TypeConvertException,
+  LocalDate getValueAsDate() throws TypeConvertException,
       NoSuchElementException;
 
   /**
-   * Gets the values of this object as a {@link Date} values.
+   * Gets the values of this object as a {@link LocalDate} values.
    *
    * <p>If the type of this object is not {@link Type#DATE}, the values will be
-   * converted into {@link Date} values.
+   * converted into {@link LocalDate} values.
    *
    * @return the values of this object as a {@link Date} values.
    * @throws TypeConvertException
-   *     if the values of this object can not be converted into a {@link Date}
+   *     if the values of this object can not be converted into a {@link LocalDate}
    *     value.
    * @throws NoSuchElementException
    *     if this object has no value.
    */
-  Date[] getValuesAsDate() throws TypeConvertException;
+  LocalDate[] getValuesAsDate() throws TypeConvertException;
+
+  /**
+   * Gets the first value of this object as a {@link LocalTime} value.
+   *
+   * <p>If the type of this object is not {@link Type#TIME}, the value will be
+   * converted into a {@link LocalTime} value.
+   *
+   * @return the first value of this object as a {@link LocalTime} value.
+   * @throws TypeConvertException
+   *     if the first value of this object can not be converted into a {@link
+   *     LocalTime} value.
+   * @throws NoSuchElementException
+   *     if this object has no value.
+   */
+  LocalTime getValueAsTime() throws TypeConvertException,
+      NoSuchElementException;
+
+  /**
+   * Gets the values of this object as a {@link LocalTime} values.
+   *
+   * <p>If the type of this object is not {@link Type#TIME}, the values will be
+   * converted into {@link LocalTime} values.
+   *
+   * @return the values of this object as a {@link LocalTime} values.
+   * @throws TypeConvertException
+   *     if the values of this object can not be converted into a {@link LocalTime}
+   *     value.
+   * @throws NoSuchElementException
+   *     if this object has no value.
+   */
+  LocalTime[] getValuesAsTime() throws TypeConvertException;
+
+  /**
+   * Gets the first value of this object as a {@link LocalDateTime} value.
+   *
+   * <p>If the type of this object is not {@link Type#DATETIME}, the value will be
+   * converted into a {@link LocalDateTime} value.
+   *
+   * @return the first value of this object as a {@link LocalDateTime} value.
+   * @throws TypeConvertException
+   *     if the first value of this object can not be converted into a {@link
+   *     LocalDateTime} value.
+   * @throws NoSuchElementException
+   *     if this object has no value.
+   */
+  LocalDateTime getValueAsDateTime() throws TypeConvertException,
+      NoSuchElementException;
+
+  /**
+   * Gets the values of this object as a {@link LocalDateTime} values.
+   *
+   * <p>If the type of this object is not {@link Type#DATETIME}, the values will be
+   * converted into {@link LocalDateTime} values.
+   *
+   * @return the values of this object as a {@link LocalDateTime} values.
+   * @throws TypeConvertException
+   *     if the values of this object can not be converted into a {@link LocalDateTime}
+   *     value.
+   * @throws NoSuchElementException
+   *     if this object has no value.
+   */
+  LocalDateTime[] getValuesAsDateTime() throws TypeConvertException;
 
   /**
    * Gets the first value of this object as a {@code byte[]} value.

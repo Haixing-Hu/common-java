@@ -15,10 +15,12 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -95,7 +97,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
 
   public BasicMultiValues(final boolean value) {
     this();
-    setBooleanValue(value);
+    setBoolean(value);
   }
 
   public BasicMultiValues(final char value) {
@@ -133,32 +135,32 @@ public class BasicMultiValues implements MultiValues, Serializable {
     setDoubleValue(value);
   }
 
-  public BasicMultiValues(@Nullable final String value) {
+  public BasicMultiValues(final String value) {
     this();
     setStringValue(value);
   }
 
-  public BasicMultiValues(@Nullable final Date value) {
+  public BasicMultiValues(final LocalDate value) {
     this();
     setDateValue(value);
   }
 
-  public BasicMultiValues(@Nullable final BigInteger value) {
+  public BasicMultiValues(final BigInteger value) {
     this();
     setBigIntegerValue(value);
   }
 
-  public BasicMultiValues(@Nullable final BigDecimal value) {
+  public BasicMultiValues(final BigDecimal value) {
     this();
     setBigDecimalValue(value);
   }
 
-  public BasicMultiValues(@Nullable final byte[] value) {
+  public BasicMultiValues(final byte[] value) {
     this();
     setByteArrayValue(value);
   }
 
-  public BasicMultiValues(@Nullable final Class<?> value) {
+  public BasicMultiValues(final Class<?> value) {
     this();
     setClassValue(value);
   }
@@ -214,7 +216,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
   private void assignSingleValue(final Type type, final MultiValues other) {
     switch (type) {
       case BOOL: {
-        final boolean value = other.getBooleanValue();
+        final boolean value = other.getBoolean();
         this.type = Type.BOOL;
         valueOrValues = value;
         count = 1;
@@ -277,7 +279,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
         return;
       }
       case DATE: {
-        final Date value = other.getDateValue();
+        final LocalDate value = other.getDateValue();
         // don't need to clone the value, since it is already the cloned
         // copy of the object of `other`.
         this.type = Type.DATE;
@@ -323,77 +325,77 @@ public class BasicMultiValues implements MultiValues, Serializable {
   private void assignMultiValues(final Type type, final MultiValues other) {
     switch (type) {
       case BOOL: {
-        final boolean[] values = other.getBooleanValues();
-        doAddBooleanValues(values);
+        final boolean[] values = other.getBooleans();
+        addMultipleBooleanValuesImpl(values);
         return;
       }
       case CHAR: {
         final char[] values = other.getCharValues();
-        doAddCharValues(values);
+        addMultipleCharValuesImpl(values);
         return;
       }
       case BYTE: {
         final byte[] values = other.getByteValues();
-        doAddByteValues(values);
+        addMultipleByteValuesImpl(values);
         return;
       }
       case SHORT: {
         final short[] values = other.getShortValues();
-        doAddShortValues(values);
+        addMultipleShortValuesImpl(values);
         return;
       }
       case INT: {
         final int[] values = other.getIntValues();
-        doAddIntValues(values);
+        addMultipleIntValuesImpl(values);
         return;
       }
       case LONG: {
         final long[] values = other.getLongValues();
-        doAddLongValues(values);
+        addMultipleLongValuesImpl(values);
         return;
       }
       case FLOAT: {
         final float[] values = other.getFloatValues();
-        doAddFloatValues(values);
+        addMultipleFloatsImpl(values);
         return;
       }
       case DOUBLE: {
         final double[] values = other.getDoubleValues();
-        doAddDoubleValues(values);
+        addMultipleDoubleValuesImpl(values);
         return;
       }
       case STRING: {
         final String[] values = other.getStringValues();
-        doAddStringValues(values);
+        addMultipleStringValuesImpl(values);
         return;
       }
       case DATE: {
-        final Date[] values = other.getDateValues();
+        final LocalDate[] values = other.getDateValues();
         // don't need to clone the value, since it is already the cloned
         // copy of the object of `other`.
-        doAddDateValues(false, values);
+        addMultipleDateValuesImpl(values);
         return;
       }
       case BYTE_ARRAY: {
         final byte[][] values = other.getByteArrayValues();
         // don't need to clone the value, since it is already the cloned
         // copy of the object of `other`.
-        doAddByteArrayValues(false, values);
+        addMultipleByteArrayValuesImpl(false, values);
         return;
       }
       case CLASS: {
         final Class<?>[] values = other.getClassValues();
-        doAddClassValues(values);
+        addMultipleClassValuesImpl(values);
         return;
       }
       case BIG_INTEGER: {
         final BigInteger[] values = other.getBigIntegerValues();
-        doAddBigIntegerValues(values);
+        addMultipleBigIntegerValuesImpl(values);
         return;
       }
       case BIG_DECIMAL: {
         final BigDecimal[] values = other.getBigDecimalValues();
-        doAddBigDecimalValues(values);
+        addMultipleBigDecimalValuesImpl(values);
         return;
       }
       default:
@@ -412,86 +414,86 @@ public class BasicMultiValues implements MultiValues, Serializable {
     }
     final int other_count = other.getCount();
     if (other_count == 1) {
-      doUnionSingleValue(type, other);
+      unionSingleValueImpl(type, other);
     } else if (other_count > 1) {
-      doUnionMultiValues(type, other);
+      unionMultiValuesImpl(type, other);
     }
   }
 
-  private void doUnionSingleValue(final Type type, final MultiValues other) {
+  private void unionSingleValueImpl(final Type type, final MultiValues other) {
     switch (type) {
       case BOOL: {
-        final boolean other_value = other.getBooleanValue();
-        doAddBooleanValue(other_value);
+        final boolean other_value = other.getBoolean();
+        addSingleBooleanValueImpl(other_value);
         return;
       }
       case CHAR: {
         final char other_value = other.getCharValue();
-        doAddCharValue(other_value);
+        addMultipleCharValuesImpl(other_value);
         return;
       }
       case BYTE: {
         final byte other_value = other.getByteValue();
-        doAddByteValue(other_value);
+        addSingleByteValueImpl(other_value);
         return;
       }
       case SHORT: {
         final short other_value = other.getShortValue();
-        doAddShortValue(other_value);
+        addSingleShortValueImpl(other_value);
         return;
       }
       case INT: {
         final int other_value = other.getIntValue();
-        doAddIntValue(other_value);
+        addSingleIntValueImpl(other_value);
         return;
       }
       case LONG: {
         final long other_value = other.getLongValue();
-        doAddLongValue(other_value);
+        addSingleLongValueImpl(other_value);
         return;
       }
       case FLOAT: {
         final float other_value = other.getFloatValue();
-        doAddFloatValue(other_value);
+        addSingleFloatValueImpl(other_value);
         return;
       }
       case DOUBLE: {
         final double other_value = other.getDoubleValue();
-        doAddDoubleValue(other_value);
+        addSingleDoubleValueImpl(other_value);
         return;
       }
       case STRING: {
         final String other_value = other.getStringValue();
-        doAddStringValue(other_value);
+        addSingleStringValueImpl(other_value);
         return;
       }
       case DATE: {
-        final Date other_value = other.getDateValue();
+        final LocalDate other_value = other.getDateValue();
         // don't need to clone the value, since it is already the cloned
         // copy of the object of `other`.
-        doAddDateValue(false, other_value);
+        addSingleDateValueImpl(other_value);
         return;
       }
       case BYTE_ARRAY: {
         final byte[] other_value = other.getByteArrayValue();
         // don't need to clone the value, since it is already the cloned
         // copy of the object of `other`.
-        doAddByteArrayValue(false, other_value);
+        addSingleByteArrayValueImpl(false, other_value);
         return;
       }
       case CLASS: {
         final Class<?> other_value = other.getClassValue();
-        doAddClassValue(other_value);
+        addSingleClassValueImpl(other_value);
         return;
       }
       case BIG_INTEGER: {
         final BigInteger other_value = other.getBigIntegerValue();
-        doAddBigIntegerValue(other_value);
+        addSingleBigIntegerValueImpl(other_value);
         return;
       }
       case BIG_DECIMAL: {
         final BigDecimal other_value = other.getBigDecimalValue();
-        doAddBigDecimalValue(other_value);
+        addSingleBigDecimalValueImpl(other_value);
         return;
       }
       default:
@@ -499,80 +501,80 @@ public class BasicMultiValues implements MultiValues, Serializable {
     }
   }
 
-  private void doUnionMultiValues(final Type type, final MultiValues other) {
+  private void unionMultiValuesImpl(final Type type, final MultiValues other) {
     switch (type) {
       case BOOL: {
-        final boolean[] other_values = other.getBooleanValues();
-        doAddBooleanValues(other_values);
+        final boolean[] other_values = other.getBooleans();
+        addMultipleBooleanValuesImpl(other_values);
         return;
       }
       case CHAR: {
         final char[] other_values = other.getCharValues();
-        doAddCharValues(other_values);
+        addMultipleCharValuesImpl(other_values);
         return;
       }
       case BYTE: {
         final byte[] other_values = other.getByteValues();
-        doAddByteValues(other_values);
+        addMultipleByteValuesImpl(other_values);
         return;
       }
       case SHORT: {
         final short[] other_values = other.getShortValues();
-        doAddShortValues(other_values);
+        addMultipleShortValuesImpl(other_values);
         return;
       }
       case INT: {
         final int[] other_values = other.getIntValues();
-        doAddIntValues(other_values);
+        addMultipleIntValuesImpl(other_values);
         return;
       }
       case LONG: {
         final long[] other_values = other.getLongValues();
-        doAddLongValues(other_values);
+        addMultipleLongValuesImpl(other_values);
         return;
       }
       case FLOAT: {
         final float[] other_values = other.getFloatValues();
-        doAddFloatValues(other_values);
+        addMultipleFloatsImpl(other_values);
         return;
       }
       case DOUBLE: {
         final double[] other_values = other.getDoubleValues();
-        doAddDoubleValues(other_values);
+        addMultipleDoubleValuesImpl(other_values);
         return;
       }
       case STRING: {
         final String[] other_values = other.getStringValues();
-        doAddStringValues(other_values);
+        addMultipleStringValuesImpl(other_values);
         return;
       }
       case DATE: {
-        final Date[] other_values = other.getDateValues();
+        final LocalDate[] other_values = other.getDateValues();
         // don't need to clone the value, since it is already the cloned
         // copy of the object of `other`.
-        doAddDateValues(false, other_values);
+        addMultipleDateValuesImpl(other_values);
         return;
       }
       case BYTE_ARRAY: {
         final byte[][] other_values = other.getByteArrayValues();
         // don't need to clone the value, since it is already the cloned
         // copy of the object of `other`.
-        doAddByteArrayValues(false, other_values);
+        addMultipleByteArrayValuesImpl(false, other_values);
         return;
       }
       case CLASS: {
         final Class<?>[] other_values = other.getClassValues();
-        doAddClassValues(other_values);
+        addMultipleClassValuesImpl(other_values);
         return;
       }
       case BIG_INTEGER: {
         final BigInteger[] other_values = other.getBigIntegerValues();
-        doAddBigIntegerValues(other_values);
+        addMultipleBigIntegerValuesImpl(other_values);
         return;
       }
       case BIG_DECIMAL: {
         final BigDecimal[] other_values = other.getBigDecimalValues();
-        doAddBigDecimalValues(other_values);
+        addMultipleBigDecimalValuesImpl(other_values);
         return;
       }
       default:
@@ -656,7 +658,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public boolean getBooleanValue() throws TypeMismatchException,
+  public boolean getBoolean() throws TypeMismatchException,
       NoSuchElementException {
     if (type != Type.BOOL) {
       throw new TypeMismatchException(Type.BOOL.name(), type.name());
@@ -672,14 +674,14 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setBooleanValue(final boolean value) {
+  public void setBoolean(final boolean value) {
     type = Type.BOOL;
     valueOrValues = value;
     count = 1;
   }
 
   @Override
-  public boolean[] getBooleanValues() throws TypeMismatchException {
+  public boolean[] getBooleans() throws TypeMismatchException {
     if (type != Type.BOOL) {
       throw new TypeMismatchException(Type.BOOL.name(), type.name());
     }
@@ -695,8 +697,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setBooleanValues(final boolean... values) {
-    if (values.length == 0) {
+  public void setBooleans(@Nullable final boolean... values) {
+    if (values == null || values.length == 0) {
       type = Type.BOOL;
       valueOrValues = null;
       count = 0;
@@ -714,8 +716,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setBooleanValues(final BooleanCollection values) {
-    final int n = values.size();
+  public void setBooleans(@Nullable final BooleanCollection values) {
+    final int n = (values == null ? 0 : values.size());
     if (n == 0) {
       type = Type.BOOL;
       valueOrValues = null;
@@ -738,10 +740,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if ((type != Type.BOOL) && (count > 0)) {
       throw new TypeMismatchException(Type.BOOL.name(), type.name());
     }
-    doAddBooleanValue(value);
+    addSingleBooleanValueImpl(value);
   }
 
-  private void doAddBooleanValue(final boolean value) {
+  private void addSingleBooleanValueImpl(final boolean value) {
     if (count == 0) {
       type = Type.BOOL;
       valueOrValues = value;
@@ -764,34 +766,38 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void addBooleanValues(final boolean... values)
+  public void addBooleanValues(@Nullable final boolean... values)
       throws TypeMismatchException {
     if ((type != Type.BOOL) && (count > 0)) {
       throw new TypeMismatchException(Type.BOOL.name(), type.name());
     }
-    if (values.length == 1) {
-      final boolean value = values[0];
-      doAddBooleanValue(value);
-    } else if (values.length > 1) {
-      doAddBooleanValues(values);
+    if (values != null) {
+      if (values.length == 1) {
+        final boolean value = values[0];
+        addSingleBooleanValueImpl(value);
+      } else if (values.length > 1) {
+        addMultipleBooleanValuesImpl(values);
+      }
     }
   }
 
   @Override
-  public void addBooleanValues(final BooleanCollection values)
+  public void addBooleanValues(@Nullable final BooleanCollection values)
       throws TypeMismatchException {
     if ((type != Type.BOOL) && (count > 0)) {
       throw new TypeMismatchException(Type.BOOL.name(), type.name());
     }
-    if (count == 1) {
-      final boolean value = values.iterator().next();
-      doAddBooleanValue(value);
-    } else if (count > 1) {
-      doAddBooleanValues(values);
+    if (values != null) {
+      if (count == 1) {
+        final boolean value = values.iterator().next();
+        addSingleBooleanValueImpl(value);
+      } else if (count > 1) {
+        addMultipleBooleanValuesImpl(values);
+      }
     }
   }
 
-  private void doAddBooleanValues(final boolean... values) {
+  private void addMultipleBooleanValuesImpl(final boolean... values) {
     if (count == 0) {
       final BooleanList list = new BooleanArrayList(values);
       type = Type.BOOL;
@@ -818,7 +824,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     }
   }
 
-  private void doAddBooleanValues(final BooleanCollection values) {
+  private void addMultipleBooleanValuesImpl(final BooleanCollection values) {
     if (count == 0) {
       final BooleanList list = new BooleanArrayList(values);
       type = Type.BOOL;
@@ -881,8 +887,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setCharValues(final char... values) {
-    if (values.length == 0) {
+  public void setCharValues(@Nullable final char... values) {
+    if (values == null || values.length == 0) {
       type = Type.CHAR;
       valueOrValues = null;
       count = 0;
@@ -900,8 +906,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setCharValues(final CharCollection values) {
-    final int n = values.size();
+  public void setCharValues(@Nullable final CharCollection values) {
+    final int n = (values == null ? 0 : values.size());
     if (n == 0) {
       type = Type.CHAR;
       valueOrValues = null;
@@ -924,10 +930,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if ((type != Type.CHAR) && (count > 0)) {
       throw new TypeMismatchException(Type.CHAR.name(), type.name());
     }
-    doAddCharValue(value);
+    addSingleCharValueImpl(value);
   }
 
-  private void doAddCharValue(final char value) {
+  private void addSingleCharValueImpl(final char value) {
     if (count == 0) {
       type = Type.CHAR;
       valueOrValues = value;
@@ -950,33 +956,37 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void addCharValues(final char... values) throws TypeMismatchException {
+  public void addCharValues(@Nullable final char... values) throws TypeMismatchException {
     if ((type != Type.CHAR) && (count > 0)) {
       throw new TypeMismatchException(Type.CHAR.name(), type.name());
     }
-    if (values.length == 1) {
-      final char value = values[0];
-      doAddCharValue(value);
-    } else if (values.length > 1) {
-      doAddCharValues(values);
+    if (values != null) {
+      if (values.length == 1) {
+        final char value = values[0];
+        addSingleCharValueImpl(value);
+      } else if (values.length > 1) {
+        addMultipleCharValuesImpl(values);
+      }
     }
   }
 
   @Override
-  public void addCharValues(final CharCollection values)
+  public void addCharValues(@Nullable final CharCollection values)
       throws TypeMismatchException {
     if ((type != Type.CHAR) && (count > 0)) {
       throw new TypeMismatchException(Type.CHAR.name(), type.name());
     }
-    if (count == 1) {
-      final char value = values.iterator().next();
-      doAddCharValue(value);
-    } else if (count > 1) {
-      doAddCharValues(values);
+    if (values != null) {
+      if (count == 1) {
+        final char value = values.iterator().next();
+        addSingleCharValueImpl(value);
+      } else if (count > 1) {
+        addMultipleCharValuesImpl(values);
+      }
     }
   }
 
-  private void doAddCharValues(final char... values) {
+  private void addMultipleCharValuesImpl(final char... values) {
     if (count == 0) {
       final CharList list = new CharArrayList(values);
       type = Type.CHAR;
@@ -1003,7 +1013,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     }
   }
 
-  private void doAddCharValues(final CharCollection values) {
+  private void addMultipleCharValuesImpl(final CharCollection values) {
     if (count == 0) {
       final CharList list = new CharArrayList(values);
       type = Type.CHAR;
@@ -1066,8 +1076,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setByteValues(final byte... values) {
-    if (values.length == 0) {
+  public void setByteValues(@Nullable final byte... values) {
+    if (values == null || values.length == 0) {
       type = Type.BYTE;
       valueOrValues = null;
       count = 0;
@@ -1085,8 +1095,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setByteValues(final ByteCollection values) {
-    final int n = values.size();
+  public void setByteValues(@Nullable final ByteCollection values) {
+    final int n = (values == null ? 0 : values.size());
     if (n == 0) {
       type = Type.BYTE;
       valueOrValues = null;
@@ -1109,10 +1119,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if ((type != Type.BYTE) && (count > 0)) {
       throw new TypeMismatchException(Type.BYTE.name(), type.name());
     }
-    doAddByteValue(value);
+    addSingleByteValueImpl(value);
   }
 
-  private void doAddByteValue(final byte value) {
+  private void addSingleByteValueImpl(final byte value) {
     if (count == 0) {
       type = Type.BYTE;
       valueOrValues = value;
@@ -1135,34 +1145,36 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void addByteValues(final byte... values) throws TypeMismatchException {
+  public void addByteValues(@Nullable final byte... values) throws TypeMismatchException {
     if ((type != Type.BYTE) && (count > 0)) {
       throw new TypeMismatchException(Type.BYTE.name(), type.name());
     }
-    if (values.length == 1) {
-      final byte value = values[0];
-      doAddByteValue(value);
-    } else if (values.length > 1) {
-      doAddByteValues(values);
+    if (values != null) {
+      if (values.length == 1) {
+        final byte value = values[0];
+        addSingleByteValueImpl(value);
+      } else if (values.length > 1) {
+        addMultipleByteValuesImpl(values);
+      }
     }
   }
 
   @Override
-  public void addByteValues(final ByteCollection values)
+  public void addByteValues(@Nullable final ByteCollection values)
       throws TypeMismatchException {
     if ((type != Type.BYTE) && (count > 0)) {
       throw new TypeMismatchException(Type.BYTE.name(), type.name());
     }
-    final int n = values.size();
+    final int n = (values == null ? 0 : values.size());
     if (n == 1) {
       final byte value = values.iterator().next();
-      doAddByteValue(value);
+      addSingleByteValueImpl(value);
     } else if (n > 1) {
-      doAddByteValues(values);
+      addMultipleByteValuesImpl(values);
     }
   }
 
-  private void doAddByteValues(final byte... values) {
+  private void addMultipleByteValuesImpl(final byte... values) {
     if (count == 0) {
       final ByteList list = new ByteArrayList(values);
       type = Type.BYTE;
@@ -1189,7 +1201,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     }
   }
 
-  private void doAddByteValues(final ByteCollection values) {
+  private void addMultipleByteValuesImpl(final ByteCollection values) {
     if (count == 0) {
       final ByteList list = new ByteArrayList(values);
       type = Type.BYTE;
@@ -1252,8 +1264,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setShortValues(final short... values) {
-    if (values.length == 0) {
+  public void setShortValues(@Nullable final short... values) {
+    if (values == null || values.length == 0) {
       type = Type.SHORT;
       valueOrValues = null;
       count = 0;
@@ -1271,8 +1283,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setShortValues(final ShortCollection values) {
-    final int n = values.size();
+  public void setShortValues(@Nullable final ShortCollection values) {
+    final int n = (values == null ? 0 : values.size());
     if (n == 0) {
       type = Type.SHORT;
       valueOrValues = null;
@@ -1295,10 +1307,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if ((type != Type.SHORT) && (count > 0)) {
       throw new TypeMismatchException(Type.SHORT.name(), type.name());
     }
-    doAddShortValue(value);
+    addSingleShortValueImpl(value);
   }
 
-  private void doAddShortValue(final short value) {
+  private void addSingleShortValueImpl(final short value) {
     if (count == 0) {
       type = Type.SHORT;
       valueOrValues = value;
@@ -1321,35 +1333,37 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void addShortValues(final short... values)
+  public void addShortValues(@Nullable final short... values)
       throws TypeMismatchException {
     if ((type != Type.SHORT) && (count > 0)) {
       throw new TypeMismatchException(Type.SHORT.name(), type.name());
     }
+    if (values != null) {
     if (values.length == 1) {
       final short value = values[0];
-      doAddShortValue(value);
+      addSingleShortValueImpl(value);
     } else if (values.length > 1) {
-      doAddShortValues(values);
+      addMultipleShortValuesImpl(values);
+    }
     }
   }
 
   @Override
-  public void addShortValues(final ShortCollection values)
+  public void addShortValues(@Nullable final ShortCollection values)
       throws TypeMismatchException {
     if ((type != Type.SHORT) && (count > 0)) {
       throw new TypeMismatchException(Type.SHORT.name(), type.name());
     }
-    final int n = values.size();
+    final int n = (values == null ? 0 : values.size());
     if (n == 1) {
       final short value = values.iterator().next();
-      doAddShortValue(value);
+      addSingleShortValueImpl(value);
     } else if (n > 1) {
-      doAddShortValues(values);
+      addMultipleShortValuesImpl(values);
     }
   }
 
-  private void doAddShortValues(final short... values) {
+  private void addMultipleShortValuesImpl(final short... values) {
     if (count == 0) {
       final ShortList list = new ShortArrayList(values);
       type = Type.SHORT;
@@ -1376,7 +1390,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     }
   }
 
-  private void doAddShortValues(final ShortCollection values) {
+  private void addMultipleShortValuesImpl(final ShortCollection values) {
     if (count == 0) {
       final ShortList list = new ShortArrayList(values);
       type = Type.SHORT;
@@ -1438,8 +1452,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setIntValues(final int... values) {
-    if (values.length == 0) {
+  public void setIntValues(@Nullable final int... values) {
+    if (values == null || values.length == 0) {
       type = Type.INT;
       valueOrValues = null;
       count = 0;
@@ -1457,8 +1471,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setIntValues(final IntCollection values) {
-    final int n = values.size();
+  public void setIntValues(@Nullable final IntCollection values) {
+    final int n = (values == null ? 0 : values.size());
     if (n == 0) {
       type = Type.INT;
       valueOrValues = null;
@@ -1481,10 +1495,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if ((type != Type.INT) && (count > 0)) {
       throw new TypeMismatchException(Type.INT.name(), type.name());
     }
-    doAddIntValue(value);
+    addSingleIntValueImpl(value);
   }
 
-  private void doAddIntValue(final int value) {
+  private void addSingleIntValueImpl(final int value) {
     if (count == 0) {
       type = Type.INT;
       valueOrValues = value;
@@ -1507,34 +1521,36 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void addIntValues(final int... values) throws TypeMismatchException {
+  public void addIntValues(@Nullable final int... values) throws TypeMismatchException {
     if ((type != Type.INT) && (count > 0)) {
       throw new TypeMismatchException(Type.INT.name(), type.name());
     }
-    if (values.length == 1) {
-      final int value = values[0];
-      doAddIntValue(value);
-    } else if (values.length > 1) {
-      doAddIntValues(values);
+    if (values != null) {
+      if (values.length == 1) {
+        final int value = values[0];
+        addSingleIntValueImpl(value);
+      } else if (values.length > 1) {
+        addMultipleIntValuesImpl(values);
+      }
     }
   }
 
   @Override
-  public void addIntValues(final IntCollection values)
+  public void addIntValues(@Nullable final IntCollection values)
       throws TypeMismatchException {
     if ((type != Type.INT) && (count > 0)) {
       throw new TypeMismatchException(Type.INT.name(), type.name());
     }
-    final int n = values.size();
+    final int n = (values == null ? 0 : values.size());
     if (n == 1) {
       final int value = values.iterator().next();
-      doAddIntValue(value);
+      addSingleIntValueImpl(value);
     } else if (n > 1) {
-      doAddIntValues(values);
+      addMultipleIntValuesImpl(values);
     }
   }
 
-  private void doAddIntValues(final int... values) {
+  private void addMultipleIntValuesImpl(final int... values) {
     if (count == 0) {
       final IntList list = new IntArrayList(values);
       type = Type.INT;
@@ -1561,7 +1577,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     }
   }
 
-  private void doAddIntValues(final IntCollection values) {
+  private void addMultipleIntValuesImpl(final IntCollection values) {
     if (count == 0) {
       final IntList list = new IntArrayList(values);
       type = Type.INT;
@@ -1624,8 +1640,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setLongValues(final long... values) {
-    if (values.length == 0) {
+  public void setLongValues(@Nullable final long... values) {
+    if (values == null || values.length == 0) {
       type = Type.LONG;
       valueOrValues = null;
       count = 0;
@@ -1643,8 +1659,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setLongValues(final LongCollection values) {
-    final int n = values.size();
+  public void setLongValues(@Nullable final LongCollection values) {
+    final int n = (values == null ? 0 : values.size());
     if (n == 0) {
       type = Type.LONG;
       valueOrValues = null;
@@ -1667,10 +1683,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if ((type != Type.LONG) && (count > 0)) {
       throw new TypeMismatchException(Type.LONG.name(), type.name());
     }
-    doAddLongValue(value);
+    addSingleLongValueImpl(value);
   }
 
-  private void doAddLongValue(final long value) {
+  private void addSingleLongValueImpl(final long value) {
     if (count == 0) {
       type = Type.LONG;
       valueOrValues = value;
@@ -1693,34 +1709,36 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void addLongValues(final long... values) throws TypeMismatchException {
+  public void addLongValues(@Nullable final long... values) throws TypeMismatchException {
     if ((type != Type.LONG) && (count > 0)) {
       throw new TypeMismatchException(Type.LONG.name(), type.name());
     }
-    if (values.length == 1) {
-      final long value = values[0];
-      doAddLongValue(value);
-    } else if (values.length > 1) {
-      doAddLongValues(values);
+    if (values != null) {
+      if (values.length == 1) {
+        final long value = values[0];
+        addSingleLongValueImpl(value);
+      } else if (values.length > 1) {
+        addMultipleLongValuesImpl(values);
+      }
     }
   }
 
   @Override
-  public void addLongValues(final LongCollection values)
+  public void addLongValues(@Nullable final LongCollection values)
       throws TypeMismatchException {
     if ((type != Type.LONG) && (count > 0)) {
       throw new TypeMismatchException(Type.LONG.name(), type.name());
     }
-    final int n = values.size();
+    final int n = (values == null ? 0 : values.size());
     if (n == 1) {
       final long value = values.iterator().next();
-      doAddLongValue(value);
+      addSingleLongValueImpl(value);
     } else if (n > 1) {
-      doAddLongValues(values);
+      addMultipleLongValuesImpl(values);
     }
   }
 
-  private void doAddLongValues(final long... values) {
+  private void addMultipleLongValuesImpl(final long... values) {
     if (count == 0) {
       final LongList list = new LongArrayList(values);
       type = Type.LONG;
@@ -1747,7 +1765,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     }
   }
 
-  private void doAddLongValues(final LongCollection values) {
+  private void addMultipleLongValuesImpl(final LongCollection values) {
     if (count == 0) {
       final LongList list = new LongArrayList(values);
       type = Type.LONG;
@@ -1810,8 +1828,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setFloatValues(final float... values) {
-    if (values.length == 0) {
+  public void setFloatValues(@Nullable final float... values) {
+    if (values == null || values.length == 0) {
       type = Type.FLOAT;
       valueOrValues = null;
       count = 0;
@@ -1829,8 +1847,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setFloatValues(final FloatCollection values) {
-    final int n = values.size();
+  public void setFloatValues(@Nullable final FloatCollection values) {
+    final int n = (values == null ? 0 : values.size());
     if (n == 0) {
       type = Type.FLOAT;
       valueOrValues = null;
@@ -1853,10 +1871,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if ((type != Type.FLOAT) && (count > 0)) {
       throw new TypeMismatchException(Type.FLOAT.name(), type.name());
     }
-    doAddFloatValue(value);
+    addSingleFloatValueImpl(value);
   }
 
-  private void doAddFloatValue(final float value) {
+  private void addSingleFloatValueImpl(final float value) {
     if (count == 0) {
       type = Type.FLOAT;
       valueOrValues = value;
@@ -1879,35 +1897,37 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void addFloatValues(final float... values)
+  public void addFloatValues(@Nullable final float... values)
       throws TypeMismatchException {
     if ((type != Type.FLOAT) && (count > 0)) {
       throw new TypeMismatchException(Type.FLOAT.name(), type.name());
     }
-    if (values.length == 1) {
-      final float value = values[0];
-      doAddFloatValue(value);
-    } else if (values.length > 1) {
-      doAddFloatValues(values);
+    if (values != null) {
+      if (values.length == 1) {
+        final float value = values[0];
+        addSingleFloatValueImpl(value);
+      } else if (values.length > 1) {
+        addMultipleFloatsImpl(values);
+      }
     }
   }
 
   @Override
-  public void addFloatValues(final FloatCollection values)
+  public void addFloatValues(@Nullable final FloatCollection values)
       throws TypeMismatchException {
     if ((type != Type.FLOAT) && (count > 0)) {
       throw new TypeMismatchException(Type.FLOAT.name(), type.name());
     }
-    final int n = values.size();
+    final int n = (values == null ? 0 : values.size());
     if (n == 1) {
       final float value = values.iterator().next();
-      doAddFloatValue(value);
+      addSingleFloatValueImpl(value);
     } else if (n > 1) {
-      doAddFloatValues(values);
+      addMultipleFloatsImpl(values);
     }
   }
 
-  private void doAddFloatValues(final float... values) {
+  private void addMultipleFloatsImpl(final float... values) {
     if (count == 0) {
       final FloatList list = new FloatArrayList(values);
       type = Type.FLOAT;
@@ -1934,7 +1954,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     }
   }
 
-  private void doAddFloatValues(final FloatCollection values) {
+  private void addMultipleFloatsImpl(final FloatCollection values) {
     if (count == 0) {
       final FloatList list = new FloatArrayList(values);
       type = Type.FLOAT;
@@ -1997,8 +2017,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setDoubleValues(final double... values) {
-    if (values.length == 0) {
+  public void setDoubleValues(@Nullable final double... values) {
+    if (values == null || values.length == 0) {
       type = Type.DOUBLE;
       valueOrValues = null;
       count = 0;
@@ -2016,8 +2036,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setDoubleValues(final DoubleCollection values) {
-    final int n = values.size();
+  public void setDoubleValues(@Nullable final DoubleCollection values) {
+    final int n = (values == null ? 0 : values.size());
     if (n == 0) {
       type = Type.DOUBLE;
       valueOrValues = null;
@@ -2040,10 +2060,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if ((type != Type.DOUBLE) && (count > 0)) {
       throw new TypeMismatchException(Type.DOUBLE.name(), type.name());
     }
-    doAddDoubleValue(value);
+    addSingleDoubleValueImpl(value);
   }
 
-  private void doAddDoubleValue(final double value) {
+  private void addSingleDoubleValueImpl(final double value) {
     if (count == 0) {
       type = Type.DOUBLE;
       valueOrValues = value;
@@ -2066,35 +2086,37 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void addDoubleValues(final double... values)
+  public void addDoubleValues(@Nullable final double... values)
       throws TypeMismatchException {
     if ((type != Type.DOUBLE) && (count > 0)) {
       throw new TypeMismatchException(Type.DOUBLE.name(), type.name());
     }
-    if (values.length == 1) {
-      final double value = values[0];
-      doAddDoubleValue(value);
-    } else if (values.length > 1) {
-      doAddDoubleValues(values);
+    if (values != null) {
+      if (values.length == 1) {
+        final double value = values[0];
+        addSingleDoubleValueImpl(value);
+      } else if (values.length > 1) {
+        addMultipleDoubleValuesImpl(values);
+      }
     }
   }
 
   @Override
-  public void addDoubleValues(final DoubleCollection values)
+  public void addDoubleValues(@Nullable final DoubleCollection values)
       throws TypeMismatchException {
     if ((type != Type.DOUBLE) && (count > 0)) {
       throw new TypeMismatchException(Type.DOUBLE.name(), type.name());
     }
-    final int n = values.size();
+    final int n = (values == null ? 0 : values.size());
     if (n == 1) {
       final double value = values.iterator().next();
-      doAddDoubleValue(value);
+      addSingleDoubleValueImpl(value);
     } else if (n > 1) {
-      doAddDoubleValues(values);
+      addMultipleDoubleValuesImpl(values);
     }
   }
 
-  private void doAddDoubleValues(final double... values) {
+  private void addMultipleDoubleValuesImpl(final double... values) {
     if (count == 0) {
       final DoubleList list = new DoubleArrayList(values);
       type = Type.DOUBLE;
@@ -2121,7 +2143,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     }
   }
 
-  private void doAddDoubleValues(final DoubleCollection values) {
+  private void addMultipleDoubleValuesImpl(final DoubleCollection values) {
     if (count == 0) {
       final DoubleList list = new DoubleArrayList(values);
       type = Type.DOUBLE;
@@ -2144,7 +2166,6 @@ public class BasicMultiValues implements MultiValues, Serializable {
     }
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public String getStringValue() throws TypeMismatchException,
       NoSuchElementException {
@@ -2156,19 +2177,19 @@ public class BasicMultiValues implements MultiValues, Serializable {
     } else if (count == 1) {
       return (String) valueOrValues;
     } else {
+      @SuppressWarnings("unchecked")
       final List<String> values = (List<String>) valueOrValues;
       return values.iterator().next();
     }
   }
 
   @Override
-  public void setStringValue(final String value) {
+  public void setStringValue(@Nullable final String value) {
     type = Type.STRING;
     valueOrValues = value;
     count = 1;
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public String[] getStringValues() throws TypeMismatchException {
     if (type != Type.STRING) {
@@ -2180,14 +2201,15 @@ public class BasicMultiValues implements MultiValues, Serializable {
       final String value = (String) valueOrValues;
       return new String[]{ value };
     } else { // count > 1
+      @SuppressWarnings("unchecked")
       final List<String> values = (List<String>) valueOrValues;
       return values.toArray(new String[0]);
     }
   }
 
   @Override
-  public void setStringValues(final String... values) {
-    if (values.length == 0) {
+  public void setStringValues(@Nullable final String... values) {
+    if (values == null || values.length == 0) {
       type = Type.STRING;
       valueOrValues = null;
       count = 0;
@@ -2205,8 +2227,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setStringValues(final Collection<String> values) {
-    final int n = values.size();
+  public void setStringValues(@Nullable final Collection<String> values) {
+    final int n = (values == null ? 0 : values.size());
     if (n == 0) {
       type = Type.STRING;
       valueOrValues = null;
@@ -2229,11 +2251,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if ((type != Type.STRING) && (count > 0)) {
       throw new TypeMismatchException(Type.STRING.name(), type.name());
     }
-    doAddStringValue(value);
+    addSingleStringValueImpl(value);
   }
 
-  @SuppressWarnings("unchecked")
-  private void doAddStringValue(final String value) {
+  private void addSingleStringValueImpl(final String value) {
     if (count == 0) {
       type = Type.STRING;
       valueOrValues = value;
@@ -2247,6 +2268,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       valueOrValues = list;
       count = 2;
     } else { // count > 1
+      @SuppressWarnings("unchecked")
       final List<String> list = (List<String>) valueOrValues;
       list.add(value);
       type = Type.STRING;
@@ -2256,36 +2278,37 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void addStringValues(final String... values)
+  public void addStringValues(@Nullable final String... values)
       throws TypeMismatchException {
     if ((type != Type.STRING) && (count > 0)) {
       throw new TypeMismatchException(Type.STRING.name(), type.name());
     }
-    if (values.length == 1) {
-      final String value = values[0];
-      doAddStringValue(value);
-    } else if (values.length > 1) {
-      doAddStringValues(values);
+    if (values != null) {
+      if (values.length == 1) {
+        final String value = values[0];
+        addSingleStringValueImpl(value);
+      } else if (values.length > 1) {
+        addMultipleStringValuesImpl(values);
+      }
     }
   }
 
   @Override
-  public void addStringValues(final Collection<String> values)
+  public void addStringValues(@Nullable final Collection<String> values)
       throws TypeMismatchException {
     if ((type != Type.STRING) && (count > 0)) {
       throw new TypeMismatchException(Type.STRING.name(), type.name());
     }
-    final int n = values.size();
+    final int n = (values == null ? 0 : values.size());
     if (n == 1) {
       final String value = values.iterator().next();
-      doAddStringValue(value);
+      addSingleStringValueImpl(value);
     } else if (n > 1) {
-      doAddStringValues(values);
+      addMultipleStringValuesImpl(values);
     }
   }
 
-  @SuppressWarnings("unchecked")
-  private void doAddStringValues(final String... values) {
+  private void addMultipleStringValuesImpl(final String... values) {
     if (count == 0) {
       final List<String> list = new ArrayList<>(values.length);
       Collections.addAll(list, values);
@@ -2301,6 +2324,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       valueOrValues = list;
       count = list.size();
     } else { // count > 1
+      @SuppressWarnings("unchecked")
       final List<String> list = (List<String>) valueOrValues;
       Collections.addAll(list, values);
       type = Type.STRING;
@@ -2309,8 +2333,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     }
   }
 
-  @SuppressWarnings("unchecked")
-  private void doAddStringValues(final Collection<String> values) {
+  private void addMultipleStringValuesImpl(final Collection<String> values) {
     if (count == 0) {
       final List<String> list = new ArrayList<>(values);
       type = Type.STRING;
@@ -2325,6 +2348,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       valueOrValues = list;
       count = list.size();
     } else { // count > 1
+      @SuppressWarnings("unchecked")
       final List<String> list = (List<String>) valueOrValues;
       list.addAll(values);
       type = Type.STRING;
@@ -2333,9 +2357,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
     }
   }
 
-  @SuppressWarnings("unchecked")
   @Override
-  public Date getDateValue() throws TypeMismatchException,
+  public LocalDate getDateValue() throws TypeMismatchException,
       NoSuchElementException {
     if (type != Type.DATE) {
       throw new TypeMismatchException(Type.DATE.name(), type.name());
@@ -2343,58 +2366,52 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if (count == 0) {
       throw new NoSuchElementException();
     } else if (count == 1) {
-      return (Date) valueOrValues;
+      return (LocalDate) valueOrValues;
     } else {
-      final List<Date> values = (List<Date>) valueOrValues;
+      @SuppressWarnings("unchecked")
+      final List<LocalDate> values = (List<LocalDate>) valueOrValues;
       return values.iterator().next();
     }
   }
 
   @Override
-  public void setDateValue(final Date value) {
+  public void setDateValue(final LocalDate value) {
     type = Type.DATE;
-    valueOrValues = Assignment.clone(value);
+    valueOrValues = value;
     count = 1;
   }
 
-  @SuppressWarnings("unchecked")
   @Override
-  public Date[] getDateValues() throws TypeMismatchException {
+  public LocalDate[] getDateValues() throws TypeMismatchException {
     if (type != Type.DATE) {
       throw new TypeMismatchException(Type.DATE.name(), type.name());
     }
     if (count == 0) {
-      return ArrayUtils.EMPTY_DATE_ARRAY;
+      return ArrayUtils.EMPTY_LOCAL_DATE_ARRAY;
     } else if (count == 1) {
-      final Date value = (Date) valueOrValues;
-      return new Date[]{ Assignment.clone(value) };
+      final LocalDate value = (LocalDate) valueOrValues;
+      return new LocalDate[]{ value };
     } else { // count > 1
-      final List<Date> values = (List<Date>) valueOrValues;
-      final Date[] result = new Date[values.size()];
-      int i = 0;
-      for (final Date value : values) {
-        result[i++] = Assignment.clone(value);
-      }
-      return result;
+      @SuppressWarnings("unchecked")
+      final List<LocalDate> values = (List<LocalDate>) valueOrValues;
+      return values.toArray(new LocalDate[0]);
     }
   }
 
   @Override
-  public void setDateValues(final Date... values) {
-    if (values.length == 0) {
+  public void setDateValues(@Nullable final LocalDate... values) {
+    if (values == null || values.length == 0) {
       type = Type.DATE;
       valueOrValues = null;
       count = 0;
     } else if (values.length == 1) {
-      final Date value = values[0];
+      final LocalDate value = values[0];
       type = Type.DATE;
-      valueOrValues = Assignment.clone(value);
+      valueOrValues = value;
       count = 1;
     } else {
-      final List<Date> list = new ArrayList<>(values.length);
-      for (final Date value : values) {
-        list.add(Assignment.clone(value));
-      }
+      final List<LocalDate> list = new ArrayList<>(values.length);
+      Collections.addAll(list, values);
       type = Type.DATE;
       valueOrValues = list;
       count = values.length;
@@ -2402,22 +2419,20 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setDateValues(final Collection<Date> values) {
-    final int n = values.size();
+  public void setDateValues(@Nullable final Collection<LocalDate> values) {
+    final int n = (values == null ? 0 : values.size());
     if (n == 0) {
       type = Type.DATE;
       valueOrValues = null;
       count = 0;
     } else if (n == 1) {
-      final Date value = values.iterator().next();
+      final LocalDate value = values.iterator().next();
       type = Type.DATE;
-      valueOrValues = Assignment.clone(value);
+      valueOrValues = value;
       count = 1;
     } else {
-      final List<Date> list = new ArrayList<>(n);
-      for (final Date value : values) {
-        list.add(Assignment.clone(value));
-      }
+      final List<LocalDate> list = new ArrayList<>(n);
+      list.addAll(values);
       type = Type.DATE;
       valueOrValues = list;
       count = n;
@@ -2425,42 +2440,30 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void addDateValue(final Date value) throws TypeMismatchException {
+  public void addDateValue(final LocalDate value) throws TypeMismatchException {
     if ((type != Type.DATE) && (count > 0)) {
       throw new TypeMismatchException(Type.DATE.name(), type.name());
     }
-    doAddDateValue(true, value);
+    addSingleDateValueImpl(value);
   }
 
-  @SuppressWarnings("unchecked")
-  private void doAddDateValue(final boolean cloneValue, final Date value) {
+  private void addSingleDateValueImpl(final LocalDate value) {
     if (count == 0) {
       type = Type.DATE;
       count = 1;
-      if (cloneValue) {
-        valueOrValues = Assignment.clone(value);
-      } else {
-        valueOrValues = value;
-      }
+      valueOrValues = value;
     } else if (count == 1) {
-      final Date oldValue = (Date) valueOrValues;
-      final List<Date> list = new ArrayList<>(2);
+      final LocalDate oldValue = (LocalDate) valueOrValues;
+      final List<LocalDate> list = new ArrayList<>(2);
       list.add(oldValue);
-      if (cloneValue) {
-        list.add(Assignment.clone(value));
-      } else {
-        list.add(value);
-      }
+      list.add(value);
       type = Type.DATE;
       valueOrValues = list;
       count = 2;
     } else { // count > 1
-      final List<Date> list = (List<Date>) valueOrValues;
-      if (cloneValue) {
-        list.add(Assignment.clone(value));
-      } else {
-        list.add(value);
-      }
+      @SuppressWarnings("unchecked")
+      final List<LocalDate> list = (List<LocalDate>) valueOrValues;
+      list.add(value);
       type = Type.DATE;
       valueOrValues = list;
       count = list.size();
@@ -2468,121 +2471,472 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void addDateValues(final Date... values) throws TypeMismatchException {
+  public void addDateValues(@Nullable final LocalDate... values) throws TypeMismatchException {
     if ((type != Type.DATE) && (count > 0)) {
       throw new TypeMismatchException(Type.DATE.name(), type.name());
     }
-    if (values.length == 1) {
-      final Date value = values[0];
-      doAddDateValue(true, value);
-    } else if (values.length > 1) {
-      doAddDateValues(true, values);
+    if (values != null) {
+      if (values.length == 1) {
+        final LocalDate value = values[0];
+        addSingleDateValueImpl(value);
+      } else if (values.length > 1) {
+        addMultipleDateValuesImpl(values);
+      }
     }
   }
 
   @Override
-  public void addDateValues(final Collection<Date> values)
+  public void addDateValues(@Nullable final Collection<LocalDate> values)
       throws TypeMismatchException {
     if ((type != Type.DATE) && (count > 0)) {
       throw new TypeMismatchException(Type.DATE.name(), type.name());
     }
-    final int n = values.size();
+    final int n = (values == null ? 0 : values.size());
     if (n == 1) {
-      final Date value = values.iterator().next();
-      doAddDateValue(true, value);
+      final LocalDate value = values.iterator().next();
+      addSingleDateValueImpl(value);
     } else if (n > 1) {
-      doAddDateValues(true, values);
+      addMultipleDateValuesImpl(values);
     }
   }
 
-  @SuppressWarnings("unchecked")
-  private void doAddDateValues(final boolean cloneValue, final Date... values) {
+  private void addMultipleDateValuesImpl(final LocalDate... values) {
     if (count == 0) {
-      final List<Date> list = new ArrayList<>(values.length);
-      if (cloneValue) {
-        for (final Date value : values) {
-          list.add(Assignment.clone(value));
-        }
-      } else {
-        Collections.addAll(list, values);
-      }
+      final List<LocalDate> list = new ArrayList<>(values.length);
+      Collections.addAll(list, values);
       type = Type.DATE;
       valueOrValues = list;
       count = list.size();
     } else if (count == 1) {
-      final Date oldValue = (Date) valueOrValues;
-      final List<Date> list = new ArrayList<>();
+      final LocalDate oldValue = (LocalDate) valueOrValues;
+      final List<LocalDate> list = new ArrayList<>();
       list.add(oldValue);
-      if (cloneValue) {
-        for (final Date value : values) {
-          list.add(Assignment.clone(value));
-        }
-      } else {
-        Collections.addAll(list, values);
-      }
+      Collections.addAll(list, values);
       type = Type.DATE;
       valueOrValues = list;
       count = list.size();
     } else { // count > 1
-      final List<Date> list = (List<Date>) valueOrValues;
-      if (cloneValue) {
-        for (final Date value : values) {
-          list.add(Assignment.clone(value));
-        }
-      } else {
-        Collections.addAll(list, values);
-      }
+      @SuppressWarnings("unchecked")
+      final List<LocalDate> list = (List<LocalDate>) valueOrValues;
+      Collections.addAll(list, values);
       type = Type.DATE;
       valueOrValues = list;
       count = list.size();
     }
   }
 
-  @SuppressWarnings("unchecked")
-  private void doAddDateValues(final boolean cloneValue,
-      final Collection<Date> values) {
+  private void addMultipleDateValuesImpl(final Collection<LocalDate> values) {
     if (count == 0) {
-      final List<Date> list = new ArrayList<>(values.size());
-      if (cloneValue) {
-        for (final Date value : values) {
-          list.add(Assignment.clone(value));
-        }
-      } else {
-        list.addAll(values);
-      }
+      final List<LocalDate> list = new ArrayList<>(values.size());
+      list.addAll(values);
       type = Type.DATE;
       valueOrValues = list;
       count = list.size();
     } else if (count == 1) {
-      final Date oldValue = (Date) valueOrValues;
-      final List<Date> list = new ArrayList<>();
+      final LocalDate oldValue = (LocalDate) valueOrValues;
+      final List<LocalDate> list = new ArrayList<>();
       list.add(oldValue);
-      if (cloneValue) {
-        for (final Date value : values) {
-          list.add(Assignment.clone(value));
-        }
-      } else {
-        list.addAll(values);
-      }
+      list.addAll(values);
       type = Type.DATE;
       valueOrValues = list;
       count = list.size();
     } else { // count > 1
-      final List<Date> list = (List<Date>) valueOrValues;
-      if (cloneValue) {
-        for (final Date value : values) {
-          list.add(Assignment.clone(value));
-        }
-      } else {
-        list.addAll(values);
-      }
+      @SuppressWarnings("unchecked")
+      final List<LocalDate> list = (List<LocalDate>) valueOrValues;
+      list.addAll(values);
       type = Type.DATE;
       valueOrValues = list;
       count = list.size();
     }
   }
 
-  @SuppressWarnings("unchecked")
+
+  @Override
+  public LocalTime getTimeValue() throws TypeMismatchException,
+      NoSuchElementException {
+    if (type != Type.TIME) {
+      throw new TypeMismatchException(Type.TIME.name(), type.name());
+    }
+    if (count == 0) {
+      throw new NoSuchElementException();
+    } else if (count == 1) {
+      return (LocalTime) valueOrValues;
+    } else {
+      @SuppressWarnings("unchecked")
+      final List<LocalTime> values = (List<LocalTime>) valueOrValues;
+      return values.iterator().next();
+    }
+  }
+
+  @Override
+  public void setTimeValue(final LocalTime value) {
+    type = Type.TIME;
+    valueOrValues = value;
+    count = 1;
+  }
+
+  @Override
+  public LocalTime[] getTimeValues() throws TypeMismatchException {
+    if (type != Type.TIME) {
+      throw new TypeMismatchException(Type.TIME.name(), type.name());
+    }
+    if (count == 0) {
+      return ArrayUtils.EMPTY_LOCAL_TIME_ARRAY;
+    } else if (count == 1) {
+      final LocalTime value = (LocalTime) valueOrValues;
+      return new LocalTime[]{ value };
+    } else { // count > 1
+      @SuppressWarnings("unchecked")
+      final List<LocalTime> values = (List<LocalTime>) valueOrValues;
+      return values.toArray(new LocalTime[0]);
+    }
+  }
+
+  @Override
+  public void setTimeValues(@Nullable final LocalTime... values) {
+    if (values == null || values.length == 0) {
+      type = Type.TIME;
+      valueOrValues = null;
+      count = 0;
+    } else if (values.length == 1) {
+      final LocalTime value = values[0];
+      type = Type.TIME;
+      valueOrValues = value;
+      count = 1;
+    } else {
+      final List<LocalTime> list = new ArrayList<>(values.length);
+      Collections.addAll(list, values);
+      type = Type.TIME;
+      valueOrValues = list;
+      count = values.length;
+    }
+  }
+
+  @Override
+  public void setTimeValues(@Nullable final Collection<LocalTime> values) {
+    final int n = (values == null ? 0 : values.size());
+    if (n == 0) {
+      type = Type.TIME;
+      valueOrValues = null;
+      count = 0;
+    } else if (n == 1) {
+      final LocalTime value = values.iterator().next();
+      type = Type.TIME;
+      valueOrValues = value;
+      count = 1;
+    } else {
+      final List<LocalTime> list = new ArrayList<>(n);
+      list.addAll(values);
+      type = Type.TIME;
+      valueOrValues = list;
+      count = n;
+    }
+  }
+
+  @Override
+  public void addTimeValue(final LocalTime value) throws TypeMismatchException {
+    if ((type != Type.TIME) && (count > 0)) {
+      throw new TypeMismatchException(Type.TIME.name(), type.name());
+    }
+    addSingleTimeValueImpl(value);
+  }
+
+  private void addSingleTimeValueImpl(final LocalTime value) {
+    if (count == 0) {
+      type = Type.TIME;
+      count = 1;
+      valueOrValues = value;
+    } else if (count == 1) {
+      final LocalTime oldValue = (LocalTime) valueOrValues;
+      final List<LocalTime> list = new ArrayList<>(2);
+      list.add(oldValue);
+      list.add(value);
+      type = Type.TIME;
+      valueOrValues = list;
+      count = 2;
+    } else { // count > 1
+      @SuppressWarnings("unchecked")
+      final List<LocalTime> list = (List<LocalTime>) valueOrValues;
+      list.add(value);
+      type = Type.TIME;
+      valueOrValues = list;
+      count = list.size();
+    }
+  }
+
+  @Override
+  public void addTimeValues(@Nullable final LocalTime... values) throws TypeMismatchException {
+    if ((type != Type.TIME) && (count > 0)) {
+      throw new TypeMismatchException(Type.TIME.name(), type.name());
+    }
+    if (values != null) {
+      if (values.length == 1) {
+        final LocalTime value = values[0];
+        addSingleTimeValueImpl(value);
+      } else if (values.length > 1) {
+        addMultipleTimeValuesImpl(values);
+      }
+    }
+  }
+
+  @Override
+  public void addTimeValues(@Nullable final Collection<LocalTime> values)
+      throws TypeMismatchException {
+    if ((type != Type.TIME) && (count > 0)) {
+      throw new TypeMismatchException(Type.TIME.name(), type.name());
+    }
+    final int n = (values == null ? 0 : values.size());
+    if (n == 1) {
+      final LocalTime value = values.iterator().next();
+      addSingleTimeValueImpl(value);
+    } else if (n > 1) {
+      addMultipleTimeValuesImpl(values);
+    }
+  }
+
+  private void addMultipleTimeValuesImpl(final LocalTime... values) {
+    if (count == 0) {
+      final List<LocalTime> list = new ArrayList<>(values.length);
+      Collections.addAll(list, values);
+      type = Type.TIME;
+      valueOrValues = list;
+      count = list.size();
+    } else if (count == 1) {
+      final LocalTime oldValue = (LocalTime) valueOrValues;
+      final List<LocalTime> list = new ArrayList<>();
+      list.add(oldValue);
+      Collections.addAll(list, values);
+      type = Type.TIME;
+      valueOrValues = list;
+      count = list.size();
+    } else { // count > 1
+      @SuppressWarnings("unchecked")
+      final List<LocalTime> list = (List<LocalTime>) valueOrValues;
+      Collections.addAll(list, values);
+      type = Type.TIME;
+      valueOrValues = list;
+      count = list.size();
+    }
+  }
+
+  private void addMultipleTimeValuesImpl(final Collection<LocalTime> values) {
+    if (count == 0) {
+      final List<LocalTime> list = new ArrayList<>(values.size());
+      list.addAll(values);
+      type = Type.TIME;
+      valueOrValues = list;
+      count = list.size();
+    } else if (count == 1) {
+      final LocalTime oldValue = (LocalTime) valueOrValues;
+      final List<LocalTime> list = new ArrayList<>();
+      list.add(oldValue);
+      list.addAll(values);
+      type = Type.TIME;
+      valueOrValues = list;
+      count = list.size();
+    } else { // count > 1
+      @SuppressWarnings("unchecked")
+      final List<LocalTime> list = (List<LocalTime>) valueOrValues;
+      list.addAll(values);
+      type = Type.TIME;
+      valueOrValues = list;
+      count = list.size();
+    }
+  }
+
+  @Override
+  public LocalDateTime getDateTimeValue() throws TypeMismatchException,
+      NoSuchElementException {
+    if (type != Type.DATETIME) {
+      throw new TypeMismatchException(Type.DATETIME.name(), type.name());
+    }
+    if (count == 0) {
+      throw new NoSuchElementException();
+    } else if (count == 1) {
+      return (LocalDateTime) valueOrValues;
+    } else {
+      @SuppressWarnings("unchecked")
+      final List<LocalDateTime> values = (List<LocalDateTime>) valueOrValues;
+      return values.iterator().next();
+    }
+  }
+
+  @Override
+  public void setDateTimeValue(final LocalDateTime value) {
+    type = Type.DATETIME;
+    valueOrValues = value;
+    count = 1;
+  }
+
+  @Override
+  public LocalDateTime[] getDateTimeValues() throws TypeMismatchException {
+    if (type != Type.DATETIME) {
+      throw new TypeMismatchException(Type.DATETIME.name(), type.name());
+    }
+    if (count == 0) {
+      return ArrayUtils.EMPTY_LOCAL_DATETIME_ARRAY;
+    } else if (count == 1) {
+      final LocalDateTime value = (LocalDateTime) valueOrValues;
+      return new LocalDateTime[]{ value };
+    } else { // count > 1
+      @SuppressWarnings("unchecked")
+      final List<LocalDateTime> values = (List<LocalDateTime>) valueOrValues;
+      return values.toArray(new LocalDateTime[0]);
+    }
+  }
+
+  @Override
+  public void setDateTimeValues(@Nullable final LocalDateTime... values) {
+    if (values == null || values.length == 0) {
+      type = Type.DATETIME;
+      valueOrValues = null;
+      count = 0;
+    } else if (values.length == 1) {
+      final LocalDateTime value = values[0];
+      type = Type.DATETIME;
+      valueOrValues = value;
+      count = 1;
+    } else {
+      final List<LocalDateTime> list = new ArrayList<>(values.length);
+      Collections.addAll(list, values);
+      type = Type.DATETIME;
+      valueOrValues = list;
+      count = values.length;
+    }
+  }
+
+  @Override
+  public void setDateTimeValues(@Nullable final Collection<LocalDateTime> values) {
+    final int n = (values == null ? 0 : values.size());
+    if (n == 0) {
+      type = Type.DATETIME;
+      valueOrValues = null;
+      count = 0;
+    } else if (n == 1) {
+      final LocalDateTime value = values.iterator().next();
+      type = Type.DATETIME;
+      valueOrValues = value;
+      count = 1;
+    } else {
+      final List<LocalDateTime> list = new ArrayList<>(n);
+      list.addAll(values);
+      type = Type.DATETIME;
+      valueOrValues = list;
+      count = n;
+    }
+  }
+
+  @Override
+  public void addDateTimeValue(final LocalDateTime value) throws TypeMismatchException {
+    if ((type != Type.DATETIME) && (count > 0)) {
+      throw new TypeMismatchException(Type.DATETIME.name(), type.name());
+    }
+    addSingleDateTimeValueImpl(value);
+  }
+
+  private void addSingleDateTimeValueImpl(final LocalDateTime value) {
+    if (count == 0) {
+      type = Type.DATETIME;
+      count = 1;
+      valueOrValues = value;
+    } else if (count == 1) {
+      final LocalDateTime oldValue = (LocalDateTime) valueOrValues;
+      final List<LocalDateTime> list = new ArrayList<>(2);
+      list.add(oldValue);
+      list.add(value);
+      type = Type.DATETIME;
+      valueOrValues = list;
+      count = 2;
+    } else { // count > 1
+      @SuppressWarnings("unchecked")
+      final List<LocalDateTime> list = (List<LocalDateTime>) valueOrValues;
+      list.add(value);
+      type = Type.DATETIME;
+      valueOrValues = list;
+      count = list.size();
+    }
+  }
+
+  @Override
+  public void addDateTimeValues(@Nullable final LocalDateTime... values) throws TypeMismatchException {
+    if ((type != Type.DATETIME) && (count > 0)) {
+      throw new TypeMismatchException(Type.DATETIME.name(), type.name());
+    }
+    if (values != null) {
+      if (values.length == 1) {
+        final LocalDateTime value = values[0];
+        addSingleDateTimeValueImpl(value);
+      } else if (values.length > 1) {
+        addMultipleDateTimeValuesImpl(values);
+      }
+    }
+  }
+
+  @Override
+  public void addDateTimeValues(@Nullable final Collection<LocalDateTime> values)
+      throws TypeMismatchException {
+    if ((type != Type.DATETIME) && (count > 0)) {
+      throw new TypeMismatchException(Type.DATETIME.name(), type.name());
+    }
+    final int n = (values == null ? 0 : values.size());
+    if (n == 1) {
+      final LocalDateTime value = values.iterator().next();
+      addSingleDateTimeValueImpl(value);
+    } else if (n > 1) {
+      addMultipleDateTimeValuesImpl(values);
+    }
+  }
+
+  private void addMultipleDateTimeValuesImpl(final LocalDateTime... values) {
+    if (count == 0) {
+      final List<LocalDateTime> list = new ArrayList<>(values.length);
+      Collections.addAll(list, values);
+      type = Type.DATETIME;
+      valueOrValues = list;
+      count = list.size();
+    } else if (count == 1) {
+      final LocalDateTime oldValue = (LocalDateTime) valueOrValues;
+      final List<LocalDateTime> list = new ArrayList<>();
+      list.add(oldValue);
+      Collections.addAll(list, values);
+      type = Type.DATETIME;
+      valueOrValues = list;
+      count = list.size();
+    } else { // count > 1
+      @SuppressWarnings("unchecked")
+      final List<LocalDateTime> list = (List<LocalDateTime>) valueOrValues;
+      Collections.addAll(list, values);
+      type = Type.DATETIME;
+      valueOrValues = list;
+      count = list.size();
+    }
+  }
+
+  private void addMultipleDateTimeValuesImpl(final Collection<LocalDateTime> values) {
+    if (count == 0) {
+      final List<LocalDateTime> list = new ArrayList<>(values.size());
+      list.addAll(values);
+      type = Type.DATETIME;
+      valueOrValues = list;
+      count = list.size();
+    } else if (count == 1) {
+      final LocalDateTime oldValue = (LocalDateTime) valueOrValues;
+      final List<LocalDateTime> list = new ArrayList<>();
+      list.add(oldValue);
+      list.addAll(values);
+      type = Type.DATETIME;
+      valueOrValues = list;
+      count = list.size();
+    } else { // count > 1
+      @SuppressWarnings("unchecked")
+      final List<LocalDateTime> list = (List<LocalDateTime>) valueOrValues;
+      list.addAll(values);
+      type = Type.DATETIME;
+      valueOrValues = list;
+      count = list.size();
+    }
+  }
+
   @Override
   public BigInteger getBigIntegerValue() throws TypeMismatchException,
       NoSuchElementException {
@@ -2594,6 +2948,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     } else if (count == 1) {
       return (BigInteger) valueOrValues;
     } else {
+      @SuppressWarnings("unchecked")
       final List<BigInteger> values = (List<BigInteger>) valueOrValues;
       return values.iterator().next();
     }
@@ -2606,7 +2961,6 @@ public class BasicMultiValues implements MultiValues, Serializable {
     count = 1;
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public BigInteger[] getBigIntegerValues() throws TypeMismatchException {
     if (type != Type.BIG_INTEGER) {
@@ -2618,14 +2972,15 @@ public class BasicMultiValues implements MultiValues, Serializable {
       final BigInteger value = (BigInteger) valueOrValues;
       return new BigInteger[]{ value };
     } else { // count > 1
+      @SuppressWarnings("unchecked")
       final List<BigInteger> values = (List<BigInteger>) valueOrValues;
       return values.toArray(new BigInteger[0]);
     }
   }
 
   @Override
-  public void setBigIntegerValues(final BigInteger... values) {
-    if (values.length == 0) {
+  public void setBigIntegerValues(@Nullable final BigInteger... values) {
+    if (values == null || values.length == 0) {
       type = Type.BIG_INTEGER;
       valueOrValues = null;
       count = 1;
@@ -2643,8 +2998,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setBigIntegerValues(final Collection<BigInteger> values) {
-    final int n = values.size();
+  public void setBigIntegerValues(@Nullable final Collection<BigInteger> values) {
+    final int n = (values == null ? 0 : values.size());
     if (n == 0) {
       type = Type.BIG_INTEGER;
       valueOrValues = null;
@@ -2668,11 +3023,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if ((type != Type.BIG_INTEGER) && (count > 0)) {
       throw new TypeMismatchException(Type.BIG_INTEGER.name(), type.name());
     }
-    doAddBigIntegerValue(value);
+    addSingleBigIntegerValueImpl(value);
   }
 
-  @SuppressWarnings("unchecked")
-  private void doAddBigIntegerValue(final BigInteger value) {
+  private void addSingleBigIntegerValueImpl(final BigInteger value) {
     if (count == 0) {
       type = Type.BIG_INTEGER;
       valueOrValues = value;
@@ -2686,6 +3040,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       valueOrValues = list;
       count = 2;
     } else { // count > 1
+      @SuppressWarnings("unchecked")
       final List<BigInteger> list = (List<BigInteger>) valueOrValues;
       list.add(value);
       type = Type.BIG_INTEGER;
@@ -2695,35 +3050,36 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void addBigIntegerValues(final BigInteger... values)
+  public void addBigIntegerValues(@Nullable final BigInteger... values)
       throws TypeMismatchException {
     if ((type != Type.BIG_INTEGER) && (count > 0)) {
       throw new TypeMismatchException(Type.BIG_INTEGER.name(), type.name());
     }
-    if (values.length == 1) {
-      final BigInteger value = values[0];
-      doAddBigIntegerValue(value);
-    } else if (values.length > 1) {
-      doAddBigIntegerValues(values);
+    if (values != null) {
+      if (values.length == 1) {
+        final BigInteger value = values[0];
+        addSingleBigIntegerValueImpl(value);
+      } else if (values.length > 1) {
+        addMultipleBigIntegerValuesImpl(values);
+      }
     }
   }
 
   @Override
-  public void addBigIntegerValues(final Collection<BigInteger> values)
+  public void addBigIntegerValues(@Nullable final Collection<BigInteger> values)
       throws TypeMismatchException {
     if ((type != Type.BIG_INTEGER) && (count > 0)) {
       throw new TypeMismatchException(Type.BIG_INTEGER.name(), type.name());
     }
-    final int n = values.size();
+    final int n = (values == null ? 0 : values.size());
     if (n == 1) {
-      doAddBigIntegerValue(values.iterator().next());
+      addSingleBigIntegerValueImpl(values.iterator().next());
     } else if (n > 1) {
-      doAddBigIntegerValues(values);
+      addMultipleBigIntegerValuesImpl(values);
     }
   }
 
-  @SuppressWarnings("unchecked")
-  private void doAddBigIntegerValues(final BigInteger... values) {
+  private void addMultipleBigIntegerValuesImpl(final BigInteger... values) {
     if (count == 0) {
       final List<BigInteger> list = new ArrayList<>(values.length);
       Collections.addAll(list, values);
@@ -2739,6 +3095,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       valueOrValues = list;
       count = list.size();
     } else { // count > 1
+      @SuppressWarnings("unchecked")
       final List<BigInteger> list = (List<BigInteger>) valueOrValues;
       Collections.addAll(list, values);
       type = Type.BIG_INTEGER;
@@ -2747,8 +3104,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     }
   }
 
-  @SuppressWarnings("unchecked")
-  private void doAddBigIntegerValues(final Collection<BigInteger> values) {
+  private void addMultipleBigIntegerValuesImpl(final Collection<BigInteger> values) {
     if (count == 0) {
       final List<BigInteger> list = new ArrayList<>(values);
       type = Type.BIG_INTEGER;
@@ -2763,6 +3119,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       valueOrValues = list;
       count = list.size();
     } else { // count > 1
+      @SuppressWarnings("unchecked")
       final List<BigInteger> list = (List<BigInteger>) valueOrValues;
       list.addAll(values);
       type = Type.BIG_INTEGER;
@@ -2771,7 +3128,6 @@ public class BasicMultiValues implements MultiValues, Serializable {
     }
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public BigDecimal getBigDecimalValue() throws TypeMismatchException,
       NoSuchElementException {
@@ -2783,6 +3139,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     } else if (count == 1) {
       return (BigDecimal) valueOrValues;
     } else {
+      @SuppressWarnings("unchecked")
       final List<BigDecimal> values = (List<BigDecimal>) valueOrValues;
       return values.iterator().next();
     }
@@ -2795,7 +3152,6 @@ public class BasicMultiValues implements MultiValues, Serializable {
     count = 1;
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public BigDecimal[] getBigDecimalValues() throws TypeMismatchException {
     if (type != Type.BIG_DECIMAL) {
@@ -2807,14 +3163,15 @@ public class BasicMultiValues implements MultiValues, Serializable {
       final BigDecimal value = (BigDecimal) valueOrValues;
       return new BigDecimal[]{ value };
     } else { // count > 1
+      @SuppressWarnings("unchecked")
       final List<BigDecimal> values = (List<BigDecimal>) valueOrValues;
       return values.toArray(new BigDecimal[0]);
     }
   }
 
   @Override
-  public void setBigDecimalValues(final BigDecimal... values) {
-    if (values.length == 0) {
+  public void setBigDecimalValues(@Nullable final BigDecimal... values) {
+    if (values == null || values.length == 0) {
       type = Type.BIG_DECIMAL;
       valueOrValues = null;
       count = 0;
@@ -2832,8 +3189,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setBigDecimalValues(final Collection<BigDecimal> values) {
-    final int n = values.size();
+  public void setBigDecimalValues(@Nullable final Collection<BigDecimal> values) {
+    final int n = (values == null ? 0 : values.size());
     if (n == 0) {
       type = Type.BIG_DECIMAL;
       valueOrValues = null;
@@ -2857,11 +3214,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if ((type != Type.BIG_DECIMAL) && (count > 0)) {
       throw new TypeMismatchException(Type.BIG_DECIMAL.name(), type.name());
     }
-    doAddBigDecimalValue(value);
+    addSingleBigDecimalValueImpl(value);
   }
 
-  @SuppressWarnings("unchecked")
-  private void doAddBigDecimalValue(final BigDecimal value) {
+  private void addSingleBigDecimalValueImpl(final BigDecimal value) {
     if (count == 0) {
       type = Type.BIG_DECIMAL;
       valueOrValues = value;
@@ -2875,6 +3231,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       valueOrValues = list;
       count = 2;
     } else { // count > 1
+      @SuppressWarnings("unchecked")
       final List<BigDecimal> list = (List<BigDecimal>) valueOrValues;
       list.add(value);
       type = Type.BIG_DECIMAL;
@@ -2884,36 +3241,37 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void addBigDecimalValues(final BigDecimal... values)
+  public void addBigDecimalValues(@Nullable final BigDecimal... values)
       throws TypeMismatchException {
     if ((type != Type.BIG_DECIMAL) && (count > 0)) {
       throw new TypeMismatchException(Type.BIG_DECIMAL.name(), type.name());
     }
-    if (values.length == 1) {
-      final BigDecimal value = values[0];
-      doAddBigDecimalValue(value);
-    } else if (values.length > 1) {
-      doAddBigDecimalValues(values);
+    if (values != null) {
+      if (values.length == 1) {
+        final BigDecimal value = values[0];
+        addSingleBigDecimalValueImpl(value);
+      } else if (values.length > 1) {
+        addMultipleBigDecimalValuesImpl(values);
+      }
     }
   }
 
   @Override
-  public void addBigDecimalValues(final Collection<BigDecimal> values)
+  public void addBigDecimalValues(@Nullable final Collection<BigDecimal> values)
       throws TypeMismatchException {
     if ((type != Type.BIG_DECIMAL) && (count > 0)) {
       throw new TypeMismatchException(Type.BIG_DECIMAL.name(), type.name());
     }
-    final int n = values.size();
+    final int n = (values == null ? 0 : values.size());
     if (n == 1) {
       final BigDecimal value = values.iterator().next();
-      doAddBigDecimalValue(value);
+      addSingleBigDecimalValueImpl(value);
     } else if (n > 1) {
-      doAddBigDecimalValues(values);
+      addMultipleBigDecimalValuesImpl(values);
     }
   }
 
-  @SuppressWarnings("unchecked")
-  private void doAddBigDecimalValues(final BigDecimal... values) {
+  private void addMultipleBigDecimalValuesImpl(final BigDecimal... values) {
     if (count == 0) {
       final List<BigDecimal> list = new ArrayList<>(values.length);
       Collections.addAll(list, values);
@@ -2929,6 +3287,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       valueOrValues = list;
       count = list.size();
     } else { // count > 1
+      @SuppressWarnings("unchecked")
       final List<BigDecimal> list = (List<BigDecimal>) valueOrValues;
       Collections.addAll(list, values);
       type = Type.BIG_DECIMAL;
@@ -2937,8 +3296,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     }
   }
 
-  @SuppressWarnings("unchecked")
-  private void doAddBigDecimalValues(final Collection<BigDecimal> values) {
+  private void addMultipleBigDecimalValuesImpl(final Collection<BigDecimal> values) {
     if (count == 0) {
       final List<BigDecimal> list = new ArrayList<>(values);
       type = Type.BIG_DECIMAL;
@@ -2953,6 +3311,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       valueOrValues = list;
       count = list.size();
     } else { // count > 1
+      @SuppressWarnings("unchecked")
       final List<BigDecimal> list = (List<BigDecimal>) valueOrValues;
       list.addAll(values);
       type = Type.BIG_DECIMAL;
@@ -2961,7 +3320,6 @@ public class BasicMultiValues implements MultiValues, Serializable {
     }
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public byte[] getByteArrayValue() throws TypeMismatchException,
       NoSuchElementException {
@@ -2973,6 +3331,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     } else if (count == 1) {
       return (byte[]) valueOrValues;
     } else {
+      @SuppressWarnings("unchecked")
       final List<byte[]> values = (List<byte[]>) valueOrValues;
       return values.iterator().next();
     }
@@ -2985,7 +3344,6 @@ public class BasicMultiValues implements MultiValues, Serializable {
     count = 1;
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public byte[][] getByteArrayValues() throws TypeMismatchException {
     if (type != Type.BYTE_ARRAY) {
@@ -2997,6 +3355,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       final byte[] value = (byte[]) valueOrValues;
       return new byte[][]{ Assignment.clone(value) };
     } else { // count > 1
+      @SuppressWarnings("unchecked")
       final List<byte[]> values = (List<byte[]>) valueOrValues;
       final byte[][] result = new byte[values.size()][];
       int i = 0;
@@ -3008,8 +3367,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setByteArrayValues(final byte[]... values) {
-    if (values.length == 0) {
+  public void setByteArrayValues(@Nullable final byte[]... values) {
+    if (values == null || values.length == 0) {
       type = Type.BYTE_ARRAY;
       valueOrValues = null;
       count = 0;
@@ -3030,8 +3389,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setByteArrayValues(final Collection<byte[]> values) {
-    final int n = values.size();
+  public void setByteArrayValues(@Nullable final Collection<byte[]> values) {
+    final int n = (values == null ? 0 : values.size());
     if (n == 0) {
       type = Type.BYTE_ARRAY;
       valueOrValues = null;
@@ -3058,11 +3417,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if ((type != Type.BYTE_ARRAY) && (count > 0)) {
       throw new TypeMismatchException(Type.BYTE_ARRAY.name(), type.name());
     }
-    doAddByteArrayValue(true, value);
+    addSingleByteArrayValueImpl(true, value);
   }
 
-  @SuppressWarnings("unchecked")
-  private void doAddByteArrayValue(final boolean cloneValue, final byte[] value) {
+  private void addSingleByteArrayValueImpl(final boolean cloneValue, final byte[] value) {
     if (count == 0) {
       type = Type.BYTE_ARRAY;
       count = 1;
@@ -3084,6 +3442,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       valueOrValues = list;
       count = 2;
     } else { // count > 1
+      @SuppressWarnings("unchecked")
       final List<byte[]> list = (List<byte[]>) valueOrValues;
       if (cloneValue) {
         list.add(Assignment.clone(value));
@@ -3097,36 +3456,37 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void addByteArrayValues(final byte[]... values)
+  public void addByteArrayValues(@Nullable final byte[]... values)
       throws TypeMismatchException {
     if ((type != Type.BYTE_ARRAY) && (count > 0)) {
       throw new TypeMismatchException(Type.BYTE_ARRAY.name(), type.name());
     }
-    if (values.length == 1) {
-      final byte[] value = values[0];
-      doAddByteArrayValue(true, value);
-    } else if (values.length > 1) {
-      doAddByteArrayValues(true, values);
+    if (values != null) {
+      if (values.length == 1) {
+        final byte[] value = values[0];
+        addSingleByteArrayValueImpl(true, value);
+      } else if (values.length > 1) {
+        addMultipleByteArrayValuesImpl(true, values);
+      }
     }
   }
 
   @Override
-  public void addByteArrayValues(final Collection<byte[]> values)
+  public void addByteArrayValues(@Nullable final Collection<byte[]> values)
       throws TypeMismatchException {
     if ((type != Type.BYTE_ARRAY) && (count > 0)) {
       throw new TypeMismatchException(Type.BYTE_ARRAY.name(), type.name());
     }
-    final int n = values.size();
+    final int n = (values == null ? 0 : values.size());
     if (n == 1) {
       final byte[] value = values.iterator().next();
-      doAddByteArrayValue(true, value);
+      addSingleByteArrayValueImpl(true, value);
     } else if (n > 1) {
-      doAddByteArrayValues(true, values);
+      addMultipleByteArrayValuesImpl(true, values);
     }
   }
 
-  @SuppressWarnings("unchecked")
-  private void doAddByteArrayValues(final boolean cloneValue,
+  private void addMultipleByteArrayValuesImpl(final boolean cloneValue,
       final byte[]... values) {
     if (count == 0) {
       final List<byte[]> list = new ArrayList<>(values.length);
@@ -3155,6 +3515,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       valueOrValues = list;
       count = list.size();
     } else { // count > 1
+      @SuppressWarnings("unchecked")
       final List<byte[]> list = (List<byte[]>) valueOrValues;
       if (cloneValue) {
         for (final byte[] value : values) {
@@ -3169,8 +3530,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     }
   }
 
-  @SuppressWarnings("unchecked")
-  private void doAddByteArrayValues(final boolean cloneValue,
+  private void addMultipleByteArrayValuesImpl(final boolean cloneValue,
       final Collection<byte[]> values) {
     if (count == 0) {
       final List<byte[]> list = new ArrayList<>(values.size());
@@ -3199,6 +3559,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       valueOrValues = list;
       count = list.size();
     } else { // count > 1
+      @SuppressWarnings("unchecked")
       final List<byte[]> list = (List<byte[]>) valueOrValues;
       if (cloneValue) {
         for (final byte[] value : values) {
@@ -3213,7 +3574,6 @@ public class BasicMultiValues implements MultiValues, Serializable {
     }
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public Class<?> getClassValue() throws TypeMismatchException,
       NoSuchElementException {
@@ -3225,6 +3585,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     } else if (count == 1) {
       return (Class<?>) valueOrValues;
     } else {
+      @SuppressWarnings("unchecked")
       final List<Class<?>> values = (List<Class<?>>) valueOrValues;
       return values.iterator().next();
     }
@@ -3237,7 +3598,6 @@ public class BasicMultiValues implements MultiValues, Serializable {
     count = 1;
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public Class<?>[] getClassValues() throws TypeMismatchException {
     if (type != Type.CLASS) {
@@ -3249,14 +3609,15 @@ public class BasicMultiValues implements MultiValues, Serializable {
       final Class<?> value = (Class<?>) valueOrValues;
       return new Class<?>[]{ value };
     } else { // count > 1
+      @SuppressWarnings("unchecked")
       final List<Class<?>> values = (List<Class<?>>) valueOrValues;
       return values.toArray(new Class<?>[0]);
     }
   }
 
   @Override
-  public void setClassValues(final Class<?>... values) {
-    if (values.length == 0) {
+  public void setClassValues(@Nullable final Class<?>... values) {
+    if (values == null || values.length == 0) {
       type = Type.CLASS;
       valueOrValues = null;
       count = 0;
@@ -3274,8 +3635,8 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void setClassValues(final Collection<Class<?>> values) {
-    final int n = values.size();
+  public void setClassValues(@Nullable final Collection<Class<?>> values) {
+    final int n = (values == null ? 0 : values.size());
     if (n == 0) {
       type = Type.CLASS;
       valueOrValues = null;
@@ -3298,11 +3659,10 @@ public class BasicMultiValues implements MultiValues, Serializable {
     if ((type != Type.CLASS) && (count > 0)) {
       throw new TypeMismatchException(Type.CLASS.name(), type.name());
     }
-    doAddClassValue(value);
+    addSingleClassValueImpl(value);
   }
 
-  @SuppressWarnings("unchecked")
-  private void doAddClassValue(final Class<?> value) {
+  private void addSingleClassValueImpl(final Class<?> value) {
     if (count == 0) {
       type = Type.CLASS;
       valueOrValues = value;
@@ -3316,6 +3676,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       valueOrValues = list;
       count = 2;
     } else { // count > 1
+      @SuppressWarnings("unchecked")
       final List<Class<?>> list = (List<Class<?>>) valueOrValues;
       list.add(value);
       type = Type.CLASS;
@@ -3325,35 +3686,36 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public void addClassValues(final Class<?>... values)
+  public void addClassValues(@Nullable final Class<?>... values)
       throws TypeMismatchException {
     if ((type != Type.CLASS) && (count > 0)) {
       throw new TypeMismatchException(Type.CLASS.name(), type.name());
     }
-    if (values.length == 1) {
-      doAddClassValue(values[0]);
-    } else if (values.length > 1) {
-      doAddClassValues(values);
+    if (values != null) {
+      if (values.length == 1) {
+        addSingleClassValueImpl(values[0]);
+      } else if (values.length > 1) {
+        addMultipleClassValuesImpl(values);
+      }
     }
   }
 
   @Override
-  public void addClassValues(final Collection<Class<?>> values)
+  public void addClassValues(@Nullable final Collection<Class<?>> values)
       throws TypeMismatchException {
     if ((type != Type.CLASS) && (count > 0)) {
       throw new TypeMismatchException(Type.CLASS.name(), type.name());
     }
-    final int n = values.size();
+    final int n = (values == null ? 0 : values.size());
     if (n == 1) {
       final Class<?> value = values.iterator().next();
-      doAddClassValue(value);
+      addSingleClassValueImpl(value);
     } else if (n > 1) {
-      doAddClassValues(values);
+      addMultipleClassValuesImpl(values);
     }
   }
 
-  @SuppressWarnings("unchecked")
-  private void doAddClassValues(final Class<?>... values) {
+  private void addMultipleClassValuesImpl(final Class<?>... values) {
     if (count == 0) {
       final List<Class<?>> list = new ArrayList<>(values.length);
       Collections.addAll(list, values);
@@ -3369,6 +3731,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
       valueOrValues = list;
       count = list.size();
     } else { // count > 1
+      @SuppressWarnings("unchecked")
       final List<Class<?>> list = (List<Class<?>>) valueOrValues;
       Collections.addAll(list, values);
       type = Type.CLASS;
@@ -3377,8 +3740,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
     }
   }
 
-  @SuppressWarnings("unchecked")
-  private void doAddClassValues(final Collection<Class<?>> values) {
+  private void addMultipleClassValuesImpl(final Collection<Class<?>> values) {
     if (count == 0) {
       final List<Class<?>> list = new ArrayList<>(values);
       type = Type.CLASS;
@@ -3393,12 +3755,111 @@ public class BasicMultiValues implements MultiValues, Serializable {
       valueOrValues = list;
       count = list.size();
     } else { // count > 1
+      @SuppressWarnings("unchecked")
       final List<Class<?>> list = (List<Class<?>>) valueOrValues;
       list.addAll(values);
       type = Type.CLASS;
       valueOrValues = list;
       count = list.size();
     }
+  }
+
+  @Override
+  public <E extends Enum<E>> E getEnumValue(final Class<E> enumClass)
+      throws TypeMismatchException, NoSuchElementException, IllegalArgumentException {
+    final String name = getStringValue();
+    return Enum.valueOf(enumClass, name);
+  }
+
+  @Override
+  public void setEnumValue(final @Nullable Enum<?> value) {
+    if (value == null) {
+      setStringValue(null);
+    } else {
+      setStringValue(value.name());
+    }
+  }
+
+  @Override
+  public <E extends Enum<E>> E[] getEnumValues(final Class<E> enumClass)
+      throws TypeMismatchException, IllegalArgumentException {
+    final String[] names = getStringValues();
+    @SuppressWarnings("unchecked")
+    final E[] result = (E[]) java.lang.reflect.Array.newInstance(enumClass, names.length);
+    for (int i = 0; i < names.length; ++i) {
+      result[i] = Enum.valueOf(enumClass, names[i]);
+    }
+    return result;
+  }
+
+  @Override
+  public void setEnumValues(@Nullable final Enum<?>... values) {
+    if (values == null || values.length == 0) {
+      type = Type.STRING;
+      count = 0;
+      valueOrValues = null;
+    } else {
+      final String[] names = new String[values.length];
+      for (int i = 0; i < values.length; ++i) {
+        final Enum<?> value = values[i];
+        names[i] = (value == null ? null : value.name());
+      }
+      setStringValues(names);
+    }
+  }
+
+  @Override
+  public void setEnumValues(@Nullable final Collection<? extends Enum<?>> values) {
+    if (values == null || values.isEmpty()) {
+      type = Type.STRING;
+      count = 0;
+      valueOrValues = null;
+    } else {
+      final String[] names = new String[values.size()];
+      int i = 0;
+      for (final Enum<?> value : values) {
+        names[i++] = (value == null ? null : value.name());
+      }
+      setStringValues(names);
+    }
+  }
+
+  @Override
+  public void addEnumValue(@Nullable final Enum<?> value)
+      throws TypeMismatchException {
+    if (value == null) {
+      addStringValue(null);
+    } else {
+      addStringValue(value.name());
+    }
+  }
+
+  @Override
+  public void addEnumValues(@Nullable final Enum<?>... values)
+      throws TypeMismatchException {
+    if (values == null || values.length == 0) {
+      return;
+    }
+    final String[] names = new String[values.length];
+    for (int i = 0; i < values.length; ++i) {
+      final Enum<?> value = values[i];
+      names[i] = (value == null ? null : value.name());
+    }
+    addStringValues(names);
+  }
+
+  @Override
+  public void addEnumValues(@Nullable final Collection<? extends Enum<?>> values)
+      throws TypeMismatchException {
+    if (values == null || values.isEmpty()) {
+      return;
+    }
+    final String[] names = new String[values.size()];
+    int i = 0;
+    for (final Enum<?> value : values) {
+      names[i++] = (value == null ? null : value.name());
+    }
+    addStringValues(names);
   }
 
   @Override
@@ -3619,7 +4080,7 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public Date getValueAsDate() throws TypeConvertException,
+  public LocalDate getValueAsDate() throws TypeConvertException,
       NoSuchElementException {
     if (count == 0) {
       throw new NoSuchElementException();
@@ -3631,14 +4092,62 @@ public class BasicMultiValues implements MultiValues, Serializable {
   }
 
   @Override
-  public Date[] getValuesAsDate() throws TypeConvertException {
+  public LocalDate[] getValuesAsDate() throws TypeConvertException {
     if (count == 0) {
-      return ArrayUtils.EMPTY_DATE_ARRAY;
+      return ArrayUtils.EMPTY_LOCAL_DATE_ARRAY;
     } else if (count == 1) {
-      final Date value = TypeUtils.objectAsDate(type, valueOrValues);
-      return new Date[]{ value };
+      final LocalDate value = TypeUtils.objectAsDate(type, valueOrValues);
+      return new LocalDate[]{ value };
     } else { // count > 1
       return TypeUtils.collectionAsDates(type, valueOrValues);
+    }
+  }
+
+  @Override
+  public LocalTime getValueAsTime() throws TypeConvertException,
+      NoSuchElementException {
+    if (count == 0) {
+      throw new NoSuchElementException();
+    } else if (count == 1) {
+      return TypeUtils.objectAsTime(type, valueOrValues);
+    } else {
+      return TypeUtils.firstInCollectionAsTime(type, valueOrValues);
+    }
+  }
+
+  @Override
+  public LocalTime[] getValuesAsTime() throws TypeConvertException {
+    if (count == 0) {
+      return ArrayUtils.EMPTY_LOCAL_TIME_ARRAY;
+    } else if (count == 1) {
+      final LocalTime value = TypeUtils.objectAsTime(type, valueOrValues);
+      return new LocalTime[]{ value };
+    } else { // count > 1
+      return TypeUtils.collectionAsTimes(type, valueOrValues);
+    }
+  }
+
+  @Override
+  public LocalDateTime getValueAsDateTime() throws TypeConvertException,
+      NoSuchElementException {
+    if (count == 0) {
+      throw new NoSuchElementException();
+    } else if (count == 1) {
+      return TypeUtils.objectAsDateTime(type, valueOrValues);
+    } else {
+      return TypeUtils.firstInCollectionAsDateTime(type, valueOrValues);
+    }
+  }
+
+  @Override
+  public LocalDateTime[] getValuesAsDateTime() throws TypeConvertException {
+    if (count == 0) {
+      return ArrayUtils.EMPTY_LOCAL_DATETIME_ARRAY;
+    } else if (count == 1) {
+      final LocalDateTime value = TypeUtils.objectAsDateTime(type, valueOrValues);
+      return new LocalDateTime[]{ value };
+    } else { // count > 1
+      return TypeUtils.collectionAsDateTimes(type, valueOrValues);
     }
   }
 
@@ -3797,103 +4306,5 @@ public class BasicMultiValues implements MultiValues, Serializable {
                .append("count", count)
                .append("valueOrValues", valueOrValues)
                .toString();
-  }
-
-  @Override
-  public <E extends Enum<E>> E getEnumValue(final Class<E> enumClass)
-      throws TypeMismatchException, NoSuchElementException, IllegalArgumentException {
-    final String name = getStringValue();
-    return Enum.valueOf(enumClass, name);
-  }
-
-  @Override
-  public void setEnumValue(final @Nullable Enum<?> value) {
-    if (value == null) {
-      setStringValue(null);
-    } else {
-      setStringValue(value.name());
-    }
-  }
-
-  @SuppressWarnings("unchecked")
-  @Override
-  public <E extends Enum<E>> E[] getEnumValues(final Class<E> enumClass)
-      throws TypeMismatchException, IllegalArgumentException {
-    final String[] names = getStringValues();
-    final E[] result = (E[]) java.lang.reflect.Array.newInstance(enumClass, names.length);
-    for (int i = 0; i < names.length; ++i) {
-      result[i] = Enum.valueOf(enumClass, names[i]);
-    }
-    return result;
-  }
-
-  @Override
-  public void setEnumValues(final Enum<?>... values) {
-    if (values == null || values.length == 0) {
-      type = Type.STRING;
-      count = 0;
-      valueOrValues = null;
-    } else {
-      final String[] names = new String[values.length];
-      for (int i = 0; i < values.length; ++i) {
-        final Enum<?> value = values[i];
-        names[i] = (value == null ? null : value.name());
-      }
-      setStringValues(names);
-    }
-  }
-
-  @Override
-  public void setEnumValues(final Collection<? extends Enum<?>> values) {
-    if (values == null || values.isEmpty()) {
-      type = Type.STRING;
-      count = 0;
-      valueOrValues = null;
-    } else {
-      final String[] names = new String[values.size()];
-      int i = 0;
-      for (final Enum<?> value : values) {
-        names[i++] = (value == null ? null : value.name());
-      }
-      setStringValues(names);
-    }
-  }
-
-  @Override
-  public void addEnumValue(final @Nullable Enum<?> value)
-      throws TypeMismatchException {
-    if (value == null) {
-      addStringValue(null);
-    } else {
-      addStringValue(value.name());
-    }
-  }
-
-  @Override
-  public void addEnumValues(final Enum<?>... values)
-      throws TypeMismatchException {
-    if (values == null || values.length == 0) {
-      return;
-    }
-    final String[] names = new String[values.length];
-    for (int i = 0; i < values.length; ++i) {
-      final Enum<?> value = values[i];
-      names[i] = (value == null ? null : value.name());
-    }
-    addStringValues(names);
-  }
-
-  @Override
-  public void addEnumValues(final Collection<? extends Enum<?>> values)
-      throws TypeMismatchException {
-    if (values == null || values.isEmpty()) {
-      return;
-    }
-    final String[] names = new String[values.size()];
-    int i = 0;
-    for (final Enum<?> value : values) {
-      names[i++] = (value == null ? null : value.name());
-    }
-    addStringValues(names);
   }
 }

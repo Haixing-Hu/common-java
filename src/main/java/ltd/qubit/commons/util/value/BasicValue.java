@@ -13,6 +13,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.NoSuchElementException;
 
@@ -633,13 +636,33 @@ public class BasicValue implements Value {
   }
 
   @Override
-  public Date getValueAsDate() throws TypeConvertException,
+  public LocalDate getValueAsDate() throws TypeConvertException,
       NoSuchElementException {
     if (value == null) {
       throw new NoSuchElementException();
     }
     final Type theType = getType();
     return TypeUtils.objectAsDate(theType, value);
+  }
+
+  @Override
+  public LocalTime getValueAsTime() throws TypeConvertException,
+      NoSuchElementException {
+    if (value == null) {
+      throw new NoSuchElementException();
+    }
+    final Type theType = getType();
+    return TypeUtils.objectAsTime(theType, value);
+  }
+
+  @Override
+  public LocalDateTime getValueAsDateTime() throws TypeConvertException,
+      NoSuchElementException {
+    if (value == null) {
+      throw new NoSuchElementException();
+    }
+    final Type theType = getType();
+    return TypeUtils.objectAsDateTime(theType, value);
   }
 
   @Override
@@ -683,7 +706,7 @@ public class BasicValue implements Value {
   @Override
   public BasicValue cloneEx() {
     try {
-      final BasicValue result = (BasicValue) super.clone();
+      final BasicValue result = (BasicValue) clone();
       result.type = type;
       result.value = TypeUtils.cloneObject(type, type);
       return result;
@@ -706,10 +729,9 @@ public class BasicValue implements Value {
     if (obj == null) {
       return false;
     }
-    if (! (obj instanceof BasicValue)) {
+    if (! (obj instanceof final BasicValue other)) {
       return false;
     }
-    final BasicValue other = (BasicValue) obj;
     return (type == other.type)
         && TypeUtils.equalsObject(type, value, other.value);
   }

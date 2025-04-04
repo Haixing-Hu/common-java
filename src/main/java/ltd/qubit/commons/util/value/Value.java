@@ -13,6 +13,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.NoSuchElementException;
 
@@ -41,7 +44,9 @@ import ltd.qubit.commons.text.xml.XmlException;
  * <li>{@code float}</li>
  * <li>{@code double}</li>
  * <li>{@code String}</li>
- * <li>{@code java.util.Date}</li>
+ * <li>{@code java.time.LocalDate}</li>
+ * <li>{@code java.time.LocalTime}</li>
+ * <li>{@code java.time.LocalDateTime}</li>
  * <li>{@code java.math.BigDecimal}</li>
  * <li>{@code java.math.BigInteger}</li>
  * <li>{@code byte[]}</li>
@@ -655,19 +660,51 @@ public interface Value extends CloneableEx<Value> {
       NoSuchElementException;
 
   /**
-   * Gets the value of this object as a {@link Date} value.
+   * Gets the value of this object as a {@link LocalDate} value.
    *
    * <p>If the type of this object is not {@link Type#DATE}, the value will be
-   * converted into a {@link Date} value.
+   * converted into a {@link LocalDate} value.
    *
-   * @return the value of this object as a {@link Date} value.
+   * @return the value of this object as a {@link LocalDate} value.
    * @throws TypeConvertException
    *           if the value of this object can not be converted into a
-   *           {@link Date} value.
+   *           {@link LocalDate} value.
    * @throws NoSuchElementException
    *           if this object has no value.
    */
-  Date getValueAsDate() throws TypeConvertException,
+  LocalDate getValueAsDate() throws TypeConvertException,
+      NoSuchElementException;
+
+  /**
+   * Gets the value of this object as a {@link LocalTime} value.
+   *
+   * <p>If the type of this object is not {@link Type#TIME}, the value will be
+   * converted into a {@link LocalTime} value.
+   *
+   * @return the value of this object as a {@link LocalTime} value.
+   * @throws TypeConvertException
+   *           if the value of this object can not be converted into a
+   *           {@link LocalTime} value.
+   * @throws NoSuchElementException
+   *           if this object has no value.
+   */
+  LocalTime getValueAsTime() throws TypeConvertException,
+      NoSuchElementException;
+
+  /**
+   * Gets the value of this object as a {@link LocalDateTime} value.
+   *
+   * <p>If the type of this object is not {@link Type#DATETIME}, the value will be
+   * converted into a {@link LocalDateTime} value.
+   *
+   * @return the value of this object as a {@link LocalDateTime} value.
+   * @throws TypeConvertException
+   *           if the value of this object can not be converted into a
+   *           {@link LocalDateTime} value.
+   * @throws NoSuchElementException
+   *           if this object has no value.
+   */
+  LocalDateTime getValueAsDateTime() throws TypeConvertException,
       NoSuchElementException;
 
   /**
