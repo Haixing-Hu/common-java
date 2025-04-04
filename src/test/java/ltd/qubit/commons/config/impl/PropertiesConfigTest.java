@@ -11,6 +11,7 @@ package ltd.qubit.commons.config.impl;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Unit test for the {@link PropertiesConfig} class.
@@ -29,7 +30,7 @@ public class PropertiesConfigTest {
   public void testDefaultConstructor() {
     final PropertiesConfig config = new PropertiesConfig();
     assertEquals(PropertiesConfig.DEFAULT_CHARSET, config.getCharset());
-    assertEquals(true, config.isEmpty());
+    assertTrue(config.isEmpty());
   }
 
   //  @Test
@@ -42,13 +43,13 @@ public class PropertiesConfigTest {
   //  }
   //
   //  private void verifyConfig(final Config config) {
-  //    assertEquals("Hello world!", config.getString("com.github.prop1"));
+  //    assertEquals("Hello world!", config.getStringValue("com.github.prop1"));
   //
   //    assertArrayEquals(new String[] {"value 2.1", "value 2.2"},
-  //        config.getStrings("com.github.prop2"));
+  //        config.getStringValues("com.github.prop2"));
   //
-  //    assertEquals(12345, config.getInt("com.github.prop3"));
+  //    assertEquals(12345, config.getIntValue("com.github.prop3"));
   //
-  //    assertEquals("中文汉字", config.getString("com.github.prop4"));
+  //    assertEquals("中文汉字", config.getStringValue("com.github.prop4"));
   //  }
 }

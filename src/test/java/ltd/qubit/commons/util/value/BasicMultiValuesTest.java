@@ -20,7 +20,9 @@ import ltd.qubit.commons.lang.Type;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -82,14 +84,14 @@ public class BasicMultiValuesTest {
     prop = new BasicMultiValues(true);
     assertEquals(Type.BOOL, prop.getType());
     assertEquals(1, prop.getCount());
-    assertEquals(true, prop.getBooleanValue());
-    assertTrue(Equality.equals(new boolean[]{true}, prop.getBooleanValues()));
+    assertTrue(prop.getBoolean());
+    assertTrue(Equality.equals(new boolean[]{true}, prop.getBooleans()));
 
     prop = new BasicMultiValues(false);
     assertEquals(Type.BOOL, prop.getType());
     assertEquals(1, prop.getCount());
-    assertEquals(false, prop.getBooleanValue());
-    assertTrue(Equality.equals(new boolean[]{false}, prop.getBooleanValues()));
+    assertFalse(prop.getBoolean());
+    assertTrue(Equality.equals(new boolean[]{false}, prop.getBooleans()));
   }
 
   /**
@@ -455,7 +457,7 @@ public class BasicMultiValuesTest {
     prop = new BasicMultiValues(value);
     assertEquals(Type.STRING, prop.getType());
     assertEquals(1, prop.getCount());
-    assertEquals(null, prop.getStringValue());
+    assertNull(prop.getStringValue());
     assertArrayEquals(new String[]{null}, prop.getStringValues());
   }
 
@@ -655,13 +657,13 @@ public class BasicMultiValuesTest {
   @Test
   public void testIsEmpty() {
     final BasicMultiValues prop = new BasicMultiValues();
-    assertEquals(true, prop.isEmpty());
+    assertTrue(prop.isEmpty());
     prop.addStringValue("value1");
-    assertEquals(false, prop.isEmpty());
+    assertFalse(prop.isEmpty());
     prop.addStringValue("value2");
-    assertEquals(false, prop.isEmpty());
+    assertFalse(prop.isEmpty());
     prop.addStringValue("value3");
-    assertEquals(false, prop.isEmpty());
+    assertFalse(prop.isEmpty());
   }
 
   /**
@@ -670,18 +672,18 @@ public class BasicMultiValuesTest {
   @Test
   public void testClear() {
     final BasicMultiValues prop = new BasicMultiValues();
-    assertEquals(true, prop.isEmpty());
+    assertTrue(prop.isEmpty());
     prop.clear();
-    assertEquals(true, prop.isEmpty());
+    assertTrue(prop.isEmpty());
     prop.addStringValue("value1");
-    assertEquals(false, prop.isEmpty());
+    assertFalse(prop.isEmpty());
     prop.clear();
-    assertEquals(true, prop.isEmpty());
+    assertTrue(prop.isEmpty());
     prop.addStringValue("value2");
-    assertEquals(false, prop.isEmpty());
+    assertFalse(prop.isEmpty());
     prop.addStringValue("value3");
-    assertEquals(false, prop.isEmpty());
+    assertFalse(prop.isEmpty());
     prop.clear();
-    assertEquals(true, prop.isEmpty());
+    assertTrue(prop.isEmpty());
   }
 }

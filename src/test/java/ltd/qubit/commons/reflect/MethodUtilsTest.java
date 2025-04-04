@@ -384,22 +384,22 @@ public class MethodUtilsTest {
         .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setCharacter"));
 
     assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::setByte))
-        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setByte"));
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setByteValue"));
 
     assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::setShort))
-        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setShort"));
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setShortValue"));
 
     assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::setInteger))
         .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setInteger"));
 
     assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::setLong))
-        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setLong"));
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setLongValue"));
 
     assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::setFloat))
-        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setFloat"));
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setFloatValue"));
 
     assertThat(getMethodByReference(MethodRefBean.class, MethodRefBean::setDouble))
-        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setDouble"));
+        .isEqualTo(getMethodByName(MethodRefBean.class, Option.DEFAULT, "setDoubleValue"));
   }
 
   @Test
