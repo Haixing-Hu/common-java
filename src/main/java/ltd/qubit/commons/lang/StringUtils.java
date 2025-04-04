@@ -17,6 +17,9 @@ import java.nio.charset.CharacterCodingException;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -29,6 +32,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -46,7 +51,14 @@ import ltd.qubit.commons.text.Searcher;
 import ltd.qubit.commons.text.Splitter;
 import ltd.qubit.commons.text.Stripper;
 import ltd.qubit.commons.text.Unicode;
+import ltd.qubit.commons.util.codec.DecodingException;
 import ltd.qubit.commons.util.codec.HexCodec;
+import ltd.qubit.commons.util.codec.IsoLocalDateCodec;
+import ltd.qubit.commons.util.codec.IsoLocalDateTimeCodec;
+import ltd.qubit.commons.util.codec.IsoLocalTimeCodec;
+import ltd.qubit.commons.util.codec.LocalDateCodec;
+import ltd.qubit.commons.util.codec.LocalDateTimeCodec;
+import ltd.qubit.commons.util.codec.LocalTimeCodec;
 import ltd.qubit.commons.util.filter.character.AcceptSpecifiedCharFilter;
 import ltd.qubit.commons.util.filter.character.AsciiCharFilter;
 import ltd.qubit.commons.util.filter.character.AsciiPrintableCharFilter;
@@ -137,6 +149,8 @@ import static ltd.qubit.commons.text.impl.SearcherImpl.firstIndexOf;
 @SuppressWarnings("overloads")
 @ThreadSafe
 public class StringUtils {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(StringUtils.class);
 
   /**
    * Represents an empty string constant.
@@ -9510,6 +9524,60 @@ public class StringUtils {
       if (df.success()) {
         return value;
       }
+      return defaultValue;
+    }
+  }
+
+  public static LocalDate toLocalDate(@Nullable final String str) {
+    return toLocalDate(str, null);
+  }
+
+  public static LocalDate toLocalDate(@Nullable final String str,
+      @Nullable final LocalDate defaultValue) {
+    if (str == null) {
+      return defaultValue;
+    }
+    final LocalDateCodec codec = IsoLocalDateCodec.INSTANCE;
+    try {
+      return codec.decode(str);
+    } catch (final DecodingException e) {
+      LOGGER.error("Failed to decode string to LocalDate: '{}', use the default value: {}", str, defaultValue, e);
+      return defaultValue;
+    }
+  }
+
+  public static LocalTime toLocalTime(@Nullable final String str) {
+    return toLocalTime(str, null);
+  }
+
+  public static LocalTime toLocalTime(@Nullable final String str,
+      @Nullable final LocalTime defaultValue) {
+    if (str == null) {
+      return defaultValue;
+    }
+    final LocalTimeCodec codec = IsoLocalTimeCodec.INSTANCE;
+    try {
+      return codec.decode(str);
+    } catch (final DecodingException e) {
+      LOGGER.error("Failed to decode string to LocalTime: '{}', use the default value: {}", str, defaultValue, e);
+      return defaultValue;
+    }
+  }
+
+  public static LocalDateTime toLocalDateTime(@Nullable final String str) {
+    return toLocalDateTime(str, null);
+  }
+
+  public static LocalDateTime toLocalDateTime(@Nullable final String str,
+      @Nullable final LocalDateTime defaultValue) {
+    if (str == null) {
+      return defaultValue;
+    }
+    final LocalDateTimeCodec codec = IsoLocalDateTimeCodec.INSTANCE;
+    try {
+      return codec.decode(str);
+    } catch (final DecodingException e) {
+      LOGGER.error("Failed to decode string to LocalDateTime: '{}', use the default value: {}", str, defaultValue, e);
       return defaultValue;
     }
   }

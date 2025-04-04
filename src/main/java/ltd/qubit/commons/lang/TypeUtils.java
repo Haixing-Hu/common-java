@@ -13,8 +13,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -711,9 +715,7 @@ public final class TypeUtils {
       case STRING: {
         final String[] values = (String[]) array;
         final List<String> result = new ArrayList<>(values.length);
-        for (final String value : values) {
-          result.add(value);
-        }
+        Collections.addAll(result, values);
         return result;
       }
       case DATE: {
@@ -735,25 +737,19 @@ public final class TypeUtils {
       case CLASS: {
         final Class<?>[] values = (Class<?>[]) array;
         final List<Class<?>> result = new ArrayList<>(values.length);
-        for (final Class<?> value : values) {
-          result.add(value);
-        }
+        Collections.addAll(result, values);
         return result;
       }
       case BIG_INTEGER: {
         final BigInteger[] values = (BigInteger[]) array;
         final List<BigInteger> result = new ArrayList<>(values.length);
-        for (final BigInteger value : values) {
-          result.add(value);
-        }
+        Collections.addAll(result, values);
         return result;
       }
       case BIG_DECIMAL: {
         final BigDecimal[] values = (BigDecimal[]) array;
         final List<BigDecimal> result = new ArrayList<>(values.length);
-        for (final BigDecimal value : values) {
-          result.add(value);
-        }
+        Collections.addAll(result, values);
         return result;
       }
       default:
@@ -1287,10 +1283,8 @@ public final class TypeUtils {
    * @throws TypeConvertException
    *     if the object can not be converted into a {@code double} value.
    */
-  @SuppressWarnings("unchecked")
-  public static double objectAsDouble(final Type type,
-      @Nullable final Object value) throws ClassCastException,
-      UnsupportedDataTypeException, TypeConvertException {
+  public static double objectAsDouble(final Type type, @Nullable final Object value)
+      throws ClassCastException, UnsupportedDataTypeException, TypeConvertException {
     switch (type) {
       case BOOL:
         return BooleanUtils.toDouble((Boolean) value);
@@ -1340,10 +1334,12 @@ public final class TypeUtils {
    * @throws UnsupportedDataTypeException
    *     if the {@link Type} object is not supported.
    */
-  @SuppressWarnings("unchecked")
-  public static String objectAsString(final Type type,
-      @Nullable final Object value) throws ClassCastException,
-      UnsupportedDataTypeException {
+  @Nullable
+  public static String objectAsString(final Type type, @Nullable final Object value)
+      throws ClassCastException, UnsupportedDataTypeException {
+    if (value == null) {
+      return null;
+    }
     switch (type) {
       case BOOL:
         return BooleanUtils.toString((Boolean) value);
@@ -1379,56 +1375,114 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts an object of the specified type to a {@link Date} object.
+   * Converts an object of the specified type to a {@link LocalDate} object.
    *
    * @param type
    *     the {@link Type} object corresponding to the type of the object to be
    *     converted.
    * @param value
    *     the object to be converted, which could be null.
-   * @return a {@link Date} object corresponds to the object to be converted.
-   *     Note that if the specified object is of the {@link Date} class, the
-   *     returned {@link Date} object is a cloned copy of the original value.
+   * @return a {@link LocalDate} object corresponds to the object to be converted.
+   *     Note that if the specified object is of the {@link LocalDate} class, the
+   *     returned {@link LocalDate} object is a cloned copy of the original value.
    * @throws ClassCastException
    *     if the {@link Type} object does not correspond to the type of the
    *     object to be converted.
    * @throws UnsupportedDataTypeException
    *     if the {@link Type} object is not supported.
    * @throws TypeConvertException
-   *     if the object can not be converted into a {@link Date} object.
+   *     if the object can not be converted into a {@link LocalDate} object.
    */
-  public static Date objectAsDate(final Type type, @Nullable final Object value)
+  @Nullable
+  public static LocalDate objectAsDate(final Type type, @Nullable final Object value)
       throws ClassCastException, UnsupportedDataTypeException,
       TypeConvertException {
+    if (value == null) {
+      return null;
+    }
     switch (type) {
-      case BOOL:
-        return BooleanUtils.toDate((Boolean) value);
-      case CHAR:
-        return CharUtils.toDate((Character) value);
-      case BYTE:
-        return ByteUtils.toDate((Byte) value);
-      case SHORT:
-        return ShortUtils.toDate((Short) value);
-      case INT:
-        return IntUtils.toDate((Integer) value);
-      case LONG:
-        return LongUtils.toDate((Long) value);
-      case FLOAT:
-        return FloatUtils.toDate((Float) value);
-      case DOUBLE:
-        return DoubleUtils.toDate((Double) value);
       case STRING:
-        return StringUtils.toDate((String) value);
+        return StringUtils.toLocalDate((String) value);
       case DATE:
-        return Assignment.clone((Date) value);
-      case BYTE_ARRAY:
-        return ByteArrayUtils.toDate((byte[]) value);
-      case CLASS:
-        throw new TypeConvertException(Type.CLASS, Type.BOOL);
-      case BIG_INTEGER:
-        return BigIntegerUtils.toDate((BigInteger) value);
-      case BIG_DECIMAL:
-        return BigDecimalUtils.toDate((BigDecimal) value);
+        return (LocalDate) value;
+      case DATETIME:
+        return ((LocalDateTime) value).toLocalDate();
+      default:
+        throw new UnsupportedDataTypeException(type);
+    }
+  }
+
+  /**
+   * Converts an object of the specified type to a {@link LocalTime} object.
+   *
+   * @param type
+   *     the {@link Type} object corresponding to the type of the object to be
+   *     converted.
+   * @param value
+   *     the object to be converted, which could be null.
+   * @return a {@link LocalTime} object corresponds to the object to be converted.
+   *     Note that if the specified object is of the {@link LocalTime} class, the
+   *     returned {@link LocalTime} object is a cloned copy of the original value.
+   * @throws ClassCastException
+   *     if the {@link Type} object does not correspond to the type of the
+   *     object to be converted.
+   * @throws UnsupportedDataTypeException
+   *     if the {@link Type} object is not supported.
+   * @throws TypeConvertException
+   *     if the object can not be converted into a {@link LocalTime} object.
+   */
+  @Nullable
+  public static LocalTime objectAsTime(final Type type, @Nullable final Object value)
+      throws ClassCastException, UnsupportedDataTypeException,
+      TypeConvertException {
+    if (value == null) {
+      return null;
+    }
+    switch (type) {
+      case STRING:
+        return StringUtils.toLocalTime((String) value);
+      case TIME:
+        return (LocalTime) value;
+      case DATETIME:
+        return ((LocalDateTime) value).toLocalTime();
+      default:
+        throw new UnsupportedDataTypeException(type);
+    }
+  }
+
+  /**
+   * Converts an object of the specified type to a {@link LocalDateTime} object.
+   *
+   * @param type
+   *     the {@link Type} object corresponding to the type of the object to be
+   *     converted.
+   * @param value
+   *     the object to be converted, which could be null.
+   * @return a {@link LocalDateTime} object corresponds to the object to be converted.
+   *     Note that if the specified object is of the {@link LocalDateTime} class, the
+   *     returned {@link LocalDateTime} object is a cloned copy of the original value.
+   * @throws ClassCastException
+   *     if the {@link Type} object does not correspond to the type of the
+   *     object to be converted.
+   * @throws UnsupportedDataTypeException
+   *     if the {@link Type} object is not supported.
+   * @throws TypeConvertException
+   *     if the object can not be converted into a {@link LocalDateTime} object.
+   */
+  @Nullable
+  public static LocalDateTime objectAsDateTime(final Type type, @Nullable final Object value)
+      throws ClassCastException, UnsupportedDataTypeException,
+      TypeConvertException {
+    if (value == null) {
+      return null;
+    }
+    switch (type) {
+      case STRING:
+        return StringUtils.toLocalDateTime((String) value);
+      case DATE:
+        return ((LocalDate) value).atStartOfDay();
+      case DATETIME:
+        return (LocalDateTime) value;
       default:
         throw new UnsupportedDataTypeException(type);
     }
@@ -2542,7 +2596,7 @@ public final class TypeUtils {
 
   /**
    * Converts the first element in a collection of values of the specified type
-   * into a {@code Date} value.
+   * into a {@code LocalDate} value.
    *
    * @param type
    *     the {@link Type} object corresponding to the type of the object to be
@@ -2557,81 +2611,115 @@ public final class TypeUtils {
    * @throws UnsupportedDataTypeException
    *     if the {@link Type} object is not supported.
    * @throws TypeConvertException
-   *     if the object can not be converted into a {@code boolean} value.
+   *     if the object can not be converted into a {@code LocalDate} value.
    * @throws NoSuchElementException
    *     if the collection is empty.
    */
   @SuppressWarnings("unchecked")
-  public static Date firstInCollectionAsDate(final Type type,
+  public static LocalDate firstInCollectionAsDate(final Type type,
       final Object col) throws ClassCastException, UnsupportedDataTypeException,
       TypeConvertException, NoSuchElementException {
     switch (type) {
-      case BOOL: {
-        final BooleanCollection values = (BooleanCollection) col;
-        final boolean value = values.iterator().next();
-        return BooleanUtils.toDate(value);
-      }
-      case CHAR: {
-        final CharCollection values = (CharCollection) col;
-        final char value = values.iterator().next();
-        return CharUtils.toDate(value);
-      }
-      case BYTE: {
-        final ByteCollection values = (ByteCollection) col;
-        final byte value = values.iterator().next();
-        return ByteUtils.toDate(value);
-      }
-      case SHORT: {
-        final ShortCollection values = (ShortCollection) col;
-        final short value = values.iterator().next();
-        return ShortUtils.toDate(value);
-      }
-      case INT: {
-        final IntCollection values = (IntCollection) col;
-        final int value = values.iterator().next();
-        return IntUtils.toDate(value);
-      }
-      case LONG: {
-        final LongCollection values = (LongCollection) col;
-        final long value = values.iterator().next();
-        return LongUtils.toDate(value);
-      }
-      case FLOAT: {
-        final FloatCollection values = (FloatCollection) col;
-        final float value = values.iterator().next();
-        return FloatUtils.toDate(value);
-      }
-      case DOUBLE: {
-        final DoubleCollection values = (DoubleCollection) col;
-        final double value = values.iterator().next();
-        return DoubleUtils.toDate(value);
-      }
       case STRING: {
         final Collection<String> values = (Collection<String>) col;
         final String value = values.iterator().next();
-        return StringUtils.toDate(value);
+        return StringUtils.toLocalDate(value);
       }
       case DATE: {
-        final Collection<Date> values = (Collection<Date>) col;
-        final Date value = values.iterator().next();
-        return Assignment.clone(value);
+        final Collection<LocalDate> values = (Collection<LocalDate>) col;
+        return values.iterator().next();
       }
-      case BYTE_ARRAY: {
-        final Collection<byte[]> values = (Collection<byte[]>) col;
-        final byte[] value = values.iterator().next();
-        return ByteArrayUtils.toDate(value);
+      case DATETIME: {
+        final Collection<LocalDateTime> values = (Collection<LocalDateTime>) col;
+        return values.iterator().next().toLocalDate();
       }
-      case CLASS:
-        throw new TypeConvertException(Type.CLASS, Type.BOOL);
-      case BIG_INTEGER: {
-        final Collection<BigInteger> values = (Collection<BigInteger>) col;
-        final BigInteger value = values.iterator().next();
-        return BigIntegerUtils.toDate(value);
+      default:
+        throw new UnsupportedDataTypeException(type);
+    }
+  }
+
+  /**
+   * Converts the first element in a collection of values of the specified type
+   * into a {@code LocalTime} value.
+   *
+   * @param type
+   *     the {@link Type} object corresponding to the type of the object to be
+   *     converted.
+   * @param col
+   *     the collection of objects of the specified type, which can't be null.
+   * @return a {@code Date} value converted from the first object in the
+   *     collection.
+   * @throws ClassCastException
+   *     if the {@link Type} object does not correspond to the type of the
+   *     object to be converted.
+   * @throws UnsupportedDataTypeException
+   *     if the {@link Type} object is not supported.
+   * @throws TypeConvertException
+   *     if the object can not be converted into a {@code LocalTime} value.
+   * @throws NoSuchElementException
+   *     if the collection is empty.
+   */
+  @SuppressWarnings("unchecked")
+  public static LocalTime firstInCollectionAsTime(final Type type,
+      final Object col) throws ClassCastException, UnsupportedDataTypeException,
+      TypeConvertException, NoSuchElementException {
+    switch (type) {
+      case STRING: {
+        final Collection<String> values = (Collection<String>) col;
+        final String value = values.iterator().next();
+        return StringUtils.toLocalTime(value);
       }
-      case BIG_DECIMAL: {
-        final Collection<BigDecimal> values = (Collection<BigDecimal>) col;
-        final BigDecimal value = values.iterator().next();
-        return BigDecimalUtils.toDate(value);
+      case TIME: {
+        final Collection<LocalTime> values = (Collection<LocalTime>) col;
+        return values.iterator().next();
+      }
+      case DATETIME: {
+        final Collection<LocalDateTime> values = (Collection<LocalDateTime>) col;
+        return values.iterator().next().toLocalTime();
+      }
+      default:
+        throw new UnsupportedDataTypeException(type);
+    }
+  }
+
+  /**
+   * Converts the first element in a collection of values of the specified type
+   * into a {@code LocalDateTime} value.
+   *
+   * @param type
+   *     the {@link Type} object corresponding to the type of the object to be
+   *     converted.
+   * @param col
+   *     the collection of objects of the specified type, which can't be null.
+   * @return a {@code Date} value converted from the first object in the
+   *     collection.
+   * @throws ClassCastException
+   *     if the {@link Type} object does not correspond to the type of the
+   *     object to be converted.
+   * @throws UnsupportedDataTypeException
+   *     if the {@link Type} object is not supported.
+   * @throws TypeConvertException
+   *     if the object can not be converted into a {@code LocalDateTime} value.
+   * @throws NoSuchElementException
+   *     if the collection is empty.
+   */
+  @SuppressWarnings("unchecked")
+  public static LocalDateTime firstInCollectionAsDateTime(final Type type,
+      final Object col) throws ClassCastException, UnsupportedDataTypeException,
+      TypeConvertException, NoSuchElementException {
+    switch (type) {
+      case STRING: {
+        final Collection<String> values = (Collection<String>) col;
+        final String value = values.iterator().next();
+        return StringUtils.toLocalDateTime(value);
+      }
+      case DATE: {
+        final Collection<LocalDate> values = (Collection<LocalDate>) col;
+        return values.iterator().next().atStartOfDay();
+      }
+      case DATETIME: {
+        final Collection<LocalDateTime> values = (Collection<LocalDateTime>) col;
+        return values.iterator().next();
       }
       default:
         throw new UnsupportedDataTypeException(type);
@@ -4987,7 +5075,7 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts a collection of objects of the specified type to a {@link Date}
+   * Converts a collection of objects of the specified type to a {@link LocalDate}
    * array.
    *
    * @param type
@@ -4998,9 +5086,9 @@ public final class TypeUtils {
    *     empty array will be returned. If the type is primitive type, the
    *     collection must be a primitive collection; otherwise, it must be a
    *     generic collection.
-   * @return a {@link Date} array corresponds to the collection of objects to be
+   * @return a {@link LocalDate} array corresponds to the collection of objects to be
    *     converted. Note that if the specified object is a collection of {@link
-   *     Date} objects, each object in the returned {@link Date} array is a
+   *     LocalDate} objects, each object in the returned {@link LocalDate} array is a
    *     cloned copy of the original corresponding value.
    * @throws ClassCastException
    *     if the {@link Type} object does not correspond to the type of the
@@ -5008,203 +5096,195 @@ public final class TypeUtils {
    * @throws UnsupportedDataTypeException
    *     if the {@link Type} object is not supported.
    * @throws TypeConvertException
-   *     if the objects in the collection can not be converted into {@link Date}
+   *     if the objects in the collection can not be converted into {@link LocalDate}
    *     objects.
    */
   @SuppressWarnings("unchecked")
-  public static Date[] collectionAsDates(final Type type,
+  public static LocalDate[] collectionAsDates(final Type type,
       @Nullable final Object col) throws ClassCastException,
       UnsupportedDataTypeException, TypeConvertException {
     if (col == null) {
-      return ArrayUtils.EMPTY_DATE_ARRAY;
+      return ArrayUtils.EMPTY_LOCAL_DATE_ARRAY;
     }
     switch (type) {
-      case BOOL: {
-        final BooleanCollection values = (BooleanCollection) col;
-        final int n = values.size();
-        if (n == 0) {
-          return ArrayUtils.EMPTY_DATE_ARRAY;
-        }
-        final Date[] result = new Date[n];
-        final BooleanIterator iter = values.iterator();
-        int i = 0;
-        while (iter.hasNext()) {
-          final boolean value = iter.next();
-          result[i++] = BooleanUtils.toDate(value);
-        }
-        return result;
-      }
-      case CHAR: {
-        final CharCollection values = (CharCollection) col;
-        final int n = values.size();
-        if (n == 0) {
-          return ArrayUtils.EMPTY_DATE_ARRAY;
-        }
-        final Date[] result = new Date[n];
-        final CharIterator iter = values.iterator();
-        int i = 0;
-        while (iter.hasNext()) {
-          final char value = iter.next();
-          result[i++] = CharUtils.toDate(value);
-        }
-        return result;
-      }
-      case BYTE: {
-        final ByteCollection values = (ByteCollection) col;
-        final int n = values.size();
-        if (n == 0) {
-          return ArrayUtils.EMPTY_DATE_ARRAY;
-        }
-        final Date[] result = new Date[n];
-        final ByteIterator iter = values.iterator();
-        int i = 0;
-        while (iter.hasNext()) {
-          final byte value = iter.next();
-          result[i++] = ByteUtils.toDate(value);
-        }
-        return result;
-      }
-      case SHORT: {
-        final ShortCollection values = (ShortCollection) col;
-        final int n = values.size();
-        if (n == 0) {
-          return ArrayUtils.EMPTY_DATE_ARRAY;
-        }
-        final Date[] result = new Date[n];
-        final ShortIterator iter = values.iterator();
-        int i = 0;
-        while (iter.hasNext()) {
-          final short value = iter.next();
-          result[i++] = ShortUtils.toDate(value);
-        }
-        return result;
-      }
-      case INT: {
-        final IntCollection values = (IntCollection) col;
-        final int n = values.size();
-        if (n == 0) {
-          return ArrayUtils.EMPTY_DATE_ARRAY;
-        }
-        final Date[] result = new Date[n];
-        final IntIterator iter = values.iterator();
-        int i = 0;
-        while (iter.hasNext()) {
-          final int value = iter.next();
-          result[i++] = IntUtils.toDate(value);
-        }
-        return result;
-      }
-      case LONG: {
-        final LongCollection values = (LongCollection) col;
-        final int n = values.size();
-        if (n == 0) {
-          return ArrayUtils.EMPTY_DATE_ARRAY;
-        }
-        final Date[] result = new Date[n];
-        final LongIterator iter = values.iterator();
-        int i = 0;
-        while (iter.hasNext()) {
-          final long value = iter.next();
-          result[i++] = LongUtils.toDate(value);
-        }
-        return result;
-      }
-      case FLOAT: {
-        final FloatCollection values = (FloatCollection) col;
-        final int n = values.size();
-        if (n == 0) {
-          return ArrayUtils.EMPTY_DATE_ARRAY;
-        }
-        final Date[] result = new Date[n];
-        final FloatIterator iter = values.iterator();
-        int i = 0;
-        while (iter.hasNext()) {
-          final float value = iter.next();
-          result[i++] = FloatUtils.toDate(value);
-        }
-        return result;
-      }
-      case DOUBLE: {
-        final DoubleCollection values = (DoubleCollection) col;
-        final int n = values.size();
-        if (n == 0) {
-          return ArrayUtils.EMPTY_DATE_ARRAY;
-        }
-        final Date[] result = new Date[n];
-        final DoubleIterator iter = values.iterator();
-        int i = 0;
-        while (iter.hasNext()) {
-          final double value = iter.next();
-          result[i++] = DoubleUtils.toDate(value);
-        }
-        return result;
-      }
       case STRING: {
         final Collection<String> values = (Collection<String>) col;
         final int n = values.size();
         if (n == 0) {
-          return ArrayUtils.EMPTY_DATE_ARRAY;
+          return ArrayUtils.EMPTY_LOCAL_DATE_ARRAY;
         }
-        final Date[] result = new Date[n];
+        final LocalDate[] result = new LocalDate[n];
         int i = 0;
         for (final String value : values) {
-          result[i++] = StringUtils.toDate(value);
+          result[i++] = StringUtils.toLocalDate(value);
         }
         return result;
       }
       case DATE: {
-        final Collection<Date> values = (Collection<Date>) col;
+        final Collection<LocalDate> values = (Collection<LocalDate>) col;
         final int n = values.size();
         if (n == 0) {
-          return ArrayUtils.EMPTY_DATE_ARRAY;
+          return ArrayUtils.EMPTY_LOCAL_DATE_ARRAY;
         }
-        final Date[] result = new Date[n];
+        return values.toArray(new LocalDate[0]);
+      }
+      case DATETIME: {
+        final Collection<LocalDateTime> values = (Collection<LocalDateTime>) col;
+        final int n = values.size();
+        if (n == 0) {
+          return ArrayUtils.EMPTY_LOCAL_DATE_ARRAY;
+        }
+        final LocalDate[] result = new LocalDate[n];
         int i = 0;
-        for (final Date value : values) {
-          result[i++] = Assignment.clone(value);
+        for (final LocalDateTime value : values) {
+          result[i++] = value.toLocalDate();
         }
         return result;
       }
-      case BYTE_ARRAY: {
-        final Collection<byte[]> values = (Collection<byte[]>) col;
+      default:
+        throw new UnsupportedDataTypeException(type);
+    }
+  }
+
+
+  /**
+   * Converts a collection of objects of the specified type to a {@link LocalTime}
+   * array.
+   *
+   * @param type
+   *     the {@link Type} object corresponding to the type of the object to be
+   *     converted.
+   * @param col
+   *     the collection of objects to be converted; if it is null or empty, a
+   *     empty array will be returned. If the type is primitive type, the
+   *     collection must be a primitive collection; otherwise, it must be a
+   *     generic collection.
+   * @return a {@link LocalTime} array corresponds to the collection of objects to be
+   *     converted. Note that if the specified object is a collection of {@link
+   *     LocalTime} objects, each object in the returned {@link LocalTime} array is a
+   *     cloned copy of the original corresponding value.
+   * @throws ClassCastException
+   *     if the {@link Type} object does not correspond to the type of the
+   *     objects in the collection to be converted.
+   * @throws UnsupportedDataTypeException
+   *     if the {@link Type} object is not supported.
+   * @throws TypeConvertException
+   *     if the objects in the collection can not be converted into {@link LocalTime}
+   *     objects.
+   */
+  @SuppressWarnings("unchecked")
+  public static LocalTime[] collectionAsTimes(final Type type,
+      @Nullable final Object col) throws ClassCastException,
+      UnsupportedDataTypeException, TypeConvertException {
+    if (col == null) {
+      return ArrayUtils.EMPTY_LOCAL_TIME_ARRAY;
+    }
+    switch (type) {
+      case STRING: {
+        final Collection<String> values = (Collection<String>) col;
         final int n = values.size();
         if (n == 0) {
-          return ArrayUtils.EMPTY_DATE_ARRAY;
+          return ArrayUtils.EMPTY_LOCAL_TIME_ARRAY;
         }
-        final Date[] result = new Date[n];
+        final LocalTime[] result = new LocalTime[n];
         int i = 0;
-        for (final byte[] value : values) {
-          result[i++] = ByteArrayUtils.toDate(value);
+        for (final String value : values) {
+          result[i++] = StringUtils.toLocalTime(value);
         }
         return result;
       }
-      case CLASS:
-        throw new TypeConvertException(Type.CLASS, Type.BOOL);
-      case BIG_INTEGER: {
-        final Collection<BigInteger> values = (Collection<BigInteger>) col;
+      case TIME: {
+        final Collection<LocalTime> values = (Collection<LocalTime>) col;
         final int n = values.size();
         if (n == 0) {
-          return ArrayUtils.EMPTY_DATE_ARRAY;
+          return ArrayUtils.EMPTY_LOCAL_TIME_ARRAY;
         }
-        final Date[] result = new Date[n];
+        return values.toArray(new LocalTime[0]);
+      }
+      case DATETIME: {
+        final Collection<LocalDateTime> values = (Collection<LocalDateTime>) col;
+        final int n = values.size();
+        if (n == 0) {
+          return ArrayUtils.EMPTY_LOCAL_TIME_ARRAY;
+        }
+        final LocalTime[] result = new LocalTime[n];
         int i = 0;
-        for (final BigInteger value : values) {
-          result[i++] = BigIntegerUtils.toDate(value);
+        for (final LocalDateTime value : values) {
+          result[i++] = value.toLocalTime();
         }
         return result;
       }
-      case BIG_DECIMAL: {
-        final Collection<BigDecimal> values = (Collection<BigDecimal>) col;
+      default:
+        throw new UnsupportedDataTypeException(type);
+    }
+  }
+
+  /**
+   * Converts a collection of objects of the specified type to a {@link LocalDateTime}
+   * array.
+   *
+   * @param type
+   *     the {@link Type} object corresponding to the type of the object to be
+   *     converted.
+   * @param col
+   *     the collection of objects to be converted; if it is null or empty, a
+   *     empty array will be returned. If the type is primitive type, the
+   *     collection must be a primitive collection; otherwise, it must be a
+   *     generic collection.
+   * @return a {@link LocalDateTime} array corresponds to the collection of objects to be
+   *     converted. Note that if the specified object is a collection of {@link
+   *     LocalDateTime} objects, each object in the returned {@link LocalDateTime} array is a
+   *     cloned copy of the original corresponding value.
+   * @throws ClassCastException
+   *     if the {@link Type} object does not correspond to the type of the
+   *     objects in the collection to be converted.
+   * @throws UnsupportedDataTypeException
+   *     if the {@link Type} object is not supported.
+   * @throws TypeConvertException
+   *     if the objects in the collection can not be converted into {@link LocalDateTime}
+   *     objects.
+   */
+  @SuppressWarnings("unchecked")
+  public static LocalDateTime[] collectionAsDateTimes(final Type type,
+      @Nullable final Object col) throws ClassCastException,
+      UnsupportedDataTypeException, TypeConvertException {
+    if (col == null) {
+      return ArrayUtils.EMPTY_LOCAL_DATETIME_ARRAY;
+    }
+    switch (type) {
+      case STRING: {
+        final Collection<String> values = (Collection<String>) col;
         final int n = values.size();
         if (n == 0) {
-          return ArrayUtils.EMPTY_DATE_ARRAY;
+          return ArrayUtils.EMPTY_LOCAL_DATETIME_ARRAY;
         }
-        final Date[] result = new Date[n];
+        final LocalDateTime[] result = new LocalDateTime[n];
         int i = 0;
-        for (final BigDecimal value : values) {
-          result[i++] = BigDecimalUtils.toDate(value);
+        for (final String value : values) {
+          result[i++] = StringUtils.toLocalDateTime(value);
         }
         return result;
+      }
+      case DATE: {
+        final Collection<LocalDate> values = (Collection<LocalDate>) col;
+        final int n = values.size();
+        if (n == 0) {
+          return ArrayUtils.EMPTY_LOCAL_DATETIME_ARRAY;
+        }
+        final LocalDateTime[] result = new LocalDateTime[n];
+        int i = 0;
+        for (final LocalDate value : values) {
+          result[i++] = value.atStartOfDay();
+        }
+        return result;
+      }
+      case DATETIME: {
+        final Collection<LocalDateTime> values = (Collection<LocalDateTime>) col;
+        final int n = values.size();
+        if (n == 0) {
+          return ArrayUtils.EMPTY_LOCAL_DATETIME_ARRAY;
+        }
+        return values.toArray(new LocalDateTime[0]);
       }
       default:
         throw new UnsupportedDataTypeException(type);
@@ -8947,9 +9027,7 @@ public final class TypeUtils {
       case STRING: {
         final Collection<String> target = (Collection<String>) col;
         final String[] array = (String[]) values;
-        for (final String value : array) {
-          target.add(value);
-        }
+        Collections.addAll(target, array);
         return;
       }
       case DATE: {
@@ -8971,25 +9049,19 @@ public final class TypeUtils {
       case CLASS: {
         final Collection<Class<?>> target = (Collection<Class<?>>) col;
         final Class<?>[] array = (Class<?>[]) values;
-        for (final Class<?> value : array) {
-          target.add(value);
-        }
+        Collections.addAll(target, array);
         return;
       }
       case BIG_INTEGER: {
         final Collection<BigInteger> target = (Collection<BigInteger>) col;
         final BigInteger[] array = (BigInteger[]) values;
-        for (final BigInteger value : array) {
-          target.add(value);
-        }
+        Collections.addAll(target, array);
         return;
       }
       case BIG_DECIMAL: {
         final Collection<BigDecimal> target = (Collection<BigDecimal>) col;
         final BigDecimal[] array = (BigDecimal[]) values;
-        for (final BigDecimal value : array) {
-          target.add(value);
-        }
+        Collections.addAll(target, array);
         return;
       }
       default:
