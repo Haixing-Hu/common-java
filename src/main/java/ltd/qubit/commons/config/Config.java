@@ -10,8 +10,10 @@ package ltd.qubit.commons.config;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -768,8 +770,7 @@ public interface Config extends CloneableEx<Config> {
    *     if the type of the specified property is not {@code String}.
    * @see #getRawString(String, String)
    */
-  String getString(String name,
-      @Nullable String defaultValue);
+  String getString(String name, @Nullable String defaultValue);
 
   /**
    * Gets the values of the specified property as an array of substituted {@code
@@ -820,8 +821,7 @@ public interface Config extends CloneableEx<Config> {
    *     if the type of the specified property is not {@code String}.
    * @see #getRawStrings(String, String[])
    */
-  String[] getStrings(String name,
-      @Nullable String[] defaultValues);
+  String[] getStrings(String name, @Nullable String[] defaultValues);
 
   /**
    * Substitutes all substitutable variables in a {@code String}, using the
@@ -875,8 +875,7 @@ public interface Config extends CloneableEx<Config> {
    * @throws ConfigurationError
    *     if the type of the specified property is not {@code BigDecimal}.
    */
-  BigDecimal getBigDecimal(String name,
-      @Nullable BigDecimal defaultValue);
+  BigDecimal getBigDecimal(String name, @Nullable BigDecimal defaultValue);
 
   /**
    * Gets the values of the specified property as an array of {@code BigDecimal}
@@ -909,8 +908,7 @@ public interface Config extends CloneableEx<Config> {
    * @throws ConfigurationError
    *     if the type of the specified property is not {@code BigDecimal}.
    */
-  BigDecimal[] getBigDecimals(String name,
-      @Nullable BigDecimal[] defaultValues);
+  BigDecimal[] getBigDecimals(String name, @Nullable BigDecimal[] defaultValues);
 
   /**
    * Gets the value of the specified property as a {@code BigInteger} value.
@@ -940,8 +938,7 @@ public interface Config extends CloneableEx<Config> {
    * @throws ConfigurationError
    *     if the type of the specified property is not {@code BigInteger}.
    */
-  BigInteger getBigInteger(String name,
-      @Nullable BigInteger defaultValue);
+  BigInteger getBigInteger(String name, @Nullable BigInteger defaultValue);
 
   /**
    * Gets the values of the specified property as an array of {@code BigInteger}
@@ -973,56 +970,54 @@ public interface Config extends CloneableEx<Config> {
    * @throws ConfigurationError
    *     if the type of the specified property is not {@code BigInteger}.
    */
-  BigInteger[] getBigIntegers(String name,
-      @Nullable BigInteger[] defaultValues);
+  BigInteger[] getBigIntegers(String name, @Nullable BigInteger[] defaultValues);
 
   /**
-   * Gets the value of the specified property as a {@code Date} value.
+   * Gets the value of the specified property as a {@link LocalDate} value.
    *
    * @param name
    *     the name of the specified property.
-   * @return the value of the property with the specified name as a {@code
-   *     Date}.
+   * @return the value of the property with the specified name as a {@link LocalDate}.
    * @throws ConfigurationError
    *     if there is no property with the specified name, or the specified
    *     property has no value, or the type of the specified property is not
-   *     {@code Date}.
+   *     {@link LocalDate}.
    */
-  Date getDate(String name);
+  LocalDate getDate(String name);
 
   /**
-   * Gets the value of the specified property as a {@code Date} value.
+   * Gets the value of the specified property as a {@link LocalDate} value.
    *
    * @param name
    *     the name of the specified property.
    * @param defaultValue
    *     the default value returned in case of there is no such property or the
    *     property has no value. It could be null.
-   * @return the value of the property with the specified name as a {@code
-   *     Date}; or the {@code defaultValue} if there is no such property or the
+   * @return the value of the property with the specified name as a {@link LocalDate};
+   *     or the {@code defaultValue} if there is no such property or the
    *     property has no value.
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code Date}.
+   *     if the type of the specified property is not {@link LocalDate}.
    */
-  Date getDate(String name, @Nullable Date defaultValue);
+  LocalDate getDate(String name, @Nullable LocalDate defaultValue);
 
   /**
-   * Gets the values of the specified property as an array of {@code Date}
+   * Gets the values of the specified property as an array of {@link LocalDate}
    * values.
    *
    * @param name
    *     the name of the specified property.
    * @return the array of the values of the property with the specified name as
-   *     a {@code Date} array.
+   *     a {@link LocalDate} array.
    * @throws ConfigurationError
    *     if there is no property with the specified name, or the specified
    *     property has no value, or the type of the specified property is not
-   *     {@code Date}.
+   *     {@link LocalDate}.
    */
-  Date[] getDates(String name);
+  LocalDate[] getDates(String name);
 
   /**
-   * Gets the values of the specified property as an array of {@code Date}
+   * Gets the values of the specified property as an array of {@link LocalDate}
    * values.
    *
    * @param name
@@ -1031,13 +1026,134 @@ public interface Config extends CloneableEx<Config> {
    *     the default values returned in case of there is no such property or the
    *     property has no value. It could be null.
    * @return the array of the values of the property with the specified name as
-   *     a {@code Date} array; or the {@code defaultValues} if there is no such
+   *     a {@link LocalDate} array; or the {@code defaultValues} if there is no such
    *     property or the property has no value.
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code Date}.
+   *     if the type of the specified property is not {@link LocalDate}.
    */
-  Date[] getDates(String name,
-      @Nullable Date[] defaultValues);
+  LocalDate[] getDates(String name, @Nullable LocalDate[] defaultValues);
+
+  /**
+   * Gets the value of the specified property as a {@link LocalTime} value.
+   *
+   * @param name
+   *     the name of the specified property.
+   * @return the value of the property with the specified name as a {@link LocalTime}.
+   * @throws ConfigurationError
+   *     if there is no property with the specified name, or the specified
+   *     property has no value, or the type of the specified property is not
+   *     {@link LocalTime}.
+   */
+  LocalTime getTime(String name);
+
+  /**
+   * Gets the value of the specified property as a {@link LocalTime} value.
+   *
+   * @param name
+   *     the name of the specified property.
+   * @param defaultValue
+   *     the default value returned in case of there is no such property or the
+   *     property has no value. It could be null.
+   * @return the value of the property with the specified name as a {@link LocalTime};
+   *     or the {@code defaultValue} if there is no such property or the
+   *     property has no value.
+   * @throws ConfigurationError
+   *     if the type of the specified property is not {@link LocalTime}.
+   */
+  LocalTime getTime(String name, @Nullable LocalTime defaultValue);
+
+  /**
+   * Gets the values of the specified property as an array of {@link LocalTime}
+   * values.
+   *
+   * @param name
+   *     the name of the specified property.
+   * @return the array of the values of the property with the specified name as
+   *     a {@link LocalTime} array.
+   * @throws ConfigurationError
+   *     if there is no property with the specified name, or the specified
+   *     property has no value, or the type of the specified property is not
+   *     {@link LocalTime}.
+   */
+  LocalTime[] getTimes(String name);
+
+  /**
+   * Gets the values of the specified property as an array of {@link LocalTime}
+   * values.
+   *
+   * @param name
+   *     the name of the specified property.
+   * @param defaultValues
+   *     the default values returned in case of there is no such property or the
+   *     property has no value. It could be null.
+   * @return the array of the values of the property with the specified name as
+   *     a {@link LocalTime} array; or the {@code defaultValues} if there is no such
+   *     property or the property has no value.
+   * @throws ConfigurationError
+   *     if the type of the specified property is not {@link LocalTime}.
+   */
+  LocalTime[] getTimes(String name, @Nullable LocalTime[] defaultValues);
+
+  /**
+   * Gets the value of the specified property as a {@link LocalDateTime} value.
+   *
+   * @param name
+   *     the name of the specified property.
+   * @return the value of the property with the specified name as a {@link LocalDateTime}.
+   * @throws ConfigurationError
+   *     if there is no property with the specified name, or the specified
+   *     property has no value, or the type of the specified property is not
+   *     {@link LocalDateTime}.
+   */
+  LocalDateTime getDateTime(String name);
+
+  /**
+   * Gets the value of the specified property as a {@link LocalDateTime} value.
+   *
+   * @param name
+   *     the name of the specified property.
+   * @param defaultValue
+   *     the default value returned in case of there is no such property or the
+   *     property has no value. It could be null.
+   * @return the value of the property with the specified name as a {@link LocalDateTime};
+   *     or the {@code defaultValue} if there is no such property or the
+   *     property has no value.
+   * @throws ConfigurationError
+   *     if the type of the specified property is not {@link LocalDateTime}.
+   */
+  LocalDateTime getDateTime(String name, @Nullable LocalDateTime defaultValue);
+
+  /**
+   * Gets the values of the specified property as an array of {@link LocalDateTime}
+   * values.
+   *
+   * @param name
+   *     the name of the specified property.
+   * @return the array of the values of the property with the specified name as
+   *     a {@link LocalDateTime} array.
+   * @throws ConfigurationError
+   *     if there is no property with the specified name, or the specified
+   *     property has no value, or the type of the specified property is not
+   *     {@link LocalDateTime}.
+   */
+  LocalDateTime[] getDateTimes(String name);
+
+  /**
+   * Gets the values of the specified property as an array of {@link LocalDateTime}
+   * values.
+   *
+   * @param name
+   *     the name of the specified property.
+   * @param defaultValues
+   *     the default values returned in case of there is no such property or the
+   *     property has no value. It could be null.
+   * @return the array of the values of the property with the specified name as
+   *     a {@link LocalDateTime} array; or the {@code defaultValues} if there is no such
+   *     property or the property has no value.
+   * @throws ConfigurationError
+   *     if the type of the specified property is not {@link LocalDateTime}.
+   */
+  LocalDateTime[] getDateTimes(String name, @Nullable LocalDateTime[] defaultValues);
 
   /**
    * Gets the value of the specified property as a {@code byte[]} value.
@@ -1067,8 +1183,7 @@ public interface Config extends CloneableEx<Config> {
    * @throws ConfigurationError
    *     if the type of the specified property is not {@code byte[]}.
    */
-  byte[] getByteArray(String name,
-      @Nullable byte[] defaultValue);
+  byte[] getByteArray(String name, @Nullable byte[] defaultValue);
 
   /**
    * Gets the values of the specified property as an array of {@code byte[]}
@@ -1100,8 +1215,7 @@ public interface Config extends CloneableEx<Config> {
    * @throws ConfigurationError
    *     if the type of the specified property is not {@code byte[]}.
    */
-  byte[][] getByteArrays(String name,
-      @Nullable byte[][] defaultValues);
+  byte[][] getByteArrays(String name, @Nullable byte[][] defaultValues);
 
   /**
    * Gets the value of the specified property as an enumeration object.

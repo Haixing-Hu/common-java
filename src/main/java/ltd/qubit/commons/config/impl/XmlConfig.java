@@ -13,9 +13,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Reader;
+import java.io.Serial;
 import java.io.Writer;
 import java.net.URI;
 import java.net.URL;
+
+import javax.annotation.concurrent.ThreadSafe;
 
 import ltd.qubit.commons.config.Config;
 import ltd.qubit.commons.config.error.ConfigurationError;
@@ -29,8 +32,10 @@ import ltd.qubit.commons.text.xml.XmlException;
  *
  * @author Haixing Hu
  */
+@ThreadSafe
 public final class XmlConfig extends DefaultConfig {
 
+  @Serial
   private static final long serialVersionUID = -2988726634410349164L;
 
   /**
@@ -163,7 +168,7 @@ public final class XmlConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void load(final String resource) {
+  public synchronized void load(final String resource) {
     LOGGER.debug("Loading XML configuration from {}", resource);
     try {
       final URL url = SystemUtils.getResource(resource);
@@ -188,7 +193,7 @@ public final class XmlConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void load(final String resource, final Class<?> loaderClass) {
+  public synchronized void load(final String resource, final Class<?> loaderClass) {
     LOGGER.debug("Loading XML configuration from {}", resource);
     try {
       final DefaultConfig config = XmlSerialization.deserialize(
@@ -209,7 +214,7 @@ public final class XmlConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void load(final String resource, final ClassLoader loader) {
+  public synchronized void load(final String resource, final ClassLoader loader) {
     LOGGER.debug("Loading XML configuration from {}", resource);
     try {
       final DefaultConfig config = XmlSerialization.deserialize(
@@ -228,7 +233,7 @@ public final class XmlConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void load(final Url url) {
+  public synchronized void load(final Url url) {
     LOGGER.debug("Loading XML configuration from {}", url);
     try {
       final DefaultConfig config = XmlSerialization.deserialize(
@@ -247,7 +252,7 @@ public final class XmlConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void load(final URL url) {
+  public synchronized void load(final URL url) {
     LOGGER.debug("Loading XML configuration from {}", url);
     try {
       final DefaultConfig config = XmlSerialization.deserialize(
@@ -266,7 +271,7 @@ public final class XmlConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void load(final URI uri) {
+  public synchronized void load(final URI uri) {
     try {
       final DefaultConfig config = XmlSerialization.deserialize(
           DefaultConfig.class, uri);
@@ -284,7 +289,7 @@ public final class XmlConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void load(final File file) {
+  public synchronized void load(final File file) {
     LOGGER.debug("Loading XML configuration from {}", file);
     try {
       final DefaultConfig config = XmlSerialization.deserialize(
@@ -305,7 +310,7 @@ public final class XmlConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void load(final InputStream in) {
+  public synchronized void load(final InputStream in) {
     LOGGER.debug("Loading XML configuration from {}", in);
     try {
       final DefaultConfig config = XmlSerialization.deserialize(
@@ -326,7 +331,7 @@ public final class XmlConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void load(final Reader reader) {
+  public synchronized void load(final Reader reader) {
     LOGGER.debug("Loading XML configuration from {}", reader);
     try {
       final DefaultConfig config = XmlSerialization.deserialize(
@@ -347,7 +352,7 @@ public final class XmlConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void store(final OutputStream out) {
+  public synchronized void store(final OutputStream out) {
     LOGGER.debug("Storing XML configuration from {}", out);
     try {
       XmlSerialization.serialize(DefaultConfig.class, this, out);
@@ -366,7 +371,7 @@ public final class XmlConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void store(final PrintStream out) {
+  public synchronized void store(final PrintStream out) {
     LOGGER.debug("Storing XML configuration from {}", out);
     try {
       XmlSerialization.serialize(DefaultConfig.class, this, out);
@@ -385,7 +390,7 @@ public final class XmlConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void store(final Writer writer) {
+  public synchronized void store(final Writer writer) {
     LOGGER.debug("Storing XML configuration from {}", writer);
     try {
       XmlSerialization.serialize(DefaultConfig.class, this, writer);
@@ -402,7 +407,7 @@ public final class XmlConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void store(final File file) {
+  public synchronized void store(final File file) {
     LOGGER.debug("Storing XML configuration from {}", file);
     try {
       XmlSerialization.serialize(DefaultConfig.class, this, file);

@@ -13,7 +13,9 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 
@@ -640,7 +642,7 @@ public abstract class AbstractConfig implements Config, Serializable {
   }
 
   @Override
-  public Date getDate(final String name) {
+  public LocalDate getDate(final String name) {
     final Property prop = get(name);
     if (prop == null) {
       throw new PropertyNotExistError(name);
@@ -652,7 +654,7 @@ public abstract class AbstractConfig implements Config, Serializable {
   }
 
   @Override
-  public Date getDate(final String name, @Nullable final Date defaultValue) {
+  public LocalDate getDate(final String name, @Nullable final LocalDate defaultValue) {
     final Property prop = get(name);
     if ((prop == null) || prop.isEmpty()) {
       return defaultValue;
@@ -661,7 +663,7 @@ public abstract class AbstractConfig implements Config, Serializable {
   }
 
   @Override
-  public Date[] getDates(final String name) {
+  public LocalDate[] getDates(final String name) {
     final Property prop = get(name);
     if (prop == null) {
       throw new PropertyNotExistError(name);
@@ -670,13 +672,90 @@ public abstract class AbstractConfig implements Config, Serializable {
   }
 
   @Override
-  public Date[] getDates(final String name,
-      @Nullable final Date[] defaultValues) {
+  public LocalDate[] getDates(final String name, @Nullable final LocalDate[] defaultValues) {
     final Property prop = get(name);
     if (prop == null) {
       return defaultValues;
     }
     return prop.getValuesAsDate();
+  }
+
+  @Override
+  public LocalTime getTime(final String name) {
+    final Property prop = get(name);
+    if (prop == null) {
+      throw new PropertyNotExistError(name);
+    }
+    if (prop.isEmpty()) {
+      throw new PropertyHasNoValueError(name);
+    }
+    return prop.getValueAsTime();
+  }
+
+  @Override
+  public LocalTime getTime(final String name, @Nullable final LocalTime defaultValue) {
+    final Property prop = get(name);
+    if ((prop == null) || prop.isEmpty()) {
+      return defaultValue;
+    }
+    return prop.getValueAsTime();
+  }
+
+  @Override
+  public LocalTime[] getTimes(final String name) {
+    final Property prop = get(name);
+    if (prop == null) {
+      throw new PropertyNotExistError(name);
+    }
+    return prop.getValuesAsTime();
+  }
+
+  @Override
+  public LocalTime[] getTimes(final String name, @Nullable final LocalTime[] defaultValues) {
+    final Property prop = get(name);
+    if (prop == null) {
+      return defaultValues;
+    }
+    return prop.getValuesAsTime();
+  }
+
+  @Override
+  public LocalDateTime getDateTime(final String name) {
+    final Property prop = get(name);
+    if (prop == null) {
+      throw new PropertyNotExistError(name);
+    }
+    if (prop.isEmpty()) {
+      throw new PropertyHasNoValueError(name);
+    }
+    return prop.getValueAsDateTime();
+  }
+
+  @Override
+  public LocalDateTime getDateTime(final String name, @Nullable final LocalDateTime defaultValue) {
+    final Property prop = get(name);
+    if ((prop == null) || prop.isEmpty()) {
+      return defaultValue;
+    }
+    return prop.getValueAsDateTime();
+  }
+
+  @Override
+  public LocalDateTime[] getDateTimes(final String name) {
+    final Property prop = get(name);
+    if (prop == null) {
+      throw new PropertyNotExistError(name);
+    }
+    return prop.getValuesAsDateTime();
+  }
+
+  @Override
+  public LocalDateTime[] getDateTimes(final String name, @Nullable final LocalDateTime[] defaultValues) {
+    final Property prop = get(name);
+    if (prop == null) {
+      return defaultValues;
+    }
+    return prop.getValuesAsDateTime();
   }
 
   @Override

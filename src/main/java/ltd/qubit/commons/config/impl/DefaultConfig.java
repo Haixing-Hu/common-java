@@ -11,13 +11,15 @@ package ltd.qubit.commons.config.impl;
 import java.io.Serial;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.ThreadSafe;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,10 +39,11 @@ import ltd.qubit.commons.datastructure.list.primitive.LongCollection;
 import ltd.qubit.commons.datastructure.list.primitive.ShortCollection;
 import ltd.qubit.commons.io.serialize.BinarySerialization;
 import ltd.qubit.commons.io.serialize.XmlSerialization;
-import ltd.qubit.commons.lang.Argument;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.lang.Type;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
+
+import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
  * The {@link DefaultConfig} class is the default implementation of the {@link
@@ -48,6 +51,7 @@ import ltd.qubit.commons.text.tostring.ToStringBuilder;
  *
  * @author Haixing Hu
  */
+@ThreadSafe
 public class DefaultConfig extends AbstractConfig implements WritableConfig {
 
   @Serial
@@ -61,19 +65,19 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     XmlSerialization.register(DefaultConfig.class, DefaultConfigXmlSerializer.INSTANCE);
   }
 
-  protected String description;
-  protected Map<String, DefaultProperty> properties;
+  protected volatile String description;
+  protected final ConcurrentHashMap<String, DefaultProperty> properties;
 
   /**
    * Constructs an empty {@link DefaultConfig} object.
    */
   public DefaultConfig() {
     description = null;
-    properties = new HashMap<>();
+    properties = new ConcurrentHashMap<>();
   }
 
   @Override
-  public String getDescription() {
+  public synchronized String getDescription() {
     return description;
   }
 
@@ -84,17 +88,24 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
    *     the new description to set, or {@code null} if none.
    */
   @Override
-  public void setDescription(@Nullable final String description) {
+  public synchronized DefaultConfig setDescription(@Nullable final String description) {
     this.description = description;
+    return this;
   }
 
   @Override
-  public void setDescription(final String name, final String description) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setDescription(description);
+  public DefaultConfig setDescription(final String name,
+      final String description) {
+    requireNonNull("name", name);
+    requireNonNull("description", description);
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setDescription(description);
+      return v;
+    });
+    return this;
   }
 
   @Override
@@ -141,7 +152,7 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
    *     this {@link DefaultConfig} object.
    */
   public DefaultConfig addAll(final Config config) {
-    Argument.requireNonNull("config", config);
+    requireNonNull("config", config);
     for (final Property prop : config.getProperties()) {
       add(prop);
     }
@@ -157,7 +168,7 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
    *     this {@link DefaultConfig} object.
    */
   public DefaultConfig addAll(final Collection<? extends Property> properties) {
-    Argument.requireNonNull("properties", properties);
+    requireNonNull("properties", properties);
     for (final Property prop : properties) {
       add(prop);
     }
@@ -174,7 +185,8 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
    *     same name.
    */
   public DefaultProperty add(final Property prop) {
-    DefaultProperty newProp = null;
+    requireNonNull("prop", prop);
+    final DefaultProperty newProp;
     if (prop instanceof DefaultProperty) {
       newProp = (DefaultProperty) prop;
     } else {
@@ -215,885 +227,1811 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
   }
 
   @Override
-  public DefaultProperty remove(final String name) {
+  public Property remove(final String name) {
     return properties.remove(name);
   }
 
   @Override
-  public void setFinal(final String name, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setType(final String name, final Type type) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setType(type);
-  }
-
-  @Override
-  public void setBoolean(final String name, final boolean value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setBooleanValue(value);
-  }
-
-  @Override
-  public void setBooleans(final String name, final boolean... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setBooleanValues(values);
-  }
-
-  @Override
-  public void setBooleans(final String name, final BooleanCollection values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setBooleanValues(values);
-  }
-
-  @Override
-  public void addBoolean(final String name, final boolean value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addBooleanValue(value);
-  }
-
-  @Override
-  public void addBooleans(final String name, final boolean... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addBooleanValues(values);
-  }
-
-  @Override
-  public void addBooleans(final String name, final BooleanCollection values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addBooleanValues(values);
-  }
-
-  @Override
-  public void setChar(final String name, final char value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setCharValue(value);
-  }
-
-  @Override
-  public void setChars(final String name, final char... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setCharValues(values);
-  }
-
-  @Override
-  public void setChars(final String name, final CharCollection values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setCharValues(values);
-  }
-
-  @Override
-  public void addChar(final String name, final char value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addCharValue(value);
-  }
-
-  @Override
-  public void addChars(final String name, final char... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addCharValues(values);
-  }
-
-  @Override
-  public void addChars(final String name, final CharCollection values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addCharValues(values);
-  }
-
-  @Override
-  public void setByte(final String name, final byte value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setByteValue(value);
-  }
-
-  @Override
-  public void setBytes(final String name, final byte... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setByteValues(values);
-  }
-
-  @Override
-  public void setBytes(final String name, final ByteCollection values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setByteValues(values);
-  }
-
-  @Override
-  public void addByte(final String name, final byte value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addByteValue(value);
-  }
-
-  @Override
-  public void addBytes(final String name, final byte... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addByteValues(values);
-  }
-
-  @Override
-  public void addBytes(final String name, final ByteCollection values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addByteValues(values);
-  }
-
-  @Override
-  public void setShort(final String name, final short value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setShortValue(value);
-  }
-
-  @Override
-  public void setShorts(final String name, final short... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setShortValues(values);
-  }
-
-  @Override
-  public void setShorts(final String name, final ShortCollection values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setShortValues(values);
-  }
-
-  @Override
-  public void addShort(final String name, final short value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addShortValue(value);
-  }
-
-  @Override
-  public void addShorts(final String name, final short... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addShortValues(values);
-  }
-
-  @Override
-  public void addShorts(final String name, final ShortCollection values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addShortValues(values);
-  }
-
-  @Override
-  public void setInt(final String name, final int value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setIntValue(value);
-  }
-
-  @Override
-  public void setInts(final String name, final int... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setIntValues(values);
-  }
-
-  @Override
-  public void setInts(final String name, final IntCollection values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setIntValues(values);
-  }
-
-  @Override
-  public void addInt(final String name, final int value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addIntValue(value);
-  }
-
-  @Override
-  public void addInts(final String name, final int... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addIntValues(values);
-  }
-
-  @Override
-  public void addInts(final String name, final IntCollection values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addIntValues(values);
-  }
-
-  @Override
-  public void setLong(final String name, final long value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setLongValue(value);
-  }
-
-  @Override
-  public void setLongs(final String name, final long... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setLongValues(values);
-  }
-
-  @Override
-  public void setLongs(final String name, final LongCollection values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setLongValues(values);
-  }
-
-  @Override
-  public void addLong(final String name, final long value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addLongValue(value);
-  }
-
-  @Override
-  public void addLongs(final String name, final long... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addLongValues(values);
-  }
-
-  @Override
-  public void addLongs(final String name, final LongCollection values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addLongValues(values);
-  }
-
-  @Override
-  public void setFloat(final String name, final float value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setFloatValue(value);
-  }
-
-  @Override
-  public void setFloats(final String name, final float... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setFloatValues(values);
-  }
-
-  @Override
-  public void setFloats(final String name, final FloatCollection values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setFloatValues(values);
-  }
-
-  @Override
-  public void addFloat(final String name, final float value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addFloatValue(value);
-  }
-
-  @Override
-  public void addFloats(final String name, final float... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addFloatValues(values);
-  }
-
-  @Override
-  public void addFloats(final String name, final FloatCollection values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addFloatValues(values);
-  }
-
-  @Override
-  public void setDouble(final String name, final double value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setDoubleValue(value);
-  }
-
-  @Override
-  public void setDoubles(final String name, final double... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setDoubleValues(values);
-  }
-
-  @Override
-  public void setDoubles(final String name, final DoubleCollection values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setDoubleValues(values);
-  }
-
-  @Override
-  public void addDouble(final String name, final double value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addDoubleValue(value);
-  }
-
-  @Override
-  public void addDoubles(final String name, final double... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addDoubleValues(values);
-  }
-
-  @Override
-  public void addDoubles(final String name, final DoubleCollection values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addDoubleValues(values);
-  }
-
-  @Override
-  public void setString(final String name, final String value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setStringValue(value);
-  }
-
-  @Override
-  public void setStrings(final String name, final String... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setStringValues(values);
-  }
-
-  @Override
-  public void setStrings(final String name, final Collection<String> values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setStringValues(values);
-  }
-
-  @Override
-  public void addString(final String name, final String value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addStringValue(value);
-  }
-
-  @Override
-  public void addStrings(final String name, final String... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addStringValues(values);
-  }
-
-  @Override
-  public void addStrings(final String name, final Collection<String> values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addStringValues(values);
-  }
-
-  @Override
-  public void setDate(final String name, final Date value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setDateValue(value);
-  }
-
-  @Override
-  public void setDates(final String name, final Date... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setDateValues(values);
-  }
-
-  @Override
-  public void setDates(final String name, final Collection<Date> values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setDateValues(values);
-  }
-
-  @Override
-  public void addDate(final String name, final Date value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addDateValue(value);
-  }
-
-  @Override
-  public void addDates(final String name, final Date... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addDateValues(values);
-  }
-
-  @Override
-  public void addDates(final String name, final Collection<Date> values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addDateValues(values);
-  }
-
-  @Override
-  public void setBigInteger(final String name, final BigInteger value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setBigIntegerValue(value);
-  }
-
-  @Override
-  public void setBigIntegers(final String name, final BigInteger... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setBigIntegerValues(values);
-  }
-
-  @Override
-  public void setBigIntegers(final String name,
-      final Collection<BigInteger> values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setBigIntegerValues(values);
-  }
-
-  @Override
-  public void addBigInteger(final String name, final BigInteger value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addBigIntegerValue(value);
-  }
-
-  @Override
-  public void addBigIntegers(final String name, final BigInteger... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addBigIntegerValues(values);
-  }
-
-  @Override
-  public void addBigIntegers(final String name,
-      final Collection<BigInteger> values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addBigIntegerValues(values);
-  }
-
-  @Override
-  public void setBigDecimal(final String name, final BigDecimal value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setBigDecimalValue(value);
-  }
-
-  @Override
-  public void setBigDecimals(final String name, final BigDecimal... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setBigDecimalValues(values);
-  }
-
-  @Override
-  public void setBigDecimals(final String name,
-      final Collection<BigDecimal> values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setBigDecimalValues(values);
-  }
-
-  @Override
-  public void addBigDecimal(final String name, final BigDecimal value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addBigDecimalValue(value);
-  }
-
-  @Override
-  public void addBigDecimals(final String name, final BigDecimal... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addBigDecimalValues(values);
-  }
-
-  @Override
-  public void addBigDecimals(final String name,
-      final Collection<BigDecimal> values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addBigDecimalValues(values);
-  }
-
-  @Override
-  public void setByteArray(final String name, final byte[] value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setByteArrayValue(value);
-  }
-
-  @Override
-  public void setByteArrays(final String name, final byte[]... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setByteArrayValues(values);
-  }
-
-  @Override
-  public void setByteArrays(final String name, final Collection<byte[]> values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setByteArrayValues(values);
-  }
-
-  @Override
-  public void addByteArray(final String name, final byte[] value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addByteArrayValue(value);
-  }
-
-  @Override
-  public void addByteArrays(final String name, final byte[]... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addByteArrayValues(values);
-  }
-
-  @Override
-  public void addByteArrays(final String name, final Collection<byte[]> values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addByteArrayValues(values);
-  }
-
-  @Override
-  public void setEnum(final String name, @Nullable final Enum<?> value) {
-    setEnum(name, value, false);
-  }
-
-  @Override
-  public void setEnum(final String name, @Nullable final Enum<?> value, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setEnumValue(value);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setEnums(final String name, @Nullable final Enum<?>... values) {
-    setEnums(name, values, false);
-  }
-
-  @Override
-  public void setEnums(final String name, @Nullable final Enum<?>[] values, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setEnumValues(values);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setEnums(final String name,
-      @Nullable final Collection<? extends Enum<?>> values) {
-    setEnums(name, values, false);
-  }
+  public DefaultConfig setFinal(final String name, final boolean isFinal) {
+    requireNonNull("name", name);
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setType(final String name, final Type type) {
+    requireNonNull("name", name);
+    requireNonNull("type", type);
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setType(type);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setBoolean(final String name, final boolean value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setBoolean(value);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setBoolean(final String name, final boolean value, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setBoolean(value);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setBooleans(final String name, @Nullable final boolean... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setBooleans(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setBooleans(final String name, @Nullable final boolean[] values, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setBooleans(values);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setBooleans(final String name, @Nullable final BooleanCollection values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setBooleans(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addBoolean(final String name, final boolean value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setBoolean(value);
+      } else {
+        v.addBooleanValue(value);
+      }
+      return v;
+    });
+    return this;
+  }
 
   @Override
-  public void setEnums(final String name,
-      @Nullable final Collection<? extends Enum<?>> values,
+  public DefaultConfig addBooleans(final String name, @Nullable final boolean... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setBooleans(values);
+      } else {
+        v.addBooleanValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addBooleans(final String name, @Nullable final BooleanCollection values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setBooleans(values);
+      } else {
+        v.addBooleanValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setChar(final String name, final char value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setCharValue(value);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setChar(final String name, final char value, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setCharValue(value);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setChars(final String name, @Nullable final char... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setCharValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setChars(final String name, @Nullable final char[] values, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setCharValues(values);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setChars(final String name, @Nullable final CharCollection values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setCharValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addChar(final String name, final char value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setCharValue(value);
+      } else {
+        v.addCharValue(value);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addChars(final String name, @Nullable final char... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setCharValues(values);
+      } else {
+        v.addCharValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addChars(final String name, @Nullable final CharCollection values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setCharValues(values);
+      } else {
+        v.addCharValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setByte(final String name, final byte value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setByteValue(value);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setByte(final String name, final byte value, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setByteValue(value);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setBytes(final String name, @Nullable final byte... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setByteValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setBytes(final String name, @Nullable final byte[] values, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setByteValues(values);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setBytes(final String name, @Nullable final ByteCollection values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setByteValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addByte(final String name, final byte value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setByteValue(value);
+      } else {
+        v.addByteValue(value);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addBytes(final String name, final byte... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setByteValues(values);
+      } else {
+        v.addByteValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addBytes(final String name, final ByteCollection values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setByteValues(values);
+      } else {
+        v.addByteValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setShort(final String name, final short value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setShortValue(value);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setShort(final String name, final short value, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setShortValue(value);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setShorts(final String name, final short... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setShortValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setShorts(final String name, final short[] values, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setShortValues(values);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setShorts(final String name, final ShortCollection values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setShortValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addShort(final String name, final short value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setShortValue(value);
+      } else {
+        v.addShortValue(value);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addShorts(final String name, final short... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setShortValues(values);
+      } else {
+        v.addShortValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addShorts(final String name, final ShortCollection values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setShortValues(values);
+      } else {
+        v.addShortValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setInt(final String name, final int value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setIntValue(value);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setInt(final String name, final int value, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setIntValue(value);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setInts(final String name, final int... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setIntValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setInts(final String name, final int[] values, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setIntValues(values);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setInts(final String name, final IntCollection values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setIntValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addInt(final String name, final int value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setIntValue(value);
+      } else {
+        v.addIntValue(value);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addInts(final String name, final int... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setIntValues(values);
+      } else {
+        v.addIntValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addInts(final String name, final IntCollection values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setIntValues(values);
+      } else {
+        v.addIntValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setLong(final String name, final long value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setLongValue(value);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setLong(final String name, final long value, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setLongValue(value);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setLongs(final String name, final long... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setLongValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setLongs(final String name, final long[] values, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setLongValues(values);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setLongs(final String name, final LongCollection values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setLongValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addLong(final String name, final long value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setLongValue(value);
+      } else {
+        v.addLongValue(value);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addLongs(final String name, final long... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setLongValues(values);
+      } else {
+        v.addLongValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addLongs(final String name, final LongCollection values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setLongValues(values);
+      } else {
+        v.addLongValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setFloat(final String name, final float value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setFloatValue(value);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setFloat(final String name, final float value, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setFloatValue(value);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setFloats(final String name, final float... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setFloatValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setFloats(final String name, final float[] values, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setFloatValues(values);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setFloats(final String name, final FloatCollection values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setFloatValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addFloat(final String name, final float value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setFloatValue(value);
+      } else {
+        v.addFloatValue(value);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addFloats(final String name, final float... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setFloatValues(values);
+      } else {
+        v.addFloatValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addFloats(final String name, final FloatCollection values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setFloatValues(values);
+      } else {
+        v.addFloatValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setDouble(final String name, final double value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setDoubleValue(value);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setDouble(final String name, final double value, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setDoubleValue(value);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setDoubles(final String name, final double... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setDoubleValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setDoubles(final String name, final double[] values, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setDoubleValues(values);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setDoubles(final String name, final DoubleCollection values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setDoubleValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addDouble(final String name, final double value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setDoubleValue(value);
+      } else {
+        v.addDoubleValue(value);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addDoubles(final String name, final double... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setDoubleValues(values);
+      } else {
+        v.addDoubleValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addDoubles(final String name, final DoubleCollection values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setDoubleValues(values);
+      } else {
+        v.addDoubleValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setString(final String name, @Nullable final String value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setStringValue(value);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setString(final String name, @Nullable final String value, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setStringValue(value);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setStrings(final String name, @Nullable final String... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setStringValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setStrings(final String name, @Nullable final String[] values, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setStringValues(values);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setStrings(final String name, final Collection<String> values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setStringValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addString(final String name, final String value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setStringValue(value);
+      } else {
+        v.addStringValue(value);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addStrings(final String name, @Nullable final String... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setStringValues(values);
+      } else {
+        v.addStringValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addStrings(final String name, final Collection<String> values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setStringValues(values);
+      } else {
+        v.addStringValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setDate(final String name, @Nullable final LocalDate value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setDateValue(value);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setDate(final String name, @Nullable final LocalDate value, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setDateValue(value);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setDates(final String name, @Nullable final LocalDate... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setDateValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setDates(final String name, @Nullable final LocalDate[] values, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setDateValues(values);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setDates(final String name, final Collection<LocalDate> values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setDateValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addDate(final String name, final LocalDate value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.addDateValue(value);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addDates(final String name, final LocalDate... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.addDateValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addDates(final String name, final Collection<LocalDate> values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.addDateValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setTime(final String name, @Nullable final LocalTime value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setTimeValue(value);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setTime(final String name, @Nullable final LocalTime value, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setTimeValue(value);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setTimes(final String name, @Nullable final LocalTime... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setTimeValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setTimes(final String name, @Nullable final LocalTime[] values, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setTimeValues(values);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setTimes(final String name, final Collection<LocalTime> values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setTimeValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addTime(final String name, final LocalTime value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.addTimeValue(value);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addTimes(final String name, final LocalTime... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.addTimeValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addTimes(final String name, final Collection<LocalTime> values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.addTimeValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setDateTime(final String name, @Nullable final LocalDateTime value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setDateTimeValue(value);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setDateTime(final String name, @Nullable final LocalDateTime value, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setDateTimeValue(value);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setDateTimes(final String name, @Nullable final LocalDateTime... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setDateTimeValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setDateTimes(final String name, @Nullable final LocalDateTime[] values, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setDateTimeValues(values);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setDateTimes(final String name, final Collection<LocalDateTime> values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setDateTimeValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addDateTime(final String name, final LocalDateTime value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.addDateTimeValue(value);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addDateTimes(final String name, final LocalDateTime... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.addDateTimeValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addDateTimes(final String name, final Collection<LocalDateTime> values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.addDateTimeValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setBigInteger(final String name, @Nullable final BigInteger value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setBigIntegerValue(value);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setBigInteger(final String name, @Nullable final BigInteger value, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setBigIntegerValue(value);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setBigIntegers(final String name, @Nullable final BigInteger... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setBigIntegerValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setBigIntegers(final String name, @Nullable final BigInteger[] values, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setBigIntegerValues(values);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setBigIntegers(final String name, final Collection<BigInteger> values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setBigIntegerValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addBigInteger(final String name, final BigInteger value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setBigIntegerValue(value);
+      } else {
+        v.addBigIntegerValue(value);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addBigIntegers(final String name, final BigInteger... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setBigIntegerValues(values);
+      } else {
+        v.addBigIntegerValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addBigIntegers(final String name, final Collection<BigInteger> values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setBigIntegerValues(values);
+      } else {
+        v.addBigIntegerValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setBigDecimal(final String name, @Nullable final BigDecimal value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setBigDecimalValue(value);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setBigDecimal(final String name, @Nullable final BigDecimal value, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setBigDecimalValue(value);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setBigDecimals(final String name, @Nullable final BigDecimal... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setBigDecimalValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setBigDecimals(final String name, @Nullable final BigDecimal[] values, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setBigDecimalValues(values);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setBigDecimals(final String name, final Collection<BigDecimal> values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setBigDecimalValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addBigDecimal(final String name, final BigDecimal value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setBigDecimalValue(value);
+      } else {
+        v.addBigDecimalValue(value);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addBigDecimals(final String name, final BigDecimal... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setBigDecimalValues(values);
+      } else {
+        v.addBigDecimalValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addBigDecimals(final String name, final Collection<BigDecimal> values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setBigDecimalValues(values);
+      } else {
+        v.addBigDecimalValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setByteArray(final String name, @Nullable final byte[] value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setByteArrayValue(value);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setByteArray(final String name, @Nullable final byte[] value, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setByteArrayValue(value);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setByteArrays(final String name, final Collection<byte[]> values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setByteArrayValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setByteArrays(final String name, @Nullable final byte[]... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setByteArrayValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setByteArrays(final String name, @Nullable final byte[][] values, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setByteArrayValues(values);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addByteArrays(final String name, final byte[]... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setByteArrayValues(values);
+      } else {
+        v.addByteArrayValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addByteArrays(final String name, final Collection<byte[]> values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setByteArrayValues(values);
+      } else {
+        v.addByteArrayValues(values);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig addByteArray(final String name, final byte[] value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setByteArrayValue(value);
+      } else {
+        v.addByteArrayValue(value);
+      }
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setEnum(final String name, @Nullable final Enum<?> value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setEnumValue(value);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setEnum(final String name, @Nullable final Enum<?> value, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setEnumValue(value);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setEnums(final String name, @Nullable final Enum<?>... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setEnumValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setEnums(final String name, @Nullable final Enum<?>[] values, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setEnumValues(values);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setEnums(final String name, @Nullable final Collection<? extends Enum<?>> values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setEnumValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig setEnums(final String name, @Nullable final Collection<? extends Enum<?>> values,
       final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setEnumValues(values);
-    prop.setFinal(isFinal);
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setEnumValues(values);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
   }
 
   @Override
-  public void addEnum(final String name, final Enum<?> value) {
-    Argument.requireNonNull("value", value);
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-      prop.setEnumValue(value);
-    } else {
-      prop.addEnumValue(value);
-    }
+  public DefaultConfig addEnum(final String name, final Enum<?> value) {
+    requireNonNull("value", value);
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setEnumValue(value);
+      } else {
+        v.addEnumValue(value);
+      }
+      return v;
+    });
+    return this;
   }
 
   @Override
-  public void addEnums(final String name, final Enum<?>... values) {
-    Argument.requireNonNull("values", values);
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-      prop.setEnumValues(values);
-    } else {
-      prop.addEnumValues(values);
-    }
+  public DefaultConfig addEnums(final String name, final Enum<?>... values) {
+    requireNonNull("values", values);
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setEnumValues(values);
+      } else {
+        v.addEnumValues(values);
+      }
+      return v;
+    });
+    return this;
   }
 
   @Override
-  public void addEnums(final String name, final Collection<? extends Enum<?>> values) {
-    Argument.requireNonNull("values", values);
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-      prop.setEnumValues(values);
-    } else {
-      prop.addEnumValues(values);
-    }
+  public DefaultConfig addEnums(final String name, final Collection<? extends Enum<?>> values) {
+    requireNonNull("values", values);
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+        v.setEnumValues(values);
+      } else {
+        v.addEnumValues(values);
+      }
+      return v;
+    });
+    return this;
   }
 
   @Override
-  public void setClass(final String name, final Class<?> value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setClassValue(value);
+  public DefaultConfig setClass(final String name, @Nullable final Class<?> value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setClassValue(value);
+      return v;
+    });
+    return this;
   }
 
   @Override
-  public void setClasses(final String name, final Class<?>... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setClassValues(values);
+  public DefaultConfig setClass(final String name, @Nullable final Class<?> value, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setClassValue(value);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
   }
 
   @Override
-  public void setClasses(final String name, final Collection<Class<?>> values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setClassValues(values);
+  public DefaultConfig setClasses(final String name, @Nullable final Class<?>... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setClassValues(values);
+      return v;
+    });
+    return this;
   }
 
   @Override
-  public void addClass(final String name, final Class<?> value) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addClassValue(value);
+  public DefaultConfig setClasses(final String name, @Nullable final Class<?>[] values, final boolean isFinal) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setClassValues(values);
+      v.setFinal(isFinal);
+      return v;
+    });
+    return this;
   }
 
   @Override
-  public void addClasses(final String name, final Class<?>... values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addClassValues(values);
+  public DefaultConfig setClasses(final String name, final Collection<Class<?>> values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setClassValues(values);
+      return v;
+    });
+    return this;
   }
 
   @Override
-  public void addClasses(final String name, final Collection<Class<?>> values) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.addClassValues(values);
+  public DefaultConfig addClass(final String name, final Class<?> value) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.addClassValue(value);
+      return v;
+    });
+    return this;
   }
 
   @Override
-  public void merge(final Config config, final MergingPolicy policy) {
-    merge(config, StringUtils.EMPTY, policy);
+  public DefaultConfig addClasses(final String name, final Class<?>... values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.addClassValues(values);
+      return v;
+    });
+    return this;
   }
 
   @Override
-  public void merge(final Config config, final String prefix,
+  public DefaultConfig addClasses(final String name, final Collection<Class<?>> values) {
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.addClassValues(values);
+      return v;
+    });
+    return this;
+  }
+
+  @Override
+  public DefaultConfig merge(final Config config, final MergingPolicy policy) {
+    return merge(config, StringUtils.EMPTY, policy);
+  }
+
+  @Override
+  public synchronized DefaultConfig merge(final Config config, final String prefix,
       final MergingPolicy policy) {
-    Argument.requireNonNull("config", config);
-    Argument.requireNonNull("prefix", prefix);
-    Argument.requireNonNull("policy", policy);
+    requireNonNull("config", config);
+    requireNonNull("prefix", prefix);
+    requireNonNull("policy", policy);
     if (this == config) {
-      return;
+      return this;
     }
     LOGGER.trace("Start merging using policy {} ....", policy);
     switch (policy) {
@@ -1158,10 +2096,11 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
         break;
     }
     LOGGER.trace("Merging finished.");
+    return this;
   }
 
   @Override
-  public void assign(final Config config) {
+  public synchronized DefaultConfig assign(final Config config) {
     LOGGER.trace("Start Assignment with another configuration ...");
     if (this != config) {
       LOGGER.trace("Removing all properties ... ");
@@ -1174,10 +2113,11 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
       }
     }
     LOGGER.trace("Assignment finished.");
+    return this;
   }
 
   @Override
-  public void assign(final Config config, final String prefix) {
+  public synchronized DefaultConfig assign(final Config config, final String prefix) {
     LOGGER.trace("Start Assignment with another configuration ...");
     if (this != config) {
       LOGGER.trace("Removing all properties ... ");
@@ -1200,19 +2140,34 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
       }
     }
     LOGGER.trace("Assignment finished.");
+    return this;
   }
 
   @Override
-  public DefaultProperty clear(final String name) {
-    final DefaultProperty prop = get(name);
-    if (prop != null) {
-      prop.clear();
-    }
-    return prop;
+  public Property clear(final String name) {
+    return properties.computeIfPresent(name, (k, v) -> {
+      v.clear();
+      return v;
+    });
   }
 
-  public void removeAll() {
+  @Override
+  public DefaultConfig clear() {
+    return removeAll();
+  }
+
+  public DefaultConfig removeAll() {
     properties.clear();
+    return this;
+  }
+
+  @Override
+  public synchronized Config cloneEx() {
+    final DefaultConfig result = new DefaultConfig();
+    for (final DefaultProperty prop : properties.values()) {
+      result.properties.put(prop.getName(), prop.cloneEx());
+    }
+    return result;
   }
 
   @Override
@@ -1239,304 +2194,9 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
   }
 
   @Override
-  public Config cloneEx() {
-    final DefaultConfig result = new DefaultConfig();
-    for (final DefaultProperty prop : properties.values()) {
-      result.properties.put(prop.getName(), prop.cloneEx());
-    }
-    return result;
-  }
-
-  @Override
   public String toString() {
     return new ToStringBuilder(this)
         .append("properties", properties)
         .toString();
   }
-
-  @Override
-  public void setBoolean(final String name, final boolean value, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setBooleanValue(value);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setBooleans(final String name, final boolean[] values, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setBooleanValues(values);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setChar(final String name, final char value, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setCharValue(value);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setChars(final String name, final char[] values, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setCharValues(values);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setByte(final String name, final byte value, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setByteValue(value);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setBytes(final String name, final byte[] values, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setByteValues(values);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setShort(final String name, final short value, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setShortValue(value);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setShorts(final String name, final short[] values, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setShortValues(values);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setInt(final String name, final int value, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setIntValue(value);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setInts(final String name, final int[] values, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setIntValues(values);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setLong(final String name, final long value, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setLongValue(value);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setLongs(final String name, final long[] values, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setLongValues(values);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setFloat(final String name, final float value, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setFloatValue(value);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setFloats(final String name, final float[] values, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setFloatValues(values);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setDouble(final String name, final double value, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setDoubleValue(value);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setDoubles(final String name, final double[] values, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setDoubleValues(values);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setString(final String name, @Nullable final String value, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setStringValue(value);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setStrings(final String name, @Nullable final String[] values, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setStringValues(values);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setBigDecimal(final String name, @Nullable final BigDecimal value, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setBigDecimalValue(value);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setBigDecimals(final String name, @Nullable final BigDecimal[] values, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setBigDecimalValues(values);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setBigInteger(final String name, @Nullable final BigInteger value, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setBigIntegerValue(value);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setBigIntegers(final String name, @Nullable final BigInteger[] values, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setBigIntegerValues(values);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setDate(final String name, @Nullable final Date value, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setDateValue(value);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setDates(final String name, @Nullable final Date[] values, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setDateValues(values);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setByteArray(final String name, @Nullable final byte[] value, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setByteArrayValue(value);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setByteArrays(final String name, @Nullable final byte[][] values, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setByteArrayValues(values);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setClass(final String name, @Nullable final Class<?> value, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setClassValue(value);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void setClasses(final String name, @Nullable final Class<?>[] values, final boolean isFinal) {
-    DefaultProperty prop = get(name);
-    if (prop == null) {
-      prop = add(name);
-    }
-    prop.setClassValues(values);
-    prop.setFinal(isFinal);
-  }
-
-  @Override
-  public void clear() {
-    removeAll();
-  }
-
 }

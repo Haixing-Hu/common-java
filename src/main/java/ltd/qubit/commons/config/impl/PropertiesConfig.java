@@ -23,6 +23,8 @@ import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.annotation.concurrent.ThreadSafe;
+
 import ltd.qubit.commons.config.Config;
 import ltd.qubit.commons.config.error.ConfigurationError;
 import ltd.qubit.commons.io.IoUtils;
@@ -39,6 +41,7 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
  *
  * @author Haixing Hu
  */
+@ThreadSafe
 public class PropertiesConfig extends DefaultConfig {
 
   @Serial
@@ -49,7 +52,7 @@ public class PropertiesConfig extends DefaultConfig {
    */
   public static final Charset DEFAULT_CHARSET = UTF_8;
 
-  private Charset charset;
+  private volatile Charset charset;
 
   /**
    * Constructs an empty {@link PropertiesConfig}, with the default charset.
@@ -367,7 +370,7 @@ public class PropertiesConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void load(final String resource) {
+  public synchronized void load(final String resource) {
     LOGGER.debug("Loading properties configuration from {}", resource);
     try {
       final Properties props = PropertiesUtils.load(resource, charset);
@@ -387,7 +390,7 @@ public class PropertiesConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void load(final String resource, final Class<?> loaderClass) {
+  public synchronized void load(final String resource, final Class<?> loaderClass) {
     LOGGER.debug("Loading properties configuration from {}", resource);
     try {
       final Properties props = PropertiesUtils.load(resource, loaderClass, charset);
@@ -407,7 +410,7 @@ public class PropertiesConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void load(final String resource, final ClassLoader loader) {
+  public synchronized void load(final String resource, final ClassLoader loader) {
     LOGGER.debug("Loading properties configuration from {}", resource);
     try {
       final Properties props = PropertiesUtils.load(resource, loader, charset);
@@ -425,7 +428,7 @@ public class PropertiesConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void load(final Url url) {
+  public synchronized void load(final Url url) {
     LOGGER.debug("Loading properties configuration from {}", url);
     try {
       final Properties props = PropertiesUtils.load(url, charset);
@@ -443,7 +446,7 @@ public class PropertiesConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void load(final URL url) {
+  public synchronized void load(final URL url) {
     LOGGER.debug("Loading properties configuration from {}", url);
     try {
       final Properties props = PropertiesUtils.load(url, charset);
@@ -461,7 +464,7 @@ public class PropertiesConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void load(final URI uri) {
+  public synchronized void load(final URI uri) {
     try {
       final Properties props = PropertiesUtils.load(uri, charset);
       load(props);
@@ -478,7 +481,7 @@ public class PropertiesConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void load(final File file) {
+  public synchronized void load(final File file) {
     LOGGER.debug("Loading properties configuration from {}", file);
     try {
       final Properties props = PropertiesUtils.load(file, charset);
@@ -499,7 +502,7 @@ public class PropertiesConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void load(final InputStream in) {
+  public synchronized void load(final InputStream in) {
     LOGGER.debug("Loading properties configuration from {}", in);
     try {
       final Properties props = PropertiesUtils.load(in, charset);
@@ -519,7 +522,7 @@ public class PropertiesConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void load(final Reader reader) {
+  public synchronized void load(final Reader reader) {
     LOGGER.debug("Loading properties configuration from {}", reader);
     try {
       final Properties props = new Properties();
@@ -538,7 +541,7 @@ public class PropertiesConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void load(final Properties properties) {
+  public synchronized void load(final Properties properties) {
     removeAll();
     for (final Map.Entry<Object, Object> entry : properties.entrySet()) {
       final String name = (String) entry.getKey();
@@ -557,7 +560,7 @@ public class PropertiesConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void store(final OutputStream out) {
+  public synchronized void store(final OutputStream out) {
     LOGGER.debug("Storing properties configuration from {}", out);
     final Properties props = store();
     try {
@@ -577,7 +580,7 @@ public class PropertiesConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void store(final PrintStream out) {
+  public synchronized void store(final PrintStream out) {
     LOGGER.debug("Storing properties configuration from {}", out);
     final Properties props = store();
     try {
@@ -597,7 +600,7 @@ public class PropertiesConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void store(final Writer writer) {
+  public synchronized void store(final Writer writer) {
     LOGGER.debug("Storing properties configuration from {}", writer);
     final Properties props = store();
     try {
@@ -617,7 +620,7 @@ public class PropertiesConfig extends DefaultConfig {
    * @throws ConfigurationError
    *     if any error occurs.
    */
-  public void store(final File file) {
+  public synchronized void store(final File file) {
     LOGGER.debug("Storing properties configuration from {}", file);
     final Properties props = store();
     OutputStream out = null;
@@ -636,7 +639,7 @@ public class PropertiesConfig extends DefaultConfig {
    *
    * @return the properties storing this configuration.
    */
-  public Properties store() {
+  public synchronized Properties store() {
     final Properties result = new Properties();
     for (final Map.Entry<String, DefaultProperty> entry : properties
         .entrySet()) {
