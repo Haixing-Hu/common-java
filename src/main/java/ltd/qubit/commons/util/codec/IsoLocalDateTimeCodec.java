@@ -17,6 +17,8 @@ package ltd.qubit.commons.util.codec;
  */
 public class IsoLocalDateTimeCodec extends LocalDateTimeCodec {
 
+  public static IsoLocalDateTimeCodec INSTANCE = new IsoLocalDateTimeCodec();
+
   // NOTE that 'u' represent the year, while 'y' represent the year-of-era.
   // see: https://stackoverflow.com/questions/29014225/what-is-the-difference-between-year-and-year-of-era
   public IsoLocalDateTimeCodec() {

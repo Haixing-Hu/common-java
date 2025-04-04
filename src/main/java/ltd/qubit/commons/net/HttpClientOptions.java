@@ -293,4 +293,24 @@ public interface HttpClientOptions {
    */
   HttpClientOptions setUseHttpLogging(boolean useHttpLogging);
 
+  /**
+   * Gets whether to log the HTTP response body.
+   *
+   * @return
+   *     {@code true} if the HTTP response body should be logged;
+   *     {@code false} otherwise.
+   */
+  boolean isLogHttpResponseBody();
+
+  /**
+   * Sets whether to log the HTTP response body.
+   *
+   * @param useHttpLogging
+   *     {@code true} if the HTTP response body should be logged;
+   *     {@code false} otherwise.
+   * @return
+   *     this object, to support method chaining.
+   */
+  HttpClientOptions setLogHttpResponseBody(boolean useHttpLogging);
+
 }

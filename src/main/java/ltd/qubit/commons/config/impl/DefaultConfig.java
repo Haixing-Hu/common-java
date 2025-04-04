@@ -21,9 +21,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import ltd.qubit.commons.config.AbstractConfig;
 import ltd.qubit.commons.config.Config;
 import ltd.qubit.commons.config.MergingPolicy;
@@ -57,16 +54,13 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
   @Serial
   private static final long serialVersionUID = 3519879255214071861L;
 
-  protected static final Logger LOGGER = LoggerFactory
-      .getLogger(DefaultConfig.class);
-
   static {
     BinarySerialization.register(DefaultConfig.class, DefaultConfigBinarySerializer.INSTANCE);
     XmlSerialization.register(DefaultConfig.class, DefaultConfigXmlSerializer.INSTANCE);
   }
 
   protected volatile String description;
-  protected final ConcurrentHashMap<String, DefaultProperty> properties;
+  protected ConcurrentHashMap<String, DefaultProperty> properties;
 
   /**
    * Constructs an empty {@link DefaultConfig} object.
@@ -2033,7 +2027,7 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     if (this == config) {
       return this;
     }
-    LOGGER.trace("Start merging using policy {} ....", policy);
+    logger.trace("Start merging using policy {} ....", policy);
     switch (policy) {
       case SKIP:
         for (final Property thatProp : config.getProperties()) {
@@ -2042,9 +2036,9 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
             continue;
           }
           if (contains(name)) {
-            LOGGER.trace("Skip the existing property '{}'.", name);
+            logger.trace("Skip the existing property '{}'.", name);
           } else {
-            LOGGER.trace("Adding a new property '{}'.", name);
+            logger.trace("Adding a new property '{}'.", name);
             final DefaultProperty thisProp = add(name);
             thisProp.assign(thatProp);
           }
@@ -2058,17 +2052,17 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
           }
           DefaultProperty thisProp = get(name);
           if (thisProp == null) {
-            LOGGER.trace("Adding a new property '{}'.", name);
+            logger.trace("Adding a new property '{}'.", name);
             thisProp = add(name);
             thisProp.assign(thatProp);
           } else if (thisProp.isFinal) {
-            LOGGER.trace("Skip the final property '{}'.", name);
+            logger.trace("Skip the final property '{}'.", name);
           } else {
             if (thisProp.getType() != thatProp.getType()) {
-              LOGGER.trace("Overwrite a existing property '{}'.", name);
+              logger.trace("Overwrite a existing property '{}'.", name);
               thisProp.assign(thatProp);
             } else {
-              LOGGER.trace("Union a existing property '{}'.", name);
+              logger.trace("Union a existing property '{}'.", name);
               thisProp.unionValues(thatProp);
             }
           }
@@ -2083,49 +2077,49 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
           }
           DefaultProperty thisProp = get(name);
           if (thisProp == null) {
-            LOGGER.trace("Adding a new property '{}'.", name);
+            logger.trace("Adding a new property '{}'.", name);
             thisProp = add(name);
             thisProp.assign(thatProp);
           } else if (thisProp.isFinal()) {
-            LOGGER.trace("Skip the final property '{}'.", name);
+            logger.trace("Skip the final property '{}'.", name);
           } else {
-            LOGGER.trace("Overwrite a existing property '{}'.", name);
+            logger.trace("Overwrite a existing property '{}'.", name);
             thisProp.assign(thatProp);
           }
         }
         break;
     }
-    LOGGER.trace("Merging finished.");
+    logger.trace("Merging finished.");
     return this;
   }
 
   @Override
   public synchronized DefaultConfig assign(final Config config) {
-    LOGGER.trace("Start Assignment with another configuration ...");
+    logger.trace("Start Assignment with another configuration ...");
     if (this != config) {
-      LOGGER.trace("Removing all properties ... ");
+      logger.trace("Removing all properties ... ");
       removeAll();
       for (final Property thatProp : config.getProperties()) {
         final String name = thatProp.getName();
-        LOGGER.trace("Adding a new property '{}'.", name);
+        logger.trace("Adding a new property '{}'.", name);
         final DefaultProperty thisProp = add(name);
         thisProp.assign(thatProp);
       }
     }
-    LOGGER.trace("Assignment finished.");
+    logger.trace("Assignment finished.");
     return this;
   }
 
   @Override
   public synchronized DefaultConfig assign(final Config config, final String prefix) {
-    LOGGER.trace("Start Assignment with another configuration ...");
+    logger.trace("Start Assignment with another configuration ...");
     if (this != config) {
-      LOGGER.trace("Removing all properties ... ");
+      logger.trace("Removing all properties ... ");
       removeAll();
       for (final Property thatProp : config.getProperties()) {
         final String name = thatProp.getName();
         if (name.startsWith(prefix)) {
-          LOGGER.trace("Adding a new property '{}'.", name);
+          logger.trace("Adding a new property '{}'.", name);
           final DefaultProperty thisProp = add(name);
           thisProp.assign(thatProp);
         }
@@ -2134,12 +2128,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
       // this == config, just remove all properties not starting with prefix
       for (final String name : getNames()) {
         if (!name.startsWith(prefix)) {
-          LOGGER.trace("Removing the property '{}'.", name);
+          logger.trace("Removing the property '{}'.", name);
           remove(name);
         }
       }
     }
-    LOGGER.trace("Assignment finished.");
+    logger.trace("Assignment finished.");
     return this;
   }
 

@@ -371,7 +371,7 @@ public class PropertiesConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void load(final String resource) {
-    LOGGER.debug("Loading properties configuration from {}", resource);
+    logger.debug("Loading properties configuration from {}", resource);
     try {
       final Properties props = PropertiesUtils.load(resource, charset);
       load(props);
@@ -391,7 +391,7 @@ public class PropertiesConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void load(final String resource, final Class<?> loaderClass) {
-    LOGGER.debug("Loading properties configuration from {}", resource);
+    logger.debug("Loading properties configuration from {}", resource);
     try {
       final Properties props = PropertiesUtils.load(resource, loaderClass, charset);
       load(props);
@@ -411,7 +411,7 @@ public class PropertiesConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void load(final String resource, final ClassLoader loader) {
-    LOGGER.debug("Loading properties configuration from {}", resource);
+    logger.debug("Loading properties configuration from {}", resource);
     try {
       final Properties props = PropertiesUtils.load(resource, loader, charset);
       load(props);
@@ -429,7 +429,7 @@ public class PropertiesConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void load(final Url url) {
-    LOGGER.debug("Loading properties configuration from {}", url);
+    logger.debug("Loading properties configuration from {}", url);
     try {
       final Properties props = PropertiesUtils.load(url, charset);
       load(props);
@@ -447,7 +447,7 @@ public class PropertiesConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void load(final URL url) {
-    LOGGER.debug("Loading properties configuration from {}", url);
+    logger.debug("Loading properties configuration from {}", url);
     try {
       final Properties props = PropertiesUtils.load(url, charset);
       load(props);
@@ -482,7 +482,7 @@ public class PropertiesConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void load(final File file) {
-    LOGGER.debug("Loading properties configuration from {}", file);
+    logger.debug("Loading properties configuration from {}", file);
     try {
       final Properties props = PropertiesUtils.load(file, charset);
       load(props);
@@ -503,7 +503,7 @@ public class PropertiesConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void load(final InputStream in) {
-    LOGGER.debug("Loading properties configuration from {}", in);
+    logger.debug("Loading properties configuration from {}", in);
     try {
       final Properties props = PropertiesUtils.load(in, charset);
       load(props);
@@ -523,7 +523,7 @@ public class PropertiesConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void load(final Reader reader) {
-    LOGGER.debug("Loading properties configuration from {}", reader);
+    logger.debug("Loading properties configuration from {}", reader);
     try {
       final Properties props = new Properties();
       props.load(reader);
@@ -561,7 +561,7 @@ public class PropertiesConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void store(final OutputStream out) {
-    LOGGER.debug("Storing properties configuration from {}", out);
+    logger.debug("Storing properties configuration from {}", out);
     final Properties props = store();
     try {
       PropertiesUtils.store(props, out, charset, description);
@@ -581,7 +581,7 @@ public class PropertiesConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void store(final PrintStream out) {
-    LOGGER.debug("Storing properties configuration from {}", out);
+    logger.debug("Storing properties configuration from {}", out);
     final Properties props = store();
     try {
       PropertiesUtils.store(props, out, charset, description);
@@ -601,7 +601,7 @@ public class PropertiesConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void store(final Writer writer) {
-    LOGGER.debug("Storing properties configuration from {}", writer);
+    logger.debug("Storing properties configuration from {}", writer);
     final Properties props = store();
     try {
       props.store(writer, description);
@@ -621,7 +621,7 @@ public class PropertiesConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void store(final File file) {
-    LOGGER.debug("Storing properties configuration from {}", file);
+    logger.debug("Storing properties configuration from {}", file);
     final Properties props = store();
     OutputStream out = null;
     try {

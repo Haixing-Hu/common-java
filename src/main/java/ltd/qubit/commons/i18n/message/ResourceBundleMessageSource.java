@@ -374,7 +374,7 @@ public class ResourceBundleMessageSource extends
    * {@code null} if not found.
    * <p>
    * As of 4.2, the default implementation checks {@code containsKey}
-   * before it attempts to call {@code getString} (which would require catching
+   * before it attempts to call {@code getStringValue} (which would require catching
    * {@code MissingResourceException} for key not found).
    * <p>Can be overridden in subclasses.
    *

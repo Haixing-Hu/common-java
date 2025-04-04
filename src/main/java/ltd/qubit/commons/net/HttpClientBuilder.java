@@ -241,6 +241,17 @@ public class HttpClientBuilder implements HttpClientOptions {
     return this;
   }
 
+  @Override
+  public boolean isLogHttpResponseBody() {
+    return options.isLogHttpResponseBody();
+  }
+
+  @Override
+  public HttpClientBuilder setLogHttpResponseBody(final boolean logHttpResponseBody) {
+    options.setLogHttpResponseBody(logHttpResponseBody);
+    return this;
+  }
+
   /**
    * Adds an interceptor to the HTTP client.
    * <p>
@@ -362,7 +373,8 @@ public class HttpClientBuilder implements HttpClientOptions {
     // Add logging if enabled
     if (isUseHttpLogging()) {
       logger.info("Using logging for the HTTP client.");
-      builder.addInterceptor(new HttpLoggingInterceptor(logger));
+      final HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(logger, options);
+      builder.addInterceptor(loggingInterceptor);
       builder.eventListener(new ConnectionLoggingEventListener(logger));
     }
 

@@ -10,7 +10,9 @@ package ltd.qubit.commons.config;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import javax.annotation.Nullable;
 
@@ -545,7 +547,7 @@ public final class ConfigUtils {
    *     property has no value, or the type of the specified property is not
    *     {@code Date}.
    */
-  public static Date choose(@Nullable final Date value, final Config config,
+  public static LocalDate choose(@Nullable final LocalDate value, final Config config,
       final String name) {
     if (value != null) {
       return value;
@@ -573,12 +575,122 @@ public final class ConfigUtils {
    *     {@link Config}; if there is no such property or the property has no
    *     value, returns the default value.
    */
-  public static Date choose(@Nullable final Date value, final Config config,
-      final String name, @Nullable final Date defaultValue) {
+  public static LocalDate choose(@Nullable final LocalDate value, final Config config,
+      final String name, @Nullable final LocalDate defaultValue) {
     if (value != null) {
       return value;
     } else {
       return config.getDate(name, defaultValue);
+    }
+  }
+
+  /**
+   * Choose the non-null value of a specified value and a property value in a
+   * {@link Config}.
+   *
+   * @param value
+   *     the specified value, which could be {@code null}.
+   * @param config
+   *     the specified {@link Config}.
+   * @param name
+   *     the name of the specified property in the {@link Config}.
+   * @return if the specified value is not {@code null}, returns the specified
+   *     value; otherwise, returns the specified property value in the specified
+   *     {@link Config}.
+   * @throws ConfigurationError
+   *     if there is no property with the specified name, or the specified
+   *     property has no value, or the type of the specified property is not
+   *     {@code Date}.
+   */
+  public static LocalTime choose(@Nullable final LocalTime value, final Config config,
+      final String name) {
+    if (value != null) {
+      return value;
+    } else {
+      return config.getTime(name);
+    }
+  }
+
+  /**
+   * Choose the non-null value of a specified value and a property value in a
+   * {@link Config}.
+   *
+   * @param value
+   *     the specified value, which could be {@code null}.
+   * @param config
+   *     the specified {@link Config}.
+   * @param name
+   *     the name of the specified property in the {@link Config}.
+   * @param defaultValue
+   *     the default value to use if the specified {@link Config} has no
+   *     property with the specified name or the specified property has no
+   *     value.
+   * @return if the specified value is not {@code null}, returns the specified
+   *     value; otherwise, returns the specified property value in the specified
+   *     {@link Config}; if there is no such property or the property has no
+   *     value, returns the default value.
+   */
+  public static LocalTime choose(@Nullable final LocalTime value, final Config config,
+      final String name, @Nullable final LocalTime defaultValue) {
+    if (value != null) {
+      return value;
+    } else {
+      return config.getTime(name, defaultValue);
+    }
+  }
+
+  /**
+   * Choose the non-null value of a specified value and a property value in a
+   * {@link Config}.
+   *
+   * @param value
+   *     the specified value, which could be {@code null}.
+   * @param config
+   *     the specified {@link Config}.
+   * @param name
+   *     the name of the specified property in the {@link Config}.
+   * @return if the specified value is not {@code null}, returns the specified
+   *     value; otherwise, returns the specified property value in the specified
+   *     {@link Config}.
+   * @throws ConfigurationError
+   *     if there is no property with the specified name, or the specified
+   *     property has no value, or the type of the specified property is not
+   *     {@code Date}.
+   */
+  public static LocalDateTime choose(@Nullable final LocalDateTime value, final Config config,
+      final String name) {
+    if (value != null) {
+      return value;
+    } else {
+      return config.getDateTime(name);
+    }
+  }
+
+  /**
+   * Choose the non-null value of a specified value and a property value in a
+   * {@link Config}.
+   *
+   * @param value
+   *     the specified value, which could be {@code null}.
+   * @param config
+   *     the specified {@link Config}.
+   * @param name
+   *     the name of the specified property in the {@link Config}.
+   * @param defaultValue
+   *     the default value to use if the specified {@link Config} has no
+   *     property with the specified name or the specified property has no
+   *     value.
+   * @return if the specified value is not {@code null}, returns the specified
+   *     value; otherwise, returns the specified property value in the specified
+   *     {@link Config}; if there is no such property or the property has no
+   *     value, returns the default value.
+   */
+  public static LocalDateTime choose(@Nullable final LocalDateTime value, final Config config,
+      final String name, @Nullable final LocalDateTime defaultValue) {
+    if (value != null) {
+      return value;
+    } else {
+      return config.getDateTime(name, defaultValue);
     }
   }
 

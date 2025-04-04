@@ -34,6 +34,16 @@ public class DefaultHttpClientOptions implements HttpClientOptions,
   @Serial
   private static final long serialVersionUID = 5972214359275621714L;
 
+  /**
+   * The configuration key of whether to log the HTTP response body.
+   */
+  public static final String KEY_LOG_HTTP_RESPONSE_BODY = "http.logging.response.body";
+
+  /**
+   * The default value of whether to log the HTTP response body.
+   */
+  public static final boolean DEFAULT_LOG_HTTP_RESPONSE_BODY = false;
+
   private WritableConfig config;
 
   /**
@@ -194,6 +204,17 @@ public class DefaultHttpClientOptions implements HttpClientOptions,
   @Override
   public HttpClientOptions setUseHttpLogging(final boolean useHttpLogging) {
     config.setBoolean(KEY_USE_HTTP_LOGGING, useHttpLogging);
+    return this;
+  }
+
+  @Override
+  public boolean isLogHttpResponseBody() {
+    return config.getBoolean(KEY_LOG_HTTP_RESPONSE_BODY, DEFAULT_LOG_HTTP_RESPONSE_BODY);
+  }
+
+  @Override
+  public HttpClientOptions setLogHttpResponseBody(final boolean logHttpResponseBody) {
+    config.setBoolean(KEY_LOG_HTTP_RESPONSE_BODY, logHttpResponseBody);
     return this;
   }
 }

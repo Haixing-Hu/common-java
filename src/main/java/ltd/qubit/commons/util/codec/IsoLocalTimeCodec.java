@@ -15,6 +15,8 @@ package ltd.qubit.commons.util.codec;
  */
 public class IsoLocalTimeCodec extends LocalTimeCodec {
 
+  public static IsoLocalTimeCodec INSTANCE = new IsoLocalTimeCodec();
+
   public IsoLocalTimeCodec() {
     super("HH:mm:ss", false);
   }

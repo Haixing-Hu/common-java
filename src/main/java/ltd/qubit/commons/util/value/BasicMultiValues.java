@@ -145,6 +145,16 @@ public class BasicMultiValues implements MultiValues, Serializable {
     setDateValue(value);
   }
 
+  public BasicMultiValues(final LocalTime value) {
+    this();
+    setTimeValue(value);
+  }
+
+  public BasicMultiValues(final LocalDateTime value) {
+    this();
+    setDateTimeValue(value);
+  }
+
   public BasicMultiValues(final BigInteger value) {
     this();
     setBigIntegerValue(value);

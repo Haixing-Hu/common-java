@@ -169,14 +169,13 @@ public final class XmlConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void load(final String resource) {
-    LOGGER.debug("Loading XML configuration from {}", resource);
+    logger.debug("Loading XML configuration from {}", resource);
     try {
       final URL url = SystemUtils.getResource(resource);
       if (url == null) {
         throw new ConfigurationError("Cannot find resource: " + resource);
       }
-      final DefaultConfig config = XmlSerialization.deserialize(
-          DefaultConfig.class, url);
+      final DefaultConfig config = XmlSerialization.deserialize(DefaultConfig.class, url);
       properties = config.properties;
     } catch (final XmlException e) {
       throw new ConfigurationError(e);
@@ -194,7 +193,7 @@ public final class XmlConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void load(final String resource, final Class<?> loaderClass) {
-    LOGGER.debug("Loading XML configuration from {}", resource);
+    logger.debug("Loading XML configuration from {}", resource);
     try {
       final DefaultConfig config = XmlSerialization.deserialize(
           DefaultConfig.class, resource, loaderClass);
@@ -215,10 +214,9 @@ public final class XmlConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void load(final String resource, final ClassLoader loader) {
-    LOGGER.debug("Loading XML configuration from {}", resource);
+    logger.debug("Loading XML configuration from {}", resource);
     try {
-      final DefaultConfig config = XmlSerialization.deserialize(
-          DefaultConfig.class, resource, loader);
+      final DefaultConfig config = XmlSerialization.deserialize(DefaultConfig.class, resource, loader);
       properties = config.properties;
     } catch (final XmlException e) {
       throw new ConfigurationError(e);
@@ -234,10 +232,9 @@ public final class XmlConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void load(final Url url) {
-    LOGGER.debug("Loading XML configuration from {}", url);
+    logger.debug("Loading XML configuration from {}", url);
     try {
-      final DefaultConfig config = XmlSerialization.deserialize(
-          DefaultConfig.class, url);
+      final DefaultConfig config = XmlSerialization.deserialize(DefaultConfig.class, url);
       properties = config.properties;
     } catch (final XmlException e) {
       throw new ConfigurationError(e);
@@ -253,10 +250,9 @@ public final class XmlConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void load(final URL url) {
-    LOGGER.debug("Loading XML configuration from {}", url);
+    logger.debug("Loading XML configuration from {}", url);
     try {
-      final DefaultConfig config = XmlSerialization.deserialize(
-          DefaultConfig.class, url);
+      final DefaultConfig config = XmlSerialization.deserialize(DefaultConfig.class, url);
       properties = config.properties;
     } catch (final XmlException e) {
       throw new ConfigurationError(e);
@@ -273,8 +269,7 @@ public final class XmlConfig extends DefaultConfig {
    */
   public synchronized void load(final URI uri) {
     try {
-      final DefaultConfig config = XmlSerialization.deserialize(
-          DefaultConfig.class, uri);
+      final DefaultConfig config = XmlSerialization.deserialize(DefaultConfig.class, uri);
       properties = config.properties;
     } catch (final XmlException e) {
       throw new ConfigurationError(e);
@@ -290,10 +285,9 @@ public final class XmlConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void load(final File file) {
-    LOGGER.debug("Loading XML configuration from {}", file);
+    logger.debug("Loading XML configuration from {}", file);
     try {
-      final DefaultConfig config = XmlSerialization.deserialize(
-          DefaultConfig.class, file);
+      final DefaultConfig config = XmlSerialization.deserialize(DefaultConfig.class, file);
       properties = config.properties;
     } catch (final XmlException e) {
       throw new ConfigurationError(e);
@@ -311,10 +305,9 @@ public final class XmlConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void load(final InputStream in) {
-    LOGGER.debug("Loading XML configuration from {}", in);
+    logger.debug("Loading XML configuration from {}", in);
     try {
-      final DefaultConfig config = XmlSerialization.deserialize(
-          DefaultConfig.class, in);
+      final DefaultConfig config = XmlSerialization.deserialize(DefaultConfig.class, in);
       properties = config.properties;
     } catch (final XmlException e) {
       throw new ConfigurationError(e);
@@ -332,10 +325,9 @@ public final class XmlConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void load(final Reader reader) {
-    LOGGER.debug("Loading XML configuration from {}", reader);
+    logger.debug("Loading XML configuration from {}", reader);
     try {
-      final DefaultConfig config = XmlSerialization.deserialize(
-          DefaultConfig.class, reader);
+      final DefaultConfig config = XmlSerialization.deserialize(DefaultConfig.class, reader);
       properties = config.properties;
     } catch (final XmlException e) {
       throw new ConfigurationError(e);
@@ -353,7 +345,7 @@ public final class XmlConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void store(final OutputStream out) {
-    LOGGER.debug("Storing XML configuration from {}", out);
+    logger.debug("Storing XML configuration from {}", out);
     try {
       XmlSerialization.serialize(DefaultConfig.class, this, out);
     } catch (final XmlException e) {
@@ -372,7 +364,7 @@ public final class XmlConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void store(final PrintStream out) {
-    LOGGER.debug("Storing XML configuration from {}", out);
+    logger.debug("Storing XML configuration from {}", out);
     try {
       XmlSerialization.serialize(DefaultConfig.class, this, out);
     } catch (final XmlException e) {
@@ -391,7 +383,7 @@ public final class XmlConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void store(final Writer writer) {
-    LOGGER.debug("Storing XML configuration from {}", writer);
+    logger.debug("Storing XML configuration from {}", writer);
     try {
       XmlSerialization.serialize(DefaultConfig.class, this, writer);
     } catch (final XmlException e) {
@@ -408,7 +400,7 @@ public final class XmlConfig extends DefaultConfig {
    *     if any error occurs.
    */
   public synchronized void store(final File file) {
-    LOGGER.debug("Storing XML configuration from {}", file);
+    logger.debug("Storing XML configuration from {}", file);
     try {
       XmlSerialization.serialize(DefaultConfig.class, this, file);
     } catch (final XmlException e) {

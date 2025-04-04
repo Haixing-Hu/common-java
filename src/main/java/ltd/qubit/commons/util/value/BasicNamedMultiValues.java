@@ -11,7 +11,9 @@ package ltd.qubit.commons.util.value;
 import java.io.Serial;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
@@ -92,7 +94,17 @@ public class BasicNamedMultiValues extends BasicMultiValues
     this.name = requireNonNull("name", name);
   }
 
-  public BasicNamedMultiValues(final String name, final Date value) {
+  public BasicNamedMultiValues(final String name, final LocalDate value) {
+    super(value);
+    this.name = requireNonNull("name", name);
+  }
+
+  public BasicNamedMultiValues(final String name, final LocalTime value) {
+    super(value);
+    this.name = requireNonNull("name", name);
+  }
+
+  public BasicNamedMultiValues(final String name, final LocalDateTime value) {
     super(value);
     this.name = requireNonNull("name", name);
   }

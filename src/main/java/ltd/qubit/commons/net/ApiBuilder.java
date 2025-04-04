@@ -334,6 +334,17 @@ public class ApiBuilder implements HttpClientOptions {
     return this;
   }
 
+  @Override
+  public boolean isLogHttpResponseBody() {
+    return httpOptions.isLogHttpResponseBody();
+  }
+
+  @Override
+  public ApiBuilder setLogHttpResponseBody(final boolean useHttpLogging) {
+    httpOptions.setLogHttpResponseBody(useHttpLogging);
+    return this;
+  }
+
   /**
    * Adds an interceptor to the HTTP client.
    * <p>
