@@ -101,6 +101,36 @@ public interface HttpClientOptions {
   boolean DEFAULT_USE_HTTP_LOGGING = true;
 
   /**
+   * The configuration key of whether to log the HTTP request headers.
+   */
+  String KEY_LOG_HTTP_REQUEST_HEADER = "http.logging.request.header";
+
+  /**
+   * The default value of whether to log the HTTP request headers.
+   */
+  boolean DEFAULT_LOG_HTTP_REQUEST_HEADER = true;
+
+  /**
+   * The configuration key of whether to log the HTTP request body.
+   */
+  String KEY_LOG_HTTP_REQUEST_BODY = "http.logging.request.body";
+
+  /**
+   * The default value of whether to log the HTTP request body.
+   */
+  boolean DEFAULT_LOG_HTTP_REQUEST_BODY = true;
+
+  /**
+   * The configuration key of whether to log the HTTP response headers.
+   */
+  String KEY_LOG_HTTP_RESPONSE_HEADER = "http.logging.response.header";
+
+  /**
+   * The default value of whether to log the HTTP response headers.
+   */
+  boolean DEFAULT_LOG_HTTP_RESPONSE_HEADER = true;
+
+  /**
    * The configuration key of whether to log the HTTP response body.
    */
   String KEY_LOG_HTTP_RESPONSE_BODY = "http.logging.response.body";
@@ -304,7 +334,81 @@ public interface HttpClientOptions {
   HttpClientOptions setUseHttpLogging(boolean useHttpLogging);
 
   /**
+   * Gets whether to log the HTTP request headers.
+   * <p>
+   * This option is only effective when {@link #isUseHttpLogging()} is {@code true}.
+   *
+   * @return
+   *     {@code true} if the HTTP request headers should be logged;
+   *     {@code false} otherwise.
+   */
+  boolean isLogHttpRequestHeader();
+
+  /**
+   * Sets whether to log the HTTP request headers.
+   * <p>
+   * This option is only effective when {@link #isUseHttpLogging()} is {@code true}.
+   *
+   * @param logHttpRequestHeader
+   *     {@code true} if the HTTP request headers should be logged;
+   *     {@code false} otherwise.
+   * @return
+   *     this object, to support method chaining.
+   */
+  HttpClientOptions setLogHttpRequestHeader(boolean logHttpRequestHeader);
+
+  /**
+   * Gets whether to log the HTTP request body.
+   * <p>
+   * This option is only effective when {@link #isUseHttpLogging()} is {@code true}.
+   *
+   * @return
+   *     {@code true} if the HTTP request body should be logged;
+   *     {@code false} otherwise.
+   */
+  boolean isLogHttpRequestBody();
+
+  /**
+   * Sets whether to log the HTTP response body.
+   * <p>
+   * This option is only effective when {@link #isUseHttpLogging()} is {@code true}.
+   *
+   * @param logHttpRequestBody
+   *     {@code true} if the HTTP response body should be logged;
+   *     {@code false} otherwise.
+   * @return
+   *     this object, to support method chaining.
+   */
+  HttpClientOptions setLogHttpRequestBody(boolean logHttpRequestBody);
+
+  /**
+   * Gets whether to log the HTTP response headers.
+   * <p>
+   * This option is only effective when {@link #isUseHttpLogging()} is {@code true}.
+   *
+   * @return
+   *     {@code true} if the HTTP response headers should be logged;
+   *     {@code false} otherwise.
+   */
+  boolean isLogHttpResponseHeader();
+
+  /**
+   * Sets whether to log the HTTP response headers.
+   * <p>
+   * This option is only effective when {@link #isUseHttpLogging()} is {@code true}.
+   *
+   * @param logHttpResponseHeader
+   *     {@code true} if the HTTP response headers should be logged;
+   *     {@code false} otherwise.
+   * @return
+   *     this object, to support method chaining.
+   */
+  HttpClientOptions setLogHttpResponseHeader(boolean logHttpResponseHeader);
+
+  /**
    * Gets whether to log the HTTP response body.
+   * <p>
+   * This option is only effective when {@link #isUseHttpLogging()} is {@code true}.
    *
    * @return
    *     {@code true} if the HTTP response body should be logged;
@@ -314,13 +418,15 @@ public interface HttpClientOptions {
 
   /**
    * Sets whether to log the HTTP response body.
+   * <p>
+   * This option is only effective when {@link #isUseHttpLogging()} is {@code true}.
    *
-   * @param useHttpLogging
+   * @param logHttpResponseBody
    *     {@code true} if the HTTP response body should be logged;
    *     {@code false} otherwise.
    * @return
    *     this object, to support method chaining.
    */
-  HttpClientOptions setLogHttpResponseBody(boolean useHttpLogging);
+  HttpClientOptions setLogHttpResponseBody(boolean logHttpResponseBody);
 
 }

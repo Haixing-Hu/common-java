@@ -335,6 +335,39 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   @Override
+  public boolean isLogHttpRequestHeader() {
+    return httpOptions.isLogHttpRequestHeader();
+  }
+
+  @Override
+  public HttpClientOptions setLogHttpRequestHeader(final boolean logHttpRequestHeader) {
+    httpOptions.setLogHttpRequestHeader(logHttpRequestHeader);
+    return this;
+  }
+
+  @Override
+  public boolean isLogHttpRequestBody() {
+    return httpOptions.isLogHttpRequestBody();
+  }
+
+  @Override
+  public HttpClientOptions setLogHttpRequestBody(final boolean logHttpRequestBody) {
+    httpOptions.setLogHttpRequestBody(logHttpRequestBody);
+    return this;
+  }
+
+  @Override
+  public boolean isLogHttpResponseHeader() {
+    return httpOptions.isLogHttpResponseHeader();
+  }
+
+  @Override
+  public HttpClientOptions setLogHttpResponseHeader(final boolean logHttpResponseHeader) {
+    httpOptions.setLogHttpResponseHeader(logHttpResponseHeader);
+    return this;
+  }
+
+  @Override
   public boolean isLogHttpResponseBody() {
     return httpOptions.isLogHttpResponseBody();
   }

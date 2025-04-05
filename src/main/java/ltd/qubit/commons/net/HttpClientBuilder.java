@@ -242,6 +242,39 @@ public class HttpClientBuilder implements HttpClientOptions {
   }
 
   @Override
+  public boolean isLogHttpRequestHeader() {
+    return options.isLogHttpRequestHeader();
+  }
+
+  @Override
+  public HttpClientBuilder setLogHttpRequestHeader(final boolean logHttpRequestHeader) {
+    options.setLogHttpRequestHeader(logHttpRequestHeader);
+    return this;
+  }
+
+  @Override
+  public boolean isLogHttpRequestBody() {
+    return options.isLogHttpRequestBody();
+  }
+
+  @Override
+  public HttpClientBuilder setLogHttpRequestBody(final boolean logHttpRequestBody) {
+    options.setLogHttpRequestBody(logHttpRequestBody);
+    return this;
+  }
+
+  @Override
+  public boolean isLogHttpResponseHeader() {
+    return options.isLogHttpResponseHeader();
+  }
+
+  @Override
+  public HttpClientBuilder setLogHttpResponseHeader(final boolean logHttpResponseHeader) {
+    options.setLogHttpResponseHeader(logHttpResponseHeader);
+    return this;
+  }
+
+  @Override
   public boolean isLogHttpResponseBody() {
     return options.isLogHttpResponseBody();
   }

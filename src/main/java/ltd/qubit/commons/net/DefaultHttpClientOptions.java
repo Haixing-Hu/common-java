@@ -199,6 +199,39 @@ public class DefaultHttpClientOptions implements HttpClientOptions,
   }
 
   @Override
+  public boolean isLogHttpRequestHeader() {
+    return config.getBoolean(KEY_LOG_HTTP_REQUEST_HEADER, DEFAULT_LOG_HTTP_REQUEST_HEADER);
+  }
+
+  @Override
+  public HttpClientOptions setLogHttpRequestHeader(final boolean logHttpRequestHeader) {
+    config.setBoolean(KEY_LOG_HTTP_REQUEST_HEADER, logHttpRequestHeader);
+    return this;
+  }
+
+  @Override
+  public boolean isLogHttpRequestBody() {
+    return config.getBoolean(KEY_LOG_HTTP_REQUEST_BODY, DEFAULT_LOG_HTTP_REQUEST_BODY);
+  }
+
+  @Override
+  public HttpClientOptions setLogHttpRequestBody(final boolean logHttpRequestBody) {
+    config.setBoolean(KEY_LOG_HTTP_REQUEST_BODY, logHttpRequestBody);
+    return this;
+  }
+
+  @Override
+  public boolean isLogHttpResponseHeader() {
+    return config.getBoolean(KEY_LOG_HTTP_RESPONSE_HEADER, DEFAULT_LOG_HTTP_RESPONSE_HEADER);
+  }
+
+  @Override
+  public HttpClientOptions setLogHttpResponseHeader(final boolean logHttpResponseHeader) {
+    config.setBoolean(KEY_LOG_HTTP_RESPONSE_HEADER, logHttpResponseHeader);
+    return this;
+  }
+
+  @Override
   public boolean isLogHttpResponseBody() {
     return config.getBoolean(KEY_LOG_HTTP_RESPONSE_BODY, DEFAULT_LOG_HTTP_RESPONSE_BODY);
   }
