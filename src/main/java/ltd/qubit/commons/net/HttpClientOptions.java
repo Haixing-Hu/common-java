@@ -101,6 +101,16 @@ public interface HttpClientOptions {
   boolean DEFAULT_USE_HTTP_LOGGING = true;
 
   /**
+   * The configuration key of whether to log the HTTP response body.
+   */
+  String KEY_LOG_HTTP_RESPONSE_BODY = "http.logging.response.body";
+
+  /**
+   * The default value of whether to log the HTTP response body.
+   */
+  boolean DEFAULT_LOG_HTTP_RESPONSE_BODY = true;
+
+  /**
    * Gets whether to use the proxy server.
    *
    * @return

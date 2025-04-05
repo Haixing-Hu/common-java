@@ -34,15 +34,6 @@ public class DefaultHttpClientOptions implements HttpClientOptions,
   @Serial
   private static final long serialVersionUID = 5972214359275621714L;
 
-  /**
-   * The configuration key of whether to log the HTTP response body.
-   */
-  public static final String KEY_LOG_HTTP_RESPONSE_BODY = "http.logging.response.body";
-
-  /**
-   * The default value of whether to log the HTTP response body.
-   */
-  public static final boolean DEFAULT_LOG_HTTP_RESPONSE_BODY = false;
 
   private WritableConfig config;
 
