@@ -9,6 +9,8 @@
 package ltd.qubit.commons.net;
 
 import java.net.Proxy;
+import java.util.Collection;
+import java.util.List;
 
 import javax.annotation.Nullable;
 
@@ -71,6 +73,31 @@ public interface HttpClientOptions {
   String KEY_USE_HTTP_LOGGING = "http.logging.use";
 
   /**
+   * The configuration key of whether to log the HTTP request headers.
+   */
+  String KEY_LOG_HTTP_REQUEST_HEADER = "http.logging.request.header";
+
+  /**
+   * The configuration key of whether to log the HTTP request body.
+   */
+  String KEY_LOG_HTTP_REQUEST_BODY = "http.logging.request.body";
+
+  /**
+   * The configuration key of whether to log the HTTP response headers.
+   */
+  String KEY_LOG_HTTP_RESPONSE_HEADER = "http.logging.response.header";
+
+  /**
+   * The configuration key of whether to log the HTTP response body.
+   */
+  String KEY_LOG_HTTP_RESPONSE_BODY = "http.logging.response.body";
+
+  /**
+   * The configuration key of sensitive HTTP headers.
+   */
+  String KEY_SENSITIVE_HTTP_HEADERS = "http.logging.sensitive-headers";
+
+  /**
    * The default timeout for the connection in seconds.
    */
   int DEFAULT_CONNECTION_TIMEOUT = 10;
@@ -101,19 +128,9 @@ public interface HttpClientOptions {
   boolean DEFAULT_USE_HTTP_LOGGING = true;
 
   /**
-   * The configuration key of whether to log the HTTP request headers.
-   */
-  String KEY_LOG_HTTP_REQUEST_HEADER = "http.logging.request.header";
-
-  /**
    * The default value of whether to log the HTTP request headers.
    */
   boolean DEFAULT_LOG_HTTP_REQUEST_HEADER = true;
-
-  /**
-   * The configuration key of whether to log the HTTP request body.
-   */
-  String KEY_LOG_HTTP_REQUEST_BODY = "http.logging.request.body";
 
   /**
    * The default value of whether to log the HTTP request body.
@@ -121,19 +138,9 @@ public interface HttpClientOptions {
   boolean DEFAULT_LOG_HTTP_REQUEST_BODY = true;
 
   /**
-   * The configuration key of whether to log the HTTP response headers.
-   */
-  String KEY_LOG_HTTP_RESPONSE_HEADER = "http.logging.response.header";
-
-  /**
    * The default value of whether to log the HTTP response headers.
    */
   boolean DEFAULT_LOG_HTTP_RESPONSE_HEADER = true;
-
-  /**
-   * The configuration key of whether to log the HTTP response body.
-   */
-  String KEY_LOG_HTTP_RESPONSE_BODY = "http.logging.response.body";
 
   /**
    * The default value of whether to log the HTTP response body.
@@ -369,7 +376,7 @@ public interface HttpClientOptions {
   boolean isLogHttpRequestBody();
 
   /**
-   * Sets whether to log the HTTP response body.
+   * Sets whether to log the HTTP request body.
    * <p>
    * This option is only effective when {@link #isUseHttpLogging()} is {@code true}.
    *
@@ -428,5 +435,61 @@ public interface HttpClientOptions {
    *     this object, to support method chaining.
    */
   HttpClientOptions setLogHttpResponseBody(boolean logHttpResponseBody);
+
+  /**
+   * Gets the list of sensitive HTTP headers whose values should be masked in logs.
+   *
+   * @return
+   *     a list of sensitive HTTP header names.
+   */
+  List<String> getSensitiveHttpHeaders();
+
+  /**
+   * Sets the list of sensitive HTTP headers whose values should be masked in logs.
+   *
+   * @param headers
+   *     the list of sensitive HTTP header names.
+   * @return
+   *     this object, to support method chaining.
+   */
+  HttpClientOptions setSensitiveHttpHeaders(List<String> headers);
+
+  /**
+   * Adds a sensitive HTTP header whose value should be masked in logs.
+   *
+   * @param headerName
+   *     the name of the sensitive HTTP header.
+   * @return
+   *     this object, to support method chaining.
+   */
+  HttpClientOptions addSensitiveHttpHeader(String headerName);
+
+  /**
+   * Adds multiple sensitive HTTP headers whose values should be masked in logs.
+   *
+   * @param headerNames
+   *     the names of the sensitive HTTP headers.
+   * @return
+   *     this object, to support method chaining.
+   */
+  HttpClientOptions addSensitiveHttpHeaders(String... headerNames);
+
+  /**
+   * Adds multiple sensitive HTTP headers whose values should be masked in logs.
+   *
+   * @param headerNames
+   *     a collection of names of the sensitive HTTP headers.
+   * @return
+   *     this object, to support method chaining.
+   */
+  HttpClientOptions addSensitiveHttpHeaders(Collection<String> headerNames);
+
+  /**
+   * Clears the list of sensitive HTTP headers.
+   *
+   * @return
+   *     this object, to support method chaining.
+   */
+  HttpClientOptions clearSensitiveHttpHeaders();
 
 }

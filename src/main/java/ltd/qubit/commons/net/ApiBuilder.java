@@ -378,6 +378,41 @@ public class ApiBuilder implements HttpClientOptions {
     return this;
   }
 
+  @Override
+  public List<String> getSensitiveHttpHeaders() {
+    return httpOptions.getSensitiveHttpHeaders();
+  }
+
+  @Override
+  public ApiBuilder setSensitiveHttpHeaders(final List<String> headers) {
+    httpOptions.setSensitiveHttpHeaders(headers);
+    return this;
+  }
+
+  @Override
+  public ApiBuilder addSensitiveHttpHeader(final String headerName) {
+    httpOptions.addSensitiveHttpHeader(headerName);
+    return this;
+  }
+
+  @Override
+  public ApiBuilder addSensitiveHttpHeaders(final String... headerNames) {
+    httpOptions.addSensitiveHttpHeaders(headerNames);
+    return this;
+  }
+
+  @Override
+  public ApiBuilder addSensitiveHttpHeaders(final Collection<String> headerNames) {
+    httpOptions.addSensitiveHttpHeaders(headerNames);
+    return this;
+  }
+
+  @Override
+  public ApiBuilder clearSensitiveHttpHeaders() {
+    httpOptions.clearSensitiveHttpHeaders();
+    return this;
+  }
+
   /**
    * Adds an interceptor to the HTTP client.
    * <p>
@@ -725,9 +760,12 @@ public class ApiBuilder implements HttpClientOptions {
     if (httpClient != null) {
       retrofitBuilder.client(httpClient);
     } else {
-      final OkHttpClient client = new HttpClientBuilder(logger, httpOptions)
-          .addInterceptors(interceptors)
-          .build();
+      final HttpClientBuilder clientBuilder = new HttpClientBuilder(logger, httpOptions)
+          .addInterceptors(interceptors);
+
+      // Sensitive HTTP headers were already passed to HttpClientBuilder via httpOptions
+
+      final OkHttpClient client = clientBuilder.build();
       retrofitBuilder.client(client);
     }
     if (callbackExecutor != null) {

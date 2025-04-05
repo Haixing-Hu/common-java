@@ -12,13 +12,13 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.concurrent.TimeUnit;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.slf4j.Logger;
-import org.slf4j.event.Level;
-import org.slf4j.spi.LoggingEventBuilder;
 
 import okhttp3.Headers;
 import okhttp3.Interceptor;
@@ -47,11 +47,35 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
  */
 public class HttpLoggingInterceptor implements Interceptor {
 
+  private static final String[] DEFAULT_SENSITIVE_HEADERS = {
+      "Authorization",
+      "Api-Key",
+      "X-Api-Key",
+      "Bearer",
+      "Cookie",
+      "Set-Cookie",
+      "Secret-Key",
+      "Client-Secret",
+      "Access-Token",
+      "Refresh-Token",
+      "Private-Token",
+      "Session-Token",
+      "JWT-Token",
+      "Password",
+      "X-Auth-Password",
+      "X-Client-ID",
+      "X-Client-Secret",
+      "X-Auth-Token",
+      "X-Auth-App-Token",
+      "X-Auth-User-Token",
+  };
+
   private final Logger logger;
   private final HttpClientOptions options;
+  private final Set<String> sensitiveHeaders;
 
   /**
-   * Creates a new instance of HttpLoggingInterceptor.
+   * Creates a new instance of HttpLoggingInterceptor with default sensitive headers.
    *
    * @param logger
    *     the SLF4J logger to use for logging.
@@ -59,8 +83,63 @@ public class HttpLoggingInterceptor implements Interceptor {
    *     the HTTP client options.
    */
   public HttpLoggingInterceptor(final Logger logger, final HttpClientOptions options) {
+    this(logger, options, DEFAULT_SENSITIVE_HEADERS);
+  }
+
+  /**
+   * Creates a new instance of HttpLoggingInterceptor with custom sensitive headers.
+   *
+   * @param logger
+   *     the SLF4J logger to use for logging.
+   * @param options
+   *     the HTTP client options.
+   * @param sensitiveHeaders
+   *     the list of sensitive header names to mask in logs.
+   */
+  public HttpLoggingInterceptor(final Logger logger, final HttpClientOptions options,
+      final String[] sensitiveHeaders) {
     this.logger = requireNonNull("logger", logger);
     this.options = requireNonNull("options", options);
+    this.sensitiveHeaders = new HashSet<>();
+    if (sensitiveHeaders != null) {
+      for (final String header : sensitiveHeaders) {
+        if (header != null && !header.isEmpty()) {
+          this.sensitiveHeaders.add(header.toLowerCase());
+        }
+      }
+    }
+  }
+
+  /**
+   * Adds a new sensitive HTTP header name to the list.
+   *
+   * @param headerName
+   *     the name of the header to consider sensitive.
+   * @return
+   *     this instance, for method chaining.
+   */
+  public HttpLoggingInterceptor addSensitiveHttpHeader(final String headerName) {
+    if (headerName != null && !headerName.isEmpty()) {
+      this.sensitiveHeaders.add(headerName.toLowerCase());
+    }
+    return this;
+  }
+
+  /**
+   * Adds multiple sensitive HTTP headers whose values should be masked in logs.
+   *
+   * @param headerNames
+   *     the names of the headers to consider sensitive.
+   * @return
+   *     this instance, for method chaining.
+   */
+  public HttpLoggingInterceptor addSensitiveHttpHeaders(final String... headerNames) {
+    if (headerNames != null) {
+      for (final String header : headerNames) {
+        addSensitiveHttpHeader(header);
+      }
+    }
+    return this;
   }
 
   @Override
@@ -69,6 +148,9 @@ public class HttpLoggingInterceptor implements Interceptor {
     final Request request = chain.request();
     final boolean useHttpLogging = options.isUseHttpLogging();
     if (!useHttpLogging) {
+      return chain.proceed(request);
+    }
+    if (!logger.isTraceEnabled()) {
       return chain.proceed(request);
     }
     final boolean logRequestHeaders = options.isLogHttpRequestHeader();
@@ -82,22 +164,20 @@ public class HttpLoggingInterceptor implements Interceptor {
         && !logResponseBody) {
       return chain.proceed(request);
     }
-    final Level loggingLevel = Level.DEBUG;
-    final LoggingEventBuilder theLogger = logger.atLevel(loggingLevel);
-    theLogger.log("--> {} {}", request.method(), request.url());
+    logger.trace("--> {} {}", request.method(), request.url());
     // 记录请求头
     if (logRequestHeaders) {
-      logRequestHeaders(theLogger, request);
+      logRequestHeaders(request);
     }
     // 记录请求体
     if (logRequestBody) {
-      logRequestBody(theLogger, request);
+      logRequestBody(request);
     } else {
       final RequestBody requestBody = request.body();
       if (requestBody != null) {
-        theLogger.log("--> END {} ({}-bytes body)", request.method(), requestBody.contentLength());
+        logger.trace("--> END {} ({}-bytes body)", request.method(), requestBody.contentLength());
       } else {
-        theLogger.log("--> END {} (no request body)", request.method());
+        logger.trace("--> END {} (no request body)", request.method());
       }
     }
     // 执行请求
@@ -106,93 +186,96 @@ public class HttpLoggingInterceptor implements Interceptor {
     try {
       response = chain.proceed(request);
     } catch (final Exception e) {
-      theLogger.log("<-- HTTP FAILED: {}", e.getMessage());
+      logger.trace("<-- HTTP FAILED: {}", e.getMessage());
       throw e;
     }
     final long tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
     // 记录响应
     final ResponseBody responseBody = response.body();
     if (responseBody == null) {
-      theLogger.log("<-- HTTP FAILED: response body is null");
+      logger.trace("<-- HTTP FAILED: response body is null");
       return response;
     }
     final long contentLength = responseBody.contentLength();
     final String bodySize = (contentLength != -1 ? contentLength + "-bytes" : "unknown-length");
-    theLogger.log("<-- {} {} {} ({}ms, {}-bytes body)",
+    logger.trace("<-- {} {} {} ({}ms, {}-bytes body)",
         response.code(), response.message(), request.url(), tookMs, bodySize);
     // 记录响应头
     if (logResponseHeaders) {
-      logResponseHeaders(theLogger, response);
+      logResponseHeaders(response);
     }
     // 记录响应体
     if (logResponseBody && hasBody(response)) {
-      logResponseBody(theLogger, response);
+      logResponseBody(response);
     } else {
-      theLogger.log("<-- END HTTP");
+      logger.trace("<-- END HTTP");
     }
     return response;
   }
 
-  private void logRequestHeaders(final LoggingEventBuilder logger, final Request request) throws IOException {
-    final Headers headers = request.headers();
+  private void logRequestHeaders(final Request request) throws IOException {
     final RequestBody requestBody = request.body();
+    final Headers headers = request.headers();
     if (requestBody != null) {
       final MediaType contentType = requestBody.contentType();
-      if (contentType != null && headers.get("Content-Type") == null) {
-        logger.log("Content-Type: {}", contentType);
-      }
+      logger.trace("Content-Type: {}", contentType);
       final long contentLength = requestBody.contentLength();
-      if (contentLength != -1 && headers.get("Content-Length") == null) {
-        logger.log("Content-Length: {}", contentLength);
+      if (contentLength != -1) {
+        logger.trace("Content-Length: {}", contentLength);
       }
     }
     for (int i = 0, count = headers.size(); i < count; i++) {
-      logger.log("{}: {}", headers.name(i), headers.value(i));
+      final String name = headers.name(i);
+      final String value = maskSensitiveHeaderValue(name, headers.value(i));
+      logger.trace("{}: {}", name, value);
     }
   }
 
-  private void logRequestBody(final LoggingEventBuilder logger, final Request request) throws IOException {
+  private void logRequestBody(final Request request) throws IOException {
     if (bodyHasUnknownEncoding(request.headers())) {
-      logger.log("--> END {} (encoded body omitted)", request.method());
+      logger.trace("--> END {} (encoded body omitted)", request.method());
     } else {
       final RequestBody requestBody = request.body();
       if (requestBody == null) {
-        logger.log("--> END {} (no request body)", request.method());
+        logger.trace("--> END {} (no request body)", request.method());
       } else if (requestBody.isDuplex()) {
-        logger.log("--> END {} (duplex request body omitted)", request.method());
+        logger.trace("--> END {} (duplex request body omitted)", request.method());
       } else if (requestBody.isOneShot()) {
-        logger.log("--> END {} (one-shot body omitted)", request.method());
+        logger.trace("--> END {} (one-shot body omitted)", request.method());
       } else {
         final Buffer buffer = new Buffer();
         requestBody.writeTo(buffer);
         final Charset charset = getCharsetFromMediaType(requestBody.contentType());
-        logger.log("");
+        logger.trace("");
+        final long contentLength = requestBody.contentLength();
         if (isProbablyUtf8(buffer)) {
-          logger.log(buffer.readString(charset));
-          logger.log("--> END {} ({}-bytes body)", request.method(), requestBody.contentLength());
+          logger.trace(buffer.readString(charset));
+          logger.trace("--> END {} ({}-bytes body)", request.method(), contentLength);
         } else {
-          logger.log("--> END {} (binary {}-bytes body omitted)", request.method(), requestBody.contentLength());
+          logger.trace("--> END {} (binary {}-bytes body omitted)", request.method(), contentLength);
         }
       }
     }
   }
 
-  private void logResponseHeaders(final LoggingEventBuilder logger, final Response response)
+  private void logResponseHeaders(final Response response)
       throws IOException {
     final Headers headers = response.headers();
     for (int i = 0, count = headers.size(); i < count; i++) {
-      logger.log("{}: {}", headers.name(i), headers.value(i));
+      final String name = headers.name(i);
+      final String value = maskSensitiveHeaderValue(name, headers.value(i));
+      logger.trace("{}: {}", name, value);
     }
   }
 
-  private void logResponseBody(final LoggingEventBuilder logger, final Response response)
+  private void logResponseBody(final Response response)
       throws IOException {
     if (bodyHasUnknownEncoding(response.headers())) {
-      logger.log("<-- END HTTP (encoded body omitted)");
+      logger.trace("<-- END HTTP (encoded body omitted)");
     } else {
       final ResponseBody responseBody = response.body();
       if (responseBody == null) {
-        logger.log("<-- END HTTP (no response body)");
+        logger.trace("<-- END HTTP (no response body)");
         return;
       }
       final BufferedSource source = responseBody.source();
@@ -209,11 +292,11 @@ public class HttpLoggingInterceptor implements Interceptor {
         }
         final Charset charset = getCharsetFromMediaType(responseBody.contentType());
         if (!isProbablyUtf8(buffer)) {
-          logger.log("<-- END HTTP (binary {}-bytes body omitted)", buffer.size());
+          logger.trace("<-- END HTTP (binary {}-bytes body omitted)", buffer.size());
         } else {
-          logger.log("");
-          logger.log(buffer.readString(charset));
-          logger.log("<-- END HTTP ({}-bytes, {}-gzipped-bytes body)", buffer.size(), gzippedLength);
+          logger.trace("");
+          logger.trace(buffer.readString(charset));
+          logger.trace("<-- END HTTP ({}-bytes, {}-gzipped-bytes body)", buffer.size(), gzippedLength);
         }
       } else {
         Charset charset = UTF_8;
@@ -225,14 +308,14 @@ public class HttpLoggingInterceptor implements Interceptor {
           }
         }
         if (!isProbablyUtf8(buffer)) {
-          logger.log("<-- END HTTP (binary {}-bytes body omitted)", buffer.size());
+          logger.trace("<-- END HTTP (binary {}-bytes body omitted)", buffer.size());
         } else {
           final long contentLength = responseBody.contentLength();
           if (contentLength != 0) {
-            logger.log("");
-            logger.log(buffer.readString(charset));
+            logger.trace("");
+            logger.trace(buffer.readString(charset));
           }
-          logger.log("<-- END HTTP ({}-bytes body)", buffer.size());
+          logger.trace("<-- END HTTP ({}-bytes body)", buffer.size());
         }
       }
     }
@@ -292,5 +375,29 @@ public class HttpLoggingInterceptor implements Interceptor {
     } catch (final EOFException e) {
       return false; // Truncated UTF-8 sequence.
     }
+  }
+
+  /**
+   * 对敏感的HTTP头部值进行打码处理。
+   *
+   * @param name
+   *     HTTP头部名称
+   * @param value
+   *     HTTP头部值
+   * @return
+   *     如果头部是敏感的，返回打码后的值；否则返回原值
+   */
+  private String maskSensitiveHeaderValue(final String name, final String value) {
+    if (value == null || value.isEmpty()) {
+      return value;
+    }
+    if (sensitiveHeaders.contains(name.toLowerCase())) {
+      if (value.length() <= 4) {
+        return "****";
+      } else {
+        return value.substring(0, 2) + "****" + value.substring(value.length() - 2);
+      }
+    }
+    return value;
   }
 }

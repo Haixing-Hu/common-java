@@ -285,6 +285,41 @@ public class HttpClientBuilder implements HttpClientOptions {
     return this;
   }
 
+  @Override
+  public List<String> getSensitiveHttpHeaders() {
+    return options.getSensitiveHttpHeaders();
+  }
+
+  @Override
+  public HttpClientBuilder setSensitiveHttpHeaders(final List<String> headers) {
+    options.setSensitiveHttpHeaders(headers);
+    return this;
+  }
+
+  @Override
+  public HttpClientBuilder addSensitiveHttpHeader(final String headerName) {
+    options.addSensitiveHttpHeader(headerName);
+    return this;
+  }
+
+  @Override
+  public HttpClientBuilder addSensitiveHttpHeaders(final String... headerNames) {
+    options.addSensitiveHttpHeaders(headerNames);
+    return this;
+  }
+
+  @Override
+  public HttpClientBuilder addSensitiveHttpHeaders(final Collection<String> headerNames) {
+    options.addSensitiveHttpHeaders(headerNames);
+    return this;
+  }
+
+  @Override
+  public HttpClientBuilder clearSensitiveHttpHeaders() {
+    options.clearSensitiveHttpHeaders();
+    return this;
+  }
+
   /**
    * Adds an interceptor to the HTTP client.
    * <p>
@@ -407,6 +442,15 @@ public class HttpClientBuilder implements HttpClientOptions {
     if (isUseHttpLogging()) {
       logger.info("Using logging for the HTTP client.");
       final HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(logger, options);
+
+      // Add sensitive HTTP headers to the logging interceptor
+      final List<String> headers = getSensitiveHttpHeaders();
+      if (headers != null && !headers.isEmpty()) {
+        for (final String header : headers) {
+          loggingInterceptor.addSensitiveHttpHeader(header);
+        }
+      }
+
       builder.addInterceptor(loggingInterceptor);
       builder.eventListener(new ConnectionLoggingEventListener(logger));
     }

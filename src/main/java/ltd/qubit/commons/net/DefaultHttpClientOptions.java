@@ -11,6 +11,10 @@ package ltd.qubit.commons.net;
 import java.io.Serial;
 import java.io.Serializable;
 import java.net.Proxy;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
@@ -239,6 +243,56 @@ public class DefaultHttpClientOptions implements HttpClientOptions,
   @Override
   public HttpClientOptions setLogHttpResponseBody(final boolean logHttpResponseBody) {
     config.setBoolean(KEY_LOG_HTTP_RESPONSE_BODY, logHttpResponseBody);
+    return this;
+  }
+
+  @Override
+  public List<String> getSensitiveHttpHeaders() {
+    final String[] headers = config.getStrings(KEY_SENSITIVE_HTTP_HEADERS);
+    if (headers == null || headers.length == 0) {
+      return new ArrayList<>();
+    } else {
+      return new ArrayList<>(Arrays.asList(headers));
+    }
+  }
+
+  @Override
+  public HttpClientOptions setSensitiveHttpHeaders(final List<String> headers) {
+    if (headers == null || headers.isEmpty()) {
+      config.remove(KEY_SENSITIVE_HTTP_HEADERS);
+    } else {
+      config.setStrings(KEY_SENSITIVE_HTTP_HEADERS, headers);
+    }
+    return this;
+  }
+
+  @Override
+  public HttpClientOptions addSensitiveHttpHeader(final String headerName) {
+    if (headerName != null && !headerName.isEmpty()) {
+      config.addString(KEY_SENSITIVE_HTTP_HEADERS, headerName);
+    }
+    return this;
+  }
+
+  @Override
+  public HttpClientOptions addSensitiveHttpHeaders(final String... headerNames) {
+    if (headerNames != null && headerNames.length > 0) {
+      config.addStrings(KEY_SENSITIVE_HTTP_HEADERS, headerNames);
+    }
+    return this;
+  }
+
+  @Override
+  public HttpClientOptions addSensitiveHttpHeaders(final Collection<String> headerNames) {
+    if (headerNames != null && !headerNames.isEmpty()) {
+      config.addStrings(KEY_SENSITIVE_HTTP_HEADERS, headerNames);
+    }
+    return this;
+  }
+
+  @Override
+  public HttpClientOptions clearSensitiveHttpHeaders() {
+    config.remove(KEY_SENSITIVE_HTTP_HEADERS);
     return this;
   }
 }
