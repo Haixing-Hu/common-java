@@ -111,14 +111,36 @@ public enum ComparisonOperator {
 
   private final String symbol;
 
+  /**
+   * 创建一个比较操作符实例。
+   *
+   * @param symbol
+   *     此比较操作符对应的符号。
+   */
   ComparisonOperator(final String symbol) {
     this.symbol = symbol;
   }
 
+  /**
+   * 获取此比较操作符对应的符号。
+   *
+   * @return
+   *     此比较操作符对应的符号。
+   */
   public final String getSymbol() {
     return symbol;
   }
 
+  /**
+   * 测试左侧值和右侧值是否满足此比较操作符的条件。
+   *
+   * @param lhsValue
+   *     比较表达式左侧的值。
+   * @param rhsValue
+   *     比较表达式右侧的值。
+   * @return
+   *     如果左侧值和右侧值满足此比较操作符的条件，则返回{@code true}；否则返回{@code false}。
+   */
   @SuppressWarnings({"unchecked", "rawtypes"})
   public final boolean test(final Object lhsValue, final Object rhsValue) {
     if (lhsValue == null) {
