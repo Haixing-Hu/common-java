@@ -689,7 +689,7 @@ public class ComposedCriterionBuilder<T> {
    * Adds a criterion that checks if a nested property accessed by four getter
    * methods is not null based on the provided flag.
    *
-   * <p>No criterion will be added if the provided flag is {@code null}.
+   * <p>No criterion will be added if the provided flag is {@code null}.</p>
    *
    * @param <P1>
    *      the type of the first level property
@@ -986,6 +986,164 @@ public class ComposedCriterionBuilder<T> {
     if (value != null) {
       final String path = getPropertyPath(entityClass, getter);
       criteria.add(new SimpleCriterion<>(entityClass, path, NOT_EQUAL, value));
+    }
+    return this;
+  }
+
+  /**
+   * Adds a criterion that checks if a nested property accessed by two getter
+   * methods is not equal to the given value.
+   *
+   * <p>No criterion will be added if the provided value is {@code null}.</p>
+   *
+   * @param <P>
+   *      the type of the first level property
+   * @param <R>
+   *      the type of the value to compare with
+   * @param g1
+   *      the first level getter method
+   * @param g2
+   *      the second level getter method
+   * @param value
+   *      the value to compare with, can be {@code null}
+   * @return this builder instance for method chaining
+   */
+  public <P, R> ComposedCriterionBuilder<T> notEqual(final GetterMethod<T, P> g1,
+      final GetterMethod<P, R> g2, @Nullable final R value) {
+    if (value != null) {
+      final String path = getPropertyPath(entityClass, g1, g2);
+      criteria.add(new SimpleCriterion<>(entityClass, path, NOT_EQUAL, value));
+    }
+    return this;
+  }
+
+  /**
+   * Adds a criterion that checks if a nested property accessed by three getter
+   * methods is not equal to the given value.
+   *
+   * <p>No criterion will be added if the provided value is {@code null}.</p>
+   *
+   * @param <P1>
+   *      the type of the first level property
+   * @param <P2>
+   *      the type of the second level property
+   * @param <R>
+   *      the type of the value to compare with
+   * @param g1
+   *      the first level getter method
+   * @param g2
+   *      the second level getter method
+   * @param g3
+   *      the third level getter method
+   * @param value
+   *      the value to compare with, can be {@code null}
+   * @return this builder instance for method chaining
+   */
+  public <P1, P2, R> ComposedCriterionBuilder<T> notEqual(final GetterMethod<T, P1> g1,
+      final GetterMethod<P1, P2> g2, final GetterMethod<P2, R> g3,
+      @Nullable final R value) {
+    if (value != null) {
+      final String path = getPropertyPath(entityClass, g1, g2, g3);
+      criteria.add(new SimpleCriterion<>(entityClass, path, NOT_EQUAL, value));
+    }
+    return this;
+  }
+
+  /**
+   * Adds a criterion that checks if a nested property accessed by four getter
+   * methods is not equal to the given value.
+   *
+   * <p>No criterion will be added if the provided value is {@code null}.</p>
+   *
+   * @param <P1>
+   *      the type of the first level property
+   * @param <P2>
+   *      the type of the second level property
+   * @param <P3>
+   *      the type of the third level property
+   * @param <R>
+   *      the type of the value to compare with
+   * @param g1
+   *      the first level getter method
+   * @param g2
+   *      the second level getter method
+   * @param g3
+   *      the third level getter method
+   * @param g4
+   *      the fourth level getter method
+   * @param value
+   *      the value to compare with, can be {@code null}
+   * @return this builder instance for method chaining
+   */
+  public <P1, P2, P3, R> ComposedCriterionBuilder<T> notEqual(final GetterMethod<T, P1> g1,
+      final GetterMethod<P1, P2> g2, final GetterMethod<P2, P3> g3,
+      final GetterMethod<P3, R> g4, @Nullable final R value) {
+    if (value != null) {
+      final String path = getPropertyPath(entityClass, g1, g2, g3, g4);
+      criteria.add(new SimpleCriterion<>(entityClass, path, NOT_EQUAL, value));
+    }
+    return this;
+  }
+
+  /**
+   * Adds a criterion that checks if a nested property accessed by five getter
+   * methods is not equal to the given value.
+   *
+   * <p>No criterion will be added if the provided value is {@code null}.</p>
+   *
+   * @param <P1>
+   *      the type of the first level property
+   * @param <P2>
+   *      the type of the second level property
+   * @param <P3>
+   *      the type of the third level property
+   * @param <P4>
+   *      the type of the fourth level property
+   * @param <R>
+   *      the type of the value to compare with
+   * @param g1
+   *      the first level getter method
+   * @param g2
+   *      the second level getter method
+   * @param g3
+   *      the third level getter method
+   * @param g4
+   *      the fourth level getter method
+   * @param g5
+   *      the fifth level getter method
+   * @param value
+   *      the value to compare with, can be {@code null}
+   * @return this builder instance for method chaining
+   */
+  public <P1, P2, P3, P4, R> ComposedCriterionBuilder<T> notEqual(final GetterMethod<T, P1> g1,
+      final GetterMethod<P1, P2> g2, final GetterMethod<P2, P3> g3,
+      final GetterMethod<P3, P4> g4, final GetterMethod<P4, R> g5,
+      @Nullable final R value) {
+    if (value != null) {
+      final String path = getPropertyPath(entityClass, g1, g2, g3, g4, g5);
+      criteria.add(new SimpleCriterion<>(entityClass, path, NOT_EQUAL, value));
+    }
+    return this;
+  }
+
+  /**
+   * Adds a criterion that checks if a nested property accessed by two getter
+   * methods is less than the given value.
+   *
+   * <p>No criterion will be added if the provided value is {@code null}.</p>
+   *
+   * @param <P>
+   *      the type of the first level property
+   * @param g1
+   *      the first level getter method
+   * @param value
+   *      the value to compare with, can be {@code null}
+   * @return this builder instance for method chaining
+   */
+  public <P> ComposedCriterionBuilder<T> less(final GetterMethod<T, P> g1, @Nullable final P value) {
+    if (value != null) {
+      final String path = getPropertyPath(entityClass, g1);
+      criteria.add(new SimpleCriterion<>(entityClass, path, LESS, value));
     }
     return this;
   }
