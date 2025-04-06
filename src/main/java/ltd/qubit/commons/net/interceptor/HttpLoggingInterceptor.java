@@ -281,7 +281,7 @@ public class HttpLoggingInterceptor implements Interceptor {
       final BufferedSource source = responseBody.source();
       source.request(Long.MAX_VALUE); // 将整个响应体缓存起来
       // 为避免消耗源中的数据，这里使用 clone() 复制一份 Buffer 用于日志输出
-      Buffer buffer = source.buffer().clone();
+      Buffer buffer = source.getBuffer().clone();
       final String contentEncoding = response.headers().get("Content-Encoding");
       if ("gzip".equalsIgnoreCase(contentEncoding)) {
         final long gzippedLength = buffer.size();
