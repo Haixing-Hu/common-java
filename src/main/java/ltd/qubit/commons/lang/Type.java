@@ -236,6 +236,7 @@ public enum Type {
   }
 
   private static Object parseEnum(final Class<?> enumClass, final String text) {
+    @SuppressWarnings({"unchecked", "rawtypes"})
     final EnumCodec<?> codec = new EnumCodec(enumClass);
     return codec.decodeThrowRuntime(text);
   }
