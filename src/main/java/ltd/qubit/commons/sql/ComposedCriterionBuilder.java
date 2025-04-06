@@ -1040,8 +1040,7 @@ public class ComposedCriterionBuilder<T> {
    * @return this builder instance for method chaining
    */
   public <P1, P2, R> ComposedCriterionBuilder<T> notEqual(final GetterMethod<T, P1> g1,
-      final GetterMethod<P1, P2> g2, final GetterMethod<P2, R> g3,
-      @Nullable final R value) {
+      final GetterMethod<P1, P2> g2, final GetterMethod<P2, R> g3, @Nullable final R value) {
     if (value != null) {
       final String path = getPropertyPath(entityClass, g1, g2, g3);
       criteria.add(new SimpleCriterion<>(entityClass, path, NOT_EQUAL, value));
@@ -1127,22 +1126,45 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if a nested property accessed by two getter
-   * methods is less than the given value.
+   * Adds a criterion that checks if the specified property is less than the
+   * given value.
    *
    * <p>No criterion will be added if the provided value is {@code null}.</p>
    *
-   * @param <P>
-   *      the type of the first level property
-   * @param g1
-   *      the first level getter method
+   * @param <R>
+   *      the type of the value to compare with
+   * @param path
+   *      the path of the property to check
    * @param value
    *      the value to compare with, can be {@code null}
    * @return this builder instance for method chaining
    */
-  public <P> ComposedCriterionBuilder<T> less(final GetterMethod<T, P> g1, @Nullable final P value) {
+  public <R> ComposedCriterionBuilder<T> less(final String path,
+      @Nullable final R value) {
     if (value != null) {
-      final String path = getPropertyPath(entityClass, g1);
+      criteria.add(new SimpleCriterion<>(entityClass, path, LESS, value));
+    }
+    return this;
+  }
+
+  /**
+   * Adds a criterion that checks if the property accessed by the getter method
+   * is less than the given value.
+   *
+   * <p>No criterion will be added if the provided value is {@code null}.</p>
+   *
+   * @param <R>
+   *      the type of the property and value
+   * @param getter
+   *      the getter method reference to access the property
+   * @param value
+   *      the value to compare with, can be {@code null}
+   * @return this builder instance for method chaining
+   */
+  public <R> ComposedCriterionBuilder<T> less(final GetterMethod<T, R> getter,
+      @Nullable final R value) {
+    if (value != null) {
+      final String path = getPropertyPath(entityClass, getter);
       criteria.add(new SimpleCriterion<>(entityClass, path, LESS, value));
     }
     return this;
