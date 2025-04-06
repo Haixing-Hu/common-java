@@ -24,7 +24,7 @@ import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.lang.ObjectUtils;
 
-import static ltd.qubit.commons.lang.CharUtils.toHexString;
+import static ltd.qubit.commons.lang.CharUtils.toUnicodeHexString;
 import static ltd.qubit.commons.lang.ObjectUtils.defaultIfNull;
 import static ltd.qubit.commons.lang.StringUtils.EMPTY;
 
@@ -1164,7 +1164,7 @@ public class ToStringStyle implements Serializable {
     builder.append('\'')
            .append(value)
            .append('\'')
-           .append(toHexString(value));
+           .append(toUnicodeHexString(value));
   }
 
   /**
