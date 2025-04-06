@@ -12,11 +12,9 @@ import java.sql.SQLSyntaxErrorException;
 
 import javax.annotation.Nullable;
 
-import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.reflect.impl.GetterMethod;
-import ltd.qubit.commons.text.SqlLikePattern;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import ltd.qubit.commons.util.ComparisonOperator;
 
@@ -30,11 +28,8 @@ import static ltd.qubit.commons.sql.impl.CriterionImplUtils.arrayToSql;
 import static ltd.qubit.commons.sql.impl.CriterionImplUtils.fieldToSql;
 import static ltd.qubit.commons.sql.impl.CriterionImplUtils.isComparable;
 import static ltd.qubit.commons.sql.impl.CriterionImplUtils.isSupportedDataType;
-import static ltd.qubit.commons.sql.impl.CriterionImplUtils.toComparableValue;
 import static ltd.qubit.commons.sql.impl.CriterionImplUtils.valueToSql;
 import static ltd.qubit.commons.text.NamingStyleUtils.propertyPathToDatabaseField;
-import static ltd.qubit.commons.util.ComparisonOperator.EQUAL;
-import static ltd.qubit.commons.util.ComparisonOperator.NOT_EQUAL;
 
 /**
  * 此模型表示用于过滤实体的简单条件表达式。
@@ -70,11 +65,6 @@ public class SimpleCriterion<T> implements Criterion<T> {
    * <p>如果此属性为{@code true}，则{@code value}属性应该是另一个被比较的属性的路径。</p>
    */
   private final boolean compareProperties;
-
-  /**
-   * 缓存表达式右边值转换后的可比较值。
-   */
-  private transient Object cachedComparableRhs;
 
   /**
    * 创建一个{@link SimpleCriterion}对象。
@@ -342,7 +332,6 @@ public class SimpleCriterion<T> implements Criterion<T> {
     return isComparable(lhsType, operator, rhsType);
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public boolean accept(final T obj) {
     if (obj == null) {
@@ -358,48 +347,7 @@ public class SimpleCriterion<T> implements Criterion<T> {
     } else {
       rhsValue = value;
     }
-    if (lhsValue == null) {
-      return (operator == EQUAL && rhsValue == null);
-    } else if (rhsValue == null) {   // lhsValue != null
-      return (operator == NOT_EQUAL);
-    }
-    //  now lhsValue != null && rhsValue != null
-    final Object comparableLhs = toComparableValue(lhsValue);
-    final Object comparableRhs;
-    if (compareProperties) {
-      comparableRhs = toComparableValue(rhsValue);  // 右侧为属性值则不能利用缓存
-    } else if (cachedComparableRhs != null) {
-      comparableRhs = cachedComparableRhs;          // 缓存存在则直接利用缓存
-    } else {
-      comparableRhs = toComparableValue(rhsValue);
-      cachedComparableRhs = comparableRhs;          // 缓存转换结果，提高效率
-    }
-    switch (operator) {
-      case EQUAL:
-        return comparableLhs.equals(comparableRhs);
-      case NOT_EQUAL:
-        return (!comparableLhs.equals(comparableRhs));
-      case LESS:
-        return (((Comparable) comparableLhs).compareTo(comparableRhs) < 0);
-      case LESS_EQUAL:
-        return (((Comparable) comparableLhs).compareTo(comparableRhs) <= 0);
-      case GREATER:
-        return (((Comparable) comparableLhs).compareTo(comparableRhs) > 0);
-      case GREATER_EQUAL:
-        return (((Comparable) comparableLhs).compareTo(comparableRhs) >= 0);
-      case IN:
-        return ArrayUtils.contains((Object[]) comparableRhs, comparableLhs);
-      case NOT_IN:
-        return (!ArrayUtils.contains((Object[]) comparableRhs, comparableLhs));
-      case LIKE:
-        return new SqlLikePattern((String) comparableRhs)
-                      .match((String) comparableLhs);
-      case NOT_LIKE:
-        return (!(new SqlLikePattern((String) comparableRhs)
-                        .match((String) comparableLhs)));
-      default:
-        return false;
-    }
+    return operator.test(lhsValue, rhsValue);
   }
 
   @Override

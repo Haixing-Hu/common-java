@@ -22,8 +22,10 @@ import javax.annotation.concurrent.ThreadSafe;
 import ltd.qubit.commons.config.WritableConfig;
 import ltd.qubit.commons.config.WritableConfigurable;
 import ltd.qubit.commons.config.impl.DefaultConfig;
+import ltd.qubit.commons.net.interceptor.HttpLoggingInterceptor;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
+import static ltd.qubit.commons.lang.ArrayUtils.EMPTY_STRING_ARRAY;
 
 /**
  * A default implementation of {@link HttpClientOptions} interface that uses a
@@ -58,6 +60,7 @@ public class DefaultHttpClientOptions implements HttpClientOptions,
    */
   public DefaultHttpClientOptions(final WritableConfig config) {
     this.config = requireNonNull("config", config);
+    this.config.addStrings(KEY_SENSITIVE_HTTP_HEADERS, HttpLoggingInterceptor.DEFAULT_SENSITIVE_HEADERS);
   }
 
   @Override
@@ -248,7 +251,7 @@ public class DefaultHttpClientOptions implements HttpClientOptions,
 
   @Override
   public List<String> getSensitiveHttpHeaders() {
-    final String[] headers = config.getStrings(KEY_SENSITIVE_HTTP_HEADERS);
+    final String[] headers = config.getStrings(KEY_SENSITIVE_HTTP_HEADERS, EMPTY_STRING_ARRAY);
     if (headers == null || headers.length == 0) {
       return new ArrayList<>();
     } else {

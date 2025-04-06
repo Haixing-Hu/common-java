@@ -11,9 +11,9 @@ package ltd.qubit.commons.net.interceptor;
 import java.io.EOFException;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.concurrent.TimeUnit;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -47,7 +47,7 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
  */
 public class HttpLoggingInterceptor implements Interceptor {
 
-  private static final String[] DEFAULT_SENSITIVE_HEADERS = {
+  public static final String[] DEFAULT_SENSITIVE_HEADERS = {
       "Authorization",
       "Api-Key",
       "X-Api-Key",

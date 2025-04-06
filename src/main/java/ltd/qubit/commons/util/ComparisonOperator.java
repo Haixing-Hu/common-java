@@ -8,6 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util;
 
+import ltd.qubit.commons.lang.ArrayUtils;
+import ltd.qubit.commons.text.SqlLikePattern;
+
+import static ltd.qubit.commons.sql.impl.CriterionImplUtils.toComparableValue;
+
 /**
  * 此枚举表示表达式左右之间的比较操作符。
  *
@@ -112,5 +117,29 @@ public enum ComparisonOperator {
 
   public final String getSymbol() {
     return symbol;
+  }
+
+  @SuppressWarnings({"unchecked", "rawtypes"})
+  public final boolean test(final Object lhsValue, final Object rhsValue) {
+    if (lhsValue == null) {
+      return (this == EQUAL && rhsValue == null);
+    } else if (rhsValue == null) {   // lhsValue != null
+      return (this == NOT_EQUAL);
+    }
+    //  now lhsValue != null && rhsValue != null
+    final Object comparableLhs = toComparableValue(lhsValue);
+    final Object comparableRhs = toComparableValue(rhsValue);
+    return switch (this) {
+      case EQUAL -> comparableLhs.equals(comparableRhs);
+      case NOT_EQUAL -> !comparableLhs.equals(comparableRhs);
+      case LESS -> (((Comparable) comparableLhs).compareTo(comparableRhs) < 0);
+      case LESS_EQUAL -> (((Comparable) comparableLhs).compareTo(comparableRhs) <= 0);
+      case GREATER -> (((Comparable) comparableLhs).compareTo(comparableRhs) > 0);
+      case GREATER_EQUAL -> (((Comparable) comparableLhs).compareTo(comparableRhs) >= 0);
+      case IN -> ArrayUtils.contains((Object[]) comparableRhs, comparableLhs);
+      case NOT_IN -> (!ArrayUtils.contains((Object[]) comparableRhs, comparableLhs));
+      case LIKE -> new SqlLikePattern((String) comparableRhs).match((String) comparableLhs);
+      case NOT_LIKE -> (!(new SqlLikePattern((String) comparableRhs).match((String) comparableLhs)));
+    };
   }
 }
