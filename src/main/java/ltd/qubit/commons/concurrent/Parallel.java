@@ -74,7 +74,7 @@ public class Parallel {
    * @param tasks
    *     The collection of tasks to be executed.
    */
-  public static void execute(final Collection<Runnable> tasks) {
+  public static void execute(final Collection<? extends Runnable> tasks) {
     execute(tasks, DEFAULT_THREADS, DEFAULT_REPORT_INTERVAL, DEFAULT_PROGRESS_REPORTER);
   }
 
@@ -86,10 +86,12 @@ public class Parallel {
    * During the execution of the tasks, the progress of the tasks will be printed
    * to the {@code System.out}.
    *
+   * @param <T>
+   *     The type of the tasks.
    * @param tasks
    *     The array of tasks to be executed.
    */
-  public static void execute(final Runnable[] tasks) {
+  public static <T extends Runnable> void execute(final T[] tasks) {
     execute(tasks, DEFAULT_THREADS, DEFAULT_REPORT_INTERVAL, DEFAULT_PROGRESS_REPORTER);
   }
 
@@ -106,7 +108,7 @@ public class Parallel {
    * @param threads
    *     The number of threads to be used for executing the tasks.
    */
-  public static void execute(final Collection<Runnable> tasks, final int threads) {
+  public static void execute(final Collection<? extends Runnable> tasks, final int threads) {
     execute(tasks, threads, DEFAULT_REPORT_INTERVAL, DEFAULT_PROGRESS_REPORTER);
   }
 
@@ -123,7 +125,7 @@ public class Parallel {
    * @param threads
    *     The number of threads to be used for executing the tasks.
    */
-  public static void execute(final Runnable[] tasks, final int threads) {
+  public static <T extends Runnable> void execute(final T[] tasks, final int threads) {
     execute(tasks, threads, DEFAULT_REPORT_INTERVAL, DEFAULT_PROGRESS_REPORTER);
   }
 
@@ -143,8 +145,8 @@ public class Parallel {
    *     The interval in seconds to print the progress of the tasks. If it is
    *    *     less than or equal to zero, it is considered as 1.
    */
-  public static void execute(final Collection<Runnable> tasks, final int threads,
-      final int reportInterval) {
+  public static void execute(final Collection<? extends Runnable> tasks,
+      final int threads, final int reportInterval) {
     execute(tasks, threads, reportInterval, DEFAULT_PROGRESS_REPORTER);
   }
 
@@ -165,7 +167,8 @@ public class Parallel {
    *     The interval in seconds to print the progress of the tasks. If it is
    *    *     less than or equal to zero, it is considered as 1.
    */
-  public static void execute(final Runnable[] tasks, final int threads, final int reportInterval) {
+  public static <T extends Runnable> void execute(final T[] tasks,
+      final int threads, final int reportInterval) {
     execute(tasks, threads, reportInterval, DEFAULT_PROGRESS_REPORTER);
   }
 
@@ -185,7 +188,7 @@ public class Parallel {
    *     The reporter to report the progress of the tasks. If it is {@code null},
    *     no progress will be reported.
    */
-  public static void execute(final Collection<Runnable> tasks,
+  public static void execute(final Collection<? extends Runnable> tasks,
       final int threads, @Nullable final ProgressReporter reporter) {
     execute(tasks, threads, DEFAULT_REPORT_INTERVAL, reporter);
   }
@@ -206,7 +209,7 @@ public class Parallel {
    *     The reporter to report the progress of the tasks. If it is {@code null},
    *     no progress will be reported.
    */
-  public static void execute(final Runnable[] tasks, final int threads,
+  public static <T extends Runnable> void execute(final T[] tasks, final int threads,
       @Nullable final ProgressReporter reporter) {
     execute(tasks, threads, DEFAULT_REPORT_INTERVAL, reporter);
   }
@@ -230,7 +233,7 @@ public class Parallel {
    *     The reporter to report the progress of the tasks. If it is {@code null},
    *     no progress will be reported.
    */
-  public static void execute(final Collection<Runnable> tasks,
+  public static void execute(final Collection<? extends Runnable> tasks,
       final int threads, final int reportInterval,
       @Nullable final ProgressReporter reporter) {
     execute(tasks, tasks.size(), threads, reportInterval, reporter);
@@ -255,7 +258,7 @@ public class Parallel {
    *     The reporter to report the progress of the tasks. If it is {@code null},
    *     no progress will be reported.
    */
-  public static void execute(final Runnable[] tasks, final int threads,
+  public static <T extends Runnable> void execute(final T[] tasks, final int threads,
       final int reportInterval, @Nullable final ProgressReporter reporter) {
     execute(new IterableArray<>(tasks), tasks.length, threads, reportInterval, reporter);
   }
@@ -281,7 +284,7 @@ public class Parallel {
    *     The reporter to report the progress of the tasks. If it is {@code null},
    *     no progress will be reported.
    */
-  public static void execute(final Iterable<Runnable> tasks,
+  public static void execute(final Iterable<? extends Runnable> tasks,
       final int taskCount, final int threads, final int reportInterval,
       @Nullable final ProgressReporter reporter) {
     if (taskCount == 0) {
