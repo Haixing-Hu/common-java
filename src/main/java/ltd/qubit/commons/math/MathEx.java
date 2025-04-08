@@ -331,12 +331,20 @@ public final class MathEx {
     return a <= 0.0D ? 0.0D - a : a;
   }
 
+  public static byte max(final byte a, final byte b) {
+    return (byte) Math.max(a, b);
+  }
+
+  public static short max(final short a, final short b) {
+    return (short) Math.max(a, b);
+  }
+
   public static int max(final int a, final int b) {
-    return a >= b ? a : b;
+    return Math.max(a, b);
   }
 
   public static long max(final long a, final long b) {
-    return a >= b ? a : b;
+    return Math.max(a, b);
   }
 
   public static float max(final float a, final float b) {
@@ -347,12 +355,20 @@ public final class MathEx {
     return Math.max(a, b);
   }
 
+  public static byte min(final byte a, final byte b) {
+    return (byte) Math.min(a, b);
+  }
+
+  public static short min(final short a, final short b) {
+    return (short) Math.min(a, b);
+  }
+
   public static int min(final int a, final int b) {
-    return a <= b ? a : b;
+    return Math.min(a, b);
   }
 
   public static long min(final long a, final long b) {
-    return a <= b ? a : b;
+    return Math.min(a, b);
   }
 
   public static float min(final float a, final float b) {
@@ -504,6 +520,78 @@ public final class MathEx {
 
   public static boolean equal(final double x, final double y, final double epsilon) {
     return Math.abs(x - y) <= epsilon;
+  }
+
+  /**
+   * 将给定的值限制在指定的范围内。
+   *
+   * @param value
+   *     给定的值。
+   * @param lower
+   *     指定的范围的(包含)下确界。
+   * @param upper
+   *     指定的范围的(包含)上确界。
+   * @return
+   *     若给定的值位于{@code [low, upper]}之间，则返回给定的值；若给定的值小于下确界
+   *     {@code lower}，则返回{@code lower}；若给定的值大于上确界{@code upper}，则
+   *     返回{@code upper}。
+   */
+  public static byte clamp(final byte value, final byte lower, final byte upper) {
+    return (byte) Math.min(upper, Math.max(lower, value));
+  }
+
+  /**
+   * 将给定的值限制在指定的范围内。
+   *
+   * @param value
+   *     给定的值。
+   * @param lower
+   *     指定的范围的(包含)下确界。
+   * @param upper
+   *     指定的范围的(包含)上确界。
+   * @return
+   *     若给定的值位于{@code [low, upper]}之间，则返回给定的值；若给定的值小于下确界
+   *     {@code lower}，则返回{@code lower}；若给定的值大于上确界{@code upper}，则
+   *     返回{@code upper}。
+   */
+  public static short clamp(final short value, final short lower, final short upper) {
+    return (short) Math.min(upper, Math.max(lower, value));
+  }
+
+  /**
+   * 将给定的值限制在指定的范围内。
+   *
+   * @param value
+   *     给定的值。
+   * @param lower
+   *     指定的范围的(包含)下确界。
+   * @param upper
+   *     指定的范围的(包含)上确界。
+   * @return
+   *     若给定的值位于{@code [low, upper]}之间，则返回给定的值；若给定的值小于下确界
+   *     {@code lower}，则返回{@code lower}；若给定的值大于上确界{@code upper}，则
+   *     返回{@code upper}。
+   */
+  public static int clamp(final int value, final int lower, final int upper) {
+    return Math.min(upper, Math.max(lower, value));
+  }
+
+  /**
+   * 将给定的值限制在指定的范围内。
+   *
+   * @param value
+   *     给定的值。
+   * @param lower
+   *     指定的范围的(包含)下确界。
+   * @param upper
+   *     指定的范围的(包含)上确界。
+   * @return
+   *     若给定的值位于{@code [low, upper]}之间，则返回给定的值；若给定的值小于下确界
+   *     {@code lower}，则返回{@code lower}；若给定的值大于上确界{@code upper}，则
+   *     返回{@code upper}。
+   */
+  public static long clamp(final long value, final long lower, final long upper) {
+    return Math.min(upper, Math.max(lower, value));
   }
 
   /**
