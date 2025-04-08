@@ -242,8 +242,9 @@ public class ArrayUtils {
     if (array == null) {
       return stringIfNull;
     }
-    return new ToStringBuilder(SimpleToStringStyle.INSTANCE).append(array)
-                                                            .toString();
+    return new ToStringBuilder(SimpleToStringStyle.INSTANCE)
+        .append(array)
+        .toString();
   }
 
   /**
