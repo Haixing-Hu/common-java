@@ -19,6 +19,7 @@ import dev.failsafe.Failsafe;
 import dev.failsafe.FailsafeExecutor;
 import dev.failsafe.RetryPolicy;
 
+import ltd.qubit.commons.config.WritableConfig;
 import ltd.qubit.commons.config.impl.DefaultConfig;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
@@ -65,7 +66,7 @@ public class RetryBuilder implements RetryOptions {
    * @param config
    *     the configuration used by the retry builder.
    */
-  public RetryBuilder(final Logger logger, final DefaultConfig config) {
+  public RetryBuilder(final Logger logger, final WritableConfig config) {
     this(logger, new DefaultRetryOptions(config));
   }
 
