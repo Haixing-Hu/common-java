@@ -42,6 +42,11 @@ public class CommandExecutor {
 
   private Duration timeout = Duration.ofSeconds(DEFAULT_EXECUTION_TIMEOUT_IN_SECONDS);
 
+  /**
+   * Whether to disable logging.
+   */
+  private boolean disableLogging = false;
+
   private int exitValueOnSuccess = 0;
 
   private int exitValue = 0;
@@ -67,6 +72,14 @@ public class CommandExecutor {
    */
   public void setTimeout(final Duration timeout) {
     this.timeout = requireNonNull("timeout", timeout);
+  }
+
+  public boolean isDisableLogging() {
+    return disableLogging;
+  }
+
+  public void setDisableLogging(final boolean disableLogging) {
+    this.disableLogging = disableLogging;
   }
 
   /**
@@ -179,7 +192,9 @@ public class CommandExecutor {
    * @see #execute(String)
    */
   public String execute(final String cmd, final boolean throwError) throws IOException {
-    logger.info("Executing the command: {}", cmd);
+    if (!disableLogging) {
+      logger.info("Executing the command: {}", cmd);
+    }
     final CommandLine commandLine = CommandLine.parse(cmd);
     final ByteArrayOutputStream out = new ByteArrayOutputStream();
     final PumpStreamHandler streamHandler = new PumpStreamHandler(out);
@@ -199,23 +214,30 @@ public class CommandExecutor {
       final long before = System.currentTimeMillis();
       exitValue = executor.execute(commandLine);
       final long after = System.currentTimeMillis();
-      logger.info("Finished executing command in {} milliseconds.", after - before);
+      if (!disableLogging) {
+        logger.info("Finished executing command in {} milliseconds.", after - before);
+      }
     } catch (final Throwable e) {
-      logger.error("Failed to execute the command {}: {}", cmd, e.getMessage(), e);
       if (throwError) {
         throw e;
       } else {
+        if (!disableLogging) {
+          logger.error("Failed to execute the command {}: {}", cmd, e.getMessage(), e);
+        }
         return null;
       }
     }
     final String output = out.toString();
     if (exitValue != exitValueOnSuccess) {
-      logger.error("Execution of the command failed with exit value {}: {}",
-          exitValue, cmd);
-      logger.error("The output of the command is: {}", output);
+      if (!disableLogging) {
+        logger.error("Execution of the command failed with exit value {}: {}", exitValue, cmd);
+        logger.error("The output of the command is: {}", output);
+      }
       return null;
     } else {
-      logger.debug("The output of the command is: {}", output);
+      if (!disableLogging) {
+        logger.debug("The output of the command is: {}", output);
+      }
       return output;
     }
   }
@@ -227,8 +249,9 @@ public class CommandExecutor {
       try {
         return FileUtils.getTempDirectory();
       } catch (final IOException e) {
-        logger.warn("Cannot get the temporary directory: {}, "
-            + "use the current directory instead.", e.getMessage(), e);
+        if (!disableLogging) {
+          logger.warn("Cannot get the temporary directory: {}, " + "use the current directory instead.", e.getMessage(), e);
+        }
         return new File(".");
       }
     }
