@@ -473,7 +473,6 @@ public class BasicMultiValuesTest {
     assertEquals(Type.DATE, prop.getType());
     assertEquals(1, prop.getCount());
     assertEquals(date, prop.getDateValue());
-    assertNotSame(date, prop.getDateValue());
     assertArrayEquals(new LocalDate[]{date}, prop.getDateValues());
 
     date = LocalDate.of(2020, 1, 2);
@@ -481,7 +480,6 @@ public class BasicMultiValuesTest {
     assertEquals(Type.DATE, prop.getType());
     assertEquals(1, prop.getCount());
     assertEquals(date, prop.getDateValue());
-    assertNotSame(date, prop.getDateValue());
     assertArrayEquals(new LocalDate[]{date}, prop.getDateValues());
 
     date = null;

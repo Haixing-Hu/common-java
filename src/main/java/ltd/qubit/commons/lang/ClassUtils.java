@@ -1214,14 +1214,30 @@ public class ClassUtils {
   }
 
   /**
-   * Check if a type is an enum type.
+   * 检测指定的类型是否是个枚举类行。
+   * <p>
+   * <b>注意：</b>不能直接使用{@link Class#isEnum()}判定枚举类型，因为{@code Enum.class.isEnum()}
+   * 会返回{@code false}。而对于此函数，{@code isEnumType(Enum.class)}返回{@code true}。
    *
    * @param type
-   *     the type to check.
-   * @return true if the type is an enum type, false otherwise.
+   *     待检测的类型的类对象。
+   * @return
+   *     若指定的类型是枚举类型，返回{@code true}；否则返回{@code false}。
    */
   public static boolean isEnumType(final Class<?> type) {
     return type.isEnum() || Enum.class.isAssignableFrom(type);
+  }
+
+  /**
+   * 检查指定的类型是否是个记录类。
+   *
+   * @param type
+   *     待检测的类型的类对象。
+   * @return
+   *     若指定的类型是记录类，返回{@code true}；否则返回{@code false}。
+   */
+  public static boolean isRecordType(final Class<?> type) {
+    return type.isRecord();
   }
 
   /**

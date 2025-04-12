@@ -245,7 +245,9 @@ public class RowMapperBuilder<T> {
     headers.add(header);
     getterMap.put(header, getterRef);
     final String path = getPropertyPath(type, getterRef);
-    propertyMap.put(header, path);
+    if (path != null) {
+      propertyMap.put(header, path);
+    }
     if (continueLastRow) {
       continueLastRowHeaders.add(header);
     } else {
@@ -310,7 +312,9 @@ public class RowMapperBuilder<T> {
     headers.add(header);
     setterMap.put(header, new SetterMethodWithType<>(argumentClass, setterRef));
     final String path = getPropertyPath(type, setterRef);
-    propertyMap.put(header, path);
+    if (path != null) {
+      propertyMap.put(header, path);
+    }
     if (continueLastRow) {
       continueLastRowHeaders.add(header);
     } else {

@@ -91,7 +91,6 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
   public DefaultConfig setDescription(final String name,
       final String description) {
     requireNonNull("name", name);
-    requireNonNull("description", description);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -129,10 +128,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
 
   @Override
   public DefaultProperty get(final String name) {
+    requireNonNull("name", name);
     return properties.get(name);
   }
 
   public DefaultProperty set(final DefaultProperty property) {
+    requireNonNull("property", property);
     return properties.put(property.getName(), property);
   }
 

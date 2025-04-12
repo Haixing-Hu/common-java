@@ -15,13 +15,19 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.regex.Pattern;
 
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ltd.qubit.commons.lang.ArrayUtils;
+
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
+import static ltd.qubit.commons.lang.ClassUtils.isEnumType;
+import static ltd.qubit.commons.lang.ClassUtils.isRecordType;
 import static ltd.qubit.commons.reflect.MethodUtils.getMethod;
 import static ltd.qubit.commons.text.CaseFormat.LOWER_CAMEL;
 import static ltd.qubit.commons.text.CaseFormat.UPPER_CAMEL;
@@ -37,6 +43,13 @@ public final class PropertyUtils {
   public static final String GET_PREFIX = "get";
   public static final String SET_PREFIX = "set";
   public static final String IS_PREFIX = "is";
+
+  public static final Pattern GET_PATTERN = Pattern.compile("^get[A-Z].*");
+
+  public static final Pattern SET_PATTERN = Pattern.compile("^set[A-Z].*");
+
+  public static final Pattern IS_PATTERN = Pattern.compile("^is[A-Z].*");
+
 
   private static final Logger LOGGER = LoggerFactory.getLogger(PropertyUtils.class);
 
@@ -63,6 +76,42 @@ public final class PropertyUtils {
           }
         }
       };
+
+  /**
+   * 判定指定的方法名称是否匹配 Java Bean 的 getter 方法模式，即 {@code getXxx()} 形式。
+   *
+   * @param methodName
+   *     指定的方法名称。
+   * @return
+   *     如果指定的方法名称匹配 Java Bean 的 getter 方法模式返回{@code true} ；否则返回{@code false}。
+   */
+  public static boolean matchGetterName(final String methodName) {
+    return GET_PATTERN.matcher(methodName).matches();
+  }
+
+  /**
+   * 判定指定的方法名称是否匹配 Java Bean 的 setter 方法模式，即 {@code setXxx()} 形式。
+   *
+   * @param methodName
+   *     指定的方法名称。
+   * @return
+   *     如果指定的方法名称匹配 Java Bean 的 setter 方法模式返回{@code true} ；否则返回{@code false}。
+   */
+  public static boolean matchSetterName(final String methodName) {
+    return SET_PATTERN.matcher(methodName).matches();
+  }
+
+  /**
+   * 判定指定的方法名称是否匹配 Java Bean 的 is 方法模式，即 {@code isXxx()} 形式。
+   *
+   * @param methodName
+   *     指定的方法名称。
+   * @return
+   *     如果指定的方法名称匹配 Java Bean 的 is 方法模式返回{@code true} ；否则返回{@code false}。
+   */
+  public static boolean matchIsName(final String methodName) {
+    return IS_PATTERN.matcher(methodName).matches();
+  }
 
   /**
    * Retrieve the property descriptors for the specified class, introspecting
@@ -266,26 +315,46 @@ public final class PropertyUtils {
   /**
    * 根据 Java Bean 的 getter 方法获取其对应的属性名称。
    *
-   * @param getter
+   * @param method
    *     指定的属性的 getter 方法，其名称必须是形如 getXxx() 或 isXxx() 的形式，
    *     或者是 "xxx()" 的形式，且没有参数。
    * @return
    *     指定的 getter 方法所对应的属性的名称；若指定的方法不是标准的Java Bean的getter方法，
    *     返回{@code null}。
    */
-  public static String getPropertyNameFromGetter(final Method getter) {
-    final String getterName = getter.getName();
-    if (getterName.startsWith(GET_PREFIX) && getter.getParameterCount() == 0) { // this is a getter
-      return parsePropertyName(getterName, GET_PREFIX);
-    } else if (getterName.startsWith(IS_PREFIX) && getter.getParameterCount() == 0) { // this is a isXxxx
-      return parsePropertyName(getterName, IS_PREFIX);
-    } else if ((getter.getParameterCount() == 0)
-        && (getter.getReturnType() != void.class)
-        && (getter.getReturnType() != Void.class)) { // this is a xxx() and has return type
-      return getterName;
+  @Nullable
+  public static String getPropertyNameFromGetter(final Method method) {
+    if (!isNoArgumentNonVoidReturnMethod(method)) {
+      return null;
+    }
+    final String methodName = method.getName();
+    if (matchGetterName(methodName)) {
+      // 标准 getXxxx() 形式
+      return parsePropertyName(methodName, GET_PREFIX);
+    } else if (matchIsName(methodName)) {
+      // 标准 isXxxx() 形式
+      return parsePropertyName(methodName, IS_PREFIX);
+    } else if ((isEnumType(method.getDeclaringClass()) || isRecordType(method.getDeclaringClass()))
+        && (!matchSetterName(methodName))) {
+      // 对于枚举类和集合类，setter 可以是 xxxx() 形式
+      return methodName;
+    } else if (ArrayUtils.contains(SPECIAL_GETTER_NAMES, methodName)) {
+      // 一些特殊的 getter 名称需要特殊处理
+      return methodName;
     } else {
       return null;
     }
+  }
+
+  private static final String[] SPECIAL_GETTER_NAMES = {
+    "length",
+    "size",
+  };
+
+  private static boolean isNoArgumentNonVoidReturnMethod(final Method method) {
+    return (method.getParameterCount() == 0)
+        && (method.getReturnType() != void.class)
+        && (method.getReturnType() != Void.class);
   }
 
   /**
@@ -297,10 +366,10 @@ public final class PropertyUtils {
    *     指定的 setter 方法所对应的属性的名称；若指定的方法不是标准的Java Bean的 setter 方法，
    *     返回{@code null}。
    */
+  @Nullable
   public static String getPropertyNameFromSetter(final Method setter) {
     final String getterName = setter.getName();
-    if (getterName.startsWith(SET_PREFIX)
-        && setter.getParameterCount() == 1) { // this is a setter
+    if (matchSetterName(getterName) && setter.getParameterCount() == 1) { // this is a setter
       return parsePropertyName(getterName, SET_PREFIX);
     } else {
       return null;

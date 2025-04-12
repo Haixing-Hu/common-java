@@ -61,11 +61,11 @@ public class MethodRefBean {
   }
 
   public void setByte(final Byte p1) {
-    lastCalledMethod = "setByteValue";
+    lastCalledMethod = "setByte";
   }
 
   public void setShort(final Short p1) {
-    lastCalledMethod = "setShortValue";
+    lastCalledMethod = "setShort";
   }
 
   public void setInteger(final Integer p1) {
@@ -73,19 +73,19 @@ public class MethodRefBean {
   }
 
   public void setLong(final Long p1) {
-    lastCalledMethod = "setLongValue";
+    lastCalledMethod = "setLong";
   }
 
   public void setFloat(final Float p1) {
-    lastCalledMethod = "setFloatValue";
+    lastCalledMethod = "setFloat";
   }
 
   public void setDouble(final Double p1) {
-    lastCalledMethod = "setDoubleValue";
+    lastCalledMethod = "setDouble";
   }
 
   public int setString(final String p1) {
-    lastCalledMethod = "setStringValue";
+    lastCalledMethod = "setString";
     return 0;
   }
 

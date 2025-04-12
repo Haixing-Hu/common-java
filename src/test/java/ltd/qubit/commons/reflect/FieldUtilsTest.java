@@ -1121,7 +1121,7 @@ public class FieldUtilsTest {
         .isEqualTo("createTime");
     assertThat(getFieldName(App.class, App::isPredefined))
         .isEqualTo("predefined");
-    assertThat(getFieldName(App.class, App::toString)).isEqualTo("toString");
+    assertThat(getFieldName(App.class, App::toString)).isNull();
   }
 
 
@@ -1135,7 +1135,7 @@ public class FieldUtilsTest {
         .isEqualTo("createTime");
     assertThat(getFieldNameGeneric(App.class, App::isPredefined))
         .isEqualTo("predefined");
-    assertThat(getFieldNameGeneric(App.class, App::toString)).isEqualTo("toString");
+    assertThrows(IllegalArgumentException.class, () -> getFieldNameGeneric(App.class, App::toString));
   }
 
   @Test
@@ -1162,7 +1162,7 @@ public class FieldUtilsTest {
         .isEqualTo("createTime");
    assertThat(getFieldName(App.class, App::setPredefined))
        .isEqualTo("predefined");
-    assertThat(getFieldName(App.class, App::toString)).isEqualTo("toString");
+    assertThat(getFieldName(App.class, App::toString)).isNull();
   }
 
   @Test

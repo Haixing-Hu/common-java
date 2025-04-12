@@ -9,7 +9,6 @@
 package ltd.qubit.commons.lang;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -24,6 +23,7 @@ import javax.annotation.Nullable;
 import org.junit.jupiter.api.Test;
 
 import ltd.qubit.commons.reflect.testbed.Foo;
+import ltd.qubit.commons.reflect.testbed.State;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -847,4 +847,11 @@ public class ClassUtilsTest {
   }
 
   private static class MyClass {}
+
+  @Test
+  public void testIsEnumType() {
+    assertFalse(ClassUtils.isEnumType(Foo.class));
+    assertTrue(ClassUtils.isEnumType(State.class));
+    assertTrue(ClassUtils.isEnumType(Enum.class));
+  }
 }

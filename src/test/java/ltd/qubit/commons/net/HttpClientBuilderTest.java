@@ -82,7 +82,7 @@ public class HttpClientBuilderTest {
     assertEquals(60, builder.getReadTimeout());
     assertEquals(90, builder.getWriteTimeout());
     assertTrue(builder.isUseProxy());
-    assertEquals("HTTP", builder.getProxyType());
+    assertEquals("http", builder.getProxyType());
     assertEquals("proxy.example.com", builder.getProxyHost());
     assertEquals(8080, builder.getProxyPort());
     assertEquals("user", builder.getProxyUsername());

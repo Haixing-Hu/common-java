@@ -15,6 +15,7 @@ import javax.annotation.Nullable;
 
 import jakarta.validation.constraints.Size;
 
+import ltd.qubit.commons.annotation.Computed;
 import ltd.qubit.commons.annotation.Identifier;
 import ltd.qubit.commons.annotation.Precision;
 import ltd.qubit.commons.annotation.Reference;
@@ -152,29 +153,35 @@ public class Street implements Identifiable, WithInfo, Assignable<Street>,
     return new Street(this);
   }
 
+  @Override
   @Nullable
   public final Long getId() {
     return id;
   }
 
+  @Override
   public final void setId(@Nullable final Long id) {
     this.id = id;
   }
 
+  @Override
   @Nullable
   public final String getCode() {
     return code;
   }
 
+  @Override
   public final void setCode(@Nullable final String code) {
     this.code = code;
   }
 
+  @Override
   @Nullable
   public final String getName() {
     return name;
   }
 
+  @Override
   public final void setName(@Nullable final String name) {
     this.name = name;
   }
@@ -242,33 +249,40 @@ public class Street implements Identifiable, WithInfo, Assignable<Street>,
     this.location = location;
   }
 
+  @Override
   @Nullable
   public final Instant getCreateTime() {
     return createTime;
   }
 
+  @Override
   public final void setCreateTime(@Nullable final Instant createTime) {
     this.createTime = createTime;
   }
 
+  @Override
   @Nullable
   public final Instant getModifyTime() {
     return modifyTime;
   }
 
+  @Override
   public final void setModifyTime(@Nullable final Instant modifyTime) {
     this.modifyTime = modifyTime;
   }
 
+  @Override
   @Nullable
   public final Instant getDeleteTime() {
     return deleteTime;
   }
 
+  @Override
   public final void setDeleteTime(@Nullable final Instant deleteTime) {
     this.deleteTime = deleteTime;
   }
 
+  @Override
   public boolean equals(final Object o) {
     if (this == o) {
       return true;
@@ -292,6 +306,7 @@ public class Street implements Identifiable, WithInfo, Assignable<Street>,
         && Equality.equals(deleteTime, other.deleteTime);
   }
 
+  @Override
   public int hashCode() {
     final int multiplier = 7;
     int result = 3;
@@ -311,6 +326,7 @@ public class Street implements Identifiable, WithInfo, Assignable<Street>,
     return result;
   }
 
+  @Override
   public String toString() {
     return new ToStringBuilder(this)
         .append("id", id)
@@ -327,5 +343,29 @@ public class Street implements Identifiable, WithInfo, Assignable<Street>,
         .append("modifyTime", modifyTime)
         .append("deleteTime", deleteTime)
         .toString();
+  }
+
+  @Computed
+  public String foo() {
+    return name;
+  }
+
+  public Street setFoo(final String foo) {
+    this.name = foo;
+    return this;
+  }
+
+  public void hello() {
+    System.out.println("hello");
+  }
+
+  public Street setHello() {
+    System.out.println("hello");
+    return this;
+  }
+
+  public Street sayHello() {
+    System.out.println("hello");
+    return this;
   }
 }

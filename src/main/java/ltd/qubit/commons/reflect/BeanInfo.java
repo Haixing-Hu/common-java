@@ -56,6 +56,7 @@ public class BeanInfo {
     // add customized methods
     EXCLUDED_PROPERTY_METHODS.add("cloneEx");
     EXCLUDED_PROPERTY_METHODS.add("assign");
+    EXCLUDED_PROPERTY_METHODS.add("desensitizedClone");
   }
 
   private static final ClassValue<BeanInfo> CACHE = new ClassValue<>() {

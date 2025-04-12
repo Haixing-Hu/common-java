@@ -19,6 +19,7 @@ import ltd.qubit.commons.reflect.impl.SetterMethod;
 import static ltd.qubit.commons.lang.StringUtils.isEmpty;
 import static ltd.qubit.commons.reflect.MethodUtils.getMethodByReference;
 import static ltd.qubit.commons.reflect.PropertyUtils.getPropertyNameFromGetter;
+import static ltd.qubit.commons.reflect.PropertyUtils.getPropertyNameFromSetter;
 
 /**
  * Provides functions to handle object graphs.
@@ -56,6 +57,7 @@ public class ObjectGraphUtils {
    * @return
    *     the path of the property specified by the getter method.
    */
+  @Nullable
   public static <T, R> String getPropertyPath(final Class<T> type,
       final GetterMethod<T, R> getter) {
     final Method m = getMethodByReference(type, getter);
@@ -76,10 +78,11 @@ public class ObjectGraphUtils {
    * @return
    *     the path of the property specified by the setter method.
    */
+  @Nullable
   public static <T, R> String getPropertyPath(final Class<T> type,
       final SetterMethod<T, R> setter) {
     final Method m = getMethodByReference(type, setter);
-    return getPropertyNameFromGetter(m);
+    return getPropertyNameFromSetter(m);
   }
 
   /**

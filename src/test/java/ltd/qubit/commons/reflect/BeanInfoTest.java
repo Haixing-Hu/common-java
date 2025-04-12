@@ -17,10 +17,11 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import ltd.qubit.commons.testbed.model.Foo;
 import ltd.qubit.commons.reflect.testbed.ChildBean;
 import ltd.qubit.commons.reflect.testbed.Info;
 import ltd.qubit.commons.reflect.testbed.ParentBean;
+import ltd.qubit.commons.reflect.testbed.Street;
+import ltd.qubit.commons.testbed.model.Foo;
 import ltd.qubit.commons.util.range.CloseRange;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -289,18 +290,21 @@ public class BeanInfoTest {
   public void testConstructor_Info() {
     final BeanInfo info = BeanInfo.of(Info.class);
     assertSame(Info.class, info.getType());
-    final Collection<Property> properties = info.getProperties();
+    final List<Property> properties = info.getProperties();
     assertNotNull(properties);
-    assertEquals(new HashSet<>(Arrays.asList(
-        Property.of(Info.class, "class"),
-        Property.of(Info.class, "toParams"),
-        Property.of(Info.class, "code"),
-        Property.of(Info.class, "deleteTime"),
-        Property.of(Info.class, "deleted"),
-        Property.of(Info.class, "id"),
-        Property.of(Info.class, "name"),
-        Property.of(Info.class, "empty")
-        )), new HashSet<>(properties));
+    final List<String> propertyNames = properties
+        .stream().map(Property::getName)
+        .sorted()
+        .toList();
+    assertEquals(List.of(
+        "class",
+        "code",
+        "deleteTime",
+        "deleted",
+        "empty",
+        "id",
+        "name"
+    ), propertyNames);
   }
 
   @Test
@@ -360,5 +364,32 @@ public class BeanInfoTest {
         .stream().map(Property::getName).sorted().toList();
     assertEquals(expectedPropertyNames, propertyNames);
     assertEquals(new HashSet<>(expectedProperties), new HashSet<>(properties));
+  }
+
+  @Test
+  public void testBeanInfo_properties() {
+    final BeanInfo info = BeanInfo.of(Street.class);
+    final List<Property> properties = info.getProperties();
+    assertNotNull(properties);
+    final List<String> propertyNames = properties.stream().map(Property::getName).sorted().toList();
+    System.out.println(propertyNames);
+    assertEquals(List.of(
+        "class",
+        "code",
+        "createTime",
+        "deleteTime",
+        "deleted",
+        "description",
+        "district",
+        "icon",
+        "id",
+        "info",
+        "level",
+        "location",
+        "modifyTime",
+        "name",
+        "postalcode",
+        "url"
+    ), propertyNames);
   }
 }
