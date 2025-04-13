@@ -10,7 +10,6 @@ package ltd.qubit.commons.reflect;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Collection;
@@ -789,19 +788,9 @@ public class Property {
    */
   public Object getValue(final Object owner) {
     if (readMethod != null) {
-      try {
-        return readMethod.invoke(owner);
-      } catch (final IllegalAccessException | InvocationTargetException | RuntimeException e) {
-        LOGGER.error("Failed to get value for {}: {}", fullname, e.getMessage());
-        throw new ReflectionException(e);
-      }
+      return MethodUtils.invokeMethod(readMethod, owner);
     } else if (field != null) {
-      try {
-        return field.get(owner);
-      } catch (final IllegalAccessException | RuntimeException e) {
-        LOGGER.error("Failed to get value for {}: {}", fullname, e.getMessage());
-        throw new ReflectionException(e);
-      }
+      return FieldUtils.readField(field, owner);
     } else {
       throw new ReflectionException("Cannot read a write-only property: " + getFullQualifiedName());
     }
@@ -819,19 +808,9 @@ public class Property {
    */
   public void setValue(final Object owner, @Nullable final Object value) {
     if (writeMethod != null) {
-      try {
-        writeMethod.invoke(owner, value);
-      } catch (final IllegalAccessException | InvocationTargetException | RuntimeException e) {
-        LOGGER.error("Failed to set value for {}: {}", fullname, e.getMessage());
-        throw new ReflectionException(e);
-      }
+      MethodUtils.invokeMethod(writeMethod, owner, value);
     } else if (field != null) {
-      try {
-        field.set(owner, value);
-      } catch (final IllegalAccessException | RuntimeException e) {
-        LOGGER.error("Failed to set value for {}: {}", fullname, e.getMessage());
-        throw new ReflectionException(e);
-      }
+      FieldUtils.writeField(field, owner, value);
     } else {
       throw new ReflectionException("Cannot write a read-only or computed property: " + getFullQualifiedName());
     }

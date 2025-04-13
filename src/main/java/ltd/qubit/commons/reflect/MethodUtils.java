@@ -55,6 +55,7 @@ import static ltd.qubit.commons.lang.ArrayUtils.EMPTY_CLASS_ARRAY;
 import static ltd.qubit.commons.lang.ArrayUtils.EMPTY_OBJECT_ARRAY;
 import static ltd.qubit.commons.lang.ClassUtils.isAssignable;
 import static ltd.qubit.commons.lang.ObjectUtils.defaultIfNull;
+import static ltd.qubit.commons.reflect.AccessibleUtils.withAccessibleObject;
 import static ltd.qubit.commons.reflect.MemberUtils.compareParameterTypes;
 import static ltd.qubit.commons.reflect.Option.ALL_EXCLUDE_BRIDGE;
 import static ltd.qubit.commons.reflect.Option.DEFAULT;
@@ -527,11 +528,13 @@ public class MethodUtils {
     requireNonNull("object", object);
     requireNonNull("method", method);
     final Object[] theArguments = defaultIfNull(arguments, EMPTY_OBJECT_ARRAY);
-    try {
-      return method.invoke(object, theArguments);
-    } catch (final Throwable e) {
-      throw new InvokingMethodFailedException(object, method, theArguments, e);
-    }
+    return withAccessibleObject(method, (m) -> {
+      try {
+        return m.invoke(object, theArguments);
+      } catch (final Throwable e) {
+        throw new InvokingMethodFailedException(object, method, theArguments, e);
+      }
+    }, true);
   }
 
   /**
@@ -616,11 +619,13 @@ public class MethodUtils {
     if (method == null) {
       throw new MethodNotExistException(type, options, name, theParamTypes);
     }
-    try {
-      return method.invoke(object, arguments);
-    } catch (final Throwable e) {
-      throw new InvokingMethodFailedException(type, options, name, theParamTypes, e);
-    }
+    return withAccessibleObject(method, (m) -> {
+      try {
+        return m.invoke(object, arguments);
+      } catch (final Throwable e) {
+        throw new InvokingMethodFailedException(type, options, name, theParamTypes, e);
+      }
+    }, true);
   }
 
   /**
@@ -697,11 +702,13 @@ public class MethodUtils {
     if (method == null) {
       throw new MethodNotExistException(type, options, name, theParamTypes);
     }
-    try {
-      return method.invoke(object, arguments);
-    } catch (final Throwable e) {
-      throw new InvokingMethodFailedException(type, options, name, theParamTypes, e);
-    }
+    return withAccessibleObject(method, (m) -> {
+      try {
+        return m.invoke(object, arguments);
+      } catch (final Throwable e) {
+        throw new InvokingMethodFailedException(type, options, name, theParamTypes, e);
+      }
+    }, true);
   }
 
   /**
