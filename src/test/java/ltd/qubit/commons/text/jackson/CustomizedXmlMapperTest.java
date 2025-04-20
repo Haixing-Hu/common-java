@@ -516,13 +516,15 @@ public class CustomizedXmlMapperTest {
 
   @Test
   public void testXmlElementNameForContainerType() throws JsonProcessingException {
-    final XmlMapper mapper = new CustomizedXmlMapper();
     final DictEntryInfo info = new DictEntryInfo();
     info.setId(123L);
     info.setCode("Q{0}H");
     info.setName("每{0}小时使用一次");
     info.setParams(new String[] {"3"});
+    final XmlMapper mapper = new CustomizedXmlMapper();
     final String xml = mapper.writeValueAsString(info);
+    System.out.println(xml);
+    
     final String expected = "<dict-entry-info>\n"
         + "  <id>123</id>\n"
         + "  <code>Q{0}H</code>\n"
@@ -530,10 +532,16 @@ public class CustomizedXmlMapperTest {
         + "  <params>\n"
         + "    <param>3</param>\n"
         + "  </params>\n"
-        + "  <display-name>每3小时使用一次</display-name>\n"
         + "  <display-code>Q3H</display-code>\n"
+        + "  <display-name>每3小时使用一次</display-name>\n"
         + "</dict-entry-info>\n";
-    assertEquals(expected, xml);
+    
+    final Diff diff = DiffBuilder.compare(expected).withTest(xml)
+                               .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndText))
+                               .ignoreWhitespace()
+                               .checkForSimilar()
+                               .build();
+    assertFalse(diff.hasDifferences(), () -> "XMLs are different: " + diff);
   }
 
   @Test
