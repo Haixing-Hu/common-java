@@ -2182,9 +2182,10 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     // that is, allowing the object of the sub-class of DefaultConfig
     // to be equal to the object of DefaultConfig, as long as they have
     // the same properties.
-    if (!(obj instanceof final DefaultConfig other)) {
+    if (!(obj instanceof DefaultConfig)) {
       return false;
     }
+    final DefaultConfig other = (DefaultConfig) obj;
     return properties.equals(other.properties);
   }
 

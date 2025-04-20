@@ -302,7 +302,7 @@ public class ArrayUtils {
     final Map<Object, Object> map = new HashMap<>((int) (array.length * 1.5));
     for (int i = 0; i < array.length; ++i) {
       final Object object = array[i];
-      if (object instanceof final Map.Entry<?, ?> entry) {
+      if (object instanceof Map.Entry<?, ?> entry) {
         map.put(entry.getKey(), entry.getValue());
       } else if (object instanceof final Object[] entry) {
         if (entry.length < 2) {
