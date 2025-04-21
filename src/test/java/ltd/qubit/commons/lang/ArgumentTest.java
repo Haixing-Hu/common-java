@@ -309,44 +309,220 @@ public class ArgumentTest {
 
   @Test
   public void testRequireZero() {
+    // 测试各个数值类型的零值
+    assertEquals((byte) 0, Argument.requireZero("zeroByte", (byte) 0));
+    assertEquals((short) 0, Argument.requireZero("zeroShort", (short) 0));
     assertEquals(0, Argument.requireZero("zeroInt", 0));
+    assertEquals(0L, Argument.requireZero("zeroLong", 0L));
+    assertEquals(0.0f, Argument.requireZero("zeroFloat", 0.0f));
+    assertEquals(0.0, Argument.requireZero("zeroDouble", 0.0));
+    
+    // 测试非零值（应抛出异常）
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireZero("nonZeroByte", (byte) 1));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireZero("nonZeroShort", (short) -1));
     assertThrows(IllegalArgumentException.class, () -> Argument.requireZero("nonZeroInt", 1));
-    assertThrows(IllegalArgumentException.class, () -> Argument.requireZero("negativeInt", -1));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireZero("nonZeroLong", -1L));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireZero("nonZeroFloat", 0.1f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireZero("nonZeroDouble", -0.1));
+    
+    // 测试接近零但不是零的值（针对浮点数）
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireZero("almostZeroFloat", 0.000001f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireZero("almostZeroDouble", 0.0000000001));
   }
 
   @Test
   public void testRequireNonZero() {
-    assertEquals(1, Argument.requireNonZero("positiveInt", 1));
-    assertEquals(-1, Argument.requireNonZero("negativeInt", -1));
+    // 测试各个数值类型的非零值
+    assertEquals((byte) 1, Argument.requireNonZero("nonZeroByte", (byte) 1));
+    assertEquals((byte) -1, Argument.requireNonZero("nonZeroByte", (byte) -1));
+    assertEquals((short) 1, Argument.requireNonZero("nonZeroShort", (short) 1));
+    assertEquals((short) -1, Argument.requireNonZero("nonZeroShort", (short) -1));
+    assertEquals(1, Argument.requireNonZero("nonZeroInt", 1));
+    assertEquals(-1, Argument.requireNonZero("nonZeroInt", -1));
+    assertEquals(1L, Argument.requireNonZero("nonZeroLong", 1L));
+    assertEquals(-1L, Argument.requireNonZero("nonZeroLong", -1L));
+    assertEquals(0.1f, Argument.requireNonZero("nonZeroFloat", 0.1f));
+    assertEquals(-0.1f, Argument.requireNonZero("nonZeroFloat", -0.1f));
+    assertEquals(0.1, Argument.requireNonZero("nonZeroDouble", 0.1));
+    assertEquals(-0.1, Argument.requireNonZero("nonZeroDouble", -0.1));
+    
+    // 测试最小/最大值（这些肯定是非零的）
+    assertEquals(Byte.MIN_VALUE, Argument.requireNonZero("minByte", Byte.MIN_VALUE));
+    assertEquals(Byte.MAX_VALUE, Argument.requireNonZero("maxByte", Byte.MAX_VALUE));
+    assertEquals(Short.MIN_VALUE, Argument.requireNonZero("minShort", Short.MIN_VALUE));
+    assertEquals(Short.MAX_VALUE, Argument.requireNonZero("maxShort", Short.MAX_VALUE));
+    assertEquals(Integer.MIN_VALUE, Argument.requireNonZero("minInt", Integer.MIN_VALUE));
+    assertEquals(Integer.MAX_VALUE, Argument.requireNonZero("maxInt", Integer.MAX_VALUE));
+    assertEquals(Long.MIN_VALUE, Argument.requireNonZero("minLong", Long.MIN_VALUE));
+    assertEquals(Long.MAX_VALUE, Argument.requireNonZero("maxLong", Long.MAX_VALUE));
+    assertEquals(Float.MIN_VALUE, Argument.requireNonZero("minFloat", Float.MIN_VALUE));
+    assertEquals(Float.MAX_VALUE, Argument.requireNonZero("maxFloat", Float.MAX_VALUE));
+    assertEquals(Double.MIN_VALUE, Argument.requireNonZero("minDouble", Double.MIN_VALUE));
+    assertEquals(Double.MAX_VALUE, Argument.requireNonZero("maxDouble", Double.MAX_VALUE));
+    
+    // 测试零值（应抛出异常）
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNonZero("zeroByte", (byte) 0));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNonZero("zeroShort", (short) 0));
     assertThrows(IllegalArgumentException.class, () -> Argument.requireNonZero("zeroInt", 0));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNonZero("zeroLong", 0L));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNonZero("zeroFloat", 0.0f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNonZero("zeroDouble", 0.0));
+    
+    // 测试接近零但不是零的值（针对浮点数）
+    assertEquals(0.000001f, Argument.requireNonZero("almostZeroFloat", 0.000001f));
+    assertEquals(0.0000000001, Argument.requireNonZero("almostZeroDouble", 0.0000000001));
   }
 
   @Test
   public void testRequirePositive() {
+    // 测试各个数值类型的正值
+    assertEquals((byte) 1, Argument.requirePositive("positiveByte", (byte) 1));
+    assertEquals((short) 1, Argument.requirePositive("positiveShort", (short) 1));
     assertEquals(1, Argument.requirePositive("positiveInt", 1));
+    assertEquals(1L, Argument.requirePositive("positiveLong", 1L));
+    assertEquals(0.1f, Argument.requirePositive("positiveFloat", 0.1f));
+    assertEquals(0.1, Argument.requirePositive("positiveDouble", 0.1));
+    
+    // 测试最大值（这些肯定是正的）
+    assertEquals(Byte.MAX_VALUE, Argument.requirePositive("maxByte", Byte.MAX_VALUE));
+    assertEquals(Short.MAX_VALUE, Argument.requirePositive("maxShort", Short.MAX_VALUE));
+    assertEquals(Integer.MAX_VALUE, Argument.requirePositive("maxInt", Integer.MAX_VALUE));
+    assertEquals(Long.MAX_VALUE, Argument.requirePositive("maxLong", Long.MAX_VALUE));
+    assertEquals(Float.MAX_VALUE, Argument.requirePositive("maxFloat", Float.MAX_VALUE));
+    assertEquals(Double.MAX_VALUE, Argument.requirePositive("maxDouble", Double.MAX_VALUE));
+    
+    // 测试零和负值（应抛出异常）
+    assertThrows(IllegalArgumentException.class, () -> Argument.requirePositive("zeroByte", (byte) 0));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requirePositive("zeroShort", (short) 0));
     assertThrows(IllegalArgumentException.class, () -> Argument.requirePositive("zeroInt", 0));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requirePositive("zeroLong", 0L));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requirePositive("zeroFloat", 0.0f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requirePositive("zeroDouble", 0.0));
+    
+    assertThrows(IllegalArgumentException.class, () -> Argument.requirePositive("negativeByte", (byte) -1));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requirePositive("negativeShort", (short) -1));
     assertThrows(IllegalArgumentException.class, () -> Argument.requirePositive("negativeInt", -1));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requirePositive("negativeLong", -1L));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requirePositive("negativeFloat", -0.1f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requirePositive("negativeDouble", -0.1));
+    
+    // 测试极小正值（针对浮点数）
+    assertEquals(Float.MIN_VALUE, Argument.requirePositive("minPositiveFloat", Float.MIN_VALUE));
+    assertEquals(Double.MIN_VALUE, Argument.requirePositive("minPositiveDouble", Double.MIN_VALUE));
   }
 
   @Test
   public void testRequireNonPositive() {
+    // 测试各个数值类型的零值和负值
+    assertEquals((byte) 0, Argument.requireNonPositive("zeroByte", (byte) 0));
+    assertEquals((byte) -1, Argument.requireNonPositive("negativeByte", (byte) -1));
+    assertEquals((short) 0, Argument.requireNonPositive("zeroShort", (short) 0));
+    assertEquals((short) -1, Argument.requireNonPositive("negativeShort", (short) -1));
     assertEquals(0, Argument.requireNonPositive("zeroInt", 0));
     assertEquals(-1, Argument.requireNonPositive("negativeInt", -1));
+    assertEquals(0L, Argument.requireNonPositive("zeroLong", 0L));
+    assertEquals(-1L, Argument.requireNonPositive("negativeLong", -1L));
+    assertEquals(0.0f, Argument.requireNonPositive("zeroFloat", 0.0f));
+    assertEquals(-0.1f, Argument.requireNonPositive("negativeFloat", -0.1f));
+    assertEquals(0.0, Argument.requireNonPositive("zeroDouble", 0.0));
+    assertEquals(-0.1, Argument.requireNonPositive("negativeDouble", -0.1));
+    
+    // 测试最小值（这些肯定是负的）
+    assertEquals(Byte.MIN_VALUE, Argument.requireNonPositive("minByte", Byte.MIN_VALUE));
+    assertEquals(Short.MIN_VALUE, Argument.requireNonPositive("minShort", Short.MIN_VALUE));
+    assertEquals(Integer.MIN_VALUE, Argument.requireNonPositive("minInt", Integer.MIN_VALUE));
+    assertEquals(Long.MIN_VALUE, Argument.requireNonPositive("minLong", Long.MIN_VALUE));
+    assertEquals(Float.NEGATIVE_INFINITY, Argument.requireNonPositive("negInfFloat", Float.NEGATIVE_INFINITY));
+    assertEquals(Double.NEGATIVE_INFINITY, Argument.requireNonPositive("negInfDouble", Double.NEGATIVE_INFINITY));
+    
+    // 测试正值（应抛出异常）
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNonPositive("positiveByte", (byte) 1));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNonPositive("positiveShort", (short) 1));
     assertThrows(IllegalArgumentException.class, () -> Argument.requireNonPositive("positiveInt", 1));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNonPositive("positiveLong", 1L));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNonPositive("positiveFloat", 0.1f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNonPositive("positiveDouble", 0.1));
+    
+    // 测试极小正值（针对浮点数）
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNonPositive("minPositiveFloat", Float.MIN_VALUE));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNonPositive("minPositiveDouble", Double.MIN_VALUE));
   }
 
   @Test
   public void testRequireNegative() {
+    // 测试各个数值类型的负值
+    assertEquals((byte) -1, Argument.requireNegative("negativeByte", (byte) -1));
+    assertEquals((short) -1, Argument.requireNegative("negativeShort", (short) -1));
     assertEquals(-1, Argument.requireNegative("negativeInt", -1));
+    assertEquals(-1L, Argument.requireNegative("negativeLong", -1L));
+    assertEquals(-0.1f, Argument.requireNegative("negativeFloat", -0.1f));
+    assertEquals(-0.1, Argument.requireNegative("negativeDouble", -0.1));
+    
+    // 测试最小值（这些肯定是负的）
+    assertEquals(Byte.MIN_VALUE, Argument.requireNegative("minByte", Byte.MIN_VALUE));
+    assertEquals(Short.MIN_VALUE, Argument.requireNegative("minShort", Short.MIN_VALUE));
+    assertEquals(Integer.MIN_VALUE, Argument.requireNegative("minInt", Integer.MIN_VALUE));
+    assertEquals(Long.MIN_VALUE, Argument.requireNegative("minLong", Long.MIN_VALUE));
+    assertEquals(Float.NEGATIVE_INFINITY, Argument.requireNegative("negInfFloat", Float.NEGATIVE_INFINITY));
+    assertEquals(Double.NEGATIVE_INFINITY, Argument.requireNegative("negInfDouble", Double.NEGATIVE_INFINITY));
+    
+    // 测试零和正值（应抛出异常）
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNegative("zeroByte", (byte) 0));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNegative("zeroShort", (short) 0));
     assertThrows(IllegalArgumentException.class, () -> Argument.requireNegative("zeroInt", 0));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNegative("zeroLong", 0L));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNegative("zeroFloat", 0.0f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNegative("zeroDouble", 0.0));
+    
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNegative("positiveByte", (byte) 1));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNegative("positiveShort", (short) 1));
     assertThrows(IllegalArgumentException.class, () -> Argument.requireNegative("positiveInt", 1));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNegative("positiveLong", 1L));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNegative("positiveFloat", 0.1f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNegative("positiveDouble", 0.1));
+    
+    // 测试极小负值（针对浮点数）
+    assertEquals(-Float.MIN_VALUE, Argument.requireNegative("minNegativeFloat", -Float.MIN_VALUE));
+    assertEquals(-Double.MIN_VALUE, Argument.requireNegative("minNegativeDouble", -Double.MIN_VALUE));
   }
 
   @Test
   public void testRequireNonNegative() {
+    // 测试各个数值类型的零值和正值
+    assertEquals((byte) 0, Argument.requireNonNegative("zeroByte", (byte) 0));
+    assertEquals((byte) 1, Argument.requireNonNegative("positiveByte", (byte) 1));
+    assertEquals((short) 0, Argument.requireNonNegative("zeroShort", (short) 0));
+    assertEquals((short) 1, Argument.requireNonNegative("positiveShort", (short) 1));
     assertEquals(0, Argument.requireNonNegative("zeroInt", 0));
     assertEquals(1, Argument.requireNonNegative("positiveInt", 1));
+    assertEquals(0L, Argument.requireNonNegative("zeroLong", 0L));
+    assertEquals(1L, Argument.requireNonNegative("positiveLong", 1L));
+    assertEquals(0.0f, Argument.requireNonNegative("zeroFloat", 0.0f));
+    assertEquals(0.1f, Argument.requireNonNegative("positiveFloat", 0.1f));
+    assertEquals(0.0, Argument.requireNonNegative("zeroDouble", 0.0));
+    assertEquals(0.1, Argument.requireNonNegative("positiveDouble", 0.1));
+    
+    // 测试最大值（这些肯定是正的）
+    assertEquals(Byte.MAX_VALUE, Argument.requireNonNegative("maxByte", Byte.MAX_VALUE));
+    assertEquals(Short.MAX_VALUE, Argument.requireNonNegative("maxShort", Short.MAX_VALUE));
+    assertEquals(Integer.MAX_VALUE, Argument.requireNonNegative("maxInt", Integer.MAX_VALUE));
+    assertEquals(Long.MAX_VALUE, Argument.requireNonNegative("maxLong", Long.MAX_VALUE));
+    assertEquals(Float.MAX_VALUE, Argument.requireNonNegative("maxFloat", Float.MAX_VALUE));
+    assertEquals(Double.MAX_VALUE, Argument.requireNonNegative("maxDouble", Double.MAX_VALUE));
+    assertEquals(Float.POSITIVE_INFINITY, Argument.requireNonNegative("posInfFloat", Float.POSITIVE_INFINITY));
+    assertEquals(Double.POSITIVE_INFINITY, Argument.requireNonNegative("posInfDouble", Double.POSITIVE_INFINITY));
+    
+    // 测试负值（应抛出异常）
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNonNegative("negativeByte", (byte) -1));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNonNegative("negativeShort", (short) -1));
     assertThrows(IllegalArgumentException.class, () -> Argument.requireNonNegative("negativeInt", -1));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNonNegative("negativeLong", -1L));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNonNegative("negativeFloat", -0.1f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNonNegative("negativeDouble", -0.1));
+    
+    // 测试极小负值（针对浮点数）
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNonNegative("minNegativeFloat", -Float.MIN_VALUE));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNonNegative("minNegativeDouble", -Double.MIN_VALUE));
   }
 
   // -------------------------------------------------------------------------
@@ -418,30 +594,186 @@ public class ArgumentTest {
 
   @Test
   public void testRequireLess() {
+    // 基本数值类型测试
+    assertEquals((char) 'a', Argument.requireLess("smaller", (char) 'a', "larger", (char) 'b'));
+    assertEquals((byte) 1, Argument.requireLess("smaller", (byte) 1, "larger", (byte) 2));
+    assertEquals((short) 1, Argument.requireLess("smaller", (short) 1, "larger", (short) 2));
     assertEquals(1, Argument.requireLess("smaller", 1, "larger", 2));
-    assertThrows(IllegalArgumentException.class, () -> Argument.requireLess("notSmaller", 2, "notLarger", 2));
-    assertThrows(IllegalArgumentException.class, () -> Argument.requireLess("notSmaller", 3, "notLarger", 2));
+    assertEquals(1L, Argument.requireLess("smaller", 1L, "larger", 2L));
+    
+    // 浮点类型测试（包含epsilon参数）
+    assertEquals(1.0f, Argument.requireLess("smaller", 1.0f, "larger", 2.0f, 0.001f));
+    assertEquals(1.0, Argument.requireLess("smaller", 1.0, "larger", 2.0, 0.001));
+    
+    // 可比较对象测试
+    assertEquals("a", Argument.requireLess("smaller", "a", "larger", "b"));
+    
+    // 相等的情况（应抛出异常）
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLess("equal", (char) 'a', "alsoEqual", (char) 'a'));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLess("equal", (byte) 1, "alsoEqual", (byte) 1));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLess("equal", (short) 1, "alsoEqual", (short) 1));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLess("equal", 1, "alsoEqual", 1));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLess("equal", 1L, "alsoEqual", 1L));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLess("equal", 1.0f, "alsoEqual", 1.0f, 0.001f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLess("equal", 1.0, "alsoEqual", 1.0, 0.001));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLess("equal", "a", "alsoEqual", "a"));
+    
+    // 大于的情况（应抛出异常）
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLess("larger", (char) 'b', "smaller", (char) 'a'));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLess("larger", (byte) 2, "smaller", (byte) 1));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLess("larger", (short) 2, "smaller", (short) 1));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLess("larger", 2, "smaller", 1));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLess("larger", 2L, "smaller", 1L));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLess("larger", 2.0f, "smaller", 1.0f, 0.001f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLess("larger", 2.0, "smaller", 1.0, 0.001));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLess("larger", "b", "smaller", "a"));
+    
+    // 接近相等但仍然小于的浮点数测试
+    assertEquals(1.003f, Argument.requireLess("slightlyLarger", 1.003f, "slightlySmaller", 1.0f, 0.001f));
+    assertEquals(1.003, Argument.requireLess("slightlyLarger", 1.003, "slightlySmaller", 1.0, 0.001));
+    
+    // 接近相等但视为相等的浮点数（应抛出异常）
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLess("tooClose1", 1.0005f, "tooClose2", 1.0f, 0.001f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLess("tooClose1", 1.0, "tooClose2", 1.0, 0.001));
   }
 
   @Test
   public void testRequireLessEqual() {
+    // 基本数值类型测试 - 小于情况
+    assertEquals((char) 'a', Argument.requireLessEqual("smaller", (char) 'a', "larger", (char) 'b'));
+    assertEquals((byte) 1, Argument.requireLessEqual("smaller", (byte) 1, "larger", (byte) 2));
+    assertEquals((short) 1, Argument.requireLessEqual("smaller", (short) 1, "larger", (short) 2));
     assertEquals(1, Argument.requireLessEqual("smaller", 1, "larger", 2));
+    assertEquals(1L, Argument.requireLessEqual("smaller", 1L, "larger", 2L));
+    
+    // 基本数值类型测试 - 等于情况
+    assertEquals((char) 'a', Argument.requireLessEqual("equal", (char) 'a', "alsoEqual", (char) 'a'));
+    assertEquals((byte) 1, Argument.requireLessEqual("equal", (byte) 1, "alsoEqual", (byte) 1));
+    assertEquals((short) 1, Argument.requireLessEqual("equal", (short) 1, "alsoEqual", (short) 1));
     assertEquals(2, Argument.requireLessEqual("equal", 2, "alsoEqual", 2));
-    assertThrows(IllegalArgumentException.class, () -> Argument.requireLessEqual("notSmaller", 3, "notLarger", 2));
+    assertEquals(1L, Argument.requireLessEqual("equal", 1L, "alsoEqual", 1L));
+    
+    // 浮点类型测试（包含epsilon参数）- 小于情况
+    assertEquals(1.0f, Argument.requireLessEqual("smaller", 1.0f, "larger", 2.0f, 0.001f));
+    assertEquals(1.0, Argument.requireLessEqual("smaller", 1.0, "larger", 2.0, 0.001));
+    
+    // 浮点类型测试（包含epsilon参数）- 等于情况
+    assertEquals(1.0f, Argument.requireLessEqual("equal", 1.0f, "alsoEqual", 1.0f, 0.001f));
+    assertEquals(1.0, Argument.requireLessEqual("equal", 1.0, "alsoEqual", 1.0, 0.001));
+    
+    // 可比较对象测试
+    assertEquals("a", Argument.requireLessEqual("smaller", "a", "larger", "b"));
+    assertEquals("a", Argument.requireLessEqual("equal", "a", "alsoEqual", "a"));
+    
+    // 大于的情况（应抛出异常）
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLessEqual("larger", (char) 'b', "smaller", (char) 'a'));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLessEqual("larger", (byte) 2, "smaller", (byte) 1));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLessEqual("larger", (short) 2, "smaller", (short) 1));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLessEqual("larger", 3, "smaller", 2));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLessEqual("larger", 2L, "smaller", 1L));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLessEqual("larger", 2.0f, "smaller", 1.0f, 0.001f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLessEqual("larger", 2.0, "smaller", 1.0, 0.001));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireLessEqual("larger", "b", "smaller", "a"));
+    
+    // 近似相等的浮点数
+    assertEquals(1.0005f, Argument.requireLessEqual("almostEqual1", 1.0005f, "almostEqual2", 1.0f, 0.001f));
+    assertEquals(1.0005, Argument.requireLessEqual("almostEqual1", 1.0005, "almostEqual2", 1.0, 0.001));
+    
+    // 差值恰好等于epsilon的情况
+    assertEquals(1.001f, Argument.requireLessEqual("borderCase1", 1.001f, "borderCase2", 1.0f, 0.001f));
+    assertEquals(1.001, Argument.requireLessEqual("borderCase1", 1.001, "borderCase2", 1.0, 0.001));
   }
 
   @Test
   public void testRequireGreater() {
+    // 基本数值类型测试
+    assertEquals((char) 'b', Argument.requireGreater("larger", (char) 'b', "smaller", (char) 'a'));
+    assertEquals((byte) 2, Argument.requireGreater("larger", (byte) 2, "smaller", (byte) 1));
+    assertEquals((short) 2, Argument.requireGreater("larger", (short) 2, "smaller", (short) 1));
     assertEquals(2, Argument.requireGreater("larger", 2, "smaller", 1));
-    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreater("notLarger", 2, "notSmaller", 2));
-    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreater("notLarger", 2, "notSmaller", 3));
+    assertEquals(2L, Argument.requireGreater("larger", 2L, "smaller", 1L));
+    
+    // 浮点类型测试（包含epsilon参数）
+    assertEquals(2.0f, Argument.requireGreater("larger", 2.0f, "smaller", 1.0f, 0.001f));
+    assertEquals(2.0, Argument.requireGreater("larger", 2.0, "smaller", 1.0, 0.001));
+    
+    // 可比较对象测试
+    assertEquals("b", Argument.requireGreater("larger", "b", "smaller", "a"));
+    
+    // 相等的情况（应抛出异常）
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreater("equal", (char) 'a', "alsoEqual", (char) 'a'));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreater("equal", (byte) 1, "alsoEqual", (byte) 1));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreater("equal", (short) 1, "alsoEqual", (short) 1));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreater("equal", 2, "alsoEqual", 2));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreater("equal", 1L, "alsoEqual", 1L));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreater("equal", 1.0f, "alsoEqual", 1.0f, 0.001f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreater("equal", 1.0, "alsoEqual", 1.0, 0.001));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreater("equal", "a", "alsoEqual", "a"));
+    
+    // 小于的情况（应抛出异常）
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreater("smaller", (char) 'a', "larger", (char) 'b'));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreater("smaller", (byte) 1, "larger", (byte) 2));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreater("smaller", (short) 1, "larger", (short) 2));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreater("smaller", 1, "larger", 2));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreater("smaller", 1L, "larger", 2L));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreater("smaller", 1.0f, "larger", 2.0f, 0.001f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreater("smaller", 1.0, "larger", 2.0, 0.001));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreater("smaller", "a", "larger", "b"));
+    
+    // 接近相等但仍然大于的浮点数测试
+    assertEquals(1.003f, Argument.requireGreater("slightlyLarger", 1.003f, "slightlySmaller", 1.0f, 0.001f));
+    assertEquals(1.003, Argument.requireGreater("slightlyLarger", 1.003, "slightlySmaller", 1.0, 0.001));
+    
+    // 接近相等但视为相等的浮点数（应抛出异常）
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreater("tooClose1", 1.0005f, "tooClose2", 1.0f, 0.001f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreater("tooClose1", 1.0005, "tooClose2", 1.0, 0.001));
   }
 
   @Test
   public void testRequireGreaterEqual() {
+    // 基本数值类型测试 - 大于情况
+    assertEquals((char) 'b', Argument.requireGreaterEqual("larger", (char) 'b', "smaller", (char) 'a'));
+    assertEquals((byte) 2, Argument.requireGreaterEqual("larger", (byte) 2, "smaller", (byte) 1));
+    assertEquals((short) 2, Argument.requireGreaterEqual("larger", (short) 2, "smaller", (short) 1));
     assertEquals(2, Argument.requireGreaterEqual("larger", 2, "smaller", 1));
+    assertEquals(2L, Argument.requireGreaterEqual("larger", 2L, "smaller", 1L));
+    
+    // 基本数值类型测试 - 等于情况
+    assertEquals((char) 'a', Argument.requireGreaterEqual("equal", (char) 'a', "alsoEqual", (char) 'a'));
+    assertEquals((byte) 1, Argument.requireGreaterEqual("equal", (byte) 1, "alsoEqual", (byte) 1));
+    assertEquals((short) 1, Argument.requireGreaterEqual("equal", (short) 1, "alsoEqual", (short) 1));
     assertEquals(2, Argument.requireGreaterEqual("equal", 2, "alsoEqual", 2));
-    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreaterEqual("notLarger", 2, "notSmaller", 3));
+    assertEquals(1L, Argument.requireGreaterEqual("equal", 1L, "alsoEqual", 1L));
+    
+    // 浮点类型测试（包含epsilon参数）- 大于情况
+    assertEquals(2.0f, Argument.requireGreaterEqual("larger", 2.0f, "smaller", 1.0f, 0.001f));
+    assertEquals(2.0, Argument.requireGreaterEqual("larger", 2.0, "smaller", 1.0, 0.001));
+    
+    // 浮点类型测试（包含epsilon参数）- 等于情况
+    assertEquals(1.0f, Argument.requireGreaterEqual("equal", 1.0f, "alsoEqual", 1.0f, 0.001f));
+    assertEquals(1.0, Argument.requireGreaterEqual("equal", 1.0, "alsoEqual", 1.0, 0.001));
+    
+    // 可比较对象测试
+    assertEquals("b", Argument.requireGreaterEqual("larger", "b", "smaller", "a"));
+    assertEquals("a", Argument.requireGreaterEqual("equal", "a", "alsoEqual", "a"));
+    
+    // 小于的情况（应抛出异常）
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreaterEqual("smaller", (char) 'a', "larger", (char) 'b'));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreaterEqual("smaller", (byte) 1, "larger", (byte) 2));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreaterEqual("smaller", (short) 1, "larger", (short) 2));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreaterEqual("smaller", 1, "larger", 2));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreaterEqual("smaller", 1L, "larger", 2L));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreaterEqual("smaller", 1.0f, "larger", 2.0f, 0.001f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreaterEqual("smaller", 1.0, "larger", 2.0, 0.001));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireGreaterEqual("smaller", "a", "larger", "b"));
+    
+    // 近似相等的浮点数
+    assertEquals(1.0005f, Argument.requireGreaterEqual("almostEqual1", 1.0005f, "almostEqual2", 1.0f, 0.001f));
+    assertEquals(1.0005, Argument.requireGreaterEqual("almostEqual1", 1.0005, "almostEqual2", 1.0, 0.001));
+    
+    // 差值恰好等于epsilon的情况
+    assertEquals(1.001f, Argument.requireGreaterEqual("borderCase1", 1.001f, "borderCase2", 1.0f, 0.001f));
+    assertEquals(1.001, Argument.requireGreaterEqual("borderCase1", 1.001, "borderCase2", 1.0, 0.001));
   }
 
   // -------------------------------------------------------------------------
@@ -450,43 +782,316 @@ public class ArgumentTest {
 
   @Test
   public void testRequireInCloseRange() {
-    // [1, 10] 闭区间测试
+    // 基本数值类型测试 - byte
+    assertEquals((byte) 1, Argument.requireInCloseRange("leftBoundary", (byte) 1, (byte) 1, (byte) 10));
+    assertEquals((byte) 5, Argument.requireInCloseRange("middle", (byte) 5, (byte) 1, (byte) 10));
+    assertEquals((byte) 10, Argument.requireInCloseRange("rightBoundary", (byte) 10, (byte) 1, (byte) 10));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInCloseRange("tooSmall", (byte) 0, (byte) 1, (byte) 10));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInCloseRange("tooLarge", (byte) 11, (byte) 1, (byte) 10));
+    
+    // 可空类型 - Byte
+    Byte nullByte = null;
+    Byte validByte = (byte) 5;
+    assertEquals((byte) 5, Argument.requireInCloseRange("validByte", validByte, (byte) 1, (byte) 10));
+    assertThrows(NullPointerException.class, () -> Argument.requireInCloseRange("nullByte", nullByte, (byte) 1, (byte) 10));
+    
+    // 基本数值类型测试 - short
+    assertEquals((short) 1, Argument.requireInCloseRange("leftBoundary", (short) 1, (short) 1, (short) 10));
+    assertEquals((short) 5, Argument.requireInCloseRange("middle", (short) 5, (short) 1, (short) 10));
+    assertEquals((short) 10, Argument.requireInCloseRange("rightBoundary", (short) 10, (short) 1, (short) 10));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInCloseRange("tooSmall", (short) 0, (short) 1, (short) 10));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInCloseRange("tooLarge", (short) 11, (short) 1, (short) 10));
+    
+    // 可空类型 - Short
+    Short nullShort = null;
+    Short validShort = (short) 5;
+    assertEquals((short) 5, Argument.requireInCloseRange("validShort", validShort, (short) 1, (short) 10));
+    assertThrows(NullPointerException.class, () -> Argument.requireInCloseRange("nullShort", nullShort, (short) 1, (short) 10));
+    
+    // 基本数值类型测试 - int
     assertEquals(1, Argument.requireInCloseRange("leftBoundary", 1, 1, 10));
     assertEquals(5, Argument.requireInCloseRange("middle", 5, 1, 10));
     assertEquals(10, Argument.requireInCloseRange("rightBoundary", 10, 1, 10));
-    
     assertThrows(IllegalArgumentException.class, () -> Argument.requireInCloseRange("tooSmall", 0, 1, 10));
     assertThrows(IllegalArgumentException.class, () -> Argument.requireInCloseRange("tooLarge", 11, 1, 10));
+    
+    // 可空类型 - Integer
+    Integer nullInteger = null;
+    Integer validInteger = 5;
+    assertEquals(5, Argument.requireInCloseRange("validInteger", validInteger, 1, 10));
+    assertThrows(NullPointerException.class, () -> Argument.requireInCloseRange("nullInteger", nullInteger, 1, 10));
+    
+    // 基本数值类型测试 - long
+    assertEquals(1L, Argument.requireInCloseRange("leftBoundary", 1L, 1L, 10L));
+    assertEquals(5L, Argument.requireInCloseRange("middle", 5L, 1L, 10L));
+    assertEquals(10L, Argument.requireInCloseRange("rightBoundary", 10L, 1L, 10L));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInCloseRange("tooSmall", 0L, 1L, 10L));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInCloseRange("tooLarge", 11L, 1L, 10L));
+    
+    // 可空类型 - Long
+    Long nullLong = null;
+    Long validLong = 5L;
+    assertEquals(5L, Argument.requireInCloseRange("validLong", validLong, 1L, 10L));
+    assertThrows(NullPointerException.class, () -> Argument.requireInCloseRange("nullLong", nullLong, 1L, 10L));
+    
+    // 基本数值类型测试 - float (含epsilon)
+    assertEquals(1.0f, Argument.requireInCloseRange("leftBoundary", 1.0f, 1.0f, 10.0f, 0.001f));
+    assertEquals(5.0f, Argument.requireInCloseRange("middle", 5.0f, 1.0f, 10.0f, 0.001f));
+    assertEquals(10.0f, Argument.requireInCloseRange("rightBoundary", 10.0f, 1.0f, 10.0f, 0.001f));
+    // 边界附近的测试
+    assertEquals(0.999f, Argument.requireInCloseRange("nearLeftBoundary", 0.999f, 1.0f, 10.0f, 0.002f)); // 在epsilon范围内
+    assertEquals(10.001f, Argument.requireInCloseRange("nearRightBoundary", 10.001f, 1.0f, 10.0f, 0.002f)); // 在epsilon范围内
+    
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInCloseRange("tooSmall", 0.998f, 1.0f, 10.0f, 0.001f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInCloseRange("tooLarge", 10.002f, 1.0f, 10.0f, 0.001f));
+    
+    // 可空类型 - Float
+    Float nullFloat = null;
+    Float validFloat = 5.0f;
+    assertEquals(5.0f, Argument.requireInCloseRange("validFloat", validFloat, 1.0f, 10.0f, 0.001f));
+    assertThrows(NullPointerException.class, () -> Argument.requireInCloseRange("nullFloat", nullFloat, 1.0f, 10.0f, 0.001f));
+    
+    // 基本数值类型测试 - double (含epsilon)
+    assertEquals(1.0, Argument.requireInCloseRange("leftBoundary", 1.0, 1.0, 10.0, 0.001));
+    assertEquals(5.0, Argument.requireInCloseRange("middle", 5.0, 1.0, 10.0, 0.001));
+    assertEquals(10.0, Argument.requireInCloseRange("rightBoundary", 10.0, 1.0, 10.0, 0.001));
+    // 边界附近的测试
+    assertEquals(0.999, Argument.requireInCloseRange("nearLeftBoundary", 0.999, 1.0, 10.0, 0.002)); // 在epsilon范围内
+    assertEquals(10.001, Argument.requireInCloseRange("nearRightBoundary", 10.001, 1.0, 10.0, 0.002)); // 在epsilon范围内
+    
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInCloseRange("tooSmall", 0.998, 1.0, 10.0, 0.001));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInCloseRange("tooLarge", 10.002, 1.0, 10.0, 0.001));
+    
+    // 可空类型 - Double
+    Double nullDouble = null;
+    Double validDouble = 5.0;
+    assertEquals(5.0, Argument.requireInCloseRange("validDouble", validDouble, 1.0, 10.0, 0.001));
+    assertThrows(NullPointerException.class, () -> Argument.requireInCloseRange("nullDouble", nullDouble, 1.0, 10.0, 0.001));
   }
 
   @Test
   public void testRequireInOpenRange() {
-    // (1, 10) 开区间测试
+    // 基本数值类型测试 - byte
+    assertEquals((byte) 2, Argument.requireInOpenRange("valid", (byte) 2, (byte) 1, (byte) 10));
+    assertEquals((byte) 9, Argument.requireInOpenRange("valid", (byte) 9, (byte) 1, (byte) 10));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInOpenRange("tooSmall", (byte) 1, (byte) 1, (byte) 10));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInOpenRange("tooLarge", (byte) 10, (byte) 1, (byte) 10));
+    
+    // 可空类型 - Byte
+    Byte nullByte = null;
+    Byte validByte = (byte) 5;
+    assertEquals((byte) 5, Argument.requireInOpenRange("validByte", validByte, (byte) 1, (byte) 10));
+    assertThrows(NullPointerException.class, () -> Argument.requireInOpenRange("nullByte", nullByte, (byte) 1, (byte) 10));
+    
+    // 基本数值类型测试 - short
+    assertEquals((short) 2, Argument.requireInOpenRange("valid", (short) 2, (short) 1, (short) 10));
+    assertEquals((short) 9, Argument.requireInOpenRange("valid", (short) 9, (short) 1, (short) 10));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInOpenRange("tooSmall", (short) 1, (short) 1, (short) 10));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInOpenRange("tooLarge", (short) 10, (short) 1, (short) 10));
+    
+    // 可空类型 - Short
+    Short nullShort = null;
+    Short validShort = (short) 5;
+    assertEquals((short) 5, Argument.requireInOpenRange("validShort", validShort, (short) 1, (short) 10));
+    assertThrows(NullPointerException.class, () -> Argument.requireInOpenRange("nullShort", nullShort, (short) 1, (short) 10));
+    
+    // 基本数值类型测试 - int
     assertEquals(2, Argument.requireInOpenRange("valid", 2, 1, 10));
     assertEquals(9, Argument.requireInOpenRange("valid", 9, 1, 10));
-    
     assertThrows(IllegalArgumentException.class, () -> Argument.requireInOpenRange("tooSmall", 1, 1, 10));
     assertThrows(IllegalArgumentException.class, () -> Argument.requireInOpenRange("tooLarge", 10, 1, 10));
+    
+    // 可空类型 - Integer
+    Integer nullInteger = null;
+    Integer validInteger = 5;
+    assertEquals(5, Argument.requireInOpenRange("validInteger", validInteger, 1, 10));
+    assertThrows(NullPointerException.class, () -> Argument.requireInOpenRange("nullInteger", nullInteger, 1, 10));
+    
+    // 基本数值类型测试 - long
+    assertEquals(2L, Argument.requireInOpenRange("valid", 2L, 1L, 10L));
+    assertEquals(9L, Argument.requireInOpenRange("valid", 9L, 1L, 10L));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInOpenRange("tooSmall", 1L, 1L, 10L));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInOpenRange("tooLarge", 10L, 1L, 10L));
+    
+    // 可空类型 - Long
+    Long nullLong = null;
+    Long validLong = 5L;
+    assertEquals(5L, Argument.requireInOpenRange("validLong", validLong, 1L, 10L));
+    assertThrows(NullPointerException.class, () -> Argument.requireInOpenRange("nullLong", nullLong, 1L, 10L));
+    
+    // 基本数值类型测试 - float (含epsilon)
+    assertEquals(1.002f, Argument.requireInOpenRange("nearLeftBoundary", 1.002f, 1.0f, 10.0f, 0.001f));
+    assertEquals(9.998f, Argument.requireInOpenRange("nearRightBoundary", 9.998f, 1.0f, 10.0f, 0.001f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInOpenRange("tooSmall", 1.0005f, 1.0f, 10.0f, 0.001f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInOpenRange("tooLarge", 9.9995f, 1.0f, 10.0f, 0.001f));
+    
+    // 可空类型 - Float
+    Float nullFloat = null;
+    Float validFloat = 5.0f;
+    assertEquals(5.0f, Argument.requireInOpenRange("validFloat", validFloat, 1.0f, 10.0f, 0.001f));
+    assertThrows(NullPointerException.class, () -> Argument.requireInOpenRange("nullFloat", nullFloat, 1.0f, 10.0f, 0.001f));
+    
+    // 基本数值类型测试 - double (含epsilon)
+    assertEquals(1.002, Argument.requireInOpenRange("nearLeftBoundary", 1.002, 1.0, 10.0, 0.001));
+    assertEquals(9.998, Argument.requireInOpenRange("nearRightBoundary", 9.998, 1.0, 10.0, 0.001));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInOpenRange("tooSmall", 1.0005, 1.0, 10.0, 0.001));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInOpenRange("tooLarge", 9.9995, 1.0, 10.0, 0.001));
+    
+    // 可空类型 - Double
+    Double nullDouble = null;
+    Double validDouble = 5.0;
+    assertEquals(5.0, Argument.requireInOpenRange("validDouble", validDouble, 1.0, 10.0, 0.001));
+    assertThrows(NullPointerException.class, () -> Argument.requireInOpenRange("nullDouble", nullDouble, 1.0, 10.0, 0.001));
   }
 
   @Test
   public void testRequireInLeftOpenRange() {
-    // (1, 10] 左开右闭区间测试
+    // 基本数值类型测试 - byte
+    assertEquals((byte) 2, Argument.requireInLeftOpenRange("valid", (byte) 2, (byte) 1, (byte) 10));
+    assertEquals((byte) 10, Argument.requireInLeftOpenRange("rightBoundary", (byte) 10, (byte) 1, (byte) 10));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInLeftOpenRange("tooSmall", (byte) 1, (byte) 1, (byte) 10));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInLeftOpenRange("tooLarge", (byte) 11, (byte) 1, (byte) 10));
+    
+    // 可空类型 - Byte
+    Byte nullByte = null;
+    Byte validByte = (byte) 5;
+    assertEquals((byte) 5, Argument.requireInLeftOpenRange("validByte", validByte, (byte) 1, (byte) 10));
+    assertThrows(NullPointerException.class, () -> Argument.requireInLeftOpenRange("nullByte", nullByte, (byte) 1, (byte) 10));
+    
+    // 基本数值类型测试 - short
+    assertEquals((short) 2, Argument.requireInLeftOpenRange("valid", (short) 2, (short) 1, (short) 10));
+    assertEquals((short) 10, Argument.requireInLeftOpenRange("rightBoundary", (short) 10, (short) 1, (short) 10));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInLeftOpenRange("tooSmall", (short) 1, (short) 1, (short) 10));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInLeftOpenRange("tooLarge", (short) 11, (short) 1, (short) 10));
+    
+    // 可空类型 - Short
+    Short nullShort = null;
+    Short validShort = (short) 5;
+    assertEquals((short) 5, Argument.requireInLeftOpenRange("validShort", validShort, (short) 1, (short) 10));
+    assertThrows(NullPointerException.class, () -> Argument.requireInLeftOpenRange("nullShort", nullShort, (short) 1, (short) 10));
+    
+    // 基本数值类型测试 - int
     assertEquals(2, Argument.requireInLeftOpenRange("valid", 2, 1, 10));
     assertEquals(10, Argument.requireInLeftOpenRange("rightBoundary", 10, 1, 10));
-    
     assertThrows(IllegalArgumentException.class, () -> Argument.requireInLeftOpenRange("tooSmall", 1, 1, 10));
     assertThrows(IllegalArgumentException.class, () -> Argument.requireInLeftOpenRange("tooLarge", 11, 1, 10));
+    
+    // 可空类型 - Integer
+    Integer nullInteger = null;
+    Integer validInteger = 5;
+    assertEquals(5, Argument.requireInLeftOpenRange("validInteger", validInteger, 1, 10));
+    assertThrows(NullPointerException.class, () -> Argument.requireInLeftOpenRange("nullInteger", nullInteger, 1, 10));
+    
+    // 基本数值类型测试 - long
+    assertEquals(2L, Argument.requireInLeftOpenRange("valid", 2L, 1L, 10L));
+    assertEquals(10L, Argument.requireInLeftOpenRange("rightBoundary", 10L, 1L, 10L));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInLeftOpenRange("tooSmall", 1L, 1L, 10L));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInLeftOpenRange("tooLarge", 11L, 1L, 10L));
+    
+    // 可空类型 - Long
+    Long nullLong = null;
+    Long validLong = 5L;
+    assertEquals(5L, Argument.requireInLeftOpenRange("validLong", validLong, 1L, 10L));
+    assertThrows(NullPointerException.class, () -> Argument.requireInLeftOpenRange("nullLong", nullLong, 1L, 10L));
+    
+    // 基本数值类型测试 - float (含epsilon)
+    assertEquals(1.002f, Argument.requireInLeftOpenRange("nearLeftBoundary", 1.002f, 1.0f, 10.0f, 0.001f));
+    assertEquals(10.0f, Argument.requireInLeftOpenRange("rightBoundary", 10.0f, 1.0f, 10.0f, 0.001f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInLeftOpenRange("tooSmall", 1.0005f, 1.0f, 10.0f, 0.001f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInLeftOpenRange("tooLarge", 10.002f, 1.0f, 10.0f, 0.001f));
+    
+    // 可空类型 - Float
+    Float nullFloat = null;
+    Float validFloat = 5.0f;
+    assertEquals(5.0f, Argument.requireInLeftOpenRange("validFloat", validFloat, 1.0f, 10.0f, 0.001f));
+    assertThrows(NullPointerException.class, () -> Argument.requireInLeftOpenRange("nullFloat", nullFloat, 1.0f, 10.0f, 0.001f));
+    
+    // 基本数值类型测试 - double (含epsilon)
+    assertEquals(1.002, Argument.requireInLeftOpenRange("nearLeftBoundary", 1.002, 1.0, 10.0, 0.001));
+    assertEquals(10.0, Argument.requireInLeftOpenRange("rightBoundary", 10.0, 1.0, 10.0, 0.001));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInLeftOpenRange("tooSmall", 1.0005, 1.0, 10.0, 0.001));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInLeftOpenRange("tooLarge", 10.002, 1.0, 10.0, 0.001));
+    
+    // 可空类型 - Double
+    Double nullDouble = null;
+    Double validDouble = 5.0;
+    assertEquals(5.0, Argument.requireInLeftOpenRange("validDouble", validDouble, 1.0, 10.0, 0.001));
+    assertThrows(NullPointerException.class, () -> Argument.requireInLeftOpenRange("nullDouble", nullDouble, 1.0, 10.0, 0.001));
   }
 
   @Test
   public void testRequireInRightOpenRange() {
-    // [1, 10) 左闭右开区间测试
+    // 基本数值类型测试 - byte
+    assertEquals((byte) 1, Argument.requireInRightOpenRange("leftBoundary", (byte) 1, (byte) 1, (byte) 10));
+    assertEquals((byte) 9, Argument.requireInRightOpenRange("valid", (byte) 9, (byte) 1, (byte) 10));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInRightOpenRange("tooSmall", (byte) 0, (byte) 1, (byte) 10));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInRightOpenRange("tooLarge", (byte) 10, (byte) 1, (byte) 10));
+    
+    // 可空类型 - Byte
+    Byte nullByte = null;
+    Byte validByte = (byte) 5;
+    assertEquals((byte) 5, Argument.requireInRightOpenRange("validByte", validByte, (byte) 1, (byte) 10));
+    assertThrows(NullPointerException.class, () -> Argument.requireInRightOpenRange("nullByte", nullByte, (byte) 1, (byte) 10));
+    
+    // 基本数值类型测试 - short
+    assertEquals((short) 1, Argument.requireInRightOpenRange("leftBoundary", (short) 1, (short) 1, (short) 10));
+    assertEquals((short) 9, Argument.requireInRightOpenRange("valid", (short) 9, (short) 1, (short) 10));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInRightOpenRange("tooSmall", (short) 0, (short) 1, (short) 10));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInRightOpenRange("tooLarge", (short) 10, (short) 1, (short) 10));
+    
+    // 可空类型 - Short
+    Short nullShort = null;
+    Short validShort = (short) 5;
+    assertEquals((short) 5, Argument.requireInRightOpenRange("validShort", validShort, (short) 1, (short) 10));
+    assertThrows(NullPointerException.class, () -> Argument.requireInRightOpenRange("nullShort", nullShort, (short) 1, (short) 10));
+    
+    // 基本数值类型测试 - int
     assertEquals(1, Argument.requireInRightOpenRange("leftBoundary", 1, 1, 10));
     assertEquals(9, Argument.requireInRightOpenRange("valid", 9, 1, 10));
-    
     assertThrows(IllegalArgumentException.class, () -> Argument.requireInRightOpenRange("tooSmall", 0, 1, 10));
     assertThrows(IllegalArgumentException.class, () -> Argument.requireInRightOpenRange("tooLarge", 10, 1, 10));
+    
+    // 可空类型 - Integer
+    Integer nullInteger = null;
+    Integer validInteger = 5;
+    assertEquals(5, Argument.requireInRightOpenRange("validInteger", validInteger, 1, 10));
+    assertThrows(NullPointerException.class, () -> Argument.requireInRightOpenRange("nullInteger", nullInteger, 1, 10));
+    
+    // 基本数值类型测试 - long
+    assertEquals(1L, Argument.requireInRightOpenRange("leftBoundary", 1L, 1L, 10L));
+    assertEquals(9L, Argument.requireInRightOpenRange("valid", 9L, 1L, 10L));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInRightOpenRange("tooSmall", 0L, 1L, 10L));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInRightOpenRange("tooLarge", 10L, 1L, 10L));
+    
+    // 可空类型 - Long
+    Long nullLong = null;
+    Long validLong = 5L;
+    assertEquals(5L, Argument.requireInRightOpenRange("validLong", validLong, 1L, 10L));
+    assertThrows(NullPointerException.class, () -> Argument.requireInRightOpenRange("nullLong", nullLong, 1L, 10L));
+    
+    // 基本数值类型测试 - float (含epsilon)
+    assertEquals(1.0f, Argument.requireInRightOpenRange("leftBoundary", 1.0f, 1.0f, 10.0f, 0.001f));
+    assertEquals(9.998f, Argument.requireInRightOpenRange("nearRightBoundary", 9.998f, 1.0f, 10.0f, 0.001f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInRightOpenRange("tooSmall", 0.998f, 1.0f, 10.0f, 0.001f));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInRightOpenRange("tooLarge", 9.9995f, 1.0f, 10.0f, 0.001f));
+    
+    // 可空类型 - Float
+    Float nullFloat = null;
+    Float validFloat = 5.0f;
+    assertEquals(5.0f, Argument.requireInRightOpenRange("validFloat", validFloat, 1.0f, 10.0f, 0.001f));
+    assertThrows(NullPointerException.class, () -> Argument.requireInRightOpenRange("nullFloat", nullFloat, 1.0f, 10.0f, 0.001f));
+    
+    // 基本数值类型测试 - double (含epsilon)
+    assertEquals(1.0, Argument.requireInRightOpenRange("leftBoundary", 1.0, 1.0, 10.0, 0.001));
+    assertEquals(9.998, Argument.requireInRightOpenRange("nearRightBoundary", 9.998, 1.0, 10.0, 0.001));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInRightOpenRange("tooSmall", 0.998, 1.0, 10.0, 0.001));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInRightOpenRange("tooLarge", 9.9995, 1.0, 10.0, 0.001));
+    
+    // 可空类型 - Double
+    Double nullDouble = null;
+    Double validDouble = 5.0;
+    assertEquals(5.0, Argument.requireInRightOpenRange("validDouble", validDouble, 1.0, 10.0, 0.001));
+    assertThrows(NullPointerException.class, () -> Argument.requireInRightOpenRange("nullDouble", nullDouble, 1.0, 10.0, 0.001));
   }
 
   // -------------------------------------------------------------------------
@@ -553,14 +1158,243 @@ public class ArgumentTest {
 
   @Test
   public void testRequireValidUnicode() {
-    // 有效的Unicode码点
-    assertEquals(0x0000, Argument.requireValidUnicode("validCodePoint", 0x0000)); // 最小值
-    assertEquals(0x10FFFF, Argument.requireValidUnicode("validCodePoint", 0x10FFFF)); // 最大值
-    assertEquals(0x0041, Argument.requireValidUnicode("validCodePoint", 0x0041)); // 字母A
-    // 注意：isValidUnicode方法在实现中只检查上限，未检查下限，所以负数也会被认为是有效的Unicode码点
-    assertEquals(-1, Argument.requireValidUnicode("negativeCodePoint", -1));
+    assertEquals(0x0041, Argument.requireValidUnicode("validCodePoint", 0x0041)); // 字符 'A'
+    assertEquals(0x4E2D, Argument.requireValidUnicode("validCodePoint", 0x4E2D)); // 字符 '中'
     
-    // 无效的Unicode码点 - 只有超过最大值才会被认为是无效的
-    assertThrows(IllegalArgumentException.class, () -> Argument.requireValidUnicode("invalidCodePoint", 0x110000)); // 超过最大值
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireValidUnicode("invalidCodePoint", -1));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireValidUnicode("invalidCodePoint", 0x110000)); // 超出Unicode范围
+  }
+
+  // -------------------------------------------------------------------------
+  // requireInCollection/requireNotInCollection方法测试
+  // -------------------------------------------------------------------------
+
+  @Test
+  public void testRequireInCollection() {
+    Collection<String> collection = new ArrayList<>();
+    collection.add("item1");
+    collection.add("item2");
+    
+    assertEquals("item1", Argument.requireInCollection("validItem", "item1", collection));
+    
+    assertThrows(NullPointerException.class, () -> Argument.requireInCollection("nullItem", null, collection));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInCollection("invalidItem", "item3", collection));
+  }
+
+  @Test
+  public void testRequireNotInCollection() {
+    Collection<String> collection = new ArrayList<>();
+    collection.add("item1");
+    collection.add("item2");
+    
+    assertEquals("item3", Argument.requireNotInCollection("validItem", "item3", collection));
+    
+    assertThrows(NullPointerException.class, () -> Argument.requireNotInCollection("nullItem", null, collection));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNotInCollection("invalidItem", "item1", collection));
+  }
+
+  // -------------------------------------------------------------------------
+  // requireInArray/requireNotInArray方法测试
+  // -------------------------------------------------------------------------
+
+  @Test
+  public void testRequireInArray() {
+    String[] array = {"item1", "item2"};
+    
+    assertEquals("item1", Argument.requireInArray("validItem", "item1", array));
+    
+    assertThrows(NullPointerException.class, () -> Argument.requireInArray("nullItem", null, array));
+    assertThrows(NullPointerException.class, () -> Argument.requireInArray("validItem", "item1", null));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireInArray("invalidItem", "item3", array));
+  }
+
+  @Test
+  public void testRequireNotInArray() {
+    String[] array = {"item1", "item2"};
+    
+    assertEquals("item3", Argument.requireNotInArray("validItem", "item3", array));
+    
+    assertThrows(NullPointerException.class, () -> Argument.requireNotInArray("nullItem", null, array));
+    assertThrows(NullPointerException.class, () -> Argument.requireNotInArray("validItem", "item3", null));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNotInArray("invalidItem", "item1", array));
+  }
+
+  // -------------------------------------------------------------------------
+  // requireMatch/requireNotMatch方法测试
+  // -------------------------------------------------------------------------
+
+  @Test
+  public void testRequireMatch() {
+    // 使用字符串形式的正则表达式测试
+    assertEquals("abc", Argument.requireMatch("validString", "abc", "^[a-z]{1,3}$"));
+    assertEquals("12345", Argument.requireMatch("validString", "12345", "^\\d+$"));
+    assertEquals("abc_def", Argument.requireMatch("validString", "abc_def", "^[a-z]+_[a-z]+$"));
+    assertEquals("2023-12-31", Argument.requireMatch("validString", "2023-12-31", "^\\d{4}-\\d{2}-\\d{2}$"));
+    
+    assertThrows(NullPointerException.class, () -> Argument.requireMatch("nullString", null, "^[a-z]+$"));
+    assertThrows(NullPointerException.class, () -> Argument.requireMatch("validString", "abc", (String) null));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireMatch("invalidString", "123abc", "^[a-z]+[0-9]+$"));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireMatch("invalidString", "", "^[a-z]+[0-9]+$"));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireMatch("invalidString", "ABC123", "^[a-z]+[0-9]+$"));
+    
+    // 使用Pattern对象形式的正则表达式测试
+    java.util.regex.Pattern patternObj = java.util.regex.Pattern.compile("^[a-z]+[0-9]+$");
+    assertEquals("abc123", Argument.requireMatch("validString", "abc123", patternObj));
+    assertEquals("xyz789", Argument.requireMatch("validString", "xyz789", patternObj));
+    
+    // 多模式匹配
+    java.util.regex.Pattern multiPatternObj = java.util.regex.Pattern.compile("^(\\d{3}-\\d{2}-\\d{4}|\\d{9})$");
+    assertEquals("123-45-6789", Argument.requireMatch("validSSN", "123-45-6789", multiPatternObj));
+    assertEquals("123456789", Argument.requireMatch("validSSN", "123456789", multiPatternObj));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireMatch("invalidSSN", "12-345-6789", multiPatternObj));
+    
+    // 不同模式标志测试
+    java.util.regex.Pattern caseInsensitivePatternObj = java.util.regex.Pattern.compile("^[a-z]+$", java.util.regex.Pattern.CASE_INSENSITIVE);
+    assertEquals("ABC", Argument.requireMatch("validString", "ABC", caseInsensitivePatternObj));
+    assertEquals("abc", Argument.requireMatch("validString", "abc", caseInsensitivePatternObj));
+    assertEquals("AbC", Argument.requireMatch("validString", "AbC", caseInsensitivePatternObj));
+    
+    assertThrows(NullPointerException.class, () -> Argument.requireMatch("nullString", null, patternObj));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireMatch("invalidString", "123abc", patternObj));
+  }
+
+  @Test
+  public void testRequireNotMatch() {
+    // 使用字符串形式的正则表达式测试
+    assertEquals("123abc", Argument.requireNotMatch("validString", "123abc", "^[a-z]+[0-9]+$"));
+    assertEquals("ABC123", Argument.requireNotMatch("validString", "ABC123", "^[a-z]+[0-9]+$"));
+    assertEquals("", Argument.requireNotMatch("validString", "", "^[a-z]+[0-9]+$"));
+    assertEquals("abc 123", Argument.requireNotMatch("validString", "abc 123", "^[a-z]+[0-9]+$"));
+    assertEquals("123", Argument.requireNotMatch("validString", "123", "^[a-z]+[0-9]+$"));
+    assertEquals("abc", Argument.requireNotMatch("validString", "abc", "^[a-z]+[0-9]+$"));
+    
+    // 特殊情况测试
+    assertEquals("12345", Argument.requireNotMatch("validString", "12345", "^[a-z]+$"));
+    assertEquals("abc12345", Argument.requireNotMatch("validString", "abc12345", "^\\d+$"));
+    assertEquals("abc-def", Argument.requireNotMatch("validString", "abc-def", "^[a-z]+_[a-z]+$"));
+    assertEquals("20231231", Argument.requireNotMatch("validString", "20231231", "^\\d{4}-\\d{2}-\\d{2}$"));
+    
+    assertThrows(NullPointerException.class, () -> Argument.requireNotMatch("nullString", null, "^[a-z]+$"));
+    assertThrows(NullPointerException.class, () -> Argument.requireNotMatch("validString", "123abc", (String) null));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNotMatch("invalidString", "abc123", "^[a-z]+[0-9]+$"));
+    
+    // 使用Pattern对象形式的正则表达式测试
+    java.util.regex.Pattern patternObj = java.util.regex.Pattern.compile("^[a-z]+[0-9]+$");
+    assertEquals("123abc", Argument.requireNotMatch("validString", "123abc", patternObj));
+    assertEquals("ABC123", Argument.requireNotMatch("validString", "ABC123", patternObj));
+    
+    // 多模式不匹配
+    java.util.regex.Pattern multiPatternObj = java.util.regex.Pattern.compile("^(\\d{3}-\\d{2}-\\d{4}|\\d{9})$");
+    assertEquals("12-345-6789", Argument.requireNotMatch("invalidSSN", "12-345-6789", multiPatternObj));
+    assertEquals("1234567890", Argument.requireNotMatch("invalidSSN", "1234567890", multiPatternObj));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNotMatch("validSSN", "123-45-6789", multiPatternObj));
+    
+    // 不同模式标志测试
+    java.util.regex.Pattern caseInsensitivePatternObj = java.util.regex.Pattern.compile("^[a-z]+$", java.util.regex.Pattern.CASE_INSENSITIVE);
+    assertEquals("123", Argument.requireNotMatch("validString", "123", caseInsensitivePatternObj));
+    assertEquals("abc123", Argument.requireNotMatch("validString", "abc123", caseInsensitivePatternObj));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNotMatch("invalidString", "ABC", caseInsensitivePatternObj));
+    
+    assertThrows(NullPointerException.class, () -> Argument.requireNotMatch("nullString", null, patternObj));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireNotMatch("invalidString", "abc123", patternObj));
+  }
+
+  // -------------------------------------------------------------------------
+  // 特定格式验证方法测试
+  // -------------------------------------------------------------------------
+
+  @Test
+  public void testRequireEmail() {
+    // 基本有效电子邮件格式
+    assertEquals("test@example.com", Argument.requireEmail("validEmail", "test@example.com"));
+    assertEquals("user.name+tag@domain.co.uk", Argument.requireEmail("validEmail", "user.name+tag@domain.co.uk"));
+    assertEquals("user-name@domain.com", Argument.requireEmail("validEmail", "user-name@domain.com"));
+    assertEquals("user_name@domain.com", Argument.requireEmail("validEmail", "user_name@domain.com"));
+    assertEquals("a@b.c", Argument.requireEmail("validEmail", "a@b.c"));
+    assertEquals("very.common@example.com", Argument.requireEmail("validEmail", "very.common@example.com"));
+    
+    assertThrows(NullPointerException.class, () -> Argument.requireEmail("nullEmail", null));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireEmail("invalidEmail", "test@"));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireEmail("invalidEmail", "test@domain"));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireEmail("invalidEmail", "test"));
+  }
+
+  @Test
+  public void testRequireIpv4() {
+    assertEquals("192.168.1.1", Argument.requireIpv4("validIpv4", "192.168.1.1"));
+    assertEquals("0.0.0.0", Argument.requireIpv4("validIpv4", "0.0.0.0"));
+    assertEquals("255.255.255.255", Argument.requireIpv4("validIpv4", "255.255.255.255"));
+    
+    assertThrows(NullPointerException.class, () -> Argument.requireIpv4("nullIpv4", null));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireIpv4("invalidIpv4", "256.0.0.1"));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireIpv4("invalidIpv4", "192.168.1"));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireIpv4("invalidIpv4", "192.168.1.1.1"));
+  }
+
+  @Test
+  public void testRequireIpv6() {
+    assertEquals("2001:0db8:85a3:0000:0000:8a2e:0370:7334", 
+                 Argument.requireIpv6("validIpv6", "2001:0db8:85a3:0000:0000:8a2e:0370:7334"));
+    
+    assertThrows(NullPointerException.class, () -> Argument.requireIpv6("nullIpv6", null));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireIpv6("invalidIpv6", "192.168.1.1"));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireIpv6("invalidIpv6", "2001:0db8:85a3:0000:0000:8a2e:0370"));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireIpv6("invalidIpv6", "2001:0db8:85a3:0000:0000:8a2e:0370:7334:1234"));
+  }
+
+  @Test
+  public void testRequireIp() {
+    assertEquals("192.168.1.1", Argument.requireIp("validIp", "192.168.1.1"));
+    assertEquals("2001:0db8:85a3:0000:0000:8a2e:0370:7334", 
+                 Argument.requireIp("validIp", "2001:0db8:85a3:0000:0000:8a2e:0370:7334"));
+    
+    assertThrows(NullPointerException.class, () -> Argument.requireIp("nullIp", null));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireIp("invalidIp", "256.0.0.1"));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireIp("invalidIp", "2001:xyz:85a3:0000:0000:8a2e:0370:7334"));
+  }
+
+  @Test
+  public void testRequireMac() {
+    assertEquals("00:1A:2B:3C:4D:5E", Argument.requireMac("validMac", "00:1A:2B:3C:4D:5E"));
+    assertEquals("a1:b2:c3:d4:e5:f6", Argument.requireMac("validMac", "a1:b2:c3:d4:e5:f6"));
+    
+    assertThrows(NullPointerException.class, () -> Argument.requireMac("nullMac", null));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireMac("invalidMac", "00:1A:2B:3C:4D"));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireMac("invalidMac", "00:1A:2B:3C:4D:5E:6F"));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireMac("invalidMac", "00-1A-2B-3C-4D-5E"));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireMac("invalidMac", "001A2B3C4D5E"));
+  }
+
+  @Test
+  public void testRequireUrl() {
+    assertEquals("http://example.com", Argument.requireUrl("validUrl", "http://example.com"));
+    assertEquals("https://www.example.com/path?query=value", 
+                 Argument.requireUrl("validUrl", "https://www.example.com/path?query=value"));
+    
+    assertThrows(NullPointerException.class, () -> Argument.requireUrl("nullUrl", null));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireUrl("invalidUrl", "example.com"));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireUrl("invalidUrl", "ftp://example.com"));
+  }
+
+  @Test
+  public void testRequireUuid() {
+    assertEquals("550e8400-e29b-41d4-a716-446655440000", 
+                 Argument.requireUuid("validUuid", "550e8400-e29b-41d4-a716-446655440000"));
+    
+    assertThrows(NullPointerException.class, () -> Argument.requireUuid("nullUuid", null));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireUuid("invalidUuid", "550e8400-e29b-41d4-a716"));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireUuid("invalidUuid", "550e8400e29b41d4a716446655440000"));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireUuid("invalidUuid", "xxxe8400-e29b-41d4-a716-446655440000"));
+  }
+
+  @Test
+  public void testRequireHex() {
+    assertEquals("1a2b3c", Argument.requireHex("validHex", "1a2b3c"));
+    assertEquals("1A2B3C", Argument.requireHex("validHex", "1A2B3C"));
+    assertEquals("123456789abcdefABCDEF", Argument.requireHex("validHex", "123456789abcdefABCDEF"));
+    
+    assertThrows(NullPointerException.class, () -> Argument.requireHex("nullHex", null));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireHex("invalidHex", "1a2b3g"));
+    assertThrows(IllegalArgumentException.class, () -> Argument.requireHex("invalidHex", "0x1a2b3c"));
   }
 } 
