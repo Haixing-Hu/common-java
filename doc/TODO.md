@@ -6,6 +6,7 @@
   > - 浮点数比较的边界情况测试（epsilon参数）
   > - 对象类型的requireInEnum测试
   > - 更多的范围检查边界情况
+  > - javadoc注释已补全
 - [x] ArrayUtils
   > 已完成测试，测试内容全面，涵盖了所有原始类型和引用类型数组的各种操作，包括：nullToEmpty、toString、hashCode、subarray、sameLength、reverse、indexOf/lastIndexOf/contains、类型转换、isEmpty、add/remove、sum/product、nullIfEmpty、lowerBound/upperBound等方法
 - [ ] Assignable
