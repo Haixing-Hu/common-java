@@ -1593,6 +1593,48 @@ public final class Argument {
   }
 
   /**
+   * 验证单精度浮点参数必须为零。
+   *
+   * @param name
+   *     参数的名称。
+   * @param arg
+   *     被验证的单精度浮点参数。
+   * @param epsilon
+   *     可接受的误差范围。
+   * @return
+   *     如果验证通过，返回参数本身。
+   * @throws IllegalArgumentException
+   *     如果参数不为零。
+   */
+  public static float requireZero(final String name, final float arg, final float epsilon) {
+    if (Math.abs(arg) > epsilon) {
+      throw new IllegalArgumentException(name + " must be zero.");
+    }
+    return arg;
+  }
+
+  /**
+   * 验证双精度浮点参数必须为零。
+   *
+   * @param name
+   *     参数的名称。
+   * @param arg
+   *     被验证的双精度浮点参数。
+   * @param epsilon
+   *     可接受的误差范围。
+   * @return
+   *     如果验证通过，返回参数本身。
+   * @throws IllegalArgumentException
+   *     如果参数不为零。
+   */
+  public static double requireZero(final String name, final double arg, final double epsilon) {
+    if (Math.abs(arg) > epsilon) {
+      throw new IllegalArgumentException(name + " must be zero.");
+    }
+    return arg;
+  }
+
+  /**
    * 验证字节参数必须不为零。
    *
    * @param name
@@ -1701,6 +1743,48 @@ public final class Argument {
    */
   public static double requireNonZero(final String name, final double arg) {
     if (arg == 0) {
+      throw new IllegalArgumentException(name + " cannot be zero.");
+    }
+    return arg;
+  }
+
+  /**
+   * 验证单精度浮点参数必须不为零。
+   *
+   * @param name
+   *     参数的名称。
+   * @param arg
+   *     被验证的单精度浮点参数。
+   * @param epsilon
+   *     可接受的误差范围。
+   * @return
+   *     如果验证通过，返回参数本身。
+   * @throws IllegalArgumentException
+   *     如果参数为零。
+   */
+  public static float requireNonZero(final String name, final float arg, final double epsilon) {
+    if (Math.abs(arg) <= epsilon) {
+      throw new IllegalArgumentException(name + " cannot be zero.");
+    }
+    return arg;
+  }
+
+  /**
+   * 验证双精度浮点参数必须不为零。
+   *
+   * @param name
+   *     参数的名称。
+   * @param arg
+   *     被验证的双精度浮点参数。
+   * @param epsilon
+   *     可接受的误差范围。
+   * @return
+   *     如果验证通过，返回参数本身。
+   * @throws IllegalArgumentException
+   *     如果参数为零。
+   */
+  public static double requireNonZero(final String name, final double arg, final double epsilon) {
+    if (Math.abs(arg) <= epsilon) {
       throw new IllegalArgumentException(name + " cannot be zero.");
     }
     return arg;
@@ -1821,6 +1905,48 @@ public final class Argument {
   }
 
   /**
+   * 验证单精度浮点参数必须为正值（大于零）。
+   *
+   * @param name
+   *     参数的名称。
+   * @param arg
+   *     被验证的单精度浮点参数。
+   * @param epsilon
+   *     可接受的误差范围。
+   * @return
+   *     如果验证通过，返回参数本身。
+   * @throws IllegalArgumentException
+   *     如果参数不是正值。
+   */
+  public static float requirePositive(final String name, final float arg, final float epsilon) {
+    if (arg <= 0 || MathEx.equal(arg, 0, epsilon)) {
+      throw new IllegalArgumentException(name + " must be positive.");
+    }
+    return arg;
+  }
+
+  /**
+   * 验证双精度浮点参数必须为正值（大于零）。
+   *
+   * @param name
+   *     参数的名称。
+   * @param arg
+   *     被验证的双精度浮点参数。
+   * @param epsilon
+   *     可接受的误差范围。
+   * @return
+   *     如果验证通过，返回参数本身。
+   * @throws IllegalArgumentException
+   *     如果参数不是正值。
+   */
+  public static double requirePositive(final String name, final double arg, final double epsilon) {
+    if (arg <= 0 || MathEx.equal(arg, 0, epsilon)) {
+      throw new IllegalArgumentException(name + " must be positive.");
+    }
+    return arg;
+  }
+
+  /**
    * 验证字节参数必须为非正值（小于等于零）。
    *
    * @param name
@@ -1929,6 +2055,48 @@ public final class Argument {
    */
   public static double requireNonPositive(final String name, final double arg) {
     if (arg > 0) {
+      throw new IllegalArgumentException(name + " must be non-positive.");
+    }
+    return arg;
+  }
+
+  /**
+   * 验证单精度浮点参数必须为非正值（小于等于零）。
+   *
+   * @param name
+   *     参数的名称。
+   * @param arg
+   *     被验证的单精度浮点参数。
+   * @param epsilon
+   *     可接受的误差范围。
+   * @return
+   *     如果验证通过，返回参数本身。
+   * @throws IllegalArgumentException
+   *     如果参数不是非正值。
+   */
+  public static float requireNonPositive(final String name, final float arg, final float epsilon) {
+    if (arg > 0 && !MathEx.equal(arg, 0, epsilon)) {
+      throw new IllegalArgumentException(name + " must be non-positive.");
+    }
+    return arg;
+  }
+
+  /**
+   * 验证双精度浮点参数必须为非正值（小于等于零）。
+   *
+   * @param name
+   *     参数的名称。
+   * @param arg
+   *     被验证的双精度浮点参数。
+   * @param epsilon
+   *     可接受的误差范围。
+   * @return
+   *     如果验证通过，返回参数本身。
+   * @throws IllegalArgumentException
+   *     如果参数不是非正值。
+   */
+  public static double requireNonPositive(final String name, final double arg, final double epsilon) {
+    if (arg > 0 && !MathEx.equal(arg, 0, epsilon)) {
       throw new IllegalArgumentException(name + " must be non-positive.");
     }
     return arg;
@@ -2049,6 +2217,48 @@ public final class Argument {
   }
 
   /**
+   * 验证单精度浮点参数必须为负值（小于零）。
+   *
+   * @param name
+   *     参数的名称。
+   * @param arg
+   *     被验证的单精度浮点参数。
+   * @param epsilon
+   *     可接受的误差范围。
+   * @return
+   *     如果验证通过，返回参数本身。
+   * @throws IllegalArgumentException
+   *     如果参数不是负值。
+   */
+  public static float requireNegative(final String name, final float arg, final float epsilon) {
+    if (arg >= 0 || MathEx.equal(arg, 0, epsilon)) {
+      throw new IllegalArgumentException(name + " must be negative.");
+    }
+    return arg;
+  }
+
+  /**
+   * 验证双精度浮点参数必须为负值（小于零）。
+   *
+   * @param name
+   *     参数的名称。
+   * @param arg
+   *     被验证的双精度浮点参数。
+   * @param epsilon
+   *     可接受的误差范围。
+   * @return
+   *     如果验证通过，返回参数本身。
+   * @throws IllegalArgumentException
+   *     如果参数不是负值。
+   */
+  public static double requireNegative(final String name, final double arg, final double epsilon) {
+    if (arg >= 0 || MathEx.equal(arg, 0, epsilon)) {
+      throw new IllegalArgumentException(name + " must be negative.");
+    }
+    return arg;
+  }
+
+  /**
    * 验证字节参数必须为非负值（大于等于零）。
    *
    * @param name
@@ -2157,6 +2367,48 @@ public final class Argument {
    */
   public static double requireNonNegative(final String name, final double arg) {
     if (arg < 0) {
+      throw new IllegalArgumentException(name + " must be non-negative.");
+    }
+    return arg;
+  }
+
+  /**
+   * 验证单精度浮点参数必须为非负值（大于等于零）。
+   *
+   * @param name
+   *     参数的名称。
+   * @param arg
+   *     被验证的单精度浮点参数。
+   * @param epsilon
+   *     可接受的误差范围。
+   * @return
+   *     如果验证通过，返回参数本身。
+   * @throws IllegalArgumentException
+   *     如果参数不是非负值。
+   */
+  public static float requireNonNegative(final String name, final float arg, final float epsilon) {
+    if (arg < 0 && !MathEx.equal(arg, 0, epsilon)) {
+      throw new IllegalArgumentException(name + " must be non-negative.");
+    }
+    return arg;
+  }
+
+  /**
+   * 验证双精度浮点参数必须为非负值（大于等于零）。
+   *
+   * @param name
+   *     参数的名称。
+   * @param arg
+   *     被验证的双精度浮点参数。
+   * @param epsilon
+   *     可接受的误差范围。
+   * @return
+   *     如果验证通过，返回参数本身。
+   * @throws IllegalArgumentException
+   *     如果参数不是非负值。
+   */
+  public static double requireNonNegative(final String name, final double arg, final double epsilon) {
+    if (arg < 0 && !MathEx.equal(arg, 0, epsilon)) {
       throw new IllegalArgumentException(name + " must be non-negative.");
     }
     return arg;
@@ -2823,6 +3075,28 @@ public final class Argument {
     return arg1;
   }
 
+
+  /**
+   * 验证第一个单精度浮点参数必须小于第二个参数（考虑误差范围）。
+   *
+   * @param name1
+   *     第一个参数的名称。
+   * @param arg1
+   *     被验证的第一个单精度浮点参数。
+   * @param name2
+   *     第二个参数的名称。
+   * @param arg2
+   *     被验证的第二个单精度浮点参数。
+   * @return
+   *     如果验证通过，返回第一个参数。
+   * @throws IllegalArgumentException
+   *     如果第一个参数不小于第二个参数。
+   */
+  public static float requireLess(final String name1, final float arg1,
+      final String name2, final float arg2) {
+    return requireLess(name1, arg1, name2, arg2, MathEx.DEFAULT_FLOAT_EPSILON);
+  }
+
   /**
    * 验证第一个单精度浮点参数必须小于第二个参数（考虑误差范围）。
    *
@@ -2854,6 +3128,29 @@ public final class Argument {
           + ").");
     }
     return arg1;
+  }
+
+
+  /**
+   * 验证第一个双精度浮点参数必须小于第二个参数（考虑误差范围）。
+   *
+   * @param name1
+   *     第一个参数的名称。
+   * @param arg1
+   *     被验证的第一个双精度浮点参数。
+   * @param name2
+   *     第二个参数的名称。
+   * @param arg2
+   *     被验证的第二个双精度浮点参数。
+   *     可接受的误差范围。
+   * @return
+   *     如果验证通过，返回第一个参数。
+   * @throws IllegalArgumentException
+   *     如果第一个参数不小于第二个参数。
+   */
+  public static double requireLess(final String name1, final double arg1,
+      final String name2, final double arg2) {
+    return requireLess(name1, arg1, name2, arg2, MathEx.DEFAULT_DOUBLE_EPSILON);
   }
 
   /**
@@ -3077,6 +3374,27 @@ public final class Argument {
   }
 
   /**
+   * 验证第一个单精度浮点参数必须小于等于第二个参数。
+   *
+   * @param name1
+   *     第一个参数的名称。
+   * @param arg1
+   *     被验证的第一个单精度浮点参数。
+   * @param name2
+   *     第二个参数的名称。
+   * @param arg2
+   *     被验证的第二个单精度浮点参数。
+   * @return
+   *     如果验证通过，返回第一个参数。
+   * @throws IllegalArgumentException
+   *     如果第一个参数大于第二个参数。
+   */
+  public static float requireLessEqual(final String name1, final float arg1,
+      final String name2, final float arg2) {
+    return requireLessEqual(name1, arg1, name2, arg2, MathEx.DEFAULT_FLOAT_EPSILON);
+  }
+
+  /**
    * 验证第一个单精度浮点参数必须小于等于第二个参数（考虑误差范围）。
    *
    * @param name1
@@ -3110,6 +3428,27 @@ public final class Argument {
           + ").");
     }
     return arg1;
+  }
+
+  /**
+   * 验证第一个双精度浮点参数必须小于等于第二个参数。
+   *
+   * @param name1
+   *     第一个参数的名称。
+   * @param arg1
+   *     被验证的第一个双精度浮点参数。
+   * @param name2
+   *     第二个参数的名称。
+   * @param arg2
+   *     被验证的第二个双精度浮点参数。
+   * @return
+   *     如果验证通过，返回第一个参数。
+   * @throws IllegalArgumentException
+   *     如果第一个参数大于第二个参数。
+   */
+  public static double requireLessEqual(final String name1, final double arg1,
+      final String name2, final double arg2) {
+    return requireLessEqual(name1, arg1, name2, arg2, MathEx.DEFAULT_DOUBLE_EPSILON);
   }
 
   /**
@@ -3336,6 +3675,27 @@ public final class Argument {
   }
 
   /**
+   * 验证第一个单精度浮点参数必须大于第二个参数。
+   *
+   * @param name1
+   *     第一个参数的名称。
+   * @param arg1
+   *     被验证的第一个单精度浮点参数。
+   * @param name2
+   *     第二个参数的名称。
+   * @param arg2
+   *     被验证的第二个单精度浮点参数。
+   * @return
+   *     如果验证通过，返回第一个参数。
+   * @throws IllegalArgumentException
+   *     如果第一个参数不大于第二个参数。
+   */
+  public static float requireGreater(final String name1, final float arg1,
+      final String name2, final float arg2) {
+    return requireGreater(name1, arg1, name2, arg2, MathEx.DEFAULT_FLOAT_EPSILON);
+  }
+
+  /**
    * 验证第一个单精度浮点参数必须大于第二个参数（考虑误差范围）。
    *
    * @param name1
@@ -3366,6 +3726,27 @@ public final class Argument {
           + ").");
     }
     return arg1;
+  }
+
+  /**
+   * 验证第一个双精度浮点参数必须大于第二个参数。
+   *
+   * @param name1
+   *     第一个参数的名称。
+   * @param arg1
+   *     被验证的第一个双精度浮点参数。
+   * @param name2
+   *     第二个参数的名称。
+   * @param arg2
+   *     被验证的第二个双精度浮点参数。
+   * @return
+   *     如果验证通过，返回第一个参数。
+   * @throws IllegalArgumentException
+   *     如果第一个参数不大于第二个参数。
+   */
+  public static double requireGreater(final String name1, final double arg1,
+      final String name2, final double arg2) {
+    return requireGreater(name1, arg1, name2, arg2, MathEx.DEFAULT_DOUBLE_EPSILON);
   }
 
   /**
@@ -3589,6 +3970,27 @@ public final class Argument {
   }
 
   /**
+   * 验证第一个单精度浮点参数必须大于等于第二个参数。
+   *
+   * @param name1
+   *     第一个参数的名称。
+   * @param arg1
+   *     被验证的第一个单精度浮点参数。
+   * @param name2
+   *     第二个参数的名称。
+   * @param arg2
+   *     被验证的第二个单精度浮点参数。
+   * @return
+   *     如果验证通过，返回第一个参数。
+   * @throws IllegalArgumentException
+   *     如果第一个参数小于第二个参数。
+   */
+  public static float requireGreaterEqual(final String name1, final float arg1,
+      final String name2, final float arg2) {
+    return requireGreaterEqual(name1, arg1, name2, arg2, MathEx.DEFAULT_FLOAT_EPSILON);
+  }
+
+  /**
    * 验证第一个单精度浮点参数必须大于等于第二个参数（考虑误差范围）。
    *
    * @param name1
@@ -3622,6 +4024,27 @@ public final class Argument {
           + ").");
     }
     return arg1;
+  }
+
+  /**
+   * 验证第一个双精度浮点参数必须大于等于第二个参数。
+   *
+   * @param name1
+   *     第一个参数的名称。
+   * @param arg1
+   *     被验证的第一个双精度浮点参数。
+   * @param name2
+   *     第二个参数的名称。
+   * @param arg2
+   *     被验证的第二个双精度浮点参数。
+   * @return
+   *     如果验证通过，返回第一个参数。
+   * @throws IllegalArgumentException
+   *     如果第一个参数小于第二个参数。
+   */
+  public static double requireGreaterEqual(final String name1, final double arg1,
+      final String name2, final double arg2) {
+    return requireGreaterEqual(name1, arg1, name2, arg2, MathEx.DEFAULT_DOUBLE_EPSILON);
   }
 
   /**
@@ -5810,214 +6233,6 @@ public final class Argument {
       throw new IllegalArgumentException("The '" + name + "' must not match the regex ["
           + regex
           + "], but it is "
-          + arg);
-    }
-    return arg;
-  }
-
-  /**
-   * 验证字符串参数必须符合电子邮件地址格式。
-   *
-   * @param name
-   *     参数的名称。
-   * @param arg
-   *     被验证的字符串参数。
-   * @return
-   *     如果验证通过，返回参数本身。
-   * @throws IllegalArgumentException
-   *     如果参数不符合电子邮件地址格式。
-   * @throws NullPointerException
-   *     如果参数为null。
-   */
-  public static String requireEmail(final String name, final String arg) {
-    if (arg == null) {
-      throw new NullPointerException("The '" + name + "' can not be null.");
-    }
-    if (!arg.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-      throw new IllegalArgumentException("The '" + name + "' must be a valid email address,"
-          + " but it is "
-          + arg);
-    }
-    return arg;
-  }
-
-  /**
-   * 验证字符串参数必须符合IPv4地址格式。
-   *
-   * @param name
-   *     参数的名称。
-   * @param arg
-   *     被验证的字符串参数。
-   * @return
-   *     如果验证通过，返回参数本身。
-   * @throws IllegalArgumentException
-   *     如果参数不符合IPv4地址格式。
-   * @throws NullPointerException
-   *     如果参数为null。
-   */
-  public static String requireIpv4(final String name, final String arg) {
-    if (arg == null) {
-      throw new NullPointerException("The '" + name + "' can not be null.");
-    }
-    if (!arg.matches("^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$")) {
-      throw new IllegalArgumentException("The '" + name + "' must be a valid IPv4 address,"
-          + " but it is "
-          + arg);
-    }
-    return arg;
-  }
-
-  /**
-   * 验证字符串参数必须符合IPv6地址格式。
-   *
-   * @param name
-   *     参数的名称。
-   * @param arg
-   *     被验证的字符串参数。
-   * @return
-   *     如果验证通过，返回参数本身。
-   * @throws IllegalArgumentException
-   *     如果参数不符合IPv6地址格式。
-   * @throws NullPointerException
-   *     如果参数为null。
-   */
-  public static String requireIpv6(final String name, final String arg) {
-    if (arg == null) {
-      throw new NullPointerException("The '" + name + "' can not be null.");
-    }
-    if (!arg.matches("^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$")) {
-      throw new IllegalArgumentException("The '" + name + "' must be a valid IPv6 address,"
-          + " but it is "
-          + arg);
-    }
-    return arg;
-  }
-
-  /**
-   * 验证字符串参数必须符合IP地址格式（IPv4或IPv6）。
-   *
-   * @param name
-   *     参数的名称。
-   * @param arg
-   *     被验证的字符串参数。
-   * @return
-   *     如果验证通过，返回参数本身。
-   * @throws IllegalArgumentException
-   *     如果参数不符合IP地址格式。
-   * @throws NullPointerException
-   *     如果参数为null。
-   */
-  public static String requireIp(final String name, final String arg) {
-    if (arg == null) {
-      throw new NullPointerException("The '" + name + "' can not be null.");
-    }
-    if (!arg.matches("^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$|^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$")) {
-      throw new IllegalArgumentException("The '" + name + "' must be a valid IP address,"
-          + " but it is "
-          + arg);
-    }
-    return arg;
-  }
-
-  /**
-   * 验证字符串参数必须符合MAC地址格式。
-   *
-   * @param name
-   *     参数的名称。
-   * @param arg
-   *     被验证的字符串参数。
-   * @return
-   *     如果验证通过，返回参数本身。
-   * @throws IllegalArgumentException
-   *     如果参数不符合MAC地址格式。
-   * @throws NullPointerException
-   *     如果参数为null。
-   */
-  public static String requireMac(final String name, final String arg) {
-    if (arg == null) {
-      throw new NullPointerException("The '" + name + "' can not be null.");
-    }
-    if (!arg.matches("^([0-9a-fA-F]{2}:){5}[0-9a-fA-F]{2}$")) {
-      throw new IllegalArgumentException("The '" + name + "' must be a valid MAC address,"
-          + " but it is "
-          + arg);
-    }
-    return arg;
-  }
-
-  /**
-   * 验证字符串参数必须符合URL格式。
-   *
-   * @param name
-   *     参数的名称。
-   * @param arg
-   *     被验证的字符串参数。
-   * @return
-   *     如果验证通过，返回参数本身。
-   * @throws IllegalArgumentException
-   *     如果参数不符合URL格式。
-   * @throws NullPointerException
-   *     如果参数为null。
-   */
-  public static String requireUrl(final String name, final String arg) {
-    if (arg == null) {
-      throw new NullPointerException("The '" + name + "' can not be null.");
-    }
-    if (!arg.matches("^https?://[\\w\\-]+(\\.[\\w\\-]+)+[\\w\\-.,@?^=%&:/~+#]*$")) {
-      throw new IllegalArgumentException("The '" + name + "' must be a valid URL,"
-          + " but it is "
-          + arg);
-    }
-    return arg;
-  }
-
-  /**
-   * 验证字符串参数必须符合UUID格式。
-   *
-   * @param name
-   *     参数的名称。
-   * @param arg
-   *     被验证的字符串参数。
-   * @return
-   *     如果验证通过，返回参数本身。
-   * @throws IllegalArgumentException
-   *     如果参数不符合UUID格式。
-   * @throws NullPointerException
-   *     如果参数为null。
-   */
-  public static String requireUuid(final String name, final String arg) {
-    if (arg == null) {
-      throw new NullPointerException("The '" + name + "' can not be null.");
-    }
-    if (!arg.matches("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")) {
-      throw new IllegalArgumentException("The '" + name + "' must be a valid UUID,"
-          + " but it is "
-          + arg);
-    }
-    return arg;
-  }
-
-  /**
-   * 验证字符串参数必须符合十六进制字符串格式（不包含前缀0x）。
-   *
-   * @param name
-   *     参数的名称。
-   * @param arg
-   *     被验证的字符串参数。
-   * @return
-   *     如果验证通过，返回参数本身。
-   * @throws IllegalArgumentException
-   *     如果参数不符合十六进制字符串格式。
-   * @throws NullPointerException
-   *     如果参数为null。
-   */
-  public static String requireHex(final String name, final String arg) {
-    if (arg == null) {
-      throw new NullPointerException("The '" + name + "' can not be null.");
-    }
-    if (!arg.matches("^[0-9a-fA-F]+$")) {
-      throw new IllegalArgumentException("The '" + name + "' must be a valid hex string,"
-          + " but it is "
           + arg);
     }
     return arg;
