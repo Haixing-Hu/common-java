@@ -8692,7 +8692,7 @@ public class StringUtils {
       if (i > 0) {
         builder.append(',');
       }
-      CharUtils.toHexString(ch, builder);
+      CharUtils.toUnicodeHexString(ch, builder);
     }
     builder.append(']');
   }
