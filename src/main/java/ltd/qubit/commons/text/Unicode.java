@@ -159,19 +159,19 @@ public final class Unicode {
   public static final int PlaneShift                 = 16;
 
   public static boolean isValidAscii(final int codePoint) {
-    return codePoint <= ASCII_MAX;
+    return (codePoint >= 0) && (codePoint <= ASCII_MAX);
   }
 
   public static boolean isValidLatin1(final int codePoint) {
-    return codePoint <= LATIN1_MAX;
+    return (codePoint >= 0) && (codePoint <= LATIN1_MAX);
   }
 
   public static boolean isValidUnicode(final int codePoint) {
-    return codePoint <= UNICODE_MAX;
+    return (codePoint >= 0) && (codePoint <= UNICODE_MAX);
   }
 
   public static boolean isBmp(final int codePoint) {
-    return codePoint < SUPPLEMENTARY_MIN;
+    return (codePoint >= 0) && (codePoint < SUPPLEMENTARY_MIN);
   }
 
   public static boolean isSupplementary(final int codePoint) {
