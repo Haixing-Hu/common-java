@@ -30,17 +30,15 @@ import java.util.stream.Stream;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
+import ltd.qubit.commons.math.MathEx;
 import ltd.qubit.commons.text.tostring.SimpleToStringStyle;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * This class provides operations on arrays, primitive arrays (like
- * {@code int[]}) and primitive wrapper arrays (like {@code Integer[]}).
+ * 这个类提供了对数组、基本类型数组（例如 {@code int[]}）和基本类型包装数组（例如 {@code Integer[]}）的操作。
  *
- * <p>This class tries to handle {@code null} input gracefully. An exception
- * will not be thrown for a {@code null} array input. However, an Object array
- * that contains a {@code null} element may throw an exception. Each method
- * documents its behavior.
+ * <p>这个类尝试优雅地处理 {@code null} 输入。对于 {@code null} 数组输入不会抛出异常。
+ * 但是，包含 {@code null} 元素的对象数组可能会抛出异常。每个方法都会记录其行为。
  *
  * @author Haixing Hu
  */
@@ -48,160 +46,158 @@ import ltd.qubit.commons.text.tostring.ToStringBuilder;
 public class ArrayUtils {
 
   /**
-   * An empty immutable {@code Object} array.
+   * 一个空的不可变 {@code Object} 数组。
    */
   public static final Object[] EMPTY_OBJECT_ARRAY = new Object[0];
 
   /**
-   * An empty immutable {@code Class} array.
+   * 一个空的不可变 {@code Class} 数组。
    */
   public static final Class<?>[] EMPTY_CLASS_ARRAY = new Class<?>[0];
 
   /**
-   * An empty immutable {@code Type} array.
+   * 一个空的不可变 {@code Type} 数组。
    */
   public static final Type[] EMPTY_TYPE_ARRAY = new Type[0];
 
   /**
-   * An empty immutable {@code String} array.
+   * 一个空的不可变 {@code String} 数组。
    */
   public static final String[] EMPTY_STRING_ARRAY = new String[0];
 
   /**
-   * An empty immutable {@code String[]} array.
+   * 一个空的不可变 {@code String[]} 二维数组。
    */
   public static final String[][] EMPTY_STRING_ARRAY_2D = new String[0][0];
 
   /**
-   * An empty immutable {@code long} array.
+   * 一个空的不可变 {@code long} 数组。
    */
   public static final long[] EMPTY_LONG_ARRAY = new long[0];
 
   /**
-   * An empty immutable {@code Long} array.
+   * 一个空的不可变 {@code Long} 数组。
    */
   public static final Long[] EMPTY_LONG_OBJECT_ARRAY = new Long[0];
 
   /**
-   * An empty immutable {@code int} array.
+   * 一个空的不可变 {@code int} 数组。
    */
   public static final int[] EMPTY_INT_ARRAY = new int[0];
 
   /**
-   * An empty immutable {@code Integer} array.
+   * 一个空的不可变 {@code Integer} 数组。
    */
   public static final Integer[] EMPTY_INTEGER_OBJECT_ARRAY = new Integer[0];
 
   /**
-   * An empty immutable {@code short} array.
+   * 一个空的不可变 {@code short} 数组。
    */
   public static final short[] EMPTY_SHORT_ARRAY = new short[0];
 
   /**
-   * An empty immutable {@code Short} array.
+   * 一个空的不可变 {@code Short} 数组。
    */
   public static final Short[] EMPTY_SHORT_OBJECT_ARRAY = new Short[0];
 
   /**
-   * An empty immutable {@code byte} array.
+   * 一个空的不可变 {@code byte} 数组。
    */
   public static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
 
   /**
-   * An empty immutable {@code Byte} array.
+   * 一个空的不可变 {@code Byte} 数组。
    */
   public static final Byte[] EMPTY_BYTE_OBJECT_ARRAY = new Byte[0];
 
   /**
-   * An empty immutable {@code double} array.
+   * 一个空的不可变 {@code double} 数组。
    */
   public static final double[] EMPTY_DOUBLE_ARRAY = new double[0];
 
   /**
-   * An empty immutable {@code Double} array.
+   * 一个空的不可变 {@code Double} 数组。
    */
   public static final Double[] EMPTY_DOUBLE_OBJECT_ARRAY = new Double[0];
 
   /**
-   * An empty immutable {@code float} array.
+   * 一个空的不可变 {@code float} 数组。
    */
   public static final float[] EMPTY_FLOAT_ARRAY = new float[0];
 
   /**
-   * An empty immutable {@code Float} array.
+   * 一个空的不可变 {@code Float} 数组。
    */
   public static final Float[] EMPTY_FLOAT_OBJECT_ARRAY = new Float[0];
 
   /**
-   * An empty immutable {@code boolean} array.
+   * 一个空的不可变 {@code boolean} 数组。
    */
   public static final boolean[] EMPTY_BOOLEAN_ARRAY = new boolean[0];
 
   /**
-   * An empty immutable {@code Boolean} array.
+   * 一个空的不可变 {@code Boolean} 数组。
    */
   public static final Boolean[] EMPTY_BOOLEAN_OBJECT_ARRAY = new Boolean[0];
 
   /**
-   * An empty immutable {@code char} array.
+   * 一个空的不可变 {@code char} 数组。
    */
   public static final char[] EMPTY_CHAR_ARRAY = new char[0];
 
   /**
-   * An empty immutable {@code Character} array.
+   * 一个空的不可变 {@code Character} 数组。
    */
   public static final Character[] EMPTY_CHARACTER_OBJECT_ARRAY = new Character[0];
 
   /**
-   * An empty immutable {@code byte[]} array.
+   * 一个空的不可变 {@code byte[]} 数组。
    */
   public static final byte[][] EMPTY_BYTE_ARRAY_ARRAY = new byte[0][];
 
   /**
-   * An empty immutable {@link BigInteger} array.
+   * 一个空的不可变 {@link BigInteger} 数组。
    */
   public static final BigInteger[] EMPTY_BIG_INTEGER_ARRAY = new BigInteger[0];
 
   /**
-   * An empty immutable {@link BigDecimal} array.
+   * 一个空的不可变 {@link BigDecimal} 数组。
    */
   public static final BigDecimal[] EMPTY_BIG_DECIMAL_ARRAY = new BigDecimal[0];
 
   /**
-   * An empty immutable {@link Date} array.
+   * 一个空的不可变 {@link Date} 数组。
    */
   public static final Date[] EMPTY_DATE_ARRAY = new Date[0];
 
   /**
-   * An empty immutable {@link Time} array.
+   * 一个空的不可变 {@link Time} 数组。
    */
   public static final Time[] EMPTY_TIME_ARRAY = new Time[0];
 
   /**
-   * An empty immutable {@link Timestamp} array.
+   * 一个空的不可变 {@link Timestamp} 数组。
    */
   public static final Timestamp[] EMPTY_TIMESTAMP_ARRAY = new Timestamp[0];
 
   /**
-   * An empty immutable {@link LocalDate} array.
+   * 一个空的不可变 {@link LocalDate} 数组。
    */
   public static final LocalDate[] EMPTY_LOCAL_DATE_ARRAY = new LocalDate[0];
 
   /**
-   * An empty immutable {@link LocalTime} array.
+   * 一个空的不可变 {@link LocalTime} 数组。
    */
   public static final LocalTime[] EMPTY_LOCAL_TIME_ARRAY = new LocalTime[0];
 
   /**
-   * An empty immutable {@link LocalDateTime} array.
+   * 一个空的不可变 {@link LocalDateTime} 数组。
    */
   public static final LocalDateTime[] EMPTY_LOCAL_DATETIME_ARRAY = new LocalDateTime[0];
 
   /**
-   * The current value when an element is not found in a list or array:
-   * {@code -1}. This value is returned by methods in this class and can also be
-   * used in comparisons with values returned by various method from
-   * {@link java.util.List}.
+   * 当在列表或数组中找不到元素时的当前值：{@code -1}。
+   * 此类中的方法返回此值，也可用于与来自 {@link java.util.List} 的各种方法返回的值进行比较。
    */
   public static final int INDEX_NOT_FOUND = -1;
 
@@ -209,34 +205,32 @@ public class ArrayUtils {
   }
 
   /**
-   * Outputs an array as a String, treating {@code null} as an empty array.
+   * 将数组作为字符串输出，将 {@code null} 视为空数组。
    *
-   * <p>Multi-dimensional arrays are handled correctly, including
-   * multi-dimensional primitive arrays.
+   * <p>多维数组和多维基本类型数组都会被正确处理。
    *
-   * <p>The format is that of Java source code, for example {@code {a,b}}.
+   * <p>格式为 Java 源代码格式，例如 {@code {a,b}}。
    *
    * @param array
-   *     the array to get a toString for, may be {@code null}
-   * @return a String representation of the array, '{}' if null array input
+   *     要获取字符串表示的数组，可能为 {@code null}
+   * @return 数组的字符串表示，如果为 null 数组输入则返回 '{}'
    */
   public static String toString(final Object array) {
     return toString(array, "{}");
   }
 
   /**
-   * Outputs an array as a String handling {@code null}s.
+   * 将数组作为字符串输出，处理 {@code null}。
    *
-   * <p>Multi-dimensional arrays are handled correctly, including
-   * multi-dimensional primitive arrays.
+   * <p>多维数组和多维基本类型数组都会被正确处理。
    *
-   * <p>The format is that of Java source code, for example {@code {a,b}}.
+   * <p>格式为 Java 源代码格式，例如 {@code {a,b}}。
    *
    * @param array
-   *     the array to get a toString for, may be {@code null}
+   *     要获取字符串表示的数组，可能为 {@code null}
    * @param stringIfNull
-   *     the String to return if the array is {@code null}
-   * @return a String representation of the array
+   *     如果数组为 {@code null} 时返回的字符串
+   * @return 数组的字符串表示
    */
   public static String toString(final Object array, final String stringIfNull) {
     if (array == null) {
@@ -248,14 +242,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Get a hashCode for an array handling multi-dimensional arrays correctly.
+   * 获取数组的哈希码，正确处理多维数组。
    *
-   * <p>Multi-dimensional primitive arrays are also handled correctly by this
-   * method.
+   * <p>多维基本类型数组也会被此方法正确处理。
    *
    * @param array
-   *     the array to get a hashCode for, may be {@code null}
-   * @return a hashCode for the array, zero if null array input.
+   *     要获取哈希码的数组，可能为 {@code null}
+   * @return 数组的哈希码，如果为 null 数组输入则返回零
    */
   public static int hashCode(final Object array) {
     int code = 2;
@@ -265,35 +258,30 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts the given array into a {@link java.util.Map}. Each element of the
-   * array must be either a {@link java.util.Map.Entry} or an array, containing
-   * at least two elements, where the first element is used as key and the
-   * second as value.
+   * 将给定数组转换为 {@link java.util.Map}。该数组的每个元素都必须是 {@link java.util.Map.Entry}
+   * 或包含至少两个元素的数组，其中第一个元素用作键，第二个元素用作值。
    *
-   * <p>This method can be used to initialize:
+   * <p>此方法可用于初始化：
    *
    * <pre>
-   * // Create a Map mapping colors.
+   * // 创建一个映射颜色的 Map。
    * Map colorMap = ArrayUtils.toMap(new String[][] {{
    *     {"RED", "#FF0000"},
    *     {"GREEN", "#00FF00"},
    *     {"BLUE", "#0000FF"}});
    * </pre>
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>此方法对于 {@code null} 输入数组返回 {@code null}。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     an array whose elements are either a {@link java.util.Map.Entry} or an
-   *     array containing at least two elements, may be {@code null}.
-   * @return a {@code Map} that was created from the array
+   *     一个数组，其元素是 {@link java.util.Map.Entry} 或包含至少两个元素的数组，可能为 {@code null}。
+   * @return 从数组创建的 {@code Map}
    * @throws IllegalArgumentException
-   *     if one element of this array is itself an array containing less then
-   *     two elements
+   *     如果此数组的一个元素本身是包含少于两个元素的数组
    * @throws IllegalArgumentException
-   *     if the array contains elements other than {@link java.util.Map.Entry}
-   *     and an Buffer
+   *     如果该数组包含除 {@link java.util.Map.Entry} 和 Buffer 以外的元素
    */
   public static <T> Map<Object, Object> toMap(@Nullable final T[] array) {
     if (array == null) {
@@ -302,7 +290,7 @@ public class ArrayUtils {
     final Map<Object, Object> map = new HashMap<>((int) (array.length * 1.5));
     for (int i = 0; i < array.length; ++i) {
       final Object object = array[i];
-      if (object instanceof Map.Entry<?, ?> entry) {
+      if (object instanceof final Map.Entry<?, ?> entry) {
         map.put(entry.getKey(), entry.getValue());
       } else if (object instanceof final Object[] entry) {
         if (entry.length < 2) {
@@ -323,59 +311,679 @@ public class ArrayUtils {
     }
     return map;
   }
-
   /**
-   * Finds the maximum value in a segment of an array.
+   * 在 byte 数组的一段中找到最大值。
    *
-   * @param <T>
-   *     the type of the elements in the array, which must be comparable.
    * @param array
-   *     the array, which could be {@code null}.
+   *     数组，可能为 {@code null}。
    * @param start
-   *     the inclusive start index of the segment. If it is less than 0, it is
-   *     treated as 0.
+   *     段的包含性起始索引。如果小于 0，则视为 0。
    * @param end
-   *     the exclusive end index of the segment. If it is greater than
-   *     {@code array.length}, it is treated as {@code array.length}.
-   * @return the maximum value found in the specified segment of the array;
-   *     returns {@code null} if the input array is {@code null} or the segment
-   *     is empty.
+   *     段的排他性结束索引。如果大于 {@code array.length}，则视为 {@code array.length}。
+   * @return 在指定数组段中找到的最大值；如果输入数组为 {@code null} 或段为空，则返回 {@code 0}。
    */
-  public static <T extends Comparable<? super T>> T max(
-      @Nullable final T[] array, final int start, final int end) {
-    if (array == null) {
-      return null;
+  public static byte max(@Nullable final byte[] array, final int start, final int end) {
+    if (array == null || array.length == 0) {
+      return 0;
     }
     final int theStart = Math.max(start, 0);
     final int theEnd = Math.min(end, array.length);
     if (theStart >= theEnd) {
-      return null;
+      return 0;
     }
-    T result = array[theStart];
+    byte result = array[theStart];
     for (int i = theStart + 1; i < theEnd; ++i) {
-      if (array[i] != null) {
-        if (result == null) {
-          result = array[i];
-        } else if (result.compareTo(array[i]) < 0) {
-          result = array[i];
-        }
+      if (array[i] > result) {
+        result = array[i];
       }
     }
     return result;
   }
 
   /**
-   * Finds the maximum value in an array.
+   * 在 byte 数组中找到最大值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @return 在指定数组中找到的最大值，如果数组为 {@code null} 或为空，则返回 {@code 0}。
+   */
+  public static byte max(@Nullable final byte[] array) {
+    if (array == null || array.length == 0) {
+      return 0;
+    }
+    return max(array, 0, array.length);
+  }
+
+  /**
+   * 在 byte 数组的一段中找到最小值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @param start
+   *     段的包含性起始索引。如果小于 0，则视为 0。
+   * @param end
+   *     段的排他性结束索引。如果大于 {@code array.length}，则视为 {@code array.length}。
+   * @return 在指定数组段中找到的最小值；如果输入数组为 {@code null} 或段为空，则返回 {@code 0}。
+   */
+  public static byte min(@Nullable final byte[] array, final int start, final int end) {
+    if (array == null || array.length == 0) {
+      return 0;
+    }
+    final int theStart = Math.max(start, 0);
+    final int theEnd = Math.min(end, array.length);
+    if (theStart >= theEnd) {
+      return 0;
+    }
+    byte result = array[theStart];
+    for (int i = theStart + 1; i < theEnd; ++i) {
+      if (array[i] < result) {
+        result = array[i];
+      }
+    }
+    return result;
+  }
+
+  /**
+   * 在 byte 数组中找到最小值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @return 在指定数组中找到的最小值，如果数组为 {@code null} 或为空，则返回 {@code 0}。
+   */
+  public static byte min(@Nullable final byte[] array) {
+    if (array == null || array.length == 0) {
+      return 0;
+    }
+    return min(array, 0, array.length);
+  }
+
+  /**
+   * 在 short 数组的一段中找到最大值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @param start
+   *     段的包含性起始索引。如果小于 0，则视为 0。
+   * @param end
+   *     段的排他性结束索引。如果大于 {@code array.length}，则视为 {@code array.length}。
+   * @return 在指定数组段中找到的最大值；如果输入数组为 {@code null} 或段为空，则返回 {@code 0}。
+   */
+  public static short max(@Nullable final short[] array, final int start, final int end) {
+    if (array == null || array.length == 0) {
+      return 0;
+    }
+    final int theStart = Math.max(start, 0);
+    final int theEnd = Math.min(end, array.length);
+    if (theStart >= theEnd) {
+      return 0;
+    }
+    short result = array[theStart];
+    for (int i = theStart + 1; i < theEnd; ++i) {
+      if (array[i] > result) {
+        result = array[i];
+      }
+    }
+    return result;
+  }
+
+  /**
+   * 在 short 数组中找到最大值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @return 在指定数组中找到的最大值，如果数组为 {@code null} 或为空，则返回 {@code 0}。
+   */
+  public static short max(@Nullable final short[] array) {
+    if (array == null || array.length == 0) {
+      return 0;
+    }
+    return max(array, 0, array.length);
+  }
+
+  /**
+   * 在 short 数组的一段中找到最小值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @param start
+   *     段的包含性起始索引。如果小于 0，则视为 0。
+   * @param end
+   *     段的排他性结束索引。如果大于 {@code array.length}，则视为 {@code array.length}。
+   * @return 在指定数组段中找到的最小值；如果输入数组为 {@code null} 或段为空，则返回 {@code 0}。
+   */
+  public static short min(@Nullable final short[] array, final int start, final int end) {
+    if (array == null || array.length == 0) {
+      return 0;
+    }
+    final int theStart = Math.max(start, 0);
+    final int theEnd = Math.min(end, array.length);
+    if (theStart >= theEnd) {
+      return 0;
+    }
+    short result = array[theStart];
+    for (int i = theStart + 1; i < theEnd; ++i) {
+      if (array[i] < result) {
+        result = array[i];
+      }
+    }
+    return result;
+  }
+
+  /**
+   * 在 short 数组中找到最小值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @return 在指定数组中找到的最小值，如果数组为 {@code null} 或为空，则返回 {@code 0}。
+   */
+  public static short min(@Nullable final short[] array) {
+    if (array == null || array.length == 0) {
+      return 0;
+    }
+    return min(array, 0, array.length);
+  }
+
+  /**
+   * 在 int 数组的一段中找到最大值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @param start
+   *     段的包含性起始索引。如果小于 0，则视为 0。
+   * @param end
+   *     段的排他性结束索引。如果大于 {@code array.length}，则视为 {@code array.length}。
+   * @return 在指定数组段中找到的最大值；如果输入数组为 {@code null} 或段为空，则返回 {@code 0}。
+   */
+  public static int max(@Nullable final int[] array, final int start, final int end) {
+    if (array == null || array.length == 0) {
+      return 0;
+    }
+    final int theStart = Math.max(start, 0);
+    final int theEnd = Math.min(end, array.length);
+    if (theStart >= theEnd) {
+      return 0;
+    }
+    int result = array[theStart];
+    for (int i = theStart + 1; i < theEnd; ++i) {
+      if (array[i] > result) {
+        result = array[i];
+      }
+    }
+    return result;
+  }
+
+  /**
+   * 在 int 数组中找到最大值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @return 在指定数组中找到的最大值，如果数组为 {@code null} 或为空，则返回 {@code 0}。
+   */
+  public static int max(@Nullable final int[] array) {
+    if (array == null || array.length == 0) {
+      return 0;
+    }
+    return max(array, 0, array.length);
+  }
+
+  /**
+   * 在 int 数组的一段中找到最小值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @param start
+   *     段的包含性起始索引。如果小于 0，则视为 0。
+   * @param end
+   *     段的排他性结束索引。如果大于 {@code array.length}，则视为 {@code array.length}。
+   * @return 在指定数组段中找到的最小值；如果输入数组为 {@code null} 或段为空，则返回 {@code 0}。
+   */
+  public static int min(@Nullable final int[] array, final int start, final int end) {
+    if (array == null || array.length == 0) {
+      return 0;
+    }
+    final int theStart = Math.max(start, 0);
+    final int theEnd = Math.min(end, array.length);
+    if (theStart >= theEnd) {
+      return 0;
+    }
+    int result = array[theStart];
+    for (int i = theStart + 1; i < theEnd; ++i) {
+      if (array[i] < result) {
+        result = array[i];
+      }
+    }
+    return result;
+  }
+
+  /**
+   * 在 int 数组中找到最小值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @return 在指定数组中找到的最小值，如果数组为 {@code null} 或为空，则返回 {@code 0}。
+   */
+  public static int min(@Nullable final int[] array) {
+    if (array == null || array.length == 0) {
+      return 0;
+    }
+    return min(array, 0, array.length);
+  }
+
+  /**
+   * 在 long 数组的一段中找到最大值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @param start
+   *     段的包含性起始索引。如果小于 0，则视为 0。
+   * @param end
+   *     段的排他性结束索引。如果大于 {@code array.length}，则视为 {@code array.length}。
+   * @return 在指定数组段中找到的最大值；如果输入数组为 {@code null} 或段为空，则返回 {@code 0}。
+   */
+  public static long max(@Nullable final long[] array, final int start, final int end) {
+    if (array == null || array.length == 0) {
+      return 0L;
+    }
+    final int theStart = Math.max(start, 0);
+    final int theEnd = Math.min(end, array.length);
+    if (theStart >= theEnd) {
+      return 0L;
+    }
+    long result = array[theStart];
+    for (int i = theStart + 1; i < theEnd; ++i) {
+      if (array[i] > result) {
+        result = array[i];
+      }
+    }
+    return result;
+  }
+
+  /**
+   * 在 long 数组中找到最大值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @return 在指定数组中找到的最大值，如果数组为 {@code null} 或为空，则返回 {@code 0}。
+   */
+  public static long max(@Nullable final long[] array) {
+    if (array == null || array.length == 0) {
+      return 0L;
+    }
+    return max(array, 0, array.length);
+  }
+
+  /**
+   * 在 long 数组的一段中找到最小值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @param start
+   *     段的包含性起始索引。如果小于 0，则视为 0。
+   * @param end
+   *     段的排他性结束索引。如果大于 {@code array.length}，则视为 {@code array.length}。
+   * @return 在指定数组段中找到的最小值；如果输入数组为 {@code null} 或段为空，则返回 {@code 0}。
+   */
+  public static long min(@Nullable final long[] array, final int start, final int end) {
+    if (array == null || array.length == 0) {
+      return 0L;
+    }
+    final int theStart = Math.max(start, 0);
+    final int theEnd = Math.min(end, array.length);
+    if (theStart >= theEnd) {
+      return 0L;
+    }
+    long result = array[theStart];
+    for (int i = theStart + 1; i < theEnd; ++i) {
+      if (array[i] < result) {
+        result = array[i];
+      }
+    }
+    return result;
+  }
+
+  /**
+   * 在 long 数组中找到最小值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @return 在指定数组中找到的最小值，如果数组为 {@code null} 或为空，则返回 {@code 0}。
+   */
+  public static long min(@Nullable final long[] array) {
+    if (array == null || array.length == 0) {
+      return 0L;
+    }
+    return min(array, 0, array.length);
+  }
+
+  /**
+   * 在 float 数组的一段中找到最大值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @param start
+   *     段的包含性起始索引。如果小于 0，则视为 0。
+   * @param end
+   *     段的排他性结束索引。如果大于 {@code array.length}，则视为 {@code array.length}。
+   * @return 在指定数组段中找到的最大值；如果输入数组为 {@code null} 或段为空，则返回 {@code 0.0f}。
+   */
+  public static float max(@Nullable final float[] array, final int start, final int end) {
+    if (array == null || array.length == 0) {
+      return 0.0f;
+    }
+    final int theStart = Math.max(start, 0);
+    final int theEnd = Math.min(end, array.length);
+    if (theStart >= theEnd) {
+      return 0.0f;
+    }
+    float result = array[theStart];
+    for (int i = theStart + 1; i < theEnd; ++i) {
+      if (Float.isNaN(array[i])) {
+        return Float.NaN;
+      }
+      if (array[i] > result || Float.isNaN(result)) {
+        result = array[i];
+      }
+    }
+    return result;
+  }
+
+  /**
+   * 在 float 数组中找到最大值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @return 在指定数组中找到的最大值，如果数组为 {@code null} 或为空，则返回 {@code 0.0f}。
+   *     如果任何值是 NaN，则返回 NaN。
+   */
+  public static float max(@Nullable final float[] array) {
+    if (array == null || array.length == 0) {
+      return 0.0f;
+    }
+    return max(array, 0, array.length);
+  }
+
+  /**
+   * 在 float 数组的一段中找到最小值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @param start
+   *     段的包含性起始索引。如果小于 0，则视为 0。
+   * @param end
+   *     段的排他性结束索引。如果大于 {@code array.length}，则视为 {@code array.length}。
+   * @return 在指定数组段中找到的最小值；如果输入数组为 {@code null} 或段为空，则返回 {@code 0.0f}。
+   *     如果任何值是 NaN，则返回 NaN。
+   */
+  public static float min(@Nullable final float[] array, final int start, final int end) {
+    if (array == null || array.length == 0) {
+      return 0.0f;
+    }
+    final int theStart = Math.max(start, 0);
+    final int theEnd = Math.min(end, array.length);
+    if (theStart >= theEnd) {
+      return 0.0f;
+    }
+    float result = array[theStart];
+    for (int i = theStart + 1; i < theEnd; ++i) {
+      if (Float.isNaN(array[i])) {
+        return Float.NaN;
+      }
+      if (array[i] < result || Float.isNaN(result)) {
+        result = array[i];
+      }
+    }
+    return result;
+  }
+
+  /**
+   * 在 float 数组中找到最小值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @return 在指定数组中找到的最小值，如果数组为 {@code null} 或为空，则返回 {@code 0.0f}。
+   *     如果任何值是 NaN，则返回 NaN。
+   */
+  public static float min(@Nullable final float[] array) {
+    if (array == null || array.length == 0) {
+      return 0.0f;
+    }
+    return min(array, 0, array.length);
+  }
+
+  /**
+   * 在 double 数组的一段中找到最大值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @param start
+   *     段的包含性起始索引。如果小于 0，则视为 0。
+   * @param end
+   *     段的排他性结束索引。如果大于 {@code array.length}，则视为 {@code array.length}。
+   * @return 在指定数组段中找到的最大值；如果输入数组为 {@code null} 或段为空，则返回 {@code 0.0}。
+   *     如果任何值是 NaN，则返回 NaN。
+   */
+  public static double max(@Nullable final double[] array, final int start, final int end) {
+    if (array == null || array.length == 0) {
+      return 0.0;
+    }
+    final int theStart = Math.max(start, 0);
+    final int theEnd = Math.min(end, array.length);
+    if (theStart >= theEnd) {
+      return 0.0;
+    }
+    double result = array[theStart];
+    for (int i = theStart + 1; i < theEnd; ++i) {
+      if (Double.isNaN(array[i])) {
+        return Double.NaN;
+      }
+      if (array[i] > result || Double.isNaN(result)) {
+        result = array[i];
+      }
+    }
+    return result;
+  }
+
+  /**
+   * 在 double 数组中找到最大值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @return 在指定数组中找到的最大值，如果数组为 {@code null} 或为空，则返回 {@code 0.0}。
+   *     如果任何值是 NaN，则返回 NaN。
+   */
+  public static double max(@Nullable final double[] array) {
+    if (array == null || array.length == 0) {
+      return 0.0;
+    }
+    return max(array, 0, array.length);
+  }
+
+  /**
+   * 在 double 数组的一段中找到最小值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @param start
+   *     段的包含性起始索引。如果小于 0，则视为 0。
+   * @param end
+   *     段的排他性结束索引。如果大于 {@code array.length}，则视为 {@code array.length}。
+   * @return 在指定数组段中找到的最小值；如果输入数组为 {@code null} 或段为空，则返回 {@code 0.0}。
+   *     如果任何值是 NaN，则返回 NaN。
+   */
+  public static double min(@Nullable final double[] array, final int start, final int end) {
+    if (array == null || array.length == 0) {
+      return 0.0;
+    }
+    final int theStart = Math.max(start, 0);
+    final int theEnd = Math.min(end, array.length);
+    if (theStart >= theEnd) {
+      return 0.0;
+    }
+    double result = array[theStart];
+    for (int i = theStart + 1; i < theEnd; ++i) {
+      if (Double.isNaN(array[i])) {
+        return Double.NaN;
+      }
+      if (array[i] < result || Double.isNaN(result)) {
+        result = array[i];
+      }
+    }
+    return result;
+  }
+
+  /**
+   * 在 double 数组中找到最小值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @return 在指定数组中找到的最小值，如果数组为 {@code null} 或为空，则返回 {@code 0.0}。
+   *     如果任何值是 NaN，则返回 NaN。
+   */
+  public static double min(@Nullable final double[] array) {
+    if (array == null || array.length == 0) {
+      return 0.0;
+    }
+    return min(array, 0, array.length);
+  }
+
+  /**
+   * 在 char 数组的一段中找到最大值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @param start
+   *     段的包含性起始索引。如果小于 0，则视为 0。
+   * @param end
+   *     段的排他性结束索引。如果大于 {@code array.length}，则视为 {@code array.length}。
+   * @return 在指定数组段中找到的最大值；如果输入数组为 {@code null} 或段为空，则返回 {@code 0}。
+   */
+  public static char max(@Nullable final char[] array, final int start, final int end) {
+    if (array == null || array.length == 0) {
+      return 0;
+    }
+    final int theStart = Math.max(start, 0);
+    final int theEnd = Math.min(end, array.length);
+    if (theStart >= theEnd) {
+      return 0;
+    }
+    char result = array[theStart];
+    for (int i = theStart + 1; i < theEnd; ++i) {
+      if (array[i] > result) {
+        result = array[i];
+      }
+    }
+    return result;
+  }
+
+  /**
+   * 在 char 数组中找到最大值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @return 在指定数组中找到的最大值，如果数组为 {@code null} 或为空，则返回 {@code 0}。
+   */
+  public static char max(@Nullable final char[] array) {
+    if (array == null || array.length == 0) {
+      return 0;
+    }
+    return max(array, 0, array.length);
+  }
+
+  /**
+   * 在 char 数组的一段中找到最小值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @param start
+   *     段的包含性起始索引。如果小于 0，则视为 0。
+   * @param end
+   *     段的排他性结束索引。如果大于 {@code array.length}，则视为 {@code array.length}。
+   * @return 在指定数组段中找到的最小值；如果输入数组为 {@code null} 或段为空，则返回 {@code 0}。
+   */
+  public static char min(@Nullable final char[] array, final int start, final int end) {
+    if (array == null || array.length == 0) {
+      return 0;
+    }
+    final int theStart = Math.max(start, 0);
+    final int theEnd = Math.min(end, array.length);
+    if (theStart >= theEnd) {
+      return 0;
+    }
+    char result = array[theStart];
+    for (int i = theStart + 1; i < theEnd; ++i) {
+      if (array[i] < result) {
+        result = array[i];
+      }
+    }
+    return result;
+  }
+
+  /**
+   * 在 char 数组中找到最小值。
+   *
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @return 在指定数组中找到的最小值，如果数组为 {@code null} 或为空，则返回 {@code 0}。
+   */
+  public static char min(@Nullable final char[] array) {
+    if (array == null || array.length == 0) {
+      return 0;
+    }
+    return min(array, 0, array.length);
+  }
+
+  /**
+   * 在数组的一段中找到最大值。
+   * <p>
+   * <b>注意：{@code null}值被认为是最小的。</b>
    *
    * @param <T>
-   *     the type of the elements in the array, which must be comparable.
+   *     数组中元素的类型，必须是可比较的。
    * @param array
-   *     the array, which could be {@code null}.
-   * @return the maximum value found in the specified array, or {@code null} if
-   *     the array is {@code null}.
+   *     数组，可能为 {@code null}。
+   * @param start
+   *     段的包含性起始索引。如果小于 0，则视为 0。
+   * @param end
+   *     段的排他性结束索引。如果大于 {@code array.length}，则视为 {@code array.length}。
+   * @return 在指定数组段中找到的最大值；如果输入数组为 {@code null} 或段为空，则返回 {@code null}。
    */
-  public static <T extends Comparable<? super T>> T max(
-      @Nullable final T[] array) {
+  public static <T extends Comparable<? super T>> T max(@Nullable final T[] array,
+      final int start, final int end) {
+    if (array == null) {
+      return null;
+    }
+    int theStart = Math.max(start, 0);
+    final int theEnd = Math.min(end, array.length);
+    if (theStart >= theEnd) {
+      return null;
+    }
+    T result = array[theStart];
+    while ((result == null) && (++theStart < theEnd)) {
+      result = array[theStart];
+    }
+    if (result == null) {
+      return null;
+    }
+    for (int i = theStart + 1; i < theEnd; ++i) {
+      if ((array[i] != null) && (result.compareTo(array[i]) < 0)) {
+        result = array[i];
+      }
+    }
+    return result;
+  }
+
+  /**
+   * 在数组中找到最大值。
+   * <p>
+   * <b>注意：{@code null}值被认为是最小的。</b>
+   *
+   * @param <T>
+   *     数组中元素的类型，必须是可比较的。
+   * @param array
+   *     数组，可能为 {@code null}。
+   * @return 在指定数组中找到的最大值，如果数组为 {@code null}，则返回 {@code null}。
+   */
+  public static <T extends Comparable<? super T>> T max(@Nullable final T[] array) {
     if (array == null) {
       return null;
     }
@@ -383,24 +991,23 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the minimum value in a segment of an array.
+   * 在数组的一段中找到最小值。
+   * <p>
+   * <b>注意：{@code null}值被认为是最小的。</b>
    *
    * @param <T>
-   *     the type of the elements in the array, which must be comparable.
+   *     数组中元素的类型，必须是可比较的。
    * @param array
-   *     the array, which could be {@code null}.
+   *     数组，可能为 {@code null}。
    * @param start
-   *     the inclusive start index of the segment. If it is less than 0, it is
-   *     treated as 0.
+   *     段的包含性起始索引。如果小于 0，则视为 0。
    * @param end
-   *     the exclusive end index of the segment. If it is greater than
-   *     {@code array.length}, it is treated as {@code array.length}.
-   * @return the minimum value found in the specified segment of the array;
-   *     returns {@code null} if the input array is {@code null} or the segment
-   *     is empty.
+   *     段的排他性结束索引。如果大于 {@code array.length}，则视为 {@code array.length}。
+   * @return
+   *     在指定数组段中找到的最小值；如果输入数组为 {@code null} 或段为空，则返回 {@code null}。
    */
-  public static <T extends Comparable<? super T>> T min(
-      @Nullable final T[] array, final int start, final int end) {
+  public static <T extends Comparable<? super T>> T min(@Nullable final T[] array,
+      final int start, final int end) {
     if (array == null) {
       return null;
     }
@@ -410,28 +1017,32 @@ public class ArrayUtils {
       return null;
     }
     T result = array[theStart];
+    if (result == null) {
+      return null;
+    }
     for (int i = theStart + 1; i < theEnd; ++i) {
-      if (array[i] != null) {
-        if (result != null && result.compareTo(array[i]) > 0) {
-          result = array[i];
-        }
+      if (array[i] == null) {
+        return null;
+      }
+      if (array[i].compareTo(result) < 0) {
+        result = array[i];
       }
     }
     return result;
   }
 
   /**
-   * Finds the minimum value in an array.
+   * 在数组中找到最小值。
+   * <p>
+   * <b>注意：{@code null}值被认为是最小的。</b>
    *
    * @param <T>
-   *     the type of the elements in the array, which must be comparable.
+   *     数组中元素的类型，必须是可比较的。
    * @param array
-   *     the array, which could be {@code null}.
-   * @return the minimum value found in the specified array, or {@code null} if
-   *     the array is {@code null}.
+   *     数组，可能为 {@code null}。
+   * @return 在指定数组中找到的最小值，如果数组为 {@code null}，则返回 {@code null}。
    */
-  public static <T extends Comparable<? super T>> T min(
-      @Nullable final T[] array) {
+  public static <T extends Comparable<? super T>> T min(@Nullable final T[] array) {
     if (array == null) {
       return null;
     }
@@ -439,33 +1050,27 @@ public class ArrayUtils {
   }
 
   /**
-   * Produces a new array containing the elements between the start and end
-   * indices.
+   * 生成一个新数组，包含从起始到结束索引的元素。
    *
-   * <p>The start current is inclusive, the end current exclusive. Null array
-   * input produces null output.
+   * <p>起始索引是包含性的，结束索引是排他性的。Null 数组输入产生 null 输出。
    *
-   * <p>The component type of the subarray is always the same as that of the
-   * input array. Thus, if the input is an array of type {@code Date}, the
-   * following usage is envisaged:
+   * <p>子数组的组件类型始终与输入数组的组件类型相同。因此，如果输入是 {@code Date} 类型的数组，则预期用法如下：
    *
    * <pre>
    * Date[] someDates = Arrays.subarray(allDates, 2, 5);
    * </pre>
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     the array, which could be {@code null}.
+   *     数组，可能为 {@code null}。
    * @param start
-   *     the starting current. Undervalue (&lt;0) is promoted to 0, overvalue
-   *     (&gt;array.length) results in an empty array.
+   *     起始索引。下溢值 (&lt;0) 提升为 0，上溢值 (&gt;array.length) 导致空数组。
    * @param end
-   *     elements up to endIndex-1 are present in the returned subarray.
-   *     Undervalue (&lt; startIndex) produces empty array, overvalue
-   *     (&gt;array.length) is demoted to array length.
-   * @return a new array containing the elements between the start and end
-   *     indices, or {@code null} if the array is {@code null}.
+   *     返回的子数组包含从起始到结束索引-1的元素。下溢值 (&lt; startIndex) 产生空数组，上溢值
+   *     (&gt;array.length) 被降级为数组长度。
+   * @return
+   *     一个包含从起始到结束索引-1的元素的新数组，如果数组为 {@code null}，则返回 {@code null}。
    */
   @SuppressWarnings("unchecked")
   public static <T> T[] subarray(@Nullable final T[] array, final int start,
@@ -487,23 +1092,19 @@ public class ArrayUtils {
   }
 
   /**
-   * Produces a new {@code long} array containing the elements between the start
-   * and end indices.
+   * 提供一个新 {@code long} 数组，包含从起始到结束索引的元素。
    *
-   * <p>The start current is inclusive, the end current exclusive. Null array
-   * input produces null output.
+   * <p>起始索引是包含性的，结束索引是排他性的。Null 数组输入产生 null 输出。
    *
    * @param array
-   *     the array
+   *     数组
    * @param start
-   *     the starting current. Undervalue (&lt;0) is promoted to 0, overvalue
-   *     (&gt;array.length) results in an empty array.
+   *     起始索引。下溢值 (&lt;0) 提升为 0，上溢值 (&gt;array.length) 导致空数组。
    * @param end
-   *     elements up to endIndex-1 are present in the returned subarray.
-   *     Undervalue (&lt; startIndex) produces empty array, overvalue
-   *     (&gt;array.length) is demoted to array length.
-   * @return a new array containing the elements between the start and end
-   *     indices, or {@code null} if the array is {@code null}.
+   *     返回的子数组包含从起始到结束索引-1的元素。下溢值 (&lt; startIndex) 产生空数组，上溢值
+   *     (&gt;array.length) 被降级为数组长度。
+   * @return
+   *     一个包含从起始到结束索引-1的元素的新数组，如果数组为 {@code null}，则返回 {@code null}。
    */
   public static long[] subarray(@Nullable final long[] array, final int start,
       final int end) {
@@ -523,23 +1124,19 @@ public class ArrayUtils {
   }
 
   /**
-   * Produces a new {@code int} array containing the elements between the start
-   * and end indices.
+   * 提供一个新 {@code int} 数组，包含从起始到结束索引的元素。
    *
-   * <p>The start current is inclusive, the end current exclusive. Null array
-   * input produces null output.
+   * <p>起始索引是包含性的，结束索引是排他性的。Null 数组输入产生 null 输出。
    *
    * @param array
-   *     the array
+   *     数组
    * @param start
-   *     the starting current. Undervalue (&lt;0) is promoted to 0, overvalue
-   *     (&gt;array.length) results in an empty array.
+   *     起始索引。下溢值 (&lt;0) 提升为 0，上溢值 (&gt;array.length) 导致空数组。
    * @param end
-   *     elements up to endIndex-1 are present in the returned subarray.
-   *     Undervalue (&lt; startIndex) produces empty array, overvalue
-   *     (&gt;array.length) is demoted to array length.
-   * @return a new array containing the elements between the start and end
-   *     indices, or {@code null} if the array is {@code null}.
+   *     返回的子数组包含从起始到结束索引-1的元素。下溢值 (&lt; startIndex) 产生空数组，上溢值
+   *     (&gt;array.length) 被降级为数组长度。
+   * @return
+   *     一个包含从起始到结束索引-1的元素的新数组，如果数组为 {@code null}，则返回 {@code null}。
    */
   public static int[] subarray(@Nullable final int[] array, final int start,
       final int end) {
@@ -559,23 +1156,19 @@ public class ArrayUtils {
   }
 
   /**
-   * Produces a new {@code short} array containing the elements between the
-   * start and end indices.
+   * 提供一个新 {@code short} 数组，包含从起始到结束索引的元素。
    *
-   * <p>The start current is inclusive, the end current exclusive. Null array
-   * input produces null output.
+   * <p>起始索引是包含性的，结束索引是排他性的。Null 数组输入产生 null 输出。
    *
    * @param array
-   *     the array
+   *     数组
    * @param start
-   *     the starting current. Undervalue (&lt;0) is promoted to 0, overvalue
-   *     (&gt;array.length) results in an empty array.
+   *     起始索引。下溢值 (&lt;0) 提升为 0，上溢值 (&gt;array.length) 导致空数组。
    * @param end
-   *     elements up to endIndex-1 are present in the returned subarray.
-   *     Undervalue (&lt; startIndex) produces empty array, overvalue
-   *     (&gt;array.length) is demoted to array length.
-   * @return a new array containing the elements between the start and end
-   *     indices, or {@code null} if the array is {@code null}.
+   *     返回的子数组包含从起始到结束索引-1的元素。下溢值 (&lt; startIndex) 产生空数组，上溢值
+   *     (&gt;array.length) 被降级为数组长度。
+   * @return
+   *     一个包含从起始到结束索引-1的元素的新数组，如果数组为 {@code null}，则返回 {@code null}。
    */
   public static short[] subarray(@Nullable final short[] array, final int start,
       final int end) {
@@ -595,23 +1188,19 @@ public class ArrayUtils {
   }
 
   /**
-   * Produces a new {@code char} array containing the elements between the start
-   * and end indices.
+   * 提供一个新 {@code char} 数组，包含从起始到结束索引的元素。
    *
-   * <p>The start current is inclusive, the end current exclusive. Null array
-   * input produces null output.
+   * <p>起始索引是包含性的，结束索引是排他性的。Null 数组输入产生 null 输出。
    *
    * @param array
-   *     the array
+   *     数组
    * @param start
-   *     the starting current. Undervalue (&lt;0) is promoted to 0, overvalue
-   *     (&gt;array.length) results in an empty array.
+   *     起始索引。下溢值 (&lt;0) 提升为 0，上溢值 (&gt;array.length) 导致空数组。
    * @param end
-   *     elements up to endIndex-1 are present in the returned subarray.
-   *     Undervalue (&lt; startIndex) produces empty array, overvalue
-   *     (&gt;array.length) is demoted to array length.
-   * @return a new array containing the elements between the start and end
-   *     indices, or {@code null} if the array is {@code null}.
+   *     返回的子数组包含从起始到结束索引-1的元素。下溢值 (&lt; startIndex) 产生空数组，上溢值
+   *     (&gt;array.length) 被降级为数组长度。
+   * @return
+   *     一个包含从起始到结束索引-1的元素的新数组，如果数组为 {@code null}，则返回 {@code null}。
    */
   public static char[] subarray(@Nullable final char[] array, final int start,
       final int end) {
@@ -631,23 +1220,19 @@ public class ArrayUtils {
   }
 
   /**
-   * Produces a new {@code byte} array containing the elements between the start
-   * and end indices.
+   * 提供一个新 {@code byte} 数组，包含从起始到结束索引的元素。
    *
-   * <p>The start current is inclusive, the end current exclusive. Null array
-   * input produces null output.
+   * <p>起始索引是包含性的，结束索引是排他性的。Null 数组输入产生 null 输出。
    *
    * @param array
-   *     the array
+   *     数组
    * @param start
-   *     the starting current. Undervalue (&lt;0) is promoted to 0, overvalue
-   *     (&gt;array.length) results in an empty array.
+   *     起始索引。下溢值 (&lt;0) 提升为 0，上溢值 (&gt;array.length) 导致空数组。
    * @param end
-   *     elements up to endIndex-1 are present in the returned subarray.
-   *     Undervalue (&lt; startIndex) produces empty array, overvalue
-   *     (&gt;array.length) is demoted to array length.
-   * @return a new array containing the elements between the start and end
-   *     indices, or {@code null} if the array is {@code null}.
+   *     返回的子数组包含从起始到结束索引-1的元素。下溢值 (&lt; startIndex) 产生空数组，上溢值
+   *     (&gt;array.length) 被降级为数组长度。
+   * @return
+   *     一个包含从起始到结束索引-1的元素的新数组，如果数组为 {@code null}，则返回 {@code null}。
    */
   public static byte[] subarray(@Nullable final byte[] array, final int start,
       final int end) {
@@ -667,23 +1252,19 @@ public class ArrayUtils {
   }
 
   /**
-   * Produces a new {@code double} array containing the elements between the
-   * start and end indices.
+   * 提供一个新 {@code double} 数组，包含从起始到结束索引的元素。
    *
-   * <p>The start current is inclusive, the end current exclusive. Null array
-   * input produces null output.
+   * <p>起始索引是包含性的，结束索引是排他性的。Null 数组输入产生 null 输出。
    *
    * @param array
-   *     the array
+   *     数组
    * @param start
-   *     the starting current. Undervalue (&lt;0) is promoted to 0, overvalue
-   *     (&gt;array.length) results in an empty array.
+   *     起始索引。下溢值 (&lt;0) 提升为 0，上溢值 (&gt;array.length) 导致空数组。
    * @param end
-   *     elements up to endIndex-1 are present in the returned subarray.
-   *     Undervalue (&lt; startIndex) produces empty array, overvalue
-   *     (&gt;array.length) is demoted to array length.
-   * @return a new array containing the elements between the start and end
-   *     indices, or {@code null} if the array is {@code null}.
+   *     返回的子数组包含从起始到结束索引-1的元素。下溢值 (&lt; startIndex) 产生空数组，上溢值
+   *     (&gt;array.length) 被降级为数组长度。
+   * @return
+   *     一个包含从起始到结束索引-1的元素的新数组，如果数组为 {@code null}，则返回 {@code null}。
    */
   public static double[] subarray(@Nullable final double[] array,
       final int start, final int end) {
@@ -703,23 +1284,19 @@ public class ArrayUtils {
   }
 
   /**
-   * Produces a new {@code float} array containing the elements between the
-   * start and end indices.
+   * 提供一个新 {@code float} 数组，包含从起始到结束索引的元素。
    *
-   * <p>The start current is inclusive, the end current exclusive. Null array
-   * input produces null output.
+   * <p>起始索引是包含性的，结束索引是排他性的。Null 数组输入产生 null 输出。
    *
    * @param array
-   *     the array
+   *     数组
    * @param start
-   *     the starting current. Undervalue (&lt;0) is promoted to 0, overvalue
-   *     (&gt;array.length) results in an empty array.
+   *     起始索引。下溢值 (&lt;0) 提升为 0，上溢值 (&gt;array.length) 导致空数组。
    * @param end
-   *     elements up to endIndex-1 are present in the returned subarray.
-   *     Undervalue (&lt; startIndex) produces empty array, overvalue
-   *     (&gt;array.length) is demoted to array length.
-   * @return a new array containing the elements between the start and end
-   *     indices, or {@code null} if the array is {@code null}.
+   *     返回的子数组包含从起始到结束索引-1的元素。下溢值 (&lt; startIndex) 产生空数组，上溢值
+   *     (&gt;array.length) 被降级为数组长度。
+   * @return
+   *     一个包含从起始到结束索引-1的元素的新数组，如果数组为 {@code null}，则返回 {@code null}。
    */
   public static float[] subarray(@Nullable final float[] array, final int start,
       final int end) {
@@ -739,23 +1316,19 @@ public class ArrayUtils {
   }
 
   /**
-   * Produces a new {@code boolean} array containing the elements between the
-   * start and end indices.
+   * 提供一个新 {@code boolean} 数组，包含从起始到结束索引的元素。
    *
-   * <p>The start current is inclusive, the end current exclusive. Null array
-   * input produces null output.
+   * <p>起始索引是包含性的，结束索引是排他性的。Null 数组输入产生 null 输出。
    *
    * @param array
-   *     the array
+   *     数组
    * @param start
-   *     the starting current. Undervalue (&lt;0) is promoted to 0, overvalue
-   *     (&gt;array.length) results in an empty array.
+   *     起始索引。下溢值 (&lt;0) 提升为 0，上溢值 (&gt;array.length) 导致空数组。
    * @param end
-   *     elements up to endIndex-1 are present in the returned subarray.
-   *     Undervalue (&lt; startIndex) produces empty array, overvalue
-   *     (&gt;array.length) is demoted to array length.
-   * @return a new array containing the elements between the start and end
-   *     indices, or {@code null} if the array is {@code null}.
+   *     返回的子数组包含从起始到结束索引-1的元素。下溢值 (&lt; startIndex) 产生空数组，上溢值
+   *     (&gt;array.length) 被降级为数组长度。
+   * @return
+   *     一个包含从起始到结束索引-1的元素的新数组，如果数组为 {@code null}，则返回 {@code null}。
    */
   public static boolean[] subarray(@Nullable final boolean[] array,
       final int start, final int end) {
@@ -775,196 +1348,168 @@ public class ArrayUtils {
   }
 
   /**
-   * Tests whether an object is an array.
+   * 测试一个对象是否是数组。
    *
    * @param obj
-   *     the object to be test, which could be null.
-   * @return true if the object is not null and is an array; false otherwise.
+   *     要测试的对象，可能为 null。
+   * @return 如果对象不为 null 且是数组，则为 true；否则为 false。
    */
   public static boolean isArray(@Nullable final Object obj) {
     return ((obj != null) && obj.getClass().isArray());
   }
 
   /**
-   * Checks whether two arrays are the same length, treating {@code null} arrays
-   * as length {@code 0}.
+   * 检查两个数组是否长度相同，将 {@code null} 数组视为长度为 {@code 0}。
    *
-   * <p>Any multi-dimensional aspects of the arrays are ignored.
+   * <p>任何多维方面的数组都会被忽略。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array1
-   *     the first array, may be {@code null}
+   *     第一个数组，可能为 {@code null}
    * @param array2
-   *     the second array, may be {@code null}
-   * @return {@code true} if length of arrays matches, treating {@code null} as
-   *     an empty array.
+   *     第二个数组，可能为 {@code null}
+   * @return 如果数组长度匹配，将 {@code null} 视为空数组，则为 {@code true}。
    */
   public static <T> boolean isSameLength(@Nullable final T[] array1,
       @Nullable final T[] array2) {
-    return ((array1 != null) || (array2 == null) || (array2.length <= 0)) && ((
-        array2
-            != null) || (array1 == null) || (array1.length <= 0)) && ((array1
-        == null) || (array2 == null) || (array1.length == array2.length));
+    return ((array1 != null) || (array2 == null) || (array2.length <= 0))
+        && ((array2 != null) || (array1 == null) || (array1.length <= 0))
+        && ((array1 == null) || (array2 == null) || (array1.length == array2.length));
   }
 
   /**
-   * Checks whether two arrays are the same length, treating {@code null} arrays
-   * as length {@code 0}.
+   * 检查两个数组是否长度相同，将 {@code null} 数组视为长度为 {@code 0}。
    *
    * @param array1
-   *     the first array, may be {@code null}
+   *     第一个数组，可能为 {@code null}
    * @param array2
-   *     the second array, may be {@code null}
-   * @return {@code true} if length of arrays matches, treating {@code null} as
-   *     an empty array.
+   *     第二个数组，可能为 {@code null}
+   * @return 如果数组长度匹配，将 {@code null} 视为空数组，则为 {@code true}。
    */
   public static boolean isSameLength(@Nullable final long[] array1,
       @Nullable final long[] array2) {
-    return ((array1 != null) || (array2 == null) || (array2.length <= 0)) && ((
-        array2
-            != null) || (array1 == null) || (array1.length <= 0)) && ((array1
-        == null) || (array2 == null) || (array1.length == array2.length));
+    return ((array1 != null) || (array2 == null) || (array2.length <= 0))
+        && ((array2 != null) || (array1 == null) || (array1.length <= 0))
+        && ((array1 == null) || (array2 == null) || (array1.length == array2.length));
   }
 
   /**
-   * Checks whether two arrays are the same length, treating {@code null} arrays
-   * as length {@code 0}.
+   * 检查两个数组是否长度相同，将 {@code null} 数组视为长度为 {@code 0}。
    *
    * @param array1
-   *     the first array, may be {@code null}
+   *     第一个数组，可能为 {@code null}
    * @param array2
-   *     the second array, may be {@code null}
-   * @return {@code true} if length of arrays matches, treating {@code null} as
-   *     an empty array.
+   *     第二个数组，可能为 {@code null}
+   * @return 如果数组长度匹配，将 {@code null} 视为空数组，则为 {@code true}。
    */
   public static boolean isSameLength(@Nullable final int[] array1,
       @Nullable final int[] array2) {
-    return ((array1 != null) || (array2 == null) || (array2.length <= 0)) && ((
-        array2
-            != null) || (array1 == null) || (array1.length <= 0)) && ((array1
-        == null) || (array2 == null) || (array1.length == array2.length));
+    return ((array1 != null) || (array2 == null) || (array2.length <= 0))
+        && ((array2 != null) || (array1 == null) || (array1.length <= 0))
+        && ((array1 == null) || (array2 == null) || (array1.length == array2.length));
   }
 
   /**
-   * Checks whether two arrays are the same length, treating {@code null} arrays
-   * as length {@code 0}.
+   * 检查两个数组是否长度相同，将 {@code null} 数组视为长度为 {@code 0}。
    *
    * @param array1
-   *     the first array, may be {@code null}
+   *     第一个数组，可能为 {@code null}
    * @param array2
-   *     the second array, may be {@code null}
-   * @return {@code true} if length of arrays matches, treating {@code null} as
-   *     an empty array.
+   *     第二个数组，可能为 {@code null}
+   * @return 如果数组长度匹配，将 {@code null} 视为空数组，则为 {@code true}。
    */
   public static boolean isSameLength(@Nullable final short[] array1,
       @Nullable final short[] array2) {
-    return ((array1 != null) || (array2 == null) || (array2.length <= 0)) && ((
-        array2
-            != null) || (array1 == null) || (array1.length <= 0)) && ((array1
-        == null) || (array2 == null) || (array1.length == array2.length));
+    return ((array1 != null) || (array2 == null) || (array2.length <= 0))
+        && ((array2 != null) || (array1 == null) || (array1.length <= 0))
+        && ((array1 == null) || (array2 == null) || (array1.length == array2.length));
   }
 
   /**
-   * Checks whether two arrays are the same length, treating {@code null} arrays
-   * as length {@code 0}.
+   * 检查两个数组是否长度相同，将 {@code null} 数组视为长度为 {@code 0}。
    *
    * @param array1
-   *     the first array, may be {@code null}
+   *     第一个数组，可能为 {@code null}
    * @param array2
-   *     the second array, may be {@code null}
-   * @return {@code true} if length of arrays matches, treating {@code null} as
-   *     an empty array.
+   *     第二个数组，可能为 {@code null}
+   * @return 如果数组长度匹配，将 {@code null} 视为空数组，则为 {@code true}。
    */
   public static boolean isSameLength(@Nullable final char[] array1,
       @Nullable final char[] array2) {
-    return ((array1 != null) || (array2 == null) || (array2.length <= 0)) && ((
-        array2
-            != null) || (array1 == null) || (array1.length <= 0)) && ((array1
-        == null) || (array2 == null) || (array1.length == array2.length));
+    return ((array1 != null) || (array2 == null) || (array2.length <= 0))
+        && ((array2 != null) || (array1 == null) || (array1.length <= 0))
+        && ((array1 == null) || (array2 == null) || (array1.length == array2.length));
   }
 
   /**
-   * Checks whether two arrays are the same length, treating {@code null} arrays
-   * as length {@code 0}.
+   * 检查两个数组是否长度相同，将 {@code null} 数组视为长度为 {@code 0}。
    *
    * @param array1
-   *     the first array, may be {@code null}
+   *     第一个数组，可能为 {@code null}
    * @param array2
-   *     the second array, may be {@code null}
-   * @return {@code true} if length of arrays matches, treating {@code null} as
-   *     an empty array.
+   *     第二个数组，可能为 {@code null}
+   * @return 如果数组长度匹配，将 {@code null} 视为空数组，则为 {@code true}。
    */
   public static boolean isSameLength(@Nullable final byte[] array1,
       @Nullable final byte[] array2) {
-    return ((array1 != null) || (array2 == null) || (array2.length <= 0)) && ((
-        array2
-            != null) || (array1 == null) || (array1.length <= 0)) && ((array1
-        == null) || (array2 == null) || (array1.length == array2.length));
+    return ((array1 != null) || (array2 == null) || (array2.length <= 0))
+        && ((array2 != null) || (array1 == null) || (array1.length <= 0))
+        && ((array1 == null) || (array2 == null) || (array1.length == array2.length));
   }
 
   /**
-   * Checks whether two arrays are the same length, treating {@code null} arrays
-   * as length {@code 0}.
+   * 检查两个数组是否长度相同，将 {@code null} 数组视为长度为 {@code 0}。
    *
    * @param array1
-   *     the first array, may be {@code null}
+   *     第一个数组，可能为 {@code null}
    * @param array2
-   *     the second array, may be {@code null}
-   * @return {@code true} if length of arrays matches, treating {@code null} as
-   *     an empty array.
+   *     第二个数组，可能为 {@code null}
+   * @return 如果数组长度匹配，将 {@code null} 视为空数组，则为 {@code true}。
    */
   public static boolean isSameLength(@Nullable final double[] array1,
       @Nullable final double[] array2) {
-    return ((array1 != null) || (array2 == null) || (array2.length <= 0)) && ((
-        array2
-            != null) || (array1 == null) || (array1.length <= 0)) && ((array1
-        == null) || (array2 == null) || (array1.length == array2.length));
+    return ((array1 != null) || (array2 == null) || (array2.length <= 0))
+        && ((array2 != null) || (array1 == null) || (array1.length <= 0))
+        && ((array1 == null) || (array2 == null) || (array1.length == array2.length));
   }
 
   /**
-   * Checks whether two arrays are the same length, treating {@code null} arrays
-   * as length {@code 0}.
+   * 检查两个数组是否长度相同，将 {@code null} 数组视为长度为 {@code 0}。
    *
    * @param array1
-   *     the first array, may be {@code null}
+   *     第一个数组，可能为 {@code null}
    * @param array2
-   *     the second array, may be {@code null}
-   * @return {@code true} if length of arrays matches, treating {@code null} as
-   *     an empty array.
+   *     第二个数组，可能为 {@code null}
+   * @return 如果数组长度匹配，将 {@code null} 视为空数组，则为 {@code true}。
    */
   public static boolean isSameLength(@Nullable final float[] array1,
       @Nullable final float[] array2) {
-    return ((array1 != null) || (array2 == null) || (array2.length <= 0)) && ((
-        array2
-            != null) || (array1 == null) || (array1.length <= 0)) && ((array1
-        == null) || (array2 == null) || (array1.length == array2.length));
+    return ((array1 != null) || (array2 == null) || (array2.length <= 0))
+        && ((array2 != null) || (array1 == null) || (array1.length <= 0))
+        && ((array1 == null) || (array2 == null) || (array1.length == array2.length));
   }
 
   /**
-   * Checks whether two arrays are the same length, treating {@code null} arrays
-   * as length {@code 0}.
+   * 检查两个数组是否长度相同，将 {@code null} 数组视为长度为 {@code 0}。
    *
    * @param array1
-   *     the first array, may be {@code null}
+   *     第一个数组，可能为 {@code null}
    * @param array2
-   *     the second array, may be {@code null}
-   * @return {@code true} if length of arrays matches, treating {@code null} as
-   *     an empty array.
+   *     第二个数组，可能为 {@code null}
+   * @return 如果数组长度匹配，将 {@code null} 视为空数组，则为 {@code true}。
    */
   public static boolean isSameLength(@Nullable final boolean[] array1,
       @Nullable final boolean[] array2) {
-    return ((array1 != null) || (array2 == null) || (array2.length <= 0)) && ((
-        array2
-            != null) || (array1 == null) || (array1.length <= 0)) && ((array1
-        == null) || (array2 == null) || (array1.length == array2.length));
+    return ((array1 != null) || (array2 == null) || (array2.length <= 0))
+        && ((array2 != null) || (array1 == null) || (array1.length <= 0))
+        && ((array1 == null) || (array2 == null) || (array1.length == array2.length));
   }
 
   /**
-   * Returns the length of the specified array. This method can deal with
-   * {@code Object} arrays and with primitive arrays.
+   * 返回指定数组的长度。此方法可以处理 {@code Object} 数组和原始数组。
    *
-   * <p>If the input array is {@code null}, {@code 0} is returned.
+   * <p>如果输入数组为 {@code null}，则返回 {@code 0}。
    *
    * <pre>
    * Arrays.getLength(null)            = 0
@@ -976,10 +1521,10 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to retrieve the length from, may be null
-   * @return The length of the array, or {@code 0} if the array is {@code null}
+   *     要从中检索长度的数组，可能为 null
+   * @return 数组的长度，如果数组为 {@code null}，则返回 {@code 0}
    * @throws IllegalArgumentException
-   *     if the object arguement is not an array.
+   *     如果对象参数不是数组。
    */
   public static int getLength(@Nullable final Object array) {
     if (array == null) {
@@ -990,21 +1535,20 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks whether two arrays are the same type taking into account
-   * multi-dimensional arrays.
+   * 检查两个数组是否是相同类型，考虑到多维数组。
    *
    * @param array1
-   *     the first array, must not be {@code null}
+   *     第一个数组，必须不为 {@code null}
    * @param array2
-   *     the second array, must not be {@code null}
-   * @return {@code true} if type of arrays matches
+   *     第二个数组，必须不为 {@code null}
+   * @return 如果数组类型匹配，则为 {@code true}
    * @throws IllegalArgumentException
-   *     if either array is {@code null}
+   *     如果任一数组为 {@code null}
    */
   public static boolean isSameType(final Object array1, final Object array2) {
     if ((array1 == null) || (array2 == null)) {
       throw new IllegalArgumentException("The array must not be null");
-    } else {
+      } else {
       final String array1ClassName = array1.getClass().getName();
       final String array2ClassName = array2.getClass().getName();
       return array1ClassName.equals(array2ClassName);
@@ -1012,16 +1556,16 @@ public class ArrayUtils {
   }
 
   /**
-   * Reverses the order of the given array.
+   * 反转给定数组的顺序。
    *
-   * <p>There is no special handling for multi-dimensional arrays.
+   * <p>对于多维数组没有特殊处理。
    *
-   * <p>This method does nothing for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法不执行任何操作。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     the array to reverse, may be {@code null}
+   *     要反转的数组，可能为 {@code null}
    */
   public static <T> void reverse(@Nullable final T[] array) {
     if (array == null) {
@@ -1039,12 +1583,12 @@ public class ArrayUtils {
   }
 
   /**
-   * Reverses the order of the given array.
+   * 反转给定数组的顺序。
    *
-   * <p>This method does nothing for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法不执行任何操作。
    *
    * @param array
-   *     the array to reverse, may be {@code null}
+   *     要反转的数组，可能为 {@code null}
    */
   public static void reverse(@Nullable final long[] array) {
     if (array == null) {
@@ -1062,12 +1606,12 @@ public class ArrayUtils {
   }
 
   /**
-   * Reverses the order of the given array.
+   * 反转给定数组的顺序。
    *
-   * <p>This method does nothing for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法不执行任何操作。
    *
    * @param array
-   *     the array to reverse, may be {@code null}
+   *     要反转的数组，可能为 {@code null}
    */
   public static void reverse(@Nullable final int[] array) {
     if (array == null) {
@@ -1085,12 +1629,12 @@ public class ArrayUtils {
   }
 
   /**
-   * Reverses the order of the given array.
+   * 反转给定数组的顺序。
    *
-   * <p>This method does nothing for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法不执行任何操作。
    *
    * @param array
-   *     the array to reverse, may be {@code null}
+   *     要反转的数组，可能为 {@code null}
    */
   public static void reverse(@Nullable final short[] array) {
     if (array == null) {
@@ -1108,12 +1652,12 @@ public class ArrayUtils {
   }
 
   /**
-   * Reverses the order of the given array.
+   * 反转给定数组的顺序。
    *
-   * <p>This method does nothing for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法不执行任何操作。
    *
    * @param array
-   *     the array to reverse, may be {@code null}
+   *     要反转的数组，可能为 {@code null}
    */
   public static void reverse(@Nullable final char[] array) {
     if (array == null) {
@@ -1131,12 +1675,12 @@ public class ArrayUtils {
   }
 
   /**
-   * Reverses the order of the given array.
+   * 反转给定数组的顺序。
    *
-   * <p>This method does nothing for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法不执行任何操作。
    *
    * @param array
-   *     the array to reverse, may be {@code null}
+   *     要反转的数组，可能为 {@code null}
    */
   public static void reverse(@Nullable final byte[] array) {
     if (array == null) {
@@ -1154,12 +1698,12 @@ public class ArrayUtils {
   }
 
   /**
-   * Reverses the order of the given array.
+   * 反转给定数组的顺序。
    *
-   * <p>This method does nothing for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法不执行任何操作。
    *
    * @param array
-   *     the array to reverse, may be {@code null}
+   *     要反转的数组，可能为 {@code null}
    */
   public static void reverse(@Nullable final double[] array) {
     if (array == null) {
@@ -1177,12 +1721,12 @@ public class ArrayUtils {
   }
 
   /**
-   * Reverses the order of the given array.
+   * 反转给定数组的顺序。
    *
-   * <p>This method does nothing for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法不执行任何操作。
    *
    * @param array
-   *     the array to reverse, may be {@code null}
+   *     要反转的数组，可能为 {@code null}
    */
   public static void reverse(@Nullable final float[] array) {
     if (array == null) {
@@ -1200,12 +1744,12 @@ public class ArrayUtils {
   }
 
   /**
-   * Reverses the order of the given array.
+   * 反转给定数组的顺序。
    *
-   * <p>This method does nothing for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法不执行任何操作。
    *
    * @param array
-   *     the array to reverse, may be {@code null}
+   *     要反转的数组，可能为 {@code null}
    */
   public static void reverse(@Nullable final boolean[] array) {
     if (array == null) {
@@ -1223,16 +1767,17 @@ public class ArrayUtils {
   }
 
   /**
-   * Shadow clone the given array and reverse the order of the elements.
+   * 反转给定数组的顺序。
    *
-   * <p><b>There is no special handling for multi-dimensional arrays.</b>
+   * <p><b>对多维数组没有特殊处理。</b>
    *
-   * <p>This method does nothing for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法不执行任何操作。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     the array to reverse, may be {@code null}
+   *     要反转的数组，可能为 {@code null}
+   * @return 反转后的数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   @Nullable
   public static <T> T[] reverseClone(@Nullable final T[] array) {
@@ -1248,12 +1793,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Clone the given array and reverse the order of the elements.
+   * 克隆给定数组并反转元素的顺序。
    *
-   * <p>This method does nothing for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法不执行任何操作。
    *
    * @param array
-   *     the array to reverse, may be {@code null}
+   *     要反转的数组，可能为 {@code null}
+   * @return 反转后的数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   @Nullable
   public static long[] reverseClone(@Nullable final long[] array) {
@@ -1269,12 +1815,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Clone the given array and reverse the order of the elements.
+   * 克隆给定数组并反转元素的顺序。
    *
-   * <p>This method does nothing for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法不执行任何操作。
    *
    * @param array
-   *     the array to reverse, may be {@code null}
+   *     要反转的数组，可能为 {@code null}
+   * @return 反转后的数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   @Nullable
   public static int[] reverseClone(@Nullable final int[] array) {
@@ -1290,12 +1837,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Clone the given array and reverse the order of the elements.
+   * 克隆给定数组并反转元素的顺序。
    *
-   * <p>This method does nothing for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法不执行任何操作。
    *
    * @param array
-   *     the array to reverse, may be {@code null}
+   *     要反转的数组，可能为 {@code null}
+   * @return 反转后的数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   @Nullable
   public static short[] reverseClone(@Nullable final short[] array) {
@@ -1311,12 +1859,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Clone the given array and reverse the order of the elements.
+   * 克隆给定数组并反转元素的顺序。
    *
-   * <p>This method does nothing for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法不执行任何操作。
    *
    * @param array
-   *     the array to reverse, may be {@code null}
+   *     要反转的数组，可能为 {@code null}
+   * @return 反转后的数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   @Nullable
   public static byte[] reverseClone(@Nullable final byte[] array) {
@@ -1332,12 +1881,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Clone the given array and reverse the order of the elements.
+   * 克隆给定数组并反转元素的顺序。
    *
-   * <p>This method does nothing for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法不执行任何操作。
    *
    * @param array
-   *     the array to reverse, may be {@code null}
+   *     要反转的数组，可能为 {@code null}
+   * @return 反转后的数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   @Nullable
   public static char[] reverseClone(@Nullable final char[] array) {
@@ -1353,12 +1903,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Clone the given array and reverse the order of the elements.
+   * 克隆给定数组并反转元素的顺序。
    *
-   * <p>This method does nothing for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法不执行任何操作。
    *
    * @param array
-   *     the array to reverse, may be {@code null}
+   *     要反转的数组，可能为 {@code null}
+   * @return 反转后的数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   @Nullable
   public static float[] reverseClone(@Nullable final float[] array) {
@@ -1374,12 +1925,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Clone the given array and reverse the order of the elements.
+   * 克隆给定数组并反转元素的顺序。
    *
-   * <p>This method does nothing for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法不执行任何操作。
    *
    * @param array
-   *     the array to reverse, may be {@code null}
+   *     要反转的数组，可能为 {@code null}
+   * @return 反转后的数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   @Nullable
   public static double[] reverseClone(@Nullable final double[] array) {
@@ -1395,12 +1947,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Clone the given array and reverse the order of the elements.
+   * 克隆给定数组并反转元素的顺序。
    *
-   * <p>This method does nothing for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法不执行任何操作。
    *
    * @param array
-   *     the array to reverse, may be {@code null}
+   *     要反转的数组，可能为 {@code null}
+   * @return 反转后的数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   @Nullable
   public static boolean[] reverseClone(@Nullable final boolean[] array) {
@@ -1416,20 +1969,17 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the current of the given object in the array.
+   * 在数组中查找给定对象的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the object to find, may be {@code null}
-   * @return the current of the object within the array,
-   *     {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-   *     array input
+   *     要查找的对象，可能为 {@code null}
+   * @return 对象在数组中的当前，如果未找到或输入数组为 {@code null}，则返回 {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static <T> int indexOf(@Nullable final T[] array,
       @Nullable final T value) {
@@ -1437,26 +1987,21 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the current of the given object in the array starting at the given
-   * current.
+   * 从给定当前开始在数组中查找给定对象的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * <p>A negative startIndex is treated as zero. A startIndex larger than the
-   * array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+   * <p>负的 startIndex 被视为零。startIndex 大于数组长度将返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the object to find, may be {@code null}
+   *     要查找的对象，可能为 {@code null}
    * @param start
-   *     the index to start searching at
-   * @return the current of the object within the array starting at the current,
-   *     {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-   *     array input.
+   *     开始搜索的当前
+   * @return 对象在数组中从给定当前开始的当前，如果未找到或输入数组为 {@code null}，则返回 {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static <T> int indexOf(@Nullable final T[] array,
       @Nullable final T value, final int start) {
@@ -1481,40 +2026,38 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the current of the given value in the array.
+   * 在数组中查找给定值的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the value to find
-   * @return the current of the value within the array, {@link #INDEX_NOT_FOUND}
-   *     ({@code -1}) if not found or {@code null} array input.
+   *     要查找的值
+   * @return
+   *     值在数组中的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static int indexOf(@Nullable final long[] array, final long value) {
     return indexOf(array, value, 0);
   }
 
   /**
-   * Finds the current of the given value in the array starting at the given
-   * current.
+   * 从给定当前开始在数组中查找给定值的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * <p>A negative startIndex is treated as zero. A startIndex larger than the
-   * array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+   * <p>负的 startIndex 被视为零。startIndex 大于数组长度将返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the value to find
+   *     要查找的值
    * @param start
-   *     the index to start searching at
-   * @return the current of the value within the array, {@link #INDEX_NOT_FOUND}
-   *     ({@code -1}) if not found or {@code null} array input.
+   *     开始搜索的当前
+   * @return
+   *     值在数组中从给定当前开始的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static int indexOf(@Nullable final long[] array, final long value,
       final int start) {
@@ -1531,40 +2074,38 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the current of the given value in the array.
+   * 在数组中查找给定值的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the value to find
-   * @return the current of the value within the array, {@link #INDEX_NOT_FOUND}
-   *     ({@code -1}) if not found or {@code null} array input.
+   *     要查找的值
+   * @return
+   *     值在数组中的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static int indexOf(@Nullable final int[] array, final int value) {
     return indexOf(array, value, 0);
   }
 
   /**
-   * Finds the current of the given value in the array starting at the given
-   * current.
+   * 从给定当前开始在数组中查找给定值的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * <p>A negative startIndex is treated as zero. A startIndex larger than the
-   * array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+   * <p>负的 startIndex 被视为零。startIndex 大于数组长度将返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the value to find
+   *     要查找的值
    * @param start
-   *     the index to start searching at
-   * @return the current of the value within the array, {@link #INDEX_NOT_FOUND}
-   *     ({@code -1}) if not found or {@code null} array input.
+   *     开始搜索的当前
+   * @return
+   *     值在数组中从给定当前开始的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static int indexOf(@Nullable final int[] array, final int value,
       final int start) {
@@ -1581,40 +2122,38 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the current of the given value in the array.
+   * 在数组中查找给定值的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the value to find
-   * @return the current of the value within the array, {@link #INDEX_NOT_FOUND}
-   *     ({@code -1}) if not found or {@code null} array input.
+   *     要查找的值
+   * @return
+   *     值在数组中的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static int indexOf(@Nullable final short[] array, final short value) {
     return indexOf(array, value, 0);
   }
 
   /**
-   * Finds the current of the given value in the array starting at the given
-   * current.
+   * 从给定当前开始在数组中查找给定值的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * <p>A negative startIndex is treated as zero. A startIndex larger than the
-   * array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+   * <p>负的 startIndex 被视为零。startIndex 大于数组长度将返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the value to find
+   *     要查找的值
    * @param start
-   *     the index to start searching at
-   * @return the current of the value within the array, {@link #INDEX_NOT_FOUND}
-   *     ({@code -1}) if not found or {@code null} array input.
+   *     开始搜索的当前
+   * @return
+   *     值在数组中从给定当前开始的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static int indexOf(@Nullable final short[] array, final short value,
       final int start) {
@@ -1631,40 +2170,38 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the current of the given value in the array.
+   * 在数组中查找给定值的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the value to find
-   * @return the current of the value within the array, {@link #INDEX_NOT_FOUND}
-   *     ({@code -1}) if not found or {@code null} array input.
+   *     要查找的值
+   * @return
+   *     值在数组中的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static int indexOf(@Nullable final char[] array, final char value) {
     return indexOf(array, value, 0);
   }
 
   /**
-   * Finds the current of the given value in the array starting at the given
-   * current.
+   * 从给定当前开始在数组中查找给定值的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * <p>A negative startIndex is treated as zero. A startIndex larger than the
-   * array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+   * <p>负的 startIndex 被视为零。startIndex 大于数组长度将返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the value to find
+   *     要查找的值
    * @param start
-   *     the index to start searching at
-   * @return the current of the value within the array, {@link #INDEX_NOT_FOUND}
-   *     ({@code -1}) if not found or {@code null} array input.
+   *     开始搜索的当前
+   * @return
+   *     值在数组中从给定当前开始的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static int indexOf(@Nullable final char[] array, final char value,
       final int start) {
@@ -1681,40 +2218,39 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the current of the given value in the array.
+   * 在数组中查找给定值的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the value to find
-   * @return the current of the value within the array, {@link #INDEX_NOT_FOUND}
-   *     ({@code -1}) if not found or {@code null} array input.
+   *     要查找的值
+   * @return
+   *     值在数组中的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static int indexOf(@Nullable final byte[] array, final byte value) {
     return indexOf(array, value, 0);
   }
 
   /**
-   * Finds the current of the given value in the array starting at the given
-   * current.
+   * 从给定当前开始在数组中查找给定值的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * <p>A negative startIndex is treated as zero. A startIndex larger than the
-   * array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+   * <p>负的 startIndex 被视为零。startIndex 大于数组长度将返回 {@link #INDEX_NOT_FOUND}
+   * ({@code -1})。
    *
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the value to find
+   *     要查找的值
    * @param start
-   *     the index to start searching at
-   * @return the current of the value within the array, {@link #INDEX_NOT_FOUND}
-   *     ({@code -1}) if not found or {@code null} array input.
+   *     开始搜索的当前
+   * @return
+   *     值在数组中从给定当前开始的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static int indexOf(@Nullable final byte[] array, final byte value,
       final int start) {
@@ -1731,99 +2267,88 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the current of the given value in the array.
+   * 在数组中查找给定值的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
+   *
+   * <p>此函数使用默认的搜索容差{@link MathEx#DEFAULT_DOUBLE_EPSILON}。
    *
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the value to find
-   * @return the current of the value within the array, {@link #INDEX_NOT_FOUND}
-   *     ({@code -1}) if not found or {@code null} array input
+   *     要查找的值
+   * @return
+   *     值在数组中的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
-  public static int indexOf(@Nullable final double[] array,
-      final double value) {
-    return indexOf(array, value, 0);
+  public static int indexOf(@Nullable final double[] array, final double value) {
+    return indexOf(array, value, 0, MathEx.DEFAULT_DOUBLE_EPSILON);
   }
 
   /**
-   * Finds the current of the given value in the array starting at the given
-   * current.
+   * 从给定当前开始在数组中查找给定值的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * <p>A negative startIndex is treated as zero. A startIndex larger than the
-   * array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+   * <p>负的 startIndex 被视为零。startIndex 大于数组长度将返回 {@link #INDEX_NOT_FOUND}
+   * ({@code -1})。
+   *
+   * <p>此函数使用默认的搜索容差{@link MathEx#DEFAULT_DOUBLE_EPSILON}。
    *
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the value to find
+   *     要查找的值
    * @param start
-   *     the index to start searching at
-   * @return the current of the value within the array, {@link #INDEX_NOT_FOUND}
-   *     ({@code -1}) if not found or {@code null} array input.
+   *     开始搜索的当前
+   * @return
+   *     值在数组中从给定当前开始的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
-  public static int indexOf(@Nullable final double[] array, final double value,
-      final int start) {
-    if (isEmpty(array)) {
-      return INDEX_NOT_FOUND;
-    }
-    final int theStart = Math.max(start, 0);
-    for (int i = theStart; i < array.length; ++i) {
-      if (value == array[i]) {
-        return i;
-      }
-    }
-    return INDEX_NOT_FOUND;
+  public static int indexOf(@Nullable final double[] array, final double value, final int start) {
+    return indexOf(array, value, start, MathEx.DEFAULT_DOUBLE_EPSILON);
   }
 
   /**
-   * Finds the current of the given value within a given tolerance in the array.
-   * This method will return the current of the first value which falls between
-   * the region defined by value - tolerance and value + tolerance.
+   * 在数组中查找给定值的当前，该值在给定的容差范围内。此方法将返回第一个落在由{@code value - tolerance}
+   * 和 {@code value + tolerance} 定义的区域内的值的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the value to find
+   *     要查找的值
    * @param tolerance
-   *     tolerance of the search
-   * @return the current of the value within the array, {@link #INDEX_NOT_FOUND}
-   *     ({@code -1}) if not found or {@code null} array input.
+   *     搜索的容差
+   * @return
+   *     值在数组中的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
-  public static int indexOf(@Nullable final double[] array, final double value,
-      final double tolerance) {
+  public static int indexOf(@Nullable final double[] array, final double value, final double tolerance) {
     return indexOf(array, value, 0, tolerance);
   }
 
   /**
-   * Finds the current of the given value in the array starting at the given
-   * current. This method will return the current of the first value which falls
-   * between the region defined by value - tolerance and value + tolerance.
+   * 从给定当前开始在数组中查找给定值的当前，该值在给定的容差范围内。此方法将返回第一个落在由
+   * {@code value - tolerance} 和 {@code value + tolerance} 定义的区域内的值的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * <p>A negative startIndex is treated as zero. A startIndex larger than the
-   * array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+   * <p>负的 startIndex 被视为零。startIndex 大于数组长度将返回 {@link #INDEX_NOT_FOUND}
+   *  ({@code -1})。
    *
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the value to find
+   *     要查找的值
    * @param start
-   *     the index to start searching at
+   *     开始搜索的当前
    * @param tolerance
-   *     tolerance of the search
-   * @return the current of the value within the array, {@link #INDEX_NOT_FOUND}
-   *     ({@code -1}) if not found or {@code null} array input.
+   *     搜索的容差
+   * @return
+   *     值在数组中从给定当前开始的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static int indexOf(@Nullable final double[] array, final double value,
       final int start, final double tolerance) {
@@ -1842,98 +2367,87 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the current of the given value in the array.
+   * 在数组中查找给定值的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
+   *
+   * <p>此函数使用默认的搜索容差{@link MathEx#DEFAULT_FLOAT_EPSILON}。
    *
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the value to find
-   * @return the current of the value within the array, {@link #INDEX_NOT_FOUND}
-   *     ({@code -1}) if not found or {@code null} array input.
+   *     要查找的值
+   * @return
+   *     值在数组中的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static int indexOf(@Nullable final float[] array, final float value) {
-    return indexOf(array, value, 0);
+    return indexOf(array, value, 0, MathEx.DEFAULT_FLOAT_EPSILON);
   }
 
   /**
-   * Finds the current of the given value in the array starting at the given
-   * current.
+   * 从给定当前开始在数组中查找给定值的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * <p>A negative startIndex is treated as zero. A startIndex larger than the
-   * array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+   * <p>负的 startIndex 被视为零。startIndex 大于数组长度将返回 {@link #INDEX_NOT_FOUND}
+   * ({@code -1})。
+   *
+   * <p>此函数使用默认的搜索容差{@link MathEx#DEFAULT_FLOAT_EPSILON}。
    *
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the value to find
+   *     要查找的值
    * @param start
-   *     the index to start searching at
-   * @return the current of the value within the array, {@link #INDEX_NOT_FOUND}
-   *     ({@code -1}) if not found or {@code null} array input
+   *     开始搜索的当前
+   * @return
+   *     值在数组中从给定当前开始的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
-  public static int indexOf(@Nullable final float[] array, final float value,
-      final int start) {
-    if (isEmpty(array)) {
-      return INDEX_NOT_FOUND;
-    }
-    final int theStart = Math.max(start, 0);
-    for (int i = theStart; i < array.length; ++i) {
-      if (value == array[i]) {
-        return i;
-      }
-    }
-    return INDEX_NOT_FOUND;
+  public static int indexOf(@Nullable final float[] array, final float value, final int start) {
+    return indexOf(array, value, start, MathEx.DEFAULT_FLOAT_EPSILON);
   }
 
   /**
-   * Finds the current of the given value within a given tolerance in the array.
-   * This method will return the current of the first value which falls between
-   * the region defined by value - tolerance and value + tolerance.
+   * 在数组中查找给定值的当前，该值在给定的容差范围内。此方法将返回第一个落在由
+   * {@code value - tolerance} 和 {@code value + tolerance} 定义的区域内的值的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the value to find
+   *     要查找的值
    * @param tolerance
-   *     tolerance of the search
-   * @return the current of the value within the array, {@link #INDEX_NOT_FOUND}
-   *     ({@code -1}) if not found or {@code null} array input.
+   *     搜索的容差
+   * @return
+   *     值在数组中的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
-  public static int indexOf(@Nullable final float[] array, final float value,
-      final float tolerance) {
+  public static int indexOf(@Nullable final float[] array, final float value, final float tolerance) {
     return indexOf(array, value, 0, tolerance);
   }
 
   /**
-   * Finds the current of the given value in the array starting at the given
-   * current. This method will return the current of the first value which falls
-   * between the region defined by value - tolerance and value + tolerance.
+   * 从给定当前开始在数组中查找给定值的当前，该值在给定的容差范围内。此方法将返回第一个落在由
+   * {@code value - tolerance} 和 {@code value + tolerance} 定义的区域内的值的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * <p>A negative startIndex is treated as zero. A startIndex larger than the
-   * array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+   * <p>负的 startIndex 被视为零。startIndex 大于数组长度将返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the value to find
+   *     要查找的值
    * @param start
-   *     the index to start searching at
+   *     开始搜索的当前
    * @param tolerance
-   *     tolerance of the search
-   * @return the current of the value within the array, {@link #INDEX_NOT_FOUND}
-   *     ({@code -1}) if not found or {@code null} array input.
+   *     搜索的容差
+   * @return
+   *     值在数组中从给定当前开始的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static int indexOf(@Nullable final float[] array, final float value,
       final int start, final float tolerance) {
@@ -1952,17 +2466,17 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the current of the given value in the array.
+   * 在数组中查找给定值的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the value to find
-   * @return the current of the value within the array, {@link #INDEX_NOT_FOUND}
-   *     ({@code -1}) if not found or {@code null} array input.
+   *     要查找的值
+   * @return
+   *     值在数组中的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static int indexOf(@Nullable final boolean[] array,
       final boolean value) {
@@ -1970,23 +2484,22 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the current of the given value in the array starting at the given
-   * current.
+   * 从给定当前开始在数组中查找给定值的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * <p>A negative startIndex is treated as zero. A startIndex larger than the
-   * array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+   * <p>负的 startIndex 被视为零。startIndex 大于数组长度将返回 {@link #INDEX_NOT_FOUND}
+   * ({@code -1})。
    *
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the value to find
+   *     要查找的值
    * @param start
-   *     the index to start searching at
-   * @return the current of the value within the array, {@link #INDEX_NOT_FOUND}
-   *     ({@code -1}) if not found or {@code null} array input.
+   *     开始搜索的当前
+   * @return
+   *     值在数组中从给定当前开始的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static int indexOf(@Nullable final boolean[] array,
       final boolean value, final int start) {
@@ -2003,21 +2516,19 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the last current of the given object within the array.
+   * 在数组中查找给定对象的最后一个当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     the array to travers backwords looking for the object, may be
-   *     {@code null}
+   *     要向后遍历以查找对象的数组，可能为 {@code null}
    * @param value
-   *     the object to find, may be {@code null}
-   * @return the last current of the object within the array,
-   *     {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-   *     array input
+   *     要查找的对象，可能为 {@code null}
+   * @return
+   *     对象在数组中的最后一个当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static <T> int lastIndexOf(@Nullable final T[] array,
       @Nullable final T value) {
@@ -2025,28 +2536,24 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the last current of the given object in the array starting at the
-   * given current.
+   * 从给定当前开始在数组中查找给定对象的最后一个当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * <p>A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}
-   * ). A
-   * startIndex larger than the array length will search from the end of the
-   * array.
+   * <p>负的 startIndex 将返回 {@link #INDEX_NOT_FOUND} ({@code -1})。{@code startIndex}
+   * 大于数组长度将从数组末尾开始搜索。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     the array to traverse for looking for the object, may be {@code null}
+   *     要向后遍历以查找对象的数组，可能为 {@code null}
    * @param value
-   *     the object to find, may be {@code null}
+   *     要查找的对象，可能为 {@code null}
    * @param start
-   *     the start current to travers backwards from
-   * @return the last current of the object within the array,
-   *     {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-   *     array input
+   *     开始向后遍历的当前
+   * @return
+   *     对象在数组中的最后一个当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static <T> int lastIndexOf(@Nullable final T[] array,
       @Nullable final T value, final int start) {
@@ -2074,50 +2581,44 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the last current of the given value within the array.
+   * 在数组中查找给定值的最后一个当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param array
-   *     the array to travers backwords looking for the object, may be
-   *     {@code null}
+   *     要向后遍历以查找对象的数组，可能为 {@code null}
    * @param value
-   *     the object to find
-   * @return the last current of the value within the array,
-   *     {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-   *     array input
+   *     要查找的值
+   * @return
+   *     值在数组中的最后一个当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
-  public static int lastIndexOf(@Nullable final long[] array,
-      final long value) {
+  public static int lastIndexOf(@Nullable final boolean[] array,
+      final boolean value) {
     return lastIndexOf(array, value, Integer.MAX_VALUE);
   }
 
   /**
-   * Finds the last current of the given value in the array starting at the
-   * given current.
+   * 从给定当前开始在数组中查找给定值的最后一个当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * <p>A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}
-   * ). A
-   * startIndex larger than the array length will search from the end of the
-   * array.
+   * <p>负的 startIndex 将返回 {@link #INDEX_NOT_FOUND} ({@code -1})。startIndex
+   * 大于数组长度将从数组末尾开始搜索。
    *
    * @param array
-   *     the array to traverse for looking for the object, may be {@code null}
+   *     要向后遍历以查找对象的数组，可能为 {@code null}
    * @param value
-   *     the value to find
+   *     要查找的值
    * @param start
-   *     the start current to travers backwards from
-   * @return the last current of the value within the array,
-   *     {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-   *     array input.
+   *     开始向后遍历的当前
+   * @return
+   *     值在数组中的最后一个当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
-  public static int lastIndexOf(@Nullable final long[] array, final long value,
-      final int start) {
-    if (array == null) {
+  public static int lastIndexOf(@Nullable final boolean[] array,
+      final boolean value, final int start) {
+    if (isEmpty(array)) {
       return INDEX_NOT_FOUND;
     }
     final int theStart = Math.min(start, array.length - 1);
@@ -2133,136 +2634,17 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the last current of the given value within the array.
+   * 在数组中查找给定值的最后一个当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
-   *
-   * @param array
-   *     the array to travers backwords looking for the object, may be
-   *     {@code null}
-   * @param value
-   *     the object to find
-   * @return the last current of the value within the array,
-   *     {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-   *     array input
-   */
-  public static int lastIndexOf(@Nullable final int[] array, final int value) {
-    return lastIndexOf(array, value, Integer.MAX_VALUE);
-  }
-
-  /**
-   * Finds the last current of the given value in the array starting at the
-   * given current.
-   *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
-   *
-   * <p>A negative startIndex will return {@link #INDEX_NOT_FOUND}
-   * ({@code -1}).
-   * A startIndex larger than the array length will search from the end of the
-   * array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param array
-   *     the array to traverse for looking for the object, may be {@code null}
+   *     要向后遍历以查找对象的数组，可能为 {@code null}
    * @param value
-   *     the value to find
-   * @param start
-   *     the start current to travers backwards from
-   * @return the last current of the value within the array,
-   *     {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-   *     array input
-   */
-  public static int lastIndexOf(@Nullable final int[] array, final int value,
-      final int start) {
-    if (array == null) {
-      return INDEX_NOT_FOUND;
-    }
-    final int theStart = Math.min(start, array.length - 1);
-    if (theStart < 0) {
-      return INDEX_NOT_FOUND;
-    }
-    for (int i = theStart; i >= 0; --i) {
-      if (value == array[i]) {
-        return i;
-      }
-    }
-    return INDEX_NOT_FOUND;
-  }
-
-  /**
-   * Finds the last current of the given value within the array.
-   *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
-   *
-   * @param array
-   *     the array to travers backwords looking for the object, may be
-   *     {@code null}
-   * @param value
-   *     the object to find
-   * @return the last current of the value within the array,
-   *     {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-   *     array input
-   */
-  public static int lastIndexOf(@Nullable final short[] array,
-      final short value) {
-    return lastIndexOf(array, value, Integer.MAX_VALUE);
-  }
-
-  /**
-   * Finds the last current of the given value in the array starting at the
-   * given current.
-   *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
-   *
-   * <p>A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}
-   * ). A
-   * startIndex larger than the array length will search from the end of the
-   * array.
-   *
-   * @param array
-   *     the array to traverse for looking for the object, may be {@code null}
-   * @param value
-   *     the value to find
-   * @param start
-   *     the start current to travers backwards from
-   * @return the last current of the value within the array,
-   *     {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-   *     array input
-   */
-  public static int lastIndexOf(@Nullable final short[] array,
-      final short value, final int start) {
-    if (array == null) {
-      return INDEX_NOT_FOUND;
-    }
-    final int theStart = Math.min(start, array.length - 1);
-    if (theStart < 0) {
-      return INDEX_NOT_FOUND;
-    }
-    for (int i = theStart; i >= 0; --i) {
-      if (value == array[i]) {
-        return i;
-      }
-    }
-    return INDEX_NOT_FOUND;
-  }
-
-  /**
-   * Finds the last current of the given value within the array.
-   *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
-   *
-   * @param array
-   *     the array to travers backwords looking for the object, may be
-   *     {@code null}
-   * @param value
-   *     the object to find
-   * @return the last current of the value within the array,
-   *     {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-   *     array input
+   *     要查找的值
+   * @return
+   *     值在数组中的最后一个当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static int lastIndexOf(@Nullable final char[] array,
       final char value) {
@@ -2270,26 +2652,22 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the last current of the given value in the array starting at the
-   * given current.
+   * 从给定当前开始在数组中查找给定值的最后一个当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * <p>A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}
-   * ). A
-   * startIndex larger than the array length will search from the end of the
-   * array.
+   * <p>负的 startIndex 将返回 {@link #INDEX_NOT_FOUND} ({@code -1})。{@code startIndex}
+   * 大于数组长度将从数组末尾开始搜索。
    *
    * @param array
-   *     the array to traverse for looking for the object, may be {@code null}
+   *     要向后遍历以查找对象的数组，可能为 {@code null}
    * @param value
-   *     the value to find
+   *     要查找的值
    * @param start
-   *     the start current to travers backwards from
-   * @return the last current of the value within the array,
-   *     {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-   *     array input
+   *     开始向后遍历的当前
+   * @return
+   *     值在数组中的最后一个当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static int lastIndexOf(@Nullable final char[] array, final char value,
       final int start) {
@@ -2309,19 +2687,176 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the last current of the given value within the array.
+   * 在数组中查找给定值的最后一个当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param array
-   *     the array to travers backwords looking for the object, may be
-   *     {@code null}
+   *     要向后遍历以查找对象的数组，可能为 {@code null}
    * @param value
-   *     the object to find
-   * @return the last current of the value within the array,
-   *     {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-   *     array input
+   *     要查找的值
+   * @return
+   *     值在数组中的最后一个当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
+   */
+  public static int lastIndexOf(@Nullable final long[] array,
+      final long value) {
+    return lastIndexOf(array, value, Integer.MAX_VALUE);
+  }
+
+  /**
+   * 从给定当前开始在数组中查找给定值的最后一个当前。
+   *
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
+   *
+   * <p>负的 startIndex 将返回 {@link #INDEX_NOT_FOUND} ({@code -1})。{@code startIndex}
+   * 大于数组长度将从数组末尾开始搜索。
+   *
+   * @param array
+   *     要向后遍历以查找对象的数组，可能为 {@code null}
+   * @param value
+   *     要查找的值
+   * @param start
+   *     开始向后遍历的当前
+   * @return
+   *     值在数组中的最后一个当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
+   */
+  public static int lastIndexOf(@Nullable final long[] array, final long value,
+      final int start) {
+    if (array == null) {
+      return INDEX_NOT_FOUND;
+    }
+    final int theStart = Math.min(start, array.length - 1);
+    if (theStart < 0) {
+      return INDEX_NOT_FOUND;
+    }
+    for (int i = theStart; i >= 0; --i) {
+      if (value == array[i]) {
+        return i;
+      }
+    }
+    return INDEX_NOT_FOUND;
+  }
+
+  /**
+   * 在数组中查找给定值的最后一个当前。
+   *
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
+   *
+   * @param array
+   *     要向后遍历以查找对象的数组，可能为 {@code null}
+   * @param value
+   *     要查找的值
+   * @return
+   *     值在数组中的最后一个当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
+   */
+  public static int lastIndexOf(@Nullable final int[] array, final int value) {
+    return lastIndexOf(array, value, Integer.MAX_VALUE);
+  }
+
+  /**
+   * 从给定当前开始在数组中查找给定值的最后一个当前。
+   *
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
+   *
+   * <p>负的 startIndex 将返回 {@link #INDEX_NOT_FOUND} ({@code -1})。{@code startIndex}
+   * 大于数组长度将从数组末尾开始搜索。
+   *
+   * @param array
+   *     要向后遍历以查找对象的数组，可能为 {@code null}
+   * @param value
+   *     要查找的值
+   * @param start
+   *     开始向后遍历的当前
+   * @return
+   *     值在数组中的最后一个当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
+   */
+  public static int lastIndexOf(@Nullable final int[] array, final int value,
+      final int start) {
+    if (array == null) {
+      return INDEX_NOT_FOUND;
+    }
+    final int theStart = Math.min(start, array.length - 1);
+    if (theStart < 0) {
+      return INDEX_NOT_FOUND;
+    }
+    for (int i = theStart; i >= 0; --i) {
+      if (value == array[i]) {
+        return i;
+      }
+    }
+    return INDEX_NOT_FOUND;
+  }
+
+  /**
+   * 在数组中查找给定值的最后一个当前。
+   *
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
+   *
+   * @param array
+   *     要向后遍历以查找对象的数组，可能为 {@code null}
+   * @param value
+   *     要查找的值
+   * @return
+   *     值在数组中的最后一个当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
+   */
+  public static int lastIndexOf(@Nullable final short[] array,
+      final short value) {
+    return lastIndexOf(array, value, Integer.MAX_VALUE);
+  }
+
+  /**
+   * 从给定当前开始在数组中查找给定值的最后一个当前。
+   *
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
+   *
+   * <p>负的 startIndex 将返回 {@link #INDEX_NOT_FOUND} ({@code -1})。{@code startIndex}
+   * 大于数组长度将从数组末尾开始搜索。
+   *
+   * @param array
+   *     要向后遍历以查找对象的数组，可能为 {@code null}
+   * @param value
+   *     要查找的值
+   * @param start
+   *     开始向后遍历的当前
+   * @return
+   *     值在数组中的最后一个当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
+   */
+  public static int lastIndexOf(@Nullable final short[] array,
+      final short value, final int start) {
+    if (array == null) {
+      return INDEX_NOT_FOUND;
+    }
+    final int theStart = Math.min(start, array.length - 1);
+    if (theStart < 0) {
+      return INDEX_NOT_FOUND;
+    }
+    for (int i = theStart; i >= 0; --i) {
+      if (value == array[i]) {
+        return i;
+      }
+    }
+    return INDEX_NOT_FOUND;
+  }
+
+
+  /**
+   * 在数组中查找给定值的最后一个当前。
+   *
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
+   *
+   * @param array
+   *     要向后遍历以查找对象的数组，可能为 {@code null}
+   * @param value
+   *     要查找的值
+   * @return
+   *     值在数组中的最后一个当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static int lastIndexOf(@Nullable final byte[] array,
       final byte value) {
@@ -2329,26 +2864,22 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the last current of the given value in the array starting at the
-   * given current.
+   * 从给定当前开始在数组中查找给定值的最后一个当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * <p>A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}
-   * ). A
-   * startIndex larger than the array length will search from the end of the
-   * array.
+   * <p>负的 startIndex 将返回 {@link #INDEX_NOT_FOUND} ({@code -1})。{@code startIndex}
+   * 大于数组长度将从数组末尾开始搜索。
    *
    * @param array
-   *     the array to traverse for looking for the object, may be {@code null}
+   *     要向后遍历以查找对象的数组，可能为 {@code null}
    * @param value
-   *     the value to find
+   *     要查找的值
    * @param start
-   *     the start current to travers backwards from
-   * @return the last current of the value within the array,
-   *     {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-   *     array input
+   *     开始向后遍历的当前
+   * @return
+   *     值在数组中的最后一个当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static int lastIndexOf(@Nullable final byte[] array, final byte value,
       final int start) {
@@ -2368,241 +2899,91 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the last current of the given value within the array.
+   * 在数组中查找给定值的最后一个当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * @param array
-   *     the array to travers backwords looking for the object, may be
-   *     {@code null}
-   * @param value
-   *     the object to find
-   * @return the last current of the value within the array,
-   *     {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-   *     array input
-   */
-  public static int lastIndexOf(@Nullable final double[] array,
-      final double value) {
-    return lastIndexOf(array, value, Integer.MAX_VALUE);
-  }
-
-  /**
-   * Finds the last current of the given value in the array starting at the
-   * given current.
-   *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
-   *
-   * <p>A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}
-   * ). A
-   * startIndex larger than the array length will search from the end of the
-   * array.
+   * <p>此函数使用默认的搜索容差{@link MathEx#DEFAULT_FLOAT_EPSILON}。
    *
    * @param array
-   *     the array to traverse for looking for the object, may be {@code null}
+   *     要向后遍历以查找对象的数组，可能为 {@code null}
    * @param value
-   *     the value to find
-   * @param start
-   *     the start current to travers backwards from
-   * @return the last current of the value within the array,
-   *     {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-   *     array input
-   */
-  public static int lastIndexOf(@Nullable final double[] array,
-      final double value, final int start) {
-    if (isEmpty(array)) {
-      return INDEX_NOT_FOUND;
-    }
-    final int theStart = Math.min(start, array.length - 1);
-    if (theStart < 0) {
-      return INDEX_NOT_FOUND;
-    }
-    for (int i = theStart; i >= 0; --i) {
-      if (value == array[i]) {
-        return i;
-      }
-    }
-    return INDEX_NOT_FOUND;
-  }
-
-  /**
-   * Finds the last current of the given value within a given tolerance in the
-   * array. This method will return the current of the last value which falls
-   * between the region defined by valueToFind - tolerance and valueToFind +
-   * tolerance.
-   *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
-   *
-   * @param array
-   *     the array to search through for the object, may be {@code null}
-   * @param value
-   *     the value to find
-   * @param tolerance
-   *     tolerance of the search
-   * @return the current of the value within the array, {@link #INDEX_NOT_FOUND}
-   *     ({@code -1}) if not found or {@code null} array input.
-   */
-  public static int lastIndexOf(@Nullable final double[] array,
-      final double value, final double tolerance) {
-    return lastIndexOf(array, value, Integer.MAX_VALUE, tolerance);
-  }
-
-  /**
-   * Finds the last current of the given value in the array starting at the
-   * given current. This method will return the current of the last value which
-   * falls between the region defined by valueToFind - tolerance and valueToFind
-   * + tolerance.
-   *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
-   *
-   * <p>A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}
-   * ). A
-   * startIndex larger than the array length will search from the end of the
-   * array.
-   *
-   * @param array
-   *     the array to traverse for looking for the object, may be {@code null}
-   * @param value
-   *     the value to find
-   * @param start
-   *     the start current to travers backwards from
-   * @param tolerance
-   *     search for value within plus/minus this amount
-   * @return the last current of the value within the array,
-   *     {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-   *     array input
-   */
-  public static int lastIndexOf(@Nullable final double[] array,
-      final double value, final int start, final double tolerance) {
-    if (isEmpty(array)) {
-      return INDEX_NOT_FOUND;
-    }
-    final int theStart = Math.min(start, array.length - 1);
-    if (theStart < 0) {
-      return INDEX_NOT_FOUND;
-    }
-    final double min = value - tolerance;
-    final double max = value + tolerance;
-    for (int i = theStart; i >= 0; --i) {
-      if ((array[i] >= min) && (array[i] <= max)) {
-        return i;
-      }
-    }
-    return INDEX_NOT_FOUND;
-  }
-
-  /**
-   * Finds the last current of the given value within the array.
-   *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
-   *
-   * @param array
-   *     the array to travers backwords looking for the object, may be
-   *     {@code null}
-   * @param value
-   *     the object to find
-   * @return the last current of the value within the array,
-   *     {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-   *     array input
+   *     要查找的值
+   * @return
+   *     值在数组中的最后一个当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
   public static int lastIndexOf(final float[] array, final float value) {
-    return lastIndexOf(array, value, Integer.MAX_VALUE);
+    return lastIndexOf(array, value, Integer.MAX_VALUE, MathEx.DEFAULT_FLOAT_EPSILON);
   }
 
   /**
-   * Finds the last current of the given value in the array starting at the
-   * given current.
+   * 从给定当前开始在数组中查找给定值的最后一个当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * <p>A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}
-   * ). A
-   * startIndex larger than the array length will search from the end of the
-   * array.
+   * <p>负的 startIndex 将返回 {@link #INDEX_NOT_FOUND} ({@code -1})。{@code startIndex}
+   * 大于数组长度将从数组末尾开始搜索。
+   *
+   * <p>此函数使用默认的搜索容差{@link MathEx#DEFAULT_FLOAT_EPSILON}。
    *
    * @param array
-   *     the array to traverse for looking for the object, may be {@code null}
+   *     要向后遍历以查找对象的数组，可能为 {@code null}
    * @param value
-   *     the value to find
+   *     要查找的值
    * @param start
-   *     the start current to travers backwards from
-   * @return the last current of the value within the array,
-   *     {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-   *     array input
+   *     开始向后遍历的当前
+   * @return
+   *     值在数组中的最后一个当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
-  public static int lastIndexOf(@Nullable final float[] array,
-      final float value, final int start) {
-    if (isEmpty(array)) {
-      return INDEX_NOT_FOUND;
-    }
-    final int theStart = Math.min(start, array.length - 1);
-    if (theStart < 0) {
-      return INDEX_NOT_FOUND;
-    }
-    for (int i = theStart; i >= 0; --i) {
-      if (value == array[i]) {
-        return i;
-      }
-    }
-    return INDEX_NOT_FOUND;
+  public static int lastIndexOf(final float[] array, final float value, final int start) {
+    return lastIndexOf(array, value, start, MathEx.DEFAULT_FLOAT_EPSILON);
   }
 
   /**
-   * Finds the last current of the given value within a given tolerance in the
-   * array. This method will return the current of the last value which falls
-   * between the region defined by valueToFind - tolerance and valueToFind +
-   * tolerance.
+   * 在数组中查找给定值的最后一个当前，该值在给定的容差范围内。此方法将返回第一个落在由
+   * {@code value - tolerance} 和 {@code value + tolerance} 定义的区域内的值的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the value to find
+   *     要查找的值
    * @param tolerance
-   *     tolerance of the search
-   * @return the current of the value within the array, {@link #INDEX_NOT_FOUND}
-   *     ({@code -1}) if not found or {@code null} array input.
+   *     搜索的容差
+   * @return
+   *     值在数组中的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
-  public static int lastIndexOf(@Nullable final float[] array,
-      final float value, final float tolerance) {
+  public static int lastIndexOf(@Nullable final float[] array, final float value, final float tolerance) {
     return lastIndexOf(array, value, Integer.MAX_VALUE, tolerance);
   }
 
   /**
-   * Finds the last current of the given value in the array starting at the
-   * given current. This method will return the current of the last value which
-   * falls between the region defined by valueToFind - tolerance and valueToFind
-   * + tolerance.
+   * 在数组中查找给定值的最后一个当前，该值在给定的容差范围内。此方法将返回第一个落在由
+   * {@code value - tolerance} 和 {@code value + tolerance} 定义的区域内的值的当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * <p>A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}
-   * ). A
-   * startIndex larger than the array length will search from the end of the
-   * array.
+   * <p>负的 startIndex 将返回 {@link #INDEX_NOT_FOUND} ({@code -1})。{@code startIndex}
+   * 大于数组长度将从数组末尾开始搜索。
    *
    * @param array
-   *     the array to traverse for looking for the object, may be {@code null}
+   *     要搜索的数组，可能为 {@code null}
    * @param value
-   *     the value to find
+   *     要查找的值
    * @param start
-   *     the start current to travers backwards from
+   *     开始搜索的当前
    * @param tolerance
-   *     search for value within plus/minus this amount
-   * @return the last current of the value within the array,
-   *     {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-   *     array input
+   *     搜索的容差
+   * @return
+   *     值在数组中从给定当前开始的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
-  public static int lastIndexOf(@Nullable final float[] array,
-      final float value, final int start, final float tolerance) {
+  public static int lastIndexOf(@Nullable final float[] array, final float value,
+      final int start, final float tolerance) {
     if (isEmpty(array)) {
       return INDEX_NOT_FOUND;
     }
@@ -2621,50 +3002,91 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the last current of the given value within the array.
+   * 在数组中查找给定值的最后一个当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) if
-   * {@code null}
-   * array input.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
+   *
+   * <p>此函数使用默认的搜索容差{@link MathEx#DEFAULT_DOUBLE_EPSILON}。
    *
    * @param array
-   *     the array to travers backwords looking for the object, may be
-   *     {@code null}
+   *     要向后遍历以查找对象的数组，可能为 {@code null}
    * @param value
-   *     the object to find
-   * @return the last current of the value within the array,
-   *     {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-   *     array input
+   *     要查找的值
+   * @return
+   *     值在数组中的最后一个当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
-  public static int lastIndexOf(@Nullable final boolean[] array,
-      final boolean value) {
-    return lastIndexOf(array, value, Integer.MAX_VALUE);
+  public static int lastIndexOf(@Nullable final double[] array, final double value) {
+    return lastIndexOf(array, value, Integer.MAX_VALUE, MathEx.DEFAULT_DOUBLE_EPSILON);
   }
 
   /**
-   * Finds the last current of the given value in the array starting at the
-   * given current.
+   * 从给定当前开始在数组中查找给定值的最后一个当前。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * <p>A negative startIndex will return {@link #INDEX_NOT_FOUND} ({@code -1}
-   * ). A
-   * startIndex larger than the array length will search from the end of the
-   * array.
+   * <p>负的 startIndex 将返回 {@link #INDEX_NOT_FOUND} ({@code -1})。{@code startIndex}
+   * 大于数组长度将从数组末尾开始搜索。
+   *
+   * <p>此函数使用默认的搜索容差{@link MathEx#DEFAULT_DOUBLE_EPSILON}。
    *
    * @param array
-   *     the array to traverse for looking for the object, may be {@code null}
+   *     要向后遍历以查找对象的数组，可能为 {@code null}
    * @param value
-   *     the value to find
+   *     要查找的值
    * @param start
-   *     the start current to travers backwards from
-   * @return the last current of the value within the array,
-   *     {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-   *     array input
+   *     开始向后遍历的当前
+   * @return
+   *     值在数组中的最后一个当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
    */
-  public static int lastIndexOf(@Nullable final boolean[] array,
-      final boolean value, final int start) {
+  public static int lastIndexOf(@Nullable final double[] array, final double value, final int start) {
+    return lastIndexOf(array, value, start, MathEx.DEFAULT_DOUBLE_EPSILON);
+  }
+
+  /**
+   * 在数组中查找给定值的最后一个当前，该值在给定的容差范围内。此方法将返回第一个落在由
+   * {@code value - tolerance} 和 {@code value + tolerance} 定义的区域内的值的当前。
+   *
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
+   *
+   * @param array
+   *     要搜索的数组，可能为 {@code null}
+   * @param value
+   *     要查找的值
+   * @param tolerance
+   *     搜索的容差
+   * @return
+   *     值在数组中的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
+   */
+  public static int lastIndexOf(@Nullable final double[] array, final double value, final double tolerance) {
+    return lastIndexOf(array, value, Integer.MAX_VALUE, tolerance);
+  }
+
+  /**
+   * 从给定当前开始在数组中查找给定值的最后一个当前，该值在给定的容差范围内。此方法将返回第一个
+   * 落在由 {@code value - tolerance} 和 {@code value + tolerance} 定义的区域内的值的当前。
+   *
+   * <p>如果输入数组为 {@code null}，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
+   *
+   * <p>负的 startIndex 将返回 {@link #INDEX_NOT_FOUND} ({@code -1})。{@code startIndex}
+   * 大于数组长度将从数组末尾开始搜索。
+   *
+   * @param array
+   *     要搜索的数组，可能为 {@code null}
+   * @param value
+   *     要查找的值
+   * @param start
+   *     开始搜索的当前
+   * @param tolerance
+   *     搜索的容差
+   * @return
+   *     值在数组中从给定当前开始的当前，如果未找到或输入数组为 {@code null}，则返回
+   *     {@link #INDEX_NOT_FOUND} ({@code -1})
+   */
+  public static int lastIndexOf(@Nullable final double[] array, final double value,
+      final int start, final double tolerance) {
     if (isEmpty(array)) {
       return INDEX_NOT_FOUND;
     }
@@ -2672,8 +3094,10 @@ public class ArrayUtils {
     if (theStart < 0) {
       return INDEX_NOT_FOUND;
     }
+    final double min = value - tolerance;
+    final double max = value + tolerance;
     for (int i = theStart; i >= 0; --i) {
-      if (value == array[i]) {
+      if ((array[i] >= min) && (array[i] <= max)) {
         return i;
       }
     }
@@ -2681,15 +3105,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if the value is in the given array.
+   * 检查数组是否包含给定值。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param value
-   *     the value to find
-   * @return {@code true} if the array contains the object
+   *     要查找的值
+   * @return 如果数组包含该对象，则返回 {@code true}
    */
   public static boolean contains(@Nullable final long[] array,
       final long value) {
@@ -2697,30 +3121,30 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if the value is in the given array.
+   * 检查数组是否包含给定值。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param value
-   *     the value to find
-   * @return {@code true} if the array contains the object
+   *     要查找的值
+   * @return 如果数组包含该对象，则返回 {@code true}
    */
   public static boolean contains(@Nullable final int[] array, final int value) {
     return indexOf(array, value) != INDEX_NOT_FOUND;
   }
 
   /**
-   * Checks if the value is in the given array.
+   * 检查数组是否包含给定值。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param value
-   *     the value to find
-   * @return {@code true} if the array contains the object
+   *     要查找的值
+   * @return 如果数组包含该对象，则返回 {@code true}
    */
   public static boolean contains(@Nullable final short[] array,
       final short value) {
@@ -2728,15 +3152,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if the value is in the given array.
+   * 检查数组是否包含给定值。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param value
-   *     the value to find
-   * @return {@code true} if the array contains the object
+   *     要查找的值
+   * @return 如果数组包含该对象，则返回 {@code true}
    */
   public static boolean contains(@Nullable final char[] array,
       final char value) {
@@ -2744,15 +3168,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if the value is in the given array.
+   * 检查数组是否包含给定值。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param value
-   *     the value to find
-   * @return {@code true} if the array contains the object
+   *     要查找的值
+   * @return 如果数组包含该对象，则返回 {@code true}
    */
   public static boolean contains(@Nullable final byte[] array,
       final byte value) {
@@ -2760,124 +3184,119 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if the value is in the given array.
+   * 检查数组是否包含给定值。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
+   *
+   * <p>此函数使用默认的搜索容差{@link MathEx#DEFAULT_DOUBLE_EPSILON}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param value
-   *     the value to find
-   * @return {@code true} if the array contains the object
+   *     要查找的值
+   * @return 如果数组包含该对象，则返回 {@code true}
    */
-  public static boolean contains(@Nullable final double[] array,
-      final double value) {
+  public static boolean contains(@Nullable final double[] array, final double value) {
     return indexOf(array, value) != INDEX_NOT_FOUND;
   }
 
   /**
-   * Checks if a value falling within the given tolerance is in the given array.
-   * If the array contains a value within the inclusive range defined by (value
-   * - tolerance) to (value + tolerance).
+   * 检查数组是否包含给定值，该值在给定的容差范围内。如果数组包含在 (value - tolerance)
+   * 到 (value + tolerance) 的范围内的值。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search
+   *     要搜索的数组
    * @param value
-   *     the value to find
+   *     要查找的值
    * @param tolerance
-   *     the array contains the tolerance of the search
-   * @return true if value falling within tolerance is in array
+   *     搜索的容差
+   * @return 如果数组包含给定容差内的值，则返回 {@code true}
    */
-  public static boolean contains(@Nullable final double[] array,
-      final double value, final double tolerance) {
+  public static boolean contains(@Nullable final double[] array, final double value, final double tolerance) {
     return indexOf(array, value, 0, tolerance) != INDEX_NOT_FOUND;
   }
 
   /**
-   * Checks if the value is in the given array.
+   * 检查数组是否包含给定值。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
+   *
+   * <p>此函数使用默认的搜索容差{@link MathEx#DEFAULT_FLOAT_EPSILON}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param value
-   *     the value to find
-   * @return {@code true} if the array contains the object
+   *     要查找的值
+   * @return 如果数组包含该对象，则返回 {@code true}
    */
-  public static boolean contains(@Nullable final float[] array,
-      final float value) {
+  public static boolean contains(@Nullable final float[] array, final float value) {
     return indexOf(array, value) != INDEX_NOT_FOUND;
   }
 
   /**
-   * Checks if a value falling within the given tolerance is in the given array.
-   * If the array contains a value within the inclusive range defined by (value
-   * - tolerance) to (value + tolerance).
+   * 检查数组是否包含给定值，该值在给定的容差范围内。如果数组包含在 (value - tolerance)
+   * 到 (value + tolerance) 的范围内的值。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search
+   *     要搜索的数组
    * @param value
-   *     the value to find
+   *     要查找的值
    * @param tolerance
-   *     the array contains the tolerance of the search
-   * @return true if value falling within tolerance is in array
+   *     搜索的容差
+   * @return 如果数组包含给定容差内的值，则返回 {@code true}
    */
-  public static boolean contains(@Nullable final float[] array,
-      final float value, final float tolerance) {
+  public static boolean contains(@Nullable final float[] array, final float value, final float tolerance) {
     return indexOf(array, value, 0, tolerance) != INDEX_NOT_FOUND;
   }
 
   /**
-   * Checks if the value is in the given array.
+   * 检查数组是否包含给定值。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param value
-   *     the value to find
-   * @return {@code true} if the array contains the object
+   *     要查找的值
+   * @return 如果数组包含该对象，则返回 {@code true}
    */
-  public static boolean contains(@Nullable final boolean[] array,
-      final boolean value) {
+  public static boolean contains(@Nullable final boolean[] array, final boolean value) {
     return indexOf(array, value) != INDEX_NOT_FOUND;
   }
 
   /**
-   * Checks if the object is in the given array.
+   * 检查数组是否包含给定对象。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组元素的类型。
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param value
-   *     the object to find
-   * @return {@code true} if the array contains the object
+   *     要查找的对象
+   * @return 如果数组包含该对象，则返回 {@code true}
    */
   public static <T> boolean contains(@Nullable final T[] array, final T value) {
     return indexOf(array, value) != INDEX_NOT_FOUND;
   }
 
   /**
-   * Checks whether the given array contains any element satisfied the specified
-   * predicate.
+   * 检查给定数组是否包含满足指定谓词的任何元素。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组元素的类型。
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param predicate
-   *     the specified predicate
-   * @return {@code true} if the array contains an element satisfied the
-   *     specified predicate.
+   *     指定的谓词
+   * @return 如果数组包含满足指定谓词的元素，则返回 {@code true}。
    */
   public static <T> boolean containsIf(@Nullable final T[] array,
       final Predicate<T> predicate) {
@@ -2893,16 +3312,16 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if all values in the specified array is in the given array.
+   * 检查指定数组中的所有值是否在给定数组中。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param values
-   *     the array of values to find
-   * @return {@code true} if the array contains the all values in the
-   *     {@code values} array.
+   *     要查找的值
+   * @return
+   *     如果数组包含所有值，则返回 {@code true}
    */
   public static boolean containsAll(@Nullable final long[] array,
       final long[] values) {
@@ -2915,16 +3334,16 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if all values in the specified array is in the given array.
+   * 检查指定数组中的所有值是否在给定数组中。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param values
-   *     the array of values to find
-   * @return {@code true} if the array contains the all values in the
-   *     {@code values} array.
+   *     要查找的值
+   * @return
+   *     如果数组包含所有值，则返回 {@code true}
    */
   public static boolean containsAll(@Nullable final int[] array,
       final int[] values) {
@@ -2937,16 +3356,16 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if all values in the specified array is in the given array.
+   * 检查指定数组中的所有值是否在给定数组中。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param values
-   *     the array of values to find
-   * @return {@code true} if the array contains the all values in the
-   *     {@code values} array.
+   *     要查找的值
+   * @return
+   *     如果数组包含所有值，则返回 {@code true}
    */
   public static boolean containsAll(@Nullable final short[] array,
       final short[] values) {
@@ -2959,16 +3378,16 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if all values in the specified array is in the given array.
+   * 检查指定数组中的所有值是否在给定数组中。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param values
-   *     the array of values to find
-   * @return {@code true} if the array contains the all values in the
-   *     {@code values} array.
+   *     要查找的值
+   * @return
+   *     如果数组包含所有值，则返回 {@code true}
    */
   public static boolean containsAll(@Nullable final char[] array,
       final char[] values) {
@@ -2981,16 +3400,16 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if all values in the specified array is in the given array.
+   * 检查指定数组中的所有值是否在给定数组中。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param values
-   *     the array of values to find
-   * @return {@code true} if the array contains the all values in the
-   *     {@code values} array.
+   *     要查找的值
+   * @return
+   *     如果数组包含所有值，则返回 {@code true}
    */
   public static boolean containsAll(@Nullable final byte[] array,
       final byte[] values) {
@@ -3003,19 +3422,20 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if all values in the specified array is in the given array.
+   * 检查指定数组中的所有值是否在给定数组中。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
+   *
+   * <p>此函数使用默认的搜索容差{@link MathEx#DEFAULT_DOUBLE_EPSILON}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param values
-   *     the array of values to find
-   * @return {@code true} if the array contains the all values in the
-   *     {@code values} array.
+   *     要查找的值
+   * @return
+   *     如果数组包含所有值，则返回 {@code true}
    */
-  public static boolean containsAll(@Nullable final double[] array,
-      final double[] values) {
+  public static boolean containsAll(@Nullable final double[] array, final double[] values) {
     for (final double value : values) {
       if (!contains(array, value)) {
         return false;
@@ -3025,18 +3445,18 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if all values in the specified array is in the given array.
+   * 检查指定数组中的所有值是否在给定数组中。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search through.
+   *     要搜索的数组
    * @param values
-   *     the array of values to find.
+   *     要查找的值
    * @param tolerance
-   *     the given tolerance for floating point comparision.
-   * @return {@code true} if the array contains the all values in the
-   *     {@code values} array.
+   *     给定的浮点比较容差
+   * @return
+   *     如果数组包含所有值，则返回 {@code true}
    */
   public static boolean containsAll(@Nullable final double[] array,
       final double[] values, final double tolerance) {
@@ -3049,19 +3469,20 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if all values in the specified array is in the given array.
+   * 检查指定数组中的所有值是否在给定数组中。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
+   *
+   * <p>此函数使用默认的搜索容差{@link MathEx#DEFAULT_FLOAT_EPSILON}。
    *
    * @param array
-   *     the array to search through.
+   *     要搜索的数组
    * @param values
-   *     the array of values to find.
-   * @return {@code true} if the array contains the all values in the
-   *     {@code values} array.
+   *     要查找的值
+   * @return
+   *     如果数组包含所有值，则返回 {@code true}
    */
-  public static boolean containsAll(@Nullable final float[] array,
-      final float[] values) {
+  public static boolean containsAll(@Nullable final float[] array, final float[] values) {
     for (final float value : values) {
       if (!contains(array, value)) {
         return false;
@@ -3071,18 +3492,18 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if all values in the specified array is in the given array.
+   * 检查指定数组中的所有值是否在给定数组中。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search through.
+   *     要搜索的数组
    * @param values
-   *     the array of values to find.
+   *     要查找的值
    * @param tolerance
-   *     the given tolerance for floating point comparision.
-   * @return {@code true} if the array contains the all values in the
-   *     {@code values} array.
+   *     给定的浮点比较容差
+   * @return
+   *     如果数组包含所有值，则返回 {@code true}
    */
   public static boolean containsAll(@Nullable final float[] array,
       final float[] values, final float tolerance) {
@@ -3095,16 +3516,16 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if all values in the specified array is in the given array.
+   * 检查指定数组中的所有值是否在给定数组中。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param values
-   *     the array of values to find
-   * @return {@code true} if the array contains the all values in the
-   *     {@code values} array.
+   *     要查找的值
+   * @return
+   *     如果数组包含所有值，则返回 {@code true}
    */
   public static boolean containsAll(@Nullable final boolean[] array,
       final boolean[] values) {
@@ -3117,18 +3538,18 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if all objects in the specified array is in the given array.
+   * 检查指定数组中的所有对象是否在给定数组中。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param values
-   *     the array of objects to find
-   * @return {@code true} if the array contains the all objects in the
-   *     {@code values} array.
+   *     要查找的值
+   * @return
+   *     如果数组包含所有值，则返回 {@code true}
    */
   public static <T> boolean containsAll(@Nullable final T[] array,
       final T[] values) {
@@ -3141,16 +3562,16 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if any value in the specified array is in the given array.
+   * 检查指定数组中是否存在任何值在给定数组中。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param values
-   *     the array of values to find
-   * @return {@code true} if the array contains the any value in the
-   *     {@code values} array.
+   *     要查找的值
+   * @return
+   *     如果数组包含任何值，则返回 {@code true}
    */
   public static boolean containsAny(@Nullable final long[] array,
       final long[] values) {
@@ -3163,16 +3584,16 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if any value in the specified array is in the given array.
+   * 检查指定数组中是否存在任何值在给定数组中。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param values
-   *     the array of values to find
-   * @return {@code true} if the array contains the any value in the
-   *     {@code values} array.
+   *     要查找的值
+   * @return
+   *     如果数组包含任何值，则返回 {@code true}
    */
   public static boolean containsAny(@Nullable final int[] array,
       final int[] values) {
@@ -3185,16 +3606,16 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if any value in the specified array is in the given array.
+   * 检查指定数组中是否存在任何值在给定数组中。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param values
-   *     the array of values to find
-   * @return {@code true} if the array contains the any value in the
-   *     {@code values} array.
+   *     要查找的值
+   * @return
+   *     如果数组包含任何值，则返回 {@code true}
    */
   public static boolean containsAny(@Nullable final short[] array,
       final short[] values) {
@@ -3207,16 +3628,16 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if any value in the specified array is in the given array.
+   * 检查指定数组中是否存在任何值在给定数组中。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param values
-   *     the array of values to find
-   * @return {@code true} if the array contains the any value in the
-   *     {@code values} array.
+   *     要查找的值
+   * @return
+   *     如果数组包含任何值，则返回 {@code true}
    */
   public static boolean containsAny(@Nullable final char[] array,
       final char[] values) {
@@ -3229,16 +3650,16 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if any value in the specified array is in the given array.
+   * 检查指定数组中是否存在任何值在给定数组中。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param values
-   *     the array of values to find
-   * @return {@code true} if the array contains the any value in the
-   *     {@code values} array.
+   *     要查找的值
+   * @return
+   *     如果数组包含任何值，则返回 {@code true}
    */
   public static boolean containsAny(@Nullable final byte[] array,
       final byte[] values) {
@@ -3251,16 +3672,18 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if any value in the specified array is in the given array.
+   * 检查指定数组中是否存在任何值在给定数组中。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
+   *
+   * <p>此函数使用默认的搜索容差{@link MathEx#DEFAULT_DOUBLE_EPSILON}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param values
-   *     the array of values to find
-   * @return {@code true} if the array contains the any value in the
-   *     {@code values} array.
+   *     要查找的值
+   * @return
+   *     如果数组包含任何值，则返回 {@code true}
    */
   public static boolean containsAny(@Nullable final double[] array,
       final double[] values) {
@@ -3273,18 +3696,18 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if any value in the specified array is in the given array.
+   * 检查指定数组中是否存在任何值在给定数组中。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param values
-   *     the array of values to find
+   *     要查找的值
    * @param tolerance
-   *     the tolerance of the comparison.
-   * @return {@code true} if the array contains the any value in the
-   *     {@code values} array.
+   *     比较的容差
+   * @return
+   *     如果数组包含任何值，则返回 {@code true}
    */
   public static boolean containsAny(@Nullable final double[] array,
       final double[] values, final double tolerance) {
@@ -3297,16 +3720,18 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if any value in the specified array is in the given array.
+   * 检查指定数组中是否存在任何值在给定数组中。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
+   *
+   * <p>此函数使用默认的搜索容差{@link MathEx#DEFAULT_FLOAT_EPSILON}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param values
-   *     the array of values to find
-   * @return {@code true} if the array contains the any value in the
-   *     {@code values} array.
+   *     要查找的值
+   * @return
+   *     如果数组包含任何值，则返回 {@code true}
    */
   public static boolean containsAny(@Nullable final float[] array,
       final float[] values) {
@@ -3319,18 +3744,18 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if any value in the specified array is in the given array.
+   * 检查指定数组中是否存在任何值在给定数组中。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search through.
+   *     要搜索的数组
    * @param values
-   *     the array of values to find.
+   *     要查找的值
    * @param tolerance
-   *     the given tolerance for floating point comparision.
-   * @return {@code true} if the array contains the any value in the
-   *     {@code values} array.
+   *     给定的浮点比较容差
+   * @return
+   *     如果数组包含任何值，则返回 {@code true}
    */
   public static boolean containsAny(@Nullable final float[] array,
       final float[] values, final float tolerance) {
@@ -3343,16 +3768,16 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if any value in the specified array is in the given array.
+   * 检查指定数组中是否存在任何值在给定数组中。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param values
-   *     the array of values to find
-   * @return {@code true} if the array contains the any value in the
-   *     {@code values} array.
+   *     要查找的值
+   * @return
+   *     如果数组包含任何值，则返回 {@code true}
    */
   public static boolean containsAny(@Nullable final boolean[] array,
       final boolean[] values) {
@@ -3365,18 +3790,18 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if any value in the specified array is in the given array.
+   * 检查指定数组中是否存在任何值在给定数组中。
    *
-   * <p>The method returns {@code false} if a {@code null} array is passed in.
+   * <p>如果传入 {@code null} 数组，此方法返回 {@code false}。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     the array to search through
+   *     要搜索的数组
    * @param values
-   *     the array of values to find
-   * @return {@code true} if the array contains the any value in the
-   *     {@code values} array.
+   *     要查找的值
+   * @return
+   *     如果数组包含任何值，则返回 {@code true}
    */
   public static <T> boolean containsAny(@Nullable final T[] array,
       final T[] values) {
@@ -3389,15 +3814,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of object Characters to primitives.
+   * 将对象 Character 数组转换为原始类型。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code Character} array, may be {@code null}
-   * @return a {@code char} array, {@code null} if null array input
+   *     一个 {@code Character} 数组，可能为 {@code null}
+   * @return 一个 {@code char} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    * @throws NullPointerException
-   *     if array content is {@code null}
+   *     如果数组内容为 {@code null}
    */
   public static char[] toPrimitive(@Nullable final Character[] array) {
     if (array == null) {
@@ -3413,15 +3838,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of object Character to primitives handling {@code null}.
+   * 将对象 Character 数组转换为原始类型，处理 {@code null}。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code Character} array, may be {@code null}
+   *     一个 {@code Character} 数组，可能为 {@code null}
    * @param valueForNull
-   *     the value to insert if {@code null} found
-   * @return a {@code char} array, {@code null} if null array input
+   *     如果找到 {@code null}，则插入的值
+   * @return 一个 {@code char} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   public static char[] toPrimitive(@Nullable final Character[] array,
       final char valueForNull) {
@@ -3439,15 +3864,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of object Longs to primitives.
+   * 将对象 Long 数组转换为原始类型。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code Long} array, may be {@code null}
-   * @return a {@code long} array, {@code null} if null array input
+   *     一个 {@code Long} 数组，可能为 {@code null}
+   * @return 一个 {@code long} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    * @throws NullPointerException
-   *     if array content is {@code null}
+   *     如果数组内容为 {@code null}
    */
   public static long[] toPrimitive(@Nullable final Long[] array) {
     if (array == null) {
@@ -3463,15 +3888,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of object Long to primitives handling {@code null}.
+   * 将对象 Long 数组转换为原始类型，处理 {@code null}。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code Long} array, may be {@code null}
+   *     一个 {@code Long} 数组，可能为 {@code null}
    * @param valueForNull
-   *     the value to insert if {@code null} found
-   * @return a {@code long} array, {@code null} if null array input
+   *     如果找到 {@code null}，则插入的值
+   * @return 一个 {@code long} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   public static long[] toPrimitive(@Nullable final Long[] array,
       final long valueForNull) {
@@ -3489,15 +3914,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of object Integers to primitives.
+   * 将对象 Integer 数组转换为原始类型。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code Integer} array, may be {@code null}
-   * @return an {@code int} array, {@code null} if null array input
+   *     一个 {@code Integer} 数组，可能为 {@code null}
+   * @return 一个 {@code int} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    * @throws NullPointerException
-   *     if array content is {@code null}
+   *     如果数组内容为 {@code null}
    */
   public static int[] toPrimitive(@Nullable final Integer[] array) {
     if (array == null) {
@@ -3513,15 +3938,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of object Integer to primitives handling {@code null}.
+   * 将对象 Integer 数组转换为原始类型，处理 {@code null}。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code Integer} array, may be {@code null}
+   *     一个 {@code Integer} 数组，可能为 {@code null}
    * @param valueForNull
-   *     the value to insert if {@code null} found
-   * @return an {@code int} array, {@code null} if null array input
+   *     如果找到 {@code null}，则插入的值
+   * @return 一个 {@code int} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   public static int[] toPrimitive(@Nullable final Integer[] array,
       final int valueForNull) {
@@ -3539,15 +3964,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of object Shorts to primitives.
+   * 将对象 Short 数组转换为原始类型。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code Short} array, may be {@code null}
-   * @return a {@code byte} array, {@code null} if null array input
+   *     一个 {@code Short} 数组，可能为 {@code null}
+   * @return 一个 {@code byte} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    * @throws NullPointerException
-   *     if array content is {@code null}
+   *     如果数组内容为 {@code null}
    */
   public static short[] toPrimitive(@Nullable final Short[] array) {
     if (array == null) {
@@ -3563,15 +3988,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of object Short to primitives handling {@code null}.
+   * 将对象 Short 数组转换为原始类型，处理 {@code null}。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code Short} array, may be {@code null}
+   *     一个 {@code Short} 数组，可能为 {@code null}
    * @param valueForNull
-   *     the value to insert if {@code null} found
-   * @return a {@code byte} array, {@code null} if null array input
+   *     如果找到 {@code null}，则插入的值
+   * @return 一个 {@code byte} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   public static short[] toPrimitive(@Nullable final Short[] array,
       final short valueForNull) {
@@ -3589,15 +4014,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of object Bytes to primitives.
+   * 将对象 Byte 数组转换为原始类型。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code Byte} array, may be {@code null}
-   * @return a {@code byte} array, {@code null} if null array input
+   *     一个 {@code Byte} 数组，可能为 {@code null}
+   * @return 一个 {@code byte} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    * @throws NullPointerException
-   *     if array content is {@code null}
+   *     如果数组内容为 {@code null}
    */
   public static byte[] toPrimitive(@Nullable final Byte[] array) {
     if (array == null) {
@@ -3613,15 +4038,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of object Bytes to primitives handling {@code null}.
+   * 将对象 Byte 数组转换为原始类型，处理 {@code null}。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code Byte} array, may be {@code null}
+   *     一个 {@code Byte} 数组，可能为 {@code null}
    * @param valueForNull
-   *     the value to insert if {@code null} found
-   * @return a {@code byte} array, {@code null} if null array input
+   *     如果找到 {@code null}，则插入的值
+   * @return 一个 {@code byte} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   public static byte[] toPrimitive(@Nullable final Byte[] array,
       final byte valueForNull) {
@@ -3639,15 +4064,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of object Doubles to primitives.
+   * 将对象 Double 数组转换为原始类型。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code Double} array, may be {@code null}
-   * @return a {@code double} array, {@code null} if null array input
+   *     一个 {@code Double} 数组，可能为 {@code null}
+   * @return 一个 {@code double} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    * @throws NullPointerException
-   *     if array content is {@code null}
+   *     如果数组内容为 {@code null}
    */
   public static double[] toPrimitive(@Nullable final Double[] array) {
     if (array == null) {
@@ -3663,15 +4088,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of object Doubles to primitives handling {@code null}.
+   * 将对象 Double 数组转换为原始类型，处理 {@code null}。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code Double} array, may be {@code null}
+   *     一个 {@code Double} 数组，可能为 {@code null}
    * @param valueForNull
-   *     the value to insert if {@code null} found
-   * @return a {@code double} array, {@code null} if null array input
+   *     如果找到 {@code null}，则插入的值
+   * @return 一个 {@code double} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   public static double[] toPrimitive(@Nullable final Double[] array,
       final double valueForNull) {
@@ -3689,15 +4114,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of object Floats to primitives.
+   * 将对象 Float 数组转换为原始类型。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code Float} array, may be {@code null}
-   * @return a {@code float} array, {@code null} if null array input
+   *     一个 {@code Float} 数组，可能为 {@code null}
+   * @return 一个 {@code float} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    * @throws NullPointerException
-   *     if array content is {@code null}
+   *     如果数组内容为 {@code null}
    */
   public static float[] toPrimitive(@Nullable final Float[] array) {
     if (array == null) {
@@ -3713,15 +4138,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of object Floats to primitives handling {@code null} .
+   * 将对象 Float 数组转换为原始类型，处理 {@code null}。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code Float} array, may be {@code null}
+   *     一个 {@code Float} 数组，可能为 {@code null}
    * @param valueForNull
-   *     the value to insert if {@code null} found
-   * @return a {@code float} array, {@code null} if null array input
+   *     如果找到 {@code null}，则插入的值
+   * @return 一个 {@code float} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   public static float[] toPrimitive(@Nullable final Float[] array,
       final float valueForNull) {
@@ -3739,15 +4164,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of object Booleans to primitives.
+   * 将对象 Boolean 数组转换为原始类型。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code Boolean} array, may be {@code null}
-   * @return a {@code boolean} array, {@code null} if null array input
+   *     一个 {@code Boolean} 数组，可能为 {@code null}
+   * @return 一个 {@code boolean} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    * @throws NullPointerException
-   *     if array content is {@code null}
+   *     如果数组内容为 {@code null}
    */
   public static boolean[] toPrimitive(@Nullable final Boolean[] array) {
     if (array == null) {
@@ -3763,15 +4188,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of object Booleans to primitives handling {@code null}.
+   * 将对象 Boolean 数组转换为原始类型，处理 {@code null}。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code Boolean} array, may be {@code null}
+   *     一个 {@code Boolean} 数组，可能为 {@code null}
    * @param valueForNull
-   *     the value to insert if {@code null} found
-   * @return a {@code boolean} array, {@code null} if null array input
+   *     如果找到 {@code null}，则插入的值
+   * @return 一个 {@code boolean} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   public static boolean[] toPrimitive(@Nullable final Boolean[] array,
       final boolean valueForNull) {
@@ -3789,13 +4214,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of primitive longs to objects.
+   * 将原始 long 数组转换为对象。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code long} array
-   * @return a {@code Long} array, {@code null} if null array input
+   *     一个 {@code long} 数组
+   * @return 一个 {@code Long} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   public static Long[] toObject(@Nullable final long[] array) {
     if (array == null) {
@@ -3811,13 +4236,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of primitive chars to objects.
+   * 将原始 char 数组转换为对象。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code char} array
-   * @return a {@code Character} array, {@code null} if null array input
+   *     一个 {@code char} 数组
+   * @return 一个 {@code Character} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   public static Character[] toObject(@Nullable final char[] array) {
     if (array == null) {
@@ -3833,13 +4258,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of primitive ints to objects.
+   * 将原始 int 数组转换为对象。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     an {@code int} array
-   * @return an {@code Integer} array, {@code null} if null array input
+   *     一个 {@code int} 数组
+   * @return 一个 {@code Integer} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   public static Integer[] toObject(@Nullable final int[] array) {
     if (array == null) {
@@ -3855,13 +4280,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of primitive bytes to objects.
+   * 将原始 byte 数组转换为对象。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code byte} array
-   * @return a {@code Byte} array, {@code null} if null array input
+   *     一个 {@code byte} 数组
+   * @return 一个 {@code Byte} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   public static Byte[] toObject(@Nullable final byte[] array) {
     if (array == null) {
@@ -3877,13 +4302,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of primitive shorts to objects.
+   * 将原始 short 数组转换为对象。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code short} array
-   * @return a {@code Short} array, {@code null} if null array input
+   *     一个 {@code short} 数组
+   * @return 一个 {@code Short} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   public static Short[] toObject(@Nullable final short[] array) {
     if (array == null) {
@@ -3899,13 +4324,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of primitive doubles to objects.
+   * 将原始 double 数组转换为对象。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code double} array
-   * @return a {@code Double} array, {@code null} if null array input
+   *     一个 {@code double} 数组
+   * @return 一个 {@code Double} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   public static Double[] toObject(@Nullable final double[] array) {
     if (array == null) {
@@ -3921,13 +4346,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of primitive floats to objects.
+   * 将原始 float 数组转换为对象。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code float} array
-   * @return a {@code Float} array, {@code null} if null array input
+   *     一个 {@code float} 数组
+   * @return 一个 {@code Float} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   public static Float[] toObject(@Nullable final float[] array) {
     if (array == null) {
@@ -3943,13 +4368,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Converts an array of primitive booleans to objects.
+   * 将原始 boolean 数组转换为对象。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
    *
    * @param array
-   *     a {@code boolean} array
-   * @return a {@code Boolean} array, {@code null} if null array input
+   *     一个 {@code boolean} 数组
+   * @return 一个 {@code Boolean} 数组，如果输入数组为 {@code null}，则返回 {@code null}
    */
   public static Boolean[] toObject(@Nullable final boolean[] array) {
     if (array == null) {
@@ -3964,6 +4389,20 @@ public class ArrayUtils {
     return result;
   }
 
+  /**
+   * 将基本类型数组转换为对象数组。
+   *
+   * <p>如果输入数组为 {@code null}，此方法返回 {@code null}。
+   *
+   * <p>此方法可接受以下类型的基本类型数组：boolean[]、char[]、byte[]、short[]、
+   * int[]、long[]、float[] 和 double[]，并将其转换为对应的对象数组。
+   *
+   * @param array
+   *     要转换的基本类型数组，可能为 {@code null}
+   * @return 转换后的对象数组，如果输入数组为 {@code null}，则返回 {@code null}
+   * @throws IllegalArgumentException
+   *     如果输入不是基本类型数组
+   */
   public static Object[] toObject(@Nullable final Object array) {
     if (array == null) {
       return null;
@@ -3991,112 +4430,112 @@ public class ArrayUtils {
   }
 
   /**
-   * Checks if an array of Objects is empty or {@code null}.
+   * 检查对象数组是否为空或 {@code null}。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     the array to test
-   * @return {@code true} if the array is empty or {@code null}
+   *     要测试的数组
+   * @return 如果数组为空或 {@code null}，则返回 {@code true}
    */
   public static <T> boolean isEmpty(@Nullable final T[] array) {
     return ((array == null) || (array.length == 0));
   }
 
   /**
-   * Checks if an array of primitive longs is empty or {@code null}.
+   * 检查原始 long 数组是否为空或 {@code null}。
    *
    * @param array
-   *     the array to test
-   * @return {@code true} if the array is empty or {@code null}
+   *     要测试的数组
+   * @return 如果数组为空或 {@code null}，则返回 {@code true}
    */
   public static boolean isEmpty(@Nullable final long[] array) {
     return ((array == null) || (array.length == 0));
   }
 
   /**
-   * Checks if an array of primitive ints is empty or {@code null}.
+   * 检查原始 int 数组是否为空或 {@code null}。
    *
    * @param array
-   *     the array to test
-   * @return {@code true} if the array is empty or {@code null}
+   *     要测试的数组
+   * @return 如果数组为空或 {@code null}，则返回 {@code true}
    */
   public static boolean isEmpty(@Nullable final int[] array) {
     return ((array == null) || (array.length == 0));
   }
 
   /**
-   * Checks if an array of primitive shorts is empty or {@code null}.
+   * 检查原始 short 数组是否为空或 {@code null}。
    *
    * @param array
-   *     the array to test
-   * @return {@code true} if the array is empty or {@code null}
+   *     要测试的数组
+   * @return 如果数组为空或 {@code null}，则返回 {@code true}
    */
   public static boolean isEmpty(@Nullable final short[] array) {
     return ((array == null) || (array.length == 0));
   }
 
   /**
-   * Checks if an array of primitive chars is empty or {@code null}.
+   * 检查原始 char 数组是否为空或 {@code null}。
    *
    * @param array
-   *     the array to test
-   * @return {@code true} if the array is empty or {@code null}
+   *     要测试的数组
+   * @return 如果数组为空或 {@code null}，则返回 {@code true}
    */
   public static boolean isEmpty(@Nullable final char[] array) {
     return ((array == null) || (array.length == 0));
   }
 
   /**
-   * Checks if an array of primitive bytes is empty or {@code null}.
+   * 检查原始 byte 数组是否为空或 {@code null}。
    *
    * @param array
-   *     the array to test
-   * @return {@code true} if the array is empty or {@code null}
+   *     要测试的数组
+   * @return 如果数组为空或 {@code null}，则返回 {@code true}
    */
   public static boolean isEmpty(@Nullable final byte[] array) {
     return ((array == null) || (array.length == 0));
   }
 
   /**
-   * Checks if an array of primitive doubles is empty or {@code null}.
+   * 检查原始 double 数组是否为空或 {@code null}。
    *
    * @param array
-   *     the array to test
-   * @return {@code true} if the array is empty or {@code null}
+   *     要测试的数组
+   * @return 如果数组为空或 {@code null}，则返回 {@code true}
    */
   public static boolean isEmpty(@Nullable final double[] array) {
     return ((array == null) || (array.length == 0));
   }
 
   /**
-   * Checks if an array of primitive floats is empty or {@code null}.
+   * 检查原始 float 数组是否为空或 {@code null}。
    *
    * @param array
-   *     the array to test
-   * @return {@code true} if the array is empty or {@code null}
+   *     要测试的数组
+   * @return 如果数组为空或 {@code null}，则返回 {@code true}
    */
   public static boolean isEmpty(@Nullable final float[] array) {
     return ((array == null) || (array.length == 0));
   }
 
   /**
-   * Checks if an array of primitive booleans is empty or {@code null}.
+   * 检查原始 boolean 数组是否为空或 {@code null}。
    *
    * @param array
-   *     the array to test
-   * @return {@code true} if the array is empty or {@code null}
+   *     要测试的数组
+   * @return 如果数组为空或 {@code null}，则返回 {@code true}
    */
   public static boolean isEmpty(@Nullable final boolean[] array) {
     return ((array == null) || (array.length == 0));
   }
 
   /**
-   * Checks if an object is empty array or {@code null}.
+   * 检查对象是否为空数组或 {@code null}。
    *
    * @param obj
-   *     the object to test.
-   * @return {@code true} if the object is an empty array or {@code null}.
+   *     要测试的对象。
+   * @return 如果对象是空数组或 {@code null}，则返回 {@code true}。
    */
   public static boolean isEmpty(@Nullable final Object obj) {
     if (obj == null) {
@@ -4133,30 +4572,27 @@ public class ArrayUtils {
   }
 
   /**
-   * Adds all the elements of the given arrays into a new array. The new array
-   * contains all of the element of {@code array1} followed by all of the
-   * elements {@code array2}. When an array is returned, it is always a new
-   * array.
+   * 将给定数组的所有元素添加到新数组中。新数组包含 {@code array1} 的所有元素，后跟
+   * {@code array2} 的所有元素。当返回数组时，它总是一个新数组。
    *
    * <pre>
    * Arrays.addAll(null, null)     = null
-   * Arrays.addAll(array1, null)   = cloned copy of array1
-   * Arrays.addAll(null, array2)   = cloned copy of array2
+   * Arrays.addAll(array1, null)   = array1 的克隆副本
+   * Arrays.addAll(null, array2)   = array2 的克隆副本
    * Arrays.addAll([], [])         = []
    * Arrays.addAll([null], [null]) = [null, null]
    * Arrays.addAll(["a", "b", "c"], ["1", "2", "3"]) = ["a", "b", "c", "1", "2", "3"]
    * </pre>
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array1
-   *     the first array whose elements are added to the new array, may be
-   *     {@code null}
+   *     其元素添加到新数组的第一个数组，可能为 {@code null}
    * @param array2
-   *     the second array whose elements are added to the new array, may be
-   *     {@code null}
-   * @return The new array, {@code null} if {@code null} array inputs. The type
-   *     of the new array is the type of the first array.
+   *     其元素添加到新数组的第二个数组，可能为 {@code null}
+   * @return
+   *    新数组，如果 {@code null} 数组输入，则返回 {@code null}。新数组的类型是第一个数组
+   *  的类型。
    */
   @SuppressWarnings("unchecked")
   public static <T> T[] addAll(@Nullable final T[] array1,
@@ -4174,22 +4610,20 @@ public class ArrayUtils {
   }
 
   /**
-   * Adds all the elements of the given arrays into a new array. The new array
-   * contains all of the element of {@code array1} followed by all of the
-   * elements {@code array2}. When an array is returned, it is always a new
-   * array.
+   * 将给定数组的所有元素添加到新数组中。新数组包含 {@code array1} 的所有元素，后跟
+   * {@code array2} 的所有元素。当返回数组时，它总是一个新数组。
    *
    * <pre>
-   * Arrays.addAll(array1, null)   = cloned copy of array1
-   * Arrays.addAll(null, array2)   = cloned copy of array2
+   * Arrays.addAll(array1, null)   = array1 的克隆副本
+   * Arrays.addAll(null, array2)   = array2 的克隆副本
    * Arrays.addAll([], [])         = []
    * </pre>
    *
    * @param array1
-   *     the first array whose elements are added to the new array.
+   *     其元素添加到新数组的第一个数组。
    * @param array2
-   *     the second array whose elements are added to the new array.
-   * @return The new boolean[] array.
+   *     其元素添加到新数组的第二个数组。
+   * @return 新的 boolean[] 数组。
    */
   public static boolean[] addAll(@Nullable final boolean[] array1,
       @Nullable final boolean[] array2) {
@@ -4205,22 +4639,20 @@ public class ArrayUtils {
   }
 
   /**
-   * Adds all the elements of the given arrays into a new array. The new array
-   * contains all of the element of {@code array1} followed by all of the
-   * elements {@code array2}. When an array is returned, it is always a new
-   * array.
+   * 将给定数组的所有元素添加到新数组中。新数组包含 {@code array1} 的所有元素，后跟
+   * {@code array2} 的所有元素。当返回数组时，它总是一个新数组。
    *
    * <pre>
-   * Arrays.addAll(array1, null)   = cloned copy of array1
-   * Arrays.addAll(null, array2)   = cloned copy of array2
+   * Arrays.addAll(array1, null)   = array1 的克隆副本
+   * Arrays.addAll(null, array2)   = array2 的克隆副本
    * Arrays.addAll([], [])         = []
    * </pre>
    *
    * @param array1
-   *     the first array whose elements are added to the new array.
+   *     其元素添加到新数组的第一个数组。
    * @param array2
-   *     the second array whose elements are added to the new array.
-   * @return The new char[] array.
+   *     其元素添加到新数组的第二个数组。
+   * @return 新的 char[] 数组。
    */
   public static char[] addAll(@Nullable final char[] array1,
       @Nullable final char[] array2) {
@@ -4236,22 +4668,20 @@ public class ArrayUtils {
   }
 
   /**
-   * Adds all the elements of the given arrays into a new array. The new array
-   * contains all of the element of {@code array1} followed by all of the
-   * elements {@code array2}. When an array is returned, it is always a new
-   * array.
+   * 将给定数组的所有元素添加到新数组中。新数组包含 {@code array1} 的所有元素，后跟
+   * {@code array2} 的所有元素。当返回数组时，它总是一个新数组。
    *
    * <pre>
-   * Arrays.addAll(array1, null)   = cloned copy of array1
-   * Arrays.addAll(null, array2)   = cloned copy of array2
+   * Arrays.addAll(array1, null)   = array1 的克隆副本
+   * Arrays.addAll(null, array2)   = array2 的克隆副本
    * Arrays.addAll([], [])         = []
    * </pre>
    *
    * @param array1
-   *     the first array whose elements are added to the new array.
+   *     其元素添加到新数组的第一个数组。
    * @param array2
-   *     the second array whose elements are added to the new array.
-   * @return The new byte[] array.
+   *     其元素添加到新数组的第二个数组。
+   * @return 新的 byte[] 数组。
    */
   public static byte[] addAll(@Nullable final byte[] array1,
       @Nullable final byte[] array2) {
@@ -4267,22 +4697,20 @@ public class ArrayUtils {
   }
 
   /**
-   * Adds all the elements of the given arrays into a new array. The new array
-   * contains all of the element of {@code array1} followed by all of the
-   * elements {@code array2}. When an array is returned, it is always a new
-   * array.
+   * 将给定数组的所有元素添加到新数组中。新数组包含 {@code array1} 的所有元素，后跟
+   * {@code array2} 的所有元素。当返回数组时，它总是一个新数组。
    *
    * <pre>
-   * Arrays.addAll(array1, null)   = cloned copy of array1
-   * Arrays.addAll(null, array2)   = cloned copy of array2
+   * Arrays.addAll(array1, null)   = array1 的克隆副本
+   * Arrays.addAll(null, array2)   = array2 的克隆副本
    * Arrays.addAll([], [])         = []
    * </pre>
    *
    * @param array1
-   *     the first array whose elements are added to the new array.
+   *     其元素添加到新数组的第一个数组。
    * @param array2
-   *     the second array whose elements are added to the new array.
-   * @return The new short[] array.
+   *     其元素添加到新数组的第二个数组。
+   * @return 新的 short[] 数组。
    */
   public static short[] addAll(@Nullable final short[] array1,
       @Nullable final short[] array2) {
@@ -4298,22 +4726,20 @@ public class ArrayUtils {
   }
 
   /**
-   * Adds all the elements of the given arrays into a new array. The new array
-   * contains all of the element of {@code array1} followed by all of the
-   * elements {@code array2}. When an array is returned, it is always a new
-   * array.
+   * 将给定数组的所有元素添加到新数组中。新数组包含 {@code array1} 的所有元素，后跟
+   * {@code array2} 的所有元素。当返回数组时，它总是一个新数组。
    *
    * <pre>
-   * Arrays.addAll(array1, null)   = cloned copy of array1
-   * Arrays.addAll(null, array2)   = cloned copy of array2
+   * Arrays.addAll(array1, null)   = array1 的克隆副本
+   * Arrays.addAll(null, array2)   = array2 的克隆副本
    * Arrays.addAll([], [])         = []
    * </pre>
    *
    * @param array1
-   *     the first array whose elements are added to the new array.
+   *     其元素添加到新数组的第一个数组。
    * @param array2
-   *     the second array whose elements are added to the new array.
-   * @return The new int[] array.
+   *     其元素添加到新数组的第二个数组。
+   * @return 新的 int[] 数组。
    */
   public static int[] addAll(@Nullable final int[] array1,
       @Nullable final int[] array2) {
@@ -4329,22 +4755,20 @@ public class ArrayUtils {
   }
 
   /**
-   * Adds all the elements of the given arrays into a new array. The new array
-   * contains all of the element of {@code array1} followed by all of the
-   * elements {@code array2}. When an array is returned, it is always a new
-   * array.
+   * 将给定数组的所有元素添加到新数组中。新数组包含 {@code array1} 的所有元素，后跟
+   * {@code array2} 的所有元素。当返回数组时，它总是一个新数组。
    *
    * <pre>
-   * Arrays.addAll(array1, null)   = cloned copy of array1
-   * Arrays.addAll(null, array2)   = cloned copy of array2
+   * Arrays.addAll(array1, null)   = array1 的克隆副本
+   * Arrays.addAll(null, array2)   = array2 的克隆副本
    * Arrays.addAll([], [])         = []
    * </pre>
    *
    * @param array1
-   *     the first array whose elements are added to the new array.
+   *     其元素添加到新数组的第一个数组。
    * @param array2
-   *     the second array whose elements are added to the new array.
-   * @return The new long[] array.
+   *     其元素添加到新数组的第二个数组。
+   * @return 新的 long[] 数组。
    */
   public static long[] addAll(@Nullable final long[] array1,
       @Nullable final long[] array2) {
@@ -4360,22 +4784,20 @@ public class ArrayUtils {
   }
 
   /**
-   * Adds all the elements of the given arrays into a new array. The new array
-   * contains all of the element of {@code array1} followed by all of the
-   * elements {@code array2}. When an array is returned, it is always a new
-   * array.
+   * 将给定数组的所有元素添加到新数组中。新数组包含 {@code array1} 的所有元素，后跟
+   * {@code array2} 的所有元素。当返回数组时，它总是一个新数组。
    *
    * <pre>
-   * Arrays.addAll(array1, null)   = cloned copy of array1
-   * Arrays.addAll(null, array2)   = cloned copy of array2
+   * Arrays.addAll(array1, null)   = array1 的克隆副本
+   * Arrays.addAll(null, array2)   = array2 的克隆副本
    * Arrays.addAll([], [])         = []
    * </pre>
    *
    * @param array1
-   *     the first array whose elements are added to the new array.
+   *     其元素添加到新数组的第一个数组。
    * @param array2
-   *     the second array whose elements are added to the new array.
-   * @return The new float[] array.
+   *     其元素添加到新数组的第二个数组。
+   * @return 新的 float[] 数组。
    */
   public static float[] addAll(@Nullable final float[] array1,
       @Nullable final float[] array2) {
@@ -4391,22 +4813,20 @@ public class ArrayUtils {
   }
 
   /**
-   * Adds all the elements of the given arrays into a new array. The new array
-   * contains all of the element of {@code array1} followed by all of the
-   * elements {@code array2}. When an array is returned, it is always a new
-   * array.
+   * 将给定数组的所有元素添加到新数组中。新数组包含 {@code array1} 的所有元素，后跟
+   * {@code array2} 的所有元素。当返回数组时，它总是一个新数组。
    *
    * <pre>
-   * Arrays.addAll(array1, null)   = cloned copy of array1
-   * Arrays.addAll(null, array2)   = cloned copy of array2
+   * Arrays.addAll(array1, null)   = array1 的克隆副本
+   * Arrays.addAll(null, array2)   = array2 的克隆副本
    * Arrays.addAll([], [])         = []
    * </pre>
    *
    * @param array1
-   *     the first array whose elements are added to the new array.
+   *     其元素添加到新数组的第一个数组。
    * @param array2
-   *     the second array whose elements are added to the new array.
-   * @return The new double[] array.
+   *     其元素添加到新数组的第二个数组。
+   * @return 新的 double[] 数组。
    */
   public static double[] addAll(@Nullable final double[] array1,
       @Nullable final double[] array2) {
@@ -4422,16 +4842,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Copies the given array and adds the given element at the end of the new
-   * array.
+   * 复制给定数组并在新数组的末尾添加给定元素。
    *
-   * <p>The new array contains the same elements of the input array plus the
-   * given
-   * element in the last position. The component type of the new array is the
-   * same as that of the input array.
+   * <p>新数组包含与输入数组相同的元素，并在最后一个位置添加给定元素。新数组的组件类型与输入数组相同。
    *
-   * <p>If the input array is {@code null}, a new one element array is returned
-   * whose component type is the same as the element.
+   * <p>如果输入数组为 {@code null}，则返回一个新的单元素数组，其组件类型与元素相同。
    *
    * <pre>
    * Arrays.add(null, null)      = [null]
@@ -4442,12 +4857,12 @@ public class ArrayUtils {
    * </pre>
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     the array to "add" the element to, may be {@code null}
+   *     要添加元素的数组，可能为 {@code null}
    * @param element
-   *     the object to add
-   * @return A new array containing the existing elements plus the new element
+   *     要添加的对象
+   * @return 包含现有元素和新元素的新数组
    */
   @SuppressWarnings("unchecked")
   public static <T> T[] add(@Nullable final T[] array,
@@ -4456,12 +4871,6 @@ public class ArrayUtils {
     if (array != null) {
       type = array.getClass().getComponentType();
     } else if (element != null) {
-      // FIXME: can we use the element.getClass() as the type of returned array?
-      // For examle, assume array is of type Object[] and its value is null,
-      // assume element is a string "a", then calling this function with the
-      // argument of array and element, what should be the type of returned
-      // array? An array of Object, or an array of String?
-      //
       type = element.getClass();
     } else {
       type = Object.class;
@@ -4472,16 +4881,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Copies the given array and adds the given element at the end of the new
-   * array.
+   * 复制给定数组并在新数组的末尾添加给定元素。
    *
-   * <p>The new array contains the same elements of the input array plus the
-   * given
-   * element in the last position. The component type of the new array is the
-   * same as that of the input array.
+   * <p>新数组包含与输入数组相同的元素，并在最后一个位置添加给定元素。新数组的组件类型与输入数组相同。
    *
-   * <p>If the input array is {@code null}, a new one element array is returned
-   * whose component type is the same as the element.
+   * <p>如果输入数组为 {@code null}，则返回一个新的单元素数组，其组件类型与元素相同。
    *
    * <pre>
    * Arrays.add(null, true)          = [true]
@@ -4490,10 +4894,10 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to copy and add the element to, may be {@code null}
+   *     要复制并添加元素的数组，可能为 {@code null}
    * @param element
-   *     the object to add at the last current of the new array
-   * @return A new array containing the existing elements plus the new element
+   *     要添加到新数组最后一个位置的对象
+   * @return 包含现有元素和新元素的新数组
    */
   public static boolean[] add(@Nullable final boolean[] array,
       final boolean element) {
@@ -4503,16 +4907,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Copies the given array and adds the given element at the end of the new
-   * array.
+   * 复制给定数组并在新数组的末尾添加给定元素。
    *
-   * <p>The new array contains the same elements of the input array plus the
-   * given
-   * element in the last position. The component type of the new array is the
-   * same as that of the input array.
+   * <p>新数组包含与输入数组相同的元素，并在最后一个位置添加给定元素。新数组的组件类型与输入数组相同。
    *
-   * <p>If the input array is {@code null}, a new one element array is returned
-   * whose component type is the same as the element.
+   * <p>如果输入数组为 {@code null}，则返回一个新的单元素数组，其组件类型与元素相同。
    *
    * <pre>
    * Arrays.add(null, 0)   = [0]
@@ -4521,10 +4920,10 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to copy and add the element to, may be {@code null}
+   *     要复制并添加元素的数组，可能为 {@code null}
    * @param element
-   *     the object to add at the last current of the new array
-   * @return A new array containing the existing elements plus the new element
+   *     要添加到新数组最后一个位置的对象
+   * @return 包含现有元素和新元素的新数组
    */
   public static byte[] add(@Nullable final byte[] array, final byte element) {
     final byte[] newArray = (byte[]) copyArrayGrow(array, Byte.TYPE);
@@ -4533,16 +4932,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Copies the given array and adds the given element at the end of the new
-   * array.
+   * 复制给定数组并在新数组的末尾添加给定元素。
    *
-   * <p>The new array contains the same elements of the input array plus the
-   * given
-   * element in the last position. The component type of the new array is the
-   * same as that of the input array.
+   * <p>新数组包含与输入数组相同的元素，并在最后一个位置添加给定元素。新数组的组件类型与输入数组相同。
    *
-   * <p>If the input array is {@code null}, a new one element array is returned
-   * whose component type is the same as the element.
+   * <p>如果输入数组为 {@code null}，则返回一个新的单元素数组，其组件类型与元素相同。
    *
    * <pre>
    * Arrays.add(null, '0')       = ['0']
@@ -4551,10 +4945,10 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to copy and add the element to, may be {@code null}
+   *     要复制并添加元素的数组，可能为 {@code null}
    * @param element
-   *     the object to add at the last current of the new array
-   * @return A new array containing the existing elements plus the new element
+   *     要添加到新数组最后一个位置的对象
+   * @return 包含现有元素和新元素的新数组
    */
   public static char[] add(@Nullable final char[] array, final char element) {
     final char[] newArray = (char[]) copyArrayGrow(array, Character.TYPE);
@@ -4563,16 +4957,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Copies the given array and adds the given element at the end of the new
-   * array.
+   * 复制给定数组并在新数组的末尾添加给定元素。
    *
-   * <p>The new array contains the same elements of the input array plus the
-   * given
-   * element in the last position. The component type of the new array is the
-   * same as that of the input array.
+   * <p>新数组包含与输入数组相同的元素，并在最后一个位置添加给定元素。新数组的组件类型与输入数组相同。
    *
-   * <p>If the input array is {@code null}, a new one element array is returned
-   * whose component type is the same as the element.
+   * <p>如果输入数组为 {@code null}，则返回一个新的单元素数组，其组件类型与元素相同。
    *
    * <pre>
    * Arrays.add(null, 0)   = [0]
@@ -4581,10 +4970,10 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to copy and add the element to, may be {@code null}
+   *     要复制并添加元素的数组，可能为 {@code null}
    * @param element
-   *     the object to add at the last current of the new array
-   * @return A new array containing the existing elements plus the new element
+   *     要添加到新数组最后一个位置的对象
+   * @return 包含现有元素和新元素的新数组
    */
   public static double[] add(@Nullable final double[] array,
       final double element) {
@@ -4594,16 +4983,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Copies the given array and adds the given element at the end of the new
-   * array.
+   * 复制给定数组并在新数组的末尾添加给定元素。
    *
-   * <p>The new array contains the same elements of the input array plus the
-   * given
-   * element in the last position. The component type of the new array is the
-   * same as that of the input array.
+   * <p>新数组包含与输入数组相同的元素，并在最后一个位置添加给定元素。新数组的组件类型与输入数组相同。
    *
-   * <p>If the input array is {@code null}, a new one element array is returned
-   * whose component type is the same as the element.
+   * <p>如果输入数组为 {@code null}，则返回一个新的单元素数组，其组件类型与元素相同。
    *
    * <pre>
    * Arrays.add(null, 0)   = [0]
@@ -4612,10 +4996,10 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to copy and add the element to, may be {@code null}
+   *     要复制并添加元素的数组，可能为 {@code null}
    * @param element
-   *     the object to add at the last current of the new array
-   * @return A new array containing the existing elements plus the new element
+   *     要添加到新数组最后一个位置的对象
+   * @return 包含现有元素和新元素的新数组
    */
   public static float[] add(@Nullable final float[] array,
       final float element) {
@@ -4625,16 +5009,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Copies the given array and adds the given element at the end of the new
-   * array.
+   * 复制给定数组并在新数组的末尾添加给定元素。
    *
-   * <p>The new array contains the same elements of the input array plus the
-   * given
-   * element in the last position. The component type of the new array is the
-   * same as that of the input array.
+   * <p>新数组包含与输入数组相同的元素，并在最后一个位置添加给定元素。新数组的组件类型与输入数组相同。
    *
-   * <p>If the input array is {@code null}, a new one element array is returned
-   * whose component type is the same as the element.
+   * <p>如果输入数组为 {@code null}，则返回一个新的单元素数组，其组件类型与元素相同。
    *
    * <pre>
    * Arrays.add(null, 0)   = [0]
@@ -4643,10 +5022,10 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to copy and add the element to, may be {@code null}
+   *     要复制并添加元素的数组，可能为 {@code null}
    * @param element
-   *     the object to add at the last current of the new array
-   * @return A new array containing the existing elements plus the new element
+   *     要添加到新数组最后一个位置的对象
+   * @return 包含现有元素和新元素的新数组
    */
   public static int[] add(@Nullable final int[] array, final int element) {
     final int[] newArray = (int[]) copyArrayGrow(array, Integer.TYPE);
@@ -4655,16 +5034,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Copies the given array and adds the given element at the end of the new
-   * array.
+   * 复制给定数组并在新数组的末尾添加给定元素。
    *
-   * <p>The new array contains the same elements of the input array plus the
-   * given
-   * element in the last position. The component type of the new array is the
-   * same as that of the input array.
+   * <p>新数组包含与输入数组相同的元素，并在最后一个位置添加给定元素。新数组的组件类型与输入数组相同。
    *
-   * <p>If the input array is {@code null}, a new one element array is returned
-   * whose component type is the same as the element.
+   * <p>如果输入数组为 {@code null}，则返回一个新的单元素数组，其组件类型与元素相同。
    *
    * <pre>
    * Arrays.add(null, 0)   = [0]
@@ -4673,10 +5047,10 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to copy and add the element to, may be {@code null}
+   *     要复制并添加元素的数组，可能为 {@code null}
    * @param element
-   *     the object to add at the last current of the new array
-   * @return A new array containing the existing elements plus the new element
+   *     要添加到新数组最后一个位置的对象
+   * @return 包含现有元素和新元素的新数组
    */
   public static long[] add(@Nullable final long[] array, final long element) {
     final long[] newArray = (long[]) copyArrayGrow(array, Long.TYPE);
@@ -4685,16 +5059,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Copies the given array and adds the given element at the end of the new
-   * array.
+   * 复制给定数组并在新数组的末尾添加给定元素。
    *
-   * <p>The new array contains the same elements of the input array plus the
-   * given
-   * element in the last position. The component type of the new array is the
-   * same as that of the input array.
+   * <p>新数组包含与输入数组相同的元素，并在最后一个位置添加给定元素。新数组的组件类型与输入数组相同。
    *
-   * <p>If the input array is {@code null}, a new one element array is returned
-   * whose component type is the same as the element.
+   * <p>如果输入数组为 {@code null}，则返回一个新的单元素数组，其组件类型与元素相同。
    *
    * <pre>
    * Arrays.add(null, 0)   = [0]
@@ -4703,10 +5072,10 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to copy and add the element to, may be {@code null}
+   *     要复制并添加元素的数组，可能为 {@code null}
    * @param element
-   *     the object to add at the last current of the new array
-   * @return A new array containing the existing elements plus the new element
+   *     要添加到新数组最后一个位置的对象
+   * @return 包含现有元素和新元素的新数组
    */
   public static short[] add(@Nullable final short[] array,
       final short element) {
@@ -4716,17 +5085,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Inserts the specified element at the specified position in the array.
-   * Shifts the element currently at that position (if any) and any subsequent
-   * elements to the right (adds one to their indices).
+   * 在指定位置插入指定元素到数组中。
+   * 将当前位置的元素（如果有）和任何后续元素向右移动（将它们的索引加一）。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * plus the given element on the specified position. The component type of the
-   * returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 加上指定位置的给定元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
-   * <p>If the input array is {@code null}, a new one element array is returned
-   * whose component type is the same as the element.
+   * <p>如果输入数组为 {@code null}，则会创建一个新的一元素数组，其组件类型与元素相同。
    *
    * <pre>
    * Arrays.add(null, 0, null)      = [null]
@@ -4737,16 +5102,16 @@ public class ArrayUtils {
    * </pre>
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     the array to add the element to, may be {@code null}
+   *     要添加元素的数组，可能为 {@code null}
    * @param index
-   *     the position of the new object
+   *     新对象的位置
    * @param element
-   *     the object to add
-   * @return A new array containing the existing elements and the new element
+   *     要添加的对象
+   * @return 包含现有元素和新元素的新数组
    * @throws IndexOutOfBoundsException
-   *     if the current is out of range (current &lt; 0 || current &gt;
+   *     如果当前超出范围（current &lt; 0 || current &gt;
    *     array.length).
    */
   @SuppressWarnings("unchecked")
@@ -4770,17 +5135,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Inserts the specified element at the specified position in the array.
-   * Shifts the element currently at that position (if any) and any subsequent
-   * elements to the right (adds one to their indices).
+   * 在指定位置插入指定元素到数组中。
+   * 将当前位置的元素（如果有）和任何后续元素向右移动（将它们的索引加一）。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * plus the given element on the specified position. The component type of the
-   * returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 加上指定位置的给定元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
-   * <p>If the input array is {@code null}, a new one element array is returned
-   * whose component type is the same as the element.
+   * <p>如果输入数组为 {@code null}，则会创建一个新的一元素数组，其组件类型与元素相同。
    *
    * <pre>
    * Arrays.add(null, 0, true)          = [true]
@@ -4790,14 +5151,14 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to add the element to, may be {@code null}
+   *     要添加元素的数组，可能为 {@code null}
    * @param index
-   *     the position of the new object
+   *     新对象的位置
    * @param element
-   *     the object to add
-   * @return A new array containing the existing elements and the new element
+   *     要添加的对象
+   * @return 包含现有元素和新元素的新数组
    * @throws IndexOutOfBoundsException
-   *     if the current is out of range (current &lt; 0 || current &gt;
+   *     如果当前超出范围（current &lt; 0 || current &gt;
    *     array.length).
    */
   public static boolean[] add(@Nullable final boolean[] array, final int index,
@@ -4807,17 +5168,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Inserts the specified element at the specified position in the array.
-   * Shifts the element currently at that position (if any) and any subsequent
-   * elements to the right (adds one to their indices).
+   * 在指定位置插入指定元素到数组中。
+   * 将当前位置的元素（如果有）和任何后续元素向右移动（将它们的索引加一）。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * plus the given element on the specified position. The component type of the
-   * returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 加上指定位置的给定元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
-   * <p>If the input array is {@code null}, a new one element array is returned
-   * whose component type is the same as the element.
+   * <p>如果输入数组为 {@code null}，则会创建一个新的一元素数组，其组件类型与元素相同。
    *
    * <pre>
    * Arrays.add(null, 0, 'a')            = ['a']
@@ -4828,14 +5185,14 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to add the element to, may be {@code null}
+   *     要添加元素的数组，可能为 {@code null}
    * @param index
-   *     the position of the new object
+   *     新对象的位置
    * @param element
-   *     the object to add
-   * @return A new array containing the existing elements and the new element
+   *     要添加的对象
+   * @return 包含现有元素和新元素的新数组
    * @throws IndexOutOfBoundsException
-   *     if the current is out of range (current &lt; 0 || current &gt;
+   *     如果当前超出范围（current &lt; 0 || current &gt;
    *     array.length).
    */
   public static char[] add(@Nullable final char[] array, final int index,
@@ -4844,17 +5201,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Inserts the specified element at the specified position in the array.
-   * Shifts the element currently at that position (if any) and any subsequent
-   * elements to the right (adds one to their indices).
+   * 在指定位置插入指定元素到数组中。
+   * 将当前位置的元素（如果有）和任何后续元素向右移动（将它们的索引加一）。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * plus the given element on the specified position. The component type of the
-   * returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 加上指定位置的给定元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
-   * <p>If the input array is {@code null}, a new one element array is returned
-   * whose component type is the same as the element.
+   * <p>如果输入数组为 {@code null}，则会创建一个新的一元素数组，其组件类型与元素相同。
    *
    * <pre>
    * Arrays.add([1], 0, 2)         = [2, 1]
@@ -4864,14 +5217,14 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to add the element to, may be {@code null}
+   *     要添加元素的数组，可能为 {@code null}
    * @param index
-   *     the position of the new object
+   *     新对象的位置
    * @param element
-   *     the object to add
-   * @return A new array containing the existing elements and the new element
+   *     要添加的对象
+   * @return 包含现有元素和新元素的新数组
    * @throws IndexOutOfBoundsException
-   *     if the current is out of range (current &lt; 0 || current &gt;
+   *     如果当前超出范围（current &lt; 0 || current &gt;
    *     array.length).
    */
   public static byte[] add(@Nullable final byte[] array, final int index,
@@ -4880,17 +5233,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Inserts the specified element at the specified position in the array.
-   * Shifts the element currently at that position (if any) and any subsequent
-   * elements to the right (adds one to their indices).
+   * 在指定位置插入指定元素到数组中。
+   * 将当前位置的元素（如果有）和任何后续元素向右移动（将它们的索引加一）。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * plus the given element on the specified position. The component type of the
-   * returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 加上指定位置的给定元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
-   * <p>If the input array is {@code null}, a new one element array is returned
-   * whose component type is the same as the element.
+   * <p>如果输入数组为 {@code null}，则会创建一个新的一元素数组，其组件类型与元素相同。
    *
    * <pre>
    * Arrays.add([1], 0, 2)         = [2, 1]
@@ -4900,14 +5249,14 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to add the element to, may be {@code null}
+   *     要添加元素的数组，可能为 {@code null}
    * @param index
-   *     the position of the new object
+   *     新对象的位置
    * @param element
-   *     the object to add
-   * @return A new array containing the existing elements and the new element
+   *     要添加的对象
+   * @return 包含现有元素和新元素的新数组
    * @throws IndexOutOfBoundsException
-   *     if the current is out of range (current &lt; 0 || current &gt;
+   *     如果当前超出范围（current &lt; 0 || current &gt;
    *     array.length).
    */
   public static short[] add(@Nullable final short[] array, final int index,
@@ -4916,17 +5265,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Inserts the specified element at the specified position in the array.
-   * Shifts the element currently at that position (if any) and any subsequent
-   * elements to the right (adds one to their indices).
+   * 在指定位置插入指定元素到数组中。
+   * 将当前位置的元素（如果有）和任何后续元素向右移动（将它们的索引加一）。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * plus the given element on the specified position. The component type of the
-   * returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 加上指定位置的给定元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
-   * <p>If the input array is {@code null}, a new one element array is returned
-   * whose component type is the same as the element.
+   * <p>如果输入数组为 {@code null}，则会创建一个新的一元素数组，其组件类型与元素相同。
    *
    * <pre>
    * Arrays.add([1], 0, 2)         = [2, 1]
@@ -4936,14 +5281,14 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to add the element to, may be {@code null}
+   *     要添加元素的数组，可能为 {@code null}
    * @param index
-   *     the position of the new object
+   *     新对象的位置
    * @param element
-   *     the object to add
-   * @return A new array containing the existing elements and the new element
+   *     要添加的对象
+   * @return 包含现有元素和新元素的新数组
    * @throws IndexOutOfBoundsException
-   *     if the current is out of range (current &lt; 0 || current &gt;
+   *     如果当前超出范围（current &lt; 0 || current &gt;
    *     array.length).
    */
   public static int[] add(@Nullable final int[] array, final int index,
@@ -4952,17 +5297,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Inserts the specified element at the specified position in the array.
-   * Shifts the element currently at that position (if any) and any subsequent
-   * elements to the right (adds one to their indices).
+   * 在指定位置插入指定元素到数组中。
+   * 将当前位置的元素（如果有）和任何后续元素向右移动（将它们的索引加一）。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * plus the given element on the specified position. The component type of the
-   * returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 加上指定位置的给定元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
-   * <p>If the input array is {@code null}, a new one element array is returned
-   * whose component type is the same as the element.
+   * <p>如果输入数组为 {@code null}，则会创建一个新的一元素数组，其组件类型与元素相同。
    *
    * <pre>
    * Arrays.add([1L], 0, 2L)           = [2L, 1L]
@@ -4972,14 +5313,14 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to add the element to, may be {@code null}
+   *     要添加元素的数组，可能为 {@code null}
    * @param index
-   *     the position of the new object
+   *     新对象的位置
    * @param element
-   *     the object to add
-   * @return A new array containing the existing elements and the new element
+   *     要添加的对象
+   * @return 包含现有元素和新元素的新数组
    * @throws IndexOutOfBoundsException
-   *     if the current is out of range (current &lt; 0 || current &gt;
+   *     如果当前超出范围（current &lt; 0 || current &gt;
    *     array.length).
    */
   public static long[] add(@Nullable final long[] array, final int index,
@@ -4988,17 +5329,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Inserts the specified element at the specified position in the array.
-   * Shifts the element currently at that position (if any) and any subsequent
-   * elements to the right (adds one to their indices).
+   * 在指定位置插入指定元素到数组中。
+   * 将当前位置的元素（如果有）和任何后续元素向右移动（将它们的索引加一）。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * plus the given element on the specified position. The component type of the
-   * returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 加上指定位置的给定元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
-   * <p>If the input array is {@code null}, a new one element array is returned
-   * whose component type is the same as the element.
+   * <p>如果输入数组为 {@code null}，则会创建一个新的一元素数组，其组件类型与元素相同。
    *
    * <pre>
    * Arrays.add([1.1f], 0, 2.2f)               = [2.2f, 1.1f]
@@ -5008,14 +5345,14 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to add the element to, may be {@code null}
+   *     要添加元素的数组，可能为 {@code null}
    * @param index
-   *     the position of the new object
+   *     新对象的位置
    * @param element
-   *     the object to add
-   * @return A new array containing the existing elements and the new element
+   *     要添加的对象
+   * @return 包含现有元素和新元素的新数组
    * @throws IndexOutOfBoundsException
-   *     if the current is out of range (current &lt; 0 || current &gt;
+   *     如果当前超出范围（current &lt; 0 || current &gt;
    *     array.length).
    */
   public static float[] add(@Nullable final float[] array, final int index,
@@ -5024,17 +5361,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Inserts the specified element at the specified position in the array.
-   * Shifts the element currently at that position (if any) and any subsequent
-   * elements to the right (adds one to their indices).
+   * 在指定位置插入指定元素到数组中。
+   * 将当前位置的元素（如果有）和任何后续元素向右移动（将它们的索引加一）。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * plus the given element on the specified position. The component type of the
-   * returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 加上指定位置的给定元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
-   * <p>If the input array is {@code null}, a new one element array is returned
-   * whose component type is the same as the element.
+   * <p>如果输入数组为 {@code null}，则会创建一个新的一元素数组，其组件类型与元素相同。
    *
    * <pre>
    * Arrays.add([1.1], 0, 2.2)              = [2.2, 1.1]
@@ -5044,14 +5377,14 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to add the element to, may be {@code null}
+   *     要添加元素的数组，可能为 {@code null}
    * @param index
-   *     the position of the new object
+   *     新对象的位置
    * @param element
-   *     the object to add
-   * @return A new array containing the existing elements and the new element
+   *     要添加的对象
+   * @return 包含现有元素和新元素的新数组
    * @throws IndexOutOfBoundsException
-   *     if the current is out of range (current &lt; 0 || current &gt;
+   *     如果当前超出范围（current &lt; 0 || current &gt;
    *     array.length).
    */
   public static double[] add(@Nullable final double[] array, final int index,
@@ -5060,19 +5393,18 @@ public class ArrayUtils {
   }
 
   /**
-   * Underlying implementation of add(array, current, element) methods. The last
-   * parameter is the class, which may not equal element.getClass for
-   * primitives.
+   * 添加(array, current, element) 方法的底层实现。
+   * 最后一个参数是类，可能不等于 element.getClass() 用于原始类型。
    *
    * @param array
-   *     the array to add the element to, may be {@code null}
+   *     要添加元素的数组，可能为 {@code null}
    * @param index
-   *     the position of the new object
+   *     新对象的位置
    * @param element
-   *     the object to add
+   *     要添加的对象
    * @param cls
-   *     the type of the element being added
-   * @return A new array containing the existing elements and the new element
+   *     正在添加的元素的类型
+   * @return 包含现有元素和新元素的新数组
    */
   private static Object add(@Nullable final Object array, final int index,
       @Nullable final Object element, final Class<?> cls) {
@@ -5099,14 +5431,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Returns a copy of the given array of size 1 greater than the argument. The
-   * last value of the array is left to the default value.
+   * 返回一个比给定数组大一的副本。新数组的最后一个值保留为默认值。
    *
    * @param array
-   *     The array to copy, must not be {@code null}.
+   *     要复制的数组，不能为 {@code null}。
    * @param newArrayComponentType
-   *     If {@code array} is {@code null}, create a size 1 array of this type.
-   * @return A new copy of the array of size 1 greater than the input.
+   *     如果 {@code array} 为 {@code null}，则创建一个大小为 1 的数组的此类型。
+   * @return 一个新的副本，比输入数组大一。
    */
   private static Object copyArrayGrow(@Nullable final Object array,
       final Class<?> newArrayComponentType) {
@@ -5121,18 +5452,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Removes the element at the specified position from the specified array. All
-   * subsequent elements are shifted to the left (substracts one from their
-   * indices).
+   * 从指定数组中删除指定位置的元素。所有后续元素都向左移动（从它们的索引中减去 1）。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * except the element on the specified position. The component type of the
-   * returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 除了指定位置的元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
-   * <p>If the input array is {@code null}, an IndexOutOfBoundsException will
-   * be
-   * thrown, because in that case no valid current can be specified.
+   * <p>如果输入数组为 {@code null}，则会抛出 IndexOutOfBoundsException，
+   * 因为在这种情况下无法指定有效的当前。
    *
    * <pre>
    * Arrays.remove(["a"], 0)           = []
@@ -5142,16 +5468,14 @@ public class ArrayUtils {
    * </pre>
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     the array to remove the element from, may not be {@code null}
+   *     要从中删除元素的数组，不能为 {@code null}
    * @param index
-   *     the position of the element to be removed
-   * @return A new array containing the existing elements except the element at
-   *     the specified position.
+   *     要删除的元素的位置
+   * @return 包含现有元素的新数组，但不包含指定位置的元素。
    * @throws IndexOutOfBoundsException
-   *     if the current is out of range (current &lt; 0 || current &ge;
-   *     array.length), or if the array is {@code null}.
+   *     如果当前超出范围（current &lt; 0 || current &ge; array.length），或者如果数组为 {@code null}。
    */
   @SuppressWarnings("unchecked")
   public static <T> T[] remove(@Nullable final T[] array, final int index) {
@@ -5160,18 +5484,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Removes the element at the specified position from the specified array. All
-   * subsequent elements are shifted to the left (substracts one from their
-   * indices).
+   * 从指定数组中删除指定位置的元素。所有后续元素都向左移动（从它们的索引中减去 1）。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * except the element on the specified position. The component type of the
-   * returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 除了指定位置的元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
-   * <p>If the input array is {@code null}, an IndexOutOfBoundsException will
-   * be
-   * thrown, because in that case no valid current can be specified.
+   * <p>如果输入数组为 {@code null}，则会抛出 IndexOutOfBoundsException，
+   * 因为在这种情况下无法指定有效的当前。
    *
    * <pre>
    * Arrays.remove([true], 0)              = []
@@ -5181,14 +5500,12 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to remove the element from, may not be {@code null}
+   *     要从中删除元素的数组，不能为 {@code null}
    * @param index
-   *     the position of the element to be removed
-   * @return A new array containing the existing elements except the element at
-   *     the specified position.
+   *     要删除的元素的位置
+   * @return 包含现有元素的新数组，但不包含指定位置的元素。
    * @throws IndexOutOfBoundsException
-   *     if the current is out of range (current &lt; 0 || current &ge;
-   *     array.length), or if the array is {@code null}.
+   *     如果当前超出范围（current &lt; 0 || current &ge; array.length），或者如果数组为 {@code null}。
    */
   public static boolean[] remove(@Nullable final boolean[] array,
       final int index) {
@@ -5196,18 +5513,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Removes the element at the specified position from the specified array. All
-   * subsequent elements are shifted to the left (substracts one from their
-   * indices).
+   * 从指定数组中删除指定位置的元素。所有后续元素都向左移动（从它们的索引中减去 1）。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * except the element on the specified position. The component type of the
-   * returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 除了指定位置的元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
-   * <p>If the input array is {@code null}, an IndexOutOfBoundsException will
-   * be
-   * thrown, because in that case no valid current can be specified.
+   * <p>如果输入数组为 {@code null}，则会抛出 IndexOutOfBoundsException，
+   * 因为在这种情况下无法指定有效的当前。
    *
    * <pre>
    * Arrays.remove([1], 0)          = []
@@ -5217,32 +5529,25 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to remove the element from, may not be {@code null}
+   *     要从中删除元素的数组，不能为 {@code null}
    * @param index
-   *     the position of the element to be removed
-   * @return A new array containing the existing elements except the element at
-   *     the specified position.
+   *     要删除的元素的位置
+   * @return 包含现有元素的新数组，但不包含指定位置的元素。
    * @throws IndexOutOfBoundsException
-   *     if the current is out of range (current &lt; 0 || current &ge;
-   *     array.length), or if the array is {@code null}.
+   *     如果当前超出范围（current &lt; 0 || current &ge; array.length），或者如果数组为 {@code null}。
    */
   public static byte[] remove(@Nullable final byte[] array, final int index) {
     return (byte[]) remove((Object) array, index);
   }
 
   /**
-   * Removes the element at the specified position from the specified array. All
-   * subsequent elements are shifted to the left (substracts one from their
-   * indices).
+   * 从指定数组中删除指定位置的元素。所有后续元素都向左移动（从它们的索引中减去 1）。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * except the element on the specified position. The component type of the
-   * returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 除了指定位置的元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
-   * <p>If the input array is {@code null}, an IndexOutOfBoundsException will
-   * be
-   * thrown, because in that case no valid current can be specified.
+   * <p>如果输入数组为 {@code null}，则会抛出 IndexOutOfBoundsException，
+   * 因为在这种情况下无法指定有效的当前。
    *
    * <pre>
    * Arrays.remove(['a'], 0)           = []
@@ -5252,32 +5557,25 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to remove the element from, may not be {@code null}
+   *     要从中删除元素的数组，不能为 {@code null}
    * @param index
-   *     the position of the element to be removed
-   * @return A new array containing the existing elements except the element at
-   *     the specified position.
+   *     要删除的元素的位置
+   * @return 包含现有元素的新数组，但不包含指定位置的元素。
    * @throws IndexOutOfBoundsException
-   *     if the current is out of range (current &lt; 0 || current &ge;
-   *     array.length), or if the array is {@code null}.
+   *     如果当前超出范围（current &lt; 0 || current &ge; array.length），或者如果数组为 {@code null}。
    */
   public static char[] remove(@Nullable final char[] array, final int index) {
     return (char[]) remove((Object) array, index);
   }
 
   /**
-   * Removes the element at the specified position from the specified array. All
-   * subsequent elements are shifted to the left (substracts one from their
-   * indices).
+   * 从指定数组中删除指定位置的元素。所有后续元素都向左移动（从它们的索引中减去 1）。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * except the element on the specified position. The component type of the
-   * returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 除了指定位置的元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
-   * <p>If the input array is {@code null}, an IndexOutOfBoundsException will
-   * be
-   * thrown, because in that case no valid current can be specified.
+   * <p>如果输入数组为 {@code null}，则会抛出 IndexOutOfBoundsException，
+   * 因为在这种情况下无法指定有效的当前。
    *
    * <pre>
    * Arrays.remove([1.1], 0)           = []
@@ -5287,14 +5585,12 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to remove the element from, may not be {@code null}
+   *     要从中删除元素的数组，不能为 {@code null}
    * @param index
-   *     the position of the element to be removed
-   * @return A new array containing the existing elements except the element at
-   *     the specified position.
+   *     要删除的元素的位置
+   * @return 包含现有元素的新数组，但不包含指定位置的元素。
    * @throws IndexOutOfBoundsException
-   *     if the current is out of range (current &lt; 0 || current &ge;
-   *     array.length), or if the array is {@code null}.
+   *     如果当前超出范围（current &lt; 0 || current &ge; array.length），或者如果数组为 {@code null}。
    */
   public static double[] remove(@Nullable final double[] array,
       final int index) {
@@ -5302,18 +5598,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Removes the element at the specified position from the specified array. All
-   * subsequent elements are shifted to the left (substracts one from their
-   * indices).
+   * 从指定数组中删除指定位置的元素。所有后续元素都向左移动（从它们的索引中减去 1）。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * except the element on the specified position. The component type of the
-   * returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 除了指定位置的元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
-   * <p>If the input array is {@code null}, an IndexOutOfBoundsException will
-   * be
-   * thrown, because in that case no valid current can be specified.
+   * <p>如果输入数组为 {@code null}，则会抛出 IndexOutOfBoundsException，
+   * 因为在这种情况下无法指定有效的当前。
    *
    * <pre>
    * Arrays.remove([1.1], 0)           = []
@@ -5323,32 +5614,25 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to remove the element from, may not be {@code null}
+   *     要从中删除元素的数组，不能为 {@code null}
    * @param index
-   *     the position of the element to be removed
-   * @return A new array containing the existing elements except the element at
-   *     the specified position.
+   *     要删除的元素的位置
+   * @return 包含现有元素的新数组，但不包含指定位置的元素。
    * @throws IndexOutOfBoundsException
-   *     if the current is out of range (current &lt; 0 || current &ge;
-   *     array.length), or if the array is {@code null}.
+   *     如果当前超出范围（current &lt; 0 || current &ge; array.length），或者如果数组为 {@code null}。
    */
   public static float[] remove(@Nullable final float[] array, final int index) {
     return (float[]) remove((Object) array, index);
   }
 
   /**
-   * Removes the element at the specified position from the specified array. All
-   * subsequent elements are shifted to the left (substracts one from their
-   * indices).
+   * 从指定数组中删除指定位置的元素。所有后续元素都向左移动（从它们的索引中减去 1）。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * except the element on the specified position. The component type of the
-   * returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 除了指定位置的元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
-   * <p>If the input array is {@code null}, an IndexOutOfBoundsException will
-   * be
-   * thrown, because in that case no valid current can be specified.
+   * <p>如果输入数组为 {@code null}，则会抛出 IndexOutOfBoundsException，
+   * 因为在这种情况下无法指定有效的当前。
    *
    * <pre>
    * Arrays.remove([1], 0)         = []
@@ -5358,32 +5642,25 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to remove the element from, may not be {@code null}
+   *     要从中删除元素的数组，不能为 {@code null}
    * @param index
-   *     the position of the element to be removed
-   * @return A new array containing the existing elements except the element at
-   *     the specified position.
+   *     要删除的元素的位置
+   * @return 包含现有元素的新数组，但不包含指定位置的元素。
    * @throws IndexOutOfBoundsException
-   *     if the current is out of range (current &lt; 0 || current &ge;
-   *     array.length), or if the array is {@code null}.
+   *     如果当前超出范围（current &lt; 0 || current &ge; array.length），或者如果数组为 {@code null}。
    */
   public static int[] remove(@Nullable final int[] array, final int index) {
     return (int[]) remove((Object) array, index);
   }
 
   /**
-   * Removes the element at the specified position from the specified array. All
-   * subsequent elements are shifted to the left (substracts one from their
-   * indices).
+   * 从指定数组中删除指定位置的元素。所有后续元素都向左移动（从它们的索引中减去 1）。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * except the element on the specified position. The component type of the
-   * returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 除了指定位置的元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
-   * <p>If the input array is {@code null}, an IndexOutOfBoundsException will
-   * be
-   * thrown, because in that case no valid current can be specified.
+   * <p>如果输入数组为 {@code null}，则会抛出 IndexOutOfBoundsException，
+   * 因为在这种情况下无法指定有效的当前。
    *
    * <pre>
    * Arrays.remove([1], 0)         = []
@@ -5393,42 +5670,33 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to remove the element from, may not be {@code null}
+   *     要从中删除元素的数组，不能为 {@code null}
    * @param index
-   *     the position of the element to be removed
-   * @return A new array containing the existing elements except the element at
-   *     the specified position.
+   *     要删除的元素的位置
+   * @return 包含现有元素的新数组，但不包含指定位置的元素。
    * @throws IndexOutOfBoundsException
-   *     if the current is out of range (current &lt; 0 || current &ge;
-   *     array.length), or if the array is {@code null}.
+   *     如果当前超出范围（current &lt; 0 || current &ge; array.length），或者如果数组为 {@code null}。
    */
   public static long[] remove(@Nullable final long[] array, final int index) {
     return (long[]) remove((Object) array, index);
   }
 
   /**
-   * Removes the element at the specified position from the specified array. All
-   * subsequent elements are shifted to the left (substracts one from their
-   * indices).
+   * 从指定数组中删除指定位置的元素。所有后续元素都向左移动（从它们的索引中减去 1）。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * except the element on the specified position. The component type of the
-   * returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 除了指定位置的元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
-   * <p>If the input array is {@code null}, an IndexOutOfBoundsException will
-   * be
-   * thrown, because in that case no valid current can be specified.
+   * <p>如果输入数组为 {@code null}，则会抛出 IndexOutOfBoundsException，
+   * 因为在这种情况下无法指定有效的当前。
    *
    * @param array
-   *     the array to remove the element from, may not be {@code null}
+   *     要从中删除元素的数组，不能为 {@code null}
    * @param index
-   *     the position of the element to be removed
-   * @return A new array containing the existing elements except the element at
-   *     the specified position.
+   *     要删除的元素的位置
+   * @return 包含现有元素的新数组，但不包含指定位置的元素。
    * @throws IndexOutOfBoundsException
-   *     if the current is out of range (current &lt; 0 || current &ge;
-   *     array.length), or if the array is {@code null}.
+   *     如果当前超出范围（current &lt; 0 || current &ge; array.length），或者如果数组为 {@code null}。
    */
   private static Object remove(@Nullable final Object array, final int index) {
     final int length = getLength(array);
@@ -5446,18 +5714,13 @@ public class ArrayUtils {
   }
 
   /**
-   * Removes the element at the specified position from the specified array. All
-   * subsequent elements are shifted to the left (substracts one from their
-   * indices).
+   * 从指定数组中删除指定位置的元素。所有后续元素都向左移动（从它们的索引中减去 1）。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * except the element on the specified position. The component type of the
-   * returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 除了指定位置的元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
-   * <p>If the input array is {@code null}, an IndexOutOfBoundsException will
-   * be
-   * thrown, because in that case no valid current can be specified.
+   * <p>如果输入数组为 {@code null}，则会抛出 IndexOutOfBoundsException，
+   * 因为在这种情况下无法指定有效的当前。
    *
    * <pre>
    * Arrays.remove([1], 0)         = []
@@ -5467,29 +5730,23 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to remove the element from, may not be {@code null}
+   *     要从中删除元素的数组，不能为 {@code null}
    * @param index
-   *     the position of the element to be removed
-   * @return A new array containing the existing elements except the element at
-   *     the specified position.
+   *     要删除的元素的位置
+   * @return 包含现有元素的新数组，但不包含指定位置的元素。
    * @throws IndexOutOfBoundsException
-   *     if the current is out of range (current &lt; 0 || current &ge;
-   *     array.length), or if the array is {@code null}.
+   *     如果当前超出范围（current &lt; 0 || current &ge; array.length），或者如果数组为 {@code null}。
    */
   public static short[] remove(@Nullable final short[] array, final int index) {
     return (short[]) remove((Object) array, index);
   }
 
   /**
-   * Removes the first occurrence of the specified element from the specified
-   * array. All subsequent elements are shifted to the left (substracts one from
-   * their indices). If the array doesn't contains such an element, no elements
-   * are removed from the array.
+   * 从指定数组中删除第一次出现的指定元素。所有后续元素都向左移动（从它们的索引中减去 1）。
+   * 如果数组不包含这样的元素，则不会从数组中删除任何元素。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * except the first occurrence of the specified element. The component type of
-   * the returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 除了第一次出现的指定元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
    * <pre>
    * Arrays.removeElement(null, "a")            = null
@@ -5500,13 +5757,12 @@ public class ArrayUtils {
    * </pre>
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     the array to remove the element from, may be {@code null}
+   *     要从中删除元素的数组，可能为 {@code null}
    * @param element
-   *     the element to be removed
-   * @return A new array containing the existing elements except the first
-   *     occurrence of the specified element.
+   *     要删除的元素
+   * @return 包含现有元素的新数组，但不包含第一次出现的指定元素。
    */
   public static <T> T[] removeElement(@Nullable final T[] array,
       final T element) {
@@ -5518,15 +5774,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Removes the first occurrence of the specified element from the specified
-   * array. All subsequent elements are shifted to the left (substracts one from
-   * their indices). If the array doesn't contains such an element, no elements
-   * are removed from the array.
+   * 从指定数组中删除第一次出现的指定元素。所有后续元素都向左移动（从它们的索引中减去 1）。
+   * 如果数组不包含这样的元素，则不会从数组中删除任何元素。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * except the first occurrence of the specified element. The component type of
-   * the returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 除了第一次出现的指定元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
    * <pre>
    * Arrays.removeElement(null, true)                = null
@@ -5537,11 +5789,10 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to remove the element from, may be {@code null}
+   *     要从中删除元素的数组，可能为 {@code null}
    * @param element
-   *     the element to be removed
-   * @return A new array containing the existing elements except the first
-   *     occurrence of the specified element.
+   *     要删除的元素
+   * @return 包含现有元素的新数组，但不包含第一次出现的指定元素。
    */
   public static boolean[] removeElement(@Nullable final boolean[] array,
       final boolean element) {
@@ -5553,15 +5804,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Removes the first occurrence of the specified element from the specified
-   * array. All subsequent elements are shifted to the left (substracts one from
-   * their indices). If the array doesn't contains such an element, no elements
-   * are removed from the array.
+   * 从指定数组中删除第一次出现的指定元素。所有后续元素都向左移动（从它们的索引中减去 1）。
+   * 如果数组不包含这样的元素，则不会从数组中删除任何元素。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * except the first occurrence of the specified element. The component type of
-   * the returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 除了第一次出现的指定元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
    * <pre>
    * Arrays.removeElement(null, 1)        = null
@@ -5572,11 +5819,10 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to remove the element from, may be {@code null}
+   *     要从中删除元素的数组，可能为 {@code null}
    * @param element
-   *     the element to be removed
-   * @return A new array containing the existing elements except the first
-   *     occurrence of the specified element.
+   *     要删除的元素
+   * @return 包含现有元素的新数组，但不包含第一次出现的指定元素。
    */
   public static byte[] removeElement(@Nullable final byte[] array,
       final byte element) {
@@ -5588,15 +5834,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Removes the first occurrence of the specified element from the specified
-   * array. All subsequent elements are shifted to the left (substracts one from
-   * their indices). If the array doesn't contains such an element, no elements
-   * are removed from the array.
+   * 从指定数组中删除第一次出现的指定元素。所有后续元素都向左移动（从它们的索引中减去 1）。
+   * 如果数组不包含这样的元素，则不会从数组中删除任何元素。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * except the first occurrence of the specified element. The component type of
-   * the returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 除了第一次出现的指定元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
    * <pre>
    * Arrays.removeElement(null, 'a')            = null
@@ -5607,11 +5849,10 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to remove the element from, may be {@code null}
+   *     要从中删除元素的数组，可能为 {@code null}
    * @param element
-   *     the element to be removed
-   * @return A new array containing the existing elements except the first
-   *     occurrence of the specified element.
+   *     要删除的元素
+   * @return 包含现有元素的新数组，但不包含第一次出现的指定元素。
    */
   public static char[] removeElement(@Nullable final char[] array,
       final char element) {
@@ -5623,14 +5864,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Removes the first occurrence of the specified element from the specified
-   * array. All subsequent elements are shifted to the left (substracts one from
-   * their indices). If the array doesn't contains such an element, no elements
-   * are removed from the array.
+   * 从指定数组中删除第一次出现的指定元素。所有后续元素都向左移动（从它们的索引中减去 1）。
+   * 如果数组不包含这样的元素，则不会从数组中删除任何元素。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array except the first occurrence of the specified element. The component
-   * type of the returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 除了第一次出现的指定元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
    * <pre>
    * Arrays.removeElement(null, 1.1)            = null
@@ -5641,11 +5879,10 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to remove the element from, may be {@code null}
+   *     要从中删除元素的数组，可能为 {@code null}
    * @param element
-   *     the element to be removed
-   * @return A new array containing the existing elements except the first
-   *     occurrence of the specified element.
+   *     要删除的元素
+   * @return 包含现有元素的新数组，但不包含第一次出现的指定元素。
    */
   public static double[] removeElement(@Nullable final double[] array,
       final double element) {
@@ -5657,15 +5894,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Removes the first occurrence of the specified element from the specified
-   * array. All subsequent elements are shifted to the left (substracts one from
-   * their indices). If the array doesn't contains such an element, no elements
-   * are removed from the array.
+   * 从指定数组中删除第一次出现的指定元素。所有后续元素都向左移动（从它们的索引中减去 1）。
+   * 如果数组不包含这样的元素，则不会从数组中删除任何元素。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * except the first occurrence of the specified element. The component type of
-   * the returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 除了第一次出现的指定元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
    * <pre>
    * Arrays.removeElement(null, 1.1)            = null
@@ -5676,11 +5909,10 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to remove the element from, may be {@code null}
+   *     要从中删除元素的数组，可能为 {@code null}
    * @param element
-   *     the element to be removed
-   * @return A new array containing the existing elements except the first
-   *     occurrence of the specified element.
+   *     要删除的元素
+   * @return 包含现有元素的新数组，但不包含第一次出现的指定元素。
    */
   public static float[] removeElement(@Nullable final float[] array,
       final float element) {
@@ -5797,54 +6029,43 @@ public class ArrayUtils {
   }
 
   /**
-   * Find the current of the first element in the sorted range [begin, end) of a
-   * specified array which does not compare less than a specified value.
+   * 查找有序范围 [begin, end) 中第一个不小于指定值的元素的索引。
    *
-   * <p>For the function to yield the expected result, the elements in the
-   * range
-   * shall already be ordered from the lower to the higher.
+   * <p>为了使函数产生预期结果，范围内的元素应该已经按照从低到高的顺序排序。
    *
-   * <p>Note that if there is an element equal to the specified value in the
-   * range,
-   * this function returns the current of the first such element; otherwise,
-   * this function returns the current of the first smallest element which is
-   * greater than the specified value.
+   * <p>注意，如果范围内有等于指定值的元素，此函数返回第一个这样的元素的索引；
+   * 否则，此函数返回第一个大于指定值的最小元素的索引。
    *
-   * <p>The function name {@code lowerBound} comes from the fact that if there
-   * is a
-   * continuous range [iter1, iter2) in [begin, end), such that
+   * <p>函数名称 {@code lowerBound} 来源于这样一个事实：如果在 [begin, end) 中存在
+   * 连续范围 [iter1, iter2)，使得
    *
    * <ul>
-   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; and</li>
-   * <li>for every i in [begin, iter1), array[i] &lt; value; and</li>
-   * <li>for every i in [iter1, iter2), array[i] == value; and</li>
-   * <li>for every i in [iter2, last), array[i] &gt; value.</li>
+   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; 且</li>
+   * <li>对于 [begin, iter1) 中的每个 i，array[i] &lt; value; 且</li>
+   * <li>对于 [iter1, iter2) 中的每个 i，array[i] == value; 且</li>
+   * <li>对于 [iter2, last) 中的每个 i，array[i] &gt; value.</li>
    * </ul>
    *
-   * <p>Then the function {@code lowerBound(array, begin, end, value)} will
-   * return {@code iter1}, which is the "lower bound" of the maximum
-   * continuous range equals to value in the sorted range. If no such continuous
-   * range exists, that is, no elements in [begin, end) equals to value, the
-   * function will returns the position of the smallest element in [begin, end)
-   * which is greater than value.
+   * <p>那么函数 {@code lowerBound(array, begin, end, value)} 将返回 {@code iter1}，
+   * 它是有序范围中等于 value 的最大连续范围的“下界”。如果不存在这样的连续范围，
+   * 即 [begin, end) 中没有元素等于 value，则函数将返回 [begin, end) 中大于 value 的
+   * 最小元素的位置。
    *
-   * <p>The function use a binary search algorithm to search the lower bound, which
-   * has a time complexity of {@code O(log n)}.
+   * <p>该函数使用二分查找算法来搜索下界，其时间复杂度为 {@code O(log n)}。
    *
    * @param array
-   *     a {@code char} array, sorted from the lower to the higher.
+   *     一个 {@code char} 数组，按照从低到高排序。
    * @param begin
-   *     the begin current.
+   *     开始索引。
    * @param end
-   *     the end current. The range of the array is defined as [begin, end).
+   *     结束索引。数组的范围定义为 [begin, end)。
    * @param value
-   *     the value to be found.
-   * @return the current of the first element in [begin, end) which does not
-   *     compare less than the specified value. If the range [begin, end) is not
-   *     correctly sorted, the behavior of this function is not defined.
+   *     要查找的值。
+   * @return [begin, end) 中第一个不小于指定值的元素的索引。如果范围 [begin, end) 没有
+   *     正确排序，则此函数的行为未定义。
    * @throws IllegalArgumentException
-   *     if {@code begin &lt; 0} or {@code begin &gt; end} or
-   *     {@code end &gt; array.length}.
+   *     如果 {@code begin &lt; 0} 或 {@code begin &gt; end} 或
+   *     {@code end &gt; array.length}。
    */
   public static int lowerBound(final char[] array, final int begin,
       final int end, final char value) {
@@ -6390,54 +6611,43 @@ public class ArrayUtils {
   }
 
   /**
-   * Find the current of the first element in the sorted range [begin, end) of a
-   * specified array which compares greater than a specified value.
+   * 查找有序范围 [begin, end) 中第一个大于指定值的元素的索引。
    *
-   * <p>For the function to yield the expected result, the elements in the
-   * range
-   * shall already be ordered from the lower to the higher.
+   * <p>为了使函数产生预期结果，范围内的元素应该已经按照从低到高的顺序排序。
    *
-   * <p>Note that if there is an element equal to the specified value in the
-   * range,
-   * this function does NOT return the current of such element; instead, it
-   * returns the current of the first smallest element which is strictly greater
-   * than the specified value.
+   * <p>注意，如果范围内有等于指定值的元素，此函数不会返回这样元素的索引；
+   * 相反，它返回第一个严格大于指定值的最小元素的索引。
    *
-   * <p>The function name {@code upperBound} comes from the fact that if there
-   * is a
-   * continuous range [iter1, iter2) in [begin, end), such that
+   * <p>函数名称 {@code upperBound} 来源于这样一个事实：如果在 [begin, end) 中存在
+   * 连续范围 [iter1, iter2)，使得
    *
    * <ul>
-   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; and</li>
-   * <li>for every i in [begin, iter1), array[i] &lt; value; and</li>
-   * <li>for every i in [iter1, iter2), array[i] == value; and</li>
-   * <li>for every i in [iter2, last), array[i] &gt; value.</li>
+   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; 且</li>
+   * <li>对于 [begin, iter1) 中的每个 i，array[i] &lt; value; 且</li>
+   * <li>对于 [iter1, iter2) 中的每个 i，array[i] == value; 且</li>
+   * <li>对于 [iter2, last) 中的每个 i，array[i] &gt; value.</li>
    * </ul>
    *
-   * <p>Then the function {@code upperBound(array, begin, end, value)} will
-   * return {@code iter2}, which is the "upper bound" of the maximum
-   * continuous range equals to the specified value in the sorted range. If no
-   * such continuous range exists, that is, no elements in [begin, end) equals
-   * to the specified value, the function will returns the current of the smallest
-   * element in [begin, end) which is greater than value.
+   * <p>那么函数 {@code upperBound(array, begin, end, value)} 将返回 {@code iter2}，
+   * 它是有序范围中等于指定值的最大连续范围的“上界”。如果不存在这样的连续范围，
+   * 即 [begin, end) 中没有元素等于指定值，则函数将返回 [begin, end) 中大于 value 的
+   * 最小元素的索引。
    *
-   * <p>The function use a binary search algorithm to search the upper bound, which
-   * has a time complexity of {@code O(log n)}.
+   * <p>该函数使用二分查找算法来搜索上界，其时间复杂度为 {@code O(log n)}。
    *
    * @param array
-   *     a {@code char} array, sorted from the lower to the higher.
+   *     一个 {@code char} 数组，按照从低到高排序。
    * @param begin
-   *     the begin current.
+   *     开始索引。
    * @param end
-   *     the end current. The range of the array is defined as [begin, end).
+   *     结束索引。数组的范围定义为 [begin, end)。
    * @param value
-   *     the value to be found.
-   * @return the current of the first element in [begin, end) which compares
-   *     greater than the specified value. If the range [begin, end) is not
-   *     correctly sorted, the behavior of this function is not defined.
+   *     要查找的值。
+   * @return [begin, end) 中第一个大于指定值的元素的索引。如果范围 [begin, end) 没有
+   *     正确排序，则此函数的行为未定义。
    * @throws IllegalArgumentException
-   *     if {@code begin &lt; 0} or {@code begin &gt; end} or
-   *     {@code end &gt; array.length}.
+   *     如果 {@code begin &lt; 0} 或 {@code begin &gt; end} 或
+   *     {@code end &gt; array.length}。
    */
   public static int upperBound(final char[] array, final int begin,
       final int end, final char value) {
@@ -6489,30 +6699,26 @@ public class ArrayUtils {
    * <li>for every i in [iter2, last), array[i] &gt; value.</li>
    * </ul>
    *
-   * <p>Then the function {@code upperBound(array, begin, end, value)} will
-   * return {@code iter2}, which is the "upper bound" of the maximum
-   * continuous range equals to the specified value in the sorted range. If no
-   * such continuous range exists, that is, no elements in [begin, end) equals
-   * to the specified value, the function will returns the current of the smallest
-   * element in [begin, end) which is greater than value.
+   * <p>那么函数 {@code upperBound(array, begin, end, value)} 将返回 {@code iter2}，
+   * 它是有序范围中等于指定值的最大连续范围的“上界”。如果不存在这样的连续范围，
+   * 即 [begin, end) 中没有元素等于指定值，则函数将返回 [begin, end) 中大于 value 的
+   * 最小元素的索引。
    *
-   * <p>The function use a binary search algorithm to search the upper bound, which
-   * has a time complexity of {@code O(log n)}.
+   * <p>该函数使用二分查找算法来搜索上界，其时间复杂度为 {@code O(log n)}。
    *
    * @param array
-   *     a {@code byte} array, sorted from the lower to the higher.
+   *     一个 {@code byte} 数组，按照从低到高排序。
    * @param begin
-   *     the begin current.
+   *     开始索引。
    * @param end
-   *     the end current. The range of the array is defined as [begin, end).
+   *     结束索引。数组的范围定义为 [begin, end)。
    * @param value
-   *     the value to be found.
-   * @return the current of the first element in [begin, end) which compares
-   *     greater than the specified value. If the range [begin, end) is not
-   *     correctly sorted, the behavior of this function is not defined.
+   *     要查找的值。
+   * @return [begin, end) 中第一个大于指定值的元素的索引。如果范围 [begin, end) 没有
+   *     正确排序，则此函数的行为未定义。
    * @throws IllegalArgumentException
-   *     if {@code begin &lt; 0} or {@code begin &gt; end} or
-   *     {@code end &gt; array.length}.
+   *     如果 {@code begin &lt; 0} 或 {@code begin &gt; end} 或
+   *     {@code end &gt; array.length}。
    */
   public static int upperBound(final byte[] array, final int begin,
       final int end, final byte value) {
@@ -6540,8 +6746,7 @@ public class ArrayUtils {
   }
 
   /**
-   * Find the current of the first element in the sorted range [begin, end) of a
-   * specified array which compares greater than a specified value.
+   * 查找有序范围 [begin, end) 中第一个大于指定值的元素的索引。
    *
    * <p>For the function to yield the expected result, the elements in the
    * range
@@ -6990,11 +7195,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Sums the values of elements in an array.
+   * 对数组中元素的值求和。
    *
    * @param array
-   *     the array of values.
-   * @return the sum of all values in the array.
+   *     值的数组。
+   * @return 数组中所有值的总和。
    */
   public static int sum(final byte[] array) {
     int result = 0;
@@ -7005,15 +7210,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Sums the values of elements in an array.
+   * 对数组中元素的值求和。
    *
    * @param array
-   *     the array of values.
+   *     值的数组。
    * @param start
-   *     the index of value starting the sum.
+   *     开始求和的值的索引。
    * @param end
-   *     the index next to the value ending the sum.
-   * @return the sum of all values in the array.
+   *     结束求和的值的下一个索引。
+   * @return 数组中所有值的总和。
    */
   public static int sum(final byte[] array, final int start, final int end) {
     final int theStart = Math.max(start, 0);
@@ -7026,11 +7231,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Sums the values of elements in an array.
+   * 对数组中元素的值求和。
    *
    * @param array
-   *     the array of values.
-   * @return the sum of all values in the array.
+   *     值的数组。
+   * @return 数组中所有值的总和。
    */
   public static int sum(final short[] array) {
     int result = 0;
@@ -7207,11 +7412,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Products the values of elements in an array.
+   * 对数组中元素的值求积。
    *
    * @param array
-   *     the array of values.
-   * @return the production of all values in the array.
+   *     值的数组。
+   * @return 数组中所有值的乘积。
    */
   public static double product(final byte[] array) {
     double result = 1;
@@ -7222,15 +7427,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Products the values of elements in an array.
+   * 对数组中元素的值求积。
    *
    * @param array
-   *     the array of values.
+   *     值的数组。
    * @param start
-   *     the index of value starting the sum.
+   *     开始求积的值的索引。
    * @param end
-   *     the index next to the value ending the sum.
-   * @return the production of all values in the array.
+   *     结束求积的值的下一个索引。
+   * @return 数组中所有值的乘积。
    */
   public static double product(final byte[] array, final int start,
       final int end) {
@@ -7428,6 +7633,15 @@ public class ArrayUtils {
     return result;
   }
 
+  /**
+   * 如果数组为空或为 null，则返回 null，否则返回原数组。
+   *
+   * @param <T>
+   *     数组中元素的类型。
+   * @param array
+   *     要检查的数组。
+   * @return 如果数组为空或为 null，则返回 null，否则返回原数组。
+   */
   public static <T> T[] nullIfEmpty(@Nullable final T[] array) {
     if (array == null || array.length == 0) {
       return null;
@@ -7436,6 +7650,13 @@ public class ArrayUtils {
     }
   }
 
+  /**
+   * 如果数组为空或为 null，则返回 null，否则返回原数组。
+   *
+   * @param array
+   *     要检查的布尔数组。
+   * @return 如果数组为空或为 null，则返回 null，否则返回原数组。
+   */
   public static boolean[] nullIfEmpty(@Nullable final boolean[] array) {
     if (array == null || array.length == 0) {
       return null;
@@ -7444,6 +7665,13 @@ public class ArrayUtils {
     }
   }
 
+  /**
+   * 如果数组为空或为 null，则返回 null，否则返回原数组。
+   *
+   * @param array
+   *     要检查的字符数组。
+   * @return 如果数组为空或为 null，则返回 null，否则返回原数组。
+   */
   public static char[] nullIfEmpty(@Nullable final char[] array) {
     if (array == null || array.length == 0) {
       return null;
@@ -7452,6 +7680,13 @@ public class ArrayUtils {
     }
   }
 
+  /**
+   * 如果数组为空或为 null，则返回 null，否则返回原数组。
+   *
+   * @param array
+   *     要检查的字节数组。
+   * @return 如果数组为空或为 null，则返回 null，否则返回原数组。
+   */
   public static byte[] nullIfEmpty(@Nullable final byte[] array) {
     if (array == null || array.length == 0) {
       return null;
@@ -7460,6 +7695,13 @@ public class ArrayUtils {
     }
   }
 
+  /**
+   * 如果数组为空或为 null，则返回 null，否则返回原数组。
+   *
+   * @param array
+   *     要检查的短整型数组。
+   * @return 如果数组为空或为 null，则返回 null，否则返回原数组。
+   */
   public static short[] nullIfEmpty(@Nullable final short[] array) {
     if (array == null || array.length == 0) {
       return null;
@@ -7468,6 +7710,13 @@ public class ArrayUtils {
     }
   }
 
+  /**
+   * 如果数组为空或为 null，则返回 null，否则返回原数组。
+   *
+   * @param array
+   *     要检查的整型数组。
+   * @return 如果数组为空或为 null，则返回 null，否则返回原数组。
+   */
   public static int[] nullIfEmpty(@Nullable final int[] array) {
     if (array == null || array.length == 0) {
       return null;
@@ -7476,6 +7725,13 @@ public class ArrayUtils {
     }
   }
 
+  /**
+   * 如果数组为空或为 null，则返回 null，否则返回原数组。
+   *
+   * @param array
+   *     要检查的长整型数组。
+   * @return 如果数组为空或为 null，则返回 null，否则返回原数组。
+   */
   public static long[] nullIfEmpty(@Nullable final long[] array) {
     if (array == null || array.length == 0) {
       return null;
@@ -7484,6 +7740,13 @@ public class ArrayUtils {
     }
   }
 
+  /**
+   * 如果数组为空或为 null，则返回 null，否则返回原数组。
+   *
+   * @param array
+   *     要检查的浮点数数组。
+   * @return 如果数组为空或为 null，则返回 null，否则返回原数组。
+   */
   public static float[] nullIfEmpty(@Nullable final float[] array) {
     if (array == null || array.length == 0) {
       return null;
@@ -7492,6 +7755,13 @@ public class ArrayUtils {
     }
   }
 
+  /**
+   * 如果数组为空或为 null，则返回 null，否则返回原数组。
+   *
+   * @param array
+   *     要检查的双精度浮点数数组。
+   * @return 如果数组为空或为 null，则返回 null，否则返回原数组。
+   */
   public static double[] nullIfEmpty(@Nullable final double[] array) {
     if (array == null || array.length == 0) {
       return null;
@@ -7501,16 +7771,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Excludes all elements of a given array from the specified array.
+   * 从指定数组中排除给定数组的所有元素。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     the specified array.
+   *     指定的数组。
    * @param toExclude
-   *     the array contains the elements to be excluded.
-   * @return an new array which contains only the elements in the specified
-   *     array but not in the excluded element array.
+   *     包含要排除的元素的数组。
+   * @return 一个新数组，其中只包含指定数组中的元素，但不包含被排除元素数组中的元素。
    */
   public static <T> T[] excludeAll(@Nullable final T[] array,
       final T[] toExclude) {
@@ -7529,35 +7798,34 @@ public class ArrayUtils {
   }
 
   /**
-   * Creates a new array which has the same element type with an existing
-   * array.
+   * 创建一个与现有数组具有相同元素类型的新数组。
    *
    * @param <T>
-   *     the type of elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     the existing array.
+   *     现有的数组。
    * @param n
-   *     the length of the new array.
-   * @return a new array with the same element type as the specified array.
+   *     新数组的长度。
+   * @return 一个与指定数组具有相同元素类型的新数组。
    */
   @SuppressWarnings("unchecked")
-  public static <T> T[] createArrayOfSameElementType(final T[] array, final int n) {
+  public static <T> T[] createArrayOfSameElementType(final T[] array,
+      final int n) {
     final Class<?> componentType = array.getClass().getComponentType();
     final Object result = Array.newInstance(componentType, n);
     return (T[]) result;
   }
 
   /**
-   * Creates a new array which has the specified element type and specified
-   * length.
+   * 创建一个具有指定元素类型和指定长度的新数组。
    *
    * @param <T>
-   *     the type of elements in the array.
+   *     数组中元素的类型。
    * @param elementType
-   *     the specified element type of the new array.
+   *     新数组的指定元素类型。
    * @param n
-   *     the length of the new array.
-   * @return a new array with the same element type as the specified array.
+   *     新数组的长度。
+   * @return 一个与指定数组具有相同元素类型的新数组。
    */
   @SuppressWarnings("unchecked")
   public static <T> T[] createArray(final Class<T> elementType, final int n) {
@@ -7565,24 +7833,21 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the current of the given object in the array starting at the given
-   * current.
+   * 从给定索引开始在数组中查找符合条件的对象的索引。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>对于 {@code null} 输入数组，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * <p>A negative startIndex is treated as zero. A startIndex larger than the
-   * array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+   * <p>负的起始索引将被视为零。大于数组长度的起始索引将返回
+   * {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索对象的数组，可能为 {@code null}
    * @param condition
-   *     the value to find should satisfy this condition.
-   * @return the index of the specified object within the array, or
-   *     {@link #INDEX_NOT_FOUND} ({@value #INDEX_NOT_FOUND}) if not found or
-   *     {@code null} array input.
+   *     要查找的值应满足此条件。
+   * @return 数组中指定对象的索引，如果未找到或输入数组为 {@code null}，
+   *     则返回 {@link #INDEX_NOT_FOUND} ({@value #INDEX_NOT_FOUND})。
    */
   public static <T> int findIndex(@Nullable final T[] array,
       final Predicate<T> condition) {
@@ -7590,26 +7855,23 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the current of the given object in the array starting at the given
-   * current.
+   * 从给定索引开始在数组中查找符合条件的对象的索引。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>对于 {@code null} 输入数组，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * <p>A negative startIndex is treated as zero. A startIndex larger than the
-   * array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+   * <p>负的起始索引将被视为零。大于数组长度的起始索引将返回
+   * {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索对象的数组，可能为 {@code null}
    * @param condition
-   *     the value to find should satisfy this condition.
+   *     要查找的值应满足此条件。
    * @param start
-   *     the index to start searching at
-   * @return the index of the specified object within the array starting from
-   *     the specified position, or {@link #INDEX_NOT_FOUND}
-   *     ({@value #INDEX_NOT_FOUND}) if not found or {@code null} array input.
+   *     开始搜索的索引
+   * @return 从指定位置开始的数组中指定对象的索引，如果未找到或输入数组为
+   *     {@code null}，则返回 {@link #INDEX_NOT_FOUND} ({@value #INDEX_NOT_FOUND})。
    */
   public static <T> int findIndex(@Nullable final T[] array,
       final Predicate<T> condition, final int start) {
@@ -7626,23 +7888,21 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the current of the given object in the array starting at the given
-   * current.
+   * 从给定索引开始在数组中查找符合条件的对象。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>对于 {@code null} 输入数组，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * <p>A negative startIndex is treated as zero. A startIndex larger than the
-   * array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+   * <p>负的起始索引将被视为零。大于数组长度的起始索引将返回
+   * {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索对象的数组，可能为 {@code null}
    * @param condition
-   *     the value to find should satisfy this condition.
-   * @return the specified object within the array, or {@code null} if not found
-   *     or {@code null} array input.
+   *     要查找的值应满足此条件。
+   * @return 数组中的指定对象，如果未找到或输入数组为 {@code null}，则返回
+   *     {@code null}。
    */
   public static <T> T find(@Nullable final T[] array,
       final Predicate<T> condition) {
@@ -7650,25 +7910,23 @@ public class ArrayUtils {
   }
 
   /**
-   * Finds the current of the given object in the array starting at the given
-   * current.
+   * 从给定索引开始在数组中查找符合条件的对象。
    *
-   * <p>This method returns {@link #INDEX_NOT_FOUND} ({@code -1}) for a {@code
-   * null} input array.
+   * <p>对于 {@code null} 输入数组，此方法返回 {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
-   * <p>A negative startIndex is treated as zero. A startIndex larger than the
-   * array length will return {@link #INDEX_NOT_FOUND} ({@code -1}).
+   * <p>负的起始索引将被视为零。大于数组长度的起始索引将返回
+   * {@link #INDEX_NOT_FOUND} ({@code -1})。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     the array to search through for the object, may be {@code null}
+   *     要搜索对象的数组，可能为 {@code null}
    * @param condition
-   *     the value to find should satisfy this condition.
+   *     要查找的值应满足此条件。
    * @param start
-   *     the index to start searching at
-   * @return the specified object within the array starting from the specified
-   *     position, or {@code null} if not found or {@code null} array input.
+   *     开始搜索的索引
+   * @return 从指定位置开始的数组中的指定对象，如果未找到或输入数组为
+   *     {@code null}，则返回 {@code null}。
    */
   public static <T> T find(@Nullable final T[] array,
       final Predicate<T> condition, final int start) {
@@ -7683,76 +7941,152 @@ public class ArrayUtils {
     }
   }
 
+  /**
+   * 如果数组为 null，则返回空数组，否则返回原数组。
+   *
+   * @param array
+   *     要检查的布尔数组。
+   * @return 如果数组为 null，则返回空数组，否则返回原数组。
+   */
   public static boolean[] nullToEmpty(@Nullable final boolean[] array) {
     return (array == null ? EMPTY_BOOLEAN_ARRAY : array);
   }
 
+  /**
+   * 如果数组为 null，则返回空数组，否则返回原数组。
+   *
+   * @param array
+   *     要检查的字符数组。
+   * @return 如果数组为 null，则返回空数组，否则返回原数组。
+   */
   public static char[] nullToEmpty(@Nullable final char[] array) {
     return (array == null ? EMPTY_CHAR_ARRAY : array);
   }
 
+  /**
+   * 如果数组为 null，则返回空数组，否则返回原数组。
+   *
+   * @param array
+   *     要检查的字节数组。
+   * @return 如果数组为 null，则返回空数组，否则返回原数组。
+   */
   public static byte[] nullToEmpty(@Nullable final byte[] array) {
     return (array == null ? EMPTY_BYTE_ARRAY : array);
   }
 
+  /**
+   * 如果数组为 null，则返回空数组，否则返回原数组。
+   *
+   * @param array
+   *     要检查的短整型数组。
+   * @return 如果数组为 null，则返回空数组，否则返回原数组。
+   */
   public static short[] nullToEmpty(@Nullable final short[] array) {
     return (array == null ? EMPTY_SHORT_ARRAY : array);
   }
 
+  /**
+   * 如果数组为 null，则返回空数组，否则返回原数组。
+   *
+   * @param array
+   *     要检查的整型数组。
+   * @return 如果数组为 null，则返回空数组，否则返回原数组。
+   */
   public static int[] nullToEmpty(@Nullable final int[] array) {
     return (array == null ? EMPTY_INT_ARRAY : array);
   }
 
+  /**
+   * 如果数组为 null，则返回空数组，否则返回原数组。
+   *
+   * @param array
+   *     要检查的长整型数组。
+   * @return 如果数组为 null，则返回空数组，否则返回原数组。
+   */
   public static long[] nullToEmpty(@Nullable final long[] array) {
     return (array == null ? EMPTY_LONG_ARRAY : array);
   }
 
+  /**
+   * 如果数组为 null，则返回空数组，否则返回原数组。
+   *
+   * @param array
+   *     要检查的浮点数数组。
+   * @return 如果数组为 null，则返回空数组，否则返回原数组。
+   */
   public static float[] nullToEmpty(@Nullable final float[] array) {
     return (array == null ? EMPTY_FLOAT_ARRAY : array);
   }
 
+  /**
+   * 如果数组为 null，则返回空数组，否则返回原数组。
+   *
+   * @param array
+   *     要检查的双精度浮点数数组。
+   * @return 如果数组为 null，则返回空数组，否则返回原数组。
+   */
   public static double[] nullToEmpty(@Nullable final double[] array) {
     return (array == null ? EMPTY_DOUBLE_ARRAY : array);
   }
 
+  /**
+   * 如果数组为 null，则返回空数组，否则返回原数组。
+   *
+   * @param array
+   *     要检查的字符序列数组。
+   * @return 如果数组为 null，则返回空数组，否则返回原数组。
+   */
   public static CharSequence[] nullToEmpty(@Nullable final CharSequence[] array) {
     return (array == null ? EMPTY_STRING_ARRAY : array);
   }
 
+  /**
+   * 如果数组为 null，则返回空数组，否则返回原数组。
+   *
+   * @param array
+   *     要检查的字符串数组。
+   * @return 如果数组为 null，则返回空数组，否则返回原数组。
+   */
   public static String[] nullToEmpty(@Nullable final String[] array) {
     return (array == null ? EMPTY_STRING_ARRAY : array);
   }
 
+  /**
+   * 如果数组为 null，则返回空数组，否则返回原数组。
+   *
+   * @param <T>
+   *     数组中元素的类型。
+   * @param array
+   *     要检查的数组。
+   * @return 如果数组为 null，则返回空数组，否则返回原数组。
+   */
   @SuppressWarnings("unchecked")
   public static <T> T[] nullToEmpty(@Nullable final T[] array) {
     return (array == null ? (T[]) EMPTY_OBJECT_ARRAY : array);
   }
 
   /**
-   * Gets the stream of a nullable array.
+   * 返回数组的流，如果数组为 {@code null}，则返回空流。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     the array, which could be {@code null}.
+   *     要转换为流的数组，可能为 {@code null}
    * @return
-   *     the stream of the array, or an empty stream if the array is {@code null}.
+   *     数组的流，如果数组为 {@code null}，则返回空流
    */
   public static <T> Stream<T> stream(@Nullable final T[] array) {
     return (array == null ? Stream.empty() : Arrays.stream(array));
   }
 
   /**
-   * Performs the given action for each element of the array until all elements
-   * have been processed or the action throws an exception.  Actions are
-   * performed in the order of the array. Exceptions thrown by the action are
-   * relayed to the caller.
+   * 对数组的每个元素执行给定的操作，直到所有元素都已处理或操作抛出
+   * 异常。操作按数组的顺序执行。操作抛出的异常会传递给调用者。
    * <p>
-   * The behavior of this method is unspecified if the action performs side
-   * effects that modify the underlying source of elements, unless an overriding
-   * class has specified a concurrent modification policy.
+   * 如果操作执行的副作用修改了元素的底层源，则此方法的行为是未指定的，
+   * 除非覆盖类指定了并发修改策略。
    * <p>
-   * The default implementation behaves as if:
+   * 默认实现的行为如下：
    * <pre>{@code
    *    if (array != null) {
    *      for (final T value : array) {
@@ -7762,13 +8096,13 @@ public class ArrayUtils {
    * }</pre>
    *
    * @param <T>
-   *     The type of the element in the array.
+   *     数组中元素的类型。
    * @param array
-   *     An {@code array} to be iterated, which may be {@code null}.
+   *     要遍历的数组，可能为 {@code null}。
    * @param action
-   *     The action to be performed for each element.
+   *     要对每个元素执行的操作。
    * @throws NullPointerException
-   *     if the specified action is null.
+   *     如果指定的操作为 null。
    */
   public static <T> void forEach(@Nullable final T[] array, final Consumer<? super T> action) {
     if (array != null) {
@@ -7779,18 +8113,18 @@ public class ArrayUtils {
   }
 
   /**
-   * Returns a new array containing specified copies of the specified object.
+   * 返回一个新数组，其中包含指定对象的多个副本。
    * <p>
-   * This function perform the shallow copy of the specified object.
+   * 此函数执行指定对象的浅复制。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param value
-   *     the object to be copied.
+   *     要复制的对象。
    * @param n
-   *     the number of copies to be made.
+   *     要创建的副本数量。
    * @return
-   *     an array containing {@code n} copies of the specified object.
+   *     包含指定对象的 {@code n} 个副本的数组。
    */
   public static <T> T[] duplicate(final T value, final int n) {
     @SuppressWarnings("unchecked")
@@ -7801,19 +8135,18 @@ public class ArrayUtils {
   }
 
   /**
-   * Returns a new array containing specified copies of deep clones of the
-   * specified object.
+   * 返回一个新数组，其中包含指定对象的深克隆副本。
    * <p>
-   * This function perform the deep clone of the specified object.
+   * 此函数执行指定对象的深克隆。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param value
-   *     the object to be copied.
+   *     要复制的对象。
    * @param n
-   *     the number of copies to be made.
+   *     要创建的副本数量。
    * @return
-   *     an array containing {@code n} copies of deep clone of the specified object.
+   *     包含指定对象的 {@code n} 个深克隆副本的数组。
    */
   public static <T extends CloneableEx<T>> T[] deepDuplicate(final T value, final int n) {
     @SuppressWarnings("unchecked")
