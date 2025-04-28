@@ -9,6 +9,7 @@
 package ltd.qubit.commons.lang;
 
 import java.util.Date;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
@@ -3484,590 +3485,590 @@ public class ArrayUtilsTest {
 
   @Test
   public void testSumByteArray() {
-    byte[] array = {1, 2, 3, 4, 5};
+    final byte[] array = {1, 2, 3, 4, 5};
     assertEquals(15, ArrayUtils.sum(array));
-    
-    byte[] emptyArray = {};
+
+    final byte[] emptyArray = {};
     assertEquals(0, ArrayUtils.sum(emptyArray));
-    
+
     try {
       ArrayUtils.sum((byte[]) null);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
-    
+
     assertEquals(6, ArrayUtils.sum(array, 0, 3)); // 1+2+3=6
     assertEquals(9, ArrayUtils.sum(array, 1, 4)); // 2+3+4=9
     assertEquals(5, ArrayUtils.sum(array, 4, 5)); // 5
     assertEquals(0, ArrayUtils.sum(array, 5, 10)); // 超出边界
     assertEquals(0, ArrayUtils.sum(array, -1, 0)); // 负索引
     assertEquals(15, ArrayUtils.sum(array, -1, 10)); // 范围超出时正确处理
-    
+
     try {
       ArrayUtils.sum((byte[]) null, 0, 3);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
   }
 
   @Test
   public void testSumShortArray() {
-    short[] array = {1, 2, 3, 4, 5};
+    final short[] array = {1, 2, 3, 4, 5};
     assertEquals(15, ArrayUtils.sum(array));
-    
-    short[] emptyArray = {};
+
+    final short[] emptyArray = {};
     assertEquals(0, ArrayUtils.sum(emptyArray));
-    
+
     try {
       ArrayUtils.sum((short[]) null);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
-    
+
     assertEquals(6, ArrayUtils.sum(array, 0, 3)); // 1+2+3=6
     assertEquals(9, ArrayUtils.sum(array, 1, 4)); // 2+3+4=9
     assertEquals(5, ArrayUtils.sum(array, 4, 5)); // 5
     assertEquals(0, ArrayUtils.sum(array, 5, 10)); // 超出边界
     assertEquals(0, ArrayUtils.sum(array, -1, 0)); // 负索引
     assertEquals(15, ArrayUtils.sum(array, -1, 10)); // 范围超出时正确处理
-    
+
     try {
       ArrayUtils.sum((short[]) null, 0, 3);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
   }
 
   @Test
   public void testSumIntArray() {
-    int[] array = {1, 2, 3, 4, 5};
+    final int[] array = {1, 2, 3, 4, 5};
     assertEquals(15, ArrayUtils.sum(array));
-    
-    int[] emptyArray = {};
+
+    final int[] emptyArray = {};
     assertEquals(0, ArrayUtils.sum(emptyArray));
-    
+
     try {
       ArrayUtils.sum((int[]) null);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
-    
+
     assertEquals(6, ArrayUtils.sum(array, 0, 3)); // 1+2+3=6
     assertEquals(9, ArrayUtils.sum(array, 1, 4)); // 2+3+4=9
     assertEquals(5, ArrayUtils.sum(array, 4, 5)); // 5
     assertEquals(0, ArrayUtils.sum(array, 5, 10)); // 超出边界
     assertEquals(0, ArrayUtils.sum(array, -1, 0)); // 负索引
     assertEquals(15, ArrayUtils.sum(array, -1, 10)); // 范围超出时正确处理
-    
+
     try {
       ArrayUtils.sum((int[]) null, 0, 3);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
   }
 
   @Test
   public void testSumLongArray() {
-    long[] array = {1L, 2L, 3L, 4L, 5L};
+    final long[] array = {1L, 2L, 3L, 4L, 5L};
     assertEquals(15L, ArrayUtils.sum(array));
-    
-    long[] emptyArray = {};
+
+    final long[] emptyArray = {};
     assertEquals(0L, ArrayUtils.sum(emptyArray));
-    
+
     try {
       ArrayUtils.sum((long[]) null);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
-    
+
     assertEquals(6L, ArrayUtils.sum(array, 0, 3)); // 1+2+3=6
     assertEquals(9L, ArrayUtils.sum(array, 1, 4)); // 2+3+4=9
     assertEquals(5L, ArrayUtils.sum(array, 4, 5)); // 5
     assertEquals(0L, ArrayUtils.sum(array, 5, 10)); // 超出边界
     assertEquals(0L, ArrayUtils.sum(array, -1, 0)); // 负索引
     assertEquals(15L, ArrayUtils.sum(array, -1, 10)); // 范围超出时正确处理
-    
+
     try {
       ArrayUtils.sum((long[]) null, 0, 3);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
   }
 
   @Test
   public void testSumFloatArray() {
-    float[] array = {1.0f, 2.0f, 3.0f, 4.0f, 5.0f};
+    final float[] array = {1.0f, 2.0f, 3.0f, 4.0f, 5.0f};
     assertEquals(15.0f, ArrayUtils.sum(array));
-    
-    float[] emptyArray = {};
+
+    final float[] emptyArray = {};
     assertEquals(0.0f, ArrayUtils.sum(emptyArray));
-    
+
     try {
       ArrayUtils.sum((float[]) null);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
-    
+
     assertEquals(6.0f, ArrayUtils.sum(array, 0, 3)); // 1+2+3=6
     assertEquals(9.0f, ArrayUtils.sum(array, 1, 4)); // 2+3+4=9
     assertEquals(5.0f, ArrayUtils.sum(array, 4, 5)); // 5
     assertEquals(0.0f, ArrayUtils.sum(array, 5, 10)); // 超出边界
     assertEquals(0.0f, ArrayUtils.sum(array, -1, 0)); // 负索引
     assertEquals(15.0f, ArrayUtils.sum(array, -1, 10)); // 范围超出时正确处理
-    
+
     try {
       ArrayUtils.sum((float[]) null, 0, 3);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
   }
 
   @Test
   public void testSumDoubleArray() {
-    double[] array = {1.0, 2.0, 3.0, 4.0, 5.0};
+    final double[] array = {1.0, 2.0, 3.0, 4.0, 5.0};
     assertEquals(15.0, ArrayUtils.sum(array));
-    
-    double[] emptyArray = {};
+
+    final double[] emptyArray = {};
     assertEquals(0.0, ArrayUtils.sum(emptyArray));
-    
+
     try {
       ArrayUtils.sum((double[]) null);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
-    
+
     assertEquals(6.0, ArrayUtils.sum(array, 0, 3)); // 1+2+3=6
     assertEquals(9.0, ArrayUtils.sum(array, 1, 4)); // 2+3+4=9
     assertEquals(5.0, ArrayUtils.sum(array, 4, 5)); // 5
     assertEquals(0.0, ArrayUtils.sum(array, 5, 10)); // 超出边界
     assertEquals(0.0, ArrayUtils.sum(array, -1, 0)); // 负索引
     assertEquals(15.0, ArrayUtils.sum(array, -1, 10)); // 范围超出时正确处理
-    
+
     try {
       ArrayUtils.sum((double[]) null, 0, 3);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
   }
 
   @Test
   public void testProductByteArray() {
-    byte[] array = {1, 2, 3, 4, 5};
+    final byte[] array = {1, 2, 3, 4, 5};
     assertEquals(120.0, ArrayUtils.product(array));
-    
-    byte[] emptyArray = {};
+
+    final byte[] emptyArray = {};
     assertEquals(1.0, ArrayUtils.product(emptyArray));
-    
+
     try {
       ArrayUtils.product((byte[]) null);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
-    
+
     assertEquals(6.0, ArrayUtils.product(array, 0, 3)); // 1*2*3=6
     assertEquals(24.0, ArrayUtils.product(array, 1, 4)); // 2*3*4=24
     assertEquals(5.0, ArrayUtils.product(array, 4, 5)); // 5
     assertEquals(1.0, ArrayUtils.product(array, 5, 10)); // 超出边界
     assertEquals(1.0, ArrayUtils.product(array, -1, 0)); // 负索引
     assertEquals(120.0, ArrayUtils.product(array, -1, 10)); // 范围超出时正确处理
-    
+
     try {
       ArrayUtils.product((byte[]) null, 0, 3);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
   }
 
   @Test
   public void testProductShortArray() {
-    short[] array = {1, 2, 3, 4, 5};
+    final short[] array = {1, 2, 3, 4, 5};
     assertEquals(120.0, ArrayUtils.product(array));
-    
-    short[] emptyArray = {};
+
+    final short[] emptyArray = {};
     assertEquals(1.0, ArrayUtils.product(emptyArray));
-    
+
     try {
       ArrayUtils.product((short[]) null);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
-    
+
     assertEquals(6.0, ArrayUtils.product(array, 0, 3)); // 1*2*3=6
     assertEquals(24.0, ArrayUtils.product(array, 1, 4)); // 2*3*4=24
     assertEquals(5.0, ArrayUtils.product(array, 4, 5)); // 5
     assertEquals(1.0, ArrayUtils.product(array, 5, 10)); // 超出边界
     assertEquals(1.0, ArrayUtils.product(array, -1, 0)); // 负索引
     assertEquals(120.0, ArrayUtils.product(array, -1, 10)); // 范围超出时正确处理
-    
+
     try {
       ArrayUtils.product((short[]) null, 0, 3);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
   }
 
   @Test
   public void testProductIntArray() {
-    int[] array = {1, 2, 3, 4, 5};
+    final int[] array = {1, 2, 3, 4, 5};
     assertEquals(120.0, ArrayUtils.product(array));
-    
-    int[] emptyArray = {};
+
+    final int[] emptyArray = {};
     assertEquals(1.0, ArrayUtils.product(emptyArray));
-    
+
     try {
       ArrayUtils.product((int[]) null);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
-    
+
     assertEquals(6.0, ArrayUtils.product(array, 0, 3)); // 1*2*3=6
     assertEquals(24.0, ArrayUtils.product(array, 1, 4)); // 2*3*4=24
     assertEquals(5.0, ArrayUtils.product(array, 4, 5)); // 5
     assertEquals(1.0, ArrayUtils.product(array, 5, 10)); // 超出边界
     assertEquals(1.0, ArrayUtils.product(array, -1, 0)); // 负索引
     assertEquals(120.0, ArrayUtils.product(array, -1, 10)); // 范围超出时正确处理
-    
+
     try {
       ArrayUtils.product((int[]) null, 0, 3);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
   }
 
   @Test
   public void testProductLongArray() {
-    long[] array = {1L, 2L, 3L, 4L, 5L};
+    final long[] array = {1L, 2L, 3L, 4L, 5L};
     assertEquals(120.0, ArrayUtils.product(array));
-    
-    long[] emptyArray = {};
+
+    final long[] emptyArray = {};
     assertEquals(1.0, ArrayUtils.product(emptyArray));
-    
+
     try {
       ArrayUtils.product((long[]) null);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
-    
+
     assertEquals(6.0, ArrayUtils.product(array, 0, 3)); // 1*2*3=6
     assertEquals(24.0, ArrayUtils.product(array, 1, 4)); // 2*3*4=24
     assertEquals(5.0, ArrayUtils.product(array, 4, 5)); // 5
     assertEquals(1.0, ArrayUtils.product(array, 5, 10)); // 超出边界
     assertEquals(1.0, ArrayUtils.product(array, -1, 0)); // 负索引
     assertEquals(120.0, ArrayUtils.product(array, -1, 10)); // 范围超出时正确处理
-    
+
     try {
       ArrayUtils.product((long[]) null, 0, 3);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
   }
 
   @Test
   public void testProductFloatArray() {
-    float[] array = {1.0f, 2.0f, 3.0f, 4.0f, 5.0f};
+    final float[] array = {1.0f, 2.0f, 3.0f, 4.0f, 5.0f};
     assertEquals(120.0f, ArrayUtils.product(array));
-    
-    float[] emptyArray = {};
+
+    final float[] emptyArray = {};
     assertEquals(1.0f, ArrayUtils.product(emptyArray));
-    
+
     try {
       ArrayUtils.product((float[]) null);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
-    
+
     assertEquals(6.0f, ArrayUtils.product(array, 0, 3)); // 1*2*3=6
     assertEquals(24.0f, ArrayUtils.product(array, 1, 4)); // 2*3*4=24
     assertEquals(5.0f, ArrayUtils.product(array, 4, 5)); // 5
     assertEquals(1.0f, ArrayUtils.product(array, 5, 10)); // 超出边界
     assertEquals(1.0f, ArrayUtils.product(array, -1, 0)); // 负索引
     assertEquals(120.0f, ArrayUtils.product(array, -1, 10)); // 范围超出时正确处理
-    
+
     try {
       ArrayUtils.product((float[]) null, 0, 3);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
   }
 
   @Test
   public void testProductDoubleArray() {
-    double[] array = {1.0, 2.0, 3.0, 4.0, 5.0};
+    final double[] array = {1.0, 2.0, 3.0, 4.0, 5.0};
     assertEquals(120.0, ArrayUtils.product(array));
-    
-    double[] emptyArray = {};
+
+    final double[] emptyArray = {};
     assertEquals(1.0, ArrayUtils.product(emptyArray));
-    
+
     try {
       ArrayUtils.product((double[]) null);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
-    
+
     assertEquals(6.0, ArrayUtils.product(array, 0, 3)); // 1*2*3=6
     assertEquals(24.0, ArrayUtils.product(array, 1, 4)); // 2*3*4=24
     assertEquals(5.0, ArrayUtils.product(array, 4, 5)); // 5
     assertEquals(1.0, ArrayUtils.product(array, 5, 10)); // 超出边界
     assertEquals(1.0, ArrayUtils.product(array, -1, 0)); // 负索引
     assertEquals(120.0, ArrayUtils.product(array, -1, 10)); // 范围超出时正确处理
-    
+
     try {
       ArrayUtils.product((double[]) null, 0, 3);
       fail("Expected NullPointerException");
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       // expected exception
     }
   }
 
   @Test
   public void testNullIfEmptyObjectArray() {
-    Object[] array = {1, "a", 3.0};
-    Object[] result = ArrayUtils.nullIfEmpty(array);
+    final Object[] array = {1, "a", 3.0};
+    final Object[] result = ArrayUtils.nullIfEmpty(array);
     assertSame(array, result);
-    
-    Object[] emptyArray = {};
+
+    final Object[] emptyArray = {};
     assertNull(ArrayUtils.nullIfEmpty(emptyArray));
-    
+
     assertNull(ArrayUtils.nullIfEmpty((Object[]) null));
   }
 
   @Test
   public void testNullIfEmptyBooleanArray() {
-    boolean[] array = {true, false, true};
-    boolean[] result = ArrayUtils.nullIfEmpty(array);
+    final boolean[] array = {true, false, true};
+    final boolean[] result = ArrayUtils.nullIfEmpty(array);
     assertSame(array, result);
-    
-    boolean[] emptyArray = {};
+
+    final boolean[] emptyArray = {};
     assertNull(ArrayUtils.nullIfEmpty(emptyArray));
-    
+
     assertNull(ArrayUtils.nullIfEmpty((boolean[]) null));
   }
 
   @Test
   public void testNullIfEmptyCharArray() {
-    char[] array = {'a', 'b', 'c'};
-    char[] result = ArrayUtils.nullIfEmpty(array);
+    final char[] array = {'a', 'b', 'c'};
+    final char[] result = ArrayUtils.nullIfEmpty(array);
     assertSame(array, result);
-    
-    char[] emptyArray = {};
+
+    final char[] emptyArray = {};
     assertNull(ArrayUtils.nullIfEmpty(emptyArray));
-    
+
     assertNull(ArrayUtils.nullIfEmpty((char[]) null));
   }
 
   @Test
   public void testNullIfEmptyByteArray() {
-    byte[] array = {1, 2, 3};
-    byte[] result = ArrayUtils.nullIfEmpty(array);
+    final byte[] array = {1, 2, 3};
+    final byte[] result = ArrayUtils.nullIfEmpty(array);
     assertSame(array, result);
-    
-    byte[] emptyArray = {};
+
+    final byte[] emptyArray = {};
     assertNull(ArrayUtils.nullIfEmpty(emptyArray));
-    
+
     assertNull(ArrayUtils.nullIfEmpty((byte[]) null));
   }
 
   @Test
   public void testNullIfEmptyShortArray() {
-    short[] array = {1, 2, 3};
-    short[] result = ArrayUtils.nullIfEmpty(array);
+    final short[] array = {1, 2, 3};
+    final short[] result = ArrayUtils.nullIfEmpty(array);
     assertSame(array, result);
-    
-    short[] emptyArray = {};
+
+    final short[] emptyArray = {};
     assertNull(ArrayUtils.nullIfEmpty(emptyArray));
-    
+
     assertNull(ArrayUtils.nullIfEmpty((short[]) null));
   }
 
   @Test
   public void testNullIfEmptyIntArray() {
-    int[] array = {1, 2, 3};
-    int[] result = ArrayUtils.nullIfEmpty(array);
+    final int[] array = {1, 2, 3};
+    final int[] result = ArrayUtils.nullIfEmpty(array);
     assertSame(array, result);
-    
-    int[] emptyArray = {};
+
+    final int[] emptyArray = {};
     assertNull(ArrayUtils.nullIfEmpty(emptyArray));
-    
+
     assertNull(ArrayUtils.nullIfEmpty((int[]) null));
   }
 
   @Test
   public void testNullIfEmptyLongArray() {
-    long[] array = {1L, 2L, 3L};
-    long[] result = ArrayUtils.nullIfEmpty(array);
+    final long[] array = {1L, 2L, 3L};
+    final long[] result = ArrayUtils.nullIfEmpty(array);
     assertSame(array, result);
-    
-    long[] emptyArray = {};
+
+    final long[] emptyArray = {};
     assertNull(ArrayUtils.nullIfEmpty(emptyArray));
-    
+
     assertNull(ArrayUtils.nullIfEmpty((long[]) null));
   }
 
   @Test
   public void testNullIfEmptyFloatArray() {
-    float[] array = {1.0f, 2.0f, 3.0f};
-    float[] result = ArrayUtils.nullIfEmpty(array);
+    final float[] array = {1.0f, 2.0f, 3.0f};
+    final float[] result = ArrayUtils.nullIfEmpty(array);
     assertSame(array, result);
-    
-    float[] emptyArray = {};
+
+    final float[] emptyArray = {};
     assertNull(ArrayUtils.nullIfEmpty(emptyArray));
-    
+
     assertNull(ArrayUtils.nullIfEmpty((float[]) null));
   }
 
   @Test
   public void testNullIfEmptyDoubleArray() {
-    double[] array = {1.0, 2.0, 3.0};
-    double[] result = ArrayUtils.nullIfEmpty(array);
+    final double[] array = {1.0, 2.0, 3.0};
+    final double[] result = ArrayUtils.nullIfEmpty(array);
     assertSame(array, result);
-    
-    double[] emptyArray = {};
+
+    final double[] emptyArray = {};
     assertNull(ArrayUtils.nullIfEmpty(emptyArray));
-    
+
     assertNull(ArrayUtils.nullIfEmpty((double[]) null));
   }
 
   @Test
   public void testLowerBoundObjectArray() {
-    Integer[] array = {1, 3, 5, 7, 9};
-    
+    final Integer[] array = {1, 3, 5, 7, 9};
+
     // 查找包含在数组中的元素
     assertEquals(0, ArrayUtils.lowerBound(array, 0, 5, 1)); // 数组中第一个元素
     assertEquals(2, ArrayUtils.lowerBound(array, 0, 5, 5)); // 数组中间元素
     assertEquals(4, ArrayUtils.lowerBound(array, 0, 5, 9)); // 数组最后一个元素
-    
+
     // 查找不在数组中的元素
     assertEquals(1, ArrayUtils.lowerBound(array, 0, 5, 2)); // 应返回大于2的第一个元素的位置
     assertEquals(3, ArrayUtils.lowerBound(array, 0, 5, 6)); // 应返回大于6的第一个元素的位置
     assertEquals(5, ArrayUtils.lowerBound(array, 0, 5, 10)); // 应返回数组长度
-    
+
     // 测试部分范围
     assertEquals(3, ArrayUtils.lowerBound(array, 2, 5, 7)); // 在部分范围内查找存在的元素
     assertEquals(2, ArrayUtils.lowerBound(array, 0, 3, 5)); // 在部分范围内查找存在的元素
     assertEquals(3, ArrayUtils.lowerBound(array, 0, 3, 6)); // 在部分范围内查找不存在的元素，应返回范围上限
-    
+
     // 测试异常情况
     try {
       ArrayUtils.lowerBound(array, -1, 5, 5);
       fail("Should throw IllegalArgumentException for negative begin index");
-    } catch (IllegalArgumentException e) {
+    } catch (final IllegalArgumentException e) {
       // 期望的异常
     }
-    
+
     try {
       ArrayUtils.lowerBound(array, 3, 2, 5);
       fail("Should throw IllegalArgumentException when begin > end");
-    } catch (IllegalArgumentException e) {
+    } catch (final IllegalArgumentException e) {
       // 期望的异常
     }
-    
+
     try {
       ArrayUtils.lowerBound(array, 0, 6, 5);
       fail("Should throw IllegalArgumentException when end > array.length");
-    } catch (IllegalArgumentException e) {
+    } catch (final IllegalArgumentException e) {
       // 期望的异常
     }
   }
-  
+
   @Test
   public void testLowerBoundIntArray() {
-    int[] array = {1, 3, 5, 7, 9};
-    
+    final int[] array = {1, 3, 5, 7, 9};
+
     // 查找包含在数组中的元素
     assertEquals(0, ArrayUtils.lowerBound(array, 0, 5, 1)); // 数组中第一个元素
     assertEquals(2, ArrayUtils.lowerBound(array, 0, 5, 5)); // 数组中间元素
     assertEquals(4, ArrayUtils.lowerBound(array, 0, 5, 9)); // 数组最后一个元素
-    
+
     // 查找不在数组中的元素
     assertEquals(1, ArrayUtils.lowerBound(array, 0, 5, 2)); // 应返回大于2的第一个元素的位置
     assertEquals(3, ArrayUtils.lowerBound(array, 0, 5, 6)); // 应返回大于6的第一个元素的位置
     assertEquals(5, ArrayUtils.lowerBound(array, 0, 5, 10)); // 应返回数组长度
-    
+
     // 测试部分范围
     assertEquals(3, ArrayUtils.lowerBound(array, 2, 5, 7)); // 在部分范围内查找存在的元素
     assertEquals(2, ArrayUtils.lowerBound(array, 0, 3, 5)); // 在部分范围内查找存在的元素
     assertEquals(3, ArrayUtils.lowerBound(array, 0, 3, 6)); // 在部分范围内查找不存在的元素，应返回范围上限
   }
-  
+
   @Test
   public void testUpperBoundObjectArray() {
-    Integer[] array = {1, 3, 5, 7, 9};
-    
+    final Integer[] array = {1, 3, 5, 7, 9};
+
     // 查找包含在数组中的元素
     assertEquals(1, ArrayUtils.upperBound(array, 0, 5, 1)); // 数组中第一个元素的下一个位置
     assertEquals(3, ArrayUtils.upperBound(array, 0, 5, 5)); // 数组中间元素的下一个位置
     assertEquals(5, ArrayUtils.upperBound(array, 0, 5, 9)); // 数组最后一个元素的下一个位置
-    
+
     // 查找不在数组中的元素
     assertEquals(1, ArrayUtils.upperBound(array, 0, 5, 2)); // 应返回大于等于2的第一个元素的位置
     assertEquals(3, ArrayUtils.upperBound(array, 0, 5, 6)); // 应返回大于等于6的第一个元素的位置
     assertEquals(5, ArrayUtils.upperBound(array, 0, 5, 10)); // 应返回数组长度
-    
+
     // 测试部分范围
     assertEquals(4, ArrayUtils.upperBound(array, 2, 5, 7)); // 在部分范围内查找存在的元素
     assertEquals(3, ArrayUtils.upperBound(array, 0, 3, 5)); // 在部分范围内查找存在的元素
     assertEquals(3, ArrayUtils.upperBound(array, 0, 3, 6)); // 在部分范围内查找不存在的元素，应返回范围上限
-    
+
     // 测试异常情况
     try {
       ArrayUtils.upperBound(array, -1, 5, 5);
       fail("Should throw IllegalArgumentException for negative begin index");
-    } catch (IllegalArgumentException e) {
+    } catch (final IllegalArgumentException e) {
       // 期望的异常
     }
-    
+
     try {
       ArrayUtils.upperBound(array, 3, 2, 5);
       fail("Should throw IllegalArgumentException when begin > end");
-    } catch (IllegalArgumentException e) {
+    } catch (final IllegalArgumentException e) {
       // 期望的异常
     }
-    
+
     try {
       ArrayUtils.upperBound(array, 0, 6, 5);
       fail("Should throw IllegalArgumentException when end > array.length");
-    } catch (IllegalArgumentException e) {
+    } catch (final IllegalArgumentException e) {
       // 期望的异常
     }
   }
-  
+
   @Test
   public void testUpperBoundIntArray() {
-    int[] array = {1, 3, 5, 7, 9};
-    
+    final int[] array = {1, 3, 5, 7, 9};
+
     // 查找包含在数组中的元素
     assertEquals(1, ArrayUtils.upperBound(array, 0, 5, 1)); // 数组中第一个元素的下一个位置
     assertEquals(3, ArrayUtils.upperBound(array, 0, 5, 5)); // 数组中间元素的下一个位置
     assertEquals(5, ArrayUtils.upperBound(array, 0, 5, 9)); // 数组最后一个元素的下一个位置
-    
+
     // 查找不在数组中的元素
     assertEquals(1, ArrayUtils.upperBound(array, 0, 5, 2)); // 应返回大于等于2的第一个元素的位置
     assertEquals(3, ArrayUtils.upperBound(array, 0, 5, 6)); // 应返回大于等于6的第一个元素的位置
     assertEquals(5, ArrayUtils.upperBound(array, 0, 5, 10)); // 应返回数组长度
-    
+
     // 测试部分范围
     assertEquals(4, ArrayUtils.upperBound(array, 2, 5, 7)); // 在部分范围内查找存在的元素
     assertEquals(3, ArrayUtils.upperBound(array, 0, 3, 5)); // 在部分范围内查找存在的元素
@@ -4076,84 +4077,420 @@ public class ArrayUtilsTest {
 
   @Test
   public void testNullIfEmpty() {
-    byte[] byteArray = {1, 2, 3};
+    final byte[] byteArray = {1, 2, 3};
     assertSame(byteArray, ArrayUtils.nullIfEmpty(byteArray));
-    
-    byte[] emptyByteArray = {};
+
+    final byte[] emptyByteArray = {};
     assertNull(ArrayUtils.nullIfEmpty(emptyByteArray));
-    
+
     assertNull(ArrayUtils.nullIfEmpty((byte[]) null));
-    
-    short[] shortArray = {1, 2, 3};
+
+    final short[] shortArray = {1, 2, 3};
     assertSame(shortArray, ArrayUtils.nullIfEmpty(shortArray));
-    
-    short[] emptyShortArray = {};
+
+    final short[] emptyShortArray = {};
     assertNull(ArrayUtils.nullIfEmpty(emptyShortArray));
-    
+
     assertNull(ArrayUtils.nullIfEmpty((short[]) null));
-    
-    int[] intArray = {1, 2, 3};
+
+    final int[] intArray = {1, 2, 3};
     assertSame(intArray, ArrayUtils.nullIfEmpty(intArray));
-    
-    int[] emptyIntArray = {};
+
+    final int[] emptyIntArray = {};
     assertNull(ArrayUtils.nullIfEmpty(emptyIntArray));
-    
+
     assertNull(ArrayUtils.nullIfEmpty((int[]) null));
-    
-    long[] longArray = {1L, 2L, 3L};
+
+    final long[] longArray = {1L, 2L, 3L};
     assertSame(longArray, ArrayUtils.nullIfEmpty(longArray));
-    
-    long[] emptyLongArray = {};
+
+    final long[] emptyLongArray = {};
     assertNull(ArrayUtils.nullIfEmpty(emptyLongArray));
-    
+
     assertNull(ArrayUtils.nullIfEmpty((long[]) null));
-    
-    float[] floatArray = {1.0f, 2.0f, 3.0f};
+
+    final float[] floatArray = {1.0f, 2.0f, 3.0f};
     assertSame(floatArray, ArrayUtils.nullIfEmpty(floatArray));
-    
-    float[] emptyFloatArray = {};
+
+    final float[] emptyFloatArray = {};
     assertNull(ArrayUtils.nullIfEmpty(emptyFloatArray));
-    
+
     assertNull(ArrayUtils.nullIfEmpty((float[]) null));
-    
-    double[] doubleArray = {1.0, 2.0, 3.0};
+
+    final double[] doubleArray = {1.0, 2.0, 3.0};
     assertSame(doubleArray, ArrayUtils.nullIfEmpty(doubleArray));
-    
-    double[] emptyDoubleArray = {};
+
+    final double[] emptyDoubleArray = {};
     assertNull(ArrayUtils.nullIfEmpty(emptyDoubleArray));
-    
+
     assertNull(ArrayUtils.nullIfEmpty((double[]) null));
-    
-    char[] charArray = {'a', 'b', 'c'};
+
+    final char[] charArray = {'a', 'b', 'c'};
     assertSame(charArray, ArrayUtils.nullIfEmpty(charArray));
-    
-    char[] emptyCharArray = {};
+
+    final char[] emptyCharArray = {};
     assertNull(ArrayUtils.nullIfEmpty(emptyCharArray));
-    
+
     assertNull(ArrayUtils.nullIfEmpty((char[]) null));
-    
-    boolean[] booleanArray = {true, false, true};
+
+    final boolean[] booleanArray = {true, false, true};
     assertSame(booleanArray, ArrayUtils.nullIfEmpty(booleanArray));
-    
-    boolean[] emptyBooleanArray = {};
+
+    final boolean[] emptyBooleanArray = {};
     assertNull(ArrayUtils.nullIfEmpty(emptyBooleanArray));
-    
+
     assertNull(ArrayUtils.nullIfEmpty((boolean[]) null));
-    
-    String[] stringArray = {"a", "b", "c"};
+
+    final String[] stringArray = {"a", "b", "c"};
     assertSame(stringArray, ArrayUtils.nullIfEmpty(stringArray));
-    
-    String[] emptyStringArray = {};
+
+    final String[] emptyStringArray = {};
     assertNull(ArrayUtils.nullIfEmpty(emptyStringArray));
-    
+
     assertNull(ArrayUtils.nullIfEmpty((String[]) null));
-    
-    Object[] objectArray = {new Object(), new Object()};
+
+    final Object[] objectArray = {new Object(), new Object()};
     assertSame(objectArray, ArrayUtils.nullIfEmpty(objectArray));
-    
-    Object[] emptyObjectArray = {};
+
+    final Object[] emptyObjectArray = {};
     assertNull(ArrayUtils.nullIfEmpty(emptyObjectArray));
-    
+
     assertNull(ArrayUtils.nullIfEmpty((Object[]) null));
+  }
+
+  @Test
+  public void testToMap() {
+    // 测试null数组
+    assertNull(ArrayUtils.toMap(null));
+
+    // 测试空数组
+    final Map<Object, Object> emptyMap = ArrayUtils.toMap(new Object[0]);
+    assertNotNull(emptyMap);
+    assertEquals(0, emptyMap.size());
+
+    // 测试二维数组转Map
+    final String[][] entries = {{"key1", "value1"}, {"key2", "value2"}};
+    Map<Object, Object> map = ArrayUtils.toMap(entries);
+    assertEquals(2, map.size());
+    assertEquals("value1", map.get("key1"));
+    assertEquals("value2", map.get("key2"));
+
+    // 测试Map.Entry数组转Map
+    final Map.Entry<String, Integer>[] entryArray = new Map.Entry[2];
+    entryArray[0] = Map.entry("one", 1);
+    entryArray[1] = Map.entry("two", 2);
+
+    map = ArrayUtils.toMap(entryArray);
+    assertEquals(2, map.size());
+    assertEquals(1, map.get("one"));
+    assertEquals(2, map.get("two"));
+
+    // 测试异常情况：元素数组长度小于2
+    try {
+      ArrayUtils.toMap(new String[][]{{"single"}});
+      fail("Should throw IllegalArgumentException for array element with length < 2");
+    } catch (final IllegalArgumentException e) {
+      // 期望的异常
+    }
+
+    // 测试异常情况：非数组元素
+    try {
+      ArrayUtils.toMap(new Object[]{new Object[]{"key", "value"}, "not an array"});
+      fail("Should throw IllegalArgumentException for non-array or non-Map.Entry element");
+    } catch (final IllegalArgumentException e) {
+      // 期望的异常
+    }
+  }
+
+  @Test
+  public void testMax() {
+    // 测试空数组
+    assertNull(ArrayUtils.max((Integer[]) null));
+    assertNull(ArrayUtils.max(new Integer[0]));
+
+    // 测试单元素数组
+    assertEquals(Integer.valueOf(5), ArrayUtils.max(new Integer[]{5}));
+
+    // 测试多元素数组
+    assertEquals(Integer.valueOf(9), ArrayUtils.max(new Integer[]{5, 2, 9, 3, 8}));
+    assertEquals(Integer.valueOf(9), ArrayUtils.max(new Integer[]{9, 8, 7, 6, 5}));
+    assertEquals(Integer.valueOf(9), ArrayUtils.max(new Integer[]{1, 2, 3, 9, 4}));
+
+    // 测试包含null的数组（null为最小值）
+    assertEquals(Integer.valueOf(5), ArrayUtils.max(new Integer[]{null, 5, null}));
+
+    assertEquals(Integer.valueOf(7), ArrayUtils.max(new Integer[]{null, null, 5, 7, null}));
+
+    // 测试全部为null的数组
+    assertNull(ArrayUtils.max(new Integer[]{null, null, null}));
+
+    // 测试其他类型
+    assertEquals("xyz", ArrayUtils.max(new String[]{"abc", "def", "xyz"}));
+    assertEquals(Double.valueOf(9.9), ArrayUtils.max(new Double[]{1.1, 5.5, 9.9}));
+  }
+
+  @Test
+  public void testMaxWithRange() {
+    // 测试空数组
+    assertNull(ArrayUtils.max((Integer[]) null, 0, 0));
+    assertNull(ArrayUtils.max(new Integer[0], 0, 0));
+
+    final Integer[] array = {1, 5, 9, 3, 7};
+
+    // 测试完整范围
+    assertEquals(Integer.valueOf(9), ArrayUtils.max(array, 0, array.length));
+
+    // 测试部分范围
+    assertEquals(Integer.valueOf(5), ArrayUtils.max(array, 0, 2));  // [1, 5]
+    assertEquals(Integer.valueOf(9), ArrayUtils.max(array, 1, 3));  // [5, 9]
+    assertEquals(Integer.valueOf(7), ArrayUtils.max(array, 3, 5));  // [3, 7]
+
+    // 测试范围边界
+    assertEquals(Integer.valueOf(1), ArrayUtils.max(array, 0, 1));  // 只有第一个元素
+    assertEquals(Integer.valueOf(7), ArrayUtils.max(array, 4, 5));  // 只有最后一个元素
+
+    // 测试无效范围
+    assertNull(ArrayUtils.max(array, 2, 2));  // 空范围
+    assertNull(ArrayUtils.max(array, 5, 5));  // 空范围(超出数组)
+
+    // 测试负数开始索引(应被视为0)
+    assertEquals(Integer.valueOf(9), ArrayUtils.max(array, -1, 3));  // 实际为[0,3)
+
+    // 测试结束索引超出数组长度(应被截断)
+    assertEquals(Integer.valueOf(9), ArrayUtils.max(array, 0, 10));  // 实际为[0,5)
+
+    // 测试开始索引大于结束索引(应返回null)
+    assertNull(ArrayUtils.max(array, 3, 2));
+
+    // 测试包含null的数组
+    final Integer[] arrayWithNull = {null, 5, null, 9, null};
+    assertEquals(Integer.valueOf(9), ArrayUtils.max(arrayWithNull, 0, 5));
+    assertEquals(Integer.valueOf(5), ArrayUtils.max(arrayWithNull, 0, 2));
+
+    // 测试范围内全部为null
+    assertNull(ArrayUtils.max(arrayWithNull, 0, 1));
+    assertNull(ArrayUtils.max(new Integer[]{null, null, null}, 0, 3));
+  }
+
+  @Test
+  public void testMin() {
+    // 测试空数组
+    assertNull(ArrayUtils.min((Integer[]) null));
+    assertNull(ArrayUtils.min(new Integer[0]));
+
+    // 测试单元素数组
+    assertEquals(Integer.valueOf(5), ArrayUtils.min(new Integer[]{5}));
+
+    // 测试多元素数组
+    assertEquals(Integer.valueOf(2), ArrayUtils.min(new Integer[]{5, 2, 9, 3, 8}));
+    assertEquals(Integer.valueOf(5), ArrayUtils.min(new Integer[]{9, 8, 7, 6, 5}));
+    assertEquals(Integer.valueOf(1), ArrayUtils.min(new Integer[]{1, 2, 3, 9, 4}));
+
+    // 测试包含null的数组（ null 是最小值）
+    assertNull(ArrayUtils.min(new Integer[]{2, 5, null}));
+
+    assertNull(ArrayUtils.min(new Integer[]{null, null, 5, 2}));
+
+    // 测试全部为null的数组
+    assertNull(ArrayUtils.min(new Integer[]{null, null, null}));
+
+    // 测试其他类型
+    assertEquals("abc", ArrayUtils.min(new String[]{"abc", "def", "xyz"}));
+    assertEquals(Double.valueOf(1.1), ArrayUtils.min(new Double[]{1.1, 5.5, 9.9}));
+  }
+
+  @Test
+  public void testMinWithRange() {
+    // 测试空数组
+    assertNull(ArrayUtils.min((Integer[]) null, 0, 0));
+    assertNull(ArrayUtils.min(new Integer[0], 0, 0));
+
+    final Integer[] array = {5, 3, 1, 9, 7};
+
+    // 测试完整范围
+    assertEquals(Integer.valueOf(1), ArrayUtils.min(array, 0, array.length));
+
+    // 测试部分范围
+    assertEquals(Integer.valueOf(3), ArrayUtils.min(array, 0, 2));  // [5, 3]
+    assertEquals(Integer.valueOf(1), ArrayUtils.min(array, 1, 3));  // [3, 1]
+    assertEquals(Integer.valueOf(7), ArrayUtils.min(array, 3, 5));  // [9, 7]
+
+    // 测试范围边界
+    assertEquals(Integer.valueOf(5), ArrayUtils.min(array, 0, 1));  // 只有第一个元素
+    assertEquals(Integer.valueOf(7), ArrayUtils.min(array, 4, 5));  // 只有最后一个元素
+
+    // 测试无效范围
+    assertNull(ArrayUtils.min(array, 2, 2));  // 空范围
+    assertNull(ArrayUtils.min(array, 5, 5));  // 空范围(超出数组)
+
+    // 测试负数开始索引(应被视为0)
+    assertEquals(Integer.valueOf(3), ArrayUtils.min(array, -1, 2));  // 实际为[0,2)
+
+    // 测试结束索引超出数组长度(应被截断)
+    assertEquals(Integer.valueOf(1), ArrayUtils.min(array, 0, 10));  // 实际为[0,5)
+
+    // 测试开始索引大于结束索引(应返回null)
+    assertNull(ArrayUtils.min(array, 3, 2));
+
+    // 测试包含null的数组
+    final Integer[] arrayWithNull = {null, 5, 2, 3, null};
+    assertNull(ArrayUtils.min(arrayWithNull, 0, 5));
+    assertEquals(Integer.valueOf(2), ArrayUtils.min(arrayWithNull, 1, 4));
+
+    // 测试范围内全部为null
+    assertNull(ArrayUtils.min(arrayWithNull, 0, 1));
+    assertNull(ArrayUtils.min(new Integer[]{null, null, null}, 0, 3));
+  }
+
+  @Test
+  public void testReverseCloneObject() {
+    // 测试null数组
+    assertNull(ArrayUtils.reverseClone((String[]) null));
+
+    // 测试空数组
+    final String[] emptyArray = new String[0];
+    String[] result = ArrayUtils.reverseClone(emptyArray);
+    assertNotNull(result);
+    assertEquals(0, result.length);
+
+    // 测试单元素数组
+    final String[] singleArray = {"single"};
+    result = ArrayUtils.reverseClone(singleArray);
+    assertNotNull(result);
+    assertEquals(1, result.length);
+    assertEquals("single", result[0]);
+
+    // 测试多元素数组
+    final String[] array = {"one", "two", "three", "four"};
+    result = ArrayUtils.reverseClone(array);
+    assertNotNull(result);
+    assertEquals(4, result.length);
+    assertEquals("four", result[0]);
+    assertEquals("three", result[1]);
+    assertEquals("two", result[2]);
+    assertEquals("one", result[3]);
+
+    // 验证原数组未改变
+    assertEquals("one", array[0]);
+    assertEquals("two", array[1]);
+    assertEquals("three", array[2]);
+    assertEquals("four", array[3]);
+
+    // 验证返回值不是原数组
+    assertNotSame(array, result);
+  }
+
+  @Test
+  public void testReverseCloneLong() {
+    // 测试null数组
+    assertNull(ArrayUtils.reverseClone((long[]) null));
+
+    // 测试空数组
+    final long[] emptyArray = new long[0];
+    long[] result = ArrayUtils.reverseClone(emptyArray);
+    assertNotNull(result);
+    assertEquals(0, result.length);
+
+    // 测试单元素数组
+    final long[] singleArray = {5L};
+    result = ArrayUtils.reverseClone(singleArray);
+    assertNotNull(result);
+    assertEquals(1, result.length);
+    assertEquals(5L, result[0]);
+
+    // 测试多元素数组
+    final long[] array = {1L, 2L, 3L, 4L};
+    result = ArrayUtils.reverseClone(array);
+    assertNotNull(result);
+    assertEquals(4, result.length);
+    assertEquals(4L, result[0]);
+    assertEquals(3L, result[1]);
+    assertEquals(2L, result[2]);
+    assertEquals(1L, result[3]);
+
+    // 验证原数组未改变
+    assertEquals(1L, array[0]);
+    assertEquals(2L, array[1]);
+    assertEquals(3L, array[2]);
+    assertEquals(4L, array[3]);
+
+    // 验证返回值不是原数组
+    assertNotSame(array, result);
+  }
+
+  @Test
+  public void testReverseCloneInt() {
+    // 测试null数组
+    assertNull(ArrayUtils.reverseClone((int[]) null));
+
+    // 测试空数组
+    final int[] emptyArray = new int[0];
+    int[] result = ArrayUtils.reverseClone(emptyArray);
+    assertNotNull(result);
+    assertEquals(0, result.length);
+
+    // 测试单元素数组
+    final int[] singleArray = {5};
+    result = ArrayUtils.reverseClone(singleArray);
+    assertNotNull(result);
+    assertEquals(1, result.length);
+    assertEquals(5, result[0]);
+
+    // 测试多元素数组
+    final int[] array = {1, 2, 3, 4};
+    result = ArrayUtils.reverseClone(array);
+    assertNotNull(result);
+    assertEquals(4, result.length);
+    assertEquals(4, result[0]);
+    assertEquals(3, result[1]);
+    assertEquals(2, result[2]);
+    assertEquals(1, result[3]);
+
+    // 验证原数组未改变
+    assertEquals(1, array[0]);
+    assertEquals(2, array[1]);
+    assertEquals(3, array[2]);
+    assertEquals(4, array[3]);
+
+    // 验证返回值不是原数组
+    assertNotSame(array, result);
+  }
+
+  @Test
+  public void testReverseCloneShort() {
+    // 测试null数组
+    assertNull(ArrayUtils.reverseClone((short[]) null));
+
+    // 测试空数组
+    final short[] emptyArray = new short[0];
+    short[] result = ArrayUtils.reverseClone(emptyArray);
+    assertNotNull(result);
+    assertEquals(0, result.length);
+
+    // 测试单元素数组
+    final short[] singleArray = {5};
+    result = ArrayUtils.reverseClone(singleArray);
+    assertNotNull(result);
+    assertEquals(1, result.length);
+    assertEquals(5, result[0]);
+
+    // 测试多元素数组
+    final short[] array = {1, 2, 3, 4};
+    result = ArrayUtils.reverseClone(array);
+    assertNotNull(result);
+    assertEquals(4, result.length);
+    assertEquals(4, result[0]);
+    assertEquals(3, result[1]);
+    assertEquals(2, result[2]);
+    assertEquals(1, result[3]);
+
+    // 验证原数组未改变
+    assertEquals(1, array[0]);
+    assertEquals(2, array[1]);
+    assertEquals(3, array[2]);
+    assertEquals(4, array[3]);
+
+    // 验证返回值不是原数组
+    assertNotSame(array, result);
   }
 }
