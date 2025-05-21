@@ -551,7 +551,7 @@ public class CollectionUtils {
    *     the total number of elements processed.
    */
   public static <T> int batchProcess(final Collection<T> col,
-      final int batchSize, final Function<List<T>, Integer> action) {
+      final int batchSize, final Function<Collection<T>, Integer> action) {
     if (batchSize <= 0) {
       throw new IllegalArgumentException("The batch size must be positive.");
     }
@@ -559,11 +559,7 @@ public class CollectionUtils {
       return 0;
     }
     if (col.size() <= batchSize) {
-      if (col instanceof List) {
-        return action.apply((List<T>) col);
-      } else {
-        return action.apply(new ArrayList<>(col));
-      }
+      return action.apply(col);
     }
     final List<T> list = new ArrayList<>();
     int result = 0;
@@ -574,9 +570,8 @@ public class CollectionUtils {
       }
       list.add(element);
     }
-    if (!list.isEmpty()) {
-      result += action.apply(list);
-    }
+    // note that the list is always non-empty here
+    result += action.apply(list);
     return result;
   }
 }
