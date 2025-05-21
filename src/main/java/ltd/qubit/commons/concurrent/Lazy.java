@@ -7,51 +7,99 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.concurrent;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import javax.annotation.Nullable;
+
 /**
- * A lazy initialized value.
+ * 一个基于 double-checked-locking 设计模式实现的懒加载对象。
  *
  * @param <T>
- *      the type of the value.
- * @author Haixing Hu
+ *      待加载对象的类型。
+ * @author 胡海星
  */
 public class Lazy<T> {
-
+  /**
+   * 懒加载对象的创建器。
+   */
   private final Supplier<T> supplier;
 
+  /**
+   * 懒加载对象的资源释放器。
+   */
+  @Nullable
+  private final Consumer<T> releaser;
+
+  /**
+   * 标记懒加载对象是否已经被初始化。
+   */
   private volatile boolean initialized;
 
+  /**
+   * 懒加载对象的引用。
+   */
   private volatile T value;
 
-  private Lazy(final Supplier<T> supplier) {
+  /**
+   * 懒加载对象的构造器。
+   *
+   * @param supplier
+   *     懒加载对象的创建器。
+   * @param releaser
+   *     懒加载对象的资源释放器。
+   */
+  private Lazy(final Supplier<T> supplier, @Nullable final Consumer<T> releaser) {
     this.supplier = supplier;
+    this.releaser = releaser;
     this.initialized = false;
     this.value = null;
   }
 
   /**
-   * Creates a new lazy initialized value.
+   * 创建一个新的懒加载对象的工厂方法。
    *
    * @param <T>
-   *     the type of the value.
+   *     懒加载对象的类型。
    * @param supplier
-   *     the supplier of the value.
+   *     懒加载对象的创建器。
    * @return
-   *     the created lazy initialized value.
+   *     新创建的懒加载对象。
    */
   public static <T> Lazy<T> of(final Supplier<T> supplier) {
     if (supplier == null) {
       throw new IllegalArgumentException("The supplier is null.");
     }
-    return new Lazy<>(supplier);
+    return new Lazy<>(supplier, null);
   }
 
   /**
-   * Gets the lazy initialized value.
+   * 创建一个新的懒加载对象的工厂方法。
+   *
+   * @param <T>
+   *     懒加载对象的类型。
+   * @param supplier
+   *     懒加载对象的创建器。
+   * @param releaser
+   *     懒加载对象的资源释放器。
+   * @return
+   *     新创建的懒加载对象。
+   */
+  public static <T> Lazy<T> of(final Supplier<T> supplier, final Consumer<T> releaser) {
+    if (supplier == null) {
+      throw new IllegalArgumentException("The supplier is null.");
+    }
+    if (releaser == null) {
+      throw new IllegalArgumentException("The releaser is null.");
+    }
+    return new Lazy<>(supplier, releaser);
+  }
+
+  /**
+   * 获取懒加载对象的实例。
    *
    * @return
-   *     the lazy initialized value.
+   *     懒加载对象的实例，注意有可能是{@code null}，若其创建器返回{@code null}。
    */
   public T get() {
     // use double-checked locking trick to ensure the value is initialized only once.
@@ -67,15 +115,39 @@ public class Lazy<T> {
   }
 
   /**
-   * Refreshes the lazy initialized value.
+   * 刷新懒加载对象的实例。
    * <p>
-   * If the value has not been initialized, this method does nothing.
-   * Otherwise, this method will re-evaluate the supplier to get the refreshed value.
+   * 如果懒加载对象的实例已经被初始化，则重新评估创建器以获取新的值。
+   * <p>
+   * 如果值尚未初始化，则此方法不会执行任何操作。
    */
   public void refresh() {
     if (initialized) {
       synchronized (this) {
-        value = supplier.get();
+        if (initialized) {
+          value = supplier.get();
+        }
+      }
+    }
+  }
+
+  /**
+   * 释放懒加载对象的实例。
+   * <p>
+   * 如果懒加载对象的实例尚未被初始化，则此方法不会执行任何操作。
+   * <p>
+   * 如果懒加载对象的实例已经被初始化，则调用资源释放器来释放资源。
+   */
+  public void release() {
+    if (initialized) {
+      synchronized (this) {
+        if (initialized) {
+          if (releaser != null && value != null) {
+            releaser.accept(value);
+          }
+          value = null;
+          initialized = false;
+        }
       }
     }
   }
