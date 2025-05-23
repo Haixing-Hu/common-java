@@ -8,15 +8,30 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.math;
 
-import java.math.BigDecimal;
-
 import static ltd.qubit.commons.lang.Argument.requireInCloseRange;
 
 /**
- * The class extends {@link java.lang.Math}.
+ * 扩展的数学工具类，提供比{@link java.lang.Math}更丰富的数学运算功能。
  *
- * <p>NOTE: In order to simplify the usage, we copy all the functions implemented
- * in {@link java.lang.Math} to this class, and add some extra functions.</p>
+ * <p>本类与{@link java.lang.Math}的主要区别如下：</p>
+ * <ul>
+ *   <li><strong>完整性</strong>：包含{@link java.lang.Math}的所有方法，提供统一的访问接口</li>
+ *   <li><strong>扩展性</strong>：新增了多种数学运算方法，包括：
+ *     <ul>
+ *       <li>随机数生成：支持指定范围的随机数生成（byte、short、int、long、double等类型）</li>
+ *       <li>浮点数比较：提供基于精度容差的相等性判断和范围检查</li>
+ *       <li>数值限制：提供clamp方法将数值限制在指定范围内</li>
+ *       <li>对数运算：新增以2为底的对数计算</li>
+ *       <li>幂运算：新增10的幂次方计算</li>
+ *     </ul>
+ *   </li>
+ *   <li><strong>便利性</strong>：为常用数学常量和操作提供更方便的访问方式</li>
+ *   <li><strong>精度控制</strong>：内置默认的浮点数精度常量，简化浮点数比较操作</li>
+ *   <li><strong>类型支持</strong>：为byte和short类型提供了max、min、clamp等操作的支持</li>
+ * </ul>
+ *
+ * <p>使用本类可以避免在不同工具类之间切换，提供了一站式的数学运算解决方案。
+ * 所有方法都是静态的，遵循{@link java.lang.Math}的设计模式。</p>
  *
  * @author Haixing Hu
  */
@@ -36,491 +51,1075 @@ public final class MathEx {
 
   public static final double DEFAULT_DOUBLE_EPSILON = 1e-6D;
 
-  private static final class RandomHolder {
-    static final RandomEx instance = new RandomEx();
-  }
-
   private MathEx() {}
 
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //
+  //                      三角函数
+  //
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * 计算指定角度的正弦值。
+   *
+   * @param a
+   *     角度值（弧度）
+   * @return
+   *     正弦值
+   */
   public static double sin(final double a) {
     return Math.sin(a);
   }
 
+  /**
+   * 计算指定角度的余弦值。
+   *
+   * @param a
+   *     角度值（弧度）
+   * @return
+   *     余弦值
+   */
   public static double cos(final double a) {
     return Math.cos(a);
   }
 
+  /**
+   * 计算指定角度的正切值。
+   *
+   * @param a
+   *     角度值（弧度）
+   * @return
+   *     正切值
+   */
   public static double tan(final double a) {
     return Math.tan(a);
   }
 
+  /**
+   * 计算指定值的反正弦值。
+   *
+   * @param a
+   *     值，必须在[-1, 1]范围内
+   * @return
+   *     反正弦值（弧度）
+   */
   public static double asin(final double a) {
-    return StrictMath.asin(a);
+    return Math.asin(a);
   }
 
+  /**
+   * 计算指定值的反余弦值。
+   *
+   * @param a
+   *     值，必须在[-1, 1]范围内
+   * @return
+   *     反余弦值（弧度）
+   */
   public static double acos(final double a) {
     return Math.acos(a);
   }
 
+  /**
+   * 计算指定值的反正切值。
+   *
+   * @param a
+   *     值
+   * @return
+   *     反正切值（弧度）
+   */
   public static double atan(final double a) {
     return Math.atan(a);
   }
 
-  public static double toRadians(final double angdeg) {
-    return Math.toRadians(angdeg);
-  }
-
-  public static double toDegrees(final double angrad) {
-    return Math.toDegrees(angrad);
-  }
-
-  public static double exp(final double a) {
-    return Math.exp(a);
-  }
-
-  public static double log(final double a) {
-    return Math.log(a);
-  }
-
-  public static double log10(final double a) {
-    return Math.log10(a);
-  }
-
-  public static double log2(final double x) {
-    return Math.log(x) / LOG_OF_2;
-  }
-
-  public static double sqrt(final double a) {
-    return Math.sqrt(a);
-  }
-
-  public static double cbrt(final double a) {
-    return Math.cbrt(a);
-  }
-
-  public static double IEEEremainder(final double f1, final double f2) {
-    return Math.IEEEremainder(f1, f2);
-  }
-
-  public static double ceil(final double a) {
-    return Math.ceil(a);
-  }
-
-  public static double floor(final double a) {
-    return StrictMath.floor(a);
-  }
-
-  public static double rint(final double a) {
-    return Math.rint(a);
-  }
-
+  /**
+   * 计算两个参数的反正切值，考虑象限。
+   *
+   * @param y
+   *     y坐标
+   * @param x
+   *     x坐标
+   * @return
+   *     从x轴正方向到点(x,y)的角度（弧度）
+   */
   public static double atan2(final double y, final double x) {
     return Math.atan2(y, x);
   }
 
-  public static double pow(final double a, final double b) {
-    return Math.pow(a, b);
-  }
-
-  public static int round(final float a) {
-    return Math.round(a);
-  }
-
-  public static long round(final double a) {
-    return Math.round(a);
-  }
-
-  public static double random() {
-    return RandomHolder.instance.nextDouble();
-  }
-
-  public static double random(final double lowerBound, final double upperBound) {
-    return RandomHolder.instance.nextDouble(lowerBound, upperBound);
-  }
-
-  public static byte randomByte() {
-    return RandomHolder.instance.nextByte();
-  }
-
-  public static byte randomByte(final byte upperBound) {
-    return RandomHolder.instance.nextByte(upperBound);
-  }
-
-  public static byte randomByte(final byte lowerBound, final byte upperBound) {
-    return RandomHolder.instance.nextByte(lowerBound, upperBound);
-  }
-
-  public static short randomShort() {
-    return RandomHolder.instance.nextShort();
-  }
-
-  public static short randomShort(final short upperBound) {
-    return RandomHolder.instance.nextShort(upperBound);
-  }
-
-  public static short randomShort(final short lowerBound, final short upperBound) {
-    return RandomHolder.instance.nextShort(lowerBound, upperBound);
-  }
-
-  public static int randomInt() {
-    return RandomHolder.instance.nextInt();
-  }
-
-  public static int randomInt(final int upperBound) {
-    return RandomHolder.instance.nextInt(upperBound);
-  }
-
-  public static int randomInt(final int lowerBound, final int upperBound) {
-    return RandomHolder.instance.nextInt(lowerBound, upperBound);
-  }
-
-  public static long randomLong() {
-    return RandomHolder.instance.nextLong();
-  }
-
-  public static long randomLong(final long upperBound) {
-    return RandomHolder.instance.nextLong(upperBound);
-  }
-
-  public static long randomLong(final long lowerBound, final long upperBound) {
-    return RandomHolder.instance.nextLong(lowerBound, upperBound);
-  }
-
-  public static int addExact(final int x, final int y) {
-    return Math.addExact(x, y);
-  }
-
-  public static long addExact(final long x, final long y) {
-    return Math.addExact(x, y);
-  }
-
-  public static int subtractExact(final int x, final int y) {
-    return Math.subtractExact(x, y);
-  }
-
-  public static long subtractExact(final long x, final long y) {
-    return Math.subtractExact(x, y);
-  }
-
-  public static int multiplyExact(final int x, final int y) {
-    return Math.multiplyExact(x, y);
-  }
-
-  public static long multiplyExact(final long x, final int y) {
-    return Math.multiplyExact(x, (long) y);
-  }
-
-  public static long multiplyExact(final long x, final long y) {
-    return Math.multiplyExact(x, y);
-  }
-
-  public static int incrementExact(final int a) {
-    return Math.incrementExact(a);
-  }
-
-  public static long incrementExact(final long a) {
-    return Math.incrementExact(a);
-  }
-
-  public static int decrementExact(final int a) {
-    return Math.decrementExact(a);
-  }
-
-  public static long decrementExact(final long a) {
-    return Math.decrementExact(a);
-  }
-
-  public static int negateExact(final int a) {
-    if (a == -2147483648) {
-      throw new ArithmeticException("integer overflow");
-    } else {
-      return -a;
-    }
-  }
-
-  public static long negateExact(final long a) {
-    if (a == -9223372036854775808L) {
-      throw new ArithmeticException("long overflow");
-    } else {
-      return -a;
-    }
-  }
-
-  public static int toIntExact(final long value) {
-    if ((long) ((int) value) != value) {
-      throw new ArithmeticException("integer overflow");
-    } else {
-      return (int) value;
-    }
-  }
-
-  public static long multiplyFull(final int x, final int y) {
-    return (long) x * (long) y;
-  }
-
-  public static long multiplyHigh(final long x, final long y) {
-    long z1;
-    final long z0;
-    final long x1;
-    final long x2;
-    final long y1;
-    final long y2;
-    final long z2;
-    final long t;
-    if (x >= 0L && y >= 0L) {
-      x1 = x >>> 32;
-      x2 = y >>> 32;
-      y1 = x & 4294967295L;
-      y2 = y & 4294967295L;
-      z2 = x1 * x2;
-      t = y1 * y2;
-      z1 = (x1 + y1) * (x2 + y2);
-      z0 = z1 - z2 - t;
-      return ((t >>> 32) + z0 >>> 32) + z2;
-    } else {
-      x1 = x >> 32;
-      x2 = x & 4294967295L;
-      y1 = y >> 32;
-      y2 = y & 4294967295L;
-      z2 = x2 * y2;
-      t = x1 * y2 + (z2 >>> 32);
-      z1 = t & 4294967295L;
-      z0 = t >> 32;
-      z1 += x2 * y1;
-      return x1 * y1 + z0 + (z1 >> 32);
-    }
-  }
-
-  public static int floorDiv(final int x, final int y) {
-    return Math.floorDiv(x, y);
-  }
-
-  public static long floorDiv(final long x, final int y) {
-    return Math.floorDiv(x, (long) y);
-  }
-
-  public static long floorDiv(final long x, final long y) {
-    return Math.floorDiv(x, y);
-  }
-
-  public static int floorMod(final int x, final int y) {
-    return x - Math.floorDiv(x, y) * y;
-  }
-
-  public static int floorMod(final long x, final int y) {
-    return (int) (x - Math.floorDiv(x, (long) y) * (long) y);
-  }
-
-  public static long floorMod(final long x, final long y) {
-    return x - Math.floorDiv(x, y) * y;
-  }
-
-  public static int abs(final int a) {
-    return a < 0 ? -a : a;
-  }
-
-  public static long abs(final long a) {
-    return a < 0L ? -a : a;
-  }
-
-  public static float abs(final float a) {
-    return a <= 0.0F ? 0.0F - a : a;
-  }
-
-  public static double abs(final double a) {
-    return a <= 0.0D ? 0.0D - a : a;
-  }
-
-  public static byte max(final byte a, final byte b) {
-    return (byte) Math.max(a, b);
-  }
-
-  public static short max(final short a, final short b) {
-    return (short) Math.max(a, b);
-  }
-
-  public static int max(final int a, final int b) {
-    return Math.max(a, b);
-  }
-
-  public static long max(final long a, final long b) {
-    return Math.max(a, b);
-  }
-
-  public static float max(final float a, final float b) {
-    return Math.max(a, b);
-  }
-
-  public static double max(final double a, final double b) {
-    return Math.max(a, b);
-  }
-
-  public static byte min(final byte a, final byte b) {
-    return (byte) Math.min(a, b);
-  }
-
-  public static short min(final short a, final short b) {
-    return (short) Math.min(a, b);
-  }
-
-  public static int min(final int a, final int b) {
-    return Math.min(a, b);
-  }
-
-  public static long min(final long a, final long b) {
-    return Math.min(a, b);
-  }
-
-  public static float min(final float a, final float b) {
-    return Math.min(a, b);
-  }
-
-  public static double min(final double a, final double b) {
-    return Math.min(a, b);
-  }
-
-  public static double fma(final double a, final double b, final double c) {
-    if (!Double.isNaN(a) && !Double.isNaN(b) && !Double.isNaN(c)) {
-      final boolean infiniteA = Double.isInfinite(a);
-      final boolean infiniteB = Double.isInfinite(b);
-      final boolean infiniteC = Double.isInfinite(c);
-      if (!infiniteA && !infiniteB && !infiniteC) {
-        final BigDecimal product = (new BigDecimal(a)).multiply(new BigDecimal(b));
-        if (c == 0.0D) {
-          return a != 0.0D && b != 0.0D ? product.doubleValue() : a * b + c;
-        } else {
-          return product.add(new BigDecimal(c)).doubleValue();
-        }
-      } else if ((!infiniteA || b != 0.0D) && (!infiniteB || a != 0.0D)) {
-        final double product = a * b;
-        if (Double.isInfinite(product) && !infiniteA && !infiniteB) {
-          assert Double.isInfinite(c);
-
-          return c;
-        } else {
-          final double result = product + c;
-
-          assert !Double.isFinite(result);
-
-          return result;
-        }
-      } else {
-        return 0.0D / 0.0;
-      }
-    } else {
-      return 0.0D / 0.0;
-    }
-  }
-
-  public static float fma(final float a, final float b, final float c) {
-    if (Float.isFinite(a) && Float.isFinite(b) && Float.isFinite(c)) {
-      if (((double) a != 0.0D) && ((double) b != 0.0D)) {
-        return (BigDecimal.valueOf((double) a * (double) b))
-            .add(new BigDecimal(c))
-            .floatValue();
-      } else {
-        return a * b + c;
-      }
-    } else {
-      return (float) fma(a, b, (double) c);
-    }
-  }
-
-  public static double ulp(final double d) {
-    return Math.ulp(d);
-  }
-
-  public static float ulp(final float f) {
-    return Math.ulp(f);
-  }
-
-  public static double signum(final double d) {
-    return Math.signum(d);
-  }
-
-  public static float signum(final float f) {
-    return Math.signum(f);
-  }
-
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //
+  //                      双曲函数
+  //
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * 计算双曲正弦值。
+   *
+   * @param x
+   *     值
+   * @return
+   *     sinh(x)
+   */
   public static double sinh(final double x) {
     return Math.sinh(x);
   }
 
+  /**
+   * 计算双曲余弦值。
+   *
+   * @param x
+   *     值
+   * @return
+   *     cosh(x)
+   */
   public static double cosh(final double x) {
     return Math.cosh(x);
   }
 
+  /**
+   * 计算双曲正切值。
+   *
+   * @param x
+   *     值
+   * @return
+   *     tanh(x)
+   */
   public static double tanh(final double x) {
     return Math.tanh(x);
   }
 
-  public static double hypot(final double x, final double y) {
-    return Math.hypot(x, y);
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //
+  //                      角度转换
+  //
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * 将角度从度转换为弧度。
+   *
+   * @param degree
+   *     角度值（度）
+   * @return
+   *     角度值（弧度）
+   */
+  public static double toRadians(final double degree) {
+    return Math.toRadians(degree);
   }
 
+  /**
+   * 将角度从弧度转换为度。
+   *
+   * @param radian
+   *     角度值（弧度）
+   * @return
+   *     角度值（度）
+   */
+  public static double toDegrees(final double radian) {
+    return Math.toDegrees(radian);
+  }
+
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //
+  //                      自然指数/自然对数
+  //
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * 计算e的指定次幂。
+   *
+   * @param a
+   *     指数
+   * @return
+   *     e^a的值
+   */
+  public static double exp(final double a) {
+    return Math.exp(a);
+  }
+
+  /**
+   * 计算 e^x - 1，对接近零的x值提供更好的精度。
+   *
+   * @param x
+   *     指数
+   * @return
+   *     e^x - 1
+   */
   public static double expm1(final double x) {
     return Math.expm1(x);
   }
 
+  /**
+   * 计算指定值的自然对数（以e为底）。
+   *
+   * @param a
+   *     值，必须大于0
+   * @return
+   *     自然对数值
+   */
+  public static double log(final double a) {
+    return Math.log(a);
+  }
+
+  /**
+   * 计算指定值的以2为底的对数。
+   *
+   * @param x
+   *     值，必须大于0
+   * @return
+   *     以2为底的对数值
+   */
+  public static double log2(final double x) {
+    return Math.log(x) / LOG_OF_2;
+  }
+
+  /**
+   * 计算指定值的常用对数（以10为底）。
+   *
+   * @param a
+   *     值，必须大于0
+   * @return
+   *     常用对数值
+   */
+  public static double log10(final double a) {
+    return Math.log10(a);
+  }
+
+  /**
+   * 计算 ln(1 + x)，对接近零的x值提供更好的精度。
+   *
+   * @param x
+   *     值
+   * @return
+   *     ln(1 + x)
+   */
   public static double log1p(final double x) {
     return Math.log1p(x);
   }
 
-  public static double copySign(final double magnitude, final double sign) {
-    return Math.copySign(magnitude, sign);
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //
+  //                      幂和开方
+  //
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * 计算指定底数的指定次幂。
+   *
+   * @param a
+   *     底数
+   * @param b
+   *     指数
+   * @return
+   *     a^b的值
+   */
+  public static double pow(final double a, final double b) {
+    return Math.pow(a, b);
   }
 
-  public static float copySign(final float magnitude, final float sign) {
-    return Math.copySign(magnitude, sign);
+  private static final long[] POW_2 = {
+      1L << 0,                // 2^0
+      1L << 1,                // 2^1
+      1L << 2,                // 2^2
+      1L << 3,                // 2^3
+      1L << 4,                // 2^4
+      1L << 5,                // 2^5
+      1L << 6,                // 2^6
+      1L << 7,                // 2^7
+      1L << 8,                // 2^8
+      1L << 9,                // 2^9
+      1L << 10,               // 2^10
+      1L << 11,               // 2^11
+      1L << 12,               // 2^12
+      1L << 13,               // 2^13
+      1L << 14,               // 2^14
+      1L << 15,               // 2^15
+      1L << 16,               // 2^16
+      1L << 17,               // 2^17
+      1L << 18,               // 2^18
+      1L << 19,               // 2^19
+      1L << 20,               // 2^20
+      1L << 21,               // 2^21
+      1L << 22,               // 2^22
+      1L << 23,               // 2^23
+      1L << 24,               // 2^24
+      1L << 25,               // 2^25
+      1L << 26,               // 2^26
+      1L << 27,               // 2^27
+      1L << 28,               // 2^28
+      1L << 29,               // 2^29
+      1L << 30,               // 2^30
+      1L << 31,               // 2^31
+      1L << 32,               // 2^32
+      1L << 33,               // 2^33
+      1L << 34,               // 2^34
+      1L << 35,               // 2^35
+      1L << 36,               // 2^36
+      1L << 37,               // 2^37
+      1L << 38,               // 2^38
+      1L << 39,               // 2^39
+      1L << 40,               // 2^40
+      1L << 41,               // 2^41
+      1L << 42,               // 2^42
+      1L << 43,               // 2^43
+      1L << 44,               // 2^44
+      1L << 45,               // 2^45
+      1L << 46,               // 2^46
+      1L << 47,               // 2^47
+      1L << 48,               // 2^48
+      1L << 49,               // 2^49
+      1L << 50,               // 2^50
+      1L << 51,               // 2^51
+      1L << 52,               // 2^52
+      1L << 53,               // 2^53
+      1L << 54,               // 2^54
+      1L << 55,               // 2^55
+      1L << 56,               // 2^56
+      1L << 57,               // 2^57
+      1L << 58,               // 2^58
+      1L << 59,               // 2^59
+      1L << 60,               // 2^60
+      1L << 61,               // 2^61
+      1L << 62,               // 2^62
+  };
+
+  public static final int MAX_2_EXPONENT = 62;
+
+  /**
+   * 计算2的幂。
+   *
+   * @param e
+   *     幂的指数，必须位于{@code 0}和{@value MAX_2_EXPONENT}之间。
+   * @return
+   *     2的指定的幂，即{@code 2^e}. 注意返回值不能超过{@value Long#MAX_VALUE}.
+   */
+  public static long pow2(final int e) {
+    requireInCloseRange("e", e, 0, MAX_2_EXPONENT);
+    return POW_2[e];
   }
 
-  public static int getExponent(final float f) {
-    return Math.getExponent(f);
+  private static final long[] POW_10 = {
+      1L,
+      10L,
+      100L,
+      1000L,
+      10000L,
+      100000L,
+      1000000L,
+      10000000L,
+      100000000L,
+      1000000000L,
+      10000000000L,
+      100000000000L,
+      1000000000000L,
+      10000000000000L,
+      100000000000000L,
+      1000000000000000L,
+      10000000000000000L,
+      100000000000000000L,
+      1000000000000000000L,
+  };
+
+  public static final int MAX_10_EXPONENT = 18;
+
+  /**
+   * 计算10的幂。
+   *
+   * @param e
+   *     幂的指数，必须位于{@code 0}和{@value MAX_10_EXPONENT}之间。
+   * @return
+   *     10的指定的幂，即{@code 10^e}. 注意返回值不能超过{@value Long#MAX_VALUE}.
+   */
+  public static long pow10(final int e) {
+    requireInCloseRange("e", e, 0, MAX_10_EXPONENT);
+    return POW_10[e];
   }
 
-  public static int getExponent(final double d) {
-    return Math.getExponent(d);
+  /**
+   * 计算指定值的平方根。
+   *
+   * @param a
+   *     值，必须大于等于0
+   * @return
+   *     平方根值
+   */
+  public static double sqrt(final double a) {
+    return Math.sqrt(a);
   }
 
-  public static double nextAfter(final double start, final double direction) {
-    return Math.nextAfter(start, direction);
+  /**
+   * 计算指定值的立方根。
+   *
+   * @param a
+   *     值
+   * @return
+   *     立方根值
+   */
+  public static double cbrt(final double a) {
+    return Math.cbrt(a);
   }
 
-  public static float nextAfter(final float start, final double direction) {
-    return Math.nextAfter(start, direction);
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //
+  //                      取整
+  //
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * 返回大于等于指定值的最小整数（向上取整）。
+   *
+   * @param a
+   *     值
+   * @return
+   *     天花板值
+   */
+  public static float ceil(final float a) {
+    return (float) Math.ceil(a);
   }
 
-  public static double nextUp(final double d) {
-    return Math.nextUp(d);
+  /**
+   * 返回大于等于指定值的最小整数（向上取整）。
+   *
+   * @param a
+   *     值
+   * @return
+   *     天花板值
+   */
+  public static double ceil(final double a) {
+    return Math.ceil(a);
   }
 
-  public static float nextUp(final float f) {
-    return Math.nextUp(f);
+  /**
+   * 返回小于等于指定值的最大整数（向下取整）。
+   *
+   * @param a
+   *     值
+   * @return
+   *     地板值
+   */
+  public static float floor(final float a) {
+    return (float) Math.floor(a);
   }
 
-  public static double nextDown(final double d) {
-    return Math.nextDown(d);
+  /**
+   * 返回小于等于指定值的最大整数（向下取整）。
+   *
+   * @param a
+   *     值
+   * @return
+   *     地板值
+   */
+  public static double floor(final double a) {
+    return Math.floor(a);
   }
 
-  public static float nextDown(final float f) {
-    return Math.nextDown(f);
+  /**
+   * 返回最接近指定值的整数值。
+   *
+   * @param a
+   *     值
+   * @return
+   *     最接近的整数值
+   */
+  public static float rint(final float a) {
+    return (float) Math.rint(a);
   }
 
-  public static double scalb(final double d, final int scaleFactor) {
-    return Math.scalb(d, scaleFactor);
+  /**
+   * 返回最接近指定值的整数值。
+   *
+   * @param a
+   *     值
+   * @return
+   *     最接近的整数值
+   */
+  public static double rint(final double a) {
+    return Math.rint(a);
   }
 
-  public static float scalb(final float f, final int scaleFactor) {
-    return Math.scalb(f, scaleFactor);
+  /**
+   * 将float值四舍五入为最接近的{@code int}值。
+   *
+   * @param a
+   *     float值
+   * @return
+   *     四舍五入后的{@code int}值
+   */
+  public static int round(final float a) {
+    return Math.round(a);
   }
 
+  /**
+   * 将double值四舍五入为最接近的{@code long}值。
+   *
+   * @param a
+   *     double值
+   * @return
+   *     四舍五入后的{@code long}值
+   */
+  public static long round(final double a) {
+    return Math.round(a);
+  }
+
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //
+  //                      除法余数
+  //
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * 计算IEEE 754标准的浮点余数。
+   *
+   * @param f1
+   *     被除数
+   * @param f2
+   *     除数
+   * @return
+   *     IEEE 754余数
+   */
+  public static float IEEEremainder(final float f1, final float f2) {
+    return (float) Math.IEEEremainder(f1, f2);
+  }
+
+  /**
+   * 计算IEEE 754标准的浮点余数。
+   *
+   * @param f1
+   *     被除数
+   * @param f2
+   *     除数
+   * @return
+   *     IEEE 754余数
+   */
+  public static double IEEEremainder(final double f1, final double f2) {
+    return Math.IEEEremainder(f1, f2);
+  }
+
+  /**
+   * 计算int除法的向下取整商。
+   *
+   * @param x
+   *     被除数
+   * @param y
+   *     除数
+   * @return
+   *     x除以y的向下取整商
+   */
+  public static int floorDiv(final int x, final int y) {
+    return Math.floorDiv(x, y);
+  }
+
+  /**
+   * 计算long除以int的向下取整商。
+   *
+   * @param x
+   *     被除数
+   * @param y
+   *     除数
+   * @return
+   *     x除以y的向下取整商
+   */
+  public static long floorDiv(final long x, final int y) {
+    return Math.floorDiv(x, y);
+  }
+
+  /**
+   * 计算long除法的向下取整商。
+   *
+   * @param x
+   *     被除数
+   * @param y
+   *     除数
+   * @return
+   *     x除以y的向下取整商
+   */
+  public static long floorDiv(final long x, final long y) {
+    return Math.floorDiv(x, y);
+  }
+
+  /**
+   * 计算int除法的向下取整模。
+   *
+   * @param x
+   *     被除数
+   * @param y
+   *     除数
+   * @return
+   *     x除以y的向下取整模
+   */
+  public static int floorMod(final int x, final int y) {
+    return Math.floorMod(x, y);
+  }
+
+  /**
+   * 计算long除以int的向下取整模。
+   *
+   * @param x
+   *     被除数
+   * @param y
+   *     除数
+   * @return
+   *     x除以y的向下取整模
+   */
+  public static int floorMod(final long x, final int y) {
+    return Math.floorMod(x, y);
+  }
+
+  /**
+   * 计算long除法的向下取整模。
+   *
+   * @param x
+   *     被除数
+   * @param y
+   *     除数
+   * @return
+   *     x除以y的向下取整模
+   */
+  public static long floorMod(final long x, final long y) {
+    return Math.floorMod(x, y);
+  }
+
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //
+  //                      绝对值
+  //
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * 返回{@code byte}值的绝对值。
+   *
+   * @param a
+   *     值
+   * @return
+   *     a的绝对值
+   */
+  public static byte abs(final byte a) {
+    return (byte) (a < 0 ? -a : a);
+  }
+
+  /**
+   * 返回{@code short}值的绝对值。
+   *
+   * @param a
+   *     值
+   * @return
+   *     a的绝对值
+   */
+  public static short abs(final short a) {
+    return (short) (a < 0 ? -a : a);
+  }
+
+  /**
+   * 返回{@code int}值的绝对值。
+   *
+   * @param a
+   *     值
+   * @return
+   *     a的绝对值
+   */
+  public static int abs(final int a) {
+    return (a < 0 ? -a : a);
+  }
+
+  /**
+   * 返回{@code long}值的绝对值。
+   *
+   * @param a
+   *     值
+   * @return
+   *     a的绝对值
+   */
+  public static long abs(final long a) {
+    return (a < 0L ? -a : a);
+  }
+
+  /**
+   * 返回float值的绝对值。
+   *
+   * @param a
+   *     值
+   * @return
+   *     a的绝对值
+   */
+  public static float abs(final float a) {
+    return (a <= 0.0f ? 0.0f - a : a);
+  }
+
+  /**
+   * 返回double值的绝对值。
+   *
+   * @param a
+   *     值
+   * @return
+   *     a的绝对值
+   */
+  public static double abs(final double a) {
+    return (a <= 0.0 ? 0.0 - a : a);
+  }
+
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //
+  //                      最大/最小值
+  //
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * 返回两个byte值中的较小者。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @return
+   *     a和b中的较小者
+   */
+  public static byte min(final byte a, final byte b) {
+    return (byte) Math.min(a, b);
+  }
+
+  /**
+   * 返回两个short值中的较小者。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @return
+   *     a和b中的较小者
+   */
+  public static short min(final short a, final short b) {
+    return (short) Math.min(a, b);
+  }
+
+  /**
+   * 返回两个{@code int}值中的较小者。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @return
+   *     a和b中的较小者
+   */
+  public static int min(final int a, final int b) {
+    return Math.min(a, b);
+  }
+
+  /**
+   * 返回两个{@code long}值中的较小者。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @return
+   *     a和b中的较小者
+   */
+  public static long min(final long a, final long b) {
+    return Math.min(a, b);
+  }
+
+  /**
+   * 返回两个float值中的较小者。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @return
+   *     a和b中的较小者
+   */
+  public static float min(final float a, final float b) {
+    return Math.min(a, b);
+  }
+
+  /**
+   * 返回两个double值中的较小者。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @return
+   *     a和b中的较小者
+   */
+  public static double min(final double a, final double b) {
+    return Math.min(a, b);
+  }
+
+  /**
+   * 返回两个byte值中的较大者。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @return
+   *     a和b中的较大者
+   */
+  public static byte max(final byte a, final byte b) {
+    return (byte) Math.max(a, b);
+  }
+
+  /**
+   * 返回两个short值中的较大者。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @return
+   *     a和b中的较大者
+   */
+  public static short max(final short a, final short b) {
+    return (short) Math.max(a, b);
+  }
+
+  /**
+   * 返回两个{@code int}值中的较大者。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @return
+   *     a和b中的较大者
+   */
+  public static int max(final int a, final int b) {
+    return Math.max(a, b);
+  }
+
+  /**
+   * 返回两个{@code long}值中的较大者。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @return
+   *     a和b中的较大者
+   */
+  public static long max(final long a, final long b) {
+    return Math.max(a, b);
+  }
+
+  /**
+   * 返回两个float值中的较大者。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @return
+   *     a和b中的较大者
+   */
+  public static float max(final float a, final float b) {
+    return Math.max(a, b);
+  }
+
+  /**
+   * 返回两个double值中的较大者。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @return
+   *     a和b中的较大者
+   */
+  public static double max(final double a, final double b) {
+    return Math.max(a, b);
+  }
+
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //
+  //                      浮点数比较
+  //
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * 判断给定的float值是否为零（在默认精度范围内）。
+   *
+   * @param x
+   *     待检查的float值
+   * @return
+   *     如果给定值在默认精度范围内等于零则返回true，否则返回false
+   */
+  public static boolean isZero(final float x) {
+    return Math.abs(x) <= DEFAULT_FLOAT_EPSILON;
+  }
+
+  /**
+   * 判断给定的float值是否为零（在指定精度范围内）。
+   *
+   * @param x
+   *     待检查的float值
+   * @param epsilon
+   *     精度范围
+   * @return
+   *     如果给定值在指定精度范围内等于零则返回true，否则返回false
+   */
+  public static boolean isZero(final float x, final float epsilon) {
+    return Math.abs(x) <= epsilon;
+  }
+
+  /**
+   * 判断给定的double值是否为零（在默认精度范围内）。
+   *
+   * @param x
+   *     待检查的double值
+   * @return
+   *     如果给定值在默认精度范围内等于零则返回true，否则返回false
+   */
+  public static boolean isZero(final double x) {
+    return Math.abs(x) <= DEFAULT_DOUBLE_EPSILON;
+  }
+
+  /**
+   * 判断给定的double值是否为零（在指定精度范围内）。
+   *
+   * @param x
+   *     待检查的double值
+   * @param epsilon
+   *     精度范围
+   * @return
+   *     如果给定值在指定精度范围内等于零则返回true，否则返回false
+   */
+  public static boolean isZero(final double x, final double epsilon) {
+    return Math.abs(x) <= epsilon;
+  }
+
+  /**
+   * 判断给定的float值是否在指定范围内（考虑默认精度）。
+   *
+   * @param value
+   *     待检查的值
+   * @param min
+   *     范围下界
+   * @param max
+   *     范围上界
+   * @return
+   *     如果值在[min, max]范围内（考虑精度容差）则返回true，否则返回false
+   */
+  public static boolean inRange(final float value, final float min, final float max) {
+    return inRange(value, min, max, DEFAULT_FLOAT_EPSILON);
+  }
+
+  /**
+   * 判断给定的float值是否在指定范围内（考虑指定精度）。
+   *
+   * @param value
+   *     待检查的值
+   * @param min
+   *     范围下界
+   * @param max
+   *     范围上界
+   * @param epsilon
+   *     精度容差
+   * @return
+   *     如果值在[min, max]范围内（考虑精度容差）则返回true，否则返回false
+   */
+  public static boolean inRange(final float value, final float min, final float max, final float epsilon) {
+    return value >= min - epsilon && value <= max + epsilon;
+  }
+
+  /**
+   * 判断给定的double值是否在指定范围内（考虑默认精度）。
+   *
+   * @param value
+   *     待检查的值
+   * @param min
+   *     范围下界
+   * @param max
+   *     范围上界
+   * @return
+   *     如果值在[min, max]范围内（考虑精度容差）则返回true，否则返回false
+   */
+  public static boolean inRange(final double value, final double min, final double max) {
+    return inRange(value, min, max, DEFAULT_DOUBLE_EPSILON);
+  }
+
+  /**
+   * 判断给定的double值是否在指定范围内（考虑指定精度）。
+   *
+   * @param value
+   *     待检查的值
+   * @param min
+   *     范围下界
+   * @param max
+   *     范围上界
+   * @param epsilon
+   *     精度容差
+   * @return
+   *     如果值在[min, max]范围内（考虑精度容差）则返回true，否则返回false
+   */
+  public static boolean inRange(final double value, final double min, final double max, final double epsilon) {
+    return value >= min - epsilon && value <= max + epsilon;
+  }
+
+  /**
+   * 判断两个float值是否在默认精度范围内相等。
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @return
+   *     如果两个值在默认精度范围内相等则返回true，否则返回false
+   */
+  public static boolean equal(final float x, final float y) {
+    return Math.abs(x - y) <= DEFAULT_FLOAT_EPSILON;
+  }
+
+  /**
+   * 判断两个float值是否在指定精度范围内相等。
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @param epsilon
+   *     精度容差
+   * @return
+   *     如果两个值在指定精度范围内相等则返回true，否则返回false
+   */
   public static boolean equal(final float x, final float y, final float epsilon) {
     return Math.abs(x - y) <= epsilon;
   }
 
+  /**
+   * 判断两个double值是否在默认精度范围内相等。
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @return
+   *     如果两个值在默认精度范围内相等则返回true，否则返回false
+   */
+  public static boolean equal(final double x, final double y) {
+    return Math.abs(x - y) <= DEFAULT_DOUBLE_EPSILON;
+  }
+
+  /**
+   * 判断两个double值是否在指定精度范围内相等。
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @param epsilon
+   *     精度容差
+   * @return
+   *     如果两个值在指定精度范围内相等则返回true，否则返回false
+   */
   public static boolean equal(final double x, final double y, final double epsilon) {
     return Math.abs(x - y) <= epsilon;
   }
+
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //
+  //                      数值限制
+  //
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   /**
    * 将给定的值限制在指定的范围内。
@@ -654,40 +1253,691 @@ public final class MathEx {
     return Math.max(0, value);
   }
 
-  private static final long[] POW_10 = {
-      1L,
-      10L,
-      100L,
-      1000L,
-      10000L,
-      100000L,
-      1000000L,
-      10000000L,
-      100000000L,
-      1000000000L,
-      10000000000L,
-      100000000000L,
-      1000000000000L,
-      10000000000000L,
-      100000000000000L,
-      1000000000000000L,
-      10000000000000000L,
-      100000000000000000L,
-      1000000000000000000L,
-  };
-
-  public static final int MAX_10_EXPONENT = 18;
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //
+  //                      精确运算
+  //
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   /**
-   * 计算10的幂。
+   * 执行两个{@code int}值的精确加法运算，如果结果溢出则抛出异常。
    *
-   * @param e
-   *     幂的指数，必须位于{@code 0}和{@value MAX_10_EXPONENT}之间。
+   * @param x
+   *     第一个加数
+   * @param y
+   *     第二个加数
    * @return
-   *     10的指定的幂，即{@code 10^e}. 注意返回值不能超过{@value Long#MAX_VALUE}.
+   *     x + y的精确结果
+   * @throws ArithmeticException
+   *     如果结果溢出int范围
    */
-  public static long pow10(final int e) {
-    requireInCloseRange("e", e, 0, MAX_10_EXPONENT);
-    return POW_10[e];
+  public static int addExact(final int x, final int y) {
+    return Math.addExact(x, y);
+  }
+
+  /**
+   * 执行两个{@code long}值的精确加法运算，如果结果溢出则抛出异常。
+   *
+   * @param x
+   *     第一个加数
+   * @param y
+   *     第二个加数
+   * @return
+   *     x + y的精确结果
+   * @throws ArithmeticException
+   *     如果结果溢出long范围
+   */
+  public static long addExact(final long x, final long y) {
+    return Math.addExact(x, y);
+  }
+
+  /**
+   * 执行两个{@code int}值的精确减法运算，如果结果溢出则抛出异常。
+   *
+   * @param x
+   *     被减数
+   * @param y
+   *     减数
+   * @return
+   *     x - y的精确结果
+   * @throws ArithmeticException
+   *     如果结果溢出int范围
+   */
+  public static int subtractExact(final int x, final int y) {
+    return Math.subtractExact(x, y);
+  }
+
+  /**
+   * 执行两个{@code long}值的精确减法运算，如果结果溢出则抛出异常。
+   *
+   * @param x
+   *     被减数
+   * @param y
+   *     减数
+   * @return
+   *     x - y的精确结果
+   * @throws ArithmeticException
+   *     如果结果溢出long范围
+   */
+  public static long subtractExact(final long x, final long y) {
+    return Math.subtractExact(x, y);
+  }
+
+  /**
+   * 执行两个{@code int}值的精确乘法运算，如果结果溢出则抛出异常。
+   *
+   * @param x
+   *     第一个乘数
+   * @param y
+   *     第二个乘数
+   * @return
+   *     x * y的精确结果
+   * @throws ArithmeticException
+   *     如果结果溢出int范围
+   */
+  public static int multiplyExact(final int x, final int y) {
+    return Math.multiplyExact(x, y);
+  }
+
+  /**
+   * 执行long和{@code int}值的精确乘法运算，如果结果溢出则抛出异常。
+   *
+   * @param x
+   *     long类型的乘数
+   * @param y
+   *     int类型的乘数
+   * @return
+   *     x * y的精确结果
+   * @throws ArithmeticException
+   *     如果结果溢出long范围
+   */
+  public static long multiplyExact(final long x, final int y) {
+    return Math.multiplyExact(x, (long) y);
+  }
+
+  /**
+   * 执行两个{@code long}值的精确乘法运算，如果结果溢出则抛出异常。
+   *
+   * @param x
+   *     第一个乘数
+   * @param y
+   *     第二个乘数
+   * @return
+   *     x * y的精确结果
+   * @throws ArithmeticException
+   *     如果结果溢出long范围
+   */
+  public static long multiplyExact(final long x, final long y) {
+    return Math.multiplyExact(x, y);
+  }
+
+  /**
+   * 对{@code int}值执行精确递增运算，如果结果溢出则抛出异常。
+   *
+   * @param a
+   *     要递增的值
+   * @return
+   *     a + 1的精确结果
+   * @throws ArithmeticException
+   *     如果结果溢出int范围
+   */
+  public static int incrementExact(final int a) {
+    return Math.incrementExact(a);
+  }
+
+  /**
+   * 对{@code long}值执行精确递增运算，如果结果溢出则抛出异常。
+   *
+   * @param a
+   *     要递增的值
+   * @return
+   *     a + 1的精确结果
+   * @throws ArithmeticException
+   *     如果结果溢出long范围
+   */
+  public static long incrementExact(final long a) {
+    return Math.incrementExact(a);
+  }
+
+  /**
+   * 对{@code int}值执行精确递减运算，如果结果溢出则抛出异常。
+   *
+   * @param a
+   *     要递减的值
+   * @return
+   *     a - 1的精确结果
+   * @throws ArithmeticException
+   *     如果结果溢出int范围
+   */
+  public static int decrementExact(final int a) {
+    return Math.decrementExact(a);
+  }
+
+  /**
+   * 对{@code long}值执行精确递减运算，如果结果溢出则抛出异常。
+   *
+   * @param a
+   *     要递减的值
+   * @return
+   *     a - 1的精确结果
+   * @throws ArithmeticException
+   *     如果结果溢出long范围
+   */
+  public static long decrementExact(final long a) {
+    return Math.decrementExact(a);
+  }
+
+  /**
+   * 对{@code int}值执行精确取负运算，如果结果溢出则抛出异常。
+   *
+   * @param a
+   *     要取负的值
+   * @return
+   *     -a的精确结果
+   * @throws ArithmeticException
+   *     如果结果溢出int范围
+   */
+  public static int negateExact(final int a) {
+    return Math.negateExact(a);
+  }
+
+  /**
+   * 对{@code long}值执行精确取负运算，如果结果溢出则抛出异常。
+   *
+   * @param a
+   *     要取负的值
+   * @return
+   *     -a的精确结果
+   * @throws ArithmeticException
+   *     如果结果溢出long范围
+   */
+  public static long negateExact(final long a) {
+    return Math.negateExact(a);
+  }
+
+  /**
+   * 将{@code long}值精确转换为{@code int}值，如果发生溢出则抛出异常。
+   *
+   * @param value
+   *     要转换的{@code long}值
+   * @return
+   *     转换后的{@code int}值
+   * @throws ArithmeticException
+   *     如果{@code long}值超出int范围
+   */
+  public static int toIntExact(final long value) {
+    return Math.toIntExact(value);
+  }
+
+  /**
+   * 计算两个{@code int}值的完整乘积（返回long以避免溢出）。
+   *
+   * @param x
+   *     第一个乘数
+   * @param y
+   *     第二个乘数
+   * @return
+   *     x * y的完整乘积（long类型）
+   */
+  public static long multiplyFull(final int x, final int y) {
+    return Math.multiplyFull(x, y);
+  }
+
+  /**
+   * 计算两个{@code long}值乘积的高位部分。
+   * <p>
+   * 此方法计算128位乘积的高64位，适用于高精度数学运算。
+   *
+   * @param x
+   *     第一个乘数
+   * @param y
+   *     第二个乘数
+   * @return
+   *     乘积的高64位
+   */
+  public static long multiplyHigh(final long x, final long y) {
+    return Math.multiplyHigh(x, y);
+  }
+
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //
+  //                      浮点数特殊操作
+  //
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * 返回float值的符号函数。
+   *
+   * @param f
+   *     值
+   * @return
+   *     如果值为正返回1.0f，为负返回-1.0f，为零返回0.0f，为NaN返回NaN
+   */
+  public static float signum(final float f) {
+    return Math.signum(f);
+  }
+
+  /**
+   * 返回double值的符号函数。
+   *
+   * @param d
+   *     值
+   * @return
+   *     如果值为正返回1.0，为负返回-1.0，为零返回0.0，为NaN返回NaN
+   */
+  public static double signum(final double d) {
+    return Math.signum(d);
+  }
+
+  /**
+   * 返回具有指定符号的值（float版本）。
+   *
+   * @param magnitude
+   *     提供量值的值
+   * @param sign
+   *     提供符号的值
+   * @return
+   *     具有sign符号的magnitude值
+   */
+  public static float copySign(final float magnitude, final float sign) {
+    return Math.copySign(magnitude, sign);
+  }
+
+  /**
+   * 返回具有指定符号的值。
+   *
+   * @param magnitude
+   *     提供量值的值
+   * @param sign
+   *     提供符号的值
+   * @return
+   *     具有sign符号的magnitude值
+   */
+  public static double copySign(final double magnitude, final double sign) {
+    return Math.copySign(magnitude, sign);
+  }
+
+  /**
+   * 返回float值在IEEE 754二进制表示中的指数部分。
+   *
+   * @param f
+   *     float值
+   * @return
+   *     指数部分
+   */
+  public static int getExponent(final float f) {
+    return Math.getExponent(f);
+  }
+
+  /**
+   * 返回double值在IEEE 754二进制表示中的指数部分。
+   *
+   * @param d
+   *     double值
+   * @return
+   *     指数部分
+   */
+  public static int getExponent(final double d) {
+    return Math.getExponent(d);
+  }
+
+  /**
+   * 返回float值的ULP（最小精度单位）。
+   *
+   * @param f
+   *     值
+   * @return
+   *     该值的ULP
+   */
+  public static float ulp(final float f) {
+    return Math.ulp(f);
+  }
+
+  /**
+   * 返回double值的ULP（最小精度单位）。
+   *
+   * @param d
+   *     值
+   * @return
+   *     该值的ULP
+   */
+  public static double ulp(final double d) {
+    return Math.ulp(d);
+  }
+
+  /**
+   * 返回从start向direction方向的相邻浮点值（float版本）。
+   *
+   * @param start
+   *     起始值
+   * @param direction
+   *     方向值
+   * @return
+   *     相邻的浮点值
+   */
+  public static float nextAfter(final float start, final double direction) {
+    return Math.nextAfter(start, direction);
+  }
+
+  /**
+   * 返回从start向direction方向的相邻浮点值。
+   *
+   * @param start
+   *     起始值
+   * @param direction
+   *     方向值
+   * @return
+   *     相邻的浮点值
+   */
+  public static double nextAfter(final double start, final double direction) {
+    return Math.nextAfter(start, direction);
+  }
+
+  /**
+   * 返回紧邻指定值且更大的浮点值（float版本）。
+   *
+   * @param f
+   *     起始值
+   * @return
+   *     下一个更大的浮点值
+   */
+  public static float nextUp(final float f) {
+    return Math.nextUp(f);
+  }
+
+  /**
+   * 返回紧邻指定值且更大的浮点值。
+   *
+   * @param d
+   *     起始值
+   * @return
+   *     下一个更大的浮点值
+   */
+  public static double nextUp(final double d) {
+    return Math.nextUp(d);
+  }
+
+  /**
+   * 返回紧邻指定值且更小的浮点值（float版本）。
+   *
+   * @param f
+   *     起始值
+   * @return
+   *     下一个更小的浮点值
+   */
+  public static float nextDown(final float f) {
+    return Math.nextDown(f);
+  }
+
+  /**
+   * 返回紧邻指定值且更小的浮点值。
+   *
+   * @param d
+   *     起始值
+   * @return
+   *     下一个更小的浮点值
+   */
+  public static double nextDown(final double d) {
+    return Math.nextDown(d);
+  }
+
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //
+  //                      高精度计算
+  //
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * 执行融合乘加运算 (a * b + c)，提供更高的精度（float版本）。
+   *
+   * @param a
+   *     第一个乘数
+   * @param b
+   *     第二个乘数
+   * @param c
+   *     加数
+   * @return
+   *     (a * b + c) 的高精度结果
+   */
+  public static float fma(final float a, final float b, final float c) {
+    return Math.fma(a, b, c);
+  }
+
+  /**
+   * 执行融合乘加运算 (a * b + c)，提供更高的精度。
+   * <p>
+   * 此方法使用BigDecimal计算以避免中间结果的舍入误差。
+   *
+   * @param a
+   *     第一个乘数
+   * @param b
+   *     第二个乘数
+   * @param c
+   *     加数
+   * @return
+   *     (a * b + c) 的高精度结果
+   */
+  public static double fma(final double a, final double b, final double c) {
+    return Math.fma(a, b, c);
+  }
+
+  /**
+   * 计算 d × 2^scaleFactor，使用单个正确舍入的浮点乘法。
+   *
+   * @param d
+   *     要缩放的值
+   * @param scaleFactor
+   *     2的幂次指数
+   * @return
+   *     d × 2^scaleFactor
+   */
+  public static double scalb(final double d, final int scaleFactor) {
+    return Math.scalb(d, scaleFactor);
+  }
+
+  /**
+   * 计算 f × 2^scaleFactor，使用单个正确舍入的浮点乘法（float版本）。
+   *
+   * @param f
+   *     要缩放的值
+   * @param scaleFactor
+   *     2的幂次指数
+   * @return
+   *     f × 2^scaleFactor
+   */
+  public static float scalb(final float f, final int scaleFactor) {
+    return Math.scalb(f, scaleFactor);
+  }
+
+  /**
+   * 计算欧几里得距离 sqrt(x² + y²)，避免中间溢出。
+   *
+   * @param x
+   *     x坐标
+   * @param y
+   *     y坐标
+   * @return
+   *     sqrt(x² + y²)
+   */
+  public static double hypot(final double x, final double y) {
+    return Math.hypot(x, y);
+  }
+
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //
+  //                      随机数生成
+  //
+  // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  private static final class RandomHolder {
+    static final RandomEx instance = new RandomEx();
+  }
+
+  /**
+   * 生成[0.0, 1.0)范围内的随机double值。
+   *
+   * @return
+   *     随机double值
+   */
+  public static double random() {
+    return RandomHolder.instance.nextDouble();
+  }
+
+  /**
+   * 生成指定范围内的随机double值。
+   *
+   * @param lowerBound
+   *     下界（包含）
+   * @param upperBound
+   *     上界（不包含）
+   * @return
+   *     指定范围内的随机double值
+   */
+  public static double random(final double lowerBound, final double upperBound) {
+    return RandomHolder.instance.nextDouble(lowerBound, upperBound);
+  }
+
+  /**
+   * 生成随机byte值。
+   *
+   * @return
+   *     随机byte值
+   */
+  public static byte randomByte() {
+    return RandomHolder.instance.nextByte();
+  }
+
+  /**
+   * 生成[0, upperBound)范围内的随机byte值。
+   *
+   * @param upperBound
+   *     上界（不包含）
+   * @return
+   *     指定范围内的随机byte值
+   */
+  public static byte randomByte(final byte upperBound) {
+    return RandomHolder.instance.nextByte(upperBound);
+  }
+
+  /**
+   * 生成指定范围内的随机byte值。
+   *
+   * @param lowerBound
+   *     下界（包含）
+   * @param upperBound
+   *     上界（不包含）
+   * @return
+   *     指定范围内的随机byte值
+   */
+  public static byte randomByte(final byte lowerBound, final byte upperBound) {
+    return RandomHolder.instance.nextByte(lowerBound, upperBound);
+  }
+
+  /**
+   * 生成随机short值。
+   *
+   * @return
+   *     随机short值
+   */
+  public static short randomShort() {
+    return RandomHolder.instance.nextShort();
+  }
+
+  /**
+   * 生成[0, upperBound)范围内的随机short值。
+   *
+   * @param upperBound
+   *     上界（不包含）
+   * @return
+   *     指定范围内的随机short值
+   */
+  public static short randomShort(final short upperBound) {
+    return RandomHolder.instance.nextShort(upperBound);
+  }
+
+  /**
+   * 生成指定范围内的随机short值。
+   *
+   * @param lowerBound
+   *     下界（包含）
+   * @param upperBound
+   *     上界（不包含）
+   * @return
+   *     指定范围内的随机short值
+   */
+  public static short randomShort(final short lowerBound, final short upperBound) {
+    return RandomHolder.instance.nextShort(lowerBound, upperBound);
+  }
+
+  /**
+   * 生成随机{@code int}值。
+   *
+   * @return
+   *     随机{@code int}值
+   */
+  public static int randomInt() {
+    return RandomHolder.instance.nextInt();
+  }
+
+  /**
+   * 生成[0, upperBound)范围内的随机{@code int}值。
+   *
+   * @param upperBound
+   *     上界（不包含）
+   * @return
+   *     指定范围内的随机{@code int}值
+   */
+  public static int randomInt(final int upperBound) {
+    return RandomHolder.instance.nextInt(upperBound);
+  }
+
+  /**
+   * 生成指定范围内的随机{@code int}值。
+   *
+   * @param lowerBound
+   *     下界（包含）
+   * @param upperBound
+   *     上界（不包含）
+   * @return
+   *     指定范围内的随机{@code int}值
+   */
+  public static int randomInt(final int lowerBound, final int upperBound) {
+    return RandomHolder.instance.nextInt(lowerBound, upperBound);
+  }
+
+  /**
+   * 生成随机{@code long}值。
+   *
+   * @return
+   *     随机{@code long}值
+   */
+  public static long randomLong() {
+    return RandomHolder.instance.nextLong();
+  }
+
+  /**
+   * 生成[0, upperBound)范围内的随机{@code long}值。
+   *
+   * @param upperBound
+   *     上界（不包含）
+   * @return
+   *     指定范围内的随机{@code long}值
+   */
+  public static long randomLong(final long upperBound) {
+    return RandomHolder.instance.nextLong(upperBound);
+  }
+
+  /**
+   * 生成指定范围内的随机{@code long}值。
+   *
+   * @param lowerBound
+   *     下界（包含）
+   * @param upperBound
+   *     上界（不包含）
+   * @return
+   *     指定范围内的随机{@code long}值
+   */
+  public static long randomLong(final long lowerBound, final long upperBound) {
+    return RandomHolder.instance.nextLong(lowerBound, upperBound);
   }
 }
