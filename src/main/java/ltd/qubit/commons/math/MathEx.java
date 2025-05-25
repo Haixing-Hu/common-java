@@ -1966,6 +1966,134 @@ public final class MathEx {
   }
 
   /**
+   * 判断给定的float值是否为非正数（在默认精度范围内）。
+   * <p>
+   * 非正数是指小于等于零的值，即 x <= 0。考虑浮点精度误差，
+   * 当值在默认精度范围内小于等于零时返回true。
+   *
+   * @param x
+   *     待检查的float值
+   * @return
+   *     如果给定值在默认精度范围内小于等于零则返回true，否则返回false
+   */
+  public static boolean isNonPositive(final float x) {
+    return x <= floatEpsilon;
+  }
+
+  /**
+   * 判断给定的float值是否为非正数（在指定精度范围内）。
+   * <p>
+   * 非正数是指小于等于零的值，即 x <= 0。考虑浮点精度误差，
+   * 当值在指定精度范围内小于等于零时返回true。
+   *
+   * @param x
+   *     待检查的float值
+   * @param epsilon
+   *     精度范围
+   * @return
+   *     如果给定值在指定精度范围内小于等于零则返回true，否则返回false
+   */
+  public static boolean isNonPositive(final float x, final float epsilon) {
+    return x <= epsilon;
+  }
+
+  /**
+   * 判断给定的double值是否为非正数（在默认精度范围内）。
+   * <p>
+   * 非正数是指小于等于零的值，即 x <= 0。考虑浮点精度误差，
+   * 当值在默认精度范围内小于等于零时返回true。
+   *
+   * @param x
+   *     待检查的double值
+   * @return
+   *     如果给定值在默认精度范围内小于等于零则返回true，否则返回false
+   */
+  public static boolean isNonPositive(final double x) {
+    return x <= doubleEpsilon;
+  }
+
+  /**
+   * 判断给定的double值是否为非正数（在指定精度范围内）。
+   * <p>
+   * 非正数是指小于等于零的值，即 x <= 0。考虑浮点精度误差，
+   * 当值在指定精度范围内小于等于零时返回true。
+   *
+   * @param x
+   *     待检查的double值
+   * @param epsilon
+   *     精度范围
+   * @return
+   *     如果给定值在指定精度范围内小于等于零则返回true，否则返回false
+   */
+  public static boolean isNonPositive(final double x, final double epsilon) {
+    return x <= epsilon;
+  }
+
+  /**
+   * 判断给定的float值是否为非负数（在默认精度范围内）。
+   * <p>
+   * 非负数是指大于等于零的值，即 x >= 0。考虑浮点精度误差，
+   * 当值在默认精度范围内大于等于零时返回true。
+   *
+   * @param x
+   *     待检查的float值
+   * @return
+   *     如果给定值在默认精度范围内大于等于零则返回true，否则返回false
+   */
+  public static boolean isNonNegative(final float x) {
+    return x >= -floatEpsilon;
+  }
+
+  /**
+   * 判断给定的float值是否为非负数（在指定精度范围内）。
+   * <p>
+   * 非负数是指大于等于零的值，即 x >= 0。考虑浮点精度误差，
+   * 当值在指定精度范围内大于等于零时返回true。
+   *
+   * @param x
+   *     待检查的float值
+   * @param epsilon
+   *     精度范围
+   * @return
+   *     如果给定值在指定精度范围内大于等于零则返回true，否则返回false
+   */
+  public static boolean isNonNegative(final float x, final float epsilon) {
+    return x >= -epsilon;
+  }
+
+  /**
+   * 判断给定的double值是否为非负数（在默认精度范围内）。
+   * <p>
+   * 非负数是指大于等于零的值，即 x >= 0。考虑浮点精度误差，
+   * 当值在默认精度范围内大于等于零时返回true。
+   *
+   * @param x
+   *     待检查的double值
+   * @return
+   *     如果给定值在默认精度范围内大于等于零则返回true，否则返回false
+   */
+  public static boolean isNonNegative(final double x) {
+    return x >= -doubleEpsilon;
+  }
+
+  /**
+   * 判断给定的double值是否为非负数（在指定精度范围内）。
+   * <p>
+   * 非负数是指大于等于零的值，即 x >= 0。考虑浮点精度误差，
+   * 当值在指定精度范围内大于等于零时返回true。
+   *
+   * @param x
+   *     待检查的double值
+   * @param epsilon
+   *     精度范围
+   * @return
+   *     如果给定值在指定精度范围内大于等于零则返回true，否则返回false
+   */
+  public static boolean isNonNegative(final double x, final double epsilon) {
+    return x >= -epsilon;
+  }
+
+  /**
    * 判断给定的float值是否在指定范围内（考虑默认精度）。
    *
    * @param value
@@ -2155,6 +2283,278 @@ public final class MathEx {
     }
     // 处理一般情况
     return Math.abs(x - y) <= epsilon;
+  }
+
+  /**
+   * 判断第一个float值是否明显小于第二个值（考虑默认精度）。
+   * <p>
+   * 相当于：x + epsilon < y
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @return
+   *     如果x明显小于y则返回true，否则返回false
+   */
+  public static boolean less(final float x, final float y) {
+    return less(x, y, floatEpsilon);
+  }
+
+  /**
+   * 判断第一个float值是否明显小于第二个值（考虑指定精度）。
+   * <p>
+   * 相当于：x + epsilon < y
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @param epsilon
+   *     精度容差
+   * @return
+   *     如果x明显小于y则返回true，否则返回false
+   */
+  public static boolean less(final float x, final float y, final float epsilon) {
+    return x + epsilon < y;
+  }
+
+  /**
+   * 判断第一个double值是否明显小于第二个值（考虑默认精度）。
+   * <p>
+   * 相当于：x + epsilon < y
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @return
+   *     如果x明显小于y则返回true，否则返回false
+   */
+  public static boolean less(final double x, final double y) {
+    return less(x, y, doubleEpsilon);
+  }
+
+  /**
+   * 判断第一个double值是否明显小于第二个值（考虑指定精度）。
+   * <p>
+   * 相当于：x + epsilon < y
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @param epsilon
+   *     精度容差
+   * @return
+   *     如果x明显小于y则返回true，否则返回false
+   */
+  public static boolean less(final double x, final double y, final double epsilon) {
+    return x + epsilon < y;
+  }
+
+  /**
+   * 判断第一个float值是否明显大于第二个值（考虑默认精度）。
+   * <p>
+   * 相当于：x > y + epsilon
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @return
+   *     如果x明显大于y则返回true，否则返回false
+   */
+  public static boolean greater(final float x, final float y) {
+    return greater(x, y, floatEpsilon);
+  }
+
+  /**
+   * 判断第一个float值是否明显大于第二个值（考虑指定精度）。
+   * <p>
+   * 相当于：x > y + epsilon
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @param epsilon
+   *     精度容差
+   * @return
+   *     如果x明显大于y则返回true，否则返回false
+   */
+  public static boolean greater(final float x, final float y, final float epsilon) {
+    return x > y + epsilon;
+  }
+
+  /**
+   * 判断第一个double值是否明显大于第二个值（考虑默认精度）。
+   * <p>
+   * 相当于：x > y + epsilon
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @return
+   *     如果x明显大于y则返回true，否则返回false
+   */
+  public static boolean greater(final double x, final double y) {
+    return greater(x, y, doubleEpsilon);
+  }
+
+  /**
+   * 判断第一个double值是否明显大于第二个值（考虑指定精度）。
+   * <p>
+   * 相当于：x > y + epsilon
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @param epsilon
+   *     精度容差
+   * @return
+   *     如果x明显大于y则返回true，否则返回false
+   */
+  public static boolean greater(final double x, final double y, final double epsilon) {
+    return x > y + epsilon;
+  }
+
+  /**
+   * 判断第一个float值是否小于等于第二个值（考虑默认精度）。
+   * <p>
+   * 相当于：x <= y + epsilon
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @return
+   *     如果x小于等于y（考虑精度）则返回true，否则返回false
+   */
+  public static boolean lessEqual(final float x, final float y) {
+    return lessEqual(x, y, floatEpsilon);
+  }
+
+  /**
+   * 判断第一个float值是否小于等于第二个值（考虑指定精度）。
+   * <p>
+   * 相当于：x <= y + epsilon
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @param epsilon
+   *     精度容差
+   * @return
+   *     如果x小于等于y（考虑精度）则返回true，否则返回false
+   */
+  public static boolean lessEqual(final float x, final float y, final float epsilon) {
+    return x <= y + epsilon;
+  }
+
+  /**
+   * 判断第一个double值是否小于等于第二个值（考虑默认精度）。
+   * <p>
+   * 相当于：x <= y + epsilon
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @return
+   *     如果x小于等于y（考虑精度）则返回true，否则返回false
+   */
+  public static boolean lessEqual(final double x, final double y) {
+    return lessEqual(x, y, doubleEpsilon);
+  }
+
+  /**
+   * 判断第一个double值是否小于等于第二个值（考虑指定精度）。
+   * <p>
+   * 相当于：x <= y + epsilon
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @param epsilon
+   *     精度容差
+   * @return
+   *     如果x小于等于y（考虑精度）则返回true，否则返回false
+   */
+  public static boolean lessEqual(final double x, final double y, final double epsilon) {
+    return x <= y + epsilon;
+  }
+
+  /**
+   * 判断第一个float值是否大于等于第二个值（考虑默认精度）。
+   * <p>
+   * 相当于：x >= y - epsilon
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @return
+   *     如果x大于等于y（考虑精度）则返回true，否则返回false
+   */
+  public static boolean greaterEqual(final float x, final float y) {
+    return greaterEqual(x, y, floatEpsilon);
+  }
+
+  /**
+   * 判断第一个float值是否大于等于第二个值（考虑指定精度）。
+   * <p>
+   * 相当于：x >= y - epsilon
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @param epsilon
+   *     精度容差
+   * @return
+   *     如果x大于等于y（考虑精度）则返回true，否则返回false
+   */
+  public static boolean greaterEqual(final float x, final float y, final float epsilon) {
+    return x >= y - epsilon;
+  }
+
+  /**
+   * 判断第一个double值是否大于等于第二个值（考虑默认精度）。
+   * <p>
+   * 相当于：x >= y - epsilon
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @return
+   *     如果x大于等于y（考虑精度）则返回true，否则返回false
+   */
+  public static boolean greaterEqual(final double x, final double y) {
+    return greaterEqual(x, y, doubleEpsilon);
+  }
+
+  /**
+   * 判断第一个double值是否大于等于第二个值（考虑指定精度）。
+   * <p>
+   * 相当于：x >= y - epsilon
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @param epsilon
+   *     精度容差
+   * @return
+   *     如果x大于等于y（考虑精度）则返回true，否则返回false
+   */
+  public static boolean greaterEqual(final double x, final double y, final double epsilon) {
+    return x >= y - epsilon;
   }
 
   // ///////////////////////////////////////////////////////////////////////////

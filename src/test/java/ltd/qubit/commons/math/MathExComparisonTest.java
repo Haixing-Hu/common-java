@@ -116,6 +116,58 @@ public class MathExComparisonTest {
   }
 
   @Test
+  void testIsNonPositive() {
+    // 测试float类型的isNonPositive
+    assertTrue(MathEx.isNonPositive(-1.0f));
+    assertTrue(MathEx.isNonPositive(0.0f));
+    assertTrue(MathEx.isNonPositive(MathEx.DEFAULT_FLOAT_EPSILON / 2));
+    assertFalse(MathEx.isNonPositive(MathEx.DEFAULT_FLOAT_EPSILON * 2));
+    assertFalse(MathEx.isNonPositive(1.0f));
+
+    // 测试double类型的isNonPositive
+    assertTrue(MathEx.isNonPositive(-1.0));
+    assertTrue(MathEx.isNonPositive(0.0));
+    assertTrue(MathEx.isNonPositive(MathEx.DEFAULT_DOUBLE_EPSILON / 2));
+    assertFalse(MathEx.isNonPositive(MathEx.DEFAULT_DOUBLE_EPSILON * 2));
+    assertFalse(MathEx.isNonPositive(1.0));
+
+    // 测试自定义精度
+    float customFloatEpsilon = 1e-3f;
+    assertTrue(MathEx.isNonPositive(customFloatEpsilon / 2, customFloatEpsilon));
+    assertFalse(MathEx.isNonPositive(customFloatEpsilon * 2, customFloatEpsilon));
+
+    double customDoubleEpsilon = 1e-9;
+    assertTrue(MathEx.isNonPositive(customDoubleEpsilon / 2, customDoubleEpsilon));
+    assertFalse(MathEx.isNonPositive(customDoubleEpsilon * 2, customDoubleEpsilon));
+  }
+
+  @Test
+  void testIsNonNegative() {
+    // 测试float类型的isNonNegative
+    assertFalse(MathEx.isNonNegative(-1.0f));
+    assertFalse(MathEx.isNonNegative(-MathEx.DEFAULT_FLOAT_EPSILON * 2));
+    assertTrue(MathEx.isNonNegative(-MathEx.DEFAULT_FLOAT_EPSILON / 2));
+    assertTrue(MathEx.isNonNegative(0.0f));
+    assertTrue(MathEx.isNonNegative(1.0f));
+
+    // 测试double类型的isNonNegative
+    assertFalse(MathEx.isNonNegative(-1.0));
+    assertFalse(MathEx.isNonNegative(-MathEx.DEFAULT_DOUBLE_EPSILON * 2));
+    assertTrue(MathEx.isNonNegative(-MathEx.DEFAULT_DOUBLE_EPSILON / 2));
+    assertTrue(MathEx.isNonNegative(0.0));
+    assertTrue(MathEx.isNonNegative(1.0));
+
+    // 测试自定义精度
+    float customFloatEpsilon = 1e-3f;
+    assertTrue(MathEx.isNonNegative(-customFloatEpsilon / 2, customFloatEpsilon));
+    assertFalse(MathEx.isNonNegative(-customFloatEpsilon * 2, customFloatEpsilon));
+
+    double customDoubleEpsilon = 1e-9;
+    assertTrue(MathEx.isNonNegative(-customDoubleEpsilon / 2, customDoubleEpsilon));
+    assertFalse(MathEx.isNonNegative(-customDoubleEpsilon * 2, customDoubleEpsilon));
+  }
+
+  @Test
   void testBetween() {
     // 测试float类型的between
     assertTrue(MathEx.between(5.0f, 1.0f, 10.0f));
@@ -179,6 +231,140 @@ public class MathExComparisonTest {
     assertFalse(MathEx.equal(Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY));
     assertFalse(MathEx.equal(Double.NaN, Double.NaN)); // NaN != NaN
     assertFalse(MathEx.equal(Double.NaN, 1.0));
+  }
+
+  @Test
+  void testLess() {
+    // 测试float类型的less（使用默认精度）
+    assertTrue(MathEx.less(1.0f, 2.0f));
+    assertTrue(MathEx.less(1.0f, 1.0f + MathEx.DEFAULT_FLOAT_EPSILON * 2));
+    assertFalse(MathEx.less(2.0f, 1.0f));
+    assertFalse(MathEx.less(1.0f, 1.0f)); // 相等不算小于
+    assertFalse(MathEx.less(1.0f, 1.0f + MathEx.DEFAULT_FLOAT_EPSILON / 2)); // 在精度范围内
+
+    // 测试double类型的less（使用默认精度）
+    assertTrue(MathEx.less(1.0, 2.0));
+    assertTrue(MathEx.less(1.0, 1.0 + MathEx.DEFAULT_DOUBLE_EPSILON * 2));
+    assertFalse(MathEx.less(2.0, 1.0));
+    assertFalse(MathEx.less(1.0, 1.0)); // 相等不算小于
+    assertFalse(MathEx.less(1.0, 1.0 + MathEx.DEFAULT_DOUBLE_EPSILON / 2)); // 在精度范围内
+
+    // 测试自定义精度
+    float customFloatEpsilon = 1e-2f;
+    assertTrue(MathEx.less(1.0f, 1.02f, customFloatEpsilon));
+    assertFalse(MathEx.less(1.0f, 1.005f, customFloatEpsilon)); // 在精度范围内
+
+    double customDoubleEpsilon = 1e-8;
+    assertTrue(MathEx.less(1.0, 1.00000002, customDoubleEpsilon));
+    assertFalse(MathEx.less(1.0, 1.000000005, customDoubleEpsilon)); // 在精度范围内
+  }
+
+  @Test
+  void testGreater() {
+    // 测试float类型的greater（使用默认精度）
+    assertTrue(MathEx.greater(2.0f, 1.0f));
+    assertTrue(MathEx.greater(1.0f + MathEx.DEFAULT_FLOAT_EPSILON * 2, 1.0f));
+    assertFalse(MathEx.greater(1.0f, 2.0f));
+    assertFalse(MathEx.greater(1.0f, 1.0f)); // 相等不算大于
+    assertFalse(MathEx.greater(1.0f + MathEx.DEFAULT_FLOAT_EPSILON / 2, 1.0f)); // 在精度范围内
+
+    // 测试double类型的greater（使用默认精度）
+    assertTrue(MathEx.greater(2.0, 1.0));
+    assertTrue(MathEx.greater(1.0 + MathEx.DEFAULT_DOUBLE_EPSILON * 2, 1.0));
+    assertFalse(MathEx.greater(1.0, 2.0));
+    assertFalse(MathEx.greater(1.0, 1.0)); // 相等不算大于
+    assertFalse(MathEx.greater(1.0 + MathEx.DEFAULT_DOUBLE_EPSILON / 2, 1.0)); // 在精度范围内
+
+    // 测试自定义精度
+    float customFloatEpsilon = 1e-2f;
+    assertTrue(MathEx.greater(1.02f, 1.0f, customFloatEpsilon));
+    assertFalse(MathEx.greater(1.005f, 1.0f, customFloatEpsilon)); // 在精度范围内
+
+    double customDoubleEpsilon = 1e-8;
+    assertTrue(MathEx.greater(1.00000002, 1.0, customDoubleEpsilon));
+    assertFalse(MathEx.greater(1.000000005, 1.0, customDoubleEpsilon)); // 在精度范围内
+  }
+
+  @Test
+  void testLessEqual() {
+    // 测试float类型的lessEqual（使用默认精度）
+    assertTrue(MathEx.lessEqual(1.0f, 2.0f));
+    assertTrue(MathEx.lessEqual(1.0f, 1.0f)); // 相等算小于等于
+    assertTrue(MathEx.lessEqual(1.0f, 1.0f + MathEx.DEFAULT_FLOAT_EPSILON / 2)); // 在精度范围内算相等
+    assertTrue(MathEx.lessEqual(1.0f, 1.0f + MathEx.DEFAULT_FLOAT_EPSILON * 2)); // 明显大于也算小于等于
+    assertFalse(MathEx.lessEqual(2.0f, 1.0f));
+
+    // 测试double类型的lessEqual（使用默认精度）
+    assertTrue(MathEx.lessEqual(1.0, 2.0));
+    assertTrue(MathEx.lessEqual(1.0, 1.0)); // 相等算小于等于
+    assertTrue(MathEx.lessEqual(1.0, 1.0 + MathEx.DEFAULT_DOUBLE_EPSILON / 2)); // 在精度范围内算相等
+    assertTrue(MathEx.lessEqual(1.0, 1.0 + MathEx.DEFAULT_DOUBLE_EPSILON * 2)); // 明显大于也算小于等于
+    assertFalse(MathEx.lessEqual(2.0, 1.0));
+
+    // 测试自定义精度
+    float customFloatEpsilon = 1e-2f;
+    assertTrue(MathEx.lessEqual(1.0f, 1.005f, customFloatEpsilon)); // 在精度范围内算相等
+    assertTrue(MathEx.lessEqual(1.0f, 1.02f, customFloatEpsilon)); // 明显大于也算小于等于
+    assertFalse(MathEx.lessEqual(1.02f, 1.0f, customFloatEpsilon)); // 明显大于第二个值
+
+    double customDoubleEpsilon = 1e-8;
+    assertTrue(MathEx.lessEqual(1.0, 1.000000005, customDoubleEpsilon)); // 在精度范围内算相等
+    assertTrue(MathEx.lessEqual(1.0, 1.00000002, customDoubleEpsilon)); // 明显大于也算小于等于
+    assertFalse(MathEx.lessEqual(1.00000002, 1.0, customDoubleEpsilon)); // 明显大于第二个值
+  }
+
+  @Test
+  void testGreaterEqual() {
+    // 测试float类型的greaterEqual（使用默认精度）
+    assertTrue(MathEx.greaterEqual(2.0f, 1.0f));
+    assertTrue(MathEx.greaterEqual(1.0f, 1.0f)); // 相等算大于等于
+    assertTrue(MathEx.greaterEqual(1.0f + MathEx.DEFAULT_FLOAT_EPSILON / 2, 1.0f)); // 在精度范围内算相等
+    assertTrue(MathEx.greaterEqual(1.0f - MathEx.DEFAULT_FLOAT_EPSILON / 2, 1.0f)); // 在精度范围内算相等
+    assertFalse(MathEx.greaterEqual(1.0f, 2.0f));
+
+    // 测试double类型的greaterEqual（使用默认精度）
+    assertTrue(MathEx.greaterEqual(2.0, 1.0));
+    assertTrue(MathEx.greaterEqual(1.0, 1.0)); // 相等算大于等于
+    assertTrue(MathEx.greaterEqual(1.0 + MathEx.DEFAULT_DOUBLE_EPSILON / 2, 1.0)); // 在精度范围内算相等
+    assertTrue(MathEx.greaterEqual(1.0 - MathEx.DEFAULT_DOUBLE_EPSILON / 2, 1.0)); // 在精度范围内算相等
+    assertFalse(MathEx.greaterEqual(1.0, 2.0));
+
+    // 测试自定义精度
+    float customFloatEpsilon = 1e-2f;
+    assertTrue(MathEx.greaterEqual(1.005f, 1.0f, customFloatEpsilon)); // 在精度范围内算相等
+    assertTrue(MathEx.greaterEqual(0.995f, 1.0f, customFloatEpsilon)); // 在精度范围内算相等
+    assertFalse(MathEx.greaterEqual(0.98f, 1.0f, customFloatEpsilon)); // 明显小于第二个值
+
+    double customDoubleEpsilon = 1e-8;
+    assertTrue(MathEx.greaterEqual(1.000000005, 1.0, customDoubleEpsilon)); // 在精度范围内算相等
+    assertTrue(MathEx.greaterEqual(0.999999995, 1.0, customDoubleEpsilon)); // 在精度范围内算相等
+    assertFalse(MathEx.greaterEqual(0.99999998, 1.0, customDoubleEpsilon)); // 明显小于第二个值
+  }
+
+  @Test
+  void testComparisonEdgeCases() {
+    // 测试边界情况和一致性
+    float x = 1.0f;
+    float y = 1.0f + MathEx.DEFAULT_FLOAT_EPSILON;
+
+    // 测试互斥性：less和greaterEqual应该是互斥的（除了相等情况）
+    assertFalse(MathEx.less(x, y) && MathEx.greaterEqual(x, y));
+    assertFalse(MathEx.greater(x, y) && MathEx.lessEqual(x, y));
+
+    // 测试包含性：lessEqual应该包含less和equal的情况
+    assertTrue(MathEx.lessEqual(x, y) || MathEx.greaterEqual(x, y)); // 至少一个应该为true
+
+    // 测试负数
+    assertTrue(MathEx.less(-2.0f, -1.0f));
+    assertTrue(MathEx.greater(-1.0f, -2.0f));
+    assertTrue(MathEx.lessEqual(-2.0f, -1.0f));
+    assertTrue(MathEx.greaterEqual(-1.0f, -2.0f));
+
+    // 测试零值
+    assertTrue(MathEx.lessEqual(0.0f, 0.0f));
+    assertTrue(MathEx.greaterEqual(0.0f, 0.0f));
+    assertFalse(MathEx.less(0.0f, 0.0f));
+    assertFalse(MathEx.greater(0.0f, 0.0f));
   }
 
   // ///////////////////////////////////////////////////////////////////////////
