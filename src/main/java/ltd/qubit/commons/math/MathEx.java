@@ -77,7 +77,7 @@ public final class MathEx {
    *   <li><strong>兼容性</strong>: 比传统的1e-3F严格1000倍，提供更高的计算精度</li>
    *   <li><strong>性能考虑</strong>: 仍然足够宽松以避免因微小的数值噪声导致的误判</li>
    * </ul>
-   * 
+   *
    * @see Float#MIN_NORMAL 最小规范化float值
    * @see #DEFAULT_DOUBLE_EPSILON 对应的double精度值
    */
@@ -139,13 +139,13 @@ public final class MathEx {
    * 此方法是线程安全的，新设置的值会立即对所有线程可见。
    *
    * @param epsilon
-   *     新的float精度值，必须大于0
+   *     新的float精度值，必须大于0且不能为NaN
    * @throws IllegalArgumentException
-   *     如果epsilon小于等于0
+   *     如果epsilon小于等于0或为NaN
    */
   public static void setFloatEpsilon(final float epsilon) {
-    if (epsilon <= 0.0f) {
-      throw new IllegalArgumentException("epsilon must be positive: " + epsilon);
+    if (Float.isNaN(epsilon) || epsilon <= 0.0f) {
+      throw new IllegalArgumentException("epsilon must be positive and not NaN: " + epsilon);
     }
     floatEpsilon = epsilon;
   }
@@ -166,13 +166,13 @@ public final class MathEx {
    * 此方法是线程安全的，新设置的值会立即对所有线程可见。
    *
    * @param epsilon
-   *     新的double精度值，必须大于0
+   *     新的double精度值，必须大于0且不能为NaN
    * @throws IllegalArgumentException
-   *     如果epsilon小于等于0
+   *     如果epsilon小于等于0或为NaN
    */
   public static void setDoubleEpsilon(final double epsilon) {
-    if (epsilon <= 0.0) {
-      throw new IllegalArgumentException("epsilon must be positive: " + epsilon);
+    if (Double.isNaN(epsilon) || epsilon <= 0.0) {
+      throw new IllegalArgumentException("epsilon must be positive and not NaN: " + epsilon);
     }
     doubleEpsilon = epsilon;
   }
@@ -1055,6 +1055,756 @@ public final class MathEx {
 
   // ///////////////////////////////////////////////////////////////////////////
   //
+  //                      多参数最小/最大值
+  //
+  // ///////////////////////////////////////////////////////////////////////////
+
+  // ===========================================================================
+  // 三参数最小值函数
+  // ===========================================================================
+
+  /**
+   * 返回三个byte值中的最小者。
+   * <p>
+   * 使用最优算法，总共进行2次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @return
+   *     a、b和c中的最小者
+   */
+  public static byte min(final byte a, final byte b, final byte c) {
+    return min(min(a, b), c);
+  }
+
+  /**
+   * 返回三个short值中的最小者。
+   * <p>
+   * 使用最优算法，总共进行2次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @return
+   *     a、b和c中的最小者
+   */
+  public static short min(final short a, final short b, final short c) {
+    return min(min(a, b), c);
+  }
+
+  /**
+   * 返回三个{@code int}值中的最小者。
+   * <p>
+   * 使用最优算法，总共进行2次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @return
+   *     a、b和c中的最小者
+   */
+  public static int min(final int a, final int b, final int c) {
+    return min(min(a, b), c);
+  }
+
+  /**
+   * 返回三个{@code long}值中的最小者。
+   * <p>
+   * 使用最优算法，总共进行2次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @return
+   *     a、b和c中的最小者
+   */
+  public static long min(final long a, final long b, final long c) {
+    return min(min(a, b), c);
+  }
+
+  /**
+   * 返回三个float值中的最小者。
+   * <p>
+   * 使用最优算法，总共进行2次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @return
+   *     a、b和c中的最小者
+   */
+  public static float min(final float a, final float b, final float c) {
+    return min(min(a, b), c);
+  }
+
+  /**
+   * 返回三个double值中的最小者。
+   * <p>
+   * 使用最优算法，总共进行2次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @return
+   *     a、b和c中的最小者
+   */
+  public static double min(final double a, final double b, final double c) {
+    return min(min(a, b), c);
+  }
+
+  // ===========================================================================
+  // 四参数最小值函数
+  // ===========================================================================
+
+  /**
+   * 返回四个byte值中的最小者。
+   * <p>
+   * 使用最优算法，总共进行3次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @return
+   *     a、b、c和d中的最小者
+   */
+  public static byte min(final byte a, final byte b, final byte c, final byte d) {
+    return min(min(a, b, c), d);
+  }
+
+  /**
+   * 返回四个short值中的最小者。
+   * <p>
+   * 使用最优算法，总共进行3次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @return
+   *     a、b、c和d中的最小者
+   */
+  public static short min(final short a, final short b, final short c, final short d) {
+    return min(min(a, b, c), d);
+  }
+
+  /**
+   * 返回四个{@code int}值中的最小者。
+   * <p>
+   * 使用最优算法，总共进行3次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @return
+   *     a、b、c和d中的最小者
+   */
+  public static int min(final int a, final int b, final int c, final int d) {
+    return min(min(a, b, c), d);
+  }
+
+  /**
+   * 返回四个{@code long}值中的最小者。
+   * <p>
+   * 使用最优算法，总共进行3次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @return
+   *     a、b、c和d中的最小者
+   */
+  public static long min(final long a, final long b, final long c, final long d) {
+    return min(min(a, b, c), d);
+  }
+
+  /**
+   * 返回四个float值中的最小者。
+   * <p>
+   * 使用最优算法，总共进行3次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @return
+   *     a、b、c和d中的最小者
+   */
+  public static float min(final float a, final float b, final float c, final float d) {
+    return min(min(a, b, c), d);
+  }
+
+  /**
+   * 返回四个double值中的最小者。
+   * <p>
+   * 使用最优算法，总共进行3次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @return
+   *     a、b、c和d中的最小者
+   */
+  public static double min(final double a, final double b, final double c, final double d) {
+    return min(min(a, b, c), d);
+  }
+
+  // ===========================================================================
+  // 五参数最小值函数
+  // ===========================================================================
+
+  /**
+   * 返回五个byte值中的最小者。
+   * <p>
+   * 使用最优算法，总共进行4次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @param e
+   *     第五个值
+   * @return
+   *     a、b、c、d和e中的最小者
+   */
+  public static byte min(final byte a, final byte b, final byte c, final byte d, final byte e) {
+    return min(min(a, b, c, d), e);
+  }
+
+  /**
+   * 返回五个short值中的最小者。
+   * <p>
+   * 使用最优算法，总共进行4次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @param e
+   *     第五个值
+   * @return
+   *     a、b、c、d和e中的最小者
+   */
+  public static short min(final short a, final short b, final short c, final short d, final short e) {
+    return min(min(a, b, c, d), e);
+  }
+
+  /**
+   * 返回五个{@code int}值中的最小者。
+   * <p>
+   * 使用最优算法，总共进行4次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @param e
+   *     第五个值
+   * @return
+   *     a、b、c、d和e中的最小者
+   */
+  public static int min(final int a, final int b, final int c, final int d, final int e) {
+    return min(min(a, b, c, d), e);
+  }
+
+  /**
+   * 返回五个{@code long}值中的最小者。
+   * <p>
+   * 使用最优算法，总共进行4次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @param e
+   *     第五个值
+   * @return
+   *     a、b、c、d和e中的最小者
+   */
+  public static long min(final long a, final long b, final long c, final long d, final long e) {
+    return min(min(a, b, c, d), e);
+  }
+
+  /**
+   * 返回五个float值中的最小者。
+   * <p>
+   * 使用最优算法，总共进行4次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @param e
+   *     第五个值
+   * @return
+   *     a、b、c、d和e中的最小者
+   */
+  public static float min(final float a, final float b, final float c, final float d, final float e) {
+    return min(min(a, b, c, d), e);
+  }
+
+  /**
+   * 返回五个double值中的最小者。
+   * <p>
+   * 使用最优算法，总共进行4次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @param e
+   *     第五个值
+   * @return
+   *     a、b、c、d和e中的最小者
+   */
+  public static double min(final double a, final double b, final double c, final double d, final double e) {
+    return min(min(a, b, c, d), e);
+  }
+
+  // ===========================================================================
+  // 三参数最大值函数
+  // ===========================================================================
+
+  /**
+   * 返回三个byte值中的最大者。
+   * <p>
+   * 使用最优算法，总共进行2次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @return
+   *     a、b和c中的最大者
+   */
+  public static byte max(final byte a, final byte b, final byte c) {
+    return max(max(a, b), c);
+  }
+
+  /**
+   * 返回三个short值中的最大者。
+   * <p>
+   * 使用最优算法，总共进行2次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @return
+   *     a、b和c中的最大者
+   */
+  public static short max(final short a, final short b, final short c) {
+    return max(max(a, b), c);
+  }
+
+  /**
+   * 返回三个{@code int}值中的最大者。
+   * <p>
+   * 使用最优算法，总共进行2次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @return
+   *     a、b和c中的最大者
+   */
+  public static int max(final int a, final int b, final int c) {
+    return max(max(a, b), c);
+  }
+
+  /**
+   * 返回三个{@code long}值中的最大者。
+   * <p>
+   * 使用最优算法，总共进行2次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @return
+   *     a、b和c中的最大者
+   */
+  public static long max(final long a, final long b, final long c) {
+    return max(max(a, b), c);
+  }
+
+  /**
+   * 返回三个float值中的最大者。
+   * <p>
+   * 使用最优算法，总共进行2次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @return
+   *     a、b和c中的最大者
+   */
+  public static float max(final float a, final float b, final float c) {
+    return max(max(a, b), c);
+  }
+
+  /**
+   * 返回三个double值中的最大者。
+   * <p>
+   * 使用最优算法，总共进行2次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @return
+   *     a、b和c中的最大者
+   */
+  public static double max(final double a, final double b, final double c) {
+    return max(max(a, b), c);
+  }
+
+  // ===========================================================================
+  // 四参数最大值函数
+  // ===========================================================================
+
+  /**
+   * 返回四个byte值中的最大者。
+   * <p>
+   * 使用最优算法，总共进行3次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @return
+   *     a、b、c和d中的最大者
+   */
+  public static byte max(final byte a, final byte b, final byte c, final byte d) {
+    return max(max(a, b, c), d);
+  }
+
+  /**
+   * 返回四个short值中的最大者。
+   * <p>
+   * 使用最优算法，总共进行3次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @return
+   *     a、b、c和d中的最大者
+   */
+  public static short max(final short a, final short b, final short c, final short d) {
+    return max(max(a, b, c), d);
+  }
+
+  /**
+   * 返回四个{@code int}值中的最大者。
+   * <p>
+   * 使用最优算法，总共进行3次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @return
+   *     a、b、c和d中的最大者
+   */
+  public static int max(final int a, final int b, final int c, final int d) {
+    return max(max(a, b, c), d);
+  }
+
+  /**
+   * 返回四个{@code long}值中的最大者。
+   * <p>
+   * 使用最优算法，总共进行3次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @return
+   *     a、b、c和d中的最大者
+   */
+  public static long max(final long a, final long b, final long c, final long d) {
+    return max(max(a, b, c), d);
+  }
+
+  /**
+   * 返回四个float值中的最大者。
+   * <p>
+   * 使用最优算法，总共进行3次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @return
+   *     a、b、c和d中的最大者
+   */
+  public static float max(final float a, final float b, final float c, final float d) {
+    return max(max(a, b, c), d);
+  }
+
+  /**
+   * 返回四个double值中的最大者。
+   * <p>
+   * 使用最优算法，总共进行3次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @return
+   *     a、b、c和d中的最大者
+   */
+  public static double max(final double a, final double b, final double c, final double d) {
+    return max(max(a, b, c), d);
+  }
+
+  // ===========================================================================
+  // 五参数最大值函数
+  // ===========================================================================
+
+  /**
+   * 返回五个byte值中的最大者。
+   * <p>
+   * 使用最优算法，总共进行4次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @param e
+   *     第五个值
+   * @return
+   *     a、b、c、d和e中的最大者
+   */
+  public static byte max(final byte a, final byte b, final byte c, final byte d, final byte e) {
+    return max(max(a, b, c, d), e);
+  }
+
+  /**
+   * 返回五个short值中的最大者。
+   * <p>
+   * 使用最优算法，总共进行4次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @param e
+   *     第五个值
+   * @return
+   *     a、b、c、d和e中的最大者
+   */
+  public static short max(final short a, final short b, final short c, final short d, final short e) {
+    return max(max(a, b, c, d), e);
+  }
+
+  /**
+   * 返回五个{@code int}值中的最大者。
+   * <p>
+   * 使用最优算法，总共进行4次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @param e
+   *     第五个值
+   * @return
+   *     a、b、c、d和e中的最大者
+   */
+  public static int max(final int a, final int b, final int c, final int d, final int e) {
+    return max(max(a, b, c, d), e);
+  }
+
+  /**
+   * 返回五个{@code long}值中的最大者。
+   * <p>
+   * 使用最优算法，总共进行4次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @param e
+   *     第五个值
+   * @return
+   *     a、b、c、d和e中的最大者
+   */
+  public static long max(final long a, final long b, final long c, final long d, final long e) {
+    return max(max(a, b, c, d), e);
+  }
+
+  /**
+   * 返回五个float值中的最大者。
+   * <p>
+   * 使用最优算法，总共进行4次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @param e
+   *     第五个值
+   * @return
+   *     a、b、c、d和e中的最大者
+   */
+  public static float max(final float a, final float b, final float c, final float d, final float e) {
+    return max(max(a, b, c, d), e);
+  }
+
+  /**
+   * 返回五个double值中的最大者。
+   * <p>
+   * 使用最优算法，总共进行4次比较。
+   *
+   * @param a
+   *     第一个值
+   * @param b
+   *     第二个值
+   * @param c
+   *     第三个值
+   * @param d
+   *     第四个值
+   * @param e
+   *     第五个值
+   * @return
+   *     a、b、c、d和e中的最大者
+   */
+  public static double max(final double a, final double b, final double c, final double d, final double e) {
+    return max(max(a, b, c, d), e);
+  }
+
+  // ///////////////////////////////////////////////////////////////////////////
+  //
   //                      浮点数比较
   //
   // ///////////////////////////////////////////////////////////////////////////
@@ -1227,8 +1977,8 @@ public final class MathEx {
    * @return
    *     如果值在[min, max]范围内（考虑精度容差）则返回true，否则返回false
    */
-  public static boolean inRange(final float value, final float min, final float max) {
-    return inRange(value, min, max, floatEpsilon);
+  public static boolean between(final float value, final float min, final float max) {
+    return between(value, min, max, floatEpsilon);
   }
 
   /**
@@ -1245,7 +1995,7 @@ public final class MathEx {
    * @return
    *     如果值在[min, max]范围内（考虑精度容差）则返回true，否则返回false
    */
-  public static boolean inRange(final float value, final float min, final float max, final float epsilon) {
+  public static boolean between(final float value, final float min, final float max, final float epsilon) {
     return value >= min - epsilon && value <= max + epsilon;
   }
 
@@ -1261,8 +2011,8 @@ public final class MathEx {
    * @return
    *     如果值在[min, max]范围内（考虑精度容差）则返回true，否则返回false
    */
-  public static boolean inRange(final double value, final double min, final double max) {
-    return inRange(value, min, max, doubleEpsilon);
+  public static boolean between(final double value, final double min, final double max) {
+    return between(value, min, max, doubleEpsilon);
   }
 
   /**
@@ -1279,12 +2029,19 @@ public final class MathEx {
    * @return
    *     如果值在[min, max]范围内（考虑精度容差）则返回true，否则返回false
    */
-  public static boolean inRange(final double value, final double min, final double max, final double epsilon) {
-    return value >= min - epsilon && value <= max + epsilon;
+  public static boolean between(final double value, final double min, final double max, final double epsilon) {
+    return (value >= min - epsilon) && (value <= max + epsilon);
   }
 
   /**
    * 判断两个float值是否在默认精度范围内相等。
+   * <p>
+   * 对特殊值的处理：
+   * <ul>
+   *   <li>相同的无穷大值被认为是相等的</li>
+   *   <li>NaN与任何值（包括NaN自身）都不相等</li>
+   *   <li>+0.0和-0.0被认为是相等的</li>
+   * </ul>
    *
    * @param x
    *     第一个值
@@ -1294,11 +2051,27 @@ public final class MathEx {
    *     如果两个值在默认精度范围内相等则返回true，否则返回false
    */
   public static boolean equal(final float x, final float y) {
+    // 处理NaN：NaN与任何值都不相等
+    if (Float.isNaN(x) || Float.isNaN(y)) {
+      return false;
+    }
+    // 处理无穷大：相同的无穷大值相等
+    if (Float.isInfinite(x) && Float.isInfinite(y)) {
+      return x == y;
+    }
+    // 处理一般情况
     return Math.abs(x - y) <= floatEpsilon;
   }
 
   /**
    * 判断两个float值是否在指定精度范围内相等。
+   * <p>
+   * 对特殊值的处理：
+   * <ul>
+   *   <li>相同的无穷大值被认为是相等的</li>
+   *   <li>NaN与任何值（包括NaN自身）都不相等</li>
+   *   <li>+0.0和-0.0被认为是相等的</li>
+   * </ul>
    *
    * @param x
    *     第一个值
@@ -1310,11 +2083,27 @@ public final class MathEx {
    *     如果两个值在指定精度范围内相等则返回true，否则返回false
    */
   public static boolean equal(final float x, final float y, final float epsilon) {
+    // 处理NaN：NaN与任何值都不相等
+    if (Float.isNaN(x) || Float.isNaN(y)) {
+      return false;
+    }
+    // 处理无穷大：相同的无穷大值相等
+    if (Float.isInfinite(x) && Float.isInfinite(y)) {
+      return x == y;
+    }
+    // 处理一般情况
     return Math.abs(x - y) <= epsilon;
   }
 
   /**
    * 判断两个double值是否在默认精度范围内相等。
+   * <p>
+   * 对特殊值的处理：
+   * <ul>
+   *   <li>相同的无穷大值被认为是相等的</li>
+   *   <li>NaN与任何值（包括NaN自身）都不相等</li>
+   *   <li>+0.0和-0.0被认为是相等的</li>
+   * </ul>
    *
    * @param x
    *     第一个值
@@ -1324,11 +2113,27 @@ public final class MathEx {
    *     如果两个值在默认精度范围内相等则返回true，否则返回false
    */
   public static boolean equal(final double x, final double y) {
+    // 处理NaN：NaN与任何值都不相等
+    if (Double.isNaN(x) || Double.isNaN(y)) {
+      return false;
+    }
+    // 处理无穷大：相同的无穷大值相等
+    if (Double.isInfinite(x) && Double.isInfinite(y)) {
+      return x == y;
+    }
+    // 处理一般情况
     return Math.abs(x - y) <= doubleEpsilon;
   }
 
   /**
    * 判断两个double值是否在指定精度范围内相等。
+   * <p>
+   * 对特殊值的处理：
+   * <ul>
+   *   <li>相同的无穷大值被认为是相等的</li>
+   *   <li>NaN与任何值（包括NaN自身）都不相等</li>
+   *   <li>+0.0和-0.0被认为是相等的</li>
+   * </ul>
    *
    * @param x
    *     第一个值
@@ -1340,6 +2145,15 @@ public final class MathEx {
    *     如果两个值在指定精度范围内相等则返回true，否则返回false
    */
   public static boolean equal(final double x, final double y, final double epsilon) {
+    // 处理NaN：NaN与任何值都不相等
+    if (Double.isNaN(x) || Double.isNaN(y)) {
+      return false;
+    }
+    // 处理无穷大：相同的无穷大值相等
+    if (Double.isInfinite(x) && Double.isInfinite(y)) {
+      return x == y;
+    }
+    // 处理一般情况
     return Math.abs(x - y) <= epsilon;
   }
 
@@ -1974,17 +2788,41 @@ public final class MathEx {
   }
 
   /**
-   * 计算 d × 2^scaleFactor，使用单个正确舍入的浮点乘法。
+   * 执行融合乘加运算 (a * b + c)，提供更高的精度（float版本）。
+   * <p>
+   * 此函数重载了{@link #fma(float, float, float)}方法，提供更具可读性的函数名。
    *
-   * @param d
-   *     要缩放的值
-   * @param scaleFactor
-   *     2的幂次指数
+   * @param a
+   *     第一个乘数
+   * @param b
+   *     第二个乘数
+   * @param c
+   *     加数
    * @return
-   *     d × 2^scaleFactor
+   *     (a * b + c) 的高精度结果
+   * @see #fma(float, float, float)
    */
-  public static double scalb(final double d, final int scaleFactor) {
-    return Math.scalb(d, scaleFactor);
+  public static float multiplyAdd(final float a, final float b, final float c) {
+    return Math.fma(a, b, c);
+  }
+
+  /**
+   * 执行融合乘加运算 (a * b + c)，提供更高的精度。
+   * <p>
+   * 此函数重载了{@link #fma(double, double, double)}方法，提供更具可读性的函数名。
+   *
+   * @param a
+   *     第一个乘数
+   * @param b
+   *     第二个乘数
+   * @param c
+   *     加数
+   * @return
+   *     (a * b + c) 的高精度结果
+   * @see #fma(double, double, double)
+   */
+  public static double multiplyAdd(final double a, final double b, final double c) {
+    return Math.fma(a, b, c);
   }
 
   /**
@@ -2002,6 +2840,20 @@ public final class MathEx {
   }
 
   /**
+   * 计算 d × 2^scaleFactor，使用单个正确舍入的浮点乘法。
+   *
+   * @param d
+   *     要缩放的值
+   * @param scaleFactor
+   *     2的幂次指数
+   * @return
+   *     d × 2^scaleFactor
+   */
+  public static double scalb(final double d, final int scaleFactor) {
+    return Math.scalb(d, scaleFactor);
+  }
+
+  /**
    * 计算欧几里得距离 sqrt(x² + y²)，避免中间溢出。
    *
    * @param x
@@ -2013,6 +2865,34 @@ public final class MathEx {
    */
   public static double hypot(final double x, final double y) {
     return Math.hypot(x, y);
+  }
+
+  /**
+   * 计算两个float值的平方和（x² + y²），避免中间溢出。
+   *
+   * @param x
+   *     第一个值。
+   * @param y
+   *     第二个值。
+   * @return
+   *     x² + y² 的平方和。
+   */
+  public static float squaredSum(final float x, final float y) {
+    return (float) Math.fma(x, x, Math.pow(y, 2));
+  }
+
+  /**
+   * 计算两个double值的平方和（x² + y²），避免中间溢出。
+   *
+   * @param x
+   *     第一个值。
+   * @param y
+   *     第二个值。
+   * @return
+   *     x² + y² 的平方和。
+   */
+  public static double squaredSum(final double x, final double y) {
+    return Math.fma(x, x, Math.pow(y, 2));
   }
 
   // ///////////////////////////////////////////////////////////////////////////
