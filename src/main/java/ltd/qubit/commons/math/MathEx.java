@@ -10,6 +10,8 @@ package ltd.qubit.commons.math;
 
 import static ltd.qubit.commons.lang.Argument.requireInCloseRange;
 
+import javax.annotation.Nullable;
+
 /**
  * 扩展的数学工具类，提供比{@link java.lang.Math}更丰富的数学运算功能。
  *
@@ -2970,6 +2972,46 @@ public final class MathEx {
   //                      浮点数特殊操作
   //
   // ///////////////////////////////////////////////////////////////////////////
+  
+  /**
+   * 返回指定的float值的符号。
+   *
+   * @param value
+   *     指定的值。
+   * @return
+   *     如果指定的值为正返回1，为负返回-1，为零返回0，为NaN返回null。注意，+0.0和-0.0都返回0。
+   * @see #signum(float)
+   */
+  @Nullable
+  public static Integer sign(final float value) {
+    if (Float.isNaN(value)) {
+      return null;
+    }
+    if (FloatBit.isZero(value)) {
+      return 0;
+    }
+    return value > 0 ? 1 : -1;
+  }
+
+  /**
+   * 返回指定的double值的符号。
+   *
+   * @param value
+   *     指定的值。
+   * @return
+   *     如果指定的值为正返回1，为负返回-1，为零返回0，为NaN返回null。注意，+0.0和-0.0都返回0。
+   * @see #signum(double)
+   */
+  @Nullable
+  public static Integer sign(final double value) {
+    if (Double.isNaN(value)) {
+      return null;
+    }
+    if (DoubleBit.isZero(value)) {
+      return 0;
+    }
+    return value > 0 ? 1 : -1;
+  }
 
   /**
    * 返回float值的符号函数。
