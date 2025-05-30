@@ -367,6 +367,161 @@ public class MathExComparisonTest {
     assertFalse(MathEx.greater(0.0f, 0.0f));
   }
 
+  @Test
+  void testCompareFloat() {
+    // 测试基本比较（使用默认精度）
+    assertEquals(-1, MathEx.compare(1.0f, 2.0f)); // 1.0f < 2.0f
+    assertEquals(1, MathEx.compare(2.0f, 1.0f));  // 2.0f > 1.0f
+    assertEquals(0, MathEx.compare(1.0f, 1.0f));  // 1.0f == 1.0f
+
+    // 测试在默认精度范围内的相等性
+    assertEquals(0, MathEx.compare(1.0f, 1.0f + MathEx.DEFAULT_FLOAT_EPSILON / 2));
+    assertEquals(0, MathEx.compare(1.0f, 1.0f - MathEx.DEFAULT_FLOAT_EPSILON / 2));
+
+    // 测试明显的差异
+    assertEquals(-1, MathEx.compare(1.0f, 1.0f + MathEx.DEFAULT_FLOAT_EPSILON * 2));
+    assertEquals(1, MathEx.compare(1.0f, 1.0f - MathEx.DEFAULT_FLOAT_EPSILON * 2));
+
+    // 测试自定义精度
+    float customEpsilon = 1e-3f;
+    assertEquals(0, MathEx.compare(1.0f, 1.0005f, customEpsilon)); // 在精度范围内
+    assertEquals(-1, MathEx.compare(1.0f, 1.002f, customEpsilon)); // 超出精度范围
+    assertEquals(1, MathEx.compare(1.002f, 1.0f, customEpsilon));  // 超出精度范围
+
+    // 测试负数
+    assertEquals(1, MathEx.compare(-1.0f, -2.0f));  // -1.0f > -2.0f
+    assertEquals(-1, MathEx.compare(-2.0f, -1.0f)); // -2.0f < -1.0f
+    assertEquals(0, MathEx.compare(-1.0f, -1.0f));  // -1.0f == -1.0f
+
+    // 测试零值
+    assertEquals(0, MathEx.compare(0.0f, 0.0f));
+    assertEquals(0, MathEx.compare(0.0f, -0.0f)); // +0.0 和 -0.0 应该相等
+    assertEquals(1, MathEx.compare(0.1f, 0.0f));
+    assertEquals(-1, MathEx.compare(0.0f, 0.1f));
+  }
+
+  @Test
+  void testCompareFloatSpecialValues() {
+    // 测试NaN的处理
+    assertEquals(0, MathEx.compare(Float.NaN, Float.NaN));          // NaN == NaN
+    assertEquals(1, MathEx.compare(Float.NaN, 1.0f));              // NaN > 任何非NaN值
+    assertEquals(-1, MathEx.compare(1.0f, Float.NaN));             // 任何非NaN值 < NaN
+    assertEquals(1, MathEx.compare(Float.NaN, Float.POSITIVE_INFINITY)); // NaN > +∞
+    assertEquals(1, MathEx.compare(Float.NaN, Float.NEGATIVE_INFINITY)); // NaN > -∞
+
+    // 测试无穷大的处理
+    assertEquals(0, MathEx.compare(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY)); // +∞ == +∞
+    assertEquals(0, MathEx.compare(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY)); // -∞ == -∞
+    assertEquals(1, MathEx.compare(Float.POSITIVE_INFINITY, Float.NEGATIVE_INFINITY)); // +∞ > -∞
+    assertEquals(-1, MathEx.compare(Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY)); // -∞ < +∞
+
+    // 测试无穷大与有限值
+    assertEquals(1, MathEx.compare(Float.POSITIVE_INFINITY, Float.MAX_VALUE));
+    assertEquals(-1, MathEx.compare(Float.MAX_VALUE, Float.POSITIVE_INFINITY));
+    assertEquals(-1, MathEx.compare(Float.NEGATIVE_INFINITY, -Float.MAX_VALUE));
+    assertEquals(1, MathEx.compare(-Float.MAX_VALUE, Float.NEGATIVE_INFINITY));
+  }
+
+  @Test
+  void testCompareDouble() {
+    // 测试基本比较（使用默认精度）
+    assertEquals(-1, MathEx.compare(1.0, 2.0)); // 1.0 < 2.0
+    assertEquals(1, MathEx.compare(2.0, 1.0));  // 2.0 > 1.0
+    assertEquals(0, MathEx.compare(1.0, 1.0));  // 1.0 == 1.0
+
+    // 测试在默认精度范围内的相等性
+    assertEquals(0, MathEx.compare(1.0, 1.0 + MathEx.DEFAULT_DOUBLE_EPSILON / 2));
+    assertEquals(0, MathEx.compare(1.0, 1.0 - MathEx.DEFAULT_DOUBLE_EPSILON / 2));
+
+    // 测试明显的差异
+    assertEquals(-1, MathEx.compare(1.0, 1.0 + MathEx.DEFAULT_DOUBLE_EPSILON * 2));
+    assertEquals(1, MathEx.compare(1.0, 1.0 - MathEx.DEFAULT_DOUBLE_EPSILON * 2));
+
+    // 测试自定义精度
+    double customEpsilon = 1e-9;
+    assertEquals(0, MathEx.compare(1.0, 1.0000000005, customEpsilon)); // 在精度范围内
+    assertEquals(-1, MathEx.compare(1.0, 1.000000002, customEpsilon)); // 超出精度范围
+    assertEquals(1, MathEx.compare(1.000000002, 1.0, customEpsilon));  // 超出精度范围
+
+    // 测试负数
+    assertEquals(1, MathEx.compare(-1.0, -2.0));  // -1.0 > -2.0
+    assertEquals(-1, MathEx.compare(-2.0, -1.0)); // -2.0 < -1.0
+    assertEquals(0, MathEx.compare(-1.0, -1.0));  // -1.0 == -1.0
+
+    // 测试零值
+    assertEquals(0, MathEx.compare(0.0, 0.0));
+    assertEquals(0, MathEx.compare(0.0, -0.0)); // +0.0 和 -0.0 应该相等
+    assertEquals(1, MathEx.compare(0.1, 0.0));
+    assertEquals(-1, MathEx.compare(0.0, 0.1));
+  }
+
+  @Test
+  void testCompareDoubleSpecialValues() {
+    // 测试NaN的处理
+    assertEquals(0, MathEx.compare(Double.NaN, Double.NaN));          // NaN == NaN
+    assertEquals(1, MathEx.compare(Double.NaN, 1.0));                // NaN > 任何非NaN值
+    assertEquals(-1, MathEx.compare(1.0, Double.NaN));               // 任何非NaN值 < NaN
+    assertEquals(1, MathEx.compare(Double.NaN, Double.POSITIVE_INFINITY)); // NaN > +∞
+    assertEquals(1, MathEx.compare(Double.NaN, Double.NEGATIVE_INFINITY)); // NaN > -∞
+
+    // 测试无穷大的处理
+    assertEquals(0, MathEx.compare(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY)); // +∞ == +∞
+    assertEquals(0, MathEx.compare(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY)); // -∞ == -∞
+    assertEquals(1, MathEx.compare(Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY)); // +∞ > -∞
+    assertEquals(-1, MathEx.compare(Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY)); // -∞ < +∞
+
+    // 测试无穷大与有限值
+    assertEquals(1, MathEx.compare(Double.POSITIVE_INFINITY, Double.MAX_VALUE));
+    assertEquals(-1, MathEx.compare(Double.MAX_VALUE, Double.POSITIVE_INFINITY));
+    assertEquals(-1, MathEx.compare(Double.NEGATIVE_INFINITY, -Double.MAX_VALUE));
+    assertEquals(1, MathEx.compare(-Double.MAX_VALUE, Double.NEGATIVE_INFINITY));
+  }
+
+  @Test
+  void testCompareConsistency() {
+    // 测试compare方法与其他比较方法的一致性
+    float[] floatValues = {-2.0f, -1.0f, 0.0f, 1.0f, 2.0f};
+    double[] doubleValues = {-2.0, -1.0, 0.0, 1.0, 2.0};
+
+    // 测试float版本的一致性
+    for (float x : floatValues) {
+      for (float y : floatValues) {
+        int compareResult = MathEx.compare(x, y);
+        
+        if (compareResult < 0) {
+          assertTrue(MathEx.less(x, y), "compare返回负数时，less应该返回true");
+          assertFalse(MathEx.greater(x, y), "compare返回负数时，greater应该返回false");
+        } else if (compareResult > 0) {
+          assertTrue(MathEx.greater(x, y), "compare返回正数时，greater应该返回true");
+          assertFalse(MathEx.less(x, y), "compare返回正数时，less应该返回false");
+        } else {
+          assertTrue(MathEx.equal(x, y), "compare返回0时，equal应该返回true");
+          assertFalse(MathEx.less(x, y), "compare返回0时，less应该返回false");
+          assertFalse(MathEx.greater(x, y), "compare返回0时，greater应该返回false");
+        }
+      }
+    }
+
+    // 测试double版本的一致性
+    for (double x : doubleValues) {
+      for (double y : doubleValues) {
+        int compareResult = MathEx.compare(x, y);
+        
+        if (compareResult < 0) {
+          assertTrue(MathEx.less(x, y), "compare返回负数时，less应该返回true");
+          assertFalse(MathEx.greater(x, y), "compare返回负数时，greater应该返回false");
+        } else if (compareResult > 0) {
+          assertTrue(MathEx.greater(x, y), "compare返回正数时，greater应该返回true");
+          assertFalse(MathEx.less(x, y), "compare返回正数时，less应该返回false");
+        } else {
+          assertTrue(MathEx.equal(x, y), "compare返回0时，equal应该返回true");
+          assertFalse(MathEx.less(x, y), "compare返回0时，less应该返回false");
+          assertFalse(MathEx.greater(x, y), "compare返回0时，greater应该返回false");
+        }
+      }
+    }
+  }
+
   // ///////////////////////////////////////////////////////////////////////////
   //
   //                      数值限制测试

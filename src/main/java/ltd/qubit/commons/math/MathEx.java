@@ -2559,6 +2559,172 @@ public final class MathEx {
     return x >= y - epsilon;
   }
 
+  /**
+   * 比较两个float值，使用默认精度。
+   * <p>
+   * 返回值的含义：
+   * <ul>
+   *   <li>负数：x小于y</li>
+   *   <li>0：x等于y（在精度范围内）</li>
+   *   <li>正数：x大于y</li>
+   * </ul>
+   * <p>
+   * 对特殊值的处理：
+   * <ul>
+   *   <li>NaN被认为等于NaN，且大于任何非NaN值</li>
+   *   <li>正无穷大于任何有限值和负无穷</li>
+   *   <li>负无穷小于任何有限值和正无穷</li>
+   * </ul>
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @return
+   *     比较结果：负数表示x<y，0表示x=y，正数表示x>y
+   */
+  public static int compare(final float x, final float y) {
+    return compare(x, y, floatEpsilon);
+  }
+
+  /**
+   * 比较两个float值，使用指定精度。
+   * <p>
+   * 返回值的含义：
+   * <ul>
+   *   <li>负数：x小于y</li>
+   *   <li>0：x等于y（在精度范围内）</li>
+   *   <li>正数：x大于y</li>
+   * </ul>
+   * <p>
+   * 对特殊值的处理：
+   * <ul>
+   *   <li>NaN被认为等于NaN，且大于任何非NaN值</li>
+   *   <li>正无穷大于任何有限值和负无穷</li>
+   *   <li>负无穷小于任何有限值和正无穷</li>
+   * </ul>
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @param epsilon
+   *     精度容差
+   * @return
+   *     比较结果：负数表示x<y，0表示x=y，正数表示x>y
+   */
+  public static int compare(final float x, final float y, final float epsilon) {
+    // 处理NaN情况
+    if (Float.isNaN(x) && Float.isNaN(y)) {
+      return 0;
+    }
+    if (Float.isNaN(x)) {
+      return 1;  // NaN > 任何非NaN值
+    }
+    if (Float.isNaN(y)) {
+      return -1; // 任何非NaN值 < NaN
+    }
+    
+    // 处理无穷大情况
+    if (Float.isInfinite(x) && Float.isInfinite(y)) {
+      return Float.compare(x, y);
+    }
+    if (Float.isInfinite(x)) {
+      return x > 0 ? 1 : -1;
+    }
+    if (Float.isInfinite(y)) {
+      return y > 0 ? -1 : 1;
+    }
+    
+    // 使用精度比较
+    if (equal(x, y, epsilon)) {
+      return 0;
+    }
+    return x < y ? -1 : 1;
+  }
+
+  /**
+   * 比较两个double值，使用默认精度。
+   * <p>
+   * 返回值的含义：
+   * <ul>
+   *   <li>负数：x小于y</li>
+   *   <li>0：x等于y（在精度范围内）</li>
+   *   <li>正数：x大于y</li>
+   * </ul>
+   * <p>
+   * 对特殊值的处理：
+   * <ul>
+   *   <li>NaN被认为等于NaN，且大于任何非NaN值</li>
+   *   <li>正无穷大于任何有限值和负无穷</li>
+   *   <li>负无穷小于任何有限值和正无穷</li>
+   * </ul>
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @return
+   *     比较结果：负数表示x<y，0表示x=y，正数表示x>y
+   */
+  public static int compare(final double x, final double y) {
+    return compare(x, y, doubleEpsilon);
+  }
+
+  /**
+   * 比较两个double值，使用指定精度。
+   * <p>
+   * 返回值的含义：
+   * <ul>
+   *   <li>负数：x小于y</li>
+   *   <li>0：x等于y（在精度范围内）</li>
+   *   <li>正数：x大于y</li>
+   * </ul>
+   * <p>
+   * 对特殊值的处理：
+   * <ul>
+   *   <li>NaN被认为等于NaN，且大于任何非NaN值</li>
+   *   <li>正无穷大于任何有限值和负无穷</li>
+   *   <li>负无穷小于任何有限值和正无穷</li>
+   * </ul>
+   *
+   * @param x
+   *     第一个值
+   * @param y
+   *     第二个值
+   * @param epsilon
+   *     精度容差
+   * @return
+   *     比较结果：负数表示x<y，0表示x=y，正数表示x>y
+   */
+  public static int compare(final double x, final double y, final double epsilon) {
+    // 处理NaN情况
+    if (Double.isNaN(x) && Double.isNaN(y)) {
+      return 0;
+    }
+    if (Double.isNaN(x)) {
+      return 1;  // NaN > 任何非NaN值
+    }
+    if (Double.isNaN(y)) {
+      return -1; // 任何非NaN值 < NaN
+    }    
+    // 处理无穷大情况
+    if (Double.isInfinite(x) && Double.isInfinite(y)) {
+      return Double.compare(x, y);
+    }
+    if (Double.isInfinite(x)) {
+      return x > 0 ? 1 : -1;
+    }
+    if (Double.isInfinite(y)) {
+      return y > 0 ? -1 : 1;
+    }    
+    // 使用精度比较
+    if (equal(x, y, epsilon)) {
+      return 0;
+    }
+    return x < y ? -1 : 1;
+  }
+
   // ///////////////////////////////////////////////////////////////////////////
   //
   //                      数值限制
