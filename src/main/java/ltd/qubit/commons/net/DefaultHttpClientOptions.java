@@ -28,10 +28,9 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.lang.ArrayUtils.EMPTY_STRING_ARRAY;
 
 /**
- * A default implementation of {@link HttpClientOptions} interface that uses a
- * {@link WritableConfig} to store all configuration values.
+ * {@link HttpClientOptions} 接口的默认实现，使用 {@link WritableConfig} 存储所有配置值。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public class DefaultHttpClientOptions implements HttpClientOptions,
@@ -44,19 +43,17 @@ public class DefaultHttpClientOptions implements HttpClientOptions,
   private WritableConfig config;
 
   /**
-   * Creates a new instance of {@link DefaultHttpClientOptions} with a default
-   * configuration.
+   * 使用默认配置创建 {@link DefaultHttpClientOptions} 的新实例。
    */
   public DefaultHttpClientOptions() {
     this(new DefaultConfig());
   }
 
   /**
-   * Creates a new instance of {@link DefaultHttpClientOptions} with the specified
-   * configuration.
+   * 使用指定配置创建 {@link DefaultHttpClientOptions} 的新实例。
    *
    * @param config
-   *     the configuration to use.
+   *     要使用的配置。
    */
   public DefaultHttpClientOptions(final WritableConfig config) {
     this.config = requireNonNull("config", config);

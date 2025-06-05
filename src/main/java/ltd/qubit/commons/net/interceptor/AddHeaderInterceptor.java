@@ -19,9 +19,9 @@ import okhttp3.Response;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * A interceptor which adds a header to the HTTP request.
+ * 向HTTP请求添加头部的拦截器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see ltd.qubit.commons.net.HttpClientBuilder
  * @see ltd.qubit.commons.net.ApiBuilder
  */
@@ -31,12 +31,12 @@ public class AddHeaderInterceptor implements Interceptor {
   private final String value;
 
   /**
-   * Creates a new {@link AddHeaderInterceptor} instance.
+   * 创建新的 {@link AddHeaderInterceptor} 实例。
    *
    * @param name
-   *     the name of the header to be added.
+   *     要添加的头部名称。
    * @param value
-   *     the value of the header to be added.
+   *     要添加的头部值。
    */
   public AddHeaderInterceptor(final String name, final String value) {
     this.name = requireNonNull("name", name);

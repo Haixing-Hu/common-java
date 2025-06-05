@@ -22,10 +22,10 @@ import ltd.qubit.commons.text.jackson.CustomizedJsonMapper;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * A converter that converts a response body to a JSON object.
+ * 将响应体转换为JSON对象的转换器。
  *
  * @param <T>
- *     the type of the JSON object.
+ *     JSON对象的类型。
  */
 public class ResponseBodyJsonConverter<T> implements Converter<ResponseBody, T> {
 

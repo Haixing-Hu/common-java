@@ -11,9 +11,9 @@ package ltd.qubit.commons.net;
 import ltd.qubit.commons.lang.EnumUtils;
 
 /**
- * Enumeration of the parts of an URL.
+ * URL各部分的枚举。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public enum UrlPart {
 
