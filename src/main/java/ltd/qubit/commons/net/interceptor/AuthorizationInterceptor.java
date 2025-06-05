@@ -9,49 +9,55 @@
 package ltd.qubit.commons.net.interceptor;
 
 /**
- * A interceptor which adds an authorization header to the HTTP request.
+ * 向HTTP请求添加授权头部的拦截器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see ltd.qubit.commons.net.HttpClientBuilder
  * @see ltd.qubit.commons.net.ApiBuilder
  */
 public class AuthorizationInterceptor extends AddHeaderInterceptor {
 
+  /**
+   * 默认的授权头部名称。
+   */
   public static final String DEFAULT_HEADER_NAME = "Authorization";
 
+  /**
+   * 默认的密钥前缀。
+   */
   public static final String DEFAULT_KEY_PREFIX = "Bearer ";
 
   /**
-   * Creates a new {@link AuthorizationInterceptor} instance.
+   * 创建新的 {@link AuthorizationInterceptor} 实例。
    *
    * @param key
-   *     the authorization key.
+   *     授权密钥。
    */
   public AuthorizationInterceptor(final String key) {
     this(key, DEFAULT_HEADER_NAME, DEFAULT_KEY_PREFIX);
   }
 
   /**
-   * Creates a new {@link AuthorizationInterceptor} instance.
+   * 创建新的 {@link AuthorizationInterceptor} 实例。
    *
    * @param key
-   *     the authorization key.
+   *     授权密钥。
    * @param headerName
-   *     the name of the authorization header.
+   *     授权头部的名称。
    */
   public AuthorizationInterceptor(final String key, final String headerName) {
     this(key, headerName, DEFAULT_KEY_PREFIX);
   }
 
   /**
-   * Creates a new {@link AuthorizationInterceptor} instance.
+   * 创建新的 {@link AuthorizationInterceptor} 实例。
    *
    * @param key
-   *     the authorization key.
+   *     授权密钥。
    * @param headerName
-   *     the name of the authorization header.
+   *     授权头部的名称。
    * @param keyPrefix
-   *     the prefix of the authorization key.
+   *     授权密钥的前缀。
    */
   public AuthorizationInterceptor(final String key, final String headerName,
       final String keyPrefix) {

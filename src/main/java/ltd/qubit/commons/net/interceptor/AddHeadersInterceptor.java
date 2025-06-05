@@ -17,29 +17,42 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import ltd.qubit.commons.net.ApiBuilder;
+import ltd.qubit.commons.net.HttpClientBuilder;
+
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * A interceptor which adds a headers to the HTTP request.
+ * 向HTTP请求添加多个头部的拦截器。
  *
- * @author Haixing Hu
- * @see ltd.qubit.commons.net.HttpClientBuilder
- * @see ltd.qubit.commons.net.ApiBuilder
+ * @author 胡海星
+ * @see HttpClientBuilder
+ * @see ApiBuilder
  */
 public class AddHeadersInterceptor implements Interceptor {
 
   private final Map<String, String> headers;
 
   /**
-   * Creates a new {@link AddHeadersInterceptor} instance.
+   * 创建新的 {@link AddHeadersInterceptor} 实例。
    *
    * @param headers
-   *     the map of the headers to be added.
+   *     要添加的头部映射。
    */
   public AddHeadersInterceptor(final Map<String, String> headers) {
     this.headers = requireNonNull("headers", headers);
   }
 
+  /**
+   * 拦截HTTP请求并添加头部。
+   *
+   * @param chain
+   *     拦截器链。
+   * @return
+   *     拦截后的响应。
+   * @throws IOException
+   *     如果发生IO错误。
+   */
   @Nonnull
   @Override
   public Response intercept(final Chain chain) throws IOException {

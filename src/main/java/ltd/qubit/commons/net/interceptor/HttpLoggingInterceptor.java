@@ -38,15 +38,18 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * A wrapper of {@link okhttp3.logging.HttpLoggingInterceptor} which logs the
- * HTTP request and response messages using a SLF4J logger.
+ * {@link okhttp3.logging.HttpLoggingInterceptor} 的包装器，使用SLF4J日志记录器
+ * 记录HTTP请求和响应消息。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see ltd.qubit.commons.net.HttpClientBuilder
  * @see ltd.qubit.commons.net.ApiBuilder
  */
 public class HttpLoggingInterceptor implements Interceptor {
 
+  /**
+   * 默认的敏感头部列表。
+   */
   public static final String[] DEFAULT_SENSITIVE_HEADERS = {
       "Authorization",
       "Api-Key",
@@ -75,26 +78,26 @@ public class HttpLoggingInterceptor implements Interceptor {
   private final Set<String> sensitiveHeaders;
 
   /**
-   * Creates a new instance of HttpLoggingInterceptor with default sensitive headers.
+   * 创建使用默认敏感头部的HttpLoggingInterceptor新实例。
    *
    * @param logger
-   *     the SLF4J logger to use for logging.
+   *     用于记录日志的SLF4J记录器。
    * @param options
-   *     the HTTP client options.
+   *     HTTP客户端选项。
    */
   public HttpLoggingInterceptor(final Logger logger, final HttpClientOptions options) {
     this(logger, options, DEFAULT_SENSITIVE_HEADERS);
   }
 
   /**
-   * Creates a new instance of HttpLoggingInterceptor with custom sensitive headers.
+   * 创建使用自定义敏感头部的HttpLoggingInterceptor新实例。
    *
    * @param logger
-   *     the SLF4J logger to use for logging.
+   *     用于记录日志的SLF4J记录器。
    * @param options
-   *     the HTTP client options.
+   *     HTTP客户端选项。
    * @param sensitiveHeaders
-   *     the list of sensitive header names to mask in logs.
+   *     需要在日志中屏蔽的敏感头部名称列表。
    */
   public HttpLoggingInterceptor(final Logger logger, final HttpClientOptions options,
       final String[] sensitiveHeaders) {
@@ -111,12 +114,12 @@ public class HttpLoggingInterceptor implements Interceptor {
   }
 
   /**
-   * Adds a new sensitive HTTP header name to the list.
+   * 向列表中添加新的敏感HTTP头部名称。
    *
    * @param headerName
-   *     the name of the header to consider sensitive.
+   *     要视为敏感的头部名称。
    * @return
-   *     this instance, for method chaining.
+   *     此实例，用于方法链式调用。
    */
   public HttpLoggingInterceptor addSensitiveHttpHeader(final String headerName) {
     if (headerName != null && !headerName.isEmpty()) {
@@ -126,12 +129,12 @@ public class HttpLoggingInterceptor implements Interceptor {
   }
 
   /**
-   * Adds multiple sensitive HTTP headers whose values should be masked in logs.
+   * 添加多个在日志中应被屏蔽的敏感HTTP头部。
    *
    * @param headerNames
-   *     the names of the headers to consider sensitive.
+   *     要视为敏感的头部名称。
    * @return
-   *     this instance, for method chaining.
+   *     此实例，用于方法链式调用。
    */
   public HttpLoggingInterceptor addSensitiveHttpHeaders(final String... headerNames) {
     if (headerNames != null) {
@@ -322,7 +325,7 @@ public class HttpLoggingInterceptor implements Interceptor {
   }
 
   /**
-   * 判断请求或响应的头部是否使用了未知的编码方式（非 identity 和 gzip）。
+   * 判断请求或响应的头部是否使用了未知的编码方式（非identity和gzip）。
    */
   private boolean bodyHasUnknownEncoding(final Headers headers) {
     final String contentEncoding = headers.get("Content-Encoding");
@@ -332,7 +335,7 @@ public class HttpLoggingInterceptor implements Interceptor {
   }
 
   /**
-   * 简单判断响应是否有响应体。对于 HEAD 请求以及某些响应码通常没有响应体。
+   * 简单判断响应是否有响应体。对于HEAD请求以及某些响应码通常没有响应体。
    */
   private boolean hasBody(final Response response) {
     // HEAD 请求没有响应体

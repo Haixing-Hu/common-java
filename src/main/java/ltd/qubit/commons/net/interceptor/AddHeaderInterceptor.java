@@ -43,6 +43,16 @@ public class AddHeaderInterceptor implements Interceptor {
     this.value = requireNonNull("value", value);
   }
 
+  /**
+   * 拦截HTTP请求并添加头部。
+   *
+   * @param chain
+   *     拦截器链。
+   * @return
+   *     拦截后的响应。
+   * @throws IOException
+   *     如果发生IO错误。
+   */
   @Nonnull
   @Override
   public Response intercept(final Chain chain) throws IOException {

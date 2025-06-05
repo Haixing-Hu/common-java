@@ -22,19 +22,19 @@ import okhttp3.EventListener;
 import okhttp3.Protocol;
 
 /**
- * A listener for logging OkHttp connection events.
+ * 用于记录OkHttp连接事件的监听器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class ConnectionLoggingEventListener extends EventListener {
 
   private final Logger logger;
 
   /**
-   * Creates a new connection event listener.
+   * 创建新的连接事件监听器。
    *
    * @param logger
-   *     The logger used to log connection events.
+   *     用于记录连接事件的日志记录器。
    */
   public ConnectionLoggingEventListener(@Nonnull final Logger logger) {
     this.logger = logger;
