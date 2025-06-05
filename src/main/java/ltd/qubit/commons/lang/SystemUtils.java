@@ -28,6 +28,7 @@ import javax.annotation.concurrent.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ltd.qubit.commons.config.error.ConfigurationError;
 import ltd.qubit.commons.io.IoUtils;
 import ltd.qubit.commons.reflect.ConstructorUtils;
 
@@ -1218,6 +1219,76 @@ public final class SystemUtils {
     LOGGER.debug(RESOURCE_URL_IS, res, url);
     if (url == null) {
       LOGGER.debug(CANNOT_FIND_RESOURCE, res);
+    }
+    return url;
+  }
+
+  /**
+   * Gets the URL of a specified resource.
+   *
+   * @param resource
+   *     the name of the specified resource. If the resource name starts with
+   *     "/", it is considered an absolute file path. If not, it is considered a
+   *     relative file path. If the resource name starts with "classpath:" or
+   *     "classpath*:", the prefix is removed and the resource is loaded from the
+   *     classpath.
+   * @return the URL of the specified resource.
+   * @throws ConfigurationError
+   *     If the resource is not found.
+   */
+  public static URL getResourceElseThrow(final String resource)
+      throws ConfigurationError {
+    final URL url = getResource(resource);
+    if (url == null) {
+      throw new ConfigurationError("Cannot find the resource: " + resource);
+    }
+    return url;
+  }
+
+  /**
+   * Gets the URL of a specified resource associated with a given class.
+   *
+   * @param resource
+   *     the name of the specified resource. If the resource name starts with
+   *     "/", it is considered an absolute file path. If not, it is considered a
+   *     relative file path. If the resource name starts with "classpath:" or
+   *     "classpath*:", the prefix is removed and the resource is loaded from the
+   *     classpath.
+   * @param clazz
+   *     the class to which the resource is associated with.
+   * @return the URL of the specified resource.
+   * @throws ConfigurationError
+   *     If the resource is not found.
+   */
+  public static URL getResourceElseThrow(final String resource, final Class<?> clazz)
+      throws ConfigurationError {
+    final URL url = getResource(resource, clazz);
+    if (url == null) {
+      throw new ConfigurationError("Cannot find the resource: " + resource);
+    }
+    return url;
+  }
+
+  /**
+   * Gets the URL of a specified resource associated with a given class loader.
+   *
+   * @param resource
+   *     the name of the specified resource. If the resource name starts with
+   *     "/", it is considered an absolute file path. If not, it is considered a
+   *     relative file path. If the resource name starts with "classpath:" or
+   *     "classpath*:", the prefix is removed and the resource is loaded from the
+   *     classpath.
+   * @param loader
+   *     the class loader to which the resource is associated with.
+   * @return the URL of the specified resource.
+   * @throws ConfigurationError
+   *     If the resource is not found.
+   */
+  public static URL getResourceElseThrow(final String resource, final ClassLoader loader)
+      throws ConfigurationError {
+    final URL url = getResource(resource, loader);
+    if (url == null) {
+      throw new ConfigurationError("Cannot find the resource: " + resource);
     }
     return url;
   }
