@@ -27,9 +27,9 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static ltd.qubit.commons.lang.ObjectUtils.defaultIfNull;
 
 /**
- * A builder used to build the URI with parameters.
+ * 用于构建带参数URI的构建器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class UriBuilder {
 
@@ -50,19 +50,19 @@ public class UriBuilder {
   private String encodedFragment;
 
   /**
-   * Constructs an empty instance.
+   * 构造空实例。
    */
   public UriBuilder() {
     this.port = -1;
   }
 
   /**
-   * Construct an instance from the string which must be a valid URI.
+   * 从字符串构造实例，该字符串必须是有效的URI。
    *
    * @param string
-   *     a valid URI in string form
+   *     字符串形式的有效URI
    * @throws URISyntaxException
-   *     if the input is not a valid URI
+   *     如果输入不是有效的URI
    */
   public UriBuilder(final String string) throws URISyntaxException {
     this(new URI(string), null);

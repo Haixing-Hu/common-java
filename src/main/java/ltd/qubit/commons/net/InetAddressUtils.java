@@ -12,6 +12,11 @@ import java.util.regex.Pattern;
 
 import ltd.qubit.commons.io.Endian;
 
+/**
+ * 提供处理网络地址的实用函数。
+ *
+ * @author 胡海星
+ */
 public class InetAddressUtils {
 
   private InetAddressUtils() {
@@ -50,11 +55,11 @@ public class InetAddressUtils {
   private static final int MAX_COLON_COUNT = 7;
 
   /**
-   * Checks whether the parameter is a valid IPv4 address.
+   * 检查参数是否为有效的IPv4地址。
    *
    * @param input
-   *     the address string to check for validity
-   * @return true if the input parameter is a valid IPv4 address
+   *     要检查有效性的地址字符串
+   * @return 如果输入参数是有效的IPv4地址，则返回true
    */
   public static boolean isIPv4Address(final String input) {
     return IPV4_PATTERN.matcher(input).matches();
