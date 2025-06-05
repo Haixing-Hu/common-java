@@ -98,6 +98,11 @@ public interface HttpClientOptions {
   String KEY_SENSITIVE_HTTP_HEADERS = "http.logging.sensitive-headers";
 
   /**
+   * The configuration key of whether to use only IPv4 addresses in DNS resolution.
+   */
+  String KEY_USE_ONLY_IPV4_ADDRESS = "http.dns.use-only-ipv4";
+
+  /**
    * The default timeout for the connection in seconds.
    */
   int DEFAULT_CONNECTION_TIMEOUT = 10;
@@ -146,6 +151,11 @@ public interface HttpClientOptions {
    * The default value of whether to log the HTTP response body.
    */
   boolean DEFAULT_LOG_HTTP_RESPONSE_BODY = true;
+
+  /**
+   * The default value of whether to use only IPv4 addresses in DNS resolution.
+   */
+  boolean DEFAULT_USE_ONLY_IPV4_ADDRESS = false;
 
   /**
    * Gets whether to use the proxy server.
@@ -491,5 +501,23 @@ public interface HttpClientOptions {
    *     this object, to support method chaining.
    */
   HttpClientOptions clearSensitiveHttpHeaders();
+
+  /**
+   * Gets whether to use only IPv4 addresses in DNS resolution.
+   *
+   * @return
+   *     {@code true} if only IPv4 addresses should be used; {@code false} otherwise.
+   */
+  boolean isUseOnlyIpV4Address();
+
+  /**
+   * Sets whether to use only IPv4 addresses in DNS resolution.
+   *
+   * @param useOnlyIpV4Address
+   *     {@code true} if only IPv4 addresses should be used; {@code false} otherwise.
+   * @return
+   *     this object, to support method chaining.
+   */
+  HttpClientOptions setUseOnlyIpV4Address(boolean useOnlyIpV4Address);
 
 }

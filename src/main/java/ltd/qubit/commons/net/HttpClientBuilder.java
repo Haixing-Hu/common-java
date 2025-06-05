@@ -26,6 +26,7 @@ import okhttp3.OkHttpClient;
 import ltd.qubit.commons.config.WritableConfig;
 import ltd.qubit.commons.net.interceptor.ConnectionLoggingEventListener;
 import ltd.qubit.commons.net.interceptor.HttpLoggingInterceptor;
+import ltd.qubit.commons.net.interceptor.SkipIpV6AddressDns;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
@@ -320,6 +321,17 @@ public class HttpClientBuilder implements HttpClientOptions {
     return this;
   }
 
+  @Override
+  public boolean isUseOnlyIpV4Address() {
+    return options.isUseOnlyIpV4Address();
+  }
+
+  @Override
+  public HttpClientBuilder setUseOnlyIpV4Address(final boolean useOnlyIpV4Address) {
+    options.setUseOnlyIpV4Address(useOnlyIpV4Address);
+    return this;
+  }
+
   /**
    * Adds an interceptor to the HTTP client.
    * <p>
@@ -411,6 +423,12 @@ public class HttpClientBuilder implements HttpClientOptions {
     builder.connectTimeout(getConnectionTimeout(), TimeUnit.SECONDS)
            .readTimeout(getReadTimeout(), TimeUnit.SECONDS)
            .writeTimeout(getWriteTimeout(), TimeUnit.SECONDS);
+
+    // Configure DNS to use only IPv4 addresses if needed
+    if (isUseOnlyIpV4Address()) {
+      logger.info("Configuring HTTP client to use only IPv4 addresses for DNS resolution.");
+      builder.dns(SkipIpV6AddressDns.INSTANCE);
+    }
 
     // Configure proxy if needed
     if (isUseProxy()) {

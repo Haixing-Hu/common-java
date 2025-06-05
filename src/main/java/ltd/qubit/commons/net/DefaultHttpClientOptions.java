@@ -298,4 +298,15 @@ public class DefaultHttpClientOptions implements HttpClientOptions,
     config.remove(KEY_SENSITIVE_HTTP_HEADERS);
     return this;
   }
+
+  @Override
+  public boolean isUseOnlyIpV4Address() {
+    return config.getBoolean(KEY_USE_ONLY_IPV4_ADDRESS, DEFAULT_USE_ONLY_IPV4_ADDRESS);
+  }
+
+  @Override
+  public HttpClientOptions setUseOnlyIpV4Address(final boolean useOnlyIpV4Address) {
+    config.setBoolean(KEY_USE_ONLY_IPV4_ADDRESS, useOnlyIpV4Address);
+    return this;
+  }
 }
