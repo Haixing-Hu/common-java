@@ -17,14 +17,49 @@ import ltd.qubit.commons.lang.EnumUtils;
  */
 public enum UrlPart {
 
+  /**
+   * 完整的URL。
+   */
   URL,
+
+  /**
+   * 方案。
+   */
   SCHEME,
+
+  /**
+   * 用户信息。
+   */
   USER_INFO,
+
+  /**
+   * 主机名。
+   */
   HOSTNAME,
+
+  /**
+   * 域名。
+   */
   DOMAIN,
+
+  /**
+   * 端口。
+   */
   PORT,
+  
+  /**
+   * 路径。
+   */
   PATH,
+
+  /**
+   * 查询。
+   */
   QUERY,
+
+  /**
+   * 片段。
+   */
   FRAGMENT;
 
   @Override

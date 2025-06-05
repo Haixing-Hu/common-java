@@ -37,35 +37,32 @@ import static ltd.qubit.commons.lang.ObjectUtils.defaultIfNull;
 import static ltd.qubit.commons.lang.StringUtils.EMPTY;
 
 /**
- * A {@link Url} object stores the information of a normalized absolute URL.
+ * {@link Url}对象存储标准化绝对URL的信息。
  * <p>
- * Normalization of a URL will do the follow transformation on the URL string:</p>
+ * URL的标准化将对URL字符串执行以下转换：</p>
  *
  * <ul>
- * <li>Trim the leading and trailing white spaces of the URL.</li>
- * <li>Decode all escaped octets in the URL.</li>
- * <li>Lower case the scheme and host of the URL. For example, transform
- * "Http://WWW.google.Com/Index.html" to "http://www.google.com/Index.html".
- * Note that the case of the path of the URL is not changed.</li>
- * <li>Remove the default port of the URL. For example, transform
- * "http://www.google.com:80/current.html" to "http://www.google.com/current.html"</li>
- * <li>Remove the fragment (or "anchor", also known as the "reference") part of
- * the URL. For example, transform "http://www.google.com/current.html#top" to
+ * <li>去除URL的前导和尾随空白字符。</li>
+ * <li>解码URL中的所有转义八位字节。</li>
+ * <li>将URL的协议和主机转换为小写。例如，将
+ * "Http://WWW.google.Com/Index.html" 转换为 "http://www.google.com/Index.html"。
+ * 注意URL路径的大小写不会改变。</li>
+ * <li>移除URL的默认端口。例如，将
+ * "http://www.google.com:80/current.html" 转换为 "http://www.google.com/current.html"</li>
+ * <li>移除URL的片段（或"锚点"，也称为"引用"）部分。例如，将
+ * "http://www.google.com/current.html#top" 转换为
  * "http://www.google.com/current.html"</li>
- * <li>Add the missing '/' after the host if path is empty. For example,
- * transform "http://www.google.com" to "http://www.google.com/"</li>
- * <li>Remove the consecutive '/' in the path of the URL, for example, transform
- * "http://www.google.com/map//current.html" to
+ * <li>如果路径为空，在主机后添加缺失的'/'。例如，
+ * 将"http://www.google.com" 转换为 "http://www.google.com/"</li>
+ * <li>移除URL路径中连续的'/'，例如，将
+ * "http://www.google.com/map//current.html" 转换为
  * "http://www.google.com/map/current.html"</li>
- * <li>Remove the consecutive '/' in the path of the URL, for example, transform
- * "http://www.google.com/map//current.html" to
- * "http://www.google.com/map/current.html"</li>
- * <li>Remove all the redundant "." and "..". For example, transform
- * "http://www.google.com/map/./../../current.html" to
+ * <li>移除所有冗余的"."和".."。例如，将
+ * "http://www.google.com/map/./../../current.html" 转换为
  * "http://www.google.com/current.html"</li>
  * </ul>
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializable {
@@ -78,28 +75,23 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
   }
 
   /**
-   * Creates a URL by parsing the given string.
+   * 通过解析给定字符串创建URL。
    *
-   * <p>This convenience factory method works as if by invoking the
-   * {@link #Url(String)} constructor; any {@link MalformedURLException} thrown
-   * by the constructor is caught and wrapped in a new
-   * {@link IllegalArgumentException} object, which is then thrown.
+   * <p>这个便捷的工厂方法就像调用{@link #Url(String)}构造函数一样工作；
+   * 构造函数抛出的任何{@link MalformedURLException}都会被捕获并包装在新的
+   * {@link IllegalArgumentException}对象中，然后抛出。
    *
-   * <p>This method is provided for use in situations where it is known that the
-   * given string is a legal URL, for example for URL constants declared within
-   * in a program, and so it would be considered a programming error for the
-   * string not to parse as such. The constructors, which throw
-   * {@link MalformedURLException} directly, should be used situations where a
-   * URL is being constructed from user input or from some other source that may
-   * be prone to errors.
+   * <p>此方法适用于已知给定字符串是合法URL的情况，例如程序中声明的URL常量，
+   * 因此字符串无法解析将被视为编程错误。在从用户输入或其他可能出错的来源构造URL时，
+   * 应使用直接抛出{@link MalformedURLException}的构造函数。
    *
    * @param str
-   *          The string to be parsed into a URL
-   * @return The new URL
+   *          要解析为URL的字符串
+   * @return 新的URL
    * @throws NullPointerException
-   *           If {@code str} is {@code null}.
+   *           如果{@code str}为{@code null}
    * @throws IllegalArgumentException
-   *           If the given string violates RFC&nbsp;2396
+   *           如果给定字符串违反RFC&nbsp;2396
    */
   public static Url create(final String str) {
     try {
@@ -121,6 +113,9 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
 
   private final String url;
 
+  /**
+   * 构造一个空的URL对象。
+   */
   public Url() {
     scheme = EMPTY;
     userInfo = null;
@@ -133,6 +128,14 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
     url = EMPTY;
   }
 
+  /**
+   * 从字符串构造URL对象。
+   *
+   * @param str
+   *     URL字符串
+   * @throws MalformedURLException
+   *     如果字符串不是有效的URL
+   */
   public Url(@Nullable final String str) throws MalformedURLException {
     this(createUri(str));
   }
@@ -156,12 +159,34 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
     }
   }
 
+  /**
+   * 构造URL对象。
+   *
+   * @param scheme
+   *     协议
+   * @param hostname
+   *     主机名
+   * @param path
+   *     路径
+   */
   public Url(@Nullable final String scheme,
              @Nullable final String hostname,
              @Nullable final String path) {
     this(scheme, null, hostname, -1, path, null, null);
   }
 
+  /**
+   * 构造URL对象。
+   *
+   * @param scheme
+   *     协议
+   * @param hostname
+   *     主机名
+   * @param port
+   *     端口
+   * @param path
+   *     路径
+   */
   public Url(@Nullable final String scheme,
              @Nullable final String hostname,
              final int port,
@@ -169,6 +194,24 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
     this(scheme, null, hostname, port, path, null, null);
   }
 
+  /**
+   * 构造URL对象。
+   *
+   * @param scheme
+   *     协议
+   * @param userInfo
+   *     用户信息
+   * @param hostname
+   *     主机名
+   * @param port
+   *     端口
+   * @param path
+   *     路径
+   * @param query
+   *     查询
+   * @param fragment
+   *     片段
+   */
   public Url(@Nullable final String scheme,
              @Nullable final String userInfo,
              @Nullable final String hostname,
@@ -188,6 +231,16 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
         this.port, this.path, this.query, this.fragment);
   }
 
+  /**
+   * 从基础URL和相对路径构造URL对象。
+   *
+   * @param base
+   *     基础URL
+   * @param relative
+   *     相对路径
+   * @throws MalformedURLException
+   *     如果构造的URL无效
+   */
   public Url(final Url base, final String relative)
       throws MalformedURLException {
     this(createUri(base, relative));
@@ -210,6 +263,14 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
     }
   }
 
+  /**
+   * 从URL对象构造Url对象。
+   *
+   * @param url
+   *     URL对象
+   * @throws MalformedURLException
+   *     如果URL无效
+   */
   public Url(final URL url) throws MalformedURLException {
     this(createUri(url));
   }
@@ -225,6 +286,12 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
     }
   }
 
+  /**
+   * 从URI对象构造Url对象。
+   *
+   * @param uri
+   *     URI对象
+   */
   public Url(@Nullable final URI uri) {
     if (uri == null) {
       scheme = EMPTY;
@@ -422,6 +489,11 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
     }
   }
 
+  /**
+   * 检查URL是否为空。
+   *
+   * @return 如果URL为空返回true
+   */
   public boolean isEmpty() {
     return (url == null)
         || (url.length() == 0)
@@ -429,79 +501,82 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
         || (hostname.length() == 0);
   }
 
+  /**
+   * 检查URL是否为根路径。
+   *
+   * @return 如果URL为根路径返回true
+   */
   public boolean isRoot() {
     return (path != null) && (path.length() == 1) && (path.charAt(0) == '/');
   }
 
   /**
-   * Gets the scheme of this URL.
+   * 获取此URL的协议。
    *
-   * @return the scheme of this URL, which never be null, but could be empty.
+   * @return 此URL的协议，永远不会为null，但可能为空
    */
   public String scheme() {
     return scheme;
   }
 
   /**
-   * Gets the user info of this URL.
+   * 获取此URL的用户信息。
    *
-   * @return the user info of this URL, which never be null, but could be empty.
+   * @return 此URL的用户信息，永远不会为null，但可能为空
    */
   public String userInfo() {
     return userInfo;
   }
 
   /**
-   * Gets the hostname of this URL.
+   * 获取此URL的主机名。
    *
-   * @return the hostname of this URL, which never be null, but could be empty.
+   * @return 此URL的主机名，永远不会为null，但可能为空
    */
   public String hostname() {
     return hostname;
   }
 
   /**
-   * Gets the host of this URL.
+   * 获取此URL的主机。
    *
-   * @return the host of this URL, which never be null.
+   * @return 此URL的主机，永远不会为null
    */
   public Host host() {
     return new Host(scheme, hostname, port);
   }
 
   /**
-   * Gets the domain of this URL.
+   * 获取此URL的域名。
    *
-   * @return the domain of this URL, which never be null, but could be empty.
+   * @return 此URL的域名，永远不会为null，但可能为空
    */
   public String domain() {
     return domain;
   }
 
   /**
-   * Gets the port of this URL.
+   * 获取此URL的端口。
    *
-   * @return the port of this URL, which could be -1 if the port is not
-   *         specified or if the port is the default port for standard
-   *         schemes.
+   * @return 此URL的端口，如果未指定端口或端口是标准协议的默认端口，则可能为-1
    */
   public int port() {
     return port;
   }
 
   /**
-   * Gets the path of this URL.
+   * 获取此URL的路径。
    *
-   * @return the path of this URL, which never be null, but could be empty.
+   * @return 此URL的路径，永远不会为null，但可能为空
    */
   public String path() {
     return path;
   }
 
   /**
-   * Gets the filename of this URL.
+   * 获取此URL的文件名。
    *
-   * @return the filename of this URL, which never be null, but could be empty.
+   * @return 此URL的文件名，永远不会为null，但可能为空
    */
   public String filename() {
     final int pos = path.lastIndexOf('/');
@@ -513,26 +588,22 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
   }
 
   /**
-   * Gets the query of this URL.
+   * 获取此URL的查询。
    *
-   * @return the query of this URL, which never be null, but could be empty.
+   * @return 此URL的查询，永远不会为null，但可能为空
    */
   public String query() {
     return query;
   }
 
   /**
-   * Gets the parameters (key/value pairs) encoded in the query part of this
-   * URL.
+   * 获取在此URL查询部分中编码的参数（键/值对）。
    *
    * @param parameterSeparator
-   *          the character used to separator the parameters. Usually this
-   *          character is '&amp;' or ';'.
+   *          用于分隔参数的字符。通常此字符是'&amp;'或';'
    * @param keyValueSeparator
-   *          the character used to separator the key and value. Usually this
-   *          character is '='.
-   * @return the map of encoded parameters, or an empty list if no such
-   *         parameters.
+   *          用于分隔键和值的字符。通常此字符是'='
+   * @return 编码参数的映射，如果没有此类参数则返回空列表
    */
   public Map<String, String> getEncodedParameters(final char parameterSeparator,
       final char keyValueSeparator) {
@@ -566,21 +637,20 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
   }
 
   /**
-   * Gets the fragment of this URL.
+   * 获取此URL的片段。
    *
-   * @return the fragment of this URL, which never be null, but could be empty.
+   * @return 此URL的片段，永远不会为null，但可能为空
    */
   public String fragment() {
     return fragment;
   }
 
   /**
-   * Gets the specified part of this URL.
+   * 获取此URL的指定部分。
    *
    * @param part
-   *          the part to be get.
-   * @return the specified part of this URL, which never be null, but could be
-   *         empty.
+   *          要获取的部分
+   * @return 此URL的指定部分，永远不会为null，但可能为空
    */
   public String get(final UrlPart part) {
     switch (part) {
@@ -607,16 +677,35 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
     }
   }
 
-  //  stop checkstyle: AbbreviationAsWordInNameCheck
+  /**
+   * 转换为URL对象。
+   *
+   * @return URL对象
+   * @throws MalformedURLException
+   *     如果URL格式无效
+   */
   public URL toURL() throws MalformedURLException {
     return new URL(url);
   }
 
+  /**
+   * 转换为URI对象。
+   *
+   * @return URI对象
+   * @throws URISyntaxException
+   *     如果URI格式无效
+   */
   public URI toURI() throws URISyntaxException {
     return new URI(scheme, userInfo, hostname, port, path, query, fragment);
   }
-  //  resume checkstyle: AbbreviationAsWordInNameCheck
 
+  /**
+   * 打开此URL的输入流。
+   *
+   * @return 输入流
+   * @throws IOException
+   *     如果发生I/O错误
+   */
   public InputStream openStream() throws IOException {
     final URL result;
     try {
@@ -627,6 +716,11 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
     return UrlUtils.openStream(result);
   }
 
+  /**
+   * 克隆当前URL对象。
+   *
+   * @return 克隆的URL对象
+   */
   @Override
   public Url cloneEx() {
     return new Url(scheme, userInfo, hostname, port, path,
@@ -673,6 +767,13 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
     return Equality.equals(url, other.url);
   }
 
+  /**
+   * 与另一个URL对象进行比较。
+   *
+   * @param other
+   *     要比较的另一个URL对象
+   * @return 比较结果
+   */
   @Override
   public int compareTo(final Url other) {
     if (this == other) {

@@ -8,6 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.net;
 
+import java.io.Serial;
+
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import ltd.qubit.commons.lang.StringUtils;
@@ -25,16 +28,39 @@ import ltd.qubit.commons.text.tostring.ToStringBuilder;
 @Immutable
 public final class TopLevelDomain extends DomainSuffix {
 
+  @Serial
   private static final long serialVersionUID = - 3880755857023154643L;
 
+  /**
+   * 顶级域名类型。
+   */
   public enum Type {
+    /**
+     * 基础设施域名。
+     */
     INFRASTRUCTURE,
+
+    /**
+     * 通用域名。
+     */
     GENERIC,
-    COUNTRY
+
+    /**
+     * 国家代码域名。
+     */
+    COUNTRY,
   }
 
-  Type type;
-  String country;
+  /**
+   * 顶级域名类型。
+   */
+  final Type type;
+
+  /**
+   * 国家名称。
+   */
+  @Nullable
+  final String country;
 
   TopLevelDomain() {
     type = Type.GENERIC;
@@ -42,16 +68,28 @@ public final class TopLevelDomain extends DomainSuffix {
   }
 
   TopLevelDomain(final String domain, final Status status,
-      final String description, final Type type, final String country) {
+      final String description, final Type type, @Nullable final String country) {
     super(domain, status, description);
     this.type = type;
     this.country = country;
   }
 
+  /**
+   * 获取顶级域名类型。
+   *
+   * @return
+   *     顶级域名类型。
+   */
   public Type getType() {
     return type;
   }
 
+  /**
+   * 判断是否为顶级域名。
+   *
+   * @return
+   *     是否为顶级域名。
+   */
   @Override
   public boolean isTopLevel() {
     return true;
@@ -62,6 +100,7 @@ public final class TopLevelDomain extends DomainSuffix {
    *
    * @return 国家名称或null
    */
+  @Nullable
   public String getCountry() {
     return country;
   }

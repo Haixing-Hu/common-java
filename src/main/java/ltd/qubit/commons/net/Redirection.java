@@ -18,9 +18,9 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * A {@link Redirection} object stores the information about a URL redirection.
+ * {@link Redirection}对象存储URL重定向的信息。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class Redirection implements Serializable,
@@ -32,11 +32,31 @@ public final class Redirection implements Serializable,
   public final boolean temporary;
   public final long    refreshTime;
 
+  /**
+   * 构造一个重定向对象。
+   *
+   * @param url
+   *     重定向的目标URL
+   * @param temporary
+   *     是否为临时重定向
+   * @param refreshTime
+   *     刷新时间
+   */
   public Redirection(final Url url, final boolean temporary,
       final long refreshTime) {
     this.url = Argument.requireNonNull("url", url);
     this.temporary = temporary;
     this.refreshTime = refreshTime;
+  }
+
+  /**
+   * 克隆当前重定向对象。
+   *
+   * @return 克隆的重定向对象
+   */
+  @Override
+  public Redirection cloneEx() {
+    return new Redirection(url, temporary, refreshTime);
   }
 
   @Override
@@ -67,21 +87,16 @@ public final class Redirection implements Serializable,
   }
 
   @Override
-  public int compareTo(final Redirection other) {
-    return url.compareTo(other.url);
-  }
-
-  @Override
-  public Redirection cloneEx() {
-    return new Redirection(url, temporary, refreshTime);
-  }
-
-  @Override
   public String toString() {
     return new ToStringBuilder(this)
                .append("url", url)
                .append("temporary", temporary)
                .append("refreshTime", refreshTime)
                .toString();
+  }
+
+  @Override
+  public int compareTo(final Redirection other) {
+    return url.compareTo(other.url);
   }
 }

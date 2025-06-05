@@ -1689,6 +1689,12 @@ public class RandomUserAgent {
   }
   // resume checkstyle: LineLength
 
+  /**
+   * 获取随机用户代理。
+   * 
+   * @return
+   *     随机用户代理。
+   */
   public static String get() {
     final String browser = randomChooseBrowser(ALL_BROWSERS);
     final String[] userAgents = USER_AGENT_MAP.get(browser);
@@ -1696,6 +1702,14 @@ public class RandomUserAgent {
     return random.choose(userAgents);
   }
 
+  /**
+   * 获取随机用户代理。
+   * 
+   * @param browsers
+   *     浏览器列表。
+   * @return
+   *     随机用户代理。
+   */
   public static String get(final String ... browsers) {
     final String browser = randomChooseBrowser(browsers);
     final String[] userAgents = USER_AGENT_MAP.get(browser);
@@ -1703,6 +1717,14 @@ public class RandomUserAgent {
     return random.choose(userAgents);
   }
 
+  /**
+   * 随机选择浏览器。
+   * 
+   * @param browsers
+   *     浏览器列表。
+   * @return
+   *     随机选择的浏览器。
+   */
   @NotNull
   public static String randomChooseBrowser(final String ... browsers) {
     if (browsers.length == 0) {

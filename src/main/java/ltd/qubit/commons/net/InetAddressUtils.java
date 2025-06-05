@@ -65,29 +65,34 @@ public class InetAddressUtils {
     return IPV4_PATTERN.matcher(input).matches();
   }
 
+  /**
+   * 检查参数是否为有效的IPv4映射的IPv6地址。
+   *
+   * @param input
+   *     要检查有效性的地址字符串
+   * @return 如果输入参数是有效的IPv4映射的IPv6地址，则返回true
+   */
   public static boolean isIPv4MappedIPv64Address(final String input) {
     return IPV4_MAPPED_IPV6_PATTERN.matcher(input).matches();
   }
 
   /**
-   * Checks whether the parameter is a valid standard (non-compressed) IPv6
-   * address.
+   * 检查参数是否为有效的标准（非压缩）IPv6地址。
    *
    * @param input
-   *     the address string to check for validity
-   * @return true if the input parameter is a valid standard (non-compressed)
-   *     IPv6 address
+   *     要检查有效性的地址字符串
+   * @return 如果输入参数是有效的标准（非压缩）IPv6地址，则返回true
    */
   public static boolean isIPv6StdAddress(final String input) {
     return IPV6_STD_PATTERN.matcher(input).matches();
   }
 
   /**
-   * Checks whether the parameter is a valid compressed IPv6 address.
+   * 检查参数是否为有效的压缩IPv6地址。
    *
    * @param input
-   *     the address string to check for validity
-   * @return true if the input parameter is a valid compressed IPv6 address
+   *     要检查有效性的地址字符串
+   * @return 如果输入参数是有效的压缩IPv6地址，则返回true
    */
   public static boolean isIPv6HexCompressedAddress(final String input) {
     int colonCount = 0;
@@ -101,29 +106,26 @@ public class InetAddressUtils {
   }
 
   /**
-   * Checks whether the parameter is a valid IPv6 address (including
-   * compressed).
+   * 检查参数是否为有效的IPv6地址（包括压缩地址）。
    *
    * @param input
-   *     the address string to check for validity
-   * @return true if the input parameter is a valid standard or compressed IPv6
-   *     address
+   *     要检查有效性的地址字符串
+   * @return 如果输入参数是有效的标准或压缩IPv6地址，则返回true
    */
   public static boolean isIPv6Address(final String input) {
     return isIPv6StdAddress(input) || isIPv6HexCompressedAddress(input);
   }
 
   /**
-   * Formats the IPv4 address.
+   * 格式化IPv4地址。
    *
    * @param ip
-   *     the IPv4 address to be formatted, represented as an integer in the
-   *     specified endianess.
+   *     要格式化的IPv4地址，表示为指定字节序的整数
    * @param endian
-   *     the endianess of the integer.
+   *     整数的字节序
    * @return
-   *     the formatted IPv4 address.
-   * @author Haixing Hu
+   *     格式化后的IPv4地址
+   * @author 胡海星
    */
   public static String formatIPv4Address(final int ip, final Endian endian) {
     final int x1 = (ip & 0xFF);         // lowest bits
@@ -144,13 +146,12 @@ public class InetAddressUtils {
   }
 
   /**
-   * Formats the hardware MAC address.
+   * 格式化硬件MAC地址。
    *
    * @param macAddressBytes
-   *     the hardware MAC address to be formatted, represented as an array of
-   *     bytes.
+   *     要格式化的硬件MAC地址，表示为字节数组
    * @return
-   *     the formatted hardware MAC address.
+   *     格式化后的硬件MAC地址
    */
   public static String formatMacAddress(final byte[] macAddressBytes) {
     if (macAddressBytes == null) {

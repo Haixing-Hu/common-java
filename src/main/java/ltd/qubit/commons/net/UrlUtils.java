@@ -80,19 +80,17 @@ public final class UrlUtils {
   }
 
   /**
-   * Given a host name, returns the domain suffix corresponding to the last
-   * public part of the host name.
+   * 给定主机名，返回对应于主机名最后公共部分的域名后缀。
    *
-   * <p>For example,
+   * <p>例如：
    * <pre><code>
    * UrlUtils.getDomainSuffix("www.google.com")    = "com"
    * UrlUtils.getDomainSuffix("www.sina.com.cn")   = "com.cn"
    * </code></pre>
    *
    * @param host
-   *     a host name.
-   * @return the domain suffix corresponding to the last public part of the host
-   *     name.
+   *     主机名
+   * @return 对应于主机名最后公共部分的域名后缀
    */
   public static DomainSuffix getDomainSuffix(@Nonnull final String host) {
     final DomainSuffixRegistry tlds = DomainSuffixRegistry.getInstance();
@@ -111,18 +109,16 @@ public final class UrlUtils {
   }
 
   /**
-   * Opens an {@link InputStream} for a {@link URL}.
+   * 为{@link URL}打开{@link InputStream}。
    * <p>
-   * This function does the same thing as {@link URL#openStream()}, except
-   * that it will decode the compressed stream.
+   * 此函数与{@link URL#openStream()}执行相同的操作，但它会解码压缩流。
    *
    * @param url
-   *     an {@link URL} object.
-   * @return the {@link InputStream} opened for the URL. If the content is
-   *     encoded using some compression algorithm, the function will decode the
-   *     encoded stream.
+   *     {@link URL}对象
+   * @return 为URL打开的{@link InputStream}。如果内容使用某种压缩算法编码，
+   *         该函数将解码编码的流
    * @throws IOException
-   *     if any error occurs.
+   *     如果发生任何错误
    */
   public static InputStream openStream(final URL url) throws IOException {
     final String userAgent = RandomUserAgent.get(RandomUserAgent.CHROME);
@@ -144,18 +140,16 @@ public final class UrlUtils {
   }
 
   /**
-   * Opens an {@link InputStream} for a {@link URL}.
+   * 为{@link Url}打开{@link InputStream}。
    *
-   * <p>This function does the same thing as {@link URL#openStream()}, except
-   * that it will decode the compressed stream.
+   * <p>此函数与{@link URL#openStream()}执行相同的操作，但它会解码压缩流。
    *
    * @param url
-   *     an {@link Url} object.
-   * @return the {@link InputStream} opened for the URL. If the content is
-   *     encoded using some compression algorithm, the function will decode the
-   *     encoded stream.
+   *     {@link Url}对象
+   * @return 为URL打开的{@link InputStream}。如果内容使用某种压缩算法编码，
+   *         该函数将解码编码的流
    * @throws IOException
-   *     if any error occurs.
+   *     如果发生任何错误
    */
   public static InputStream openStream(final Url url) throws IOException {
     final URL theUrl;
@@ -168,18 +162,16 @@ public final class UrlUtils {
   }
 
   /**
-   * Opens an {@link InputStream} for a {@link URI}.
+   * 为{@link URI}打开{@link InputStream}。
    *
-   * <p>This function does the same thing as {@link URL#openStream()}, except
-   * that it will decode the compressed stream.
+   * <p>此函数与{@link URL#openStream()}执行相同的操作，但它会解码压缩流。
    *
    * @param uri
-   *     an {@link URI} object.
-   * @return the {@link InputStream} opened for the URL. If the content is
-   *     encoded using some compression algorithm, the function will decode the
-   *     encoded stream.
+   *     {@link URI}对象
+   * @return 为URI打开的{@link InputStream}。如果内容使用某种压缩算法编码，
+   *         该函数将解码编码的流
    * @throws IOException
-   *     if any error occurs.
+   *     如果发生任何错误
    */
   public static InputStream openStream(final URI uri) throws IOException {
     final URL url;
@@ -192,13 +184,13 @@ public final class UrlUtils {
   }
 
   /**
-   * Converts a list of strings to a list of {@link Url} objects.
+   * 将字符串列表转换为{@link Url}对象列表。
    *
    * @param urls
-   *     the list of strings to be converted.
-   * @return the list of {@link Url} objects converted from the list of strings.
+   *     要转换的字符串列表
+   * @return 从字符串列表转换的{@link Url}对象列表
    * @throws MalformedURLException
-   *     if any string in the list is a malformed URL.
+   *     如果列表中的任何字符串是格式错误的URL
    */
   public static List<Url> toUrls(final List<String> urls)
       throws MalformedURLException {
@@ -211,12 +203,31 @@ public final class UrlUtils {
     return result;
   }
 
+  /**
+   * 下载URL内容到临时文件。
+   *
+   * @param url
+   *     要下载的URL
+   * @return 下载内容的临时文件
+   * @throws IOException
+   *     如果发生I/O错误
+   */
   public static File download(final URL url) throws IOException {
     final File temp = FileUtils.getTempFile();
     download(url, temp);
     return temp;
   }
 
+  /**
+   * 下载URL内容到指定文件。
+   *
+   * @param url
+   *     要下载的URL
+   * @param outputFile
+   *     输出文件
+   * @throws IOException
+   *     如果发生I/O错误
+   */
   public static void download(final URL url, final File outputFile)
       throws IOException {
     OutputStream output = null;
@@ -234,7 +245,17 @@ public final class UrlUtils {
     }
   }
 
-
+  /**
+   * 下载URL内容为字符串。
+   *
+   * @param url
+   *     要下载的URL
+   * @param charset
+   *     字符编码
+   * @return 下载的内容字符串
+   * @throws IOException
+   *     如果发生I/O错误
+   */
   public static String downloadAsString(final URL url, final Charset charset)
       throws IOException {
     try (final InputStream input = openStream(url)) {
@@ -246,16 +267,16 @@ public final class UrlUtils {
   }
 
   /**
-   * Build a URI with parameters.
+   * 构建带参数的URI。
    *
    * @param uri
-   *     the specified URI.
+   *     指定的URI
    * @param params
-   *     the parameters.
+   *     参数映射
    * @return
-   *     the built URI with parameters.
+   *     构建的带参数URI
    * @throws RuntimeException
-   *     if the format of the URI is invalid.
+   *     如果URI格式无效
    */
   public static URI buildUri(final URI uri, final Map<String, String> params) {
     final UriBuilder builder = new UriBuilder(uri);
@@ -268,17 +289,15 @@ public final class UrlUtils {
   }
 
   /**
-   * Build a BASE-64 encoded data URL from the binary data represented as a
-   * BASE-64 encoded string.
+   * 从表示为BASE-64编码字符串的二进制数据构建BASE-64编码的数据URL。
    *
    * @param mimeType
-   *     the MIME type of the data.
+   *     数据的MIME类型
    * @param base64String
-   *     the BASE-64 encoded string.
+   *     BASE-64编码字符串
    * @return
-   *     the built URL, represented as a string. Note that the URL cannot be
-   *     represented as a {@link URL} object, since the old {@link URL} class
-   *     does not support the {@code data:} protocol.
+   *     构建的URL，表示为字符串。注意URL不能表示为{@link URL}对象，
+   *     因为旧的{@link URL}类不支持{@code data:}协议
    */
   public static String buildBase64DataUrl(final String mimeType, final String base64String) {
     requireNonNull("mimeType", mimeType);
@@ -287,15 +306,14 @@ public final class UrlUtils {
   }
 
   /**
-   * Build a BASE-64 encoded data URI from the binary data represented as a
-   * BASE-64 encoded string.
+   * 从表示为BASE-64编码字符串的二进制数据构建BASE-64编码的数据URI。
    *
    * @param mimeType
-   *     the MIME type of the data.
+   *     数据的MIME类型
    * @param base64String
-   *     the BASE-64 encoded string.
+   *     BASE-64编码字符串
    * @return
-   *     the built URI.
+   *     构建的URI
    */
   public static URI buildBase64DataUri(final String mimeType, final String base64String) {
     final String url = buildBase64DataUrl(mimeType, base64String);
@@ -303,18 +321,17 @@ public final class UrlUtils {
   }
 
   /**
-   * Build a BASE-64 encoded data URL from the binary data.
+   * 从二进制数据构建BASE-64编码的数据URL。
    *
    * @param mimeType
-   *     the MIME type of the data.
+   *     数据的MIME类型
    * @param data
-   *     the binary data.
+   *     二进制数据
    * @return
-   *     the built URL, represented as a string. Note that the URL cannot be
-   *     represented as a {@link URL} object, since the old {@link URL} class
-   *     does not support the {@code data:} protocol.
+   *     构建的URL，表示为字符串。注意URL不能表示为{@link URL}对象，
+   *     因为旧的{@link URL}类不支持{@code data:}协议
    * @throws RuntimeException
-   *     if any I/O error occurs.
+   *     如果发生任何I/O错误
    */
   public static String buildBase64DataUrl(final String mimeType, final byte[] data) {
     requireNonNull("mimeType", mimeType);
@@ -328,14 +345,14 @@ public final class UrlUtils {
   }
 
   /**
-   * Build a BASE-64 encoded data URL from the binary data.
+   * 从二进制数据构建BASE-64编码的数据URI。
    *
    * @param mimeType
-   *     the MIME type of the data.
+   *     数据的MIME类型
    * @param data
-   *     the binary data.
+   *     二进制数据
    * @return
-   *     the built URI.
+   *     构建的URI
    */
   public static URI buildBase64DataUri(final String mimeType, final byte[] data) {
     final String url = buildBase64DataUrl(mimeType, data);

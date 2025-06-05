@@ -69,22 +69,24 @@ public class UriBuilder {
   }
 
   /**
-   * Construct an instance from the provided URI.
+   * 从提供的URI构造实例。
    *
    * @param uri
-   *     the provided URI.
+   *     提供的URI
    */
   public UriBuilder(final URI uri) {
     this(uri, null);
   }
 
   /**
-   * Construct an instance from the string which must be a valid URI.
+   * 从字符串构造实例，该字符串必须是有效的URI。
    *
    * @param string
-   *     a valid URI in string form
+   *     字符串形式的有效URI
+   * @param charset
+   *     指定的字符集
    * @throws URISyntaxException
-   *     if the input is not a valid URI
+   *     如果输入不是有效的URI
    */
   public UriBuilder(final String string, final Charset charset)
       throws URISyntaxException {
@@ -92,12 +94,12 @@ public class UriBuilder {
   }
 
   /**
-   * Construct an instance from the provided URI.
+   * 从提供的URI构造实例。
    *
    * @param uri
-   *     the provided URI.
+   *     提供的URI
    * @param charset
-   *     the specified charset.
+   *     指定的字符集
    */
   public UriBuilder(final URI uri, final Charset charset) {
     setCharset(charset);
@@ -105,10 +107,11 @@ public class UriBuilder {
   }
 
   /**
-   * Construct an instance.
+   * 设置字符集。
    *
    * @param charset
-   *     the specified charset.
+   *     指定的字符集
+   * @return 当前实例
    */
   public UriBuilder setCharset(final Charset charset) {
     this.charset = charset;
@@ -116,9 +119,9 @@ public class UriBuilder {
   }
 
   /**
-   * Gets the encoding charset.
+   * 获取编码字符集。
    *
-   * @return the encoding charset.
+   * @return 编码字符集
    */
   public Charset getCharset() {
     return charset;
@@ -140,9 +143,11 @@ public class UriBuilder {
   }
 
   /**
-   * Builds a {@link URI} instance.
+   * 构建一个{@link URI}实例。
    *
-   * @return the building result.
+   * @return 构建结果
+   * @throws URISyntaxException
+   *     如果URI格式无效
    */
   public URI build() throws URISyntaxException {
     return new URI(buildString());
@@ -243,7 +248,11 @@ public class UriBuilder {
   }
 
   /**
-   * Sets URI scheme.
+   * 设置URI的协议。
+   *
+   * @param scheme
+   *     URI协议
+   * @return 当前实例
    */
   public UriBuilder setScheme(final String scheme) {
     this.scheme = scheme;
@@ -251,8 +260,11 @@ public class UriBuilder {
   }
 
   /**
-   * Sets URI user info. The value is expected to be unescaped and may contain
-   * non ASCII characters.
+   * 设置URI用户信息。值应该是未转义的，可能包含非ASCII字符。
+   *
+   * @param userInfo
+   *     用户信息
+   * @return 当前实例
    */
   public UriBuilder setUserInfo(final String userInfo) {
     this.userInfo = userInfo;
@@ -263,15 +275,24 @@ public class UriBuilder {
   }
 
   /**
-   * Sets URI user info as a combination of username and password. These values
-   * are expected to be unescaped and may contain non ASCII characters.
+   * 设置URI用户信息为用户名和密码的组合。这些值应该是未转义的，可能包含非ASCII字符。
+   *
+   * @param username
+   *     用户名
+   * @param password
+   *     密码
+   * @return 当前实例
    */
   public UriBuilder setUserInfo(final String username, final String password) {
     return setUserInfo(username + ':' + password);
   }
 
   /**
-   * Sets URI host.
+   * 设置URI主机。
+   *
+   * @param host
+   *     主机名
+   * @return 当前实例
    */
   public UriBuilder setHost(final String host) {
     this.host = host;
@@ -281,7 +302,11 @@ public class UriBuilder {
   }
 
   /**
-   * Sets URI port.
+   * 设置URI端口。
+   *
+   * @param port
+   *     端口号
+   * @return 当前实例
    */
   public UriBuilder setPort(final int port) {
     this.port = (port < 0 ? -1 : port);
@@ -291,10 +316,11 @@ public class UriBuilder {
   }
 
   /**
-   * Sets URI path. The value is expected to be unescaped and may contain non
-   * ASCII characters.
+   * 设置URI路径。值应该是未转义的，可能包含非ASCII字符。
    *
-   * @return this.
+   * @param path
+   *     路径
+   * @return 当前实例
    */
   public UriBuilder setPath(final String path) {
     return setPathSegments(
@@ -302,10 +328,11 @@ public class UriBuilder {
   }
 
   /**
-   * Sets URI path. The value is expected to be unescaped and may contain non
-   * ASCII characters.
+   * 设置URI路径段。值应该是未转义的，可能包含非ASCII字符。
    *
-   * @return this.
+   * @param pathSegments
+   *     路径段数组
+   * @return 当前实例
    */
   public UriBuilder setPathSegments(final String... pathSegments) {
     this.pathSegments = (pathSegments.length > 0 ? Arrays.asList(pathSegments) :
@@ -316,10 +343,11 @@ public class UriBuilder {
   }
 
   /**
-   * Sets URI path. The value is expected to be unescaped and may contain non
-   * ASCII characters.
+   * 设置URI路径段列表。值应该是未转义的，可能包含非ASCII字符。
    *
-   * @return this.
+   * @param pathSegments
+   *     路径段列表
+   * @return 当前实例
    */
   public UriBuilder setPathSegments(final List<String> pathSegments) {
     if (pathSegments != null && pathSegments.size() > 0) {
@@ -333,7 +361,9 @@ public class UriBuilder {
   }
 
   /**
-   * Removes URI query.
+   * 移除URI查询。
+   *
+   * @return 当前实例
    */
   public UriBuilder removeQuery() {
     this.queryParams = null;
@@ -344,11 +374,13 @@ public class UriBuilder {
   }
 
   /**
-   * Sets URI query parameters. The parameter name / values are expected to be
-   * unescaped and may contain non ASCII characters.
+   * 设置URI查询参数。参数名/值应该是未转义的，可能包含非ASCII字符。
    * <p>
-   * Please note query parameters and custom query component are mutually
-   * exclusive. This method will remove custom query if present.
+   * 请注意查询参数和自定义查询组件是互斥的。此方法将删除已存在的自定义查询。
+   *
+   * @param nvps
+   *     名称-值对列表
+   * @return 当前实例
    */
   public UriBuilder setParameters(final List<NameValuePair> nvps) {
     if (queryParams == null) {
@@ -364,11 +396,13 @@ public class UriBuilder {
   }
 
   /**
-   * Sets URI query parameters. The parameter name / values are expected to be
-   * unescaped and may contain non ASCII characters.
+   * 设置URI查询参数。参数名/值应该是未转义的，可能包含非ASCII字符。
    * <p>
-   * Please note query parameters and custom query component are mutually
-   * exclusive. This method will remove custom query if present.
+   * 请注意查询参数和自定义查询组件是互斥的。此方法将删除已存在的自定义查询。
+   *
+   * @param nvps
+   *     名称-值对数组
+   * @return 当前实例
    */
   public UriBuilder setParameters(final NameValuePair... nvps) {
     if (queryParams == null) {
@@ -384,12 +418,13 @@ public class UriBuilder {
   }
 
   /**
-   * Sets parameter of URI query overriding existing value if set. The parameter
-   * name and value are expected to be unescaped and may contain non ASCII
-   * characters.
+   * 设置URI查询参数，覆盖已存在的值。参数名和值应该是未转义的，可能包含非ASCII字符。
    * <p>
-   * Please note query parameters and custom query component are mutually
-   * exclusive. This method will remove custom query if present.
+   * 请注意查询参数和自定义查询组件是互斥的。此方法将删除已存在的自定义查询。
+   *
+   * @param params
+   *     参数映射
+   * @return 当前实例
    */
   public UriBuilder setParameters(final Map<String, String> params) {
     if (queryParams == null) {
@@ -406,12 +441,15 @@ public class UriBuilder {
   }
 
   /**
-   * Sets parameter of URI query overriding existing value if set. The parameter
-   * name and value are expected to be unescaped and may contain non ASCII
-   * characters.
+   * 设置URI查询参数，覆盖已存在的值。参数名和值应该是未转义的，可能包含非ASCII字符。
    * <p>
-   * Please note query parameters and custom query component are mutually
-   * exclusive. This method will remove custom query if present.
+   * 请注意查询参数和自定义查询组件是互斥的。此方法将删除已存在的自定义查询。
+   *
+   * @param param
+   *     参数名
+   * @param value
+   *     参数值
+   * @return 当前实例
    */
   public UriBuilder setParameter(final String param, final String value) {
     if (queryParams == null) {
@@ -428,16 +466,15 @@ public class UriBuilder {
   }
 
   /**
-   * Adds parameter to URI query. The parameter name and value are expected to
-   * be unescaped and may contain non ASCII characters.
+   * 向URI查询添加参数。参数名和值应该是未转义的，可能包含非ASCII字符。
    * <p>
-   * Please note query parameters and custom query component are mutually
-   * exclusive. This method will remove custom query if present.
+   * 请注意查询参数和自定义查询组件是互斥的。此方法将删除已存在的自定义查询。
    *
    * @param param
-   *     the parameter name.
+   *     参数名
    * @param value
-   *     the parameter value.
+   *     参数值
+   * @return 当前实例
    */
   public UriBuilder addParameter(final String param, final String value) {
     if (queryParams == null) {
@@ -451,14 +488,13 @@ public class UriBuilder {
   }
 
   /**
-   * Adds URI query parameters. The parameter name / values are expected to be
-   * unescaped and may contain non ASCII characters.
+   * 向URI查询添加参数。参数名/值应该是未转义的，可能包含非ASCII字符。
    * <p>
-   * Please note query parameters and custom query component are mutually
-   * exclusive. This method will remove custom query if present.
+   * 请注意查询参数和自定义查询组件是互斥的。此方法将删除已存在的自定义查询。
    *
    * @param pairs
-   *     the parameters to add.
+   *     要添加的参数列表
+   * @return 当前实例
    */
   public UriBuilder addParameters(final List<NameValuePair> pairs) {
     if (queryParams == null) {
@@ -472,16 +508,15 @@ public class UriBuilder {
   }
 
   /**
-   * Adds parameter to URI query. The parameter name and value are expected to
-   * be unescaped and may contain non ASCII characters.
+   * 向URI查询添加参数。参数名和值应该是未转义的，可能包含非ASCII字符。
    * <p>
-   * Please note query parameters and custom query component are mutually
-   * exclusive. This method will remove custom query if present.
+   * 请注意查询参数和自定义查询组件是互斥的。此方法将删除已存在的自定义查询。
    *
    * @param <T>
-   *     the type of the parameter value.
+   *     参数值的类型
    * @param params
-   *     the parameters to add.
+   *     要添加的参数映射
+   * @return 当前实例
    */
   public <T> UriBuilder addParameter(final Map<String, T> params) {
     if (queryParams == null) {
@@ -498,7 +533,9 @@ public class UriBuilder {
   }
 
   /**
-   * Clears URI query parameters.
+   * 清除URI查询参数。
+   *
+   * @return 当前实例
    */
   public UriBuilder clearParameters() {
     queryParams = null;
@@ -508,11 +545,13 @@ public class UriBuilder {
   }
 
   /**
-   * Sets custom URI query. The value is expected to be unescaped and may
-   * contain non ASCII characters.
+   * 设置自定义URI查询。值应该是未转义的，可能包含非ASCII字符。
    * <p>
-   * Please note query parameters and custom query component are mutually
-   * exclusive. This method will remove query parameters if present.
+   * 请注意查询参数和自定义查询组件是互斥的。此方法将删除已存在的查询参数。
+   *
+   * @param query
+   *     自定义查询字符串
+   * @return 当前实例
    */
   public UriBuilder setCustomQuery(final String query) {
     this.query = query;
@@ -523,8 +562,11 @@ public class UriBuilder {
   }
 
   /**
-   * Sets URI fragment. The value is expected to be unescaped and may contain
-   * non ASCII characters.
+   * 设置URI片段。值应该是未转义的，可能包含非ASCII字符。
+   *
+   * @param fragment
+   *     片段字符串
+   * @return 当前实例
    */
   public UriBuilder setFragment(final String fragment) {
     this.fragment = fragment;
@@ -532,35 +574,75 @@ public class UriBuilder {
     return this;
   }
 
+  /**
+   * 检查URI是否为绝对URI。
+   *
+   * @return 如果是绝对URI返回true
+   */
   public boolean isAbsolute() {
     return scheme != null;
   }
 
+  /**
+   * 检查URI是否为不透明URI。
+   *
+   * @return 如果是不透明URI返回true
+   */
   public boolean isOpaque() {
     return (pathSegments == null) && (encodedPath == null);
   }
 
+  /**
+   * 获取URI的协议。
+   *
+   * @return URI协议
+   */
   public String getScheme() {
     return scheme;
   }
 
+  /**
+   * 获取URI的用户信息。
+   *
+   * @return 用户信息
+   */
   public String getUserInfo() {
     return userInfo;
   }
 
+  /**
+   * 获取URI的主机。
+   *
+   * @return 主机名
+   */
   public String getHost() {
     return host;
   }
 
+  /**
+   * 获取URI的端口。
+   *
+   * @return 端口号
+   */
   public int getPort() {
     return port;
   }
 
+  /**
+   * 检查路径是否为空。
+   *
+   * @return 如果路径为空返回true
+   */
   public boolean isPathEmpty() {
     return (pathSegments == null || pathSegments.isEmpty()) && (encodedPath
         == null || encodedPath.isEmpty());
   }
 
+  /**
+   * 获取路径段列表。
+   *
+   * @return 路径段列表
+   */
   public List<String> getPathSegments() {
     if (pathSegments != null) {
       return new ArrayList<>(pathSegments);
@@ -569,6 +651,11 @@ public class UriBuilder {
     }
   }
 
+  /**
+   * 获取路径字符串。
+   *
+   * @return 路径字符串
+   */
   public String getPath() {
     if (pathSegments == null) {
       return null;
@@ -580,11 +667,21 @@ public class UriBuilder {
     return result.toString();
   }
 
+  /**
+   * 检查查询是否为空。
+   *
+   * @return 如果查询为空返回true
+   */
   public boolean isQueryEmpty() {
     return (queryParams == null || queryParams.isEmpty()) && (encodedQuery
         == null);
   }
 
+  /**
+   * 获取查询参数列表。
+   *
+   * @return 查询参数列表
+   */
   public List<NameValuePair> getQueryParams() {
     if (queryParams != null) {
       return new ArrayList<>(queryParams);
@@ -593,6 +690,11 @@ public class UriBuilder {
     }
   }
 
+  /**
+   * 获取片段。
+   *
+   * @return 片段字符串
+   */
   public String getFragment() {
     return fragment;
   }

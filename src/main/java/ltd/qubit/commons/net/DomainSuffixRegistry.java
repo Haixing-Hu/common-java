@@ -125,6 +125,12 @@ public final class DomainSuffixRegistry {
 
   private final HashMap<String, DomainSuffix> domains;
 
+  /**
+   * 使用指定的配置资源名称创建一个新的DomainSuffixRegistry实例。
+   * 
+   * @param configResourceName
+   *     配置资源名称。
+   */
   public DomainSuffixRegistry(final String configResourceName) {
     domains = new HashMap<>();
     final ClassLoader classLoader = DomainSuffixRegistry.class.getClassLoader();
@@ -137,6 +143,12 @@ public final class DomainSuffixRegistry {
     }
   }
 
+  /**
+   * 使用指定的配置资源URL创建一个新的DomainSuffixRegistry实例。
+   * 
+   * @param configResourceUrl
+   *     配置资源URL。
+   */
   public DomainSuffixRegistry(final URL configResourceUrl) {
     domains = new HashMap<>();
     loadFromResource(configResourceUrl);

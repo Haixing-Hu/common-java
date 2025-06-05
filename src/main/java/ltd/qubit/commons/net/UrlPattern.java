@@ -22,9 +22,9 @@ import ltd.qubit.commons.text.Pattern;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * A {@link UrlPattern} represents a rule of pattern used to matches URLs.
+ * {@link UrlPattern}表示用于匹配URL的模式规则。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class UrlPattern implements Serializable, CloneableEx<UrlPattern> {
 
@@ -40,37 +40,83 @@ public class UrlPattern implements Serializable, CloneableEx<UrlPattern> {
 
   protected Pattern pattern;
 
+  /**
+   * 构造一个空的URL模式对象。
+   */
   public UrlPattern() {
     part = null;
     pattern = new Pattern();
   }
 
+  /**
+   * 构造URL模式对象。
+   *
+   * @param pattern
+   *     模式对象
+   */
   public UrlPattern(final Pattern pattern) {
     part = null;
     this.pattern = Argument.requireNonNull("pattern", pattern);
   }
 
+  /**
+   * 构造URL模式对象。
+   *
+   * @param part
+   *     URL部分
+   * @param pattern
+   *     模式对象
+   */
   public UrlPattern(final UrlPart part, final Pattern pattern) {
     this.part = part;
     this.pattern = Argument.requireNonNull("pattern", pattern);
   }
 
+  /**
+   * 获取URL部分。
+   *
+   * @return URL部分
+   */
   public UrlPart getPart() {
     return part;
   }
 
+  /**
+   * 设置URL部分。
+   *
+   * @param part
+   *     URL部分
+   */
   public void setPart(final UrlPart part) {
     this.part = part;
   }
 
+  /**
+   * 获取模式对象。
+   *
+   * @return 模式对象
+   */
   public Pattern getPattern() {
     return pattern;
   }
 
+  /**
+   * 设置模式对象。
+   *
+   * @param pattern
+   *     模式对象
+   */
   public void setPattern(final Pattern pattern) {
     this.pattern = Argument.requireNonNull("pattern", pattern);
   }
 
+  /**
+   * 检查URL是否匹配当前模式。
+   *
+   * @param url
+   *     要检查的URL
+   * @return 如果URL匹配当前模式返回true
+   */
   public boolean matches(@Nullable final Url url) {
     if (url == null) {
       return false;
@@ -79,6 +125,11 @@ public class UrlPattern implements Serializable, CloneableEx<UrlPattern> {
     return pattern.matches(str);
   }
 
+  /**
+   * 克隆当前URL模式对象。
+   *
+   * @return 克隆的URL模式对象
+   */
   @Override
   public UrlPattern cloneEx() {
     return new UrlPattern(part, pattern.cloneEx());
