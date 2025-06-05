@@ -606,16 +606,16 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Adds multiple converter factories to the API client.
+   * 向API客户端添加多个转换器工厂。
    * <p>
-   * Converter factories are used to convert between HTTP bodies and Java objects.
+   * 转换器工厂用于在HTTP主体和Java对象之间进行转换。
    *
    * @param converterFactories
-   *     the array of converter factories to add, elements must not be {@code null}.
+   *     要添加的转换器工厂数组，元素不能为 {@code null}。
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，用于支持方法链式调用。
    * @throws NullPointerException
-   *     if any of the converter factories is {@code null}.
+   *     如果任何转换器工厂为 {@code null}。
    */
   public ApiBuilder addConverterFactories(final Converter.Factory ... converterFactories) {
     for (final Converter.Factory converterFactory : converterFactories) {
@@ -625,16 +625,16 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Adds a collection of converter factories to the API client.
+   * 向API客户端添加转换器工厂集合。
    * <p>
-   * Converter factories are used to convert between HTTP bodies and Java objects.
+   * 转换器工厂用于在HTTP主体和Java对象之间进行转换。
    *
    * @param converterFactories
-   *     the collection of converter factories to add, elements must not be {@code null}.
+   *     要添加的转换器工厂集合，元素不能为 {@code null}。
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，用于支持方法链式调用。
    * @throws NullPointerException
-   *     if any of the converter factories is {@code null}.
+   *     如果任何转换器工厂为 {@code null}。
    */
   public ApiBuilder addConverterFactories(final Collection<Converter.Factory> converterFactories) {
     for (final Converter.Factory converterFactory : converterFactories) {
@@ -644,10 +644,10 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Clears all converter factories previously added to this builder.
+   * 清除之前添加到此构建器的所有转换器工厂。
    *
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，用于支持方法链式调用。
    */
   public ApiBuilder clearConverterFactories() {
     converterFactories.clear();
@@ -655,17 +655,16 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Adds a call adapter factory to the API client.
+   * 向API客户端添加调用适配器工厂。
    * <p>
-   * Call adapter factories are used to adapt the response types of methods
-   * in the API interface.
+   * 调用适配器工厂用于适配API接口中方法的响应类型。
    *
    * @param callAdapterFactory
-   *     the call adapter factory to add, must not be {@code null}.
+   *     要添加的调用适配器工厂，不能为 {@code null}。
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，用于支持方法链式调用。
    * @throws NullPointerException
-   *     if the call adapter factory is {@code null}.
+   *     如果调用适配器工厂为 {@code null}。
    */
   public ApiBuilder addCallAdapterFactory(final CallAdapter.Factory callAdapterFactory) {
     callAdapterFactories.add(requireNonNull("callAdapterFactory", callAdapterFactory));
@@ -673,17 +672,16 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Adds multiple call adapter factories to the API client.
+   * 向API客户端添加多个调用适配器工厂。
    * <p>
-   * Call adapter factories are used to adapt the response types of methods
-   * in the API interface.
+   * 调用适配器工厂用于适配API接口中方法的响应类型。
    *
    * @param callAdapterFactories
-   *     the array of call adapter factories to add, elements must not be {@code null}.
+   *     要添加的调用适配器工厂数组，元素不能为 {@code null}。
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，用于支持方法链式调用。
    * @throws NullPointerException
-   *     if any of the call adapter factories is {@code null}.
+   *     如果任何调用适配器工厂为 {@code null}。
    */
   public ApiBuilder addCallAdapterFactories(final CallAdapter.Factory ... callAdapterFactories) {
     for (final CallAdapter.Factory callAdapterFactory : callAdapterFactories) {
@@ -693,17 +691,16 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Adds a collection of call adapter factories to the API client.
+   * 向API客户端添加调用适配器工厂集合。
    * <p>
-   * Call adapter factories are used to adapt the response types of methods
-   * in the API interface.
+   * 调用适配器工厂用于适配API接口中方法的响应类型。
    *
    * @param callAdapterFactories
-   *     the collection of call adapter factories to add, elements must not be {@code null}.
+   *     要添加的调用适配器工厂集合，元素不能为 {@code null}。
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，用于支持方法链式调用。
    * @throws NullPointerException
-   *     if any of the call adapter factories is {@code null}.
+   *     如果任何调用适配器工厂为 {@code null}。
    */
   public ApiBuilder addCallAdapterFactories(final Collection<CallAdapter.Factory> callAdapterFactories) {
     for (final CallAdapter.Factory callAdapterFactory : callAdapterFactories) {
@@ -713,10 +710,10 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Clears all call adapter factories previously added to this builder.
+   * 清除之前添加到此构建器的所有调用适配器工厂。
    *
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，用于支持方法链式调用。
    */
   public ApiBuilder clearCallAdapterFactories() {
     callAdapterFactories.clear();
@@ -758,7 +755,7 @@ public class ApiBuilder implements HttpClientOptions {
       final HttpClientBuilder clientBuilder = new HttpClientBuilder(logger, httpOptions)
           .addInterceptors(interceptors);
 
-      // Sensitive HTTP headers were already passed to HttpClientBuilder via httpOptions
+      // 敏感HTTP头部已通过httpOptions传递给HttpClientBuilder
 
       final OkHttpClient client = clientBuilder.build();
       retrofitBuilder.client(client);
