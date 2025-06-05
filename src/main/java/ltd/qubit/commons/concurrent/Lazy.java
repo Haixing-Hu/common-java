@@ -7,6 +7,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.concurrent;
+
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -39,6 +40,7 @@ public class Lazy<T> {
   /**
    * 懒加载对象的引用。
    */
+  @Nullable
   private volatile T value;
 
   /**
@@ -112,6 +114,19 @@ public class Lazy<T> {
       }
     }
     return value;
+  }
+
+  /**
+   * 设置懒加载对象的实例。
+   *
+   * @param value
+   *     懒加载对象的实例，允许为{@code null}。
+   */
+  public void set(@Nullable final T value) {
+    synchronized (this) {
+      this.value = value;
+      this.initialized = true;
+    }
   }
 
   /**

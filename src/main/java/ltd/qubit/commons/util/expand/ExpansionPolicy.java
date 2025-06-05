@@ -14,6 +14,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import ltd.qubit.commons.CommonsConfig;
+import ltd.qubit.commons.concurrent.Lazy;
 import ltd.qubit.commons.config.Config;
 
 /**
@@ -94,7 +95,10 @@ public abstract class ExpansionPolicy {
   private static final String INVALID_IMPLEMENTATION =
           "Invalid implementation of the abstract method.";
 
-  private static volatile ExpansionPolicy defaultPolicy = null;
+  private static final Lazy<ExpansionPolicy> lazyDefaultPolicy = Lazy.of(() -> {
+    final Config config = CommonsConfig.get();
+    return config.getInstance(PROPERTY_DEFAULT, MemorySavingExpansionPolicy.INSTANCE);
+  });
 
   /**
    * Gets the default {@link ExpansionPolicy}.
@@ -102,19 +106,13 @@ public abstract class ExpansionPolicy {
    * @return the default {@link ExpansionPolicy}.
    */
   public static ExpansionPolicy getDefault() {
-    if (defaultPolicy == null) {
-      synchronized (ExpansionPolicy.class) {
-        if (defaultPolicy == null) {
-          final Config config = CommonsConfig.get();
-          defaultPolicy = config.getInstance(PROPERTY_DEFAULT,
-                  MemorySavingExpansionPolicy.INSTANCE);
-        }
-      }
-    }
-    return defaultPolicy;
+    return lazyDefaultPolicy.get();
   }
 
-  private static volatile int initialCapacity = - 1;
+  private static final Lazy<Integer> lazyInitialCapacity = Lazy.of(() -> {
+    final Config config = CommonsConfig.get();
+    return config.getInt(PROPERTY_INITIAL_CAPACITY, DEFAULT_INITIAL_CAPACITY);
+  });
 
   /**
    * Gets the suggested initial capacity.
@@ -122,16 +120,7 @@ public abstract class ExpansionPolicy {
    * @return the suggested initial capacity.
    */
   public static int getInitialCapacity() {
-    if (initialCapacity < 0) {
-      synchronized (ExpansionPolicy.class) {
-        if (initialCapacity < 0) {
-          final Config config = CommonsConfig.get();
-          initialCapacity = config.getInt(PROPERTY_INITIAL_CAPACITY,
-                  DEFAULT_INITIAL_CAPACITY);
-        }
-      }
-    }
-    return initialCapacity;
+    return lazyInitialCapacity.get();
   }
 
   public abstract int getNextCapacity(int oldCapacity, int newLength);

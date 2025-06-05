@@ -8,54 +8,44 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons;
 
+import ltd.qubit.commons.concurrent.Lazy;
 import ltd.qubit.commons.config.Config;
-import ltd.qubit.commons.config.ConfigUtils;
+
+import static ltd.qubit.commons.config.ConfigUtils.loadXmlConfig;
 
 /**
- * Provides functions to get the configuration of the commons module and defines
- * the names and default values of properties.
+ * 提供获取通用模块配置的功能，并定义属性的名称和默认值。
  *
  * @author Haixing Hu
  */
 public final class CommonsConfig {
 
   /**
-   * The system property name for the XML resource of the configuration of commons module.
+   * 通用模块配置的 XML 资源的系统属性名称。
    */
   public static final String PROPERTY_RESOURCE = "CommonsConfig";
 
   /**
-   * The default name of XML resource of the configuration of commons module.
+   * 通用模块配置的 XML 资源的默认名称。
    */
   public static final String DEFAULT_RESOURCE = "common-java.xml";
 
   /**
-   * The static {@link Config} object.
+   * 静态的 {@link Config} 对象的懒加载实例。
    */
-  private static volatile Config config = null;
+  private static final Lazy<Config> lazyConfig = Lazy.of(() ->
+      loadXmlConfig(PROPERTY_RESOURCE, DEFAULT_RESOURCE, CommonsConfig.class));
 
   /**
-   * Gets the configuration of the commons module.
+   * 获取通用模块的配置。
    *
-   * <p>The function will first try to search in the system's properties to find
-   * the XML resource name of the configuration, if no such system properties
-   * exists, it will use the default XML resource. Then it will try to load
-   * the configuration from the XML file, and return the configuration if
-   * success, or return an empty configuration if failed.
+   * <p>该函数将首先尝试在系统属性中搜索配置的 XML 资源名称，如果没有找到这样的系统属性，
+   * 它将使用默认的 XML 资源。然后它将尝试从 XML 文件加载配置，如果成功则返回配置，
+   * 如果失败则返回空配置。
    *
-   * @return the configuration of the commons module, or an empty configuration
-   *         if failed.
+   * @return 通用模块的配置，如果失败则返回空配置。
    */
   public static Config get() {
-    // use the double checked locking
-    if (config == null) {
-      synchronized (CommonsConfig.class) {
-        if (config == null) {
-          config = ConfigUtils.loadXmlConfig(PROPERTY_RESOURCE,
-              DEFAULT_RESOURCE, CommonsConfig.class);
-        }
-      }
-    }
-    return config;
+    return lazyConfig.get();
   }
 }

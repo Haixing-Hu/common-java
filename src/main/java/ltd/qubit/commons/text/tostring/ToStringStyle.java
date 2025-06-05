@@ -8,22 +8,24 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.tostring;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Stack;
 
-import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.Immutable;
 
 import ltd.qubit.commons.CommonsConfig;
+import ltd.qubit.commons.concurrent.Lazy;
 import ltd.qubit.commons.config.Config;
 import ltd.qubit.commons.lang.ClassUtils;
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.lang.ObjectUtils;
 
+import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.lang.CharUtils.toUnicodeHexString;
 import static ltd.qubit.commons.lang.ObjectUtils.defaultIfNull;
 import static ltd.qubit.commons.lang.StringUtils.EMPTY;
@@ -69,6 +71,7 @@ import static ltd.qubit.commons.lang.StringUtils.EMPTY;
 @Immutable
 public class ToStringStyle implements Serializable {
 
+  @Serial
   private static final long serialVersionUID = - 3342036824434541804L;
 
   /**
@@ -102,32 +105,29 @@ public class ToStringStyle implements Serializable {
    */
   public static final String PROPERTY_DEFAULT = "ToStringStyle.default";
 
-  @GuardedBy("ToStringStyle.class")
-  private static volatile ToStringStyle defaultStyle = null;
+  private static final Lazy<ToStringStyle> lazyDefaultStyle = Lazy.of(() -> {
+    final Config config = CommonsConfig.get();
+    return config.getInstance(PROPERTY_DEFAULT, DefaultToStringStyle.INSTANCE);
+  });
 
   /**
-   * Gets the default {@link ToStringStyle}, which will be loaded from the
-   * configuration of the commons module.
+   * 获取默认的 {@link ToStringStyle}，它将从通用模块的配置中加载。
    *
-   * @return the default {@link ToStringStyle}.
+   * @return 默认的 {@link ToStringStyle}。
    */
   public static ToStringStyle getDefault() {
-    if (defaultStyle == null) {
-      synchronized (ToStringStyle.class) {
-        if (defaultStyle == null) {
-          final Config config = CommonsConfig.get();
-          defaultStyle = config.getInstance(PROPERTY_DEFAULT,
-              DefaultToStringStyle.INSTANCE);
-        }
-      }
-    }
-    return defaultStyle;
+    return lazyDefaultStyle.get();
   }
 
+  /**
+   * 设置默认的 {@link ToStringStyle}。
+   *
+   * @param style
+   *     默认的 {@link ToStringStyle}，不可为 {@code null}。
+   */
   public static void setDefault(final ToStringStyle style) {
-    synchronized (ToStringStyle.class) {
-      defaultStyle = style;
-    }
+    requireNonNull("style", style);
+    lazyDefaultStyle.set(style);
   }
 
   /**
