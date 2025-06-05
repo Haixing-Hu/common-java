@@ -320,13 +320,13 @@ public class HttpClientBuilder implements HttpClientOptions {
   }
 
   @Override
-  public boolean isUseOnlyIpV4Address() {
-    return options.isUseOnlyIpV4Address();
+  public boolean isIpV4Only() {
+    return options.isIpV4Only();
   }
 
   @Override
-  public HttpClientBuilder setUseOnlyIpV4Address(final boolean useOnlyIpV4Address) {
-    options.setUseOnlyIpV4Address(useOnlyIpV4Address);
+  public HttpClientBuilder setIpV4Only(final boolean ipV4Only) {
+    options.setIpV4Only(ipV4Only);
     return this;
   }
 
@@ -423,7 +423,7 @@ public class HttpClientBuilder implements HttpClientOptions {
            .writeTimeout(getWriteTimeout(), TimeUnit.SECONDS);
 
     // Configure DNS to use only IPv4 addresses if needed
-    if (isUseOnlyIpV4Address()) {
+    if (isIpV4Only()) {
       logger.info("Configuring HTTP client to use only IPv4 addresses for DNS resolution.");
       builder.dns(SkipIpV6AddressDns.INSTANCE);
     }

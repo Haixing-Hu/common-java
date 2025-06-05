@@ -297,13 +297,13 @@ public class DefaultHttpClientOptions implements HttpClientOptions,
   }
 
   @Override
-  public boolean isUseOnlyIpV4Address() {
-    return config.getBoolean(KEY_USE_ONLY_IPV4_ADDRESS, DEFAULT_USE_ONLY_IPV4_ADDRESS);
+  public boolean isIpV4Only() {
+    return config.getBoolean(KEY_IPV4_ONLY, DEFAULT_IPV4_ONLY);
   }
 
   @Override
-  public HttpClientOptions setUseOnlyIpV4Address(final boolean useOnlyIpV4Address) {
-    config.setBoolean(KEY_USE_ONLY_IPV4_ADDRESS, useOnlyIpV4Address);
+  public HttpClientOptions setIpV4Only(final boolean ipV4Only) {
+    config.setBoolean(KEY_IPV4_ONLY, ipV4Only);
     return this;
   }
 }

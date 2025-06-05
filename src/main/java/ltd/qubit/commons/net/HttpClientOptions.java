@@ -99,7 +99,7 @@ public interface HttpClientOptions {
   /**
    * DNS解析中是否仅使用IPv4地址的配置键。
    */
-  String KEY_USE_ONLY_IPV4_ADDRESS = "http.dns.use-only-ipv4";
+  String KEY_IPV4_ONLY = "http.dns.ipv4-only";
 
   /**
    * 连接超时的默认值，单位为秒。
@@ -154,369 +154,369 @@ public interface HttpClientOptions {
   /**
    * DNS解析中是否仅使用IPv4地址的默认值。
    */
-  boolean DEFAULT_USE_ONLY_IPV4_ADDRESS = false;
+  boolean DEFAULT_IPV4_ONLY = false;
 
   /**
-   * Gets whether to use the proxy server.
+   * 获取是否使用代理服务器。
    *
    * @return
-   *     {@code true} if the proxy server should be used; {@code false} otherwise.
+   *     如果应使用代理服务器返回{@code true}；否则返回{@code false}。
    */
   boolean isUseProxy();
 
   /**
-   * Sets whether to use the proxy server.
+   * 设置是否使用代理服务器。
    *
    * @param useProxy
-   *     {@code true} if the proxy server should be used; {@code false} otherwise.
+   *     如果应使用代理服务器设置为{@code true}；否则设置为{@code false}。
    * @return
-   *     this object, to support method chaining.
+   *     此对象，用于支持方法链式调用。
    */
   HttpClientOptions setUseProxy(boolean useProxy);
 
   /**
-   * Gets the proxy server type.
+   * 获取代理服务器类型。
    *
    * @return
-   *     the proxy server type.
+   *     代理服务器类型。
    */
   String getProxyType();
 
   /**
-   * Sets the proxy server type.
+   * 设置代理服务器类型。
    *
    * @param proxyType
-   *     the proxy server type.
+   *     代理服务器类型。
    * @return
-   *     this object, to support method chaining.
+   *     此对象，用于支持方法链式调用。
    */
   HttpClientOptions setProxyType(String proxyType);
 
   /**
-   * Sets the proxy server type.
+   * 设置代理服务器类型。
    *
    * @param proxyType
-   *     the proxy server type.
+   *     代理服务器类型。
    * @return
-   *     this object, to support method chaining.
+   *     此对象，用于支持方法链式调用。
    */
   HttpClientOptions setProxyType(Proxy.Type proxyType);
 
   /**
-   * Gets the proxy server host.
+   * 获取代理服务器主机。
    *
    * @return
-   *     the proxy server host, or {@code null} if not set.
+   *     代理服务器主机，如果未设置则返回{@code null}。
    */
   @Nullable
   String getProxyHost();
 
   /**
-   * Sets the proxy server host.
+   * 设置代理服务器主机。
    *
    * @param proxyHost
-   *     the proxy server host, or {@code null} to clear the setting.
+   *     代理服务器主机，设置为{@code null}以清除设置。
    * @return
-   *     this object, to support method chaining.
+   *     此对象，用于支持方法链式调用。
    */
   HttpClientOptions setProxyHost(@Nullable String proxyHost);
 
   /**
-   * Gets the proxy server port.
+   * 获取代理服务器端口。
    *
    * @return
-   *     the proxy server port.
+   *     代理服务器端口。
    */
   int getProxyPort();
 
   /**
-   * Sets the proxy server port.
+   * 设置代理服务器端口。
    *
    * @param proxyPort
-   *     the proxy server port.
+   *     代理服务器端口。
    * @return
-   *     this object, to support method chaining.
+   *     此对象，用于支持方法链式调用。
    */
   HttpClientOptions setProxyPort(int proxyPort);
 
   /**
-   * Gets the proxy server username.
+   * 获取代理服务器用户名。
    *
    * @return
-   *     the proxy server username, or {@code null} if not set.
+   *     代理服务器用户名，如果未设置则返回{@code null}。
    */
   @Nullable
   String getProxyUsername();
 
   /**
-   * Sets the proxy server username.
+   * 设置代理服务器用户名。
    *
    * @param proxyUsername
-   *     the proxy server username, or {@code null} to clear the setting.
+   *     代理服务器用户名，设置为{@code null}以清除设置。
    * @return
-   *     this object, to support method chaining.
+   *     此对象，用于支持方法链式调用。
    */
   HttpClientOptions setProxyUsername(@Nullable String proxyUsername);
 
   /**
-   * Gets the proxy server password.
+   * 获取代理服务器密码。
    *
    * @return
-   *     the proxy server password, or {@code null} if not set.
+   *     代理服务器密码，如果未设置则返回{@code null}。
    */
   @Nullable
   String getProxyPassword();
 
   /**
-   * Sets the proxy server password.
+   * 设置代理服务器密码。
    *
    * @param proxyPassword
-   *     the proxy server password, or {@code null} to clear the setting.
+   *     代理服务器密码，设置为{@code null}以清除设置。
    * @return
-   *     this object, to support method chaining.
+   *     此对象，用于支持方法链式调用。
    */
   HttpClientOptions setProxyPassword(@Nullable String proxyPassword);
 
   /**
-   * Gets the connection timeout in seconds.
+   * 获取连接超时时间（以秒为单位）。
    *
    * @return
-   *     the connection timeout in seconds.
+   *     连接超时时间（以秒为单位）。
    */
   int getConnectionTimeout();
 
   /**
-   * Sets the connection timeout in seconds.
+   * 设置连接超时时间（以秒为单位）。
    *
    * @param connectionTimeout
-   *     the connection timeout in seconds.
+   *     连接超时时间（以秒为单位）。
    * @return
-   *     this object, to support method chaining.
+   *     此对象，用于支持方法链式调用。
    */
   HttpClientOptions setConnectionTimeout(int connectionTimeout);
 
   /**
-   * Gets the read timeout in seconds.
+   * 获取读取超时时间（以秒为单位）。
    *
    * @return
-   *     the read timeout in seconds.
+   *     读取超时时间（以秒为单位）。
    */
   int getReadTimeout();
 
   /**
-   * Sets the read timeout in seconds.
+   * 设置读取超时时间（以秒为单位）。
    *
    * @param readTimeout
-   *     the read timeout in seconds.
+   *     读取超时时间（以秒为单位）。
    * @return
-   *     this object, to support method chaining.
+   *     此对象，用于支持方法链式调用。
    */
   HttpClientOptions setReadTimeout(int readTimeout);
 
   /**
-   * Gets the write timeout in seconds.
+   * 获取写入超时时间（以秒为单位）。
    *
    * @return
-   *     the write timeout in seconds.
+   *     写入超时时间（以秒为单位）。
    */
   int getWriteTimeout();
 
   /**
-   * Sets the write timeout in seconds.
+   * 设置写入超时时间（以秒为单位）。
    *
    * @param writeTimeout
-   *     the write timeout in seconds.
+   *     写入超时时间（以秒为单位）。
    * @return
-   *     this object, to support method chaining.
+   *     此对象，用于支持方法链式调用。
    */
   HttpClientOptions setWriteTimeout(int writeTimeout);
 
   /**
-   * Gets whether to use the HTTP logging interceptor.
+   * 获取是否使用HTTP日志拦截器。
    *
    * @return
-   *     {@code true} if the HTTP logging interceptor should be used; {@code false} otherwise.
+   *     如果应使用HTTP日志拦截器返回{@code true}；否则返回{@code false}。
    */
   boolean isUseHttpLogging();
 
   /**
-   * Sets whether to use the HTTP logging interceptor.
+   * 设置是否使用HTTP日志拦截器。
    *
    * @param useHttpLogging
-   *     {@code true} if the HTTP logging interceptor should be used; {@code false} otherwise.
+   *     如果应使用HTTP日志拦截器设置为{@code true}；否则设置为{@code false}。
    * @return
-   *     this object, to support method chaining.
+   *     此对象，用于支持方法链式调用。
    */
   HttpClientOptions setUseHttpLogging(boolean useHttpLogging);
 
   /**
-   * Gets whether to log the HTTP request headers.
+   * 获取是否记录HTTP请求头。
    * <p>
-   * This option is only effective when {@link #isUseHttpLogging()} is {@code true}.
+   * 此选项仅在{@link #isUseHttpLogging()}为{@code true}时有效。
    *
    * @return
-   *     {@code true} if the HTTP request headers should be logged;
-   *     {@code false} otherwise.
+   *     如果应记录HTTP请求头返回{@code true}；
+   *     否则返回{@code false}。
    */
   boolean isLogHttpRequestHeader();
 
   /**
-   * Sets whether to log the HTTP request headers.
+   * 设置是否记录HTTP请求头。
    * <p>
-   * This option is only effective when {@link #isUseHttpLogging()} is {@code true}.
+   * 此选项仅在{@link #isUseHttpLogging()}为{@code true}时有效。
    *
    * @param logHttpRequestHeader
-   *     {@code true} if the HTTP request headers should be logged;
-   *     {@code false} otherwise.
+   *     如果应记录HTTP请求头设置为{@code true}；
+   *     否则设置为{@code false}。
    * @return
-   *     this object, to support method chaining.
+   *     此对象，用于支持方法链式调用。
    */
   HttpClientOptions setLogHttpRequestHeader(boolean logHttpRequestHeader);
 
   /**
-   * Gets whether to log the HTTP request body.
+   * 获取是否记录HTTP请求体。
    * <p>
-   * This option is only effective when {@link #isUseHttpLogging()} is {@code true}.
+   * 此选项仅在{@link #isUseHttpLogging()}为{@code true}时有效。
    *
    * @return
-   *     {@code true} if the HTTP request body should be logged;
-   *     {@code false} otherwise.
+   *     如果应记录HTTP请求体返回{@code true}；
+   *     否则返回{@code false}。
    */
   boolean isLogHttpRequestBody();
 
   /**
-   * Sets whether to log the HTTP request body.
+   * 设置是否记录HTTP请求体。
    * <p>
-   * This option is only effective when {@link #isUseHttpLogging()} is {@code true}.
+   * 此选项仅在{@link #isUseHttpLogging()}为{@code true}时有效。
    *
    * @param logHttpRequestBody
-   *     {@code true} if the HTTP response body should be logged;
-   *     {@code false} otherwise.
+   *     如果应记录HTTP请求体设置为{@code true}；
+   *     否则设置为{@code false}。
    * @return
-   *     this object, to support method chaining.
+   *     此对象，用于支持方法链式调用。
    */
   HttpClientOptions setLogHttpRequestBody(boolean logHttpRequestBody);
 
   /**
-   * Gets whether to log the HTTP response headers.
+   * 获取是否记录HTTP响应头。
    * <p>
-   * This option is only effective when {@link #isUseHttpLogging()} is {@code true}.
+   * 此选项仅在{@link #isUseHttpLogging()}为{@code true}时有效。
    *
    * @return
-   *     {@code true} if the HTTP response headers should be logged;
-   *     {@code false} otherwise.
+   *     如果应记录HTTP响应头返回{@code true}；
+   *     否则返回{@code false}。
    */
   boolean isLogHttpResponseHeader();
 
   /**
-   * Sets whether to log the HTTP response headers.
+   * 设置是否记录HTTP响应头。
    * <p>
-   * This option is only effective when {@link #isUseHttpLogging()} is {@code true}.
+   * 此选项仅在{@link #isUseHttpLogging()}为{@code true}时有效。
    *
    * @param logHttpResponseHeader
-   *     {@code true} if the HTTP response headers should be logged;
-   *     {@code false} otherwise.
+   *     如果应记录HTTP响应头设置为{@code true}；
+   *     否则设置为{@code false}。
    * @return
-   *     this object, to support method chaining.
+   *     此对象，用于支持方法链式调用。
    */
   HttpClientOptions setLogHttpResponseHeader(boolean logHttpResponseHeader);
 
   /**
-   * Gets whether to log the HTTP response body.
+   * 获取是否记录HTTP响应体。
    * <p>
-   * This option is only effective when {@link #isUseHttpLogging()} is {@code true}.
+   * 此选项仅在{@link #isUseHttpLogging()}为{@code true}时有效。
    *
    * @return
-   *     {@code true} if the HTTP response body should be logged;
-   *     {@code false} otherwise.
+   *     如果应记录HTTP响应体返回{@code true}；
+   *     否则返回{@code false}。
    */
   boolean isLogHttpResponseBody();
 
   /**
-   * Sets whether to log the HTTP response body.
+   * 设置是否记录HTTP响应体。
    * <p>
-   * This option is only effective when {@link #isUseHttpLogging()} is {@code true}.
+   * 此选项仅在{@link #isUseHttpLogging()}为{@code true}时有效。
    *
    * @param logHttpResponseBody
-   *     {@code true} if the HTTP response body should be logged;
-   *     {@code false} otherwise.
+   *     如果应记录HTTP响应体设置为{@code true}；
+   *     否则设置为{@code false}。
    * @return
-   *     this object, to support method chaining.
+   *     此对象，用于支持方法链式调用。
    */
   HttpClientOptions setLogHttpResponseBody(boolean logHttpResponseBody);
 
   /**
-   * Gets the list of sensitive HTTP headers whose values should be masked in logs.
+   * 获取在日志中应屏蔽值的敏感HTTP头列表。
    *
    * @return
-   *     a list of sensitive HTTP header names.
+   *     敏感HTTP头名称列表。
    */
   List<String> getSensitiveHttpHeaders();
 
   /**
-   * Sets the list of sensitive HTTP headers whose values should be masked in logs.
+   * 设置在日志中应屏蔽值的敏感HTTP头列表。
    *
    * @param headers
-   *     the list of sensitive HTTP header names.
+   *     敏感HTTP头名称列表。
    * @return
-   *     this object, to support method chaining.
+   *     此对象，用于支持方法链式调用。
    */
   HttpClientOptions setSensitiveHttpHeaders(List<String> headers);
 
   /**
-   * Adds a sensitive HTTP header whose value should be masked in logs.
+   * 添加一个在日志中应屏蔽值的敏感HTTP头。
    *
    * @param headerName
-   *     the name of the sensitive HTTP header.
+   *     敏感HTTP头的名称。
    * @return
-   *     this object, to support method chaining.
+   *     此对象，用于支持方法链式调用。
    */
   HttpClientOptions addSensitiveHttpHeader(String headerName);
 
   /**
-   * Adds multiple sensitive HTTP headers whose values should be masked in logs.
+   * 添加多个在日志中应屏蔽值的敏感HTTP头。
    *
    * @param headerNames
-   *     the names of the sensitive HTTP headers.
+   *     敏感HTTP头的名称。
    * @return
-   *     this object, to support method chaining.
+   *     此对象，用于支持方法链式调用。
    */
   HttpClientOptions addSensitiveHttpHeaders(String... headerNames);
 
   /**
-   * Adds multiple sensitive HTTP headers whose values should be masked in logs.
+   * 添加多个在日志中应屏蔽值的敏感HTTP头。
    *
    * @param headerNames
-   *     a collection of names of the sensitive HTTP headers.
+   *     敏感HTTP头名称的集合。
    * @return
-   *     this object, to support method chaining.
+   *     此对象，用于支持方法链式调用。
    */
   HttpClientOptions addSensitiveHttpHeaders(Collection<String> headerNames);
 
   /**
-   * Clears the list of sensitive HTTP headers.
+   * 清除敏感HTTP头列表。
    *
    * @return
-   *     this object, to support method chaining.
+   *     此对象，用于支持方法链式调用。
    */
   HttpClientOptions clearSensitiveHttpHeaders();
 
   /**
-   * Gets whether to use only IPv4 addresses in DNS resolution.
+   * 获取在DNS解析中是否仅使用IPv4地址。
    *
    * @return
-   *     {@code true} if only IPv4 addresses should be used; {@code false} otherwise.
+   *     如果应仅使用IPv4地址返回{@code true}；否则返回{@code false}。
    */
-  boolean isUseOnlyIpV4Address();
+  boolean isIpV4Only();
 
   /**
-   * Sets whether to use only IPv4 addresses in DNS resolution.
+   * 设置在DNS解析中是否仅使用IPv4地址。
    *
-   * @param useOnlyIpV4Address
-   *     {@code true} if only IPv4 addresses should be used; {@code false} otherwise.
+   * @param ipV4Only
+   *     如果应仅使用IPv4地址设置为{@code true}；否则设置为{@code false}。
    * @return
-   *     this object, to support method chaining.
+   *     此对象，用于支持方法链式调用。
    */
-  HttpClientOptions setUseOnlyIpV4Address(boolean useOnlyIpV4Address);
+  HttpClientOptions setIpV4Only(boolean ipV4Only);
 
 }

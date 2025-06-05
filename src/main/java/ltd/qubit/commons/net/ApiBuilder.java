@@ -412,6 +412,17 @@ public class ApiBuilder implements HttpClientOptions {
     return this;
   }
 
+  @Override
+  public boolean isIpV4Only() {
+    return httpOptions.isIpV4Only();
+  }
+
+  @Override
+  public ApiBuilder setIpV4Only(final boolean ipV4Only) {
+    httpOptions.setIpV4Only(ipV4Only);
+    return this;
+  }
+
   /**
    * 向HTTP客户端添加拦截器。
    * <p>
