@@ -32,34 +32,32 @@ import static ltd.qubit.commons.net.TopLevelDomain.Type.GENERIC;
 import static ltd.qubit.commons.net.TopLevelDomain.Type.INFRASTRUCTURE;
 
 /**
- * A {@link DomainSuffixRegistry} object stores the map of the {@link
- * DomainSuffix} objects.
+ * {@link DomainSuffixRegistry} 对象存储 {@link DomainSuffix} 对象的映射。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class DomainSuffixRegistry {
 
   /**
-   * The value of this property is the name of the XML resource file of the
-   * {@link DomainSuffixRegistry} class.
+   * 此属性的值是 {@link DomainSuffixRegistry} 类的XML资源文件名。
    *
    * <table style="border-collapse:collapse;">
-   * <caption>The property of XML resource filename of domain suffixes</caption>
+   * <caption>域名后缀XML资源文件名的属性</caption>
    * <tr>
-   * <th style="border:1px solid;padding:0.5rem;">Type</th>
-   * <th style="border:1px solid;padding:0.5rem;">Count</th>
-   * <th style="border:1px solid;padding:0.5rem;">Value</th>
-   * <th style="border:1px solid;padding:0.5rem;">Required</th>
-   * <th style="border:1px solid;padding:0.5rem;">Default</th>
-   * <th style="border:1px solid;padding:0.5rem;">Range</th>
+   * <th style="border:1px solid;padding:0.5rem;">类型</th>
+   * <th style="border:1px solid;padding:0.5rem;">数量</th>
+   * <th style="border:1px solid;padding:0.5rem;">值</th>
+   * <th style="border:1px solid;padding:0.5rem;">必需</th>
+   * <th style="border:1px solid;padding:0.5rem;">默认值</th>
+   * <th style="border:1px solid;padding:0.5rem;">范围</th>
    * </tr>
    * <tr>
    * <td style="border:1px solid;padding:0.5rem;">String</td>
    * <td style="border:1px solid;padding:0.5rem;">1</td>
-   * <td style="border:1px solid;padding:0.5rem;">the name of the XML resource
-   * file of the {@link DomainSuffixRegistry} class.</td>
-   * <td style="border:1px solid;padding:0.5rem;">no</td>
+   * <td style="border:1px solid;padding:0.5rem;">{@link DomainSuffixRegistry} 类的XML
+   * 资源文件名。</td>
+   * <td style="border:1px solid;padding:0.5rem;">否</td>
    * <td style="border:1px solid;padding:0.5rem;">{@link #DEFAULT_RESOURCE}</td>
    * <td style="border:1px solid;padding:0.5rem;"></td>
    * </tr>
@@ -70,7 +68,7 @@ public final class DomainSuffixRegistry {
   public static final String PROPERTY_RESOURCE = "DomainSuffixRegistry.resource";
 
   /**
-   * The default value of the property {@link #PROPERTY_RESOURCE}.
+   * 属性 {@link #PROPERTY_RESOURCE} 的默认值。
    *
    * @see #PROPERTY_RESOURCE
    */
@@ -106,10 +104,9 @@ public final class DomainSuffixRegistry {
   private static volatile DomainSuffixRegistry instance;
 
   /**
-   * Get the singleton instance of the DomainSuffixes class, with lazy
-   * instantiation.
+   * 获取DomainSuffixes类的单例实例，使用懒加载实例化。
    *
-   * @return the singleton instance of the DomainSuffixes class.
+   * @return DomainSuffixes类的单例实例。
    */
   public static DomainSuffixRegistry getInstance() {
     // use the double locked check trick.
@@ -146,24 +143,22 @@ public final class DomainSuffixRegistry {
   }
 
   /**
-   * Tests whether the extension is a registered domain entry.
+   * 测试扩展名是否为已注册的域条目。
    *
    * @param extension
-   *     the extension.
-   * @return {@code true} if the extension is a registered domain entry; {@code
-   *     false} otherwise.
+   *     扩展名。
+   * @return 如果扩展名是已注册的域条目则返回 {@code true}；否则返回 {@code false}。
    */
   public boolean isDomainSuffix(final String extension) {
     return domains.containsKey(extension);
   }
 
   /**
-   * Tests whether the extension is a top level domain entry.
+   * 测试扩展名是否为顶级域条目。
    *
    * @param domain
-   *     the domain.
-   * @return {@code true} if the extension is a top-level domain entry; {@code
-   *     false} otherwise.
+   *     域名。
+   * @return 如果扩展名是顶级域条目则返回 {@code true}；否则返回 {@code false}。
    */
   public boolean isTopLevelDomain(final String domain) {
     final DomainSuffix suffix = domains.get(domain);
@@ -171,25 +166,23 @@ public final class DomainSuffixRegistry {
   }
 
   /**
-   * Return the {@link DomainSuffix} object for the extension, if extension is a
-   * top level domain returned object will be an instance of {@link
-   * TopLevelDomain}.
+   * 返回扩展名对应的 {@link DomainSuffix} 对象，如果扩展名是顶级域，
+   * 返回的对象将是 {@link TopLevelDomain} 的实例。
    *
    * @param extension
-   *     extension of the domain.
-   * @return the {@link DomainSuffix} object for the extension,
+   *     域的扩展名。
+   * @return 扩展名对应的 {@link DomainSuffix} 对象。
    */
   public DomainSuffix getDomainSuffix(final String extension) {
     return domains.get(extension);
   }
 
   /**
-   * Return the {@link TopLevelDomain} object for the extension, if extension is
-   * not a top level domain returns null.
+   * 返回扩展名对应的 {@link TopLevelDomain} 对象，如果扩展名不是顶级域则返回null。
    *
    * @param extension
-   *     extension of the top level domain.
-   * @return the {@link DomainSuffix} object for the extension,
+   *     顶级域的扩展名。
+   * @return 扩展名对应的 {@link DomainSuffix} 对象。
    */
   public TopLevelDomain getTopLevelDomain(final String extension) {
     final DomainSuffix suffix = domains.get(extension);

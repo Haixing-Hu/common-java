@@ -16,17 +16,14 @@ import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * This class represents the last part of the host name, which is operated by
- * authorities, not individuals. This information is needed to find the domain
- * name of a host. The domain name of a host is defined to be the last part
- * before the domain suffix, without sub-domain names. As an example the domain
- * name of {@code  http://www.sina.com.cn/} is {@code sina.com.cn}.
+ * 此类表示主机名的最后部分，由权威机构而非个人运营。此信息用于查找主机的域名。
+ * 主机的域名定义为域名后缀之前的最后部分，不包括子域名。例如，
+ * {@code http://www.sina.com.cn/} 的域名是 {@code sina.com.cn}。
  *
- * <p>This class holds two fields, <strong>domain</strong> field represents the
- * suffix (such as "co.uk"), <strong>status</strong> field represents domain's
- * status.
+ * <p>此类包含两个字段，<strong>domain</strong> 字段表示后缀（如"co.uk"），
+ * <strong>status</strong> 字段表示域的状态。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public class DomainSuffix implements Serializable {
@@ -34,7 +31,7 @@ public class DomainSuffix implements Serializable {
   private static final long serialVersionUID = - 891087570899663847L;
 
   /**
-   * Enumeration of the status of the top level domain.
+   * 顶级域状态的枚举。
    */
   public enum Status {
     INFRASTRUCTURE,

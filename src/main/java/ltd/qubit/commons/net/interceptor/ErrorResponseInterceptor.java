@@ -1,12 +1,12 @@
-////////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////
 //
 //    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //
-////////////////////////////////////////////////////////////////////////////////
-package ltd.qubit.commons.net;
+// ////////////////////////////////////////////////////////////////////////
+package ltd.qubit.commons.net.interceptor;
 
 import java.io.IOException;
 import java.util.function.Consumer;
@@ -18,6 +18,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
+
+import ltd.qubit.commons.net.ResponseBodyJsonConverter;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
@@ -59,6 +61,16 @@ public class ErrorResponseInterceptor<E> implements Interceptor {
     this.errorConsumer = requireNonNull("errorConsumer", errorConsumer);
   }
 
+  /**
+   * 拦截HTTP请求并处理错误响应。
+   *
+   * @param chain
+   *     拦截器链。
+   * @return
+   *     拦截后的响应。
+   * @throws IOException
+   *     如果发生IO错误。
+   */
   @Nonnull
   @Override
   public Response intercept(@Nonnull final Chain chain) throws IOException {

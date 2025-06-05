@@ -84,54 +84,54 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Constructs a new API builder with the specified logger and HTTP client options.
+   * 使用指定的日志记录器和HTTP客户端选项构造新的API构建器。
    *
    * @param logger
-   *     the logger used by this builder, must not be {@code null}.
+   *     此构建器使用的日志记录器，不能为 {@code null}。
    * @param httpOptions
-   *     the HTTP client options used by this builder, must not be {@code null}.
+   *     此构建器使用的HTTP客户端选项，不能为 {@code null}。
    */
   public ApiBuilder(final Logger logger, final HttpClientOptions httpOptions) {
     this(logger, httpOptions, new CustomizedJsonMapper());
   }
 
   /**
-   * Constructs a new API builder with the specified logger and configuration.
+   * 使用指定的日志记录器和配置构造新的API构建器。
    *
    * @param logger
-   *     the logger used by this builder, must not be {@code null}.
+   *     此构建器使用的日志记录器，不能为 {@code null}。
    * @param config
-   *     the configuration used by this builder, must not be {@code null}.
+   *     此构建器使用的配置，不能为 {@code null}。
    */
   public ApiBuilder(final Logger logger, final WritableConfig config) {
     this(logger, new DefaultHttpClientOptions(config), new CustomizedJsonMapper());
   }
 
   /**
-   * Constructs a new API builder with the specified logger, configuration, and JSON mapper.
+   * 使用指定的日志记录器、配置和JSON映射器构造新的API构建器。
    *
    * @param logger
-   *     the logger used by this builder, must not be {@code null}.
+   *     此构建器使用的日志记录器，不能为 {@code null}。
    * @param config
-   *     the configuration used by this builder, must not be {@code null}.
+   *     此构建器使用的配置，不能为 {@code null}。
    * @param jsonMapper
-   *     the JSON mapper used by this builder, must not be {@code null}.
+   *     此构建器使用的JSON映射器，不能为 {@code null}。
    */
   public ApiBuilder(final Logger logger, final WritableConfig config, final JsonMapper jsonMapper) {
     this(logger, new DefaultHttpClientOptions(config), jsonMapper);
   }
 
   /**
-   * Constructs a new API builder with the specified logger, HTTP client options, and JSON mapper.
+   * 使用指定的日志记录器、HTTP客户端选项和JSON映射器构造新的API构建器。
    * <p>
-   * This is the main constructor that all other constructors delegate to.
+   * 这是所有其他构造函数委托的主构造函数。
    *
    * @param logger
-   *     the logger used by this builder, must not be {@code null}.
+   *     此构建器使用的日志记录器，不能为 {@code null}。
    * @param httpOptions
-   *     the HTTP client options used by this builder, must not be {@code null}.
+   *     此构建器使用的HTTP客户端选项，不能为 {@code null}。
    * @param jsonMapper
-   *     the JSON mapper used by this builder, must not be {@code null}.
+   *     此构建器使用的JSON映射器，不能为 {@code null}。
    */
   public ApiBuilder(final Logger logger, final HttpClientOptions httpOptions, final JsonMapper jsonMapper) {
     this.logger = requireNonNull("logger", logger);
@@ -140,24 +140,24 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Gets the logger used by this builder.
+   * 获取此构建器使用的日志记录器。
    *
    * @return
-   *     the logger used by this builder.
+   *     此构建器使用的日志记录器。
    */
   public Logger getLogger() {
     return logger;
   }
 
   /**
-   * Sets the logger used by this builder.
+   * 设置此构建器使用的日志记录器。
    *
    * @param logger
-   *     the logger to be used, must not be {@code null}.
+   *     要使用的日志记录器，不能为 {@code null}。
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，用于支持方法链式调用。
    * @throws NullPointerException
-   *     if the logger is {@code null}.
+   *     如果日志记录器为 {@code null}。
    */
   public ApiBuilder setLogger(final Logger logger) {
     this.logger = requireNonNull("logger", logger);
@@ -165,24 +165,24 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Gets the HTTP client options used by this builder.
+   * 获取此构建器使用的HTTP客户端选项。
    *
    * @return
-   *     the HTTP client options used by this builder.
+   *     此构建器使用的HTTP客户端选项。
    */
   public HttpClientOptions getHttpOptions() {
     return httpOptions;
   }
 
   /**
-   * Sets the HTTP client options used by this builder.
+   * 设置此构建器使用的HTTP客户端选项。
    *
    * @param httpOptions
-   *     the HTTP client options to be used, must not be {@code null}.
+   *     要使用的HTTP客户端选项，不能为 {@code null}。
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，用于支持方法链式调用。
    * @throws NullPointerException
-   *     if the options is {@code null}.
+   *     如果选项为 {@code null}。
    */
   public ApiBuilder setHttpOptions(final HttpClientOptions httpOptions) {
     this.httpOptions = requireNonNull("options", httpOptions);
@@ -190,24 +190,24 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Gets the JSON mapper used by this builder.
+   * 获取此构建器使用的JSON映射器。
    *
    * @return
-   *     the JSON mapper used by this builder.
+   *     此构建器使用的JSON映射器。
    */
   public JsonMapper getJsonMapper() {
     return jsonMapper;
   }
 
   /**
-   * Sets the JSON mapper used by this builder.
+   * 设置此构建器使用的JSON映射器。
    *
    * @param jsonMapper
-   *     the JSON mapper to be used, must not be {@code null}.
+   *     要使用的JSON映射器，不能为 {@code null}。
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，用于支持方法链式调用。
    * @throws NullPointerException
-   *     if the JSON mapper is {@code null}.
+   *     如果JSON映射器为 {@code null}。
    */
   public ApiBuilder setJsonMapper(final JsonMapper jsonMapper) {
     this.jsonMapper = requireNonNull("jsonMapper", jsonMapper);
@@ -413,16 +413,16 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Adds an interceptor to the HTTP client.
+   * 向HTTP客户端添加拦截器。
    * <p>
-   * Interceptors can be used to monitor, modify, or retry HTTP requests and responses.
+   * 拦截器可用于监控、修改或重试HTTP请求和响应。
    *
    * @param interceptor
-   *     the interceptor to add, must not be {@code null}.
+   *     要添加的拦截器，不能为 {@code null}。
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，用于支持方法链式调用。
    * @throws NullPointerException
-   *     if the interceptor is {@code null}.
+   *     如果拦截器为 {@code null}。
    */
   public ApiBuilder addInterceptor(final Interceptor interceptor) {
     interceptors.add(requireNonNull("interceptor", interceptor));
@@ -430,16 +430,16 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Adds multiple interceptors to the HTTP client.
+   * 向HTTP客户端添加多个拦截器。
    * <p>
-   * Interceptors can be used to monitor, modify, or retry HTTP requests and responses.
+   * 拦截器可用于监控、修改或重试HTTP请求和响应。
    *
    * @param interceptors
-   *     the array of interceptors to add, elements must not be {@code null}.
+   *     要添加的拦截器数组，元素不能为 {@code null}。
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，用于支持方法链式调用。
    * @throws NullPointerException
-   *     if any of the interceptors is {@code null}.
+   *     如果任何拦截器为 {@code null}。
    */
   public ApiBuilder addInterceptors(final Interceptor ... interceptors) {
     for (final Interceptor interceptor : interceptors) {
@@ -449,16 +449,16 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Adds a collection of interceptors to the HTTP client.
+   * 向HTTP客户端添加拦截器集合。
    * <p>
-   * Interceptors can be used to monitor, modify, or retry HTTP requests and responses.
+   * 拦截器可用于监控、修改或重试HTTP请求和响应。
    *
    * @param interceptors
-   *     the collection of interceptors to add, elements must not be {@code null}.
+   *     要添加的拦截器集合，元素不能为 {@code null}。
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，用于支持方法链式调用。
    * @throws NullPointerException
-   *     if any of the interceptors is {@code null}.
+   *     如果任何拦截器为 {@code null}。
    */
   public ApiBuilder addInterceptors(final Collection<Interceptor> interceptors) {
     for (final Interceptor interceptor : interceptors) {
@@ -468,10 +468,10 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Clears all interceptors previously added to this builder.
+   * 清除之前添加到此构建器的所有拦截器。
    *
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，用于支持方法链式调用。
    */
   public ApiBuilder clearInterceptors() {
     interceptors.clear();
@@ -479,24 +479,24 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Gets the base URL of the API server.
+   * 获取API服务器的基础URL。
    *
    * @return
-   *     the base URL of the API server.
+   *     API服务器的基础URL。
    */
   public String getBaseUrl() {
     return baseUrl;
   }
 
   /**
-   * Sets the base URL of the API server.
+   * 设置API服务器的基础URL。
    *
    * @param baseUrl
-   *     the base URL of the API server, must not be {@code null}.
+   *     API服务器的基础URL，不能为 {@code null}。
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，用于支持方法链式调用。
    * @throws NullPointerException
-   *     if the base URL is {@code null}.
+   *     如果基础URL为 {@code null}。
    */
   public ApiBuilder setBaseUrl(final String baseUrl) {
     this.baseUrl = requireNonNull("baseUrl", baseUrl);
@@ -504,29 +504,27 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Gets the HTTP client used by this builder.
+   * 获取此构建器使用的HTTP客户端。
    * <p>
-   * If not explicitly set, a new HTTP client will be created by this builder
-   * when building the API client.
+   * 如果未明确设置，此构建器在构建API客户端时将创建新的HTTP客户端。
    *
    * @return
-   *     the HTTP client used by this builder, or {@code null} if not set.
+   *     此构建器使用的HTTP客户端，如果未设置则为 {@code null}。
    */
   public OkHttpClient getHttpClient() {
     return httpClient;
   }
 
   /**
-   * Sets the HTTP client to be used by this builder.
+   * 设置此构建器要使用的HTTP客户端。
    * <p>
-   * If set, this client will be used directly when building the API client.
-   * If not set, a new HTTP client will be created based on the other
-   * configuration options.
+   * 如果设置，此客户端将在构建API客户端时直接使用。
+   * 如果未设置，将根据其他配置选项创建新的HTTP客户端。
    *
    * @param httpClient
-   *     the HTTP client to be used, or {@code null} to create a new one.
+   *     要使用的HTTP客户端，或 {@code null} 以创建新客户端。
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，用于支持方法链式调用。
    */
   public ApiBuilder setHttpClient(final OkHttpClient httpClient) {
     this.httpClient = httpClient;
@@ -534,10 +532,10 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Gets the callback executor for the API client.
+   * 获取API客户端的回调执行器。
    *
    * @return
-   *     the callback executor, or {@code null} if not set.
+   *     回调执行器，如果未设置则为 {@code null}。
    */
   @Nullable
   public Executor getCallbackExecutor() {
@@ -545,14 +543,14 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Sets the callback executor for the API client.
+   * 设置API客户端的回调执行器。
    * <p>
-   * The executor is used to deliver callbacks on the specified thread.
+   * 执行器用于在指定线程上传递回调。
    *
    * @param callbackExecutor
-   *     the callback executor, or {@code null} to use the default one.
+   *     回调执行器，或 {@code null} 以使用默认执行器。
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，用于支持方法链式调用。
    */
   public ApiBuilder setCallbackExecutor(@Nullable final Executor callbackExecutor) {
     this.callbackExecutor = callbackExecutor;
@@ -560,10 +558,13 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Gets whether to validate the API interface eagerly.
+   * 获取是否急切验证API接口。
+   * <p>
+   * 启用后，Retrofit将执行运行时检查以验证API接口中的每个方法是否正确配置。
+   * 这在开发期间很有用，可以提早发现配置错误。
    *
    * @return
-   *     whether to validate the API interface eagerly, or {@code null} if not set.
+   *     是否急切验证API接口，如果未设置则为 {@code null}。
    */
   @Nullable
   public Boolean getValidateEagerly() {
@@ -571,17 +572,16 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Sets whether to validate the API interface eagerly.
+   * 设置是否急切验证API接口。
    * <p>
-   * When enabled, Retrofit will perform runtime checks to verify that each method
-   * in the API interface is properly configured. This is useful during development
-   * to catch configuration errors early.
+   * 启用后，Retrofit将执行运行时检查以验证API接口中的每个方法是否正确配置。
+   * 这在开发期间很有用，可以提早发现配置错误。
    *
    * @param validateEagerly
-   *     {@code true} to validate the API interface eagerly, {@code false} to
-   *     validate lazily, or {@code null} to use the default setting.
+   *     {@code true} 表示急切验证API接口，{@code false} 表示懒惰验证，
+   *     或 {@code null} 以使用默认设置。
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，用于支持方法链式调用。
    */
   public ApiBuilder setValidateEagerly(@Nullable final Boolean validateEagerly) {
     this.validateEagerly = validateEagerly;
@@ -589,16 +589,16 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Adds a converter factory to the API client.
+   * 向API客户端添加转换器工厂。
    * <p>
-   * Converter factories are used to convert between HTTP bodies and Java objects.
+   * 转换器工厂用于在HTTP主体和Java对象之间进行转换。
    *
    * @param converterFactory
-   *     the converter factory to add, must not be {@code null}.
+   *     要添加的转换器工厂，不能为 {@code null}。
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，用于支持方法链式调用。
    * @throws NullPointerException
-   *     if the converter factory is {@code null}.
+   *     如果转换器工厂为 {@code null}。
    */
   public ApiBuilder addConverterFactory(final Converter.Factory converterFactory) {
     converterFactories.add(requireNonNull("converterFactory", converterFactory));
@@ -724,34 +724,30 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Builds a RESTful API client.
+   * 构建RESTful API客户端。
    * <p>
-   * This method creates a fully configured Retrofit client based on the settings
-   * provided to this builder. The configuration process follows these steps:
+   * 此方法根据提供给此构建器的设置创建完全配置的Retrofit客户端。配置过程遵循以下步骤：
    * <ol>
-   *   <li>Creates a Retrofit builder with the configured base URL</li>
-   *   <li>Configures the HTTP client, either using the one provided via
-   *       {@link #setHttpClient(OkHttpClient)} or creating a new one based on
-   *       the HTTP client options</li>
-   *   <li>Sets the callback executor if specified</li>
-   *   <li>Sets the eager validation setting if specified</li>
-   *   <li>Adds converter factories, defaulting to a Jackson converter using the
-   *       configured JSON mapper if none are explicitly added</li>
-   *   <li>Adds call adapter factories if any are specified</li>
-   *   <li>Builds the Retrofit client and creates the API implementation</li>
+   *   <li>使用配置的基础URL创建Retrofit构建器</li>
+   *   <li>配置HTTP客户端，使用通过 {@link #setHttpClient(OkHttpClient)} 提供的客户端
+   *       或根据HTTP客户端选项创建新客户端</li>
+   *   <li>如果指定，设置回调执行器</li>
+   *   <li>如果指定，设置急切验证设置</li>
+   *   <li>添加转换器工厂，如果没有明确添加，则默认使用配置的JSON映射器的Jackson转换器</li>
+   *   <li>如果指定，添加调用适配器工厂</li>
+   *   <li>构建Retrofit客户端并创建API实现</li>
    * </ol>
    *
    * @param <API>
-   *     the interface type of the API.
+   *     API的接口类型。
    * @param apiClass
-   *     the interface class of the API, must not be {@code null}.
+   *     API的接口类，不能为 {@code null}。
    * @return
-   *     the API client implementation.
+   *     API客户端实现。
    * @throws IllegalArgumentException
-   *     if the base URL is not set or is invalid, or if the API interface
-   *     is not properly defined.
+   *     如果基础URL未设置或无效，或API接口定义不正确。
    * @throws NullPointerException
-   *     if the API class is {@code null}.
+   *     如果API类为 {@code null}。
    */
   public <API> API build(final Class<API> apiClass) {
     final Retrofit.Builder retrofitBuilder = new Retrofit.Builder()

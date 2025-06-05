@@ -28,37 +28,35 @@ import ltd.qubit.commons.text.xml.XmlException;
 import ltd.qubit.commons.text.xml.XmlUtils;
 
 /**
- * A {@link DefaultPorts} object stores a map between the scheme and its
- * default port.
+ * {@link DefaultPorts} 对象存储方案与其默认端口之间的映射。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class DefaultPorts {
 
   /**
-   * The value of this property is the name of the XML resource file of the
-   * {@link DefaultPorts} class.
+   * 此属性的值是 {@link DefaultPorts} 类的XML资源文件名。
    *
    * <table style="border-collapse:collapse;">
-   *    <caption>The property of the XML resource filename of default ports</caption>
+   *    <caption>默认端口XML资源文件名的属性</caption>
    *    <thead>
    *      <tr>
-   *        <th style="border:1px solid;padding:0.5rem;">Type</th>
-   *        <th style="border:1px solid;padding:0.5rem;">Count</th>
-   *        <th style="border:1px solid;padding:0.5rem;">Value</th>
-   *        <th style="border:1px solid;padding:0.5rem;">Required</th>
-   *        <th style="border:1px solid;padding:0.5rem;">Default</th>
-   *        <th style="border:1px solid;padding:0.5rem;">Range</th>
+   *        <th style="border:1px solid;padding:0.5rem;">类型</th>
+   *        <th style="border:1px solid;padding:0.5rem;">数量</th>
+   *        <th style="border:1px solid;padding:0.5rem;">值</th>
+   *        <th style="border:1px solid;padding:0.5rem;">必需</th>
+   *        <th style="border:1px solid;padding:0.5rem;">默认值</th>
+   *        <th style="border:1px solid;padding:0.5rem;">范围</th>
    *      </tr>
    *    </thead>
    *    <tbody>
    *      <tr>
    *        <td style="border:1px solid;padding:0.5rem;">String</td>
    *        <td style="border:1px solid;padding:0.5rem;">1</td>
-   *        <td style="border:1px solid;padding:0.5rem;">the name of the XML
-   *        resource file of the {@link DefaultPorts} class.</td>
-   *        <td style="border:1px solid;padding:0.5rem;">no</td>
+   *        <td style="border:1px solid;padding:0.5rem;">{@link DefaultPorts} 类的XML
+   *        资源文件名。</td>
+   *        <td style="border:1px solid;padding:0.5rem;">否</td>
    *        <td style="border:1px solid;padding:0.5rem;">{@link #DEFAULT_RESOURCE}</td>
    *        <td style="border:1px solid;padding:0.5rem;"></td>
    *      </tr>
@@ -70,7 +68,7 @@ public final class DefaultPorts {
   public static final String PROPERTY_RESOURCE = "DefaultPorts.resource";
 
   /**
-   * The default value of the property {@link #PROPERTY_RESOURCE}.
+   * 属性 {@link #PROPERTY_RESOURCE} 的默认值。
    *
    * @see #PROPERTY_RESOURCE
    */
@@ -87,12 +85,11 @@ public final class DefaultPorts {
   private static volatile Map<String, Integer> ports = null;
 
   /**
-   * Gets the default port number of a specified scheme.
+   * 获取指定方案的默认端口号。
    *
    * @param scheme
-   *          a specified scheme.
-   * @return the default port number of the specified scheme; or -1 if no such
-   *         default port for the specified scheme.
+   *          指定的方案。
+   * @return 指定方案的默认端口号；如果指定方案没有默认端口则返回-1。
    */
   public static int get(final String scheme) {
     if (ports == null) {

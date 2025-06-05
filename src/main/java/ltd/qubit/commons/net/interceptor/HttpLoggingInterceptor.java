@@ -38,7 +38,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * {@link okhttp3.logging.HttpLoggingInterceptor} 的包装器，使用SLF4J日志记录器
+ * {@link okhttp3.logging.HttpLoggingInterceptor} 的拦截器，使用SLF4J日志记录器
  * 记录HTTP请求和响应消息。
  *
  * @author 胡海星
@@ -145,6 +145,16 @@ public class HttpLoggingInterceptor implements Interceptor {
     return this;
   }
 
+  /**
+   * 拦截HTTP请求并记录日志。
+   *
+   * @param chain
+   *     拦截器链。
+   * @return
+   *     拦截后的响应。
+   * @throws IOException
+   *     如果发生IO错误。
+   */
   @Override
   @Nonnull
   public Response intercept(final Interceptor.Chain chain) throws IOException {
@@ -216,6 +226,14 @@ public class HttpLoggingInterceptor implements Interceptor {
     return response;
   }
 
+  /**
+   * 记录请求头。
+   *
+   * @param request
+   *     请求。
+   * @throws IOException
+   *     如果发生IO错误。
+   */
   private void logRequestHeaders(final Request request) throws IOException {
     final RequestBody requestBody = request.body();
     final Headers headers = request.headers();
@@ -234,6 +252,14 @@ public class HttpLoggingInterceptor implements Interceptor {
     }
   }
 
+  /**
+   * 记录请求体。
+   *
+   * @param request
+   *     请求。
+   * @throws IOException
+   *     如果发生IO错误。
+   */
   private void logRequestBody(final Request request) throws IOException {
     if (bodyHasUnknownEncoding(request.headers())) {
       logger.trace("--> END {} (encoded body omitted)", request.method());
@@ -261,6 +287,14 @@ public class HttpLoggingInterceptor implements Interceptor {
     }
   }
 
+  /**
+   * 记录响应头。
+   *
+   * @param response
+   *     响应。
+   * @throws IOException
+   *     如果发生IO错误。
+   */
   private void logResponseHeaders(final Response response)
       throws IOException {
     final Headers headers = response.headers();
@@ -271,6 +305,14 @@ public class HttpLoggingInterceptor implements Interceptor {
     }
   }
 
+  /**
+   * 记录响应体。
+   *
+   * @param response
+   *     响应。
+   * @throws IOException
+   *     如果发生IO错误。
+   */
   private void logResponseBody(final Response response)
       throws IOException {
     if (bodyHasUnknownEncoding(response.headers())) {
@@ -349,6 +391,14 @@ public class HttpLoggingInterceptor implements Interceptor {
     return true;
   }
 
+  /**
+   * 从媒体类型中获取字符集。
+   *
+   * @param mediaType
+   *     媒体类型。
+   * @return
+   *     字符集。
+   */
   private Charset getCharsetFromMediaType(@Nullable final MediaType mediaType) {
     Charset charset = UTF_8;
     if (mediaType != null) {
@@ -360,6 +410,14 @@ public class HttpLoggingInterceptor implements Interceptor {
     return charset;
   }
 
+  /**
+   * 判断缓冲区是否可能包含UTF-8编码的字符。
+   *
+   * @param buffer
+   *     缓冲区。
+   * @return
+   *     如果缓冲区可能包含UTF-8编码的字符，则返回true；否则返回false。
+   */
   private boolean isProbablyUtf8(final Buffer buffer) {
     try {
       final Buffer prefix = new Buffer();
