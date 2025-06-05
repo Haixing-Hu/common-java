@@ -31,13 +31,11 @@ import ltd.qubit.commons.net.interceptor.SkipIpV6AddressDns;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * A builder of {@link OkHttpClient} clients which is much easier to use
- * than the {@link OkHttpClient.Builder} class.
+ * {@link OkHttpClient} 客户端的构建器，使用起来比 {@link OkHttpClient.Builder} 类更简单。
  * <p>
- * <b>NOTE:</b> This class is <b>NOT</b> thread-safe. But the built client is
- * thread-safe.
+ * <b>注意：</b> 此类 <b>不是</b> 线程安全的。但构建出的客户端是线程安全的。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class HttpClientBuilder implements HttpClientOptions {
 
@@ -48,41 +46,41 @@ public class HttpClientBuilder implements HttpClientOptions {
   private HttpClientOptions options;
 
   /**
-   * Construct a provider of the HTTP client.
+   * 构造HTTP客户端提供器。
    */
   public HttpClientBuilder() {
     this(LoggerFactory.getLogger(HttpClientBuilder.class), new DefaultHttpClientOptions());
   }
 
   /**
-   * Construct a provider of the HTTP client.
+   * 构造HTTP客户端提供器。
    *
    * @param logger
-   *     the logger used by the provided http client.
+   *     提供的HTTP客户端使用的日志记录器。
    */
   public HttpClientBuilder(final Logger logger) {
     this(logger, new DefaultHttpClientOptions());
   }
 
   /**
-   * Construct a provider of the HTTP client.
+   * 构造HTTP客户端提供器。
    *
    * @param logger
-   *     the logger used by the provided http client.
+   *     提供的HTTP客户端使用的日志记录器。
    * @param config
-   *     the configuration used by the provided http client.
+   *     提供的HTTP客户端使用的配置。
    */
   public HttpClientBuilder(final Logger logger, final WritableConfig config) {
     this(logger, new DefaultHttpClientOptions(config));
   }
 
   /**
-   * Construct a provider of the HTTP client.
+   * 构造HTTP客户端提供器。
    *
    * @param logger
-   *     the logger used by the provided http client.
+   *     提供的HTTP客户端使用的日志记录器。
    * @param options
-   *     the HTTP client options used by the provided http client.
+   *     提供的HTTP客户端使用的HTTP客户端选项。
    */
   public HttpClientBuilder(final Logger logger, final HttpClientOptions options) {
     this.logger = requireNonNull("logger", logger);
@@ -99,24 +97,24 @@ public class HttpClientBuilder implements HttpClientOptions {
   }
 
   /**
-   * Gets the HTTP client options used by this builder.
+   * 获取此构建器使用的HTTP客户端选项。
    *
    * @return
-   *     the HTTP client options used by this builder.
+   *     此构建器使用的HTTP客户端选项。
    */
   public HttpClientOptions getOptions() {
     return options;
   }
 
   /**
-   * Sets the HTTP client options used by this builder.
+   * 设置此构建器使用的HTTP客户端选项。
    *
    * @param options
-   *     the HTTP client options to be used, must not be {@code null}.
+   *     要使用的HTTP客户端选项，不能为 {@code null}。
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，以支持方法链式调用。
    * @throws NullPointerException
-   *     if the options is {@code null}.
+   *     如果选项为 {@code null}。
    */
   public HttpClientBuilder setOptions(final HttpClientOptions options) {
     this.options = requireNonNull("options", options);
@@ -333,16 +331,16 @@ public class HttpClientBuilder implements HttpClientOptions {
   }
 
   /**
-   * Adds an interceptor to the HTTP client.
+   * 向HTTP客户端添加拦截器。
    * <p>
-   * Interceptors can be used to monitor, modify, or retry HTTP requests and responses.
+   * 拦截器可用于监控、修改或重试HTTP请求和响应。
    *
    * @param interceptor
-   *     the interceptor to add, must not be {@code null}.
+   *     要添加的拦截器，不能为 {@code null}。
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，以支持方法链式调用。
    * @throws NullPointerException
-   *     if the interceptor is {@code null}.
+   *     如果拦截器为 {@code null}。
    */
   public HttpClientBuilder addInterceptor(final Interceptor interceptor) {
     interceptors.add(requireNonNull("interceptor", interceptor));
@@ -350,16 +348,16 @@ public class HttpClientBuilder implements HttpClientOptions {
   }
 
   /**
-   * Adds multiple interceptors to the HTTP client.
+   * 向HTTP客户端添加多个拦截器。
    * <p>
-   * Interceptors can be used to monitor, modify, or retry HTTP requests and responses.
+   * 拦截器可用于监控、修改或重试HTTP请求和响应。
    *
    * @param interceptors
-   *     the array of interceptors to add, elements must not be {@code null}.
+   *     要添加的拦截器数组，元素不能为 {@code null}。
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，以支持方法链式调用。
    * @throws NullPointerException
-   *     if any of the interceptors is {@code null}.
+   *     如果任何拦截器为 {@code null}。
    */
   public HttpClientBuilder addInterceptors(final Interceptor ... interceptors) {
     for (final Interceptor interceptor : interceptors) {
@@ -369,16 +367,16 @@ public class HttpClientBuilder implements HttpClientOptions {
   }
 
   /**
-   * Adds a collection of interceptors to the HTTP client.
+   * 向HTTP客户端添加拦截器集合。
    * <p>
-   * Interceptors can be used to monitor, modify, or retry HTTP requests and responses.
+   * 拦截器可用于监控、修改或重试HTTP请求和响应。
    *
    * @param interceptors
-   *     the collection of interceptors to add, elements must not be {@code null}.
+   *     要添加的拦截器集合，元素不能为 {@code null}。
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，以支持方法链式调用。
    * @throws NullPointerException
-   *     if any of the interceptors is {@code null}.
+   *     如果任何拦截器为 {@code null}。
    */
   public HttpClientBuilder addInterceptors(final Collection<Interceptor> interceptors) {
     for (final Interceptor interceptor : interceptors) {
@@ -388,10 +386,10 @@ public class HttpClientBuilder implements HttpClientOptions {
   }
 
   /**
-   * Clears all interceptors previously added to this builder.
+   * 清除之前添加到此构建器的所有拦截器。
    *
    * @return
-   *     this builder, to support method chaining.
+   *     此构建器，以支持方法链式调用。
    */
   public HttpClientBuilder clearInterceptors() {
     interceptors.clear();
@@ -413,10 +411,10 @@ public class HttpClientBuilder implements HttpClientOptions {
   }
 
   /**
-   * Build a pre-configured HTTP client.
+   * 构建预配置的HTTP客户端。
    *
    * @return
-   *    A pre-configured HTTP client.
+   *    预配置的HTTP客户端。
    */
   public OkHttpClient build() {
     final OkHttpClient.Builder builder = new OkHttpClient.Builder();

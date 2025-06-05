@@ -16,27 +16,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides utility functions for network.
+ * 提供网络相关的实用函数。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class NetworkUtils {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(NetworkUtils.class);
 
   /**
-   * Tests whether the device can access the specified host at the specified port.
+   * 测试设备是否可以访问指定主机的指定端口。
    *
    * @param host
-   *     the host to be tested.
+   *     要测试的主机。
    * @param port
-   *     the port to be tested.
+   *     要测试的端口。
    * @param timeout
-   *     the timeout in milliseconds.
+   *     超时时间（毫秒）。
    * @return
-   *     {@code true} if the device can access the specified host at the specified port,
-   *     {@code false} otherwise.
-   * @author Haixing Hu
+   *     如果设备可以访问指定主机的指定端口，则返回 {@code true}，否则返回 {@code false}。
+   * @author 胡海星
    */
   public static boolean ping(final String host, final int port, final int timeout) {
     LOGGER.info("Connecting to {}:{}...", host, port);

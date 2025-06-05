@@ -22,11 +22,10 @@ import retrofit2.Converter;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * An interceptor that intercepts the error response of a HTTP request and
- * processes the error response.
+ * 拦截HTTP请求错误响应并处理错误响应的拦截器。
  *
  * @param <E>
- *      the type of the error response.
+ *      错误响应的类型。
  */
 public class ErrorResponseInterceptor<E> implements Interceptor {
 
@@ -35,27 +34,24 @@ public class ErrorResponseInterceptor<E> implements Interceptor {
   private final Consumer<E> errorConsumer;
 
   /**
-   * Constructs a new {@link ErrorResponseInterceptor} with the specified error
-   * response class and error consumer.
+   * 使用指定的错误响应类和错误消费者构造新的 {@link ErrorResponseInterceptor}。
    *
    * @param errorClass
-   *     the class of the error response.
+   *     错误响应的类。
    * @param errorConsumer
-   *     the consumer to process the error response.
+   *     处理错误响应的消费者。
    */
   public ErrorResponseInterceptor(final Class<E> errorClass, final Consumer<E> errorConsumer) {
     this(new ResponseBodyJsonConverter<>(errorClass), errorConsumer);
   }
 
   /**
-   * Constructs a new {@link ErrorResponseInterceptor} with the specified error
-   * response converter and error consumer.
+   * 使用指定的错误响应转换器和错误消费者构造新的 {@link ErrorResponseInterceptor}。
    *
    * @param responseBodyConverter
-   *     the converter to convert the error response body to the error response
-   *     object.
+   *     将错误响应体转换为错误响应对象的转换器。
    * @param errorConsumer
-   *     the consumer to process the error response.
+   *     处理错误响应的消费者。
    */
   public ErrorResponseInterceptor(final Converter<ResponseBody, E> responseBodyConverter,
       final Consumer<E> errorConsumer) {

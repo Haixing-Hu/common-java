@@ -14,13 +14,11 @@ import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * A top-level domain (TLD) is the last part of an Internet domain name; that
- * is, the letters which follow the final dot of any domain name.
+ * 顶级域名（TLD）是互联网域名的最后部分；即跟在域名最后一个点后面的字母。
  *
- * <p>For example, in the domain name {@code www.website.com}, the top-level
- * domain is {@code com}.
+ * <p>例如，在域名 {@code www.website.com} 中，顶级域名是 {@code com}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see <a href="http://www.iana.org/">INNA</a>
  * @see <a href="http://en.wikipedia.org/wiki/Top-level_domain">Top-Level Domain</a>
  */
@@ -60,9 +58,9 @@ public final class TopLevelDomain extends DomainSuffix {
   }
 
   /**
-   * Returns the country name if this TLD is Country Code TLD.
+   * 如果此TLD是国家代码TLD，则返回国家名称。
    *
-   * @return country name or null
+   * @return 国家名称或null
    */
   public String getCountry() {
     return country;

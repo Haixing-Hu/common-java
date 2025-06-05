@@ -39,9 +39,9 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.net.InetAddressUtils.isIPv4Address;
 
 /**
- * This class provides the utility functions for handing URLs.
+ * 此类提供处理URL的实用函数。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public final class UrlUtils {
@@ -49,18 +49,17 @@ public final class UrlUtils {
   private static final Logger LOGGER = LoggerFactory.getLogger(UrlUtils.class);
 
   /**
-   * Given a host name, returns the domain name of the host name. The domain of
-   * a host is the substring of the host name without the subdomain names.
+   * 给定主机名，返回主机名的域名。主机的域名是主机名中不包含子域名的子字符串。
    *
-   * <p>For example,
+   * <p>例如：
    * <pre><code>
    * UrlUtils.getDomain("www.google.com")    = "google.com"
    * UrlUtils.getDomain("www.sina.com.cn")   = "sina.com.cn"
    * </code></pre>
    *
    * @param host
-   *     a host name
-   * @return the domain name of the host name.
+   *     主机名
+   * @return 主机名的域名。
    */
   public static String getDomain(@Nonnull final String host) {
     if (isIPv4Address(host)) {

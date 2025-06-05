@@ -15,145 +15,144 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 /**
- * The interface of configurations for HTTP clients.
+ * HTTP客户端配置的接口。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface HttpClientOptions {
 
   /**
-   * The configuration key of the connection timeout, in seconds.
+   * 连接超时的配置键，单位为秒。
    */
   String KEY_CONNECTION_TIMEOUT = "http.timeout.connection";
 
   /**
-   * The configuration key of the read timeout, in seconds.
+   * 读取超时的配置键，单位为秒。
    */
   String KEY_READ_TIMEOUT = "http.timeout.read";
 
   /**
-   * The configuration key of the write timeout, in seconds.
+   * 写入超时的配置键，单位为秒。
    */
   String KEY_WRITE_TIMEOUT = "http.timeout.write";
 
   /**
-   * The configuration key of whether to use the proxy server while connecting
-   * to the model provider.
+   * 连接到模型提供者时是否使用代理服务器的配置键。
    */
   String KEY_USE_PROXY = "http.proxy.use";
 
   /**
-   * The configuration key of the proxy server type.
+   * 代理服务器类型的配置键。
    */
   String KEY_PROXY_TYPE = "http.proxy.type";
 
   /**
-   * The configuration key of the proxy server host.
+   * 代理服务器主机的配置键。
    */
   String KEY_PROXY_HOST = "http.proxy.host";
 
   /**
-   * The configuration key of the proxy server port.
+   * 代理服务器端口的配置键。
    */
   String KEY_PROXY_PORT = "http.proxy.port";
 
   /**
-   * The configuration key of the proxy server username.
+   * 代理服务器用户名的配置键。
    */
   String KEY_PROXY_USERNAME = "http.proxy.username";
 
   /**
-   * The configuration key of the proxy server password.
+   * 代理服务器密码的配置键。
    */
   String KEY_PROXY_PASSWORD = "http.proxy.password";
 
   /**
-   * The configuration key of whether to use the HTTP logging interceptor.
+   * 是否使用HTTP日志拦截器的配置键。
    */
   String KEY_USE_HTTP_LOGGING = "http.logging.use";
 
   /**
-   * The configuration key of whether to log the HTTP request headers.
+   * 是否记录HTTP请求头的配置键。
    */
   String KEY_LOG_HTTP_REQUEST_HEADER = "http.logging.request.header";
 
   /**
-   * The configuration key of whether to log the HTTP request body.
+   * 是否记录HTTP请求体的配置键。
    */
   String KEY_LOG_HTTP_REQUEST_BODY = "http.logging.request.body";
 
   /**
-   * The configuration key of whether to log the HTTP response headers.
+   * 是否记录HTTP响应头的配置键。
    */
   String KEY_LOG_HTTP_RESPONSE_HEADER = "http.logging.response.header";
 
   /**
-   * The configuration key of whether to log the HTTP response body.
+   * 是否记录HTTP响应体的配置键。
    */
   String KEY_LOG_HTTP_RESPONSE_BODY = "http.logging.response.body";
 
   /**
-   * The configuration key of sensitive HTTP headers.
+   * 敏感HTTP头的配置键。
    */
   String KEY_SENSITIVE_HTTP_HEADERS = "http.logging.sensitive-headers";
 
   /**
-   * The configuration key of whether to use only IPv4 addresses in DNS resolution.
+   * DNS解析中是否仅使用IPv4地址的配置键。
    */
   String KEY_USE_ONLY_IPV4_ADDRESS = "http.dns.use-only-ipv4";
 
   /**
-   * The default timeout for the connection in seconds.
+   * 连接超时的默认值，单位为秒。
    */
   int DEFAULT_CONNECTION_TIMEOUT = 10;
 
   /**
-   * The default timeout for the read in seconds.
+   * 读取超时的默认值，单位为秒。
    */
   int DEFAULT_READ_TIMEOUT = 120;
 
   /**
-   * The default timeout for the write out seconds.
+   * 写入超时的默认值，单位为秒。
    */
   int DEFAULT_WRITE_TIMEOUT = 120;
 
   /**
-   * The default value of whether to use the proxy server.
+   * 是否使用代理服务器的默认值。
    */
   boolean DEFAULT_USE_PROXY = false;
 
   /**
-   * The default value of the proxy server type.
+   * 代理服务器类型的默认值。
    */
   String DEFAULT_PROXY_TYPE = "http";
 
   /**
-   * The default value of whether to use the HTTP logging interceptor.
+   * 是否使用HTTP日志拦截器的默认值。
    */
   boolean DEFAULT_USE_HTTP_LOGGING = true;
 
   /**
-   * The default value of whether to log the HTTP request headers.
+   * 是否记录HTTP请求头的默认值。
    */
   boolean DEFAULT_LOG_HTTP_REQUEST_HEADER = true;
 
   /**
-   * The default value of whether to log the HTTP request body.
+   * 是否记录HTTP请求体的默认值。
    */
   boolean DEFAULT_LOG_HTTP_REQUEST_BODY = true;
 
   /**
-   * The default value of whether to log the HTTP response headers.
+   * 是否记录HTTP响应头的默认值。
    */
   boolean DEFAULT_LOG_HTTP_RESPONSE_HEADER = true;
 
   /**
-   * The default value of whether to log the HTTP response body.
+   * 是否记录HTTP响应体的默认值。
    */
   boolean DEFAULT_LOG_HTTP_RESPONSE_BODY = true;
 
   /**
-   * The default value of whether to use only IPv4 addresses in DNS resolution.
+   * DNS解析中是否仅使用IPv4地址的默认值。
    */
   boolean DEFAULT_USE_ONLY_IPV4_ADDRESS = false;
 

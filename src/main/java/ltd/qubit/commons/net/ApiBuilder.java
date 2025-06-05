@@ -34,12 +34,11 @@ import ltd.qubit.commons.text.jackson.CustomizedJsonMapper;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * A builder for building a API client.
+ * 用于构建API客户端的构建器。
  * <p>
- * <b>NOTE:</b> This class is <b>NOT</b> thread-safe. But the built API client
- * is thread-safe.
+ * <b>注意：</b> 此类 <b>不是</b> 线程安全的。但构建出的API客户端是线程安全的。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class ApiBuilder implements HttpClientOptions {
 
@@ -66,7 +65,7 @@ public class ApiBuilder implements HttpClientOptions {
   private final List<CallAdapter.Factory> callAdapterFactories = new ArrayList<>();
 
   /**
-   * Constructs a new API builder with default settings.
+   * 使用默认设置构造新的API构建器。
    */
   public ApiBuilder() {
     this(LoggerFactory.getLogger(ApiBuilder.class),
@@ -75,10 +74,10 @@ public class ApiBuilder implements HttpClientOptions {
   }
 
   /**
-   * Constructs a new API builder with the specified logger and default settings.
+   * 使用指定的日志记录器和默认设置构造新的API构建器。
    *
    * @param logger
-   *     the logger used by this builder, must not be {@code null}.
+   *     此构建器使用的日志记录器，不能为 {@code null}。
    */
   public ApiBuilder(final Logger logger) {
     this(logger, new DefaultHttpClientOptions(), new CustomizedJsonMapper());
