@@ -14,6 +14,20 @@ import ltd.qubit.commons.lang.StringUtils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+
+import ltd.qubit.commons.CommonsConfig;
+import ltd.qubit.commons.config.Config;
 
 /**
  * Unit test of the DomainSuffixes class.
@@ -2129,6 +2143,172 @@ public class DomainSuffixRegistryTest {
     assertEquals(TopLevelDomain.Type.COUNTRY, tld.getType());
     assertEquals("Zimbabwe", tld.getCountry());
 
+  }
+
+  @Test
+  public void testLazyInitialization() {
+    // 测试懒加载初始化
+    final DomainSuffixRegistry instance1 = DomainSuffixRegistry.getInstance();
+    assertNotNull(instance1);
+    
+    // 第二次调用应该返回相同的实例
+    final DomainSuffixRegistry instance2 = DomainSuffixRegistry.getInstance();
+    assertNotNull(instance2);
+    
+    // 验证单例模式
+    assertEquals(instance1, instance2);
+  }
+
+  @Test
+  public void testThreadSafeSingletonAccess() throws InterruptedException {
+    final int threadCount = 20;
+    final CountDownLatch startLatch = new CountDownLatch(1);
+    final CountDownLatch finishLatch = new CountDownLatch(threadCount);
+    final ConcurrentHashMap<DomainSuffixRegistry, Integer> instanceCounts = new ConcurrentHashMap<>();
+    final ExecutorService executor = Executors.newFixedThreadPool(threadCount);
+
+    // 启动多个线程同时获取单例实例
+    for (int i = 0; i < threadCount; i++) {
+      executor.submit(() -> {
+        try {
+          startLatch.await(); // 等待信号，同时开始
+          final DomainSuffixRegistry instance = DomainSuffixRegistry.getInstance();
+          instanceCounts.merge(instance, 1, Integer::sum);
+        } catch (final Exception e) {
+          e.printStackTrace();
+        } finally {
+          finishLatch.countDown();
+        }
+      });
+    }
+
+    // 发出开始信号
+    startLatch.countDown();
+    
+    // 等待所有线程完成
+    assertTrue(finishLatch.await(10, TimeUnit.SECONDS));
+    executor.shutdown();
+
+    // 验证只有一个实例被创建
+    assertEquals(1, instanceCounts.size());
+    final Integer totalCount = instanceCounts.values().iterator().next();
+    assertEquals(threadCount, totalCount.intValue());
+  }
+
+  @Test
+  public void testConcurrentAccess() throws InterruptedException {
+    final int threadCount = 10;
+    final int operationsPerThread = 100;
+    final ExecutorService executor = Executors.newFixedThreadPool(threadCount);
+    final CountDownLatch latch = new CountDownLatch(threadCount);
+    final AtomicInteger successCount = new AtomicInteger(0);
+    final AtomicInteger errorCount = new AtomicInteger(0);
+
+    // 启动多个线程同时访问 DomainSuffixRegistry
+    for (int i = 0; i < threadCount; i++) {
+      executor.submit(() -> {
+        try {
+          for (int j = 0; j < operationsPerThread; j++) {
+            final DomainSuffixRegistry registry = DomainSuffixRegistry.getInstance();
+            final TopLevelDomain comTld = registry.getTopLevelDomain("com");
+            final TopLevelDomain orgTld = registry.getTopLevelDomain("org");
+            final boolean isComDomain = registry.isDomainSuffix("com");
+            final boolean isOrgDomain = registry.isDomainSuffix("org");
+            
+            if (comTld != null && orgTld != null && isComDomain && isOrgDomain) {
+              successCount.incrementAndGet();
+            } else {
+              errorCount.incrementAndGet();
+            }
+          }
+        } catch (final Exception e) {
+          errorCount.incrementAndGet();
+          e.printStackTrace();
+        } finally {
+          latch.countDown();
+        }
+      });
+    }
+
+    // 等待所有线程完成
+    assertTrue(latch.await(30, TimeUnit.SECONDS));
+    executor.shutdown();
+
+    // 验证所有操作都成功
+    assertEquals(threadCount * operationsPerThread, successCount.get());
+    assertEquals(0, errorCount.get());
+  }
+
+  @Test
+  public void testPerformanceConsistency() {
+    final DomainSuffixRegistry registry = DomainSuffixRegistry.getInstance();
+    
+    // 预热
+    for (int i = 0; i < 100; i++) {
+      registry.getTopLevelDomain("com");
+    }
+    
+    // 测试性能一致性
+    final long startTime = System.nanoTime();
+    for (int i = 0; i < 10000; i++) {
+      final TopLevelDomain tld = registry.getTopLevelDomain("com");
+      assertNotNull(tld);
+      assertEquals("com", tld.domain);
+    }
+    final long endTime = System.nanoTime();
+    final long duration = endTime - startTime;
+    
+    // 验证性能在合理范围内（这里只是确保不会出现异常性能问题）
+    assertTrue(duration < TimeUnit.SECONDS.toNanos(1));
+  }
+
+  @Test
+  public void testConfigurationProperty() {
+    // 测试配置属性的使用
+    final Config config = CommonsConfig.get();
+    final String defaultResource = config.getString(DomainSuffixRegistry.PROPERTY_RESOURCE, 
+        DomainSuffixRegistry.DEFAULT_RESOURCE);
+    assertEquals(DomainSuffixRegistry.DEFAULT_RESOURCE, defaultResource);
+  }
+
+  @Test
+  public void testResourceConstants() {
+    // 测试常量定义
+    assertEquals("DomainSuffixRegistry.resource", DomainSuffixRegistry.PROPERTY_RESOURCE);
+    assertEquals("domain-suffixes.xml", DomainSuffixRegistry.DEFAULT_RESOURCE);
+    assertEquals("domains", DomainSuffixRegistry.ROOT_NODE);
+    assertEquals("suffixes", DomainSuffixRegistry.SUFFIXES_NODE);
+    assertEquals("tlds", DomainSuffixRegistry.TLDS_NODE);
+  }
+
+  @Test
+  public void testList() {
+    final DomainSuffixRegistry registry = DomainSuffixRegistry.getInstance();
+    final List<DomainSuffix> allSuffixes = registry.list();
+    
+    assertNotNull(allSuffixes);
+    assertTrue(allSuffixes.size() > 0);
+    
+    // 验证列表包含一些已知的域名后缀
+    final Set<String> domains = allSuffixes.stream()
+        .map(suffix -> suffix.domain)
+        .collect(Collectors.toSet());
+    
+    assertTrue(domains.contains("com"));
+    assertTrue(domains.contains("org"));
+    assertTrue(domains.contains("net"));
+    assertTrue(domains.contains("edu"));
+    assertTrue(domains.contains("gov"));
+  }
+
+  @Test
+  public void testRepeatedInstanceAccess() {
+    // 测试重复获取实例的性能
+    for (int i = 0; i < 1000; i++) {
+      final DomainSuffixRegistry instance = DomainSuffixRegistry.getInstance();
+      assertNotNull(instance);
+      assertTrue(instance.isDomainSuffix("com"));
+    }
   }
 
 }

@@ -21,6 +21,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import ltd.qubit.commons.CommonsConfig;
+import ltd.qubit.commons.concurrent.Lazy;
 import ltd.qubit.commons.config.Config;
 import ltd.qubit.commons.lang.SystemUtils;
 import ltd.qubit.commons.text.xml.DomUtils;
@@ -82,7 +83,11 @@ public final class DefaultPorts {
 
   public static final String PORT_NODE = "port";
 
-  private static volatile Map<String, Integer> ports = null;
+  private static final Lazy<Map<String, Integer>> lazyPorts = Lazy.of(() -> {
+    final Config config = CommonsConfig.get();
+    final String resource = config.getString(PROPERTY_RESOURCE, DEFAULT_RESOURCE);
+    return loadDefaultPorts(resource);
+  });
 
   /**
    * 获取指定方案的默认端口号。
@@ -92,39 +97,32 @@ public final class DefaultPorts {
    * @return 指定方案的默认端口号；如果指定方案没有默认端口则返回-1。
    */
   public static int get(final String scheme) {
-    if (ports == null) {
-      synchronized (DefaultPorts.class) {
-        if (ports == null) {
-          final Config config = CommonsConfig.get();
-          final String resource = config.getString(PROPERTY_RESOURCE,
-              DEFAULT_RESOURCE);
-          loadDefaultPorts(resource);
-        }
-      }
-    }
+    final Map<String, Integer> ports = lazyPorts.get();
     final Integer result = ports.get(scheme);
-    return (result != null ? result.intValue() : - 1);
+    return (result != null ? result.intValue() : -1);
   }
 
-  private static void loadDefaultPorts(final String resource) {
-    ports = new HashMap<>();
+  private static Map<String, Integer> loadDefaultPorts(final String resource) {
+    final Map<String, Integer> ports = new HashMap<>();
     final URL url = SystemUtils.getResource(resource, DefaultPorts.class);
     if (url == null) {
       final Logger logger = LoggerFactory.getLogger(DefaultPorts.class);
       logger.error("Can't find the default ports resource file: {}",
           resource);
-      return;
+      return ports;
     }
     try {
       final Document doc = XmlUtils.parse(url);
-      parse(doc.getDocumentElement());
+      parse(doc.getDocumentElement(), ports);
     } catch (final XmlException e) {
       final Logger logger = LoggerFactory.getLogger(DefaultPorts.class);
       logger.error("Failed to load the default ports from {}.", resource, e);
     }
+    return ports;
   }
 
-  private static void parse(final Element root) throws XmlException {
+  private static void parse(final Element root, final Map<String, Integer> ports)
+      throws XmlException {
     DomUtils.checkNode(root, ROOT_NODE);
     final List<Element> nodeList = DomUtils.getChildren(root, null);
     if ((nodeList == null) || nodeList.isEmpty()) {

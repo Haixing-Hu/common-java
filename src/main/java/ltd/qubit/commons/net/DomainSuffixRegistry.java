@@ -21,6 +21,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import ltd.qubit.commons.CommonsConfig;
+import ltd.qubit.commons.concurrent.Lazy;
 import ltd.qubit.commons.config.Config;
 import ltd.qubit.commons.lang.StringUtils;
 import ltd.qubit.commons.text.xml.DomUtils;
@@ -101,7 +102,11 @@ public final class DomainSuffixRegistry {
   private static final Logger LOGGER = LoggerFactory
       .getLogger(DomainSuffixRegistry.class);
 
-  private static volatile DomainSuffixRegistry instance;
+  private static final Lazy<DomainSuffixRegistry> lazy = Lazy.of(() -> {
+    final Config config = CommonsConfig.get();
+    final String resource = config.getString(PROPERTY_RESOURCE, DEFAULT_RESOURCE);
+    return new DomainSuffixRegistry(resource);
+  });
 
   /**
    * 获取DomainSuffixes类的单例实例，使用懒加载实例化。
@@ -109,25 +114,14 @@ public final class DomainSuffixRegistry {
    * @return DomainSuffixes类的单例实例。
    */
   public static DomainSuffixRegistry getInstance() {
-    // use the double locked check trick.
-    if (instance == null) {
-      synchronized (DomainSuffixRegistry.class) {
-        if (instance == null) {
-          final Config config = CommonsConfig.get();
-          final String resource = config.getString(PROPERTY_RESOURCE,
-              DEFAULT_RESOURCE);
-          instance = new DomainSuffixRegistry(resource);
-        }
-      }
-    }
-    return instance;
+    return lazy.get();
   }
 
   private final HashMap<String, DomainSuffix> domains;
 
   /**
    * 使用指定的配置资源名称创建一个新的DomainSuffixRegistry实例。
-   * 
+   *
    * @param configResourceName
    *     配置资源名称。
    */
@@ -145,7 +139,7 @@ public final class DomainSuffixRegistry {
 
   /**
    * 使用指定的配置资源URL创建一个新的DomainSuffixRegistry实例。
-   * 
+   *
    * @param configResourceUrl
    *     配置资源URL。
    */
