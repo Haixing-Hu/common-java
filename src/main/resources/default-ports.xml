@@ -27,4 +27,56 @@
 		<scheme>https</scheme>
 		<port>443</port>
 	</default-port>
+	<default-port>
+		<scheme>pop3</scheme>
+		<port>110</port>
+	</default-port>
+	<default-port>
+		<scheme>imap</scheme>
+		<port>143</port>
+	</default-port>
+	<default-port>
+		<scheme>imaps</scheme>
+		<port>993</port>
+	</default-port>
+	<default-port>
+		<scheme>pop3s</scheme>
+		<port>995</port>
+	</default-port>
+	<default-port>
+		<scheme>smtp</scheme>
+		<port>25</port>
+	</default-port>
+	<default-port>
+		<scheme>smtps</scheme>
+		<port>465</port>
+	</default-port>
+	<default-port>
+		<scheme>submission</scheme>
+		<port>587</port>
+	</default-port>
+	<default-port>
+		<scheme>dns</scheme>
+		<port>53</port>
+	</default-port>
+	<default-port>
+		<scheme>ssh</scheme>
+		<port>22</port>
+	</default-port>
+	<default-port>
+		<scheme>telnet</scheme>
+		<port>23</port>
+	</default-port>
+	<default-port>
+		<scheme>tftp</scheme>
+		<port>69</port>
+	</default-port>
+	<default-port>
+		<scheme>snmp</scheme>
+		<port>161</port>
+	</default-port>
+	<default-port>
+		<scheme>snmptrap</scheme>
+		<port>162</port>
+	</default-port>
 </default-ports>
