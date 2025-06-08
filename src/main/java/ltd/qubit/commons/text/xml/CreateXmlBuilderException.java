@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -9,9 +9,9 @@
 package ltd.qubit.commons.text.xml;
 
 /**
- * Thrown to indicate an error occurred while creating the XML document builder.
+ * 抛出此异常表示在创建 XML 文档构建器时发生错误。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class CreateXmlBuilderException extends XmlException {
 

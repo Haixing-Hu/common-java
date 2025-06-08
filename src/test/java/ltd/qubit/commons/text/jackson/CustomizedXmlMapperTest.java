@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -524,7 +524,7 @@ public class CustomizedXmlMapperTest {
     final XmlMapper mapper = new CustomizedXmlMapper();
     final String xml = mapper.writeValueAsString(info);
     System.out.println(xml);
-    
+
     final String expected = "<dict-entry-info>\n"
         + "  <id>123</id>\n"
         + "  <code>Q{0}H</code>\n"
@@ -535,7 +535,7 @@ public class CustomizedXmlMapperTest {
         + "  <display-code>Q3H</display-code>\n"
         + "  <display-name>每3小时使用一次</display-name>\n"
         + "</dict-entry-info>\n";
-    
+
     final Diff diff = DiffBuilder.compare(expected).withTest(xml)
                                .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndText))
                                .ignoreWhitespace()

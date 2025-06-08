@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -9,18 +9,17 @@
 package ltd.qubit.commons.error;
 
 /**
- * The interface which provide a method to convert this object to an
- * {@link ErrorInfo} object.
+ * 提供将此对象转换为 {@link ErrorInfo} 对象的方法的接口。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface ErrorInfoConvertable {
 
   /**
-   * Converts this object to an {@link ErrorInfo} object.
+   * 将此对象转换为 {@link ErrorInfo} 对象。
    *
    * @return
-   *    an {@link ErrorInfo} object converted from this object.
+   *    从该对象转换而来的 {@link ErrorInfo} 对象。
    */
   ErrorInfo toErrorInfo();
 }

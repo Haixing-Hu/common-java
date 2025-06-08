@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,52 +11,52 @@ package ltd.qubit.commons.concurrent;
 import ltd.qubit.commons.util.clock.TimeMeter;
 
 /**
- * A progress reporter that reports the progress of a task.
+ * 报告任务进度的进度报告器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface ProgressReporter {
   /**
-   * Reports the starting of a task.
+   * 报告任务的开始。
    *
    * @param totalCount
-   *     the total number of tasks.
+   *     任务总数。
    */
   void start(long totalCount);
 
   /**
-   * Reports the progress of a task.
+   * 报告任务的进度。
    *
    * @param totalCount
-   *     the total number of tasks.
+   *     任务总数。
    * @param activeCount
-   *     the number of active tasks.
+   *     活动任务数。
    * @param completedCount
-   *     the number of completed tasks.
+   *     已完成任务数。
    * @param meter
-   *     the time meter of the task.
+   *     任务的时间计量器。
    */
   void process(long totalCount, long activeCount, long completedCount, TimeMeter meter);
 
   /**
-   * Reports the finish of a task.
+   * 报告任务的完成。
    *
    * @param totalCount
-   *     the total number of tasks.
+   *     任务总数。
    * @param meter
-   *     the time meter of the task, which must be stopped.
+   *     任务的时间计量器，必须已停止。
    */
   void finish(long totalCount, TimeMeter meter);
 
   /**
-   * Reports the interruption of a task.
+   * 报告任务的中断。
    *
    * @param totalCount
-   *     the total number of tasks.
+   *     任务总数。
    * @param completedCount
-   *     the number of completed tasks.
+   *     已完成任务数。
    * @param meter
-   *     the time meter of the task, which must be stopped.
+   *     任务的时间计量器，必须已停止。
    */
   void interrupt(long totalCount, long completedCount, TimeMeter meter);
 }

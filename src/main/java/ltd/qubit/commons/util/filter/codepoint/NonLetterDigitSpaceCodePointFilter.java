@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,18 +11,25 @@ package ltd.qubit.commons.util.filter.codepoint;
 import javax.annotation.concurrent.Immutable;
 
 /**
- * A CharFilter that accept only the non-letter and non-digit characters and
- * whitespace characters.
+ * 一个代码点过滤器，仅接受既非字母、也非数字、也非空白的代码点。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class NonLetterDigitSpaceCodePointFilter implements CodePointFilter {
 
-  public static final NonLetterDigitSpaceCodePointFilter INSTANCE = new NonLetterDigitSpaceCodePointFilter();
+  /**
+   * 此类的单例实例。
+   */
+  public static final NonLetterDigitSpaceCodePointFilter INSTANCE =
+      new NonLetterDigitSpaceCodePointFilter();
 
-  private NonLetterDigitSpaceCodePointFilter() {}
+  private NonLetterDigitSpaceCodePointFilter() {
+  }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean accept(final Integer codePoint) {
     return (codePoint != null)

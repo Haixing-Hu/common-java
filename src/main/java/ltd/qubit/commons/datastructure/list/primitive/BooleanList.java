@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -9,251 +9,219 @@
 package ltd.qubit.commons.datastructure.list.primitive;
 
 /**
- * An ordered collection of {@code boolean} values.
+ * {@code boolean} 值的有序集合。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface BooleanList extends BooleanCollection {
 
   /**
-   * Appends the specified element to the end of me (optional operation).
-   * Returns {@code true} iff I changed as a result of this call.
+   * 将指定元素追加到列表末尾（可选操作）。
+   * 如果此调用导致列表发生变化，则返回 {@code true}。
    *
-   * <p>If a collection refuses to add the specified element for any reason
-   * other than that it already contains the element, it <i>must</i> throw an
-   * exception (rather than simply returning {@code false}). This preserves the
-   * invariant that a collection always contains the specified element after
-   * this call returns.
+   * <p>如果集合因为除了已包含该元素之外的任何原因拒绝添加指定元素，
+   * 它<i>必须</i>抛出异常（而不是简单地返回 {@code false}）。
+   * 这保持了集合在此调用返回后始终包含指定元素的不变性。
    *
    * @param element
-   *     the value whose presence within me is to be ensured
-   * @return {@code true} iff I changed as a result of this call
+   *     要确保存在于此列表中的值
+   * @return 如果此调用导致列表发生变化，则返回 {@code true}
    * @throws UnsupportedOperationException
-   *     when this operation is not supported
+   *     当不支持此操作时
    * @throws IllegalArgumentException
-   *     may be thrown if some aspect of the specified element prevents it from
-   *     being added to me
+   *     如果指定元素的某些方面阻止其被添加到此列表中，可能抛出此异常
    */
   @Override
   boolean add(boolean element);
 
   /**
-   * Inserts the specified element at the specified position (optional
-   * operation). Shifts the element currently at that position (if any) and any
-   * subsequent elements to the right, increasing their indices.
+   * 在指定位置插入指定元素（可选操作）。
+   * 将当前位于该位置的元素（如果有）和任何后续元素向右移动，增加它们的索引。
    *
    * @param index
-   *     the index at which to insert the element
+   *     要插入元素的索引
    * @param element
-   *     the value to insert
+   *     要插入的值
    * @throws UnsupportedOperationException
-   *     when this operation is not supported
+   *     当不支持此操作时
    * @throws IllegalArgumentException
-   *     if some aspect of the specified element prevents it from being added to
-   *     me
+   *     如果指定元素的某些方面阻止其被添加到此列表中
    * @throws IndexOutOfBoundsException
-   *     if the specified index is out of range
+   *     如果指定的索引超出范围
    */
   void add(int index, boolean element);
 
   /**
-   * Inserts all of the elements in the specified collection into me, at the
-   * specified position (optional operation). Shifts the element currently at
-   * that position (if any) and any subsequent elements to the right, increasing
-   * their indices. The new elements will appear in the order that they are
-   * returned by the given collection's {@link BooleanCollection#iterator
-   * iterator}.
+   * 将指定集合中的所有元素插入到此列表的指定位置（可选操作）。
+   * 将当前位于该位置的元素（如果有）和任何后续元素向右移动，增加它们的索引。
+   * 新元素将按照给定集合的{@link BooleanCollection#iterator 迭代器}返回的顺序出现。
    *
    * @param index
-   *     the index at which to insert the first element from the specified
-   *     collection
+   *     要插入指定集合中第一个元素的索引
    * @param collection
-   *     the {@link BooleanCollection ByteCollection} of elements to add
-   * @return {@code true} iff I changed as a result of this call
+   *     要添加的元素的 {@link BooleanCollection} 集合
+   * @return 如果此调用导致列表发生变化，则返回 {@code true}
    * @throws UnsupportedOperationException
-   *     when this operation is not supported
+   *     当不支持此操作时
    * @throws IndexOutOfBoundsException
-   *     if the specified index is out of range
+   *     如果指定的索引超出范围
    */
   boolean addAll(int index, BooleanCollection collection);
 
   /**
-   * Returns {@code true} iff <i>that</i> is an {@code BooleanList} that
-   * contains the same elements in the same order as me. In other words, returns
-   * {@code true} iff <i>that</i> is a {@code BooleanList} that has the same
-   * {@link #size() size} as me, and for which the elements returned by its
-   * {@link BooleanList#iterator iterator} are equal ( {@code ==}) to the
-   * corresponding elements within me. (This contract ensures that this method
-   * works properly across different implementations of the {@code BooleanList}
-   * interface.)
+   * 当且仅当 <i>that</i> 是一个 {@code BooleanList} 且包含与此列表相同顺序的相同元素时，
+   * 返回 {@code true}。换句话说，当且仅当 <i>that</i> 是一个 {@code BooleanList}，
+   * 且具有与此列表相同的{@link #size() 大小}，并且其{@link BooleanList#iterator 迭代器}
+   * 返回的元素与此列表中对应的元素相等（{@code ==}）时，返回 {@code true}。
+   * （此约定确保此方法在 {@code BooleanList} 接口的不同实现中正常工作。）
    *
    * @param that
-   *     the object to compare to me
-   * @return {@code true} iff <i>that</i> is an {@code BooleanList} that
-   *     contains the same elements in the same order as me
+   *     要与此列表比较的对象
+   * @return 当且仅当 <i>that</i> 是一个 {@code BooleanList} 且包含与此列表相同顺序的相同元素时，
+   *     返回 {@code true}
    */
   @Override
   boolean equals(Object that);
 
   /**
-   * Returns the value of the element at the specified position within me.
+   * 返回此列表中指定位置的元素值。
    *
    * @param index
-   *     the index of the element to return
-   * @return the value of the element at the specified position
+   *     要返回的元素的索引
+   * @return 指定位置的元素值
    * @throws IndexOutOfBoundsException
-   *     if the specified index is out of range
+   *     如果指定的索引超出范围
    */
   boolean get(int index);
 
   /**
-   * The hash code of an {@code BooleanList} is defined to be the result of the
-   * following calculation:
+   * {@code BooleanList} 的哈希码定义为以下计算的结果：
    *
    * <pre>
    * int hash = 1;
    * for (BooleanIterator iter = iterator(); iter.hasNext();) {
    *   boolean value = iter.next();
-   *   hash = 31 * hash + (int) (value &circ; (value &gt;&gt;&gt; 32));
+   *   hash = 31 * hash + (value ? 1 : 0);
    * }
    * </pre>
    *
-   * <p>This contract ensures that this method is consistent with {@link
-   * #equals
-   * equals} and with the {@link java.util.List#hashCode hashCode} method of a
-   * {@link java.util.List List} of {@link Boolean}s.
+   * <p>此约定确保此方法与{@link #equals equals}方法一致，
+   * 并与{@link Boolean}的{@link java.util.List List}的
+   * {@link java.util.List#hashCode hashCode}方法一致。
    *
-   * @return my hash code/
+   * @return 此列表的哈希码
    */
   @Override
   int hashCode();
 
   /**
-   * Returns the current of the first occurrence of the specified element within
-   * me, or {@code -1} if I do not contain the element.
+   * 返回此列表中指定元素第一次出现的索引，如果此列表不包含该元素，则返回 {@code -1}。
    *
    * @param element
-   *     the element to search for
-   * @return the smallest current of an element matching the specified value, or
-   *     {@code -1} if no such matching element can be found.
+   *     要搜索的元素
+   * @return 匹配指定值的元素的最小索引，如果找不到这样的匹配元素，则返回 {@code -1}
    */
   int indexOf(boolean element);
 
   /**
-   * Returns an {@link BooleanIterator iterator} over all elements, in the
-   * appropriate sequence.
+   * 返回按适当顺序遍历所有元素的{@link BooleanIterator 迭代器}。
    *
-   * @return an {@link BooleanIterator iterator} over all elements.
+   * @return 遍历所有元素的{@link BooleanIterator 迭代器}
    */
   @Override
   BooleanIterator iterator();
 
   /**
-   * Returns the current of the last occurrence of the specified element within
-   * me, or -1 if I do not contain the element.
+   * 返回此列表中指定元素最后一次出现的索引，如果此列表不包含该元素，则返回 -1。
    *
    * @param element
-   *     the element to search for
-   * @return the largest current of an element matching the specified value, or
-   *     {@code -1} if no such matching element can be found
+   *     要搜索的元素
+   * @return 匹配指定值的元素的最大索引，如果找不到这样的匹配元素，则返回 {@code -1}
    */
   int lastIndexOf(boolean element);
 
   /**
-   * Returns a {@link BooleanListIterator bidirectional iterator} over all my
-   * elements, in the appropriate sequence.
+   * 返回按适当顺序遍历所有元素的{@link BooleanListIterator 双向迭代器}。
    *
-   * @return an {@link BooleanListIterator iterator} over all elements.
+   * @return 遍历所有元素的{@link BooleanListIterator 迭代器}
    */
   BooleanListIterator listIterator();
 
   /**
-   * Returns a {@link BooleanListIterator bidirectional iterator} over all my
-   * elements, in the appropriate sequence, starting at the specified position.
-   * The specified <i>current</i> indicates the first element that would be
-   * returned by an initial call to the {@link BooleanListIterator#next next}
-   * method. An initial call to the {@link BooleanListIterator#previous
-   * previous} method would return the element with the specified <i>current</i>
-   * minus one.
+   * 返回从指定位置开始按适当顺序遍历所有元素的{@link BooleanListIterator 双向迭代器}。
+   * 指定的<i>索引</i>表示初次调用{@link BooleanListIterator#next next}方法
+   * 将返回的第一个元素。初次调用{@link BooleanListIterator#previous previous}
+   * 方法将返回指定<i>索引</i>减一的元素。
    *
    * @param index
-   *     the specified index.
-   * @return the specified {@link BooleanListIterator iterator}.
+   *     指定的索引
+   * @return 指定的{@link BooleanListIterator 迭代器}
    * @throws IndexOutOfBoundsException
-   *     if the specified index is out of range
+   *     如果指定的索引超出范围
    */
   BooleanListIterator listIterator(int index);
 
   /**
-   * Removes the element at the specified position in (optional operation). Any
-   * subsequent elements are shifted to the left, subtracting one from their
-   * indices. Returns the element that was removed.
+   * 移除此列表中指定位置的元素（可选操作）。
+   * 将任何后续元素向左移动，从它们的索引中减一。返回被移除的元素。
    *
    * @param index
-   *     the index of the element to remove
-   * @return the value of the element that was removed
+   *     要移除的元素的索引
+   * @return 被移除的元素的值
    * @throws UnsupportedOperationException
-   *     when this operation is not supported
+   *     当不支持此操作时
    * @throws IndexOutOfBoundsException
-   *     if the specified index is out of range
+   *     如果指定的索引超出范围
    */
   boolean removeAt(int index);
 
   /**
-   * Replaces the element at the specified position in me with the specified
-   * element (optional operation).
+   * 用指定元素替换此列表中指定位置的元素（可选操作）。
    *
    * @param index
-   *     the index of the element to change
+   *     要更改的元素的索引
    * @param element
-   *     the value to be stored at the specified position
-   * @return the value previously stored at the specified position
+   *     要存储在指定位置的值
+   * @return 先前存储在指定位置的值
    * @throws UnsupportedOperationException
-   *     when this operation is not supported
+   *     当不支持此操作时
    * @throws IndexOutOfBoundsException
-   *     if the specified index is out of range
+   *     如果指定的索引超出范围
    */
   boolean set(int index, boolean element);
 
   /**
-   * Returns a view of the elements within me between the specified
-   * <i>fromIndex</i>, inclusive, and <i>toIndex</i>, exclusive. The returned
-   * {@code BooleanList} is backed by me, so that any changes in the returned
-   * list are reflected in me, and vice-versa. The returned list supports all of
-   * the optional operations that I support.
+   * 返回此列表中指定 <i>fromIndex</i>（包含）和 <i>toIndex</i>（不包含）之间元素的视图。
+   * 返回的 {@code BooleanList} 由此列表支持，因此返回列表中的任何更改都会反映在此列表中，
+   * 反之亦然。返回的列表支持此列表支持的所有可选操作。
    *
-   * <p>Note that when <code><i>fromIndex</i> == <i>toIndex</i></code>, the
-   * returned list is initially empty, and when <code><i>fromIndex</i> == 0
-   * &amp;&amp; <i>toIndex</i> == {@link #size() size()}</code> the returned
-   * list is my "improper" sublist, containing all my elements.
+   * <p>注意，当 <code><i>fromIndex</i> == <i>toIndex</i></code> 时，
+   * 返回的列表最初为空，当 <code><i>fromIndex</i> == 0 &amp;&amp; 
+   * <i>toIndex</i> == {@link #size() size()}</code> 时，
+   * 返回的列表是此列表的"非真子列表"，包含此列表的所有元素。
    *
-   * <p>The semantics of the returned list become undefined if I am
-   * structurally
-   * modified in any way other than via the returned list.
+   * <p>如果此列表以除通过返回列表之外的任何方式进行结构修改，
+   * 则返回列表的语义变为未定义。
    *
    * @param fromIndex
-   *     the smallest current (inclusive) in me that appears in the returned
-   *     list
+   *     出现在返回列表中的此列表的最小索引（包含）
    * @param toIndex
-   *     the largest current (exclusive) in me that appears in the returned
-   *     list
-   * @return a view of this list from <i>fromIndex</i> (inclusive) to
-   *     <i>toIndex</i> (exclusive)
+   *     出现在返回列表中的此列表的最大索引（不包含）
+   * @return 此列表从 <i>fromIndex</i>（包含）到 <i>toIndex</i>（不包含）的视图
    * @throws IndexOutOfBoundsException
-   *     if either specified current is out of range
+   *     如果任一指定索引超出范围
    */
   BooleanList subList(int fromIndex, int toIndex);
 
   /**
-   * Sorts the list into ascending numerical order.
+   * 将列表按升序数值顺序排序。
    */
   void sort();
 
   /**
-   * Unique the values in this sorted list.
+   * 对此已排序列表中的值进行去重。
    *
-   * <p>The list is assumed to be sorted, i.e., the same values should be
-   * successively placed.</p>
+   * <p>假设列表已排序，即相同的值应连续放置。</p>
    */
   void unique();
 }

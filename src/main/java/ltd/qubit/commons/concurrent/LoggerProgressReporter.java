@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,12 +13,18 @@ import org.slf4j.Logger;
 import ltd.qubit.commons.io.LoggerPrinter;
 
 /**
- * A {@link ProgressReporter} that reports the progress to a {@link Logger}.
+ * 将进度报告给{@link Logger}的{@link ProgressReporter}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class LoggerProgressReporter extends PrinterProgressReporter {
 
+  /**
+   * 构造一个{@link LoggerProgressReporter}。
+   *
+   * @param logger
+   *     指定的{@link Logger}。
+   */
   LoggerProgressReporter(final Logger logger) {
     super(new LoggerPrinter(logger));
   }

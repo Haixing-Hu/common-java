@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -9,26 +9,26 @@
 package ltd.qubit.commons.config;
 
 /**
- * Something that may be configured with a {@link WritableConfig}.
+ * 可以使用 {@link WritableConfig} 进行配置的组件。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface WritableConfigurable {
 
   /**
-   * Gets the configuration used by this object.
+   * 获取此对象使用的配置。
    *
-   * @return the configuration used by this object. It should never return null.
+   * @return 此对象使用的配置。它永远不应返回 null。
    */
   WritableConfig getConfig();
 
   /**
-   * Sets the configuration to be used by this object.
+   * 设置要由此对象使用的配置。
    *
    * @param config
-   *     the configuration to be set to this object. It can't be null.
+   *     要设置到此对象的配置。它不能为 null。
    * @return
-   *     the current instance of this object.
+   *     此对象的当前实例。
    */
   WritableConfigurable setConfig(WritableConfig config);
 

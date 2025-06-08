@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -264,12 +264,12 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
   }
 
   /**
-   * 从URL对象构造Url对象。
+   * 从 {@link URL} 对象构造一个 {@link Url} 对象。
    *
    * @param url
-   *     URL对象
+   *     一个 {@link URL} 对象。
    * @throws MalformedURLException
-   *     如果URL无效
+   *     如果该 URL 无效。
    */
   public Url(final URL url) throws MalformedURLException {
     this(createUri(url));
@@ -287,10 +287,10 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
   }
 
   /**
-   * 从URI对象构造Url对象。
+   * 从 {@link URI} 对象构造一个 {@link Url} 对象。
    *
    * @param uri
-   *     URI对象
+   *     一个 {@link URI} 对象。
    */
   public Url(@Nullable final URI uri) {
     if (uri == null) {
@@ -490,9 +490,10 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
   }
 
   /**
-   * 检查URL是否为空。
+   * 判断此URL是否为空。
    *
-   * @return 如果URL为空返回true
+   * @return
+   *    如果此URL为空，则返回 `true`；否则返回 `false`。
    */
   public boolean isEmpty() {
     return (url == null)
@@ -502,9 +503,10 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
   }
 
   /**
-   * 检查URL是否为根路径。
+   * 判断此URL是否为根URL，即路径为"/"。
    *
-   * @return 如果URL为根路径返回true
+   * @return
+   *    如果此URL为根URL，则返回 `true`；否则返回 `false`。
    */
   public boolean isRoot() {
     return (path != null) && (path.length() == 1) && (path.charAt(0) == '/');
@@ -513,7 +515,8 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
   /**
    * 获取此URL的协议。
    *
-   * @return 此URL的协议，永远不会为null，但可能为空
+   * @return
+   *    此URL的协议。
    */
   public String scheme() {
     return scheme;
@@ -522,7 +525,8 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
   /**
    * 获取此URL的用户信息。
    *
-   * @return 此URL的用户信息，永远不会为null，但可能为空
+   * @return
+   *    此URL的用户信息，如果不存在则返回 `null`。
    */
   public String userInfo() {
     return userInfo;
@@ -531,7 +535,8 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
   /**
    * 获取此URL的主机名。
    *
-   * @return 此URL的主机名，永远不会为null，但可能为空
+   * @return
+   *    此URL的主机名。
    */
   public String hostname() {
     return hostname;
@@ -540,7 +545,8 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
   /**
    * 获取此URL的主机。
    *
-   * @return 此URL的主机，永远不会为null
+   * @return
+   *    此URL的主机。
    */
   public Host host() {
     return new Host(scheme, hostname, port);
@@ -549,16 +555,18 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
   /**
    * 获取此URL的域名。
    *
-   * @return 此URL的域名，永远不会为null，但可能为空
+   * @return
+   *    此URL的域名。
    */
   public String domain() {
     return domain;
   }
 
   /**
-   * 获取此URL的端口。
+   * 获取此URL的端口号。
    *
-   * @return 此URL的端口，如果未指定端口或端口是标准协议的默认端口，则可能为-1
+   * @return
+   *    此URL的端口号。
    */
   public int port() {
     return port;
@@ -567,16 +575,18 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
   /**
    * 获取此URL的路径。
    *
-   * @return 此URL的路径，永远不会为null，但可能为空
+   * @return
+   *    此URL的路径。
    */
   public String path() {
     return path;
   }
 
   /**
-   * 获取此URL的文件名。
+   * 获取此URL的文件名部分。
    *
-   * @return 此URL的文件名，永远不会为null，但可能为空
+   * @return
+   *    此URL的文件名部分。
    */
   public String filename() {
     final int pos = path.lastIndexOf('/');
@@ -588,22 +598,23 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
   }
 
   /**
-   * 获取此URL的查询。
+   * 获取此URL的查询部分。
    *
-   * @return 此URL的查询，永远不会为null，但可能为空
+   * @return
+   *    此URL的查询部分，如果不存在则返回 `null`。
    */
   public String query() {
     return query;
   }
 
   /**
-   * 获取在此URL查询部分中编码的参数（键/值对）。
+   * 将此{@code URL}的查询字符串解析为从键到值的映射。
    *
    * @param parameterSeparator
-   *          用于分隔参数的字符。通常此字符是'&amp;'或';'
+   *     用于在查询字符串中分隔参数的字符。
    * @param keyValueSeparator
-   *          用于分隔键和值的字符。通常此字符是'='
-   * @return 编码参数的映射，如果没有此类参数则返回空列表
+   *     用于分隔参数的键和值的字符。
+   * @return 从参数名称到值的映射。
    */
   public Map<String, String> getEncodedParameters(final char parameterSeparator,
       final char keyValueSeparator) {
@@ -637,20 +648,22 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
   }
 
   /**
-   * 获取此URL的片段。
+   * 获取此URL的片段部分。
    *
-   * @return 此URL的片段，永远不会为null，但可能为空
+   * @return
+   *    此URL的片段部分，如果不存在则返回 `null`。
    */
   public String fragment() {
     return fragment;
   }
 
   /**
-   * 获取此URL的指定部分。
+   * 获取此URL指定部分的值。
    *
    * @param part
-   *          要获取的部分
-   * @return 此URL的指定部分，永远不会为null，但可能为空
+   *     指定的URL部分。
+   * @return
+   *     此URL指定部分的值。
    */
   public String get(final UrlPart part) {
     switch (part) {
@@ -678,33 +691,37 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
   }
 
   /**
-   * 转换为URL对象。
+   * 将此 {@link Url} 转换为 {@link URL} 对象。
    *
-   * @return URL对象
+   * @return
+   *    从此 {@link Url} 创建的 {@link URL} 对象。
    * @throws MalformedURLException
-   *     如果URL格式无效
+   *    如果发生URL语法错误。
    */
   public URL toURL() throws MalformedURLException {
     return new URL(url);
   }
 
   /**
-   * 转换为URI对象。
+   * 将此 {@link Url} 转换为 {@link URI} 对象。
    *
-   * @return URI对象
+   * @return
+   *    从此 {@link Url} 创建的 {@link URI} 对象。
    * @throws URISyntaxException
-   *     如果URI格式无效
+   *    如果发生URI语法错误。
    */
   public URI toURI() throws URISyntaxException {
     return new URI(scheme, userInfo, hostname, port, path, query, fragment);
   }
 
   /**
-   * 打开此URL的输入流。
+   * 打开到此 {@code URL} 的连接并返回一个用于从该连接读取的
+   * {@code InputStream}。
    *
-   * @return 输入流
+   * @return
+   *    用于从URL连接读取的输入流。
    * @throws IOException
-   *     如果发生I/O错误
+   *    如果打开连接时发生I/O错误。
    */
   public InputStream openStream() throws IOException {
     final URL result;
@@ -727,7 +744,28 @@ public final class Url implements Comparable<Url>, CloneableEx<Url>, Serializabl
         query, fragment, domain, url);
   }
 
-  // used internally by clone()
+  /**
+   * 内部克隆构造函数。
+   *
+   * @param scheme
+   *     协议。
+   * @param userInfo
+   *     用户信息。
+   * @param hostname
+   *     主机名。
+   * @param port
+   *     端口。
+   * @param path
+   *     路径。
+   * @param query
+   *     查询。
+   * @param fragment
+   *     片段。
+   * @param domain
+   *     域名。
+   * @param url
+   *     URL字符串。
+   */
   private Url(@Nullable final String scheme, @Nullable final String userInfo,
       @Nullable final String hostname,
       final int port,

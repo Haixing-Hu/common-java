@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -9,11 +9,14 @@
 package ltd.qubit.commons.util.ref;
 
 /**
- * A trivial structure representing the reference of a boolean variable, which could
- * be used as a reference argument in function calls.
+ * 一个表示 {@code boolean} 型变量引用的简单结构体，可作为引用参数用于函数调用。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class BooleanRef {
+
+  /**
+   * 所引用的 {@code boolean} 型变量。
+   */
   public boolean value;
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,6 +13,11 @@ import java.security.GeneralSecurityException;
 
 import ltd.qubit.commons.util.pair.KeyValuePairList;
 
+/**
+ * 当使用不支持的算法时抛出此异常。
+ *
+ * @author 胡海星
+ */
 public class UnsupportedAlgorithmException extends GeneralSecurityException
     implements ErrorInfoConvertable {
 
@@ -21,11 +26,23 @@ public class UnsupportedAlgorithmException extends GeneralSecurityException
 
   private final String algorithm;
 
+  /**
+   * 构造一个新的不支持算法异常。
+   *
+   * @param algorithm
+   *     不支持的算法名称。
+   */
   public UnsupportedAlgorithmException(final String algorithm) {
     super("Unsupported algorithm: " + algorithm);
     this.algorithm = algorithm;
   }
 
+  /**
+   * 获取不支持的算法名称。
+   *
+   * @return
+   *     不支持的算法名称。
+   */
   public final String getAlgorithm() {
     return algorithm;
   }

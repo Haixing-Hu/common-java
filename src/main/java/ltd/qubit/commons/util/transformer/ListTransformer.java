@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -12,32 +12,59 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The transformer of a list which apply a specified transformer to each element
- * of the list.
+ * 列表的转换器,它将指定的转换器应用于列表的每个元素。
  *
  * @param <T>
- *        the type of elements in the list.
- * @author Haixing Hu
+ *        列表中元素的类型。
+ * @author 胡海星
  */
 public class ListTransformer<T> extends AbstractTransformer<List<T>> {
 
   private Transformer<T>  elementTransformer;
   private boolean ignoreNull = false;
 
+  /**
+   * 获取列表中元素的转换器。
+   *
+   * @return
+   *     列表中元素的转换器。
+   */
   public final Transformer<T> getElementTransformer() {
     return elementTransformer;
   }
 
+  /**
+   * 设置列表中元素的转换器。
+   *
+   * @param elementTransformer
+   *     新的列表中元素的转换器。
+   * @return
+   *     返回当前对象。
+   */
   public final ListTransformer<T> setElementTransformer(
       final Transformer<T> elementTransformer) {
     this.elementTransformer = elementTransformer;
     return this;
   }
 
+  /**
+   * 返回是否忽略{@code null}元素。
+   *
+   * @return
+   *     如果忽略{@code null}元素，则返回{@code true}；否则返回{@code false}。
+   */
   public final boolean isIgnoreNull() {
     return ignoreNull;
   }
 
+  /**
+   * 设置是否忽略{@code null}元素。
+   *
+   * @param ignoreNull
+   *     指定是否忽略{@code null}元素。
+   * @return
+   *     返回当前对象。
+   */
   public final ListTransformer<T> setIgnoreNull(final boolean ignoreNull) {
     this.ignoreNull = ignoreNull;
     return this;

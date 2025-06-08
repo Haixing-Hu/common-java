@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,37 +13,36 @@ import java.io.OutputStream;
 import javax.annotation.concurrent.Immutable;
 
 /**
- * A {@code NullOutputStream} object writes all data to the famous <b>/dev/null</b>.
+ * {@code NullOutputStream} 对象将所有数据写入著名的 <b>/dev/null</b>。
  *
- * <p>This output stream has no destination (file/socket etc.) and all bytes written to
- * it are ignored and lost.</p>
+ * <p>此输出流没有目标（文件/套接字等），所有写入它的字节都将被忽略和丢失。</p>
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class NullOutputStream extends OutputStream {
 
   /**
-   * The singleton instance of the NullOutputStream.
+   * NullOutputStream 的单例实例。
    */
   public static final NullOutputStream INSTANCE = new NullOutputStream();
 
   /**
-   * The restrictive constructor.
+   * 限制性构造函数。
    */
   private NullOutputStream() {
     // empty
   }
 
   /**
-   * Does nothing - output to {@code /dev/null}.
+   * 什么都不做 - 输出到 {@code /dev/null}。
    *
    * @param b
-   *          The bytes to write
+   *          要写入的字节。
    * @param off
-   *          The start offset
+   *          起始偏移量。
    * @param len
-   *          The number of bytes to write
+   *          要写入的字节数。
    */
   @Override
   public void write(final byte[] b, final int off, final int len) {
@@ -51,10 +50,10 @@ public final class NullOutputStream extends OutputStream {
   }
 
   /**
-   * Does nothing - output to {@code /dev/null}.
+   * 什么都不做 - 输出到 {@code /dev/null}。
    *
    * @param b
-   *          The byte to write
+   *          要写入的字节。
    */
   @Override
   public void write(final int b) {
@@ -62,10 +61,10 @@ public final class NullOutputStream extends OutputStream {
   }
 
   /**
-   * Does nothing - output to {@code /dev/null}.
+   * 什么都不做 - 输出到 {@code /dev/null}。
    *
    * @param b
-   *          The bytes to write
+   *          要写入的字节。
    */
   @Override
   public void write(final byte[] b) {

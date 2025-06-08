@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -22,25 +22,31 @@ import ltd.qubit.commons.config.Property;
 import ltd.qubit.commons.lang.Argument;
 
 /**
- * An implementation of {@link Config} interface which get property values from
- * a stack of {@link Config}s.
+ * {@link Config} 接口的实现，它从一个 {@link Config} 栈中获取属性值。
  *
- * <p>The property value is looked up in the stack of {@link Config}s form the
- * top (the last one put into the stack) to the bottom (the first one put into
- * the stack).
+ * <p>属性值在 {@link Config} 栈中从顶部（最后一个放入栈中）到底部（第一个放入栈中）进行查找。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class StackConfig extends AbstractConfig {
 
   private static final long serialVersionUID = 7815389819448399587L;
 
+  /**
+   * 配置栈。
+   */
   private final Stack<Config> configs;
 
+  /**
+   * 构造一个空的 {@link StackConfig}。
+   */
   public StackConfig() {
     configs = new Stack<>();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String getDescription() {
     if (configs.isEmpty()) {
@@ -51,46 +57,49 @@ public class StackConfig extends AbstractConfig {
   }
 
   /**
-   * Pushes a {@link Config} to the stack.
+   * 将一个 {@link Config} 推入栈中。
    *
    * @param config
-   *     the {@link Config} to be pushed into the stack.
+   *     要推入栈中的 {@link Config}。
    * @throws NullPointerException
-   *     if the {@code config} is null.
+   *     如果 {@code config} 为 null。
    */
   public void push(final Config config) {
     configs.push(Argument.requireNonNull("config", config));
   }
 
   /**
-   * Pops the top {@link Config} object in the stack.
+   * 弹出栈顶的 {@link Config} 对象。
    *
-   * @return the top {@link Config} object in the stack.
+   * @return 栈顶的 {@link Config} 对象。
    * @throws EmptyStackException
-   *     if this stack is empty.
+   *     如果此栈为空。
    */
   public Config pop() throws EmptyStackException {
     return configs.pop();
   }
 
   /**
-   * Tests whether the stack is empty.
+   * 测试此栈是否为空。
    *
-   * @return true if the stack is empty; false otherwise.
+   * @return 如果栈为空则返回 true；否则返回 false。
    */
   public boolean isStackEmpty() {
     return configs.isEmpty();
   }
 
   /**
-   * Gets the size of the stack.
+   * 获取栈的大小。
    *
-   * @return the size of the stack.
+   * @return 栈的大小。
    */
   public int stackSize() {
     return configs.size();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isEmpty() {
     for (final Config config : configs) {
@@ -101,11 +110,17 @@ public class StackConfig extends AbstractConfig {
     return true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int size() {
     return getNames().size();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Collection<? extends Property> getProperties() {
     final Map<String, Property> propertiesMap = new HashMap<>();
@@ -119,6 +134,9 @@ public class StackConfig extends AbstractConfig {
     return propertiesMap.values();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Set<String> getNames() {
     final Set<String> names = new HashSet<>();
@@ -128,6 +146,9 @@ public class StackConfig extends AbstractConfig {
     return names;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean contains(final String name) {
     for (final Config config : configs) {
@@ -138,6 +159,9 @@ public class StackConfig extends AbstractConfig {
     return false;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Property get(final String name) {
     // look up the property from the last to the first
@@ -150,6 +174,9 @@ public class StackConfig extends AbstractConfig {
     return null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public StackConfig cloneEx() {
     final StackConfig result = (StackConfig) super.cloneEx();

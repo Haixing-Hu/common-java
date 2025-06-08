@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -487,7 +487,7 @@ public class MathExComparisonTest {
     for (float x : floatValues) {
       for (float y : floatValues) {
         int compareResult = MathEx.compare(x, y);
-        
+
         if (compareResult < 0) {
           assertTrue(MathEx.less(x, y), "compare返回负数时，less应该返回true");
           assertFalse(MathEx.greater(x, y), "compare返回负数时，greater应该返回false");
@@ -506,7 +506,7 @@ public class MathExComparisonTest {
     for (double x : doubleValues) {
       for (double y : doubleValues) {
         int compareResult = MathEx.compare(x, y);
-        
+
         if (compareResult < 0) {
           assertTrue(MathEx.less(x, y), "compare返回负数时，less应该返回true");
           assertFalse(MathEx.greater(x, y), "compare返回负数时，greater应该返回false");
@@ -673,4 +673,4 @@ public class MathExComparisonTest {
     assertEquals(5.0, MathEx.clamp(7.0, 5.0, 5.0));
     assertEquals(5.0, MathEx.clamp(5.0, 5.0, 5.0));
   }
-} 
+}

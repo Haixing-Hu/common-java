@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,21 +15,38 @@ import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import static ltd.qubit.commons.lang.Argument.requireLessEqual;
 
 /**
- * A character filter which only accepts characters in the specified range.
+ * 一个字符过滤器，只接受指定范围内的字符。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class InRangeCharFilter implements CharFilter {
 
+  /**
+   * 范围起始（包含）。
+   */
   private final char start;
+  /**
+   * 范围结束（包含）。
+   */
   private final char end;
 
+  /**
+   * 构造一个 {@link InRangeCharFilter} 对象。
+   *
+   * @param start
+   *     范围起始（包含）。
+   * @param end
+   *     范围结束（包含）。
+   */
   public InRangeCharFilter(final char start, final char end) {
     requireLessEqual("start", start, "end", end);
     this.start = start;
     this.end = end;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean accept(final Character ch) {
     return (ch != null) && (start <= ch) && (ch <= end);

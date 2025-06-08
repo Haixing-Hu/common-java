@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -109,9 +109,10 @@ public final class DomainSuffixRegistry {
   });
 
   /**
-   * 获取DomainSuffixes类的单例实例，使用懒加载实例化。
+   * 获取 {@link DomainSuffixRegistry} 类的惰性加载单例实例。
    *
-   * @return DomainSuffixes类的单例实例。
+   * @return
+   *     {@link DomainSuffixRegistry} 类的单例实例。
    */
   public static DomainSuffixRegistry getInstance() {
     return lazy.get();
@@ -200,9 +201,10 @@ public final class DomainSuffixRegistry {
   }
 
   /**
-   * Lists all domain suffixes.
+   * 列出所有域名后缀。
    *
-   * @return the list of all domain suffixes.
+   * @return
+   *     所有域名后缀的列表。
    */
   public List<DomainSuffix> list() {
     return new ArrayList<>(domains.values());

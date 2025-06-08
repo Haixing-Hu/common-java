@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -279,7 +279,7 @@ public class BigIntegerUtilsTest {
     final long timestamp = 1609459200000L; // 2021-01-01 00:00:00 UTC
     final Date expected = new Date(timestamp);
     final Date defaultDate = new Date(1577836800000L); // 2020-01-01 00:00:00 UTC
-    
+
     assertEquals(expected, BigIntegerUtils.toDate(new BigInteger("1609459200000"), defaultDate));
     assertEquals(defaultDate, BigIntegerUtils.toDate(null, defaultDate));
     assertNull(BigIntegerUtils.toDate(null, null));
@@ -289,18 +289,18 @@ public class BigIntegerUtilsTest {
   public void testToByteArray() {
     // 对于零值的测试
     assertArrayEquals(new byte[0], BigIntegerUtils.toByteArray(BigInteger.ZERO));
-    
+
     // 正常值测试 - 注意BigInteger.toByteArray()返回大端序表示
     final byte[] expected1 = {1}; // 1的字节表示
     assertArrayEquals(expected1, BigIntegerUtils.toByteArray(BigInteger.ONE));
-    
+
     final byte[] expected2 = {1, 35}; // 291的字节表示 (0x0123 = 291)
     assertArrayEquals(expected2, BigIntegerUtils.toByteArray(new BigInteger("291")));
-    
+
     // 负值测试 - 注意BigInteger使用二进制补码表示
     final byte[] expectedNeg = {-1}; // -1的字节表示
     assertArrayEquals(expectedNeg, BigIntegerUtils.toByteArray(BigInteger.valueOf(-1)));
-    
+
     // 对于null值的测试
     assertNull(BigIntegerUtils.toByteArray(null));
   }
@@ -308,14 +308,14 @@ public class BigIntegerUtilsTest {
   @Test
   public void testToByteArrayDefaultValue() {
     final byte[] defaultValue = new byte[] {1, 2, 3};
-    
+
     // 正常值测试
     final byte[] expected1 = {1}; // 1的字节表示
     assertArrayEquals(expected1, BigIntegerUtils.toByteArray(BigInteger.ONE, defaultValue));
-    
+
     // 零值测试
     assertArrayEquals(new byte[0], BigIntegerUtils.toByteArray(BigInteger.ZERO, defaultValue));
-    
+
     // null值测试
     assertArrayEquals(defaultValue, BigIntegerUtils.toByteArray(null, defaultValue));
   }
@@ -357,7 +357,7 @@ public class BigIntegerUtilsTest {
     assertTrue(BigIntegerUtils.isComparable(long.class));
     assertTrue(BigIntegerUtils.isComparable(float.class));
     assertTrue(BigIntegerUtils.isComparable(double.class));
-    
+
     assertTrue(BigIntegerUtils.isComparable(Boolean.class));
     assertTrue(BigIntegerUtils.isComparable(Byte.class));
     assertTrue(BigIntegerUtils.isComparable(Short.class));
@@ -365,12 +365,12 @@ public class BigIntegerUtilsTest {
     assertTrue(BigIntegerUtils.isComparable(Long.class));
     assertTrue(BigIntegerUtils.isComparable(Float.class));
     assertTrue(BigIntegerUtils.isComparable(Double.class));
-    
+
     assertTrue(BigIntegerUtils.isComparable(BigInteger.class));
     assertTrue(BigIntegerUtils.isComparable(BigDecimal.class));
-    
+
     assertFalse(BigIntegerUtils.isComparable(String.class));
     assertFalse(BigIntegerUtils.isComparable(Date.class));
     assertFalse(BigIntegerUtils.isComparable(Object.class));
   }
-} 
+}

@@ -1,3 +1,11 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//    Copyright (c) 2022 - 2025.
+//    Haixing Hu, Qubit Co. Ltd.
+//
+//    All rights reserved.
+//
+////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.concurrent;
 
 import org.junit.jupiter.api.Test;
@@ -73,4 +81,4 @@ class LazyTest {
   void testNullReleaserThrows() {
     assertThrows(IllegalArgumentException.class, () -> Lazy.of(() -> 1, null));
   }
-} 
+}

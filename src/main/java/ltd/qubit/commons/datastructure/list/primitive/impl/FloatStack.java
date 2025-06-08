@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,11 +11,11 @@ package ltd.qubit.commons.datastructure.list.primitive.impl;
 import java.util.EmptyStackException;
 
 /**
- * A primitive float based Stack. The underlying backing store is an
- * {@link FloatArrayList} where the front of the list is the bottom of the stack
- * and the tail of the list is the top of the stack.
+ * 基于 {@code float} 实现的栈。
  *
- * @author Haixing Hu
+ * <p>其底层存储是一个 {@link FloatArrayList}，其中列表的前面是栈底，后面是栈顶。
+ *
+ * @author 胡海星
  */
 public class FloatStack {
   /**
@@ -24,16 +24,16 @@ public class FloatStack {
   private final FloatArrayList list = new FloatArrayList();
 
   /**
-   * Creates an empty primitive float stack.
+   * 创建一个空的栈。
    */
   public FloatStack() {
   }
 
   /**
-   * Creates a stack prepopulating it with float values.
+   * 创建一个栈，并用数组中的值预先填充它。
    *
    * @param numbas
-   *          the float array to add
+   *          要添加的 {@code float} 数组。
    */
   public FloatStack(final float[] numbas) {
     for (final float numba : numbas) {
@@ -42,20 +42,22 @@ public class FloatStack {
   }
 
   /**
-   * Tests if this stack is empty.
+   * 测试此堆栈是否为空。
    *
-   * @return true if and only if this stack is empty; false otherwise
+   * @return
+   *     如果此堆栈为空，则为 {@code true}；否则为 {@code false}。
    */
   public boolean empty() {
     return list.isEmpty();
   }
 
   /**
-   * Looks at the top of this stack without removing it.
+   * 查看此堆栈的顶部而不删除它。
    *
-   * @return the value at the top of this stack
+   * @return
+   *     此堆栈顶部的值。
    * @throws java.util.EmptyStackException
-   *           if this stack is empty
+   *     如果此堆栈为空。
    */
   public float peek() {
     if (list.isEmpty()) {
@@ -66,16 +68,16 @@ public class FloatStack {
   }
 
   /**
-   * Return the n'th float down the stack, where 0 is the top element and
-   * [size()-1] is the bottom element.
+   * 返回堆栈中第 n 个 {@code float}，其中 0 是顶部元素，[size()-1] 是底部元素。
    *
    * @param n
-   *          the element current
-   * @return the element at the current
+   *          元素索引。
+   * @return
+   *          指定索引处的元素。
    * @throws EmptyStackException
-   *           if the stack is empty
+   *     如果堆栈为空。
    * @throws IndexOutOfBoundsException
-   *           if the current is out of bounds
+   *     如果索引越界。
    */
   public float peek(final int n) {
     if (list.isEmpty()) {
@@ -86,11 +88,12 @@ public class FloatStack {
   }
 
   /**
-   * Removes the value at the top of this stack and returns it.
+   * 删除此堆栈顶部的值并返回它。
    *
-   * @return value at the top of this stack
+   * @return
+   *     此堆栈顶部的值。
    * @throws java.util.EmptyStackException
-   *           if this stack is empty
+   *     如果此堆栈为空。
    */
   public float pop() {
     if (list.isEmpty()) {
@@ -101,11 +104,12 @@ public class FloatStack {
   }
 
   /**
-   * Pushes a value onto the top of this stack.
+   * 将一个值压入此堆栈的顶部。
    *
    * @param item
-   *          the value to push onto this stack
-   * @return the item argument for call chaining
+   *          要压入此堆栈的值。
+   * @return
+   *     参数 {@code item}，以用于方法链式调用。
    */
   public float push(final float item) {
     list.add(item);
@@ -113,16 +117,16 @@ public class FloatStack {
   }
 
   /**
-   * Returns the 1-based position where a value is on this stack. If the value
-   * occurs as an item in this stack, this method returns the distance from the
-   * top of the stack of the occurrence nearest the top of the stack; the
-   * topmost item on the stack is considered to be at distance 1.
+   * 返回一个值在此堆栈中的从1开始的位置。
+   *
+   * <p>如果该值作为一项出现在此堆栈中，此方法返回最接近堆栈顶部的出现位置与堆栈顶部的距离；
+   * 堆栈最顶部的项被认为在距离1的位置。
    *
    * @param item
-   *          the value to search for from the top down
-   * @return the 1-based position from the top of the stack where the int is
-   *         located; the return value -1 indicates that the int is not on the
-   *         stack
+   *          要从上到下搜索的值。
+   * @return
+   *     从堆栈顶部开始的从1开始的位置，其中找到了 {@code int}；返回值-1表示堆栈上没有该
+   *     {@code int}。
    */
   public int search(final float item) {
     for (int ii = list.size() - 1; ii >= 0; ii--) {
@@ -135,29 +139,29 @@ public class FloatStack {
   }
 
   /**
-   * Gets items from the stack where the current is zero based and the top of the
-   * stack is at an current of size()-1 with the bottom of the stack at an current
-   * of 0.
+   * 从堆栈中获取项目，其中索引是基于零的，堆栈的顶部位于索引 size()-1 处，堆栈的底部位于索引 0 处。
    *
    * @param index
-   *          the index into the stack treated as a list
-   * @return the value at the current
+   *          堆栈作为一个列表的索引。
+   * @return
+   *          指定索引处的值。
    */
   public float get(final int index) {
     return list.get(index);
   }
 
   /**
-   * Gets the size of this stack.
+   * 获取此堆栈的大小。
    *
-   * @return the size of this stack
+   * @return
+   *     此堆栈的大小。
    */
   public int size() {
     return list.size();
   }
 
   /**
-   * Empties the contents of the stack.
+   * 清空堆栈的内容。
    */
   public void clear() {
     list.clear();

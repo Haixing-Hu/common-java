@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -26,9 +26,9 @@ import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * A ChainedStringTransformer chains a list of string transformers.
+ * ChainedStringTransformer链接了一系列字符串转换器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "chained-string-transformer")
@@ -45,32 +45,75 @@ public class ChainedStringTransformer implements StringTransformer {
   @XmlElementWrapper(name = "transformers")
   private List<StringTransformer> transformers;
 
+  /**
+   * 构造一个空的 {@link ChainedStringTransformer}。
+   */
   public ChainedStringTransformer() {
     transformers = new ArrayList<>();
   }
 
+  /**
+   * 构造一个 {@link ChainedStringTransformer}。
+   *
+   * @param transformers
+   *     要使用的转换器列表。
+   */
   public ChainedStringTransformer(final List<StringTransformer> transformers) {
     this.transformers = requireNonNull("transformers", transformers);
   }
 
+  /**
+   * 获取此链中的转换器列表。
+   *
+   * @return
+   *     此链中的转换器列表。
+   */
   public final List<StringTransformer> getTransformers() {
     return transformers;
   }
 
+  /**
+   * 设置此链中的转换器列表。
+   *
+   * @param transformers
+   *     新的转换器列表。
+   * @return
+   *     返回此对象。
+   */
   public final ChainedStringTransformer setTransformers(
       final List<StringTransformer> transformers) {
     this.transformers = requireNonNull("transformers", transformers);
     return this;
   }
 
+  /**
+   * 返回此链中的转换器数量。
+   *
+   * @return
+   *     此链中的转换器数量。
+   */
   public int size() {
     return transformers.size();
   }
 
+  /**
+   * 测试此链是否不包含任何转换器。
+   *
+   * @return
+   *     如果此链不包含任何转换器，则返回{@code true}；否则返回{@code false}。
+   */
   public boolean isEmpty() {
     return transformers.isEmpty();
   }
 
+  /**
+   * 将转换器添加到此链的末尾。
+   *
+   * @param transformer
+   *     要添加的转换器。
+   * @return
+   *     返回此对象。
+   */
   public ChainedStringTransformer add(final StringTransformer transformer) {
     if (transformer == null) {
       throw new NullPointerException();

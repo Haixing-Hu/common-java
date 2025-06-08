@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -9,26 +9,24 @@
 package ltd.qubit.commons.config;
 
 /**
- * The enumeration of the policies used when merging configurations.
+ * 合并配置时使用的策略的枚举。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public enum MergingPolicy {
 
   /**
-   * Skip all the existing property, no matter whether it is final or not.
+   * 跳过所有现有的属性，无论它是否是final的。
    */
   SKIP,
 
   /**
-   * Union the values of the existing property, or skip it if it is final. If
-   * the existing property has a different type and it is not final, overwrite
-   * it with new value.
+   * 合并现有属性的值，如果它是final的则跳过它。如果现有属性具有不同的类型且不是final的，则用新值覆盖它。
    */
   UNION,
 
   /**
-   * Overwrite the existing property, or skip it if it is final.
+   * 覆盖现有属性，如果它是final的则跳过它。
    */
   OVERWRITE,
 }

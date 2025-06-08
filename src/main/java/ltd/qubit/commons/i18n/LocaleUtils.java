@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,33 +15,30 @@ import javax.annotation.Nullable;
 import ltd.qubit.commons.lang.StringUtils;
 
 /**
- * Provide utilities functions deal with locale.
+ * 提供处理区域设置的实用函数。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class LocaleUtils {
 
   /**
-   * Converts a POSIX locale ID into the corresponding Java {@link Locale}
-   * object.
+   * 将 POSIX 区域设置 ID 转换为相应的 Java {@link Locale} 对象。
    *
-   * <p>The POSIX locale ID is a string of the following format:
+   * <p>POSIX 区域设置 ID 是以下格式的字符串：
    * <pre><code>
    *  locale_id ::= language ("_" country)? ("_" variant)?
    * </code></pre>
    *
-   * <p>where
+   * <p>其中
    * <ul>
-   * <li>{@code language} is a 2-letter ISO-639 codes, in lower case.</li>
-   * <li>{@code country} is a 2-letter ISO-3166 codes, in upper case.</li>
-   * <li>{@code variant} specify particular variants of the locale,
-   * typically with special options. </li>
+   * <li>{@code language} 是 2 字母的 ISO-639 代码，小写。</li>
+   * <li>{@code country} 是 2 字母的 ISO-3166 代码，大写。</li>
+   * <li>{@code variant} 指定区域设置的特定变体，通常具有特殊选项。</li>
    * </ul>
    *
    * @param localeId
-   *     a POSIX locale ID.
-   * @return the corresponding Java {@link Locale} object; returns null if the
-   *     POSIX locale ID is invalid or the locale is not supported.
+   *     POSIX 区域设置 ID。
+   * @return 相应的 Java {@link Locale} 对象；如果 POSIX 区域设置 ID 无效或不支持该区域设置，则返回 null。
    */
   public static Locale fromPosixLocale(@Nullable final String localeId) {
     if ((localeId == null) || (localeId.length() == 0)) {
@@ -91,40 +88,32 @@ public class LocaleUtils {
   }
 
   /**
-   * Convert a Java {@link Locale} object into the corresponding POSIX locale
-   * ID.
+   * 将 Java {@link Locale} 对象转换为相应的 POSIX 区域设置 ID。
    *
-   * <p>The POSIX locale ID is a string of the following format:
+   * <p>POSIX 区域设置 ID 是以下格式的字符串：
    * <pre><code>
    *  locale_id      ::= "C" | base_locale_id options?
    *  base_locale_id ::= language ("_" script)? ("_" territory)? ("_" variant)? ("." encoding)?
    *  options        ::= "@" key "=" value ("," key "=" value )*
    * </code></pre>
    *
-   * <p>where
+   * <p>其中
    * <ul>
-   * <li>the string "C" is used to represent a unspecified locale id. It acts as
-   * the current default locale of the current process.</li>
-   * <li>{@code language} is a 2-letter ISO-639 codes, in lower case</li>
-   * <li>{@code script} is a 4-letter ISO-15924 codes, in title case.
-   * <li>{@code script} is a 2-letter ISO-3166 codes, in upper case. Also
-   * known as a country code, although the territories may not be countries.</li>
-   * <li>{@code variant} specify particular variants of the locale,
-   * typically with special options. They cannot overlap with script or
-   * territory codes, so they must have either one letter or have more than 4
-   * letters.</li>
-   * <li>{@code encoding} is the text encoding for ANSI applications.</li>
-   * <li>{@code key}, {@code value} pair is the user predefined
-   * configuration items.</li>
+   * <li>字符串 "C" 用于表示未指定的区域设置 ID。它充当当前进程的当前默认区域设置。</li>
+   * <li>{@code language} 是 2 字母的 ISO-639 代码，小写</li>
+   * <li>{@code script} 是 4 字母的 ISO-15924 代码，标题大小写。
+   * <li>{@code script} 是 2 字母的 ISO-3166 代码，大写。也称为国家代码，尽管领土可能不是国家。</li>
+   * <li>{@code variant} 指定区域设置的特定变体，通常具有特殊选项。它们不能与脚本或领土代码重叠，
+   * 因此它们必须有一个字母或超过 4 个字母。</li>
+   * <li>{@code encoding} 是 ANSI 应用程序的文本编码。</li>
+   * <li>{@code key}、{@code value} 对是用户预定义的配置项。</li>
    * </ul>
    *
-   * <p>Since the Java {@link Locale} object only support the language, country,
-   * and variant fields, the other fields will be ignored during conversion.
+   * <p>由于 Java {@link Locale} 对象仅支持语言、国家和变体字段，因此在转换期间将忽略其他字段。
    *
    * @param locale
-   *     a Java {@link Locale} object. If it is null, a null string is
-   *     returned.
-   * @return the corresponding POSIX locale ID; or null if the locale is null.
+   *     Java {@link Locale} 对象。如果为 null，则返回 null 字符串。
+   * @return 相应的 POSIX 区域设置 ID；如果区域设置为 null，则返回 null。
    */
   public static String toPosixLocale(@Nullable final Locale locale) {
     if (locale == null) {

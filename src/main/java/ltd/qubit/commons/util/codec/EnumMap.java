@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,9 +13,9 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * The map between a enumerator and its name.
+ * 枚举器与其名称之间的映射。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class EnumMap {
 
@@ -23,19 +23,47 @@ public class EnumMap {
 
   private String name;
 
+  /**
+   * 获取枚举值。
+   *
+   * @return
+   *     枚举值。
+   */
   public final String getValue() {
     return value;
   }
 
+  /**
+   * 设置枚举值。
+   *
+   * @param value
+   *     新的枚举值。
+   * @return
+   *     返回此对象。
+   */
   public final EnumMap setValue(final String value) {
     this.value = value;
     return this;
   }
 
+  /**
+   * 获取枚举名称。
+   *
+   * @return
+   *     枚举名称。
+   */
   public final String getName() {
     return name;
   }
 
+  /**
+   * 设置枚举名称。
+   *
+   * @param name
+   *     新的枚举名称。
+   * @return
+   *     返回此对象。
+   */
   public final EnumMap setName(final String name) {
     this.name = name;
     return this;

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -20,36 +20,69 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.lang.Argument.requireNonSame;
 
 /**
- * An implementation of tree using an abstract list to store the children.
+ * 使用抽象列表存储子节点的树实现。
  *
- * @author Haixing Hu
+ * @param <KEY>
+ *     树节点键的类型。
+ * @param <VALUE>
+ *     树节点值的类型。
+ * @author 胡海星
  */
 @NotThreadSafe
 public abstract class AbstractListTree<KEY, VALUE> extends AbstractTree<KEY, VALUE> {
 
+  /**
+   * 存储子节点的列表。
+   */
   protected List<Tree<KEY, VALUE>> children;
 
+  /**
+   * 创建树列表的抽象方法。
+   *
+   * @return
+   *     新创建的树列表。
+   */
   protected abstract List<Tree<KEY, VALUE>> makeTreeList();
 
+  /**
+   * 构造一个空的抽象列表树。
+   */
   protected AbstractListTree() {
     this.children = null;
   }
 
+  /**
+   * 构造一个具有指定键和值的抽象列表树。
+   *
+   * @param key
+   *     树节点的键。
+   * @param value
+   *     树节点的值。
+   */
   protected AbstractListTree(final KEY key, final VALUE value) {
     super(key, value);
     this.children = null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isLeaf() {
     return ((children == null) || children.isEmpty());
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int getChildrenCount() {
     return (children == null ? 0 : children.size());
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Collection<Tree<KEY, VALUE>> getChildren() {
     if (children == null) {
@@ -59,6 +92,9 @@ public abstract class AbstractListTree<KEY, VALUE> extends AbstractTree<KEY, VAL
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Tree<KEY, VALUE> getChild(final KEY key) {
     if (children == null) {
@@ -80,6 +116,9 @@ public abstract class AbstractListTree<KEY, VALUE> extends AbstractTree<KEY, VAL
     return null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Tree<KEY, VALUE> addChild(final Tree<KEY, VALUE> child) {
     requireNonNull("child", child);
@@ -110,6 +149,9 @@ public abstract class AbstractListTree<KEY, VALUE> extends AbstractTree<KEY, VAL
     return null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Tree<KEY, VALUE> removeChild(final KEY key) {
     if (children == null) {
@@ -137,6 +179,9 @@ public abstract class AbstractListTree<KEY, VALUE> extends AbstractTree<KEY, VAL
     return null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int clearChildren() {
     if (children == null) {

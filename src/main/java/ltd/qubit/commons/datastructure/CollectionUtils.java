@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -41,6 +41,11 @@ import ltd.qubit.commons.util.filter.Filter;
 
 import static ltd.qubit.commons.reflect.ConstructorUtils.newInstance;
 
+/**
+ * 提供集合操作的静态函数。
+ *
+ * @author 胡海星
+ */
 public class CollectionUtils {
 
   /**
@@ -50,7 +55,6 @@ public class CollectionUtils {
    *     集合，可以为{@code null}。
    * @return
    *     若集合为{@code null}或空，则返回{@code true}，否则返回{@code false}。
-   * @author 胡海星
    */
   public static boolean isEmpty(@Nullable final Collection<?> col) {
     return col == null || col.isEmpty();
@@ -63,7 +67,6 @@ public class CollectionUtils {
    *     映射，可以为{@code null}。
    * @return
    *     若映射为{@code null}或空，则返回{@code true}，否则返回{@code false}。
-   * @author 胡海星
    */
   public static boolean isEmpty(@Nullable final Map<?, ?> map) {
     return map == null || map.isEmpty();
@@ -78,7 +81,6 @@ public class CollectionUtils {
    *     输入的列表，可以为{@code null}.
    * @return
    *     去重后的列表，若{@code list}是{@code null}则返回{@code null}。
-   * @author 胡海星
    */
   public static <T> List<T> unique(@Nullable final List<T> list) {
     if (list == null) {
@@ -107,7 +109,6 @@ public class CollectionUtils {
    * @return
    *     集合中第一个满足条件的元素，若集合为{@code null}或空，则返回{@code null}。
    *     若集合中没有满足条件的元素，则返回{@code null}。
-   * @author 胡海星
    */
   @Nullable
   public static <T> T findFirst(@Nullable final Collection<T> col,
@@ -135,7 +136,6 @@ public class CollectionUtils {
    * @return
    *     集合中第所有满足条件的元素，若集合为{@code null}或空，则返回{@code null}。
    *     若集合中没有满足条件的元素，则返回空列表。
-   * @author 胡海星
    */
   public static <T> List<T> findAll(@Nullable final Collection<T> col,
       @Nonnull final Filter<T> filter) {
@@ -151,6 +151,18 @@ public class CollectionUtils {
     return result;
   }
 
+  /**
+   * 判断集合中是否存在满足条件的元素。
+   *
+   * @param col
+   *     要判断的集合。
+   * @param filter
+   *     判断条件。
+   * @param <T>
+   *     集合中元素的类型。
+   * @return
+   *     如果集合中存在满足条件的元素，返回{@code true}；否则返回{@code false}。
+   */
   public static <T> boolean containsIf(@Nullable final Collection<T> col,
       @Nonnull final Filter<T> filter) {
     if (col == null || col.isEmpty()) {
@@ -164,29 +176,87 @@ public class CollectionUtils {
     return false;
   }
 
-  public static <T> Queue<T> constructSameTypeOfCollection(final Queue<T> list) {
-    return (Queue<T>) constructSameTypeOfCollection((Collection<T>) list);
+  /**
+   * 构造一个和指定队列相同类型的空队列。
+   *
+   * @param queue
+   *     指定的队列。
+   * @param <T>
+   *     队列中元素的类型。
+   * @return
+   *     和指定队列相同类型的空队列。
+   */
+  public static <T> Queue<T> constructSameTypeOfCollection(final Queue<T> queue) {
+    return (Queue<T>) constructSameTypeOfCollection((Collection<T>) queue);
   }
 
+  /**
+   * 构造一个和指定列表相同类型的空列表。
+   *
+   * @param list
+   *     指定的列表。
+   * @param <T>
+   *     列表中元素的类型。
+   * @return
+   *     和指定列表相同类型的空列表。
+   */
   public static <T> List<T> constructSameTypeOfCollection(final List<T> list) {
     return (List<T>) constructSameTypeOfCollection((Collection<T>) list);
   }
 
-  public static <T> SortedSet<T> constructSameTypeOfCollection(final SortedSet<T> list) {
-    return (SortedSet<T>) constructSameTypeOfCollection((Collection<T>) list);
+  /**
+   * 构造一个和指定有序集合相同类型的空有序集合。
+   *
+   * @param set
+   *     指定的有序集合。
+   * @param <T>
+   *     集合中元素的类型。
+   * @return
+   *     和指定有序集合相同类型的空有序集合。
+   */
+  public static <T> SortedSet<T> constructSameTypeOfCollection(final SortedSet<T> set) {
+    return (SortedSet<T>) constructSameTypeOfCollection((Collection<T>) set);
   }
 
-  public static <T> Set<T> constructSameTypeOfCollection(final Set<T> list) {
-    return (Set<T>) constructSameTypeOfCollection((Collection<T>) list);
+  /**
+   * 构造一个和指定集合相同类型的空集合。
+   *
+   * @param set
+   *     指定的集合。
+   * @param <T>
+   *     集合中元素的类型。
+   * @return
+   *     和指定集合相同类型的空集合。
+   */
+  public static <T> Set<T> constructSameTypeOfCollection(final Set<T> set) {
+    return (Set<T>) constructSameTypeOfCollection((Collection<T>) set);
   }
 
-  @SuppressWarnings({ "unchecked", "rawtypes" })
+  /**
+   * 构造一个和指定集合相同类型的空集合。
+   *
+   * @param col
+   *     指定的集合。
+   * @param <T>
+   *     集合中元素的类型。
+   * @return
+   *     和指定集合相同类型的空集合。
+   */
+  @SuppressWarnings({"unchecked", "rawtypes"})
   public static <T> Collection<T> constructSameTypeOfCollection(final Collection<T> col) {
     Argument.requireNonNull("col", col);
     final Class<? extends Collection> cls = col.getClass();
     return (Collection<T>) constructSameTypeOfCollection(cls);
   }
 
+  /**
+   * 根据指定的集合类型构造一个该类型的空集合。
+   *
+   * @param colType
+   *     指定的集合类型。
+   * @return
+   *     指定类型的空集合。
+   */
   @SuppressWarnings("rawtypes")
   public static Collection constructSameTypeOfCollection(final Class<? extends Collection> colType) {
     Argument.requireNonNull("colType", colType);
@@ -209,12 +279,32 @@ public class CollectionUtils {
     }
   }
 
+  /**
+   * 构造一个和指定映射相同类型的空映射。
+   *
+   * @param map
+   *     指定的映射。
+   * @param <K>
+   *     映射中键的类型。
+   * @param <V>
+   *     映射中值的类型。
+   * @return
+   *     和指定映射相同类型的空映射。
+   */
   @SuppressWarnings({"unchecked", "rawtypes"})
   public static <K, V> Map<K, V> constructSameTypeOfMap(final Map<K, V> map) {
     final Class<? extends Map> cls = map.getClass();
     return (Map<K, V>) constructSameTypeOfMap(cls);
   }
 
+  /**
+   * 根据指定的映射类型构造一个该类型的空映射。
+   *
+   * @param mapType
+   *     指定的映射类型。
+   * @return
+   *     指定类型的空映射。
+   */
   @SuppressWarnings("rawtypes")
   public static Map constructSameTypeOfMap(final Class<? extends Map> mapType) {
     Argument.requireNonNull("mapType", mapType);
@@ -235,20 +325,19 @@ public class CollectionUtils {
   }
 
   /**
-   * Converts a collections of objects into a hash map.
+   * 将对象集合转换为哈希图。
    *
    * @param <K>
-   *     the type of the key.
+   *     键的类型。
    * @param <V>
-   *     the type of the value.
+   *     值的类型。
    * @param col
-   *     the collection of objects, which could be {@code null}.
+   *     对象集合，可以为{@code null}。
    * @param keyGetter
-   *     the getter method to get the key from the object.
+   *     从对象中获取键的 getter 方法。
    * @return
-   *     a hash map, where the key is gotten from the object by the {@code keyGetter}.
-   *     and the value is the object itself. A {@code null} collection will
-   *     return an empty map.
+   *     一个哈希图，其中键是通过{@code keyGetter}从对象中获取的，值是对象本身。
+   *     一个{@code null}集合将导致一个空的哈希图。
    */
   public static <K, V>
   HashMap<K, V> toHashMap(@Nullable final Collection<V> col, final GetterMethod<V, K> keyGetter) {
@@ -263,24 +352,23 @@ public class CollectionUtils {
   }
 
   /**
-   * Converts a collections of values into a hash map.
+   * 将对象集合转换为哈希图。
    *
    * @param <T>
-   *     the type of the object.
+   *     对象类型。
    * @param <K>
-   *     the type of the key.
+   *     键的类型。
    * @param <V>
-   *     the type of the value.
+   *     值的类型。
    * @param col
-   *     the collection of objects, which could be {@code null}.
+   *     对象集合，可以为{@code null}。
    * @param keyGetter
-   *     the getter method to get the key from the object.
+   *     用于从对象获取键的 getter 方法。
    * @param valueGetter
-   *     the getter method to get the value from the object.
+   *     用于从对象获取值的 getter 方法。
    * @return
-   *     a hash map, where the key is gotten from the object by the {@code keyGetter},
-   *     and the value is gotten from the object by the {@code valueGetter}. A
-   *     {@code null} collection will return an empty map.
+   *     一个哈希图，其中键和值分别通过{@code keyGetter}和{@code valueGetter}
+   *     从对象中获取。{@code null}集合将导致一个空的哈希图。
    */
   public static <T, K, V>
   HashMap<K, V> toHashMap(@Nullable final Collection<T> col,
@@ -298,21 +386,19 @@ public class CollectionUtils {
   }
 
   /**
-   * Converts a list of objects to a map from its key to its position.
+   * 获取一个将列表中的键映射到其在列表中位置的映射。
    *
    * @param <K>
-   *     the type of the key.
+   *     键的类型。
    * @param <V>
-   *     the type of values in the list.
+   *     值的类型。
    * @param list
-   *     the list of objects, which could be {@code null}.
+   *     对象列表，可以为{@code null}。
    * @param keyGetter
-   *     the getter method to get the key from the object.
+   *     用于从对象获取键的 getter 方法。
    * @return
-   *     a hash map, where the key is gotten from the object by the {@code keyGetter}.
-   *     and the value is position of the object with the key in the list,
-   *     converted to the {@code long} type. The position is 0-based.
-   *     A {@code null} list will return an empty map.
+   *     一个哈希图，其中键是通过{@code keyGetter}从对象中获取的，值是对象在
+   *     列表中的位置索引。{@code null}列表将导致一个空的哈希图。
    */
   public static <K, V>
   HashMap<K, Long> getKeyToPositionMap(@Nullable final List<V> list,
@@ -330,17 +416,16 @@ public class CollectionUtils {
   }
 
   /**
-   * Splits the list into sublists of the specified size.
+   * 将列表分割成指定大小的子列表。
    *
-   * @param <T>
-   *     the type of the elements in the list.
    * @param list
-   *     the list to be split, which could be {@code null}.
+   *     要分割的列表。
    * @param size
-   *     the size of each sublist.
+   *     每个子列表的大小。
+   * @param <T>
+   *     列表中元素的类型。
    * @return
-   *     a list of sublists, where each sublist has the specified size.
-   *     If the input list is {@code null}, then return an empty list.
+   *     一个包含子列表的列表。
    */
   public static <T> List<List<T>> splitList(@Nullable final List<T> list, final int size) {
     if (list == null || list.isEmpty()) {
@@ -355,20 +440,18 @@ public class CollectionUtils {
   }
 
   /**
-   * Maps the elements of the list to another list.
+   * 对列表中的每个元素进行映射，返回一个新的列表。
    *
-   * @param <F>
-   *     the type of the elements in the input list.
-   * @param <T>
-   *     the type of the elements in the output list.
    * @param list
-   *     the list to be mapped, which could be {@code null}.
+   *     要映射的列表。
    * @param mapper
-   *     the map function to apply to each element.
+   *     映射函数。
+   * @param <F>
+   *     原列表中元素的类型。
+   * @param <T>
+   *     新列表中元素的类型。
    * @return
-   *     a list of the results of applying the function to the elements of the
-   *     list; or {@code null} if the input list is {@code null}. The returned
-   *     list is modifiable.
+   *     一个新的列表，其中包含了原列表中每个元素经过映射函数处理后的结果。
    */
   public static <F, T> List<T> map(@Nullable final List<F> list,
       final Function<? super F, ? extends T> mapper) {
@@ -379,20 +462,18 @@ public class CollectionUtils {
   }
 
   /**
-   * Groups a collections of objects by the specified key.
+   * 对集合中的数据进行分组。
    *
-   * @param <K>
-   *     the type of the key.
-   * @param <V>
-   *     the type of the value.
    * @param col
-   *     the collection of objects, which could be {@code null}.
+   *     要去分组的数据集合。
    * @param keyGetter
-   *     the getter method to get the key from the object.
+   *     用于获取分组依据的键的 getter。
+   * @param <K>
+   *     分组依据的键的类型。
+   * @param <V>
+   *     集合中元素的类型。
    * @return
-   *     a hash map, where the key is gotten from the object by the {@code keyGetter}.
-   *     and the value is the list of objects with the same key. A {@code null}
-   *     collection will return an empty map.
+   *     一个Map，其键为分组依据的键，其值为具有该键的元素的列表。
    */
   public static <K, V>
   Map<K, List<V>> groupData(@Nullable final Collection<V> col,
@@ -409,25 +490,22 @@ public class CollectionUtils {
   }
 
   /**
-   * Groups a collections of objects by the specified key.
+   * 对集合中的数据进行分组。
    *
-   * @param <T>
-   *     the type of the object.
-   * @param <K>
-   *     the type of the key.
-   * @param <V>
-   *     the type of the value.
    * @param col
-   *     the collection of objects, which could be {@code null}.
+   *     要去分组的数据集合。
    * @param keyGetter
-   *     the getter method to get the key from the object.
+   *     用于获取分组依据的键的 getter。
    * @param valueGetter
-   *     the getter method to get the value from the object.
+   *     用于获取分组后列表中元素的 getter。
+   * @param <T>
+   *     输入集合中元素的类型。
+   * @param <K>
+   *     分组依据的键的类型。
+   * @param <V>
+   *     分组后列表中元素的类型。
    * @return
-   *     a hash map, where the key is gotten from the object by the {@code keyGetter},
-   *     and the value the list of properties gotten by the {@code valueGetter}
-   *     from objects with the same key. A {@code null} collection will return
-   *     an empty map.
+   *     一个Map，其键为分组依据的键，其值为具有该键的元素的列表。
    */
   public static <T, K, V>
   Map<K, List<V>> groupData(@Nullable final Collection<T> col,
@@ -446,14 +524,14 @@ public class CollectionUtils {
   }
 
   /**
-   * Merges the source list into the target list.
+   * 将源列表中的元素合并到目标列表中。
    *
-   * @param <T>
-   *     the type of the elements in the list.
    * @param target
-   *     the target list, which could be {@code null}.
+   *     目标列表。
    * @param source
-   *     the source list, which could be {@code null}.
+   *     源列表。
+   * @param <T>
+   *     列表中元素的类型。
    */
   public static <T> void mergeList(final List<T> target, final List<T> source) {
     for (final T e : source) {
@@ -464,31 +542,29 @@ public class CollectionUtils {
   }
 
   /**
-   * Gets the stream of a nullable collection.
+   * 获取集合的流。
    *
-   * @param <T>
-   *     the type of the elements in the collection.
    * @param col
-   *     the collection, which could be {@code null}.
+   *     集合。
+   * @param <T>
+   *     集合中元素的类型。
    * @return
-   *     the stream of the collection, or an empty stream if the collection is {@code null}.
+   *     集合的流。如果集合为{@code null}，则返回一个空的流。
    */
   public static <T> Stream<T> stream(@Nullable final Collection<T> col) {
     return (col == null ? Stream.empty() : col.stream());
   }
 
   /**
-   * Performs the given action for each element of the {@code Iterable}
-   * until all elements have been processed or the action throws an
-   * exception.  Actions are performed in the order of iteration, if that
-   * order is specified.  Exceptions thrown by the action are relayed to the
-   * caller.
+   * 对 {@code Iterable} 的每个元素执行给定的操作，
+   * 直到所有元素都被处理完毕或操作抛出异常为止。
+   * 如果指定了遍历顺序，则按照遍历顺序执行操作。
+   * 操作抛出的异常会被传递给调用者。
    * <p>
-   * The behavior of this method is unspecified if the action performs
-   * side effects that modify the underlying source of elements, unless an
-   * overriding class has specified a concurrent modification policy.
+   * 如果该操作会产生副作用并修改底层元素源，则本方法的行为未指定，
+   * 除非重写的类指定了并发修改策略。
    * <p>
-   * The default implementation behaves as if:
+   * 默认实现行为等同于：
    * <pre>{@code
    *    if (col != null) {
    *      for (T t : col) {
@@ -497,15 +573,14 @@ public class CollectionUtils {
    *    }
    * }</pre>
    *
-   * @param <T>
-   *     The type of the element in the iterable.
    * @param col
-   *     An {@code Iterable} to be iterated, which may be {@code null}.
+   *     要处理的集合，可以为{@code null}。
    * @param action
-   *     The action to be performed for each element
-   * @throws NullPointerException
-   *     if the specified action is null
+   *     要对每个元素执行的操作。
+   * @param <T>
+   *     集合中元素的类型。
    */
+
   public static <T> void forEach(@Nullable final Iterable<T> col,
       final Consumer<? super T> action) {
     if (col != null) {
@@ -514,18 +589,17 @@ public class CollectionUtils {
   }
 
   /**
-   * Creates an array list of elements.
+   * 创建一个包含指定元素的数组列表。
    * <p>
-   * This function is similar to the {@link Arrays#asList} method, or the
-   * {@link List#of} method introduced in Java 9, but this function returns a
-   * modifiable array list instead of a fixed-size list or an unmodifiable list.
+   * 此函数类似于 {@link Arrays#asList} 方法，或 Java 9 引入的 {@link List#of} 方法，
+   * 但本函数返回的是可修改的数组列表，而不是固定大小的列表或不可修改的列表。
    *
-   * @param <T>
-   *     the type of the elements.
    * @param elements
-   *     the elements to be added to the list.
+   *     指定的元素。
+   * @param <T>
+   *     元素的类型。
    * @return
-   *     an array list of the elements.
+   *     包含指定元素的 {@link ArrayList}。
    */
   @SafeVarargs
   public static <T> ArrayList<T> listOf(final T... elements) {
@@ -535,20 +609,18 @@ public class CollectionUtils {
   }
 
   /**
-   * Process a collection of elements in batches.
+   * 对集合进行分批处理。
    *
-   * @param <T>
-   *     the type of the elements.
    * @param col
-   *     the collection of elements to be processed.
+   *     要处理的集合。
    * @param batchSize
-   *     the size of each batch, which must be positive.
+   *     每批处理的数量。
    * @param action
-   *     the action to be applied to each batch of elements, which accepts a
-   *     collection of elements and returns the number of elements successfully
-   *     processed.
+   *     对每批数据进行处理的函数。该函数的返回值为成功处理的数量。
+   * @param <T>
+   *     集合中元素的类型。
    * @return
-   *     the total number of elements processed.
+   *     成功处理的元素总数。
    */
   public static <T> int batchProcess(final Collection<T> col,
       final int batchSize, final Function<Collection<T>, Integer> action) {

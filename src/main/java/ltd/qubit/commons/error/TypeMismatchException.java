@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -12,9 +12,9 @@ import ltd.qubit.commons.lang.Type;
 import ltd.qubit.commons.util.pair.KeyValuePairList;
 
 /**
- * Thrown when a type mismatch error occurs.
+ * 发生类型不匹配错误时抛出。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class TypeMismatchException extends RuntimeException
     implements ErrorInfoConvertable {
@@ -24,6 +24,15 @@ public class TypeMismatchException extends RuntimeException
   private final String expectedTypeName;
   private final String actualTypeName;
 
+  /**
+   * 使用指定的期望类型名称和实际类型名称构造一个新的
+   * {@link TypeMismatchException}。
+   *
+   * @param expectedTypeName
+   *     期望类型的名称。
+   * @param actualTypeName
+   *     实际类型的名称。
+   */
   public TypeMismatchException(final String expectedTypeName,
       final String actualTypeName) {
     super(buildMessage(expectedTypeName, actualTypeName));
@@ -31,6 +40,17 @@ public class TypeMismatchException extends RuntimeException
     this.actualTypeName = actualTypeName;
   }
 
+  /**
+   * 使用指定的期望类型名称、实际类型名称和消息构造一个新的
+   * {@link TypeMismatchException}。
+   *
+   * @param expectedTypeName
+   *     期望类型的名称。
+   * @param actualTypeName
+   *     实际类型的名称。
+   * @param message
+   *     详细消息。
+   */
   public TypeMismatchException(final String expectedTypeName,
       final String actualTypeName, final String message) {
     super(buildMessage(expectedTypeName, actualTypeName) + message);
@@ -38,6 +58,15 @@ public class TypeMismatchException extends RuntimeException
     this.actualTypeName = actualTypeName;
   }
 
+  /**
+   * 使用指定的期望类型和实际类型构造一个新的
+   * {@link TypeMismatchException}。
+   *
+   * @param expectedType
+   *     期望类型。
+   * @param actualType
+   *     实际类型。
+   */
   public TypeMismatchException(final Class<?> expectedType,
       final Class<?> actualType) {
     super(buildMessage(expectedType.getName(), actualType.getName()));
@@ -45,6 +74,17 @@ public class TypeMismatchException extends RuntimeException
     this.actualTypeName = actualType.getName();
   }
 
+  /**
+   * 使用指定的期望类型、实际类型和消息构造一个新的
+   * {@link TypeMismatchException}。
+   *
+   * @param expectedType
+   *     期望类型。
+   * @param actualType
+   *     实际类型。
+   * @param message
+   *     详细消息。
+   */
   public TypeMismatchException(final Class<?> expectedType,
       final Class<?> actualType, final String message) {
     super(buildMessage(expectedType.getName(), actualType.getName()) + message);
@@ -52,12 +92,32 @@ public class TypeMismatchException extends RuntimeException
     this.actualTypeName = actualType.getName();
   }
 
+  /**
+   * 使用指定的期望类型和实际类型构造一个新的
+   * {@link TypeMismatchException}。
+   *
+   * @param expectedType
+   *     期望类型。
+   * @param actualType
+   *     实际类型。
+   */
   public TypeMismatchException(final Type expectedType, final Type actualType) {
     super(buildMessage(expectedType.name(), actualType.name()));
     this.expectedTypeName = expectedType.name();
     this.actualTypeName = actualType.name();
   }
 
+  /**
+   * 使用指定的期望类型、实际类型和消息构造一个新的
+   * {@link TypeMismatchException}。
+   *
+   * @param expectedType
+   *     期望类型。
+   * @param actualType
+   *     实际类型。
+   * @param message
+   *     详细消息。
+   */
   public TypeMismatchException(final Type expectedType,
       final Type actualType, final String message) {
     super(buildMessage(expectedType.name(), actualType.name()) + message);
@@ -65,10 +125,20 @@ public class TypeMismatchException extends RuntimeException
     this.actualTypeName = actualType.name();
   }
 
+  /**
+   * 获取期望类型的名称。
+   *
+   * @return 期望类型的名称。
+   */
   public String getExpectedTypeName() {
     return expectedTypeName;
   }
 
+  /**
+   * 获取实际类型的名称。
+   *
+   * @return 实际类型的名称。
+   */
   public String getActualTypeName() {
     return actualTypeName;
   }
@@ -79,6 +149,9 @@ public class TypeMismatchException extends RuntimeException
         + " but the actual type is " + actualTypeName + ". ";
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public ErrorInfo toErrorInfo() {
     return new ErrorInfo("SERVER_ERROR", "TYPE_MISMATCH",

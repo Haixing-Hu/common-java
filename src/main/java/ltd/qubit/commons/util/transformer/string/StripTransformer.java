@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -14,10 +14,9 @@ import ltd.qubit.commons.text.Stripper;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * A {@link StripTransformer} transform a string by stripping the
- * leading and trailing whitespace and non-printable characters.
+ * {@link StripTransformer}通过剥离前导和尾随的空白和不可打印字符来转换字符串。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class StripTransformer extends AbstractStringTransformer {

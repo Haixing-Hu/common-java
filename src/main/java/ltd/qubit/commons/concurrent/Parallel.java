@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -25,38 +25,36 @@ import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.util.clock.TimeMeter;
 
 /**
- * Provides utilities for executing tasks in parallel.
+ * 提供并行执行任务的工具。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class Parallel {
   /**
-   * The default number of threads for executing tasks in parallel.
+   * 并行执行任务的默认线程数。
    * <p>
-   * The value of this constant is the number of available processors of the
-   * current machine.
+   * 此常量的值是当前计算机的可用处理器数。
    */
   public static final int DEFAULT_THREADS = Runtime.getRuntime().availableProcessors();
 
   /**
-   * The default single thread threshold.
+   * 默认的单线程阈值。
    * <p>
-   * If the size of the collection is less than or equal to this value,
-   * the tasks will be executed in a single thread.
+   * 如果集合的大小小于或等于此值，则任务将在单个线程中执行。
    * <p>
-   * The value of this constant is {@value}.
+   * 此常量的值为{@value}。
    */
   public static final int DEFAULT_SINGLE_THREAD_THRESHOLD = 1;
 
   /**
-   * The default report interval in seconds.
+   * 默认报告间隔（以秒为单位）。
    * <p>
-   * The value of this constant is {@value}.
+   * 此常量的值为{@value}。
    */
   public static final int DEFAULT_REPORT_INTERVAL = 5;
 
   /**
-   * The default progress reporter.
+   * 默认的进度报告器。
    */
   public static final ProgressReporter DEFAULT_PROGRESS_REPORTER = ConsoleProgressReporter.INSTANCE;
 
@@ -64,86 +62,80 @@ public class Parallel {
   private static final Logger logger = LoggerFactory.getLogger(Parallel.class);
 
   /**
-   * Executes a given collection of tasks in parallel, with a fixed number of threads.
+   * 使用固定数量的线程并行执行给定的任务集合。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be printed
-   * to the {@code System.out}.
+   * 在任务执行期间，任务的进度将被打印到{@code System.out}。
    *
    * @param tasks
-   *     The collection of tasks to be executed.
+   *     要执行的任务的集合。
    */
   public static void execute(final Collection<? extends Runnable> tasks) {
     execute(tasks, DEFAULT_THREADS, DEFAULT_REPORT_INTERVAL, DEFAULT_PROGRESS_REPORTER);
   }
 
   /**
-   * Executes a given array of tasks in parallel, with a fixed number of threads.
+   * 使用固定数量的线程并行执行给定的任务数组。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be printed
-   * to the {@code System.out}.
+   * 在任务执行期间，任务的进度将被打印到{@code System.out}。
    *
    * @param <T>
-   *     The type of the tasks.
+   *     任务的类型。
    * @param tasks
-   *     The array of tasks to be executed.
+   *     要执行的任务数组。
    */
   public static <T extends Runnable> void execute(final T[] tasks) {
     execute(tasks, DEFAULT_THREADS, DEFAULT_REPORT_INTERVAL, DEFAULT_PROGRESS_REPORTER);
   }
 
   /**
-   * Executes a given collection of tasks in parallel, with a fixed number of threads.
+   * 使用固定数量的线程并行执行给定的任务集合。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be printed
-   * to the {@code System.out}.
+   * 在任务执行期间，任务的进度将被打印到{@code System.out}。
    *
    * @param tasks
-   *     The collection of tasks to be executed.
+   *     要执行的任务的集合。
    * @param threads
-   *     The number of threads to be used for executing the tasks.
+   *     用于执行任务的线程数。
    */
   public static void execute(final Collection<? extends Runnable> tasks, final int threads) {
     execute(tasks, threads, DEFAULT_REPORT_INTERVAL, DEFAULT_PROGRESS_REPORTER);
   }
 
   /**
-   * Executes a given array of tasks in parallel, with a fixed number of threads.
+   * 使用固定数量的线程并行执行给定的任务数组。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be printed
-   * to the {@code System.out}.
+   * 在任务执行期间，任务的进度将被打印到{@code System.out}。
    *
    * @param tasks
-   *     The array of tasks to be executed.
+   *     要执行的任务数组。
    * @param threads
-   *     The number of threads to be used for executing the tasks.
+   *     用于执行任务的线程数。
    */
   public static <T extends Runnable> void execute(final T[] tasks, final int threads) {
     execute(tasks, threads, DEFAULT_REPORT_INTERVAL, DEFAULT_PROGRESS_REPORTER);
   }
 
   /**
-   * Executes a given collection of tasks in parallel, with a fixed number of threads.
+   * 使用固定数量的线程并行执行给定的任务集合。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be printed
-   * to the {@code System.out}.
+   * 在任务执行期间，任务的进度将被打印到{@code System.out}。
    *
    * @param tasks
-   *     The collection of tasks to be executed.
+   *     要执行的任务的集合。
    * @param threads
-   *     The number of threads to be used for executing the tasks.
+   *     用于执行任务的线程数。
    * @param reportInterval
-   *     The interval in seconds to print the progress of the tasks. If it is
-   *    *     less than or equal to zero, it is considered as 1.
+   *     打印任务进度的间隔（以秒为单位）。 如果它小于或等于零，则视为1。
    */
   public static void execute(final Collection<? extends Runnable> tasks,
       final int threads, final int reportInterval) {
@@ -152,20 +144,18 @@ public class Parallel {
 
 
   /**
-   * Executes a given array of tasks in parallel, with a fixed number of threads.
+   * 使用固定数量的线程并行执行给定的任务数组。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be printed
-   * to the {@code System.out}.
+   * 在任务执行期间，任务的进度将被打印到{@code System.out}。
    *
    * @param tasks
-   *     The array of tasks to be executed.
+   *     要执行的任务数组。
    * @param threads
-   *     The number of threads to be used for executing the tasks.
+   *     用于执行任务的线程数。
    * @param reportInterval
-   *     The interval in seconds to print the progress of the tasks. If it is
-   *    *     less than or equal to zero, it is considered as 1.
+   *     打印任务进度的间隔（以秒为单位）。 如果它小于或等于零，则视为1。
    */
   public static <T extends Runnable> void execute(final T[] tasks,
       final int threads, final int reportInterval) {
@@ -173,20 +163,18 @@ public class Parallel {
   }
 
   /**
-   * Executes a given collection of tasks in parallel, with a fixed number of threads.
+   * 使用固定数量的线程并行执行给定的任务集合。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be reported
-   * to the specified {@link ProgressReporter}.
+   * 在任务执行期间，任务的进度将报告给指定的{@link ProgressReporter}。
    *
    * @param tasks
-   *     The collection of tasks to be executed.
+   *     要执行的任务的集合。
    * @param threads
-   *     The number of threads to be used for executing the tasks.
+   *     用于执行任务的线程数。
    * @param reporter
-   *     The reporter to report the progress of the tasks. If it is {@code null},
-   *     no progress will be reported.
+   *     报告任务进度的报告器。如果为{@code null}，将不报告任何进度。
    */
   public static void execute(final Collection<? extends Runnable> tasks,
       final int threads, @Nullable final ProgressReporter reporter) {
@@ -194,20 +182,18 @@ public class Parallel {
   }
 
   /**
-   * Executes a given array of tasks in parallel, with a fixed number of threads.
+   * 使用固定数量的线程并行执行给定的任务数组。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be reported
-   * to the specified {@link ProgressReporter}.
+   * 在任务执行期间，任务的进度将报告给指定的{@link ProgressReporter}。
    *
    * @param tasks
-   *     The array of tasks to be executed.
+   *     要执行的任务数组。
    * @param threads
-   *     The number of threads to be used for executing the tasks.
+   *     用于执行任务的线程数。
    * @param reporter
-   *     The reporter to report the progress of the tasks. If it is {@code null},
-   *     no progress will be reported.
+   *     报告任务进度的报告器。如果为{@code null}，将不报告任何进度。
    */
   public static <T extends Runnable> void execute(final T[] tasks, final int threads,
       @Nullable final ProgressReporter reporter) {
@@ -215,23 +201,20 @@ public class Parallel {
   }
 
   /**
-   * Executes a given collection of tasks in parallel, with a fixed number of threads.
+   * 使用固定数量的线程并行执行给定的任务集合。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be reported
-   * to the specified {@link ProgressReporter}.
+   * 在任务执行期间，任务的进度将报告给指定的{@link ProgressReporter}。
    *
    * @param tasks
-   *     The collection of tasks to be executed.
+   *     要执行的任务的集合。
    * @param threads
-   *     The number of threads to be used for executing the tasks.
+   *     用于执行任务的线程数。
    * @param reportInterval
-   *     The interval in seconds to print the progress of the tasks. If it is
-   *     less than or equal to zero, it is considered as 1.
+   *     打印任务进度的间隔（以秒为单位）。 如果它小于或等于零，则视为1。
    * @param reporter
-   *     The reporter to report the progress of the tasks. If it is {@code null},
-   *     no progress will be reported.
+   *     报告任务进度的报告器。如果为{@code null}，将不报告任何进度。
    */
   public static void execute(final Collection<? extends Runnable> tasks,
       final int threads, final int reportInterval,
@@ -240,23 +223,20 @@ public class Parallel {
   }
 
   /**
-   * Executes a given array of tasks in parallel, with a fixed number of threads.
+   * 使用固定数量的线程并行执行给定的任务数组。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be reported
-   * to the specified {@link ProgressReporter}.
+   * 在任务执行期间，任务的进度将报告给指定的{@link ProgressReporter}。
    *
    * @param tasks
-   *     The array of tasks to be executed.
+   *     要执行的任务数组。
    * @param threads
-   *     The number of threads to be used for executing the tasks.
+   *     用于执行任务的线程数。
    * @param reportInterval
-   *     The interval in seconds to print the progress of the tasks. If it is
-   *     less than or equal to zero, it is considered as 1.
+   *     打印任务进度的间隔（以秒为单位）。 如果它小于或等于零，则视为1。
    * @param reporter
-   *     The reporter to report the progress of the tasks. If it is {@code null},
-   *     no progress will be reported.
+   *     报告任务进度的报告器。如果为{@code null}，将不报告任何进度。
    */
   public static <T extends Runnable> void execute(final T[] tasks, final int threads,
       final int reportInterval, @Nullable final ProgressReporter reporter) {
@@ -264,25 +244,22 @@ public class Parallel {
   }
 
   /**
-   * Executes a given collection of tasks in parallel, with a fixed number of threads.
+   * 使用固定数量的线程并行执行给定的任务可迭代对象。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be reported
-   * to the specified {@link ProgressReporter}.
+   * 在任务执行期间，任务的进度将报告给指定的{@link ProgressReporter}。
    *
    * @param tasks
-   *     The iterable tasks to be executed.
+   *     要执行的任务的可迭代对象。
    * @param taskCount
-   *     The total number of tasks to be executed.
+   *     任务总数。
    * @param threads
-   *     The number of threads to be used for executing the tasks.
+   *     用于执行任务的线程数。
    * @param reportInterval
-   *     The interval in seconds to print the progress of the tasks. If it is
-   *     less than or equal to zero, it is considered as 1.
+   *     打印任务进度的间隔（以秒为单位）。 如果它小于或等于零，则视为1。
    * @param reporter
-   *     The reporter to report the progress of the tasks. If it is {@code null},
-   *     no progress will be reported.
+   *     报告任务进度的报告器。如果为{@code null}，将不报告任何进度。
    */
   public static void execute(final Iterable<? extends Runnable> tasks,
       final int taskCount, final int threads, final int reportInterval,
@@ -352,18 +329,16 @@ public class Parallel {
   }
 
   /**
-   * Performs an action to each element of a list in parallel, with a fixed
-   * number of threads.
+   * 对集合中的每个元素并行执行给定的操作。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be printed
-   * to the {@code System.out}.
+   * 在任务执行期间，任务的进度将被打印到{@code System.out}。
    *
    * @param col
-   *     The collection of elements to be iterated.
+   *     包含要操作元素的集合。
    * @param action
-   *     The action to be executed for each element.
+   *     要对每个元素执行的操作。
    */
   public static <T> void forEach(final Collection<T> col, final Consumer<T> action) {
     forEach(col, DEFAULT_THREADS, DEFAULT_SINGLE_THREAD_THRESHOLD,
@@ -371,18 +346,16 @@ public class Parallel {
   }
 
   /**
-   * Performs an action to each element of an array in parallel, with a fixed
-   * number of threads.
+   * 对数组中的每个元素并行执行给定的操作。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be printed
-   * to the {@code System.out}.
+   * 在任务执行期间，任务的进度将被打印到{@code System.out}。
    *
    * @param array
-   *     The array of elements to be iterated.
+   *     包含要操作元素的数组。
    * @param action
-   *     The action to be executed for each element.
+   *     要对每个元素执行的操作。
    */
   public static <T> void forEach(final T[] array, final Consumer<T> action) {
     forEach(array, DEFAULT_THREADS, DEFAULT_SINGLE_THREAD_THRESHOLD,
@@ -390,20 +363,18 @@ public class Parallel {
   }
 
   /**
-   * Performs an action to each element of a list in parallel, with a fixed
-   * number of threads.
+   * 对集合中的每个元素并行执行给定的操作。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be printed
-   * to the {@code System.out}.
+   * 在任务执行期间，任务的进度将被打印到{@code System.out}。
    *
    * @param col
-   *     The collection of elements to be iterated.
+   *     包含要操作元素的集合。
    * @param threads
-   *     The number of threads to be used for executing the tasks.
+   *     用于执行任务的线程数。
    * @param action
-   *     The action to be executed for each element.
+   *     要对每个元素执行的操作。
    */
   public static <T> void forEach(final Collection<T> col, final int threads,
       final Consumer<T> action) {
@@ -412,20 +383,18 @@ public class Parallel {
   }
 
   /**
-   * Performs an action to each element of an array in parallel, with a fixed
-   * number of threads.
+   * 对数组中的每个元素并行执行给定的操作。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be printed
-   * to the {@code System.out}.
+   * 在任务执行期间，任务的进度将被打印到{@code System.out}。
    *
    * @param array
-   *     The array of elements to be iterated.
+   *     包含要操作元素的数组。
    * @param threads
-   *     The number of threads to be used for executing the tasks.
+   *     用于执行任务的线程数。
    * @param action
-   *     The action to be executed for each element.
+   *     要对每个元素执行的操作。
    */
   public static <T> void forEach(final T[] array, final int threads,
       final Consumer<T> action) {
@@ -433,25 +402,22 @@ public class Parallel {
         DEFAULT_REPORT_INTERVAL, DEFAULT_PROGRESS_REPORTER, action);
   }
 
+
   /**
-   * Performs an action to each element of a list in parallel, with a fixed
-   * number of threads.
+   * 对集合中的每个元素并行执行给定的操作。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be printed
-   * to the {@code System.out}.
+   * 在任务执行期间，任务的进度将被打印到{@code System.out}。
    *
    * @param col
-   *     The collection of elements to be iterated.
+   *     包含要操作元素的集合。
    * @param threads
-   *     The number of threads to be used for executing the tasks.
+   *     用于执行任务的线程数。
    * @param singleThreadThreshold
-   *     If the size of the collection is less than or equal to this value,
-   *     the tasks will be executed in a single thread. If it is less than or
-   *     equal to zero, it is considered as 0.
+   *     如果集合的大小小于或等于此值，则任务将在单个线程中执行。
    * @param action
-   *     The action to be executed for each element.
+   *     要对每个元素执行的操作。
    */
   public static <T> void forEach(final Collection<T> col, final int threads,
       final int singleThreadThreshold, final Consumer<T> action) {
@@ -460,24 +426,20 @@ public class Parallel {
   }
 
   /**
-   * Performs an action to each element of an array in parallel, with a fixed
-   * number of threads.
+   * 对数组中的每个元素并行执行给定的操作。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be printed
-   * to the {@code System.out}.
+   * 在任务执行期间，任务的进度将被打印到{@code System.out}。
    *
    * @param array
-   *     The array of elements to be iterated.
+   *     包含要操作元素的数组。
    * @param threads
-   *     The number of threads to be used for executing the tasks.
+   *     用于执行任务的线程数。
    * @param singleThreadThreshold
-   *     If the size of the collection is less than or equal to this value,
-   *     the tasks will be executed in a single thread. If it is less than or
-   *     equal to zero, it is considered as 0.
+   *     如果数组的大小小于或等于此值，则任务将在单个线程中执行。
    * @param action
-   *     The action to be executed for each element.
+   *     要对每个元素执行的操作。
    */
   public static <T> void forEach(final T[] array, final int threads,
       final int singleThreadThreshold, final Consumer<T> action) {
@@ -486,23 +448,20 @@ public class Parallel {
   }
 
   /**
-   * Performs an action to each element of a list in parallel, with a fixed
-   * number of threads.
+   * 对集合中的每个元素并行执行给定的操作。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be printed
-   * to the {@code System.out}.
+   * 在任务执行期间，任务的进度将报告给指定的{@link ProgressReporter}。
    *
    * @param col
-   *     The collection of elements to be iterated.
+   *     包含要操作元素的集合。
    * @param threads
-   *     The number of threads to be used for executing the tasks.
+   *     用于执行任务的线程数。
    * @param reporter
-   *     The reporter to report the progress of the tasks. If it is {@code null},
-   *     no progress will be reported.
+   *     报告任务进度的报告器。如果为{@code null}，将不报告任何进度。
    * @param action
-   *     The action to be executed for each element.
+   *     要对每个元素执行的操作。
    */
   public static <T> void forEach(final Collection<T> col, final int threads,
       @Nullable final ProgressReporter reporter, final Consumer<T> action) {
@@ -511,23 +470,20 @@ public class Parallel {
   }
 
   /**
-   * Performs an action to each element of an array in parallel, with a fixed
-   * number of threads.
+   * 对数组中的每个元素并行执行给定的操作。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be printed
-   * to the {@code System.out}.
+   * 在任务执行期间，任务的进度将报告给指定的{@link ProgressReporter}。
    *
    * @param array
-   *     The array of elements to be iterated.
+   *     包含要操作元素的数组。
    * @param threads
-   *     The number of threads to be used for executing the tasks.
+   *     用于执行任务的线程数。
    * @param reporter
-   *     The reporter to report the progress of the tasks. If it is {@code null},
-   *     no progress will be reported.
+   *     报告任务进度的报告器。如果为{@code null}，将不报告任何进度。
    * @param action
-   *     The action to be executed for each element.
+   *     要对每个元素执行的操作。
    */
   public static <T> void forEach(final T[] array, final int threads,
       @Nullable final ProgressReporter reporter, final Consumer<T> action) {
@@ -536,26 +492,22 @@ public class Parallel {
   }
 
   /**
-   * Performs an action to each element of a list in parallel, with a fixed
-   * number of threads.
+   * 对集合中的每个元素并行执行给定的操作。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be printed
-   * to the {@code System.out}.
+   * 在任务执行期间，任务的进度将报告给指定的{@link ProgressReporter}。
    *
    * @param col
-   *     The collection of elements to be iterated.
+   *     包含要操作元素的集合。
    * @param threads
-   *     The number of threads to be used for executing the tasks.
+   *     用于执行任务的线程数。
    * @param reportInterval
-   *     The interval in seconds to print the progress of the tasks. If it is
-   *    *     less than or equal to zero, it is considered as 1.
+   *     打印任务进度的间隔（以秒为单位）。 如果它小于或等于零，则视为1。
    * @param reporter
-   *     The reporter to report the progress of the tasks. If it is {@code null},
-   *     no progress will be reported.
+   *     报告任务进度的报告器。如果为{@code null}，将不报告任何进度。
    * @param action
-   *     The action to be executed for each element.
+   *     要对每个元素执行的操作。
    */
   public static <T> void forEach(final Collection<T> col, final int threads,
       final int reportInterval, @Nullable final ProgressReporter reporter,
@@ -565,26 +517,22 @@ public class Parallel {
   }
 
   /**
-   * Performs an action to each element of an array in parallel, with a fixed
-   * number of threads.
+   * 对数组中的每个元素并行执行给定的操作。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be printed
-   * to the {@code System.out}.
+   * 在任务执行期间，任务的进度将报告给指定的{@link ProgressReporter}。
    *
    * @param array
-   *     The array of elements to be iterated.
+   *     包含要操作元素的数组。
    * @param threads
-   *     The number of threads to be used for executing the tasks.
+   *     用于执行任务的线程数。
    * @param reportInterval
-   *     The interval in seconds to print the progress of the tasks. If it is
-   *    *     less than or equal to zero, it is considered as 1.
+   *     打印任务进度的间隔（以秒为单位）。 如果它小于或等于零，则视为1。
    * @param reporter
-   *     The reporter to report the progress of the tasks. If it is {@code null},
-   *     no progress will be reported.
+   *     报告任务进度的报告器。如果为{@code null}，将不报告任何进度。
    * @param action
-   *     The action to be executed for each element.
+   *     要对每个元素执行的操作。
    */
   public static <T> void forEach(final T[] array, final int threads,
       final int reportInterval, @Nullable final ProgressReporter reporter,
@@ -594,30 +542,24 @@ public class Parallel {
   }
 
   /**
-   * Performs an action to each element of a list in parallel, with a fixed
-   * number of threads.
+   * 对集合中的每个元素并行执行给定的操作。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be printed
-   * to the {@code System.out}.
+   * 在任务执行期间，任务的进度将报告给指定的{@link ProgressReporter}。
    *
    * @param col
-   *     The collection of elements to be iterated.
+   *     包含要操作元素的集合。
    * @param threads
-   *     The number of threads to be used for executing the tasks.
+   *     用于执行任务的线程数。
    * @param singleThreadThreshold
-   *     If the size of the collection is less than or equal to this value,
-   *     the tasks will be executed in a single thread. If it is less than or
-   *     equal to zero, it is considered as 0.
+   *     如果集合的大小小于或等于此值，则任务将在单个线程中执行。
    * @param reportInterval
-   *     The interval in seconds to print the progress of the tasks. If it is
-   *     less than or equal to zero, it is considered as 1.
+   *     打印任务进度的间隔（以秒为单位）。 如果它小于或等于零，则视为1。
    * @param reporter
-   *     The reporter to report the progress of the tasks. If it is {@code null},
-   *     no progress will be reported.
+   *     报告任务进度的报告器。如果为{@code null}，将不报告任何进度。
    * @param action
-   *     The action to be executed for each element.
+   *     要对每个元素执行的操作。
    */
   public static <T> void forEach(final Collection<T> col, final int threads,
       final int singleThreadThreshold, final int reportInterval,
@@ -636,30 +578,24 @@ public class Parallel {
   }
 
   /**
-   * Performs an action to each element of an array in parallel, with a fixed
-   * number of threads.
+   * 对数组中的每个元素并行执行给定的操作。
    * <p>
-   * The calling thread will be blocked until all tasks are finished.
+   * 调用线程将被阻塞，直到所有任务都完成。
    * <p>
-   * During the execution of the tasks, the progress of the tasks will be printed
-   * to the {@code System.out}.
+   * 在任务执行期间，任务的进度将报告给指定的{@link ProgressReporter}。
    *
    * @param array
-   *     The array of elements to be iterated.
+   *     包含要操作元素的数组。
    * @param threads
-   *     The number of threads to be used for executing the tasks.
+   *     用于执行任务的线程数。
    * @param singleThreadThreshold
-   *     If the size of the collection is less than or equal to this value,
-   *     the tasks will be executed in a single thread. If it is less than or
-   *     equal to zero, it is considered as 0.
+   *     如果数组的大小小于或等于此值，则任务将在单个线程中执行。
    * @param reportInterval
-   *     The interval in seconds to print the progress of the tasks. If it is
-   *     less than or equal to zero, it is considered as 1.
+   *     打印任务进度的间隔（以秒为单位）。 如果它小于或等于零，则视为1。
    * @param reporter
-   *     The reporter to report the progress of the tasks. If it is {@code null},
-   *     no progress will be reported.
+   *     报告任务进度的报告器。如果为{@code null}，将不报告任何进度。
    * @param action
-   *     The action to be executed for each element.
+   *     要对每个元素执行的操作。
    */
   public static <T> void forEach(final T[] array, final int threads,
       final int singleThreadThreshold, final int reportInterval,

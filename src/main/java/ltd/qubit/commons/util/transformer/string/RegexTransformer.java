@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -25,19 +25,15 @@ import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * A {@link RegexTransformer} transforms strings using a predefined regular
- * expression pattern.
+ * {@link RegexTransformer}使用预定义的正则表达式模式转换字符串。
+ * <p>
+ * {@link #transform(String)}函数将尝试将输入字符串中所有匹配预定义输入模式的子串替换掉；
+ * 对于每个匹配的子串,该函数将尝试将输出模式中的"${0}","${1}","${2}"等替换为
+ * 组0(整个匹配字符串),组1(第一个捕获的组),组2(第二个捕获的组)等。
+ * <p>
+ * 请注意,此类的实现不是线程安全的。
  *
- * <p>The {@link #transform(String)} function will firstly try to match the entire
- * string with the predefined input pattern; if it failed, the function will
- * return the string without changes; if it success, the function will try to
- * replace the "${0}", "${1}", "${2}", ..., etc, in the output pattern with the
- * group 0 (entire matching string), group 1 (the first captured group), group 2
- * (the second captured group), etc.
- *
- * <p>Note that the implementation of this class is not thread safe.
- *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class RegexTransformer extends AbstractStringTransformer {
 
@@ -60,35 +56,78 @@ public class RegexTransformer extends AbstractStringTransformer {
 
   private transient Matcher inputMatcher;
 
+  /**
+   * 构造一个{@link RegexTransformer}。
+   */
   public RegexTransformer() {
     inputPattern = StringUtils.EMPTY;
     outputPattern = StringUtils.EMPTY;
     inputMatcher = null;
   }
 
+  /**
+   * 构造一个{@link RegexTransformer}。
+   *
+   * @param inputPattern
+   *     用于匹配的正则表达式。
+   * @param outputPattern
+   *     用于替换的正则表达式。
+   */
   public RegexTransformer(final String inputPattern, final String outputPattern) {
     this.inputPattern = requireNonNull("inputPattern", inputPattern);
     this.outputPattern = requireNonNull("outputPattern", outputPattern);
     inputMatcher = null;
   }
 
+  /**
+   * 获取用于匹配的正则表达式。
+   *
+   * @return
+   *     用于匹配的正则表达式。
+   */
   public String getInputPattern() {
     return inputPattern;
   }
 
+  /**
+   * 设置用于匹配的正则表达式。
+   *
+   * @param inputPattern
+   *     新的用于匹配的正则表达式。
+   */
   public void setInputPattern(final String inputPattern) {
     this.inputPattern = requireNonNull("inputPattern", inputPattern);
     inputMatcher = null;
   }
 
+  /**
+   * 获取用于替换的正则表达式。
+   *
+   * @return
+   *     用于替换的正则表达式。
+   */
   public String getOutputPattern() {
     return outputPattern;
   }
 
+  /**
+   * 设置用于替换的正则表达式。
+   *
+   * @param outputPattern
+   *     新的用于替换的正则表达式。
+   */
   public void setOutputPattern(final String outputPattern) {
     this.outputPattern = requireNonNull("outputPattern", outputPattern);
   }
 
+  /**
+   * 使用此转换器转换指定的字符串。
+   *
+   * @param str
+   *     要转换的字符串，可以为{@code null}。
+   * @return
+   *     转换后的字符串。
+   */
   @Override
   public String transform(@Nullable final String str) {
     if ((str == null) || (str.length() == 0)) {

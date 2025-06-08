@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -17,29 +17,49 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.lang.StringUtils.splitCodePoints;
 
 /**
- * A CharFilter that accept only the characters NOT in the specified string.
+ * 一个代码点过滤器，仅接受不在指定字符串中的代码点。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class NotInStringCodePointFilter implements CodePointFilter {
 
   private CharSequence rejectCodePoints;
   private IntList rejectCodePointList;
 
+  /**
+   * 构造一个 {@link NotInStringCodePointFilter}。
+   *
+   * @param rejectCodePoints
+   *     包含被拒绝的代码点的字符串。
+   */
   public NotInStringCodePointFilter(final CharSequence rejectCodePoints) {
-    this.rejectCodePoints = requireNonNull("acceptCodePoints", rejectCodePoints);
+    this.rejectCodePoints = requireNonNull("rejectCodePoints", rejectCodePoints);
     this.rejectCodePointList = splitCodePoints(rejectCodePoints);
   }
 
+  /**
+   * 获取包含被拒绝的代码点的字符串。
+   *
+   * @return 包含被拒绝的代码点的字符串。
+   */
   public CharSequence getRejectCodePoints() {
     return rejectCodePoints;
   }
 
+  /**
+   * 设置包含被拒绝的代码点的字符串。
+   *
+   * @param rejectCodePoints
+   *     新的包含被拒绝的代码点的字符串。
+   */
   public void setRejectCodePoints(final CharSequence rejectCodePoints) {
-    this.rejectCodePoints = requireNonNull("acceptCodePoints", rejectCodePoints);
+    this.rejectCodePoints = requireNonNull("rejectCodePoints", rejectCodePoints);
     this.rejectCodePointList = splitCodePoints(rejectCodePoints);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean accept(final Integer codePoint) {
     return (codePoint != null) && (!rejectCodePointList.contains(codePoint));

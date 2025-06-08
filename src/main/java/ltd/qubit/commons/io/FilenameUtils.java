@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -18,22 +18,21 @@ import javax.annotation.Nullable;
 import ltd.qubit.commons.net.Url;
 
 /**
- * Provides utility methods for manipulating filenames.
+ * 提供操作文件名的实用方法。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class FilenameUtils {
 
   /**
-   * Gets the base name (i.e. the part up to and not including the last ".") of
-   * a filename.
+   * 获取文件名的基本名称（即直到但不包括最后一个"."的部分）。
    * <p>
-   * Will return the file name itself if it doesn't contain any dots.
+   * 如果文件名不包含任何点，将返回文件名本身。
    *
    * @param filename
-   *     the filename.
+   *     文件名。
    * @return
-   *     the base name of filename, or {@code null} if the filename is {@code null}.
+   *     文件名的基本名称，如果文件名为 {@code null}，则返回 {@code null}。
    */
   @Nullable
   public static String getBaseNameFromFilename(@Nullable final String filename) {
@@ -45,16 +44,15 @@ public class FilenameUtils {
   }
 
   /**
-   * Gets the extension (i.e. the part after the last ".") of a filename.
+   * 获取文件名的扩展名（即最后一个"."之后的部分）。
    * <p>
-   * Will return an empty string if it doesn't contain any dots.
+   * 如果文件名不包含任何点，将返回空字符串。
    *
    * @param filename
-   *     the filename.
+   *     文件名。
    * @return
-   *     the extension of the filename, or {@code null} if the filename is
-   *     {@code null}. If the filename doesn't contain any dots, an empty
-   *     string is returned.
+   *     文件名的扩展名，如果文件名为 {@code null}，则返回 {@code null}。
+   *     如果文件名不包含任何点，则返回空字符串。
    */
   @Nullable
   public static String getExtensionFromFilename(@Nullable final String filename) {
@@ -66,18 +64,16 @@ public class FilenameUtils {
   }
 
   /**
-   * Gets the base name (i.e. the part up to and not including the last ".") of
-   * the last path segment of a file name.
+   * 获取文件名最后路径段的基本名称（即直到但不包括最后一个"."的部分）。
    * <p>
-   * Will return the file name itself if it doesn't contain any dots. All
-   * leading directories of the {@code file name} parameter are skipped.
+   * 如果文件名不包含任何点，将返回文件名本身。
+   * 跳过 {@code file name} 参数的所有前导目录。
    *
    * @param path
-   *     the path of the file to obtain the base name of.
+   *     要获取基本名称的文件路径。
    * @return
-   *     the base name of file name of the file in the specified path, or
-   *     {@code null} if the path is {@code null}, or the path is the path
-   *     of a directory (i.e., the filename of the path is an empty string).
+   *     指定路径中文件名的基本名称，如果路径为 {@code null}，
+   *     或路径是目录的路径（即路径的文件名是空字符串），则返回 {@code null}。
    */
   @Nullable
   public static String getBasename(@Nullable final Path path) {
@@ -92,18 +88,16 @@ public class FilenameUtils {
   }
 
   /**
-   * Gets the base name (i.e. the part up to and not including the last ".") of
-   * the last path segment of a file name.
+   * 获取文件名最后路径段的基本名称（即直到但不包括最后一个"."的部分）。
    * <p>
-   * Will return the file name itself if it doesn't contain any dots. All
-   * leading directories of the {@code file name} parameter are skipped.
+   * 如果文件名不包含任何点，将返回文件名本身。
+   * 跳过 {@code file name} 参数的所有前导目录。
    *
    * @param path
-   *     the path of the file to obtain the base name of.
+   *     要获取基本名称的文件路径。
    * @return
-   *     the base name of file name of the file in the specified path, or
-   *     {@code null} if the path is {@code null}, or the path is the path
-   *     of a directory (i.e., the filename of the path is an empty string).
+   *     指定路径中文件名的基本名称，如果路径为 {@code null}，
+   *     或路径是目录的路径（即路径的文件名是空字符串），则返回 {@code null}。
    */
   @Nullable
   public static String getBasename(@Nullable final File path) {
@@ -118,18 +112,16 @@ public class FilenameUtils {
   }
 
   /**
-   * Gets the base name (i.e. the part up to and not including the last ".") of
-   * the last path segment of a file name.
+   * 获取文件名最后路径段的基本名称（即直到但不包括最后一个"."的部分）。
    * <p>
-   * Will return the file name itself if it doesn't contain any dots. All
-   * leading directories of the {@code file name} parameter are skipped.
+   * 如果文件名不包含任何点，将返回文件名本身。
+   * 跳过 {@code file name} 参数的所有前导目录。
    *
    * @param path
-   *     the path of the file to obtain the base name of.
+   *     要获取基本名称的文件路径。
    * @return
-   *     the base name of file name of the file in the specified path, or
-   *     {@code null} if the path is {@code null}, or the path is the path
-   *    of a directory (i.e., the filename of the path is an empty string).
+   *     指定路径中文件名的基本名称，如果路径为 {@code null}，
+   *     或路径是目录的路径（即路径的文件名是空字符串），则返回 {@code null}。
    */
   @Nullable
   public static String getBasename(@Nullable final String path) {
@@ -144,19 +136,17 @@ public class FilenameUtils {
   }
 
   /**
-   * Gets the extension (i.e. the part after the last ".") of a file.
+   * 获取文件的扩展名（即最后一个"."之后的部分）。
    * <p>
-   * Will return an empty string if the file name doesn't contain any dots. Only
-   * the last segment of the file name is consulted - i.e. all leading
-   * directories of the {@code file name} parameter are skipped.
+   * 如果文件名不包含任何点，将返回空字符串。
+   * 只检查文件名的最后一段 - 即跳过 {@code file name} 参数的所有前导目录。
    *
    * @param path
-   *     the path of the file to obtain the extension of.
+   *     要获取扩展名的文件路径。
    * @return
-   *     the extension of file name of the file in the specified path, or
-   *     {@code null} if the path is {@code null}, or the path is the path
-   *     of a directory (i.e., the filename of the path is an empty string).
-   *     If the file name doesn't contain any dots, an empty string is returned.
+   *     指定路径中文件名的扩展名，如果路径为 {@code null}，
+   *     或路径是目录的路径（即路径的文件名是空字符串），则返回 {@code null}。
+   *     如果文件名不包含任何点，则返回空字符串。
    */
   @Nullable
   public static String getExtension(@Nullable final Path path) {
@@ -171,19 +161,17 @@ public class FilenameUtils {
   }
 
   /**
-   * Gets the extension (i.e. the part after the last ".") of a file.
+   * 获取文件的扩展名（即最后一个"."之后的部分）。
    * <p>
-   * Will return an empty string if the file name doesn't contain any dots. Only
-   * the last segment of the file name is consulted - i.e. all leading
-   * directories of the {@code file name} parameter are skipped.
+   * 如果文件名不包含任何点，将返回空字符串。
+   * 只检查文件名的最后一段 - 即跳过 {@code file name} 参数的所有前导目录。
    *
    * @param path
-   *     the path of the file to obtain the extension of.
+   *     要获取扩展名的文件路径。
    * @return
-   *     the extension of file name of the file in the specified path, or
-   *     {@code null} if the path is {@code null}, or the path is the path
-   *     of a directory (i.e., the filename of the path is an empty string). If
-   *     the file name doesn't contain any dots, an empty string is returned.
+   *     指定路径中文件名的扩展名，如果路径为 {@code null}，
+   *     或路径是目录的路径（即路径的文件名是空字符串），则返回 {@code null}。
+   *     如果文件名不包含任何点，则返回空字符串。
    */
   @Nullable
   public static String getExtension(@Nullable final File path) {
@@ -198,19 +186,17 @@ public class FilenameUtils {
   }
 
   /**
-   * Gets the extension (i.e. the part after the last ".") of a file.
+   * 获取文件的扩展名（即最后一个"."之后的部分）。
    * <p>
-   * Will return an empty string if the file name doesn't contain any dots. Only
-   * the last segment of the file name is consulted - i.e. all leading
-   * directories of the {@code file name} parameter are skipped.
+   * 如果文件名不包含任何点，将返回空字符串。
+   * 只检查文件名的最后一段 - 即跳过 {@code file name} 参数的所有前导目录。
    *
    * @param path
-   *     the path of the file to obtain the extension of.
+   *     要获取扩展名的文件路径。
    * @return
-   *     the extension of file name of the file in the specified path, or
-   *     {@code null} if the path is {@code null}, or the path is the path
-   *     of a directory (i.e., the filename of the path is an empty string). If
-   *     the file name doesn't contain any dots, an empty string is returned.
+   *     指定路径中文件名的扩展名，如果路径为 {@code null}，
+   *     或路径是目录的路径（即路径的文件名是空字符串），则返回 {@code null}。
+   *     如果文件名不包含任何点，则返回空字符串。
    */
   @Nullable
   public static String getExtension(@Nullable final String path) {
@@ -225,21 +211,17 @@ public class FilenameUtils {
   }
 
   /**
-   * Gets the extension (i.e. the part after the last ".") of a file, with a
-   * dot "." prefix.
+   * 获取文件的扩展名（即最后一个"."之后的部分），带有一个点 "." 前缀。
    * <p>
-   * Will return an empty string if the file name doesn't contain any dots. Only
-   * the last segment of the file name is consulted - i.e. all leading
-   * directories of the {@code file name} parameter are skipped.
+   * 如果文件名不包含任何点，将返回空字符串。
+   * 只检查文件名的最后一段 - 即跳过 {@code file name} 参数的所有前导目录。
    *
    * @param path
-   *     the path of the file to obtain the extension of.
+   *     要获取扩展名的文件路径。
    * @return
-   *     the extension of file name of the file in the specified path with a
-   *     dot "." prefix, or {@code null} if the path is {@code null}, or the
-   *     path is the path of a directory (i.e., the filename of the path is an
-   *     empty string). If the file name doesn't contain any dots, an empty
-   *     string is returned.
+   *     指定路径中文件名的扩展名，带有一个点 "." 前缀，如果路径为 {@code null}，
+   *     或路径是目录的路径（即路径的文件名是空字符串），则返回 {@code null}。
+   *     如果文件名不包含任何点，则返回空字符串。
    */
   @Nullable
   public static String getDotExtension(@Nullable final Path path) {
@@ -252,21 +234,17 @@ public class FilenameUtils {
   }
 
   /**
-   * Gets the extension (i.e. the part after the last ".") of a file, with a
-   * dot "." prefix.
+   * 获取文件的扩展名（即最后一个"."之后的部分），带有一个点 "." 前缀。
    * <p>
-   * Will return an empty string if the file name doesn't contain any dots. Only
-   * the last segment of the file name is consulted - i.e. all leading
-   * directories of the {@code file name} parameter are skipped.
+   * 如果文件名不包含任何点，将返回空字符串。
+   * 只检查文件名的最后一段 - 即跳过 {@code file name} 参数的所有前导目录。
    *
    * @param path
-   *     the path of the file to obtain the extension of.
+   *     要获取扩展名的文件路径。
    * @return
-   *     the extension of file name of the file in the specified path with a
-   *     dot "." prefix, or {@code null} if the path is {@code null}, or the
-   *     path is the path of a directory (i.e., the filename of the path is an
-   *     empty string). If the file name doesn't contain any dots, an empty
-   *     string is returned.
+   *     指定路径中文件名的扩展名，带有一个点 "." 前缀，如果路径为 {@code null}，
+   *     或路径是目录的路径（即路径的文件名是空字符串），则返回 {@code null}。
+   *     如果文件名不包含任何点，则返回空字符串。
    */
   @Nullable
   public static String getDotExtension(@Nullable final File path) {
@@ -279,21 +257,17 @@ public class FilenameUtils {
   }
 
   /**
-   * Gets the extension (i.e. the part after the last ".") of a file, with a
-   * dot "." prefix.
+   * 获取文件的扩展名（即最后一个"."之后的部分），带有一个点 "." 前缀。
    * <p>
-   * Will return an empty string if the file name doesn't contain any dots. Only
-   * the last segment of the file name is consulted - i.e. all leading
-   * directories of the {@code file name} parameter are skipped.
+   * 如果文件名不包含任何点，将返回空字符串。
+   * 只检查文件名的最后一段 - 即跳过 {@code file name} 参数的所有前导目录。
    *
    * @param path
-   *     the path of the file to obtain the extension of.
+   *     要获取扩展名的文件路径。
    * @return
-   *     the extension of file name of the file in the specified path with a
-   *     dot "." prefix, or {@code null} if the path is {@code null}, or the
-   *     path is the path of a directory (i.e., the filename of the path is an
-   *     empty string). If the file name doesn't contain any dots, an empty
-   *     string is returned.
+   *     指定路径中文件名的扩展名，带有一个点 "." 前缀，如果路径为 {@code null}，
+   *     或路径是目录的路径（即路径的文件名是空字符串），则返回 {@code null}。
+   *     如果文件名不包含任何点，则返回空字符串。
    */
   @Nullable
   public static String getDotExtension(@Nullable final String path) {
@@ -306,22 +280,22 @@ public class FilenameUtils {
   }
 
   /**
-   * Gets the filename from the path of a file.
+   * 获取文件名从文件路径。
    *
    * @param file
-   *     the path of the file.
-   * @return the filename extracted from the path.
+   *     文件路径。
+   * @return 从路径提取的文件名。
    */
   public static String getFilename(final File file) {
     return getFilenameFromPath(file.getPath());
   }
 
   /**
-   * Gets the filename from the path of a file.
+   * 获取文件名从文件路径。
    *
    * @param path
-   *     the path of the file.
-   * @return the filename extracted from the path.
+   *     文件路径。
+   * @return 从路径提取的文件名。
    */
   public static String getFilename(final Path path) {
     final Path filename = path.getFileName();
@@ -333,44 +307,44 @@ public class FilenameUtils {
   }
 
   /**
-   * Gets the filename from the URL of a file.
+   * 获取文件名从文件的URL。
    *
    * @param url
-   *     the URL of the file.
-   * @return the filename extracted from the path.
+   *     文件的URL。
+   * @return 从路径提取的文件名。
    */
   public static String getFilename(final URL url) {
     return getFilenameFromUrl(url.toString());
   }
 
   /**
-   * Gets the filename from the URL of a file.
+   * 获取文件名从文件的URL。
    *
    * @param uri
-   *     the URI of the file.
-   * @return the filename extracted from the path.
+   *     文件的URI。
+   * @return 从路径提取的文件名。
    */
   public static String getFilename(final URI uri) {
     return getFilenameFromUrl(uri.toString());
   }
 
   /**
-   * Gets the filename from the URL of a file.
+   * 获取文件名从文件的URL。
    *
    * @param url
-   *     the URL of the file.
-   * @return the filename extracted from the path.
+   *     文件的URL。
+   * @return 从路径提取的文件名。
    */
   public static String getFilename(final Url url) {
     return getFilenameFromUrl(url.toString());
   }
 
   /**
-   * Gets the filename from a path.
+   * 获取文件名从路径。
    *
    * @param path
-   *     the path.
-   * @return the filename extracted from the path.
+   *     路径。
+   * @return 从路径提取的文件名。
    */
   public static String getFilenameFromPath(final String path) {
     final int index = path.lastIndexOf(File.separatorChar);
@@ -382,11 +356,11 @@ public class FilenameUtils {
   }
 
   /**
-   * Gets the filename from a URL.
+   * 获取文件名从URL。
    *
    * @param url
-   *     the URL.
-   * @return the filename extracted from the URL.
+   *     网址。
+   * @return 从URL提取的文件名。
    */
   public static String getFilenameFromUrl(final String url) {
     final int index = url.lastIndexOf('/');
@@ -398,11 +372,11 @@ public class FilenameUtils {
   }
 
   /**
-   * Gets the filename from a classpath.
+   * 获取文件名从类路径。
    *
    * @param classpath
-   *     the classpath.
-   * @return the filename extracted from the classpath.
+   *     类路径。
+   * @return 从类路径提取的文件名。
    */
   public static String getFilenameFromClasspath(final String classpath) {
     final int index = classpath.lastIndexOf('/');

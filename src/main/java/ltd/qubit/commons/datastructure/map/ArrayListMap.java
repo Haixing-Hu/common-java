@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,21 +15,33 @@ import java.util.Map;
 import javax.annotation.concurrent.NotThreadSafe;
 
 /**
- * An implementation of map using an array list to store the keys and values.
+ * 使用数组列表存储键和值的映射实现。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @NotThreadSafe
 public class ArrayListMap<KEY, VALUE> extends AbstractListMap<KEY, VALUE> {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected List<AbstractListMap.Entry<KEY, VALUE>> makeList() {
     return new ArrayList<>();
   }
 
+  /**
+   * 构造一个新的 {@link ArrayListMap}。
+   */
   public ArrayListMap() {
   }
 
+  /**
+   * 构造一个新的 {@link ArrayListMap}，并使用给定的映射初始化。
+   * 
+   * @param map
+   *     要初始化的映射
+   */
   public ArrayListMap(final Map<? extends KEY, ? extends VALUE> map) {
     this.putAll(map);
   }

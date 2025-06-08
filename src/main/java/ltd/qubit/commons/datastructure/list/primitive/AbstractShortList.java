@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,35 +8,67 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list.primitive;
 
+import java.io.Serial;
+
 import ltd.qubit.commons.lang.Hash;
 
+/**
+ * {@link ShortList}接口的骨架抽象实现。
+ *
+ * @author 胡海星
+ */
 public abstract class AbstractShortList extends AbstractShortCollection implements ShortList {
 
+  @Serial
   private static final long serialVersionUID = -1392082730597946038L;
 
+  /**
+   * 此列表已被修改的次数。
+   */
   protected int modifyCount = 0;
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract short get(int index);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract int size();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract short removeAt(int index);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract short set(int index, short element);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract void add(int index, short element);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean add(final short element) {
     add(size(), element);
     return true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean addAll(final int index, final ShortCollection collection) {
     boolean modified = false;
@@ -49,6 +81,9 @@ public abstract class AbstractShortList extends AbstractShortCollection implemen
     return modified;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int indexOf(final short element) {
     final ShortIterator iter = iterator();
@@ -63,6 +98,9 @@ public abstract class AbstractShortList extends AbstractShortCollection implemen
     return -1;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int lastIndexOf(final short element) {
     final ShortListIterator iter = listIterator(size());
@@ -74,19 +112,31 @@ public abstract class AbstractShortList extends AbstractShortCollection implemen
     return -1;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public ShortIterator iterator() {
     return listIterator();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public ShortListIterator listIterator() {
     return listIterator(0);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract ShortListIterator listIterator(final int index);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void unique() {
     final ShortListIterator iter = listIterator();

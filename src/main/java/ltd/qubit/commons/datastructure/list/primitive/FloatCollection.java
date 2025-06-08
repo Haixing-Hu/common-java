@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,175 +11,153 @@ package ltd.qubit.commons.datastructure.list.primitive;
 import java.io.Serializable;
 
 /**
- * A collection of {@code float} values.
+ * {@code float} 值的集合。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface FloatCollection extends Comparable<FloatCollection>,
     Serializable {
 
   /**
-   * Ensures that I contain the specified element (optional operation). Returns
-   * {@code true} iff I changed as a result of this call.
+   * 确保我包含指定的元素（可选操作）。当且仅当因为此调用而改变了我时返回 {@code true}。
    *
-   * <p>If a collection refuses to add the specified element for any reason
-   * other than that it already contains the element, it <i>must</i> throw an
-   * exception (rather than simply returning {@code false}). This preserves the
-   * invariant that a collection always contains the specified element after
-   * this call returns.
+   * <p>如果集合因为除了已经包含该元素之外的任何原因拒绝添加指定的元素，
+   * 它<i>必须</i>抛出异常（而不是简单地返回 {@code false}）。这保持了
+   * 此调用返回后集合总是包含指定元素的不变性。
    *
    * @param element
-   *     the value whose presence within me is to be ensured
-   * @return {@code true} iff I changed as a result of this call
+   *     要确保在我中存在的值
+   * @return 当且仅当因为此调用而改变了我时返回 {@code true}
    * @throws UnsupportedOperationException
-   *     when this operation is not supported
+   *     当不支持此操作时
    * @throws IllegalArgumentException
-   *     may be thrown if some aspect of the specified element prevents it from
-   *     being added to me
+   *     如果指定元素的某些方面阻止其被添加到我中，可能会抛出
    */
   boolean add(float element);
 
   /**
-   * {@link #add Adds} all of the elements in the specified collection to me
-   * (optional operation).
+   * {@link #add 添加} 指定集合中的所有元素到我中（可选操作）。
    *
    * @param c
-   *     the collection of elements whose presence within me is to be ensured
-   * @return {@code true} iff I changed as a result of this call
+   *     要确保在我中存在的元素集合
+   * @return 当且仅当因为此调用而改变了我时返回 {@code true}
    * @throws UnsupportedOperationException
-   *     when this operation is not supported
+   *     当不支持此操作时
    * @throws IllegalArgumentException
-   *     may be thrown if some aspect of some specified element prevents it from
-   *     being added to me
+   *     如果某个指定元素的某些方面阻止其被添加到我中，可能会抛出
    */
   boolean addAll(FloatCollection c);
 
   /**
-   * Removes all my elements (optional operation). I will be {@link #isEmpty
-   * empty} after this method successfully returns.
+   * 移除我的所有元素（可选操作）。此方法成功返回后我将为 {@link #isEmpty 空}。
    *
    * @throws UnsupportedOperationException
-   *     when this operation is not supported
+   *     当不支持此操作时
    */
   void clear();
 
   /**
-   * Returns {@code true} iff I contain the specified element.
+   * 当且仅当我包含指定元素时返回 {@code true}。
    *
    * @param element
-   *     the value whose presence within me is to be tested
-   * @return {@code true} iff I contain the specified element
+   *     要测试其在我中存在性的值
+   * @return 当且仅当我包含指定元素时返回 {@code true}
    */
   boolean contains(float element);
 
   /**
-   * Returns {@code true} iff I {@link #contains contain} all of the elements in
-   * the given collection.
+   * 当且仅当我 {@link #contains 包含} 给定集合中的所有元素时返回 {@code true}。
    *
    * @param c
-   *     the collection of elements whose presence within me is to be tested
-   * @return {@code true} iff I contain the all the specified elements
+   *     要测试其在我中存在性的元素集合
+   * @return 当且仅当我包含所有指定元素时返回 {@code true}
    */
   boolean containsAll(FloatCollection c);
 
   /**
-   * Returns {@code true} iff I contain no elements.
+   * 当且仅当我不包含任何元素时返回 {@code true}。
    *
-   * @return {@code true} iff I contain no elements.
+   * @return 当且仅当我不包含任何元素时返回 {@code true}。
    */
   boolean isEmpty();
 
   /**
-   * Returns an {@link FloatIterator iterator} over all my elements. This base
-   * interface places no constraints on the order in which the elements are
-   * returned by the returned iterator.
+   * 返回我所有元素的 {@link FloatIterator 迭代器}。此基础接口
+   * 对返回的迭代器返回元素的顺序不施加约束。
    *
-   * @return an {@link FloatIterator iterator} over all my elements.
+   * @return 我所有元素的 {@link FloatIterator 迭代器}。
    */
   FloatIterator iterator();
 
   /**
-   * Removes all of my elements that are contained in the specified collection
-   * (optional operation). The behavior of this method is unspecified if the
-   * given collection is modified while this method is executing. Note that this
-   * includes the case in which the given collection is this collection, and it
-   * is not empty.
+   * 移除我中包含在指定集合中的所有元素（可选操作）。如果在执行此方法时修改了给定集合，
+   * 则此方法的行为是未指定的。请注意，这包括给定集合是此集合且不为空的情况。
    *
    * @param c
-   *     the collection of elements to remove
-   * @return {@code true} iff I contained the at least one of the specified
-   *     elements, in other words, returns {@code true} iff I changed as a
-   *     result of this call
+   *     要移除的元素集合
+   * @return 当且仅当我包含至少一个指定元素时返回 {@code true}，
+   *     换句话说，当且仅当因为此调用而改变了我时返回 {@code true}
    * @throws UnsupportedOperationException
-   *     when this operation is not supported
+   *     当不支持此操作时
    */
   boolean removeAll(FloatCollection c);
 
   /**
-   * Removes a single occurrence of the specified element (optional operation).
+   * 移除指定元素的单个出现（可选操作）。
    *
    * @param element
-   *     the element to remove, if present
-   * @return {@code true} iff I contained the specified element, in other words,
-   *     iff I changed as a result of this call
+   *     要移除的元素（如果存在）
+   * @return 当且仅当我包含指定元素时返回 {@code true}，
+   *     换句话说，当且仅当因为此调用而改变了我时返回 {@code true}
    * @throws UnsupportedOperationException
-   *     when this operation is not supported
+   *     当不支持此操作时
    */
   boolean remove(float element);
 
   /**
-   * Removes all of my elements that are <i>not</i> contained in the specified
-   * collection (optional operation). (In other words, retains <i>only</i> my
-   * elements that are contained in the specified collection.) The behavior of
-   * this method is unspecified if the given collection is modified while this
-   * method is executing.
+   * 移除我中<i>未</i>包含在指定集合中的所有元素（可选操作）。
+   * （换句话说，<i>仅</i>保留我中包含在指定集合中的元素。）
+   * 如果在执行此方法时修改了给定集合，则此方法的行为是未指定的。
    *
    * @param c
-   *     the collection of elements to retain
-   * @return {@code true} iff I changed as a result of this call
+   *     要保留的元素集合
+   * @return 当且仅当因为此调用而改变了我时返回 {@code true}
    * @throws UnsupportedOperationException
-   *     when this operation is not supported
+   *     当不支持此操作时
    */
   boolean retainAll(FloatCollection c);
 
   /**
-   * Returns the number of elements I contain.
+   * 返回我包含的元素数量。
    *
-   * @return the number of elements I contain
+   * @return 我包含的元素数量
    */
   int size();
 
   /**
-   * Returns an array containing all of my elements. The length of the returned
-   * array will be equal to my {@link #size size}.
+   * 返回包含我所有元素的数组。返回数组的长度将等于我的 {@link #size 大小}。
    *
-   * <p>The returned array will be independent of me, so that callers may modify
-   * that returned array without modifying this collection.
+   * <p>返回的数组将独立于我，因此调用者可以修改返回的数组而不会修改此集合。
    *
-   * <p>When I guarantee the order in which elements are returned by an {@link
-   * #iterator iterator}, the returned array will contain elements in the same
-   * order.
+   * <p>当我保证 {@link #iterator 迭代器} 返回元素的顺序时，
+   * 返回的数组将以相同的顺序包含元素。
    *
-   * @return an array containing all my elements
+   * @return 包含我所有元素的数组
    */
   float[] toArray();
 
   /**
-   * Returns an array containing all of my elements, using the given array if it
-   * is large enough. When the length of the given array is larger than the
-   * number of elements I contain, values outside of my range will be
-   * unchanged.
+   * 返回包含我所有元素的数组，如果给定数组足够大则使用给定数组。
+   * 当给定数组的长度大于我包含的元素数量时，我范围外的值将保持不变。
    *
-   * <p>The returned array will be independent of me, so that callers may modify
-   * that returned array without modifying this collection.
+   * <p>返回的数组将独立于我，因此调用者可以修改返回的数组而不会修改此集合。
    *
-   * <p>When I guarantee the order in which elements are returned by an {@link
-   * #iterator iterator}, the returned array will contain elements in the same
-   * order.
+   * <p>当我保证 {@link #iterator 迭代器} 返回元素的顺序时，
+   * 返回的数组将以相同的顺序包含元素。
    *
    * @param a
-   *     an array that may be used to contain the elements
-   * @return an array containing all my elements
+   *     可能用于包含元素的数组
+   * @return 包含我所有元素的数组
    */
   float[] toArray(float[] a);
 }

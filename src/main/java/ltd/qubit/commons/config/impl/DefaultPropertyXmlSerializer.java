@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -30,9 +30,9 @@ import static ltd.qubit.commons.text.xml.DomUtils.setOptEnumAttr;
 import static ltd.qubit.commons.text.xml.DomUtils.setReqStringAttr;
 
 /**
- * The {@link XmlSerializer} for the {@link DefaultProperty} class.
+ * {@link DefaultProperty} 类的 {@link XmlSerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class DefaultPropertyXmlSerializer implements XmlSerializer {
@@ -47,11 +47,17 @@ public final class DefaultPropertyXmlSerializer implements XmlSerializer {
 
   public static final DefaultPropertyXmlSerializer INSTANCE = new DefaultPropertyXmlSerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String getRootNodeName() {
     return ROOT_NODE;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultProperty deserialize(final Element root) throws XmlException {
     checkNode(root, ROOT_NODE);

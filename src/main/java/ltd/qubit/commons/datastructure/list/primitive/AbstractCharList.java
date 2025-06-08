@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,10 +8,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list.primitive;
 
+import java.io.Serial;
+
 import ltd.qubit.commons.lang.Hash;
 
+/**
+ * {@link CharList} 的抽象基类。
+ *
+ * @author 胡海星
+ */
 public abstract class AbstractCharList extends AbstractCharCollection implements CharList {
 
+  @Serial
   private static final long serialVersionUID = -8293434831269543674L;
 
   protected byte modifyCount = 0;

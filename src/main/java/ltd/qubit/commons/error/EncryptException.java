@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -25,15 +25,30 @@ public class EncryptException extends GeneralSecurityException implements ErrorI
 
   private final String reason;
 
+  /**
+   * 构造一个新的加密异常。
+   */
   public EncryptException() {
     reason = null;
   }
 
+  /**
+   * 构造一个带有指定消息的加密异常。
+   *
+   * @param message
+   *     异常消息。
+   */
   public EncryptException(final String message) {
     super(message);
     reason = message;
   }
 
+  /**
+   * 构造一个带有指定原因的加密异常。
+   *
+   * @param e
+   *     异常原因。
+   */
   public EncryptException(final Throwable e) {
     super(e.getMessage(), e);
     reason = e.getMessage();
@@ -45,6 +60,12 @@ public class EncryptException extends GeneralSecurityException implements ErrorI
         new KeyValuePair("reason", (reason == null ? this.getMessage() : reason)));
   }
 
+  /**
+   * 获取加密失败的原因。
+   *
+   * @return
+   *     加密失败的原因。
+   */
   public String getReason() {
     return (reason == null ? this.getMessage() : reason);
   }

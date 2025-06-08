@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -20,37 +20,28 @@ import ltd.qubit.commons.error.NoSuchMessageException;
 import ltd.qubit.commons.lang.ArrayUtils;
 
 /**
- * Abstract implementation of the {@link HierarchicalMessageSource} interface,
- * implementing common handling of message variants, making it easy
- * to implement a specific strategy for a concrete MessageSource.
+ * {@link HierarchicalMessageSource} 接口的抽象实现，实现了消息变体的通用处理，
+ * 使得为具体的 MessageSource 实现特定策略变得容易。
  *
- * <p>Subclasses must implement the abstract {@link #resolveCode}
- * method. For efficient resolution of messages without arguments, the
- * {@link #resolveCodeWithoutArguments} method should be overridden
- * as well, resolving messages without a MessageFormat being involved.
+ * <p>子类必须实现抽象的 {@link #resolveCode} 方法。为了高效解析没有参数的消息，
+ * 也应该重写 {@link #resolveCodeWithoutArguments} 方法，在不涉及 MessageFormat 的情况下解析消息。
  *
- * <p><b>Note:</b> By default, message texts are only parsed through
- * MessageFormat if arguments have been passed in for the message. In case
- * of no arguments, message texts will be returned as-is. As a consequence,
- * you should only use MessageFormat escaping for messages with actual
- * arguments, and keep all other messages unescaped. If you prefer to
- * escape all messages, set the "alwaysUseMessageFormat" flag to "true".
+ * <p><b>注意：</b> 默认情况下，只有在为消息传入参数时，消息文本才会通过 MessageFormat 解析。
+ * 在没有参数的情况下，消息文本将按原样返回。因此，您应该只对具有实际参数的消息使用 MessageFormat 转义，
+ * 并保持所有其他消息不转义。如果您希望转义所有消息，请将 "alwaysUseMessageFormat" 标志设置为 "true"。
  *
- * <p>Supports not only {@link MessageSourceResolvable}s as primary messages
- * but also resolution of message arguments that are in turn
- * {@link MessageSourceResolvable}s themselves.
+ * <p>不仅支持 {@link MessageSourceResolvable} 作为主要消息，还支持解析本身也是
+ * {@link MessageSourceResolvable} 的消息参数。
  *
- * <p>This class does not implement caching of messages per code, thus
- * subclasses can dynamically change messages over time. Subclasses are
- * encouraged to cache their messages in a modification-aware fashion,
- * allowing for hot deployment of updated messages.
+ * <p>此类不实现按代码缓存消息，因此子类可以随时间动态更改消息。鼓励子类以修改感知的方式缓存其消息，
+ * 允许热部署更新的消息。
  * <p>
- * This class is a copy of {@code org.springframework.context.support.AbstractMessageSource}
- * with slight modifications. It is used to avoid the dependency of Spring Framework.
+ * 此类是 {@code org.springframework.context.support.AbstractMessageSource} 的副本，
+ * 稍作修改。它用于避免对 Spring Framework 的依赖。
  *
  * @author Juergen Hoeller
  * @author Rod Johnson
- * @author Haixing Hu
+ * @author 胡海星
  * @see #resolveCode(String, java.util.Locale)
  * @see #resolveCodeWithoutArguments(String, java.util.Locale)
  * @see #setAlwaysUseMessageFormat

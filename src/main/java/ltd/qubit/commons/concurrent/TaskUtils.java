@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,26 +13,26 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * 提供任务执行相关的工具函数。
+ *
+ * @author 胡海星
+ */
 public class TaskUtils {
 
   private static final ExecutorService EXECUTOR_SERVICE = Executors.newCachedThreadPool();
 
   /**
-   * Executes a given task asynchronously with a possible delay, returning a
-   * {@link CompletableFuture}.
+   * 以可能的延迟异步执行给定的任务，并返回一个{@link CompletableFuture}。
    * <p>
-   * This method allows for the execution of a task in a separate thread,
-   * followed by a possible delay, and then provides the result via a
-   * {@link CompletableFuture}. If an exception is thrown during task execution,
-   * it is propagated through the {@link CompletableFuture}.
+   * 此方法允许在单独的线程中执行任务，然后可能进行延迟，然后通过
+   * {@link CompletableFuture}提供结果。如果在任务执行期间抛出异常，
+   * 它将通过{@link CompletableFuture}传播。
    * <p>
-   * The total number of delay depends on the specified minimum execution time
-   * of the task. If the task execution time is less than the specified minimum
-   * execution time, the delay will be the difference between the minimum
-   * execution time and the task execution time. Otherwise, the delay will be
-   * zero.
+   * 总延迟时间取决于指定的任务最短执行时间。如果任务执行时间小于指定的最短执行时间，
+   * 则延迟时间将为最短执行时间与任务执行时间之差。否则，延迟将为零。
    * <p>
-   * Usage example:
+   * 使用示例:
    * <pre><code>
    * executeWithDelay(
    *     () -> {
@@ -51,21 +51,16 @@ public class TaskUtils {
    * </code></pre>
    *
    * @param <T>
-   *     The type of the result produced by the task.
+   *     任务产生的结果的类型。
    * @param task
-   *     The task to be executed. This is a {@link Callable} that can return a
-   *     result.
+   *     要执行的任务。这是一个可以返回结果的{@link Callable}。
    * @param minExecutionTime
-   *     The specified minimum execution time of the task, in milliseconds. If
-   *     the task execution time is less than the specified minimum execution
-   *     time, the delay will be the difference between the minimum execution
-   *     time and the task execution time. Otherwise, the delay will be zero.
+   *     任务的指定最短执行时间，以毫秒为单位。如果任务执行时间小于指定的最短执行时间，
+   *     则延迟时间将是最短执行时间与任务执行时间之差。否则，延迟将为零。
    * @return
-   *     A {@link CompletableFuture} that will complete with the result of the
-   *     task after the specified delay. If the task throws an exception, the
-   *     {@link CompletableFuture} will complete exceptionally with that exception.
-   * @author Haixing Hu
-   * @deprecated Use {@link Delay#execute(Callable, long)} instead.
+   *     一个{@link CompletableFuture}，它将在指定的延迟后完成并返回任务的结果。
+   *     如果任务抛出异常，则{@link CompletableFuture}将以该异常的方式完成。
+   * @deprecated 请改用 {@link Delay#execute(Callable, long)}。
    */
   @Deprecated
   public static <T> CompletableFuture<T> executeWithDelay(final Callable<T> task,
@@ -89,21 +84,16 @@ public class TaskUtils {
 
 
   /**
-   * Executes a given task asynchronously with a possible delay, returning a
-   * {@link CompletableFuture}.
+   * 以可能的延迟异步执行给定的任务，并返回一个{@link CompletableFuture}。
    * <p>
-   * This method allows for the execution of a task in a separate thread,
-   * followed by a possible delay, and then provides the result via a
-   * {@link CompletableFuture}. If an exception is thrown during task execution,
-   * it is propagated through the {@link CompletableFuture}.
+   * 此方法允许在单独的线程中执行任务，然后可能进行延迟，然后通过
+   * {@link CompletableFuture}提供结果。如果在任务执行期间抛出异常，
+   * 它将通过{@link CompletableFuture}传播。
    * <p>
-   * The total number of delay depends on the specified minimum execution time
-   * of the task. If the task execution time is less than the specified minimum
-   * execution time, the delay will be the difference between the minimum
-   * execution time and the task execution time. Otherwise, the delay will be
-   * zero.
+   * 总延迟时间取决于指定的任务最短执行时间。如果任务执行时间小于指定的最短执行时间，
+   * 则延迟时间将为最短执行时间与任务执行时间之差。否则，延迟将为零。
    * <p>
-   * Usage example:
+   * 使用示例:
    * <pre><code>
    * executeWithDelay(
    *     () -> {
@@ -121,20 +111,16 @@ public class TaskUtils {
    * </code></pre>
    *
    * @param <T>
-   *     The type of the result produced by the task.
+   *     任务产生的结果的类型。
    * @param task
-   *     The task to be executed. This is a {@link Runnable} that has no return.
+   *     要执行的任务。这是一个没有返回值的{@link Runnable}。
    * @param minExecutionTime
-   *     The specified minimum execution time of the task, in milliseconds. If
-   *     the task execution time is less than the specified minimum execution
-   *     time, the delay will be the difference between the minimum execution
-   *     time and the task execution time. Otherwise, the delay will be zero.
+   *     任务的指定最短执行时间，以毫秒为单位。如果任务执行时间小于指定的最短执行时间，
+   *     则延迟时间将是最短执行时间与任务执行时间之差。否则，延迟将为零。
    * @return
-   *     A {@link CompletableFuture} that will complete with the result of the
-   *     task after the specified delay. If the task throws an exception, the
-   *     {@link CompletableFuture} will complete exceptionally with that exception.
-   * @author Haixing Hu
-   * @deprecated Use {@link Delay#execute(Runnable, long)} instead.
+   *     一个{@link CompletableFuture}，它将在指定的延迟后完成并返回任务的结果。
+   *     如果任务抛出异常，则{@link CompletableFuture}将以该异常的方式完成。
+   * @deprecated 请改用 {@link Delay#execute(Runnable, long)}。
    */
   @Deprecated
   public static <T> CompletableFuture<T> executeWithDelay(final Runnable task,

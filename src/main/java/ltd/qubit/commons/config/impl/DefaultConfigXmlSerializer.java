@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -23,9 +23,9 @@ import static ltd.qubit.commons.text.xml.DomUtils.checkNode;
 import static ltd.qubit.commons.text.xml.DomUtils.getChildren;
 
 /**
- * The {@link XmlSerializer} for the {@link DefaultConfig} class.
+ * {@link DefaultConfig} 类的 {@link XmlSerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class DefaultConfigXmlSerializer implements XmlSerializer {
@@ -34,11 +34,17 @@ public final class DefaultConfigXmlSerializer implements XmlSerializer {
 
   public static final DefaultConfigXmlSerializer INSTANCE = new DefaultConfigXmlSerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String getRootNodeName() {
     return ROOT_NODE;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig deserialize(final Element root) throws XmlException {
     checkNode(root, ROOT_NODE);
@@ -55,6 +61,9 @@ public final class DefaultConfigXmlSerializer implements XmlSerializer {
     return result;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Element serialize(final Document doc, final Object obj) throws XmlException {
     final DefaultConfig config;

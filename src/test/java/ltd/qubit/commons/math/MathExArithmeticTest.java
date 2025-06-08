@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -475,4 +475,4 @@ public class MathExArithmeticTest {
     // 验证高位结果的正确性：对于很大的数，高位应该非零
     assertTrue(high >= 0);
   }
-} 
+}

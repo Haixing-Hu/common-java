@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -9,10 +9,9 @@
 package ltd.qubit.commons.config.error;
 
 /**
- * This error indicates that the property with a specified name does not have
- * any value.
+ * 此错误表示具有指定名称的属性没有任何值。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class PropertyHasNoValueError extends ConfigurationError {
 
@@ -20,11 +19,23 @@ public class PropertyHasNoValueError extends ConfigurationError {
 
   private final String propertyName;
 
+  /**
+   * 构造一个新的 {@link PropertyHasNoValueError}。
+   *
+   * @param propertyName
+   *     没有值的属性的名称。
+   */
   public PropertyHasNoValueError(final String propertyName) {
     super("The specified property has no value: " + propertyName);
     this.propertyName = propertyName;
   }
 
+  /**
+   * 获取没有值的属性的名称。
+   *
+   * @return
+   *     没有值的属性的名称。
+   */
   public String getPropertyName() {
     return propertyName;
   }

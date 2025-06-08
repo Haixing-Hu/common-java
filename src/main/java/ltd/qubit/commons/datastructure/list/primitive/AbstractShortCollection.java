@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,35 +8,48 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list.primitive;
 
+import java.io.Serial;
+
 import javax.annotation.Nullable;
 
 import ltd.qubit.commons.lang.Comparison;
 import ltd.qubit.commons.lang.Hash;
 
 /**
- * Abstract base class for {@link ShortCollection}s.
+ * {@link ShortCollection} 的抽象基类。
  *
- * <p>Read-only subclasses must override {@link #iterator} and {@link #size}.
- * Mutable subclasses should also override {@link #add} and
- * {@link ShortIterator#remove ShortIterator.remove}. All other methods have at
- * least some base implementation derived from these. Subclasses may choose to
- * override these methods to provide a more efficient implementation.
+ * <p>只读子类必须覆盖 {@link #iterator}和{@link #size}。
+ * 可变子类还应覆盖{@link #add}和{@link ShortIterator#remove ShortIterator.remove}。
+ * 所有其他方法都至少具有从这些方法派生的一些基本实现。子类可以选择覆盖这些方法以提供更有效的实现。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public abstract class AbstractShortCollection implements ShortCollection {
 
+  @Serial
   private static final long serialVersionUID = -415181402693273004L;
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract ShortIterator iterator();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract int size();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract boolean add(final short element);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean addAll(final ShortCollection c) {
     boolean modified = false;
@@ -46,6 +59,9 @@ public abstract class AbstractShortCollection implements ShortCollection {
     return modified;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void clear() {
     for (final ShortIterator iter = iterator(); iter.hasNext();) {
@@ -54,6 +70,9 @@ public abstract class AbstractShortCollection implements ShortCollection {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean contains(final short element) {
     for (final ShortIterator iter = iterator(); iter.hasNext();) {
@@ -64,6 +83,9 @@ public abstract class AbstractShortCollection implements ShortCollection {
     return false;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean containsAll(final ShortCollection c) {
     for (final ShortIterator iter = c.iterator(); iter.hasNext();) {
@@ -74,11 +96,17 @@ public abstract class AbstractShortCollection implements ShortCollection {
     return true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isEmpty() {
     return (0 == size());
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean remove(final short element) {
     for (final ShortIterator iter = iterator(); iter.hasNext();) {
@@ -90,6 +118,9 @@ public abstract class AbstractShortCollection implements ShortCollection {
     return false;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean removeAll(final ShortCollection c) {
     boolean modified = false;
@@ -99,6 +130,9 @@ public abstract class AbstractShortCollection implements ShortCollection {
     return modified;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean retainAll(final ShortCollection c) {
     boolean modified = false;
@@ -111,6 +145,9 @@ public abstract class AbstractShortCollection implements ShortCollection {
     return modified;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public short[] toArray() {
     final short[] array = new short[size()];
@@ -122,6 +159,9 @@ public abstract class AbstractShortCollection implements ShortCollection {
     return array;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public short[] toArray(final short[] a) {
     if (a.length < size()) {
@@ -136,6 +176,9 @@ public abstract class AbstractShortCollection implements ShortCollection {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int compareTo(@Nullable final ShortCollection other) {
     if (other == null) {
@@ -160,6 +203,9 @@ public abstract class AbstractShortCollection implements ShortCollection {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int hashCode() {
     final int multiplier = 131;
@@ -172,6 +218,9 @@ public abstract class AbstractShortCollection implements ShortCollection {
     return code;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean equals(@Nullable final Object obj) {
     if (obj == null) {

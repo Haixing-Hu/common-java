@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,9 +11,9 @@ package ltd.qubit.commons.util.expand;
 import javax.annotation.concurrent.Immutable;
 
 /**
- * The {@link ExpansionPolicy} which doubles the capacity to hold the new length.
+ * 将容量加倍以容纳新长度的 {@link ExpansionPolicy}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public class DoubleExpansionPolicy extends ExpansionPolicy {

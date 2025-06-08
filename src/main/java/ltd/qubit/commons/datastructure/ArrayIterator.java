@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -12,28 +12,47 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * An iterator for an array.
+ * 数组的迭代器。
  *
  * @param <E>
- *       the type of the elements of the array.
+ *     数组元素的类型
+ * @author 胡海星。
  * @see IterableArray
- * @author Haixing Hu
  */
 public class ArrayIterator<E> implements Iterator<E> {
 
+  /**
+   * 数组。
+   */
   private final E[] array;
+
+  /**
+   * 索引。
+   */
   private int index;
 
+  /**
+   * 构造一个数组的迭代器。
+   *
+   * @param array
+   *     数组。
+   */
   public ArrayIterator(final E[] array) {
     this.array = array;
     this.index = 0;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean hasNext() {
     return (index < array.length);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public E next() {
     if (!hasNext()) {

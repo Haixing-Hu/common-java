@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -35,7 +35,6 @@ public class NetworkUtils {
    *     超时时间（毫秒）。
    * @return
    *     如果设备可以访问指定主机的指定端口，则返回 {@code true}，否则返回 {@code false}。
-   * @author 胡海星
    */
   public static boolean ping(final String host, final int port, final int timeout) {
     LOGGER.info("Connecting to {}:{}...", host, port);

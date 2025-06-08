@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -9,24 +9,24 @@
 package ltd.qubit.commons.config;
 
 /**
- * Something that may be configured with a {@link Config}.
+ * 可使用 {@link Config} 进行配置的对象。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface Configurable {
 
   /**
-   * Gets the configuration used by this object.
+   * 获取此对象使用的配置。
    *
-   * @return the configuration used by this object. It should never return null.
+   * @return 此对象使用的配置。它永远不应返回 null。
    */
   Config getConfig();
 
   /**
-   * Sets the configuration to be used by this object.
+   * 设置此对象要使用的配置。
    *
    * @param config
-   *     the configuration to be set to this object. It can't be null.
+   *     要设置到此对象的配置。它不能为 null。
    */
   void setConfig(Config config);
 

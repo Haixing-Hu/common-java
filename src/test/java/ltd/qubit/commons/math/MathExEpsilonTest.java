@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -35,7 +35,7 @@ public class MathExEpsilonTest {
     // 测试默认精度值
     assertEquals(MathEx.DEFAULT_FLOAT_EPSILON, MathEx.getFloatEpsilon());
     assertEquals(MathEx.DEFAULT_DOUBLE_EPSILON, MathEx.getDoubleEpsilon());
-    
+
     // 验证默认值的正确性
     assertEquals(1e-6F, MathEx.DEFAULT_FLOAT_EPSILON);
     assertEquals(1e-12D, MathEx.DEFAULT_DOUBLE_EPSILON);
@@ -98,12 +98,12 @@ public class MathExEpsilonTest {
     // 测试精度设置的线程安全性
     final float testFloatEpsilon = 1e-4F;
     final double testDoubleEpsilon = 1e-9D;
-    
+
     Thread thread1 = new Thread(() -> {
       MathEx.setFloatEpsilon(testFloatEpsilon);
       MathEx.setDoubleEpsilon(testDoubleEpsilon);
     });
-    
+
     Thread thread2 = new Thread(() -> {
       try {
         Thread.sleep(10); // 确保thread1先执行
@@ -113,13 +113,13 @@ public class MathExEpsilonTest {
       assertEquals(testFloatEpsilon, MathEx.getFloatEpsilon());
       assertEquals(testDoubleEpsilon, MathEx.getDoubleEpsilon());
     });
-    
+
     thread1.start();
     thread2.start();
-    
+
     thread1.join();
     thread2.join();
-    
+
     // 恢复原始值
     MathEx.setFloatEpsilon(originalFloatEpsilon);
     MathEx.setDoubleEpsilon(originalDoubleEpsilon);
@@ -129,17 +129,17 @@ public class MathExEpsilonTest {
   void testEpsilonImpactOnFloatComparison() {
     // 测试精度设置对浮点数比较的影响
     float originalEpsilon = MathEx.getFloatEpsilon();
-    
+
     // 使用较大的精度
     MathEx.setFloatEpsilon(0.1f);
     assertTrue(MathEx.equal(1.0f, 1.05f));
     assertTrue(MathEx.isZero(0.08f));
-    
+
     // 使用较小的精度
     MathEx.setFloatEpsilon(1e-8f);
     assertFalse(MathEx.equal(1.0f, 1.00001f));
     assertFalse(MathEx.isZero(1e-7f));
-    
+
     // 恢复原始值
     MathEx.setFloatEpsilon(originalEpsilon);
   }
@@ -148,17 +148,17 @@ public class MathExEpsilonTest {
   void testEpsilonImpactOnDoubleComparison() {
     // 测试精度设置对双精度浮点数比较的影响
     double originalEpsilon = MathEx.getDoubleEpsilon();
-    
+
     // 使用较大的精度
     MathEx.setDoubleEpsilon(1e-6);
     assertTrue(MathEx.equal(1.0, 1.0000005));
     assertTrue(MathEx.isZero(5e-7));
-    
+
     // 使用较小的精度
     MathEx.setDoubleEpsilon(1e-15);
     assertFalse(MathEx.equal(1.0, 1.0000000000001));
     assertFalse(MathEx.isZero(1e-14));
-    
+
     // 恢复原始值
     MathEx.setDoubleEpsilon(originalEpsilon);
   }
@@ -166,23 +166,23 @@ public class MathExEpsilonTest {
   @Test
   void testEpsilonEdgeCases() {
     // 测试极值情况
-    
+
     // 测试非常小的正值
     MathEx.setFloatEpsilon(Float.MIN_VALUE);
     assertEquals(Float.MIN_VALUE, MathEx.getFloatEpsilon());
-    
+
     MathEx.setDoubleEpsilon(Double.MIN_VALUE);
     assertEquals(Double.MIN_VALUE, MathEx.getDoubleEpsilon());
-    
+
     // 测试较大的精度值
     MathEx.setFloatEpsilon(1.0f);
     assertEquals(1.0f, MathEx.getFloatEpsilon());
-    
+
     MathEx.setDoubleEpsilon(1.0);
     assertEquals(1.0, MathEx.getDoubleEpsilon());
-    
+
     // 恢复原始值
     MathEx.setFloatEpsilon(originalFloatEpsilon);
     MathEx.setDoubleEpsilon(originalDoubleEpsilon);
   }
-} 
+}

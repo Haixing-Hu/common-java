@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,35 +8,67 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list.primitive;
 
+import java.io.Serial;
+
 import ltd.qubit.commons.lang.Hash;
 
+/**
+ * {@link LongList}接口的骨架抽象实现。
+ *
+ * @author 胡海星
+ */
 public abstract class AbstractLongList extends AbstractLongCollection implements LongList {
 
+  @Serial
   private static final long serialVersionUID = -486872511884606247L;
 
+  /**
+   * 此列表已被修改的次数。
+   */
   protected int modifyCount = 0;
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract long get(int index);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract int size();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract long removeAt(int index);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract long set(int index, long element);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract void add(int index, long element);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean add(final long element) {
     add(size(), element);
     return true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean addAll(final int index, final LongCollection collection) {
     boolean modified = false;
@@ -49,6 +81,9 @@ public abstract class AbstractLongList extends AbstractLongCollection implements
     return modified;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int indexOf(final long element) {
     final LongIterator iter = iterator();
@@ -63,6 +98,9 @@ public abstract class AbstractLongList extends AbstractLongCollection implements
     return -1;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int lastIndexOf(final long element) {
     final LongListIterator iter = listIterator(size());
@@ -74,19 +112,31 @@ public abstract class AbstractLongList extends AbstractLongCollection implements
     return -1;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public LongIterator iterator() {
     return listIterator();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public LongListIterator listIterator() {
     return listIterator(0);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract LongListIterator listIterator(final int index);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void unique() {
     final LongListIterator iter = listIterator();

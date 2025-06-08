@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -32,9 +32,9 @@ import static ltd.qubit.commons.io.OutputUtils.writeString;
 import static ltd.qubit.commons.io.OutputUtils.writeVarInt;
 
 /**
- * The {@link BinarySerializer} for the {@link DefaultProperty} class.
+ * {@link DefaultProperty} 类的 {@link BinarySerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class DefaultPropertyBinarySerializer implements BinarySerializer {
@@ -42,6 +42,9 @@ public final class DefaultPropertyBinarySerializer implements BinarySerializer {
   public static final DefaultPropertyBinarySerializer INSTANCE =
       new DefaultPropertyBinarySerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultProperty deserialize(final InputStream in,
       final boolean allowNull) throws IOException {
@@ -62,6 +65,9 @@ public final class DefaultPropertyBinarySerializer implements BinarySerializer {
     return result;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final OutputStream out, @Nullable final Object obj)
       throws IOException {

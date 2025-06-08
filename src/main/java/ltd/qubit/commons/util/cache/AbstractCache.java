@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,31 +13,40 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import ltd.qubit.commons.io.error.AlreadyOpenedException;
 import ltd.qubit.commons.io.error.NotOpenedException;
 
 /**
- * The abstract base class for implementing the {@link Cache} interface.
+ * 实现 {@link Cache} 接口的抽象基类。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public abstract class AbstractCache<KEY, VALUE> implements Cache<KEY, VALUE> {
 
   /**
-   * The default value of maximum allowed number of objects in the cache, which is {@value}.
+   * 缓存中允许的默认最大对象数, 值为 {@value}.
    */
   public static final int DEFAULT_MAX_CACHED = Integer.MAX_VALUE;
 
   /**
-   * The data stored in the internal map, which contains the value and its last access time,
-   * as well as its access frequency.
+   * 存储在内部map中的数据, 其中包含值及其最后访问时间以及访问频率.
    *
-   * @author Haixing Hu
+   * @author 胡海星
    */
   protected class Data {
+    /**
+     * 最后访问时间。
+     */
     long lastAccessTime = 0;
+    /**
+     * 访问频率。
+     */
     long accessFrequency = 0;
+    /**
+     * 缓存的数值。
+     */
     VALUE value = null;
   }
 
@@ -45,31 +54,61 @@ public abstract class AbstractCache<KEY, VALUE> implements Cache<KEY, VALUE> {
   protected int maxCached;
   protected Map<KEY, Data> cached;
 
+  /**
+   * 构造一个具有默认设置的 {@link AbstractCache}。
+   */
   protected AbstractCache() {
     opened = false;
     maxCached = DEFAULT_MAX_CACHED;
-    cached = new HashMap<KEY, Data>();
+    cached = new HashMap<>();
   }
 
+  /**
+   * 构造一个具有指定最大缓存数量的 {@link AbstractCache}。
+   *
+   * @param maxCached
+   *     所允许的缓存中对象的最大数量。
+   */
   protected AbstractCache(final int maxCached) {
     this.opened = false;
     this.maxCached = (maxCached < 0 ? Integer.MAX_VALUE : maxCached);
-    this.cached = new HashMap<KEY, Data>();
+    this.cached = new HashMap<>();
   }
 
+  /**
+   * 为底层的map构造一个具有指定初始容量和加载因子的 {@link AbstractCache}。
+   *
+   * @param intitalCapacity
+   *     底层map的初始容量。
+   * @param loadFactor
+   *     底层map的加载因子。
+   */
   protected AbstractCache(final int intitalCapacity, final float loadFactor) {
     this.opened = false;
     this.maxCached = DEFAULT_MAX_CACHED;
-    this.cached = new HashMap<KEY, Data>(intitalCapacity, loadFactor);
+    this.cached = new HashMap<>(intitalCapacity, loadFactor);
   }
 
+  /**
+   * 构造一个具有指定最大大小、初始容量和加载因子的 {@link AbstractCache}。
+   *
+   * @param maxCached
+   *     所允许的缓存中对象的最大数量。
+   * @param intitalCapacity
+   *     底层map的初始容量。
+   * @param loadFactor
+   *     底层map的加载因子。
+   */
   protected AbstractCache(final int maxCached, final int intitalCapacity,
       final float loadFactor) {
     this.opened = false;
     this.maxCached = (maxCached < 0 ? Integer.MAX_VALUE : maxCached);
-    this.cached = new HashMap<KEY, Data>(intitalCapacity, loadFactor);
+    this.cached = new HashMap<>(intitalCapacity, loadFactor);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isOpened() {
     return opened;
@@ -85,13 +124,12 @@ public abstract class AbstractCache<KEY, VALUE> implements Cache<KEY, VALUE> {
   }
 
   /**
-   * Performs the open operation.
+   * 执行打开操作。
    *
-   * <p>Implementation may initialize the underlying data source, open the
-   * underlying data source, fetch some or all the data.
+   * <p>实现可以初始化底层数据源, 打开底层数据源, 获取部分或全部数据.
    *
    * @throws IOException
-   *           if any I/O error occurred.
+   *           如果发生任何I/O错误.
    */
   protected abstract void doOpen() throws IOException;
 
@@ -115,27 +153,24 @@ public abstract class AbstractCache<KEY, VALUE> implements Cache<KEY, VALUE> {
   }
 
   /**
-   * Fetches the value corresponding to the specified key from the underlying
-   * data source.
+   * 从底层数据源获取指定键对应的值.
    *
    * @param key
-   *          the key of the value to be fetched.
-   * @return the value corresponding to the specified key fetched from the
-   *         underlying data source.
+   *          要获取的值的键.
+   * @return 从底层数据源获取的指定键对应的值.
    * @throws IOException
-   *           if any I/O error occurred.
+   *           如果发生任何I/O错误.
    */
   protected abstract VALUE fetchValue(KEY key) throws IOException;
 
   /**
-   * Cleans the cache so that it has no more than the desired number of objects.
+   * 清理缓存, 使其对象数量不超过期望的数量.
    *
-   * <p>Implementation may choose how to select the objects to remove from the cache.
+   * <p>实现可以选择如何选择要从缓存中删除的对象.
    * @param desiredSize
-   *          the desired number of object remained in the cache after calling
-   *          this function.
+   *          调用此函数后缓存中剩余的期望对象数.
    * @throws IOException
-   *           If any I/O error occurred.
+   *           如果发生任何I/O错误.
    */
   protected abstract void cleanCache(int desiredSize) throws IOException;
 
@@ -144,8 +179,7 @@ public abstract class AbstractCache<KEY, VALUE> implements Cache<KEY, VALUE> {
     if (! opened) {
       throw new NotOpenedException();
     }
-    // TODO Auto-generated method stub
-    return null;
+    return cached.values().stream().map(d -> d.value).collect(Collectors.toList());
   }
 
   @Override
@@ -153,8 +187,7 @@ public abstract class AbstractCache<KEY, VALUE> implements Cache<KEY, VALUE> {
     if (! opened) {
       throw new NotOpenedException();
     }
-    // TODO Auto-generated method stub
-    return null;
+    return cached.keySet();
   }
 
   @Override
@@ -162,8 +195,7 @@ public abstract class AbstractCache<KEY, VALUE> implements Cache<KEY, VALUE> {
     if (! opened) {
       throw new NotOpenedException();
     }
-    // TODO Auto-generated method stub
-    return false;
+    return cached.containsKey(key);
   }
 
   @Override
@@ -171,8 +203,7 @@ public abstract class AbstractCache<KEY, VALUE> implements Cache<KEY, VALUE> {
     if (! opened) {
       throw new NotOpenedException();
     }
-    // TODO Auto-generated method stub
-    return false;
+    return cached.containsKey(key);
   }
 
   @Override
@@ -185,10 +216,10 @@ public abstract class AbstractCache<KEY, VALUE> implements Cache<KEY, VALUE> {
   }
 
   /**
-   * Performs the close operation.
+   * 执行关闭操作.
    *
    * @throws IOException
-   *           if any I/O error occurred.
+   *           如果发生任何I/O错误.
    */
   protected abstract void doClose() throws IOException;
 

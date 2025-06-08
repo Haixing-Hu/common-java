@@ -33,15 +33,34 @@ public class ResponseBodyJsonConverter<T> implements Converter<ResponseBody, T> 
 
   private final JsonMapper jsonMapper;
 
+  /**
+   * 使用指定的类和默认的 {@link CustomizedJsonMapper} 构造一个
+   * {@link ResponseBodyJsonConverter}。
+   *
+   * @param clazz
+   *     目标对象的类。
+   */
   public ResponseBodyJsonConverter(final Class<T> clazz) {
     this(clazz, new CustomizedJsonMapper());
   }
 
+  /**
+   * 使用指定的类和 {@link JsonMapper} 构造一个
+   * {@link ResponseBodyJsonConverter}。
+   *
+   * @param clazz
+   *     目标对象的类。
+   * @param jsonMapper
+   *     用于转换的 {@link JsonMapper}。
+   */
   public ResponseBodyJsonConverter(final Class<T> clazz, final JsonMapper jsonMapper) {
     this.clazz = requireNonNull("clazz", clazz);
     this.jsonMapper = requireNonNull("jsonMapper", jsonMapper);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Nullable
   @Override
   public T convert(final ResponseBody responseBody) throws IOException {

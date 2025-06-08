@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -14,15 +14,14 @@ import java.util.TimeZone;
 import javax.annotation.Nullable;
 
 /**
- * Simple implementation of the {@link TimeZoneAwareLocaleContext} interface,
- * always returning a specified {@code Locale} and {@code TimeZone}.
+ * {@link TimeZoneAwareLocaleContext} 接口的简单实现，
+ * 始终返回指定的 {@code Locale} 和 {@code TimeZone}。
  * <p>
- * Note: Prefer the use of {@link SimpleLocaleContext} when only setting a
- * Locale but no TimeZone.
+ * 注意：当只设置 Locale 而不设置 TimeZone 时，优先使用 {@link SimpleLocaleContext}。
  *
  * @author Juergen Hoeller
  * @author Nicholas Williams
- * @author HAixing Hu
+ * @author 胡海星
  * @see LocaleContextHolder#setLocaleContext
  * @see LocaleContextHolder#getTimeZone()
  */
@@ -33,15 +32,14 @@ public class SimpleTimeZoneAwareLocaleContext extends SimpleLocaleContext
   private final TimeZone timeZone;
 
   /**
-   * Create a new SimpleTimeZoneAwareLocaleContext that exposes the specified
-   * Locale and TimeZone. Every {@link #getLocale()} call will return the given
-   * Locale, and every {@link #getTimeZone()} call will return the given
-   * TimeZone.
+   * 创建一个新的 SimpleTimeZoneAwareLocaleContext，暴露指定的 Locale 和 TimeZone。
+   * 每次 {@link #getLocale()} 调用都将返回给定的 Locale，
+   * 每次 {@link #getTimeZone()} 调用都将返回给定的 TimeZone。
    *
    * @param locale
-   *     the Locale to expose
+   *     要暴露的 Locale
    * @param timeZone
-   *     the TimeZone to expose
+   *     要暴露的 TimeZone
    */
   public SimpleTimeZoneAwareLocaleContext(@Nullable final Locale locale,
       @Nullable final TimeZone timeZone) {
@@ -49,6 +47,9 @@ public class SimpleTimeZoneAwareLocaleContext extends SimpleLocaleContext
     this.timeZone = timeZone;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   @Nullable
   public TimeZone getTimeZone() {

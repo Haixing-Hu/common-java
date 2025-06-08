@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2024 - 2025.
-//    Nanjing Xinglin Digital Technology Co., Ltd.
+//    Copyright (c) 2022 - 2025.
+//    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //

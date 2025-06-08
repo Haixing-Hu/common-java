@@ -11,98 +11,96 @@ package ltd.qubit.commons.util.retry;
 import java.io.Serializable;
 
 /**
- * The interface of configurations for retry operations.
+ * 重试操作的配置接口。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface RetryOptions extends Serializable {
 
   /**
-   * The configuration key of the maximum number of attempts.
+   * 最大尝试次数的配置键。
    * <p>
-   * Note that the number of attempts is one more than the number of retries.
-   * That is, if the number of attempts is 1, then there is no retry. If the
-   * number of attempts is 2, then there is one retry. If the number of attempts
-   * is 3, then there are two retries, and so on.
+   * 请注意,尝试次数比重试次数多一次。也就是说,如果尝试次数为1,则不重试。
+   * 如果尝试次数为2,则重试一次。如果尝试次数为3,则重试两次,依此类推。
    */
   String KEY_MAX_RETRY_ATTEMPTS = "retry.max_attempts";
 
   /**
-   * The configuration key of the minimum delay between retries, in seconds.
+   * 重试之间的最小延迟(以秒为单位)的配置键。
    */
   String KEY_MIN_RETRY_DELAY = "retry.min_delay";
 
   /**
-   * The configuration key of the maximum delay between retries, in seconds.
+   * 重试之间的最大延迟(以秒为单位)的配置键。
    */
   String KEY_MAX_RETRY_DELAY = "retry.max_delay";
 
   /**
-   * The default maximum number of attempts for the retry mechanism.
+   * 重试机制的默认最大尝试次数。
    */
   int DEFAULT_MAX_RETRY_ATTEMPTS = 5;
 
   /**
-   * The default minimum interval between retries in seconds.
+   * 重试之间的默认最小间隔(以秒为单位)。
    */
   int DEFAULT_MIN_RETRY_DELAY = 1;
 
   /**
-   * The default maximum interval between retries in seconds.
+   * 重试之间的默认最大间隔(以秒为单位)。
    */
   int DEFAULT_MAX_RETRY_DELAY = 60;
 
   /**
-   * Gets the maximum number of attempts.
+   * 获取最大尝试次数。
    *
    * @return
-   *     the maximum number of attempts.
+   *     最大尝试次数。
    */
   int getMaxRetryAttempts();
 
   /**
-   * Sets the maximum number of attempts.
+   * 设置最大尝试次数。
    *
    * @param maxRetryAttempts
-   *     the maximum number of attempts.
+   *     最大尝试次数。
    * @return
-   *     this object, to support method chaining.
+   *     此对象,以支持方法链接。
    */
   RetryOptions setMaxRetryAttempts(int maxRetryAttempts);
 
   /**
-   * Gets the minimum delay between retries, in seconds.
+   * 获取重试之间的最小延迟(以秒为单位)。
    *
    * @return
-   *     the minimum delay between retries, in seconds.
+   *     重试之间的最小延迟(以秒为单位)。
    */
   int getMinRetryDelay();
 
   /**
-   * Sets the minimum delay between retries, in seconds.
+   * 设置重试之间的最小延迟(以秒为单位)。
    *
    * @param minRetryDelay
-   *     the minimum delay between retries, in seconds.
+   *     重试之间的最小延迟(以秒为单位)。
    * @return
-   *     this object, to support method chaining.
+   *     此对象,以支持方法链接。
    */
   RetryOptions setMinRetryDelay(int minRetryDelay);
 
   /**
-   * Gets the maximum delay between retries, in seconds.
+   * 获取重试之间的最大延迟(以秒为单位)。
    *
    * @return
-   *     the maximum delay between retries, in seconds.
+   *     重试之间的最大延迟(以秒为单位)。
    */
   int getMaxRetryDelay();
 
   /**
-   * Sets the maximum delay between retries, in seconds.
+   * 设置重试之间的最大延迟(以秒为单位)。
    *
    * @param maxRetryDelay
-   *     the maximum delay between retries, in seconds.
+   *     重试之间的最大延迟(以秒为单位)。
    * @return
-   *     this object, to support method chaining.
+   *     此对象,以支持方法链接。
    */
   RetryOptions setMaxRetryDelay(int maxRetryDelay);
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -31,22 +31,16 @@ import static ltd.qubit.commons.lang.Argument.requireIndexInCloseRange;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * An implementation of {@link List} which use an internal array buffer to store
- * the nodes and use the array current to simulate the link between nodes.
+ * {@link List} 的一个实现，它使用内部数组缓冲区来存储节点，并使用数组索引来模拟节点之间的链接。
  *
- * <p>This implementation will has the benefits of {@link LinkedList} and avoid
- * the frequent memory allocations.
+ * <p>此实现将具有{@link LinkedList}的优点，并避免了频繁的内存分配。
  *
- * <p>This implementation uses an array to store nodes of the list. Each node
- * contains the position of the previous node and the position of the next node.
- * The position of -1 denotes a nil node. All nodes in the array consist two
- * list: the allocated list and the free list. The allocated list is a
- * bidirectional-linked cycle list containing all allocated nodes (i.e., the
- * nodes used to store the elements), and the free list is a single direction
- * linked list containing all free nodes. The implementation also contains the
- * position of the head nodes of the allocated list and the free list.
+ * <p>此实现使用一个数组来存储列表的节点。 每个节点都包含前一个节点的位置和下一个节点的位置。
+ * -1的位置表示一个空节点。 数组中的所有节点都包含两个列表：已分配列表和空闲列表。
+ * 已分配列表是一个双向链接的循环列表，其中包含所有已分配的节点（即，用于存储元素的节点），
+ * 空闲列表是包含所有空闲节点的单向链表。 该实现还包含已分配列表和空闲列表的头节点的位置。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class ArrayLinkedList<E> extends AbstractSequentialList<E>
     implements Deque<E>, CloneableEx<ArrayLinkedList<E>>, Serializable {
@@ -54,9 +48,9 @@ public class ArrayLinkedList<E> extends AbstractSequentialList<E>
   private static final long serialVersionUID = 7384854819145629005L;
 
   /**
-   * The class of nodes of the {@link ArrayLinkedList}.
+   * {@link ArrayLinkedList} 的节点类。
    *
-   * @author Haixing Hu
+   * @author 胡海星
    */
   protected static class Node implements Serializable {
 
@@ -68,9 +62,9 @@ public class ArrayLinkedList<E> extends AbstractSequentialList<E>
   }
 
   /**
-   * The class of iterators of {@link ArrayLinkedList}.
+   * {@link ArrayLinkedList} 的迭代器类。
    *
-   * @author Haixing Hu
+   * @author 胡海星
    */
   protected static class ListIter<E> implements ListIterator<E> {
 
@@ -197,9 +191,9 @@ public class ArrayLinkedList<E> extends AbstractSequentialList<E>
   }
 
   /**
-   * Adapter to provide descending iterators via {@link ListIter#previous()}.
+   * 通过{@link ListIter#previous()}提供降序迭代器的适配器。
    *
-   * @author Haixing Hu
+   * @author 胡海星
    */
   protected static class DescendingIter<E> implements Iterator<E> {
 

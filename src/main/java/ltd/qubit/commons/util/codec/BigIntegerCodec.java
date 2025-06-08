@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,9 +15,9 @@ import javax.annotation.concurrent.Immutable;
 import ltd.qubit.commons.text.Stripper;
 
 /**
- * The codec of the {@link BigInteger} class.
+ * {@link BigInteger}类的编解码器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public class BigIntegerCodec implements Codec<BigInteger, String> {

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,18 +13,18 @@ import ltd.qubit.commons.datastructure.list.primitive.IntIterator;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * An unmodifiable version of {@link IntIterator}.
+ * {@link IntIterator} 的不可修改版本。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class UnmodifiableIntIterator implements IntIterator {
 
   /**
-   * Wraps a {@link IntIterator} as an {@link UnmodifiableIntIterator}.
+   * 将 {@link IntIterator} 包装为 {@link UnmodifiableIntIterator}。
    *
    * @param iterator
-   *     the {@link IntIterator} to be wrap.
-   * @return an {@link UnmodifiableIntIterator} wrapping the specified iterator.
+   *     要包装的 {@link IntIterator}。
+   * @return 包装指定迭代器的 {@link UnmodifiableIntIterator}。
    */
   public static UnmodifiableIntIterator wrap(final IntIterator iterator) {
     if (iterator instanceof UnmodifiableIntIterator) {
@@ -34,22 +34,43 @@ public class UnmodifiableIntIterator implements IntIterator {
     }
   }
 
+  /**
+   * 被包装的 {@link IntIterator}。
+   */
   private final IntIterator iterator;
 
+  /**
+   * 构造一个{@link UnmodifiableIntIterator}。
+   *
+   * @param iterator
+   *     要包装的{@link IntIterator}。
+   */
   protected UnmodifiableIntIterator(final IntIterator iterator) {
     this.iterator = requireNonNull("iterator", iterator);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean hasNext() {
     return iterator.hasNext();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int next() {
     return iterator.next();
   }
 
+  /**
+   * 不支持此操作。
+   *
+   * @throws UnsupportedOperationException
+   *     总是抛出。
+   */
   @Override
   public void remove() {
     throw new UnsupportedOperationException();

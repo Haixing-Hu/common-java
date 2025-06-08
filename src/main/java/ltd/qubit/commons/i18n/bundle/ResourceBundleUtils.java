@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -18,18 +18,18 @@ import java.util.ResourceBundle;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * Provides helping function for resource bundles.
+ * 为资源包提供辅助函数。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class ResourceBundleUtils {
 
   private static final Map<String, ResourceBundle> bundleMap = new HashMap<>();
 
   /**
-   * Gets a resource bundle of a specified name.
+   * 获取指定名称的资源包。
    *
-   * <p>The name may have one of the following formats:
+   * <p>名称可能具有以下格式之一：
    *
    * <pre><code>
    *   [bundleName].properties
@@ -37,15 +37,14 @@ public final class ResourceBundleUtils {
    *   [bundleName]_[language]_[country].properties
    * </code></pre>
    *
-   * <p>where {@code [bundleName]} is the name of the bundle, which can not
-   * contains the '_' character; [language] is a two lowercase letter language
-   * code, {@code [country]} is a two uppercase letter country code.
+   * <p>其中 {@code [bundleName]} 是包的名称，不能包含 '_' 字符；{@code [language]} 是两个小写字母的语言代码，
+   * {@code [country]} 是两个大写字母的国家代码。
    *
    * @param bundleName
-   *     the name of a bundle.
-   * @return The resource bundle of the specified name.
+   *     包的名称。
+   * @return 指定名称的资源包。
    * @throws MissingResourceException
-   *     If the resource bundle can not be found.
+   *     如果找不到资源包。
    */
   public static ResourceBundle getBundle(final String bundleName)
       throws MissingResourceException {
@@ -84,16 +83,15 @@ public final class ResourceBundleUtils {
   }
 
   /**
-   * Gets the string of a specified key from a specified resource bundle.
+   * 从指定的资源包中获取指定键的字符串。
    *
    * @param bundleName
-   *     The name of the resource bundle.
+   *     资源包的名称。
    * @param key
-   *     The key of the message to be get.
-   * @return The string of a specified key from a specified resource bundle.
+   *     要获取的消息的键。
+   * @return 指定资源包中指定键的字符串。
    * @throws MissingResourceException
-   *     If the resource bundle can not be found, or the message of the
-   *     specified key can not be found.
+   *     如果找不到资源包，或找不到指定键的消息。
    */
   public static String getString(final String bundleName, final String key)
       throws MissingResourceException {
@@ -102,17 +100,15 @@ public final class ResourceBundleUtils {
   }
 
   /**
-   * Gets the message of a specified key from a specified resource bundle,
-   * formatted without arguments.
+   * 从指定的资源包中获取指定键的消息，不使用参数进行格式化。
    *
    * @param bundleName
-   *     The name of the resource bundle.
+   *     资源包的名称。
    * @param key
-   *     The unique identifier of the message
-   * @return the formatted message.
+   *     消息的唯一标识符。
+   * @return 格式化的消息。
    * @throws MissingResourceException
-   *     If the resource bundle can not be found, or the message of the
-   *     specified key can not be found.
+   *     如果找不到资源包，或找不到指定键的消息。
    */
   public static String getMessage(final String bundleName, final String key)
       throws MissingResourceException {
@@ -120,19 +116,17 @@ public final class ResourceBundleUtils {
   }
 
   /**
-   * Gets the message of a specified key from a specified resource bundle,
-   * formatted using specified arguments.
+   * 从指定的资源包中获取指定键的消息，使用指定的参数进行格式化。
    *
    * @param bundleName
-   *     The name of the resource bundle.
+   *     资源包的名称。
    * @param key
-   *     The unique identifier of the message
+   *     消息的唯一标识符。
    * @param arguments
-   *     The arguments used to format the message.
-   * @return the formatted message.
+   *     用于格式化消息的参数。
+   * @return 格式化的消息。
    * @throws MissingResourceException
-   *     If the resource bundle can not be found, or the message of the
-   *     specified key can not be found.
+   *     如果找不到资源包，或找不到指定键的消息。
    */
   public static String getMessage(final String bundleName, final String key,
       final Object... arguments) throws MissingResourceException {

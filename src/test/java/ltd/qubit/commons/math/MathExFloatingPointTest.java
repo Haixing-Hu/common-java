@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -419,24 +419,24 @@ public class MathExFloatingPointTest {
   void testHighPrecisionAccuracy() {
     // 测试高精度计算的准确性
     // 这里测试一些容易产生舍入误差的计算
-    
+
     // 测试FMA相比普通运算的精度提升
     double a = 1e16;
     double b = 1e-16;
     double c = 1.0;
-    
+
     // 使用FMA应该更精确
     double fmaResult = MathEx.fma(a, b, c);
     double normalResult = a * b + c;
-    
+
     // 在这种情况下，两种计算应该都能给出正确结果2.0
     assertEquals(2.0, fmaResult, DELTA);
     assertEquals(2.0, normalResult, DELTA);
-    
+
     // 测试scalb的精度
     double value = 1.5;
     double scaled = MathEx.scalb(value, 10);
     double expected = value * Math.pow(2, 10);
     assertEquals(expected, scaled, DELTA);
   }
-} 
+}

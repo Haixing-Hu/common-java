@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -276,7 +276,7 @@ public class BigDecimalUtilsTest {
     final long timestamp = 1609459200000L; // 2021-01-01 00:00:00 UTC
     final Date expected = new Date(timestamp);
     final Date defaultDate = new Date(1577836800000L); // 2020-01-01 00:00:00 UTC
-    
+
     assertEquals(expected, BigDecimalUtils.toDate(new BigDecimal(timestamp), defaultDate));
     assertEquals(defaultDate, BigDecimalUtils.toDate(null, defaultDate));
     assertNull(BigDecimalUtils.toDate(null, null));
@@ -286,12 +286,12 @@ public class BigDecimalUtilsTest {
   public void testToByteArray() {
     // 对于零值的测试
     assertArrayEquals(new byte[0], BigDecimalUtils.toByteArray(BigDecimal.ZERO));
-    
+
     // 对于正常值的测试 - 由于实现细节涉及内部字节格式，这里仅确保结果非空且长度合理
     final byte[] result = BigDecimalUtils.toByteArray(new BigDecimal("123.456"));
     assertNotNull(result);
     assertTrue(result.length > 0);
-    
+
     // 对于null值的测试
     assertNull(BigDecimalUtils.toByteArray(null));
   }
@@ -303,7 +303,7 @@ public class BigDecimalUtilsTest {
     final byte[] result = BigDecimalUtils.toByteArray(new BigDecimal("123.456"), defaultValue);
     assertNotNull(result);
     assertTrue(result.length > 0);
-    
+
     // null值测试
     assertArrayEquals(defaultValue, BigDecimalUtils.toByteArray(null, defaultValue));
   }
@@ -389,7 +389,7 @@ public class BigDecimalUtilsTest {
     assertTrue(BigDecimalUtils.isComparable(long.class));
     assertTrue(BigDecimalUtils.isComparable(float.class));
     assertTrue(BigDecimalUtils.isComparable(double.class));
-    
+
     assertTrue(BigDecimalUtils.isComparable(Boolean.class));
     assertTrue(BigDecimalUtils.isComparable(Byte.class));
     assertTrue(BigDecimalUtils.isComparable(Short.class));
@@ -397,12 +397,12 @@ public class BigDecimalUtilsTest {
     assertTrue(BigDecimalUtils.isComparable(Long.class));
     assertTrue(BigDecimalUtils.isComparable(Float.class));
     assertTrue(BigDecimalUtils.isComparable(Double.class));
-    
+
     assertTrue(BigDecimalUtils.isComparable(BigInteger.class));
     assertTrue(BigDecimalUtils.isComparable(BigDecimal.class));
-    
+
     assertFalse(BigDecimalUtils.isComparable(String.class));
     assertFalse(BigDecimalUtils.isComparable(Date.class));
     assertFalse(BigDecimalUtils.isComparable(Object.class));
   }
-} 
+}

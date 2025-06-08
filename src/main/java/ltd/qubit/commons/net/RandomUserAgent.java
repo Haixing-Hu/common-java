@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -1691,7 +1691,7 @@ public class RandomUserAgent {
 
   /**
    * 获取随机用户代理。
-   * 
+   *
    * @return
    *     随机用户代理。
    */
@@ -1704,7 +1704,7 @@ public class RandomUserAgent {
 
   /**
    * 获取随机用户代理。
-   * 
+   *
    * @param browsers
    *     浏览器列表。
    * @return
@@ -1719,7 +1719,7 @@ public class RandomUserAgent {
 
   /**
    * 随机选择浏览器。
-   * 
+   *
    * @param browsers
    *     浏览器列表。
    * @return

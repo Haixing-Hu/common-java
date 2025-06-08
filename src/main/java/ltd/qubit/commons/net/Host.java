@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -302,12 +302,9 @@ public final class Host implements CloneableEx<Host>, Comparable<Host>,
   }
 
   /**
-   * 返回主机字符串表示形式。
-   * <p>
-   * 如果端口大于等于0，返回"主机名:端口"格式；否则只返回主机名。
+   * 返回此主机的字符串表示形式，不包括方案。
    *
-   * @return
-   *     主机字符串表示形式。
+   * @return 此主机的字符串表示形式，不包括方案。
    */
   public String toHostString() {
     if (port >= 0) {
@@ -317,6 +314,11 @@ public final class Host implements CloneableEx<Host>, Comparable<Host>,
     }
   }
 
+  /**
+   * 返回此主机的字符串表示形式。
+   *
+   * @return 此主机的字符串表示形式。
+   */
   @Override
   public String toString() {
     final StringBuilder builder = new StringBuilder();
@@ -328,10 +330,10 @@ public final class Host implements CloneableEx<Host>, Comparable<Host>,
   }
 
   /**
-   * 克隆此Host对象。
+   * 克隆此对象。
    *
    * @return
-   *     此Host对象的副本。
+   *     此对象的克隆。
    */
   @Override
   public Host cloneEx() {

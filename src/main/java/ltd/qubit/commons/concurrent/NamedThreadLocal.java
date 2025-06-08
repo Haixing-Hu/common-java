@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -14,17 +14,16 @@ import java.util.function.Supplier;
 import ltd.qubit.commons.lang.Argument;
 
 /**
- * {@link ThreadLocal} subclass that exposes a specified name as
- * {@link #toString()} result (allowing for introspection).
+ * {@link ThreadLocal} 的子类，它将指定的名称作为 {@link #toString()} 的结果公开（以允许内省）。
  * <p>
- * This class is a copy of {@code org.springframework.core.NamedThreadLocal}
- * with slight modifications. It is used to avoid the dependency of Spring
- * Framework.
+ * 此类是 {@code org.springframework.core.NamedThreadLocal} 的副本，略有修改。
+ * 它用于避免对 Spring Framework 的依赖。
  *
- * @param <T> the value type
+ * @param <T>
+ *     值的类型
  * @author Juergen Hoeller
  * @author Qimiao Chen
- * @author Haixing Hu
+ * @author 胡海星
  * @see NamedInheritableThreadLocal
  */
 public class NamedThreadLocal<T> extends ThreadLocal<T> {
@@ -33,8 +32,10 @@ public class NamedThreadLocal<T> extends ThreadLocal<T> {
 
 
   /**
-   * Create a new NamedThreadLocal with the given name.
-   * @param name a descriptive name for this ThreadLocal
+   * 使用指定的名称构造一个新的 {@link NamedThreadLocal}。
+   *
+   * @param name
+   *     此线程局部变量的描述性名称。
    */
   public NamedThreadLocal(final String name) {
     this.name = Argument.requireNonEmpty("name", name);
@@ -47,12 +48,15 @@ public class NamedThreadLocal<T> extends ThreadLocal<T> {
 
 
   /**
-   * Create a named thread local variable. The initial value of the variable is
-   * determined by invoking the {@code get} method on the {@code Supplier}.
-   * @param <S> the type of the named thread local's value
-   * @param name a descriptive name for the thread local
-   * @param supplier the supplier to be used to determine the initial value
-   * @return a new named thread local
+   * 创建一个命名的线程局部变量。变量的初始值是通过调用{@code Supplier}上的{@code get}方法来确定的。
+   *
+   * @param <S>
+   *     命名的线程局部变量的值的类型
+   * @param name
+   *     线程局部变量的描述性名称
+   * @param supplier
+   *     用于确定初始值的 supplier
+   * @return 一个新的命名线程局部变量
    * @since 6.1
    */
   public static <S> ThreadLocal<S> withInitial(final String name, final Supplier<? extends S> supplier) {
@@ -61,14 +65,23 @@ public class NamedThreadLocal<T> extends ThreadLocal<T> {
 
 
   /**
-   * An extension of NamedThreadLocal that obtains its initial value from
-   * the specified {@code Supplier}.
-   * @param <T> the type of the named thread local's value
+   * {@link NamedThreadLocal}的扩展，它从指定的{@code Supplier}获取其初始值。
+   *
+   * @param <T>
+   *     命名的线程局部变量的值的类型
    */
   private static final class SuppliedNamedThreadLocal<T> extends NamedThreadLocal<T> {
 
     private final Supplier<? extends T> supplier;
 
+    /**
+     * 构造一个 {@link SuppliedNamedThreadLocal}。
+     *
+     * @param name
+     *     此线程局部变量的描述性名称。
+     * @param supplier
+     *     用于确定初始值的 supplier。
+     */
     SuppliedNamedThreadLocal(final String name, final Supplier<? extends T> supplier) {
       super(name);
       this.supplier = Objects.requireNonNull(supplier);

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,11 +11,11 @@ package ltd.qubit.commons.util.expand;
 import javax.annotation.concurrent.Immutable;
 
 /**
- * The {@link ExpansionPolicy} which use less memory.
+ * 占用内存较少的 {@link ExpansionPolicy}。
  *
- * <p>The growth pattern is:  0, 4, 8, 16, 25, 35, 46, 58, 72, 88, ...
+ * <p>其增长模式为： 0, 4, 8, 16, 25, 35, 46, 58, 72, 88, ...
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public class MemorySavingExpansionPolicy extends ExpansionPolicy {

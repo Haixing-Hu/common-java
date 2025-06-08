@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -22,9 +22,9 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * The codec which encode/decode {@link LocalDate} objects to/from strings.
+ * 将{@link LocalDate}对象与字符串相互编解码的编解码器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see LocalDateTimeCodec
  */
 public class LocalDateCodec implements Codec<LocalDate, String> {

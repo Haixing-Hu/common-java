@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -2150,11 +2150,11 @@ public class DomainSuffixRegistryTest {
     // 测试懒加载初始化
     final DomainSuffixRegistry instance1 = DomainSuffixRegistry.getInstance();
     assertNotNull(instance1);
-    
+
     // 第二次调用应该返回相同的实例
     final DomainSuffixRegistry instance2 = DomainSuffixRegistry.getInstance();
     assertNotNull(instance2);
-    
+
     // 验证单例模式
     assertEquals(instance1, instance2);
   }
@@ -2184,7 +2184,7 @@ public class DomainSuffixRegistryTest {
 
     // 发出开始信号
     startLatch.countDown();
-    
+
     // 等待所有线程完成
     assertTrue(finishLatch.await(10, TimeUnit.SECONDS));
     executor.shutdown();
@@ -2214,7 +2214,7 @@ public class DomainSuffixRegistryTest {
             final TopLevelDomain orgTld = registry.getTopLevelDomain("org");
             final boolean isComDomain = registry.isDomainSuffix("com");
             final boolean isOrgDomain = registry.isDomainSuffix("org");
-            
+
             if (comTld != null && orgTld != null && isComDomain && isOrgDomain) {
               successCount.incrementAndGet();
             } else {
@@ -2242,12 +2242,12 @@ public class DomainSuffixRegistryTest {
   @Test
   public void testPerformanceConsistency() {
     final DomainSuffixRegistry registry = DomainSuffixRegistry.getInstance();
-    
+
     // 预热
     for (int i = 0; i < 100; i++) {
       registry.getTopLevelDomain("com");
     }
-    
+
     // 测试性能一致性
     final long startTime = System.nanoTime();
     for (int i = 0; i < 10000; i++) {
@@ -2257,7 +2257,7 @@ public class DomainSuffixRegistryTest {
     }
     final long endTime = System.nanoTime();
     final long duration = endTime - startTime;
-    
+
     // 验证性能在合理范围内（这里只是确保不会出现异常性能问题）
     assertTrue(duration < TimeUnit.SECONDS.toNanos(1));
   }
@@ -2266,7 +2266,7 @@ public class DomainSuffixRegistryTest {
   public void testConfigurationProperty() {
     // 测试配置属性的使用
     final Config config = CommonsConfig.get();
-    final String defaultResource = config.getString(DomainSuffixRegistry.PROPERTY_RESOURCE, 
+    final String defaultResource = config.getString(DomainSuffixRegistry.PROPERTY_RESOURCE,
         DomainSuffixRegistry.DEFAULT_RESOURCE);
     assertEquals(DomainSuffixRegistry.DEFAULT_RESOURCE, defaultResource);
   }
@@ -2285,15 +2285,15 @@ public class DomainSuffixRegistryTest {
   public void testList() {
     final DomainSuffixRegistry registry = DomainSuffixRegistry.getInstance();
     final List<DomainSuffix> allSuffixes = registry.list();
-    
+
     assertNotNull(allSuffixes);
     assertTrue(allSuffixes.size() > 0);
-    
+
     // 验证列表包含一些已知的域名后缀
     final Set<String> domains = allSuffixes.stream()
         .map(suffix -> suffix.domain)
         .collect(Collectors.toSet());
-    
+
     assertTrue(domains.contains("com"));
     assertTrue(domains.contains("org"));
     assertTrue(domains.contains("net"));

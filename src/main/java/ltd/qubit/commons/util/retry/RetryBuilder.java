@@ -25,12 +25,11 @@ import ltd.qubit.commons.config.impl.DefaultConfig;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * A build of retry executors.
+ * 重试执行器的构建器。
  * <p>
- * <b>NOTE:</b> This class is <b>NOT</b> thread-safe. But the retry executors
- * built by this class are thread-safe.
+ * <b>注意:</b> 此类<b>不是</b>线程安全的。但由此类构建的重试执行器是线程安全的。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class RetryBuilder implements RetryOptions {
 
@@ -42,92 +41,134 @@ public class RetryBuilder implements RetryOptions {
   private RetryOptions options;
 
   /**
-   * Constructs a retry builder.
+   * 构造一个重试构建器。
    */
   public RetryBuilder() {
     this(LoggerFactory.getLogger(RetryBuilder.class), new DefaultConfig());
   }
 
   /**
-   * Constructs a retry builder.
+   * 构造一个重试构建器。
    *
    * @param logger
-   *     the logger used by the retry builder.
+   *     重试构建器使用的记录器。
    */
   public RetryBuilder(final Logger logger) {
     this(logger, new DefaultConfig());
   }
 
   /**
-   * Constructs a retry builder.
+   * 构造一个重试构建器。
    *
    * @param logger
-   *     the logger used by the retry builder.
+   *     重试构建器使用的记录器。
    * @param config
-   *     the configuration used by the retry builder.
+   *     重试构建器使用的配置。
    */
   public RetryBuilder(final Logger logger, final WritableConfig config) {
     this(logger, new DefaultRetryOptions(config));
   }
 
   /**
-   * Constructs a retry builder.
+   * 构造一个重试构建器。
    *
    * @param logger
-   *     the logger used by the retry builder.
+   *     重试构建器使用的记录器。
    * @param options
-   *     the retry options used by the retry builder.
+   *     重试构建器使用的重试选项。
    */
   public RetryBuilder(final Logger logger, final RetryOptions options) {
     this.logger = requireNonNull("logger", logger);
     this.options = requireNonNull("options", options);
   }
 
+  /**
+   * 获取此构建器使用的记录器。
+   *
+   * @return 此构建器使用的记录器。
+   */
   public Logger getLogger() {
     return logger;
   }
 
+  /**
+   * 设置此构建器使用的记录器。
+   *
+   * @param logger
+   *     新的记录器。
+   * @return 此构建器。
+   */
   public RetryBuilder setLogger(final Logger logger) {
     this.logger = requireNonNull("logger", logger);
     return this;
   }
 
+  /**
+   * 获取此构建器使用的重试选项。
+   *
+   * @return 此构建器使用的重试选项。
+   */
   public RetryOptions getOptions() {
     return options;
   }
 
+  /**
+   * 设置此构建器使用的重试选项。
+   *
+   * @param options
+   *     新的重试选项。
+   * @return 此构建器。
+   */
   public RetryBuilder setOptions(final RetryOptions options) {
-    this.options = options;
+    this.options = requireNonNull("options", options);
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int getMaxRetryAttempts() {
     return options.getMaxRetryAttempts();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public RetryBuilder setMaxRetryAttempts(final int maxRetryAttempts) {
     options.setMaxRetryAttempts(maxRetryAttempts);
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int getMinRetryDelay() {
     return options.getMinRetryDelay();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public RetryBuilder setMinRetryDelay(final int minRetryDelay) {
     options.setMinRetryDelay(minRetryDelay);
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int getMaxRetryDelay() {
     return options.getMaxRetryDelay();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public RetryBuilder setMaxRetryDelay(final int maxRetryDelay) {
     options.setMaxRetryDelay(maxRetryDelay);
@@ -135,14 +176,14 @@ public class RetryBuilder implements RetryOptions {
   }
 
   /**
-   * Builds a retry executor for the specified exceptions.
+   * 为指定的异常构建重试执行器。
    *
    * @param <T>
-   *     the type of the result of the operation.
+   *     操作结果的类型。
    * @param exceptions
-   *     the exceptions that should be retried.
+   *     应重试的异常。
    * @return
-   *     the retry executor.
+   *     重试执行器。
    */
   public <T> FailsafeExecutor<T> build(final List<Class<? extends Throwable>> exceptions) {
     final RetryPolicy<T> policy = RetryPolicy
@@ -163,14 +204,14 @@ public class RetryBuilder implements RetryOptions {
   }
 
   /**
-   * Builds a retry executor for the specified exceptions.
+   * 为指定的异常构建重试执行器。
    *
    * @param <T>
-   *     the type of the result of the operation.
+   *     操作结果的类型。
    * @param exceptions
-   *     the exceptions that should be retried.
+   *     应重试的异常。
    * @return
-   *     the retry executor.
+   *     重试执行器。
    */
   @SuppressWarnings("unchecked")
   public <T> FailsafeExecutor<T> build(final Class<? extends Throwable> ... exceptions) {
@@ -178,12 +219,12 @@ public class RetryBuilder implements RetryOptions {
   }
 
   /**
-   * Builds a retry executor for all exceptions.
+   * 为所有异常构建重试执行器。
    *
    * @param <T>
-   *     the type of the result of the operation.
+   *     操作结果的类型。
    * @return
-   *     the retry executor.
+   *     重试执行器。
    */
   public <T> FailsafeExecutor<T> build() {
     return build(List.of(Exception.class));

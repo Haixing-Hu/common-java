@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -9,10 +9,9 @@
 package ltd.qubit.commons.util.transformer;
 
 /**
- * This abstract class provides an easier way to implements the
- * {@link Transformer} interface using an anonymous class.
+ * 此抽象类提供了一种更简单的方法来实现{@link Transformer}接口,即使用匿名类。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public abstract class AbstractTransformer<T> implements Transformer<T> {
 

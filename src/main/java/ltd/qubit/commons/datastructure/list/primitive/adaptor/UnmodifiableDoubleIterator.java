@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -12,18 +12,18 @@ import ltd.qubit.commons.datastructure.list.primitive.DoubleIterator;
 import ltd.qubit.commons.lang.Argument;
 
 /**
- * An unmodifiable version of {@link DoubleIterator}.
+ * {@link DoubleIterator} 的不可修改版本。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class UnmodifiableDoubleIterator implements DoubleIterator {
 
   /**
-   * Wraps a {@link DoubleIterator} as an {@link UnmodifiableDoubleIterator}.
+   * 将 {@link DoubleIterator} 包装为 {@link UnmodifiableDoubleIterator}。
    *
    * @param iterator
-   *     the {@link DoubleIterator} to be wrap.
-   * @return an {@link UnmodifiableDoubleIterator} wrapping the specified iterator.
+   *     要包装的 {@link DoubleIterator}。
+   * @return 包装指定迭代器的 {@link UnmodifiableDoubleIterator}。
    */
   public static UnmodifiableDoubleIterator wrap(final DoubleIterator iterator) {
     if (iterator instanceof UnmodifiableDoubleIterator) {
@@ -33,22 +33,43 @@ public class UnmodifiableDoubleIterator implements DoubleIterator {
     }
   }
 
+  /**
+   * 被包装的迭代器。
+   */
   private final DoubleIterator iterator;
 
+  /**
+   * 构造一个 {@link UnmodifiableDoubleIterator}。
+   *
+   * @param iterator
+   *     要包装的 {@link DoubleIterator}。
+   */
   protected UnmodifiableDoubleIterator(final DoubleIterator iterator) {
     this.iterator = Argument.requireNonNull("iterator", iterator);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean hasNext() {
     return iterator.hasNext();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public double next() {
     return iterator.next();
   }
 
+  /**
+   * 不支持此操作。
+   *
+   * @throws UnsupportedOperationException
+   *     总是抛出。
+   */
   @Override
   public void remove() {
     throw new UnsupportedOperationException();

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list.primitive;
 
+import java.io.Serial;
 import java.util.ConcurrentModificationException;
 import java.util.NoSuchElementException;
 
@@ -32,6 +33,7 @@ import static ltd.qubit.commons.lang.Argument.requireLessEqual;
  */
 public abstract class RandomAccessShortList extends AbstractShortList {
 
+  @Serial
   private static final long serialVersionUID = -4868660380886802250L;
 
   public static final int DEFAULT_INITIAL_CAPACITY = 8;
@@ -57,6 +59,9 @@ public abstract class RandomAccessShortList extends AbstractShortList {
 
   protected abstract void sort(final int fromIndex, final int toIndex);
 
+  /**
+   * {@link RandomAccessShortList} 的 {@link ShortListIterator} 实现。
+   */
   protected static class RandomAccessShortListIterator implements ShortListIterator {
 
     protected RandomAccessShortList source;
@@ -177,6 +182,9 @@ public abstract class RandomAccessShortList extends AbstractShortList {
     }
   }
 
+  /**
+   * {@link RandomAccessShortList} 的子列表视图。
+   */
   protected static class RandomAccessShortSubList extends RandomAccessShortList {
 
     private static final long serialVersionUID = 4012617346618879051L;

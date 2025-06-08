@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -29,1720 +29,1717 @@ import ltd.qubit.commons.datastructure.list.primitive.ShortCollection;
 import ltd.qubit.commons.lang.Type;
 
 /**
- * The {@link WritableConfig} interface extends the {@link Config} interface to provide
- * methods for modifying configuration values.
+ * {@link WritableConfig} 接口继承了 {@link Config} 接口，提供了修改配置值的方法。
  * <p>
- * The implementation of this interface should be thread-safe, meaning that
- * multiple threads can safely access and modify the configuration at the same time
- * without causing any data inconsistency or corruption.
+ * 此接口的实现应该是线程安全的，这意味着多个线程可以同时安全地访问和修改配置，而不会导致任何数据不一致或损坏。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public interface WritableConfig extends Config {
 
   /**
-   * Sets the description of this configuration.
+   * 设置此配置的描述。
    *
    * @param description
-   *     the new description to set, or {@code null} if none.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的新描述，如果为 {@code null} 则表示没有。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setDescription(@Nullable String description);
 
   /**
-   * Sets the description of a property.
+   * 设置属性的描述。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param description
-   *     the new description to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的新描述。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setDescription(String name, String description);
 
   /**
-   * Removes a property.
+   * 删除一个属性。
    *
    * @param name
-   *     the name of the property to remove.
+   *     要删除的属性的名称。
    * @return
-   *     the removed property, or null if no such property.
+   *     被删除的属性，如果没有此属性则返回 null。
    */
   Property remove(String name);
 
   /**
-   * Sets whether a property is final.
+   * 设置属性是否是 final 的。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setFinal(String name, boolean isFinal);
 
   /**
-   * Sets the type of a property.
+   * 设置属性的类型。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param type
-   *     the new type to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的新类型。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setType(String name, Type type);
 
   /**
-   * Sets a boolean value.
+   * 设置一个布尔值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setBoolean(String name, boolean value);
 
   /**
-   * Sets a boolean value and its final status.
+   * 设置一个布尔值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set.
+   *     要设置的值。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setBoolean(String name, boolean value, boolean isFinal);
 
   /**
-   * Sets multiple boolean values.
+   * 设置多个布尔值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setBooleans(String name, boolean... values);
 
   /**
-   * Sets multiple boolean values and their final status.
+   * 设置多个布尔值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
+   *     要设置的值。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setBooleans(String name, boolean[] values, boolean isFinal);
 
   /**
-   * Sets multiple boolean values.
+   * 设置多个布尔值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setBooleans(String name, BooleanCollection values);
 
   /**
-   * Adds a boolean value.
+   * 添加一个布尔值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addBoolean(String name, boolean value);
 
   /**
-   * Adds multiple boolean values.
+   * 添加多个布尔值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addBooleans(String name, boolean... values);
 
   /**
-   * Adds multiple boolean values.
+   * 添加多个布尔值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addBooleans(String name, BooleanCollection values);
 
   // Char operations
   /**
-   * Sets a char value.
+   * 设置一个字符值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setChar(String name, char value);
 
   /**
-   * Sets a char value and its final status.
+   * 设置一个字符值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set.
+   *     要设置的值。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setChar(String name, char value, boolean isFinal);
 
   /**
-   * Sets multiple char values.
+   * 设置多个字符值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setChars(String name, char... values);
 
   /**
-   * Sets multiple char values and their final status.
+   * 设置多个字符值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
+   *     要设置的值。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setChars(String name, char[] values, boolean isFinal);
 
   /**
-   * Sets multiple char values.
+   * 设置多个字符值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setChars(String name, CharCollection values);
 
   /**
-   * Adds a char value.
+   * 添加一个字符值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addChar(String name, char value);
 
   /**
-   * Adds multiple char values.
+   * 添加多个字符值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addChars(String name, char... values);
 
   /**
-   * Adds multiple char values.
+   * 添加多个字符值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addChars(String name, CharCollection values);
 
   // Byte operations
   /**
-   * Sets a byte value.
+   * 设置一个字节值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setByte(String name, byte value);
 
   /**
-   * Sets a byte value and its final status.
+   * 设置一个字节值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set.
+   *     要设置的值。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setByte(String name, byte value, boolean isFinal);
 
   /**
-   * Sets multiple byte values.
+   * 设置多个字节值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setBytes(String name, byte... values);
 
   /**
-   * Sets multiple byte values and their final status.
+   * 设置多个字节值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
+   *     要设置的值。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setBytes(String name, byte[] values, boolean isFinal);
 
   /**
-   * Sets multiple byte values.
+   * 设置多个字节值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setBytes(String name, ByteCollection values);
 
   /**
-   * Adds a byte value.
+   * 添加一个字节值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addByte(String name, byte value);
 
   /**
-   * Adds multiple byte values.
+   * 添加多个字节值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addBytes(String name, byte... values);
 
   /**
-   * Adds multiple byte values.
+   * 添加多个字节值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addBytes(String name, ByteCollection values);
 
   // Short operations
   /**
-   * Sets a short value.
+   * 设置一个短整数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setShort(String name, short value);
 
   /**
-   * Sets a short value and its final status.
+   * 设置一个短整数值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set.
+   *     要设置的值。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setShort(String name, short value, boolean isFinal);
 
   /**
-   * Sets multiple short values.
+   * 设置多个短整数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setShorts(String name, short... values);
 
   /**
-   * Sets multiple short values and their final status.
+   * 设置多个短整数值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
+   *     要设置的值。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setShorts(String name, short[] values, boolean isFinal);
 
   /**
-   * Sets multiple short values.
+   * 设置多个短整数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setShorts(String name, ShortCollection values);
 
   /**
-   * Adds a short value.
+   * 添加一个短整数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addShort(String name, short value);
 
   /**
-   * Adds multiple short values.
+   * 添加多个短整数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addShorts(String name, short... values);
 
   /**
-   * Adds multiple short values.
+   * 添加多个短整数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addShorts(String name, ShortCollection values);
 
   // Int operations
   /**
-   * Sets an int value.
+   * 设置一个整数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setInt(String name, int value);
 
   /**
-   * Sets an int value and its final status.
+   * 设置一个整数值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set.
+   *     要设置的值。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setInt(String name, int value, boolean isFinal);
 
   /**
-   * Sets multiple int values.
+   * 设置多个整数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setInts(String name, int... values);
 
   /**
-   * Sets multiple int values and their final status.
+   * 设置多个整数值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
+   *     要设置的值。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setInts(String name, int[] values, boolean isFinal);
 
   /**
-   * Sets multiple int values.
+   * 设置多个整数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setInts(String name, IntCollection values);
 
   /**
-   * Adds an int value.
+   * 添加一个整数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addInt(String name, int value);
 
   /**
-   * Adds multiple int values.
+   * 添加多个整数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addInts(String name, int... values);
 
   /**
-   * Adds multiple int values.
+   * 添加多个整数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addInts(String name, IntCollection values);
 
   // Long operations
   /**
-   * Sets a long value.
+   * 设置一个长整数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setLong(String name, long value);
 
   /**
-   * Sets a long value and its final status.
+   * 设置一个长整数值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set.
+   *     要设置的值。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setLong(String name, long value, boolean isFinal);
 
   /**
-   * Sets multiple long values.
+   * 设置多个长整数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setLongs(String name, long... values);
 
   /**
-   * Sets multiple long values and their final status.
+   * 设置多个长整数值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
+   *     要设置的值。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setLongs(String name, long[] values, boolean isFinal);
 
   /**
-   * Sets multiple long values.
+   * 设置多个长整数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setLongs(String name, LongCollection values);
 
   /**
-   * Adds a long value.
+   * 添加一个长整数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addLong(String name, long value);
 
   /**
-   * Adds multiple long values.
+   * 添加多个长整数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addLongs(String name, long... values);
 
   /**
-   * Adds multiple long values.
+   * 添加多个长整数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addLongs(String name, LongCollection values);
 
   // Float operations
   /**
-   * Sets a float value.
+   * 设置一个浮点数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setFloat(String name, float value);
 
   /**
-   * Sets a float value and its final status.
+   * 设置一个浮点数值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set.
+   *     要设置的值。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setFloat(String name, float value, boolean isFinal);
 
   /**
-   * Sets multiple float values.
+   * 设置多个浮点数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setFloats(String name, float... values);
 
   /**
-   * Sets multiple float values and their final status.
+   * 设置多个浮点数值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
+   *     要设置的值。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setFloats(String name, float[] values, boolean isFinal);
 
   /**
-   * Sets multiple float values.
+   * 设置多个浮点数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setFloats(String name, FloatCollection values);
 
   /**
-   * Adds a float value.
+   * 添加一个浮点数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addFloat(String name, float value);
 
   /**
-   * Adds multiple float values.
+   * 添加多个浮点数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addFloats(String name, float... values);
 
   /**
-   * Adds multiple float values.
+   * 添加多个浮点数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addFloats(String name, FloatCollection values);
 
   // Double operations
   /**
-   * Sets a double value.
+   * 设置一个双精度浮点数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setDouble(String name, double value);
 
   /**
-   * Sets a double value and its final status.
+   * 设置一个双精度浮点数值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set.
+   *     要设置的值。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setDouble(String name, double value, boolean isFinal);
 
   /**
-   * Sets multiple double values.
+   * 设置多个双精度浮点数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setDoubles(String name, double... values);
 
   /**
-   * Sets multiple double values and their final status.
+   * 设置多个双精度浮点数值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
+   *     要设置的值。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setDoubles(String name, double[] values, boolean isFinal);
 
   /**
-   * Sets multiple double values.
+   * 设置多个双精度浮点数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setDoubles(String name, DoubleCollection values);
 
   /**
-   * Adds a double value.
+   * 添加一个双精度浮点数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addDouble(String name, double value);
 
   /**
-   * Adds multiple double values.
+   * 添加多个双精度浮点数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addDoubles(String name, double... values);
 
   /**
-   * Adds multiple double values.
+   * 添加多个双精度浮点数值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addDoubles(String name, DoubleCollection values);
 
   // String operations
   /**
-   * Sets a string value.
+   * 设置一个字符串值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set, or {@code null} if none.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值，可以为 {@code null}。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setString(String name, @Nullable String value);
 
   /**
-   * Sets a string value and its final status.
+   * 设置一个字符串值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set, or {@code null} if none.
+   *     要设置的值，可以为 {@code null}。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setString(String name, @Nullable String value, boolean isFinal);
 
   /**
-   * Sets multiple string values.
+   * 设置多个字符串值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set, elements can be {@code null}.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值，其元素可以为 {@code null}。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setStrings(String name, @Nullable String... values);
 
   /**
-   * Sets multiple string values and their final status.
+   * 设置多个字符串值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set, elements can be {@code null}.
+   *     要设置的值，其元素可以为 {@code null}。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setStrings(String name, @Nullable String[] values, boolean isFinal);
 
   /**
-   * Sets multiple string values.
+   * 设置多个字符串值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setStrings(String name, Collection<String> values);
 
   /**
-   * Adds a string value.
+   * 添加一个字符串值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addString(String name, String value);
 
   /**
-   * Adds multiple string values.
+   * 添加多个字符串值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addStrings(String name, String... values);
 
   /**
-   * Adds multiple string values.
+   * 添加多个字符串值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addStrings(String name, Collection<String> values);
 
   // Date operations
   /**
-   * Sets a date value.
+   * 设置一个日期值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set, or {@code null} if none.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值，可以为 {@code null}。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setDate(String name, @Nullable LocalDate value);
 
   /**
-   * Sets a date value and its final status.
+   * 设置一个日期值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set, or {@code null} if none.
+   *     要设置的值，可以为 {@code null}。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setDate(String name, @Nullable LocalDate value, boolean isFinal);
 
   /**
-   * Sets multiple date values.
+   * 设置多个日期值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set, elements can be {@code null}.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值，其元素可以为 {@code null}。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setDates(String name, @Nullable LocalDate... values);
 
   /**
-   * Sets multiple date values and their final status.
+   * 设置多个日期值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set, elements can be {@code null}.
+   *     要设置的值，其元素可以为 {@code null}。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setDates(String name, @Nullable LocalDate[] values, boolean isFinal);
 
   /**
-   * Sets multiple date values.
+   * 设置多个日期值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setDates(String name, Collection<LocalDate> values);
 
   /**
-   * Adds a date value.
+   * 添加一个日期值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addDate(String name, LocalDate value);
 
   /**
-   * Adds multiple date values.
+   * 添加多个日期值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addDates(String name, LocalDate... values);
 
   /**
-   * Adds multiple date values.
+   * 添加多个日期值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addDates(String name, Collection<LocalDate> values);
 
   // Time operations
   /**
-   * Sets a time value.
+   * 设置一个时间值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set, or {@code null} if none.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值，可以为 {@code null}。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setTime(String name, @Nullable LocalTime value);
 
   /**
-   * Sets a time value and its final status.
+   * 设置一个时间值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set, or {@code null} if none.
+   *     要设置的值，可以为 {@code null}。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setTime(String name, @Nullable LocalTime value, boolean isFinal);
 
   /**
-   * Sets multiple time values.
+   * 设置多个时间值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set, elements can be {@code null}.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值，其元素可以为 {@code null}。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setTimes(String name, @Nullable LocalTime... values);
 
   /**
-   * Sets multiple time values and their final status.
+   * 设置多个时间值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set, elements can be {@code null}.
+   *     要设置的值，其元素可以为 {@code null}。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setTimes(String name, @Nullable LocalTime[] values, boolean isFinal);
 
   /**
-   * Sets multiple time values.
+   * 设置多个时间值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setTimes(String name, Collection<LocalTime> values);
 
   /**
-   * Adds a time value.
+   * 添加一个时间值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addTime(String name, LocalTime value);
 
   /**
-   * Adds multiple time values.
+   * 添加多个时间值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addTimes(String name, LocalTime... values);
 
   /**
-   * Adds multiple time values.
+   * 添加多个时间值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addTimes(String name, Collection<LocalTime> values);
 
   // DateTime operations
   /**
-   * Sets a dateTime value.
+   * 设置一个日期时间值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set, or {@code null} if none.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值，可以为 {@code null}。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setDateTime(String name, @Nullable LocalDateTime value);
 
   /**
-   * Sets a dateTime value and its final status.
+   * 设置一个日期时间值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set, or {@code null} if none.
+   *     要设置的值，可以为 {@code null}。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setDateTime(String name, @Nullable LocalDateTime value, boolean isFinal);
 
   /**
-   * Sets multiple date time values.
+   * 设置多个日期时间值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set, elements can be {@code null}.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值，其元素可以为 {@code null}。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setDateTimes(String name, @Nullable LocalDateTime... values);
 
   /**
-   * Sets multiple date time values and their final status.
+   * 设置多个日期时间值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set, elements can be {@code null}.
+   *     要设置的值，其元素可以为 {@code null}。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setDateTimes(String name, @Nullable LocalDateTime[] values, boolean isFinal);
 
   /**
-   * Sets multiple date time values.
+   * 设置多个日期时间值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setDateTimes(String name, Collection<LocalDateTime> values);
 
   /**
-   * Adds a dateTime value.
+   * 添加一个日期时间值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addDateTime(String name, LocalDateTime value);
 
   /**
-   * Adds multiple date time values.
+   * 添加多个日期时间值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addDateTimes(String name, LocalDateTime... values);
 
   /**
-   * Adds multiple date time values.
+   * 添加多个日期时间值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addDateTimes(String name, Collection<LocalDateTime> values);
 
   // BigInteger operations
   /**
-   * Sets a BigInteger value.
+   * 设置一个 BigInteger 值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set, or {@code null} if none.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值，可以为 {@code null}。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setBigInteger(String name, @Nullable BigInteger value);
 
   /**
-   * Sets a BigInteger value and its final status.
+   * 设置一个 BigInteger 值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set, or {@code null} if none.
+   *     要设置的值，可以为 {@code null}。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setBigInteger(String name, @Nullable BigInteger value, boolean isFinal);
 
   /**
-   * Sets multiple BigInteger values.
+   * 设置多个 BigInteger 值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set, elements can be {@code null}.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值，其元素可以为 {@code null}。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setBigIntegers(String name, @Nullable BigInteger... values);
 
   /**
-   * Sets multiple BigInteger values and their final status.
+   * 设置多个 BigInteger 值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set, elements can be {@code null}.
+   *     要设置的值，其元素可以为 {@code null}。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setBigIntegers(String name, @Nullable BigInteger[] values, boolean isFinal);
 
   /**
-   * Sets multiple BigInteger values.
+   * 设置多个 BigInteger 值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setBigIntegers(String name, Collection<BigInteger> values);
 
   /**
-   * Adds a BigInteger value.
+   * 添加一个 BigInteger 值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addBigInteger(String name, BigInteger value);
 
   /**
-   * Adds multiple BigInteger values.
+   * 添加多个 BigInteger 值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addBigIntegers(String name, BigInteger... values);
 
   /**
-   * Adds multiple BigInteger values.
+   * 添加多个 BigInteger 值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addBigIntegers(String name, Collection<BigInteger> values);
 
   // BigDecimal operations
   /**
-   * Sets a BigDecimal value.
+   * 设置一个 BigDecimal 值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set, or {@code null} if none.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值，可以为 {@code null}。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setBigDecimal(String name, @Nullable BigDecimal value);
 
   /**
-   * Sets a BigDecimal value and its final status.
+   * 设置一个 BigDecimal 值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set, or {@code null} if none.
+   *     要设置的值，可以为 {@code null}。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setBigDecimal(String name, @Nullable BigDecimal value, boolean isFinal);
 
   /**
-   * Sets multiple BigDecimal values.
+   * 设置多个 BigDecimal 值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set, elements can be {@code null}.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值，其元素可以为 {@code null}。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setBigDecimals(String name, @Nullable BigDecimal... values);
 
   /**
-   * Sets multiple BigDecimal values and their final status.
+   * 设置多个 BigDecimal 值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set, elements can be {@code null}.
+   *     要设置的值，其元素可以为 {@code null}。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setBigDecimals(String name, @Nullable BigDecimal[] values, boolean isFinal);
 
   /**
-   * Sets multiple BigDecimal values.
+   * 设置多个 BigDecimal 值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setBigDecimals(String name, Collection<BigDecimal> values);
 
   /**
-   * Adds a BigDecimal value.
+   * 添加一个 BigDecimal 值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addBigDecimal(String name, BigDecimal value);
 
   /**
-   * Adds multiple BigDecimal values.
+   * 添加多个 BigDecimal 值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addBigDecimals(String name, BigDecimal... values);
 
   /**
-   * Adds multiple BigDecimal values.
+   * 添加多个 BigDecimal 值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addBigDecimals(String name, Collection<BigDecimal> values);
 
   // ByteArray operations
   /**
-   * Sets a byte array value.
+   * 设置一个字节数组值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set, or {@code null} if none.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值，可以为 {@code null}。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setByteArray(String name, @Nullable byte[] value);
 
   /**
-   * Sets a byte array value and its final status.
+   * 设置一个字节数组值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set, or {@code null} if none.
+   *     要设置的值，可以为 {@code null}。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setByteArray(String name, @Nullable byte[] value, boolean isFinal);
 
   /**
-   * Sets multiple byte array values.
+   * 设置多个字节数组值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set, elements can be {@code null}.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值，其元素可以为 {@code null}。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setByteArrays(String name, @Nullable byte[]... values);
 
   /**
-   * Sets multiple byte array values and their final status.
+   * 设置多个字节数组值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set, elements can be {@code null}.
+   *     要设置的值，其元素可以为 {@code null}。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setByteArrays(String name, @Nullable byte[][] values, boolean isFinal);
 
   /**
-   * Sets multiple byte array values.
+   * 设置多个字节数组值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setByteArrays(String name, Collection<byte[]> values);
 
   /**
-   * Adds a byte array value.
+   * 添加一个字节数组值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addByteArray(String name, byte[] value);
 
   /**
-   * Adds multiple byte array values.
+   * 添加多个字节数组值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addByteArrays(String name, byte[]... values);
 
   /**
-   * Adds multiple byte array values.
+   * 添加多个字节数组值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addByteArrays(String name, Collection<byte[]> values);
 
   // Enum operations
   /**
-   * Sets an enum value.
+   * 设置一个枚举值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set, or {@code null} if none.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值，可以为 {@code null}。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setEnum(String name, @Nullable Enum<?> value);
 
   /**
-   * Sets an enum value and its final status.
+   * 设置一个枚举值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set, or {@code null} if none.
+   *     要设置的值，可以为 {@code null}。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setEnum(String name, @Nullable Enum<?> value, boolean isFinal);
 
   /**
-   * Sets multiple enum values.
+   * 设置多个枚举值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set, elements can be {@code null}.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值，其元素可以为 {@code null}。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setEnums(String name, @Nullable Enum<?>... values);
 
   /**
-   * Sets multiple enum values and their final status.
+   * 设置多个枚举值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set, elements can be {@code null}.
+   *     要设置的值，其元素可以为 {@code null}。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setEnums(String name, @Nullable Enum<?>[] values, boolean isFinal);
 
   /**
-   * Sets multiple enum values.
+   * 设置多个枚举值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set, can be {@code null}.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值，可以为 {@code null}。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setEnums(String name, @Nullable Collection<? extends Enum<?>> values);
 
   /**
-   * Sets multiple enum values and their final status.
+   * 设置多个枚举值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set, can be {@code null}.
+   *     要设置的值，可以为 {@code null}。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setEnums(String name, @Nullable Collection<? extends Enum<?>> values, boolean isFinal);
 
   /**
-   * Adds an enum value.
+   * 添加一个枚举值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addEnum(String name, Enum<?> value);
 
   /**
-   * Adds multiple enum values.
+   * 添加多个枚举值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addEnums(String name, Enum<?>... values);
 
   /**
-   * Adds multiple enum values.
+   * 添加多个枚举值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addEnums(String name, Collection<? extends Enum<?>> values);
 
   // Class operations
   /**
-   * Sets a class value.
+   * 设置一个类对象值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set, or {@code null} if none.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值，可以为 {@code null}。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setClass(String name, @Nullable Class<?> value);
 
   /**
-   * Sets a class value and its final status.
+   * 设置一个类对象值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to set, or {@code null} if none.
+   *     要设置的值，可以为 {@code null}。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setClass(String name, @Nullable Class<?> value, boolean isFinal);
 
   /**
-   * Sets multiple class values.
+   * 设置多个类对象值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set, elements can be {@code null}.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值，其元素可以为 {@code null}。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setClasses(String name, @Nullable Class<?>... values);
 
   /**
-   * Sets multiple class values and their final status.
+   * 设置多个类对象值及其 final 状态。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set, elements can be {@code null}.
+   *     要设置的值，其元素可以为 {@code null}。
    * @param isFinal
-   *     whether the property should be final.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     属性是否应该是 final 的。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setClasses(String name, @Nullable Class<?>[] values, boolean isFinal);
 
   /**
-   * Sets multiple class values.
+   * 设置多个类对象值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to set.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要设置的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig setClasses(String name, Collection<Class<?>> values);
 
   /**
-   * Adds a class value.
+   * 添加一个类对象值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param value
-   *     the value to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addClass(String name, Class<?> value);
 
   /**
-   * Adds multiple class values.
+   * 添加多个类对象值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addClasses(String name, Class<?>... values);
 
   /**
-   * Adds multiple class values.
+   * 添加多个类对象值。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @param values
-   *     the values to add.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加的值。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig addClasses(String name, Collection<Class<?>> values);
 
   /**
-   * Merges another configuration into this one.
+   * 将另一个配置合并到此配置中。
    *
    * @param config
-   *     the configuration to merge from.
+   *     要从中合并的配置。
    * @param policy
-   *     the merging policy to use.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要使用的合并策略。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig merge(Config config, MergingPolicy policy);
 
   /**
-   * Merges another configuration into this one with a prefix.
+   * 将另一个带前缀的配置合并到此配置中。
    *
    * @param config
-   *     the configuration to merge from.
+   *     要从中合并的配置。
    * @param prefix
-   *     the prefix to add to property names.
+   *     要添加到属性名称的前缀。
    * @param policy
-   *     the merging policy to use.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要使用的合并策略。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig merge(Config config, String prefix, MergingPolicy policy);
 
   /**
-   * Assigns values from another configuration.
+   * 从另一个配置中分配值。
    *
    * @param config
-   *     the configuration to assign from.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要从中分配的配置。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig assign(Config config);
 
   /**
-   * Assigns values from another configuration with a prefix.
+   * 从另一个带前缀的配置中分配值。
    *
    * @param config
-   *     the configuration to assign from.
+   *     要从中分配的配置。
    * @param prefix
-   *     the prefix to add to property names.
-   * @return this {@link WritableConfig} object for method chaining.
+   *     要添加到属性名称的前缀。
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig assign(Config config, String prefix);
 
   /**
-   * Clears a property's values.
+   * 清除属性的值。
    *
    * @param name
-   *     the name of the property to clear.
-   * @return the cleared property.
+   *     要清除的属性的名称。
+   * @return 清除后的属性。
    */
   Property clear(String name);
 
   /**
-   * Removes all properties.
+   * 删除所有属性。
    *
-   * @return this {@link WritableConfig} object for method chaining.
+   * @return 此 {@link WritableConfig} 对象，用于方法链式调用。
    */
   WritableConfig clear();
 }

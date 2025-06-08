@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,118 +11,115 @@ package ltd.qubit.commons.datastructure.tree;
 import java.util.Collection;
 
 /**
- * The interface of the tree structure.
+ * 树形结构的接口。
  *
  * @param <KEY>
- *     the type of the keys of tree nodes.
+ *     树节点的键的类型。
  * @param <VALUE>
- *     the type of the values of tree nodes.
- * @author Haixing Hu
+ *     树节点的值的类型。
+ * @author 胡海星
  */
 public interface Tree<KEY, VALUE> {
 
   /**
-   * Tests whether this tree node is a leaf, i.e., has no children.
+   * 测试此树节点是否为叶子节点，即没有子节点。
    *
-   * @return true if this tree node is a leaf, false otherwise.
+   * @return 如果此树节点是叶子节点，则为 true；否则为 false。
    */
   boolean isLeaf();
 
   /**
-   * Gets the key of this tree node.
+   * 获取此树节点的键。
    *
-   * @return the key of this tree node.
+   * @return 此树节点的键。
    */
   KEY getKey();
 
   /**
-   * Gets the value of this tree node.
+   * 获取此树节点的值。
    *
-   * @return the value of this tree node.
+   * @return 此树节点的值。
    */
   VALUE getValue();
 
   /**
-   * Sets the value of this tree node.
+   * 设置此树节点的值。
    *
    * @param value
-   *     the new value to be set.
+   *     要设置的新值。
    */
   void setValue(VALUE value);
 
   /**
-   * Tests whether the tree node contains a child of the specified key.
+   * 测试树节点是否包含具有指定键的子节点。
    *
    * @param key
-   *     a specified key, which could be null.
-   * @return true if the tree node contains a child of the specified key, false
-   *     otherwise.
+   *     指定的键，可以为 null。
+   * @return 如果树节点包含具有指定键的子节点，则为 true；否则为 false。
    */
   boolean containsChild(KEY key);
 
   /**
-   * Gets the amount of children of this tree node.
+   * 获取此树节点的子节点数。
    *
-   * @return the amount of children of this tree node.
+   * @return 此树节点的子节点数。
    */
   int getChildrenCount();
 
   /**
-   * Gets the collection of children node of this tree node.
+   * 获取此树节点的子节点集合。
    *
-   * @return the collection of children node of this tree node.
+   * @return 此树节点的子节点集合。
    */
   Collection<Tree<KEY, VALUE>> getChildren();
 
   /**
-   * Gets the child of this tree node with the specified key.
+   * 获取具有指定键的此树节点的子节点。
    *
    * @param key
-   *     a specified key, which could be null.
-   * @return the child of this tree node with the specified key, or null if this
-   *     tree node has no child with the specified key.
+   *     指定的键，可以为 null。
+   * @return 具有指定键的此树节点的子节点，如果此树节点没有具有指定键的子节点，则为 null。
    */
   Tree<KEY, VALUE> getChild(KEY key);
 
   /**
-   * Adds a child node to this tree node.
+   * 将一个子节点添加到此树节点。
    *
    * @param child
-   *     the child node to be added.
-   * @return if this tree node already has a child with the same key as the new
-   *     child node, this function returns the old node, and use the new child
-   *     node to replace the old node; otherwise, this function add the new
-   *     child node to the children of this tree node, and returns null.
+   *     要添加的子节点。
+   * @return 如果此树节点已经有一个与新子节点具有相同键的子节点，
+   *     则此函数返回旧节点，并使用新子节点替换旧节点；
+   *     否则，此函数将新子节点添加到此树节点的子节点中，并返回 null。
    * @throws NullPointerException
-   *     if child is null.
+   *     如果 child 为 null。
    * @throws IllegalArgumentException
-   *     if this == child.
+   *     如果 this == child。
    */
   Tree<KEY, VALUE> addChild(Tree<KEY, VALUE> child);
 
   /**
-   * Removes the child node of this tree node with the specified key.
+   * 移除具有指定键的此树节点的子节点。
    *
    * @param key
-   *     a specified key, which could be null.
-   * @return if this tree node has a child with the specified key, this function
-   *     will remove that child node from the children of this node, and returns
-   *     the removed child node; otherwise, this function returns null.
+   *     指定的键，可以为 null。
+   * @return 如果此树节点具有指定键的子节点，则此函数将从该节点的子节点中移除该子节点，
+   *     并返回被移除的子节点；否则，此函数返回 null。
    */
   Tree<KEY, VALUE> removeChild(KEY key);
 
   /**
-   * Removes all the children node of this tree node.
+   * 移除此树节点的所有子节点。
    *
-   * @return the total number of children nodes removed from this tree node.
+   * @return 从此树节点移除的子节点总数。
    */
   int clearChildren();
 
   /**
-   * Tests whether this node is valid. A node is valid if and only if there is
-   * NO cycle NOR bridge between the descendants of the node.
+   * 测试此节点是否有效。
    *
-   * @return true if this node is valid, false otherwise.
+   * <p>一个节点是有效的，当且仅当该节点的后代中没有循环或桥接。
+   *
+   * @return 如果此节点有效，则为 true；否则为 false。
    */
   boolean isValid();
 

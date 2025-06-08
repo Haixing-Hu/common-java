@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,18 +13,17 @@ import javax.annotation.Nullable;
 import ltd.qubit.commons.util.value.NamedMultiValues;
 
 /**
- * A {@link Property} object represents a property, which has the following
- * attributes:
+ * {@link Property} 对象表示一个属性，它具有以下属性：
  *
  * <ul>
- * <li>a name</li>
- * <li>a type</li>
- * <li>a optional description</li>
- * <li>a boolean mark to indicate whether this property is final</li>
- * <li>one or more values of the specified type</li>
+ * <li>名称</li>
+ * <li>类型</li>
+ * <li>可选的描述</li>
+ * <li>一个布尔标记，指示此属性是否是最终的</li>
+ * <li>指定类型的一个或多个值</li>
  * </ul>
  *
- * <p>Currently the {@link Property} objects support the following types:
+ * <p>目前，{@link Property} 对象支持以下类型：
  * <ul>
  * <li>{@code boolean}</li>
  * <li>{@code char}</li>
@@ -42,53 +41,51 @@ import ltd.qubit.commons.util.value.NamedMultiValues;
  * <li>{@code Class}</li>
  * </ul>
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface Property extends NamedMultiValues {
 
   /**
-   * Gets the description of this property.
+   * 获取此属性的描述。
    *
-   * @return the description of this property, which could be null.
+   * @return
+   *     此属性的描述，可以为 null。
    */
   @Nullable
   String getDescription();
 
   /**
-   * Sets the description of this property.
+   * 设置此属性的描述。
    *
    * @param description
-   *     the description of this property, which could be null.
+   *     此属性的描述，可以为 null。
    */
   void setDescription(@Nullable String description);
 
   /**
-   * Tests whether this property if final.
+   * 测试此属性是否是最终的。
    *
-   * <p>A final property can not be override by merging with the property having
-   * the same name.
+   * <p>一个最终的属性不能通过与同名属性合并来覆盖。
    *
-   * @return true if this property if final; false otherwise.
+   * @return 如果此属性是最终的，则为 true；否则为 false。
    */
   boolean isFinal();
 
   /**
-   * Sets whether this property is final.
+   * 设置此属性是否是最终的。
    *
-   * <p>A final property can not be override by merging with the property having
-   * the same name.
+   * <p>一个最终的属性不能通过与同名属性合并来覆盖。
    *
    * @param isFinal
-   *     if it is true, this property will be set to be final; otherwise, it
-   *     will be set to be non-final.
+   *     如果为 true，则此属性将被设置为最终的；否则，它将被设置为非最终的。
    */
   void setFinal(boolean isFinal);
 
   /**
-   * Assigns another {@link Property} object to this object.
+   * 将另一个 {@link Property} 对象分配给此对象。
    *
    * @param other
-   *     the other {@link Property} object to be assigned to this object.
+   *     要分配给此对象的另一个 {@link Property} 对象。
    */
   void assign(Property other);
 }

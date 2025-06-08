@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,28 +13,56 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * A CharFilter that accept only the characters not in the specified string.
+ * 一个字符过滤器，仅接受不在指定字符串中存在的字符。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class NotInStringCharFilter implements CharFilter {
 
+  /**
+   * 被拒绝的字符序列。
+   */
   private CharSequence rejectedChars;
 
-  public NotInStringCharFilter() {}
+  /**
+   * 构造一个 {@link NotInStringCharFilter}。
+   */
+  public NotInStringCharFilter() {
+    this.rejectedChars = null;
+  }
 
+  /**
+   * 构造一个 {@link NotInStringCharFilter}。
+   *
+   * @param rejectedChars
+   *     被拒绝的字符序列。
+   */
   public NotInStringCharFilter(final CharSequence rejectedChars) {
     this.rejectedChars = rejectedChars;
   }
 
+  /**
+   * 获取被拒绝的字符序列。
+   *
+   * @return 被拒绝的字符序列。
+   */
   public CharSequence getRejectedChars() {
     return rejectedChars;
   }
 
+  /**
+   * 设置被拒绝的字符序列。
+   *
+   * @param rejectedChars
+   *     新的被拒绝的字符序列。
+   */
   public void setRejectedChars(final CharSequence rejectedChars) {
     this.rejectedChars = rejectedChars;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean accept(final Character ch) {
     if (ch == null) {

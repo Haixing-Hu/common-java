@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,13 +13,13 @@ import java.util.Locale;
 import ltd.qubit.commons.util.pair.KeyValuePairList;
 
 /**
- * This exception is thrown when a message can't be resolved.
+ * 当无法解析消息时抛出此异常。
  * <p>
- * This class is a copy of {@code org.springframework.context.NoSuchMessageException}
- * with a slight modification: the {@code code} and {@code locale} fields are added.
- * It is used to avoid the dependency of Spring Framework.
+ * 此类是 {@code org.springframework.context.NoSuchMessageException} 的副本，
+ * 稍作修改：添加了 {@code code} 和 {@code locale} 字段。
+ * 它用于避免对 Spring Framework 的依赖。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class NoSuchMessageException extends RuntimeException implements ErrorInfoConvertable  {
 
@@ -29,9 +29,12 @@ public class NoSuchMessageException extends RuntimeException implements ErrorInf
   private final Locale locale;
 
   /**
-   * Create a new exception.
-   * @param code the code that could not be resolved for given locale
-   * @param locale the locale that was used to search for the code within
+   * 创建一个新的异常。
+   *
+   * @param code
+   *     无法为给定区域设置解析的代码。
+   * @param locale
+   *     用于搜索代码的区域设置。
    */
   public NoSuchMessageException(final String code, final Locale locale) {
     super("No message found under code '" + code + "' for locale '" + locale + "'.");
@@ -40,8 +43,10 @@ public class NoSuchMessageException extends RuntimeException implements ErrorInf
   }
 
   /**
-   * Create a new exception.
-   * @param code the code that could not be resolved for given locale
+   * 创建一个新的异常。
+   *
+   * @param code
+   *     无法为给定区域设置解析的代码。
    */
   public NoSuchMessageException(final String code) {
     super("No message found under code '" + code + "' for locale '" + Locale.getDefault() + "'.");
@@ -49,14 +54,29 @@ public class NoSuchMessageException extends RuntimeException implements ErrorInf
     this.locale = Locale.getDefault();
   }
 
+  /**
+   * 获取无法解析的消息代码。
+   *
+   * @return
+   *     无法解析的消息代码。
+   */
   public String getCode() {
     return code;
   }
 
+  /**
+   * 获取用于搜索消息代码的区域设置。
+   *
+   * @return
+   *     用于搜索消息代码的区域设置。
+   */
   public Locale getLocale() {
     return locale;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public ErrorInfo toErrorInfo() {
     return new ErrorInfo("SERVER_ERROR", "NO_SUCH_MESSAGE",

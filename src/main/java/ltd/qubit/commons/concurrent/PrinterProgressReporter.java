@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,14 +15,20 @@ import ltd.qubit.commons.util.HumanReadable;
 import ltd.qubit.commons.util.clock.TimeMeter;
 
 /**
- * A {@link ProgressReporter} that reports the progress to a {@link Printer}.
+ * 将进度报告给{@link Printer}的{@link ProgressReporter}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class PrinterProgressReporter implements ProgressReporter {
 
   protected final Printer printer;
 
+  /**
+   * 构造一个{@link PrinterProgressReporter}。
+   *
+   * @param printer
+   *     指定的{@link Printer}。
+   */
   PrinterProgressReporter(final Printer printer) {
     this.printer = printer;
   }

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -32,6 +32,17 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 import static ltd.qubit.commons.lang.ObjectUtils.defaultIfNull;
 
+/**
+ * URL编码/解码实用程序类。
+ *
+ * <p>该类的实现参考了
+ * <a href="http://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs/org/apache/http/client/utils/URLEncodedUtils.html">
+ *   org.apache.http.client.utils.URLEncodedUtils
+ * </a>
+ * </p>
+ *
+ * @author 胡海星
+ */
 public class UrlEncodingUtils {
 
   public static final String CONTENT_TYPE = "application/x-www-form-urlencoded";
@@ -117,9 +128,19 @@ public class UrlEncodingUtils {
   }
   // resume checkstyle: MagicNumber
 
-  public UrlEncodingUtils() {
+  private UrlEncodingUtils() {
   }
 
+  /**
+   * 返回一个 {@link NameValuePair} 列表，表示从URI查询字符串中解析出的键值对。
+   *
+   * @param uri
+   *     要解析的URI。
+   * @param charset
+   *     用于解码的字符集，如果为 {@code null} 则使用UTF-8。
+   * @return
+   *     从URI查询字符串中解析出的 {@link NameValuePair} 列表。
+   */
   public static List<NameValuePair> parse(final URI uri, @Nullable final Charset charset) {
     Argument.requireNonNull("URI", uri);
     final String query = uri.getRawQuery();
@@ -130,6 +151,16 @@ public class UrlEncodingUtils {
     }
   }
 
+  /**
+   * 返回一个 {@link NameValuePair} 列表，表示从字符串中解析出的键值对。
+   *
+   * @param str
+   *     要解析的字符串。
+   * @param charset
+   *     用于解码的字符集，如果为 {@code null} 则使用UTF-8。
+   * @return
+   *     从字符串中解析出的 {@link NameValuePair} 列表。
+   */
   public static List<NameValuePair> parse(final String str, final Charset charset) {
     if (str == null) {
       return Collections.emptyList();
@@ -139,6 +170,18 @@ public class UrlEncodingUtils {
     }
   }
 
+  /**
+   * 返回一个 {@link NameValuePair} 列表，表示从字符串中解析出的键值对。
+   *
+   * @param str
+   *     要解析的字符串。
+   * @param charset
+   *     用于解码的字符集，如果为 {@code null} 则使用UTF-8。
+   * @param separators
+   *     用于分隔键值对的字符。
+   * @return
+   *     从字符串中解析出的 {@link NameValuePair} 列表。
+   */
   public static List<NameValuePair> parse(final String str, final Charset charset,
       final char... separators) {
     if (str == null) {
@@ -149,6 +192,18 @@ public class UrlEncodingUtils {
     }
   }
 
+  /**
+   * 返回一个 {@link NameValuePair} 列表，表示从 {@link CharBuffer} 中解析出的键值对。
+   *
+   * @param buffer
+   *     要解析的 {@link CharBuffer}。
+   * @param charset
+   *     用于解码的字符集，如果为 {@code null} 则使用UTF-8。
+   * @param separators
+   *     用于分隔键值对的字符。
+   * @return
+   *     从 {@link CharBuffer} 中解析出的 {@link NameValuePair} 列表。
+   */
   public static List<NameValuePair> parse(final CharBuffer buffer,
       @Nullable final Charset charset, final char... separators) {
     Argument.requireNonNull("Char buffer", buffer);
@@ -211,6 +266,16 @@ public class UrlEncodingUtils {
     return splitSegments(str, PATH_SEPARATORS);
   }
 
+  /**
+   * 将路径字符串解析为路径段列表。
+   *
+   * @param str
+   *     要解析的路径字符串。
+   * @param charset
+   *     用于解码的字符集，如果为 {@code null} 则使用UTF-8。
+   * @return
+   *     路径段列表。
+   */
   public static List<String> parsePathSegments(final CharSequence str,
       @Nullable final Charset charset) {
     Argument.requireNonNull("Char sequence", str);
@@ -222,10 +287,28 @@ public class UrlEncodingUtils {
     return list;
   }
 
+  /**
+   * 将路径字符串解析为路径段列表，使用UTF-8字符集。
+   *
+   * @param str
+   *     要解析的路径字符串。
+   * @return
+   *     路径段列表。
+   */
   public static List<String> parsePathSegments(final CharSequence str) {
     return parsePathSegments(str, UTF_8);
   }
 
+  /**
+   * 将路径段列表格式化为路径字符串。
+   *
+   * @param segments
+   *     要格式化的路径段列表。
+   * @param charset
+   *     用于编码的字符集，如果为 {@code null} 则使用UTF-8。
+   * @return
+   *     格式化后的路径字符串。
+   */
   public static String formatSegments(final Iterable<String> segments,
       @Nullable final Charset charset) {
     Argument.requireNonNull("Segments", segments);

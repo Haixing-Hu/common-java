@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -14,17 +14,24 @@ import ltd.qubit.commons.lang.CharUtils;
 
 
 /**
- * A code point filter that accept only the non-blank characters.
+ * 一个代码点过滤器，仅接受非空白代码点。
  *
- * @author Haixing Hu
+ * @author 胡海星
+ * @see CharUtils#isBlank(int)
  */
 @Immutable
 public final class NonBlankCodePointFilter implements CodePointFilter {
 
+  /**
+   * 此类的单例实例。
+   */
   public static final NonBlankCodePointFilter INSTANCE = new NonBlankCodePointFilter();
 
   private NonBlankCodePointFilter() {}
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean accept(final Integer codePoint) {
     return (codePoint != null) && (!CharUtils.isBlank(codePoint));

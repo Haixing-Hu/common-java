@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -17,46 +17,71 @@ import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * This class represents a transition in a state machine.
+ * 此类表示状态机中的转换。
  *
  * @param <S>
- *     the type of states.
+ *     状态的类型。
  * @param <E>
- *     the type of events.
- * @author Haixing Hu
+ *     事件的类型。
+ * @author 胡海星
  */
 @Immutable
 public class Transition<S extends Enum<S>, E extends Enum<E>> {
 
   /**
-   * The source state of this transition.
+   * 此转换的源状态。
    */
   private final S source;
 
   /**
-   * The event that triggers this transition.
+   * 触发此转换的事件。
    */
   private final E event;
 
   /**
-   * The target state of this transition.
+   * 此转换的目标状态。
    */
   private final S target;
 
+  /**
+   * 构造一个 {@code Transition}.
+   *
+   * @param source
+   *     转换的源状态。
+   * @param event
+   *     触发转换的事件。
+   * @param target
+   *     转换的目标状态。
+   */
   public Transition(final S source, final E event, final S target) {
     this.source = requireNonNull("source", source);
     this.event = requireNonNull("event", event);
     this.target = requireNonNull("target", target);
   }
 
+  /**
+   * 获取此转换的源状态。
+   *
+   * @return 此转换的源状态。
+   */
   public S getSource() {
     return source;
   }
 
+  /**
+   * 获取触发此转换的事件。
+   *
+   * @return 触发此转换的事件。
+   */
   public E getEvent() {
     return event;
   }
 
+  /**
+   * 获取此转换的目标状态。
+   *
+   * @return 此转换的目标状态。
+   */
   public S getTarget() {
     return target;
   }

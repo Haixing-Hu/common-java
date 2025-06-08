@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -43,10 +43,9 @@ import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * The {@link DefaultConfig} class is the default implementation of the {@link
- * Config} interface.
+ * {@link DefaultConfig} 类是 {@link Config} 接口的默认实现。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public class DefaultConfig extends AbstractConfig implements WritableConfig {
@@ -63,7 +62,7 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
   protected ConcurrentHashMap<String, DefaultProperty> properties;
 
   /**
-   * Constructs an empty {@link DefaultConfig} object.
+   * 构造一个空的 {@link DefaultConfig} 对象。
    */
   public DefaultConfig() {
     description = null;
@@ -76,10 +75,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
   }
 
   /**
-   * Sets the description.
+   * 设置描述。
    *
    * @param description
-   *     the new description to set, or {@code null} if none.
+   *     要设置的新描述，如果无则为 {@code null}。
+   * @return
+   *     此对象。
    */
   @Override
   public synchronized DefaultConfig setDescription(@Nullable final String description) {
@@ -132,19 +133,26 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return properties.get(name);
   }
 
+  /**
+   * 设置指定的属性。
+   *
+   * @param property
+   *     要设置的属性。
+   * @return
+   *     此对象。
+   */
   public DefaultProperty set(final DefaultProperty property) {
     requireNonNull("property", property);
     return properties.put(property.getName(), property);
   }
 
   /**
-   * Adds all properties of the specified {@link Config} object to this
-   * {@link DefaultConfig} object.
+   * 将指定{@link Config}对象的所有属性添加到此{@link DefaultConfig}对象中。
    *
    * @param config
-   *     the {@link Config} object whose properties are to be added.
+   *     要添加其属性的{@link Config}对象。
    * @return
-   *     this {@link DefaultConfig} object.
+   *     此{@link DefaultConfig}对象。
    */
   public DefaultConfig addAll(final Config config) {
     requireNonNull("config", config);
@@ -155,12 +163,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
   }
 
   /**
-   * Adds a collection of {@link Property}s to this {@link DefaultConfig} object.
+   * 将一个{@link Property}的集合添加到此{@link DefaultConfig}对象中。
    *
    * @param properties
-   *     the collection of {@link Property}s to be added.
+   *     要添加的{@link Property}的集合。
    * @return
-   *     this {@link DefaultConfig} object.
+   *     此{@link DefaultConfig}对象。
    */
   public DefaultConfig addAll(final Collection<? extends Property> properties) {
     requireNonNull("properties", properties);
@@ -171,13 +179,13 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
   }
 
   /**
-   * Adds a new {@link Property} to this {@link DefaultConfig} object.
+   * 将一个新的{@link Property}添加到此{@link DefaultConfig}对象中。
    *
    * @param prop
-   *     the new {@link Property} to be add.
-   * @return the previous {@link Property} with the same name in this {@link
-   *     DefaultConfig} object, or null if no previous {@link Property} with the
-   *     same name.
+   *     要添加的新{@link Property}。
+   * @return
+   *     此{@link DefaultConfig}对象中具有相同名称的先前{@link Property}，
+   *     如果没有具有相同名称的先前{@link Property}，则为null。
    */
   public DefaultProperty add(final Property prop) {
     requireNonNull("prop", prop);
@@ -192,12 +200,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
   }
 
   /**
-   * Add a new empty property with the specified name to this {@link
-   * DefaultConfig} object.
+   * 向此{@link DefaultConfig}对象添加一个具有指定名称的新空属性。
    *
    * @param name
-   *     the name of the new empty property.
-   * @return the newly added {@link DefaultProperty} object.
+   *     新空属性的名称。
+   * @return
+   *     新添加的{@link DefaultProperty}对象。
    */
   public DefaultProperty add(final String name) {
     final DefaultProperty prop = new DefaultProperty(name);
@@ -206,14 +214,14 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
   }
 
   /**
-   * Add a new empty property with the specified name and type to this {@link
-   * DefaultConfig} object.
+   * 向此{@link DefaultConfig}对象添加一个具有指定名称和类型的新空属性。
    *
    * @param name
-   *     the name of the new empty property.
+   *     新空属性的名称。
    * @param type
-   *     the type of the new empty property.
-   * @return the newly added {@link DefaultProperty} object.
+   *     新空属性的类型。
+   * @return
+   *     新添加的{@link DefaultProperty}对象。
    */
   public DefaultProperty add(final String name, final Type type) {
     final DefaultProperty prop = new DefaultProperty(name, type);
@@ -221,11 +229,17 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return prop;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Property remove(final String name) {
     return properties.remove(name);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setFinal(final String name, final boolean isFinal) {
     requireNonNull("name", name);
@@ -239,6 +253,9 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setType(final String name, final Type type) {
     requireNonNull("name", name);
@@ -253,20 +270,20 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setBoolean(final String name, final boolean value) {
-    properties.compute(name, (k, v) -> {
-      if (v == null) {
-        v = new DefaultProperty(name);
-      }
-      v.setBoolean(value);
-      return v;
-    });
-    return this;
+    return setBoolean(name, value, false);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setBoolean(final String name, final boolean value, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -278,20 +295,20 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setBooleans(final String name, @Nullable final boolean... values) {
-    properties.compute(name, (k, v) -> {
-      if (v == null) {
-        v = new DefaultProperty(name);
-      }
-      v.setBooleans(values);
-      return v;
-    });
-    return this;
+    return setBooleans(name, values, false);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setBooleans(final String name, @Nullable final boolean[] values, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -303,20 +320,20 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setBooleans(final String name, @Nullable final BooleanCollection values) {
-    properties.compute(name, (k, v) -> {
-      if (v == null) {
-        v = new DefaultProperty(name);
-      }
-      v.setBooleans(values);
-      return v;
-    });
-    return this;
+    return setBooleans(name, (values == null ? null : values.toArray()), false);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addBoolean(final String name, final boolean value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -329,48 +346,60 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addBooleans(final String name, @Nullable final boolean... values) {
-    properties.compute(name, (k, v) -> {
-      if (v == null) {
-        v = new DefaultProperty(name);
-        v.setBooleans(values);
-      } else {
-        v.addBooleanValues(values);
-      }
-      return v;
-    });
+    if (values != null) {
+      requireNonNull("name", name);
+      properties.compute(name, (k, v) -> {
+        if (v == null) {
+          v = new DefaultProperty(name);
+          v.setBooleans(values);
+        } else {
+          v.addBooleanValues(values);
+        }
+        return v;
+      });
+    }
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addBooleans(final String name, @Nullable final BooleanCollection values) {
-    properties.compute(name, (k, v) -> {
-      if (v == null) {
-        v = new DefaultProperty(name);
-        v.setBooleans(values);
-      } else {
-        v.addBooleanValues(values);
-      }
-      return v;
-    });
+    if (values != null) {
+      requireNonNull("name", name);
+      properties.compute(name, (k, v) -> {
+        if (v == null) {
+          v = new DefaultProperty(name);
+          v.setBooleans(values);
+        } else {
+          v.addBooleanValues(values);
+        }
+        return v;
+      });
+    }
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setChar(final String name, final char value) {
-    properties.compute(name, (k, v) -> {
-      if (v == null) {
-        v = new DefaultProperty(name);
-      }
-      v.setCharValue(value);
-      return v;
-    });
-    return this;
+    return setChar(name, value, false);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setChar(final String name, final char value, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -382,20 +411,20 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setChars(final String name, @Nullable final char... values) {
-    properties.compute(name, (k, v) -> {
-      if (v == null) {
-        v = new DefaultProperty(name);
-      }
-      v.setCharValues(values);
-      return v;
-    });
-    return this;
+    return setChars(name, values, false);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setChars(final String name, @Nullable final char[] values, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -407,20 +436,20 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setChars(final String name, @Nullable final CharCollection values) {
-    properties.compute(name, (k, v) -> {
-      if (v == null) {
-        v = new DefaultProperty(name);
-      }
-      v.setCharValues(values);
-      return v;
-    });
-    return this;
+    return setChars(name, (values == null ? null : values.toArray()), false);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addChar(final String name, final char value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -433,8 +462,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addChars(final String name, @Nullable final char... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -447,8 +480,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addChars(final String name, @Nullable final CharCollection values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -461,8 +498,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setByte(final String name, final byte value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -473,8 +514,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setByte(final String name, final byte value, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -486,8 +531,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setBytes(final String name, @Nullable final byte... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -498,8 +547,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setBytes(final String name, @Nullable final byte[] values, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -511,8 +564,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setBytes(final String name, @Nullable final ByteCollection values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -523,8 +580,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addByte(final String name, final byte value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -537,8 +598,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addBytes(final String name, final byte... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -551,8 +616,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addBytes(final String name, final ByteCollection values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -565,8 +634,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setShort(final String name, final short value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -577,8 +650,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setShort(final String name, final short value, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -590,8 +667,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setShorts(final String name, final short... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -602,8 +683,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setShorts(final String name, final short[] values, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -615,8 +700,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setShorts(final String name, final ShortCollection values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -627,8 +716,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addShort(final String name, final short value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -641,8 +734,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addShorts(final String name, final short... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -655,8 +752,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addShorts(final String name, final ShortCollection values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -669,8 +770,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setInt(final String name, final int value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -681,8 +786,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setInt(final String name, final int value, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -694,8 +803,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setInts(final String name, final int... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -706,8 +819,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setInts(final String name, final int[] values, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -719,8 +836,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setInts(final String name, final IntCollection values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -731,8 +852,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addInt(final String name, final int value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -745,8 +870,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addInts(final String name, final int... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -759,8 +888,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addInts(final String name, final IntCollection values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -773,8 +906,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setLong(final String name, final long value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -785,8 +922,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setLong(final String name, final long value, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -798,8 +939,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setLongs(final String name, final long... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -810,8 +955,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setLongs(final String name, final long[] values, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -823,8 +972,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setLongs(final String name, final LongCollection values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -835,8 +988,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addLong(final String name, final long value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -849,8 +1006,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addLongs(final String name, final long... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -863,8 +1024,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addLongs(final String name, final LongCollection values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -877,8 +1042,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setFloat(final String name, final float value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -889,8 +1058,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setFloat(final String name, final float value, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -902,8 +1075,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setFloats(final String name, final float... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -914,8 +1091,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setFloats(final String name, final float[] values, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -927,8 +1108,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setFloats(final String name, final FloatCollection values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -939,8 +1124,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addFloat(final String name, final float value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -953,8 +1142,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addFloats(final String name, final float... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -967,8 +1160,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addFloats(final String name, final FloatCollection values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -981,8 +1178,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setDouble(final String name, final double value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -993,8 +1194,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setDouble(final String name, final double value, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1006,8 +1211,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setDoubles(final String name, final double... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1018,8 +1227,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setDoubles(final String name, final double[] values, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1031,8 +1244,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setDoubles(final String name, final DoubleCollection values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1043,8 +1260,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addDouble(final String name, final double value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1057,8 +1278,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addDoubles(final String name, final double... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1071,8 +1296,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addDoubles(final String name, final DoubleCollection values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1085,8 +1314,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setString(final String name, @Nullable final String value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1097,8 +1330,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setString(final String name, @Nullable final String value, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1110,8 +1347,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setStrings(final String name, @Nullable final String... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1122,8 +1363,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setStrings(final String name, @Nullable final String[] values, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1135,8 +1380,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setStrings(final String name, final Collection<String> values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1147,8 +1396,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addString(final String name, final String value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1161,8 +1414,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addStrings(final String name, @Nullable final String... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1175,8 +1432,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addStrings(final String name, final Collection<String> values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1189,8 +1450,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setDate(final String name, @Nullable final LocalDate value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1201,8 +1466,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setDate(final String name, @Nullable final LocalDate value, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1214,8 +1483,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setDates(final String name, @Nullable final LocalDate... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1226,8 +1499,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setDates(final String name, @Nullable final LocalDate[] values, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1239,8 +1516,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setDates(final String name, final Collection<LocalDate> values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1251,8 +1532,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addDate(final String name, final LocalDate value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1263,8 +1548,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addDates(final String name, final LocalDate... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1275,8 +1564,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addDates(final String name, final Collection<LocalDate> values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1287,8 +1580,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setTime(final String name, @Nullable final LocalTime value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1299,8 +1596,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setTime(final String name, @Nullable final LocalTime value, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1312,8 +1613,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setTimes(final String name, @Nullable final LocalTime... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1324,8 +1629,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setTimes(final String name, @Nullable final LocalTime[] values, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1337,8 +1646,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setTimes(final String name, final Collection<LocalTime> values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1349,8 +1662,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addTime(final String name, final LocalTime value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1361,8 +1678,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addTimes(final String name, final LocalTime... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1373,8 +1694,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addTimes(final String name, final Collection<LocalTime> values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1385,8 +1710,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setDateTime(final String name, @Nullable final LocalDateTime value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1397,8 +1726,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setDateTime(final String name, @Nullable final LocalDateTime value, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1410,8 +1743,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setDateTimes(final String name, @Nullable final LocalDateTime... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1422,8 +1759,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setDateTimes(final String name, @Nullable final LocalDateTime[] values, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1435,8 +1776,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setDateTimes(final String name, final Collection<LocalDateTime> values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1447,8 +1792,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addDateTime(final String name, final LocalDateTime value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1459,8 +1808,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addDateTimes(final String name, final LocalDateTime... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1471,8 +1824,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addDateTimes(final String name, final Collection<LocalDateTime> values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1483,8 +1840,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setBigInteger(final String name, @Nullable final BigInteger value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1495,8 +1856,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setBigInteger(final String name, @Nullable final BigInteger value, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1508,8 +1873,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setBigIntegers(final String name, @Nullable final BigInteger... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1520,8 +1889,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setBigIntegers(final String name, @Nullable final BigInteger[] values, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1533,8 +1906,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setBigIntegers(final String name, final Collection<BigInteger> values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1545,8 +1922,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addBigInteger(final String name, final BigInteger value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1559,8 +1940,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addBigIntegers(final String name, final BigInteger... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1573,8 +1958,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addBigIntegers(final String name, final Collection<BigInteger> values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1587,8 +1976,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setBigDecimal(final String name, @Nullable final BigDecimal value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1599,8 +1992,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setBigDecimal(final String name, @Nullable final BigDecimal value, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1612,8 +2009,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setBigDecimals(final String name, @Nullable final BigDecimal... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1624,8 +2025,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setBigDecimals(final String name, @Nullable final BigDecimal[] values, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1637,8 +2042,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setBigDecimals(final String name, final Collection<BigDecimal> values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1649,8 +2058,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addBigDecimal(final String name, final BigDecimal value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1663,8 +2076,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addBigDecimals(final String name, final BigDecimal... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1677,8 +2094,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addBigDecimals(final String name, final Collection<BigDecimal> values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1691,8 +2112,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setByteArray(final String name, @Nullable final byte[] value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1703,8 +2128,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setByteArray(final String name, @Nullable final byte[] value, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1716,8 +2145,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setByteArrays(final String name, final Collection<byte[]> values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1728,8 +2161,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setByteArrays(final String name, @Nullable final byte[]... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1740,8 +2177,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setByteArrays(final String name, @Nullable final byte[][] values, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1753,8 +2194,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addByteArrays(final String name, final byte[]... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1767,8 +2212,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addByteArrays(final String name, final Collection<byte[]> values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1781,8 +2230,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addByteArray(final String name, final byte[] value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1795,8 +2248,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setEnum(final String name, @Nullable final Enum<?> value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1807,8 +2264,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setEnum(final String name, @Nullable final Enum<?> value, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1820,8 +2281,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setEnums(final String name, @Nullable final Enum<?>... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1832,8 +2297,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setEnums(final String name, @Nullable final Enum<?>[] values, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1845,8 +2314,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setEnums(final String name, @Nullable final Collection<? extends Enum<?>> values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1857,9 +2330,13 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setEnums(final String name, @Nullable final Collection<? extends Enum<?>> values,
       final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1871,9 +2348,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addEnum(final String name, final Enum<?> value) {
-    requireNonNull("value", value);
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1886,9 +2366,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addEnums(final String name, final Enum<?>... values) {
-    requireNonNull("values", values);
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1901,9 +2384,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addEnums(final String name, final Collection<? extends Enum<?>> values) {
-    requireNonNull("values", values);
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1916,8 +2402,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setClass(final String name, @Nullable final Class<?> value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1928,8 +2418,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setClass(final String name, @Nullable final Class<?> value, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1941,8 +2435,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setClasses(final String name, @Nullable final Class<?>... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1953,8 +2451,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setClasses(final String name, @Nullable final Class<?>[] values, final boolean isFinal) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1966,8 +2468,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig setClasses(final String name, final Collection<Class<?>> values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1978,8 +2484,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addClass(final String name, final Class<?> value) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -1990,8 +2500,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addClasses(final String name, final Class<?>... values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -2002,8 +2516,12 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig addClasses(final String name, final Collection<Class<?>> values) {
+    requireNonNull("name", name);
     properties.compute(name, (k, v) -> {
       if (v == null) {
         v = new DefaultProperty(name);
@@ -2014,11 +2532,17 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig merge(final Config config, final MergingPolicy policy) {
     return merge(config, StringUtils.EMPTY, policy);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public synchronized DefaultConfig merge(final Config config, final String prefix,
       final MergingPolicy policy) {
@@ -2094,12 +2618,16 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public synchronized DefaultConfig assign(final Config config) {
+    requireNonNull("config", config);
     logger.trace("Start Assignment with another configuration ...");
     if (this != config) {
       logger.trace("Removing all properties ... ");
-      removeAll();
+      clear();
       for (final Property thatProp : config.getProperties()) {
         final String name = thatProp.getName();
         logger.trace("Adding a new property '{}'.", name);
@@ -2111,12 +2639,17 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public synchronized DefaultConfig assign(final Config config, final String prefix) {
+    requireNonNull("config", config);
+    requireNonNull("prefix", prefix);
     logger.trace("Start Assignment with another configuration ...");
     if (this != config) {
       logger.trace("Removing all properties ... ");
-      removeAll();
+      clear();
       for (final Property thatProp : config.getProperties()) {
         final String name = thatProp.getName();
         if (name.startsWith(prefix)) {
@@ -2138,24 +2671,30 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Property clear(final String name) {
+    requireNonNull("name", name);
     return properties.computeIfPresent(name, (k, v) -> {
       v.clear();
       return v;
     });
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public DefaultConfig clear() {
-    return removeAll();
-  }
-
-  public DefaultConfig removeAll() {
     properties.clear();
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public synchronized Config cloneEx() {
     final DefaultConfig result = new DefaultConfig();

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -18,15 +18,14 @@ import ltd.qubit.commons.error.NoSuchMessageException;
 import ltd.qubit.commons.i18n.message.MessageSource;
 
 /**
- * Helper class that allows for accessing a Spring {@link MessageSource} as a
- * {@link java.util.ResourceBundle}. Used for example to expose a Spring
- * MessageSource to JSTL web views.
+ * 辅助类，允许将 Spring {@link MessageSource} 作为 {@link java.util.ResourceBundle} 访问。
+ * 例如，用于将 Spring MessageSource 公开给 JSTL 网页视图。
  * <p>
- * This class is a copy of {@code org.springframework.context.support.MessageSourceResourceBundle}
- * with slight modifications. It is used to avoid the dependency of Spring Framework.
+ * 此类是 {@code org.springframework.context.support.MessageSourceResourceBundle} 的副本，
+ * 稍作修改。它用于避免对 Spring Framework 的依赖。
  *
  * @author Juergen Hoeller
- * @author Haixing Hu
+ * @author 胡海星
  * @see MessageSource
  * @see java.util.ResourceBundle
  */
@@ -37,13 +36,12 @@ public class MessageSourceResourceBundle extends ResourceBundle {
   private final Locale locale;
 
   /**
-   * Create a new MessageSourceResourceBundle for the given MessageSource and
-   * Locale.
+   * 为给定的 MessageSource 和 Locale 创建新的 MessageSourceResourceBundle。
    *
    * @param source
-   *     the MessageSource to retrieve messages from
+   *     用于检索消息的 MessageSource
    * @param locale
-   *     the Locale to retrieve messages for
+   *     用于检索消息的 Locale
    */
   public MessageSourceResourceBundle(final MessageSource source,
       final Locale locale) {
@@ -55,15 +53,14 @@ public class MessageSourceResourceBundle extends ResourceBundle {
   }
 
   /**
-   * Create a new MessageSourceResourceBundle for the given MessageSource and
-   * Locale.
+   * 为给定的 MessageSource 和 Locale 创建新的 MessageSourceResourceBundle。
    *
    * @param source
-   *     the MessageSource to retrieve messages from
+   *     用于检索消息的 MessageSource
    * @param locale
-   *     the Locale to retrieve messages for
+   *     用于检索消息的 Locale
    * @param parent
-   *     the parent ResourceBundle to delegate to if no local message found
+   *     如果未找到本地消息时委托给的父 ResourceBundle
    */
   public MessageSourceResourceBundle(final MessageSource source,
       final Locale locale, final ResourceBundle parent) {
@@ -73,8 +70,7 @@ public class MessageSourceResourceBundle extends ResourceBundle {
 
 
   /**
-   * This implementation resolves the code in the MessageSource. Returns
-   * {@code null} if the message could not be resolved.
+   * 此实现解析 MessageSource 中的代码。如果无法解析消息，则返回 {@code null}。
    */
   @Override
   @Nullable
@@ -87,10 +83,8 @@ public class MessageSourceResourceBundle extends ResourceBundle {
   }
 
   /**
-   * This implementation checks whether the target MessageSource can resolve a
-   * message for the given key, translating {@code NoSuchMessageException}
-   * accordingly. In contrast to ResourceBundle's default implementation in JDK
-   * 1.6, this does not rely on the capability to enumerate message keys.
+   * 此实现检查目标 MessageSource 是否可以解析给定键的消息，相应地转换 {@code NoSuchMessageException}。
+   * 与 JDK 1.6 中 ResourceBundle 的默认实现不同，这不依赖于枚举消息键的能力。
    */
   @Override
   public boolean containsKey(final String key) {
@@ -103,8 +97,7 @@ public class MessageSourceResourceBundle extends ResourceBundle {
   }
 
   /**
-   * This implementation throws {@code UnsupportedOperationException}, as a
-   * MessageSource does not allow for enumerating the defined message codes.
+   * 此实现抛出 {@code UnsupportedOperationException}，因为 MessageSource 不允许枚举已定义的消息代码。
    */
   @Override
   public Enumeration<String> getKeys() {
@@ -112,8 +105,7 @@ public class MessageSourceResourceBundle extends ResourceBundle {
   }
 
   /**
-   * This implementation exposes the specified Locale for introspection through
-   * the standard {@code ResourceBundle.getLocale()} method.
+   * 此实现通过标准的 {@code ResourceBundle.getLocale()} 方法公开指定的 Locale 以供反省。
    */
   @Override
   public Locale getLocale() {

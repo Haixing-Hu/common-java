@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,9 +13,9 @@ import javax.annotation.concurrent.Immutable;
 import ltd.qubit.commons.text.Ascii;
 
 /**
- * A character filter which accepts only ASCII printable characters.
+ * 只接受 ASCII 可打印字符的字符过滤器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public class AsciiPrintableCharFilter implements CharFilter {

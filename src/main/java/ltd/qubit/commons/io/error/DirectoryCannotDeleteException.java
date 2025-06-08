@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -18,9 +18,9 @@ import ltd.qubit.commons.error.ErrorInfoConvertable;
 import ltd.qubit.commons.util.pair.KeyValuePairList;
 
 /**
- * Thrown to indicate that a directory can not be deleted.
+ * 抛出此异常以指示无法删除目录。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class DirectoryCannotDeleteException extends IOException
     implements ErrorInfoConvertable {
@@ -30,28 +30,58 @@ public class DirectoryCannotDeleteException extends IOException
 
   private final String path;
 
+  /**
+   * 构造一个表示无法删除目录的异常。
+   */
   public DirectoryCannotDeleteException() {
     super("The directory can't be deleted. ");
     this.path = "<unknown>";
   }
 
+  /**
+   * 构造一个表示无法删除目录的异常。
+   *
+   * @param path
+   *     目录路径。
+   */
   public DirectoryCannotDeleteException(final String path) {
     super("The directory can't be deleted: " + path);
     this.path = path;
   }
 
+  /**
+   * 构造一个表示无法删除目录的异常。
+   *
+   * @param file
+   *     目录文件。
+   */
   public DirectoryCannotDeleteException(final File file) {
     this(file.getAbsolutePath());
   }
 
+  /**
+   * 构造一个表示无法删除目录的异常。
+   *
+   * @param path
+   *     目录路径。
+   */
   public DirectoryCannotDeleteException(final Path path) {
     this(path.toAbsolutePath().toString());
   }
 
+  /**
+   * 获取目录路径。
+   *
+   * @return
+   *     目录路径。
+   */
   public String getPath() {
     return path;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public ErrorInfo toErrorInfo() {
     return new ErrorInfo("IO_ERROR", "DIRECTORY_CANNOT_DELETE",

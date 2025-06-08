@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,18 +11,23 @@ package ltd.qubit.commons.util.filter.character;
 import javax.annotation.concurrent.Immutable;
 
 /**
- * A CharFilter that accept only the letter or digit characters or whitespace
- * characters.
+ * 一个字符过滤器，仅接受字母、数字或空白字符。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class LetterDigitSpaceCharFilter implements CharFilter {
 
+  /**
+   * 此类的单例实例。
+   */
   public static final LetterDigitSpaceCharFilter INSTANCE = new LetterDigitSpaceCharFilter();
 
   private LetterDigitSpaceCharFilter() {}
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean accept(final Character ch) {
     return (ch != null)

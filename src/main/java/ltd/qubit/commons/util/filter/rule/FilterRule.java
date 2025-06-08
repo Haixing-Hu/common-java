@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -9,27 +9,24 @@
 package ltd.qubit.commons.util.filter.rule;
 
 /**
- * The filter rule for a chained filter.
+ * 用于链式过滤器的过滤规则。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public abstract class FilterRule {
 
   /**
-   * Given the current state, a filter result and a filter action returned by a
-   * filter in the filter chain, get the next state of the chained filter.
+   * 给定链式过滤器的当前状态、过滤器链中某个过滤器的过滤结果以及该过滤器的返回操作，
+   * 获取链式过滤器的下一个状态。
    *
    * @param currentState
-   *     the index state of the chained filter, which is a value defined in
-   *     FilterState.
+   *     链式过滤器的当前状态，是 {@code FilterState} 中定义的值。
    * @param filterState
-   *     a value defined in FilterState returned by the current filter in the
-   *     chain.
+   *     过滤器链中当前过滤器返回的状态，是 {@code FilterState} 中定义的值。
    * @param filterAction
-   *     a value defined in FilterAction returned by the current filter in the
-   *     chain.
-   * @return a bitwise combination of the next state and the action to be take
-   *     by the chained filter.
+   *     过滤器链中当前过滤器返回的操作，是 {@code FilterAction} 中定义的值。
+   * @return
+   *     链式过滤器下一个状态和将要执行的操作的按位组合。
    */
   public abstract int nextStateAction(int currentState, int filterState,
       int filterAction);

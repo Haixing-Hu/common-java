@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,9 +13,9 @@ import java.io.Serial;
 import ltd.qubit.commons.util.pair.KeyValuePair;
 
 /**
- * Thrown to indicate that a content type is not supported.
+ * 抛出此异常以指示内容类型不受支持。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class UnsupportedContentTypeException extends RuntimeException
     implements ErrorInfoConvertable {
@@ -25,15 +25,30 @@ public class UnsupportedContentTypeException extends RuntimeException
 
   private final String contentType;
 
+  /**
+   * 构造一个新的不支持内容类型异常。
+   *
+   * @param contentType
+   *     不支持的内容类型。
+   */
   public UnsupportedContentTypeException(final String contentType) {
     super("Unsupported content type: " + contentType);
     this.contentType = contentType;
   }
 
+  /**
+   * 获取不支持的内容类型。
+   *
+   * @return
+   *     不支持的内容类型。
+   */
   public final String getContentType() {
     return contentType;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public ErrorInfo toErrorInfo() {
     return new ErrorInfo("REQUEST_ERROR", "UNSUPPORTED_CONTENT_TYPE",

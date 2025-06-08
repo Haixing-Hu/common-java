@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -9,126 +9,109 @@
 package ltd.qubit.commons.datastructure.list.primitive;
 
 /**
- * A bi-directional iterator over {@code char} values.
+ * {@code char} 值的双向迭代器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface CharListIterator extends CharIterator {
 
   /**
-   * Inserts the specified element into my underlying collection (optional
-   * operation).
+   * 将指定元素插入到底层集合中（可选操作）。
    *
-   * <p>The element is inserted immediately before the next element
-   * that would have been returned by {@link #next}, if any, and immediately
-   * after the next element that would have been returned by {@link #previous},
-   * if any.
+   * <p>该元素紧接在{@link #next}将返回的下一个元素之前插入（如果有的话），
+   * 并紧接在{@link #previous}将返回的下一个元素之后插入（如果有的话）。
    *
-   * <p>The new element is inserted immediately before the implied cursor. A
-   * subsequent call to {@link #previous} will return the added element, a
-   * subsequent call to {@link #next} will be unaffected. This call increases by
-   * one the value that would be returned by a call to {@link #nextIndex} or
-   * {@link #previousIndex}.
+   * <p>新元素紧接在隐含游标之前插入。后续调用{@link #previous}将返回添加的元素，
+   * 后续调用{@link #next}不受影响。此调用将{@link #nextIndex}或
+   * {@link #previousIndex}调用返回的值增加一。
    *
    * @param element
-   *     the value to be inserted.
+   *     要插入的值。
    * @throws UnsupportedOperationException
-   *     when this operation is not supported.
+   *     当不支持此操作时。
    * @throws IllegalArgumentException
-   *     if some aspect of the specified element prevents it from being added.
+   *     如果指定元素的某些方面阻止其被添加。
    */
   void add(char element);
 
   /**
-   * Returns {@code true} iff I have more elements when traversed in the forward
-   * direction.
+   * 当且仅当向前遍历时还有更多元素时返回 {@code true}。
    *
-   * <p>In other words, returns {@code true} iff a call to
-   * {@link #next} will return an element rather than throwing an exception.
+   * <p>换句话说，当且仅当调用{@link #next}将返回元素而不是抛出异常时返回 {@code true}。
    *
-   * @return {@code true} iff I have more elements when traversed in the forward
-   *     direction.
+   * @return 当且仅当向前遍历时还有更多元素时返回 {@code true}。
    */
   @Override
   boolean hasNext();
 
   /**
-   * Returns {@code true} iff I have more elements when traversed in the reverse
-   * direction.
+   * 当且仅当向后遍历时还有更多元素时返回 {@code true}。
    *
-   * <p>In other words, returns {@code true} iff a call to
-   * {@link #previous} will return an element rather than throwing an
-   * exception.
+   * <p>换句话说，当且仅当调用{@link #previous}将返回元素而不是抛出异常时返回 {@code true}。
    *
-   * @return {@code true} iff I have more elements when traversed in the reverse
-   *     direction.
+   * @return 当且仅当向后遍历时还有更多元素时返回 {@code true}。
    */
   boolean hasPrevious();
 
   /**
-   * Returns the next element in me when traversed in the forward direction.
+   * 返回向前遍历时我的下一个元素。
    *
-   * @return the next element in me.
+   * @return 我的下一个元素。
    * @throws java.util.NoSuchElementException
-   *     if there is no next element.
+   *     如果没有下一个元素。
    */
   @Override
   char next();
 
   /**
-   * Returns the current of the element that would be returned by a subsequent
-   * call to {@link #next}, or the number of elements in my iteration if I have
-   * no next element.
+   * 返回后续调用{@link #next}将返回的元素的索引，
+   * 如果我没有下一个元素，则返回我迭代中的元素数量。
    *
-   * @return the current of the next element in me.
+   * @return 我的下一个元素的索引。
    */
   int nextIndex();
 
   /**
-   * Returns the next element in me when traversed in the reverse direction.
+   * 返回向后遍历时我的下一个元素。
    *
-   * @return the previous element in me.
+   * @return 我的前一个元素。
    * @throws java.util.NoSuchElementException
-   *     if there is no previous element.
+   *     如果没有前一个元素。
    */
   char previous();
 
   /**
-   * Returns the current of the element that would be returned by a subsequent
-   * call to {@link #previous}, or {@code -1} if I have no previous element.
+   * 返回后续调用{@link #previous}将返回的元素的索引，
+   * 如果我没有前一个元素，则返回 {@code -1}。
    *
-   * @return the current of the previous element in me.
+   * @return 我的前一个元素的索引。
    */
   int previousIndex();
 
   /**
-   * Removes from my underlying collection the last element returned by {@link
-   * #next} or {@link #previous} (optional operation).
+   * 从我的底层集合中移除{@link #next}或{@link #previous}最后返回的元素（可选操作）。
    *
    * @throws UnsupportedOperationException
-   *     if this operation is not supported.
+   *     如果不支持此操作。
    * @throws IllegalStateException
-   *     if neither {@link #next} nor {@link #previous} has yet been called, or
-   *     {@link #remove} or {@link #add} has already been called since the last
-   *     call to {@link #next} or {@link #previous}.
+   *     如果尚未调用{@link #next}或{@link #previous}，或者自上次调用
+   *     {@link #next}或{@link #previous}以来已经调用了{@link #remove}或{@link #add}。
    */
   @Override
   void remove();
 
   /**
-   * Replaces in my underlying collection the last element returned by {@link
-   * #next} or {@link #previous} with the specified value (optional operation).
+   * 在我的底层集合中用指定值替换{@link #next}或{@link #previous}最后返回的元素（可选操作）。
    *
    * @param element
-   *     the value to replace the last returned element with.
+   *     用于替换最后返回元素的值。
    * @throws UnsupportedOperationException
-   *     if this operation is not supported.
+   *     如果不支持此操作。
    * @throws IllegalStateException
-   *     if neither {@link #next} nor {@link #previous} has yet been called, or
-   *     {@link #remove} or {@link #add} has already been called since the last
-   *     call to {@link #next} or {@link #previous}.
+   *     如果尚未调用{@link #next}或{@link #previous}，或者自上次调用
+   *     {@link #next}或{@link #previous}以来已经调用了{@link #remove}或{@link #add}。
    * @throws IllegalArgumentException
-   *     if some aspect of the specified element prevents it from being added.
+   *     如果指定元素的某些方面阻止其被添加。
    */
   void set(char element);
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list.primitive;
 
+import java.io.Serial;
 import java.util.ConcurrentModificationException;
 import java.util.NoSuchElementException;
 
@@ -17,20 +18,17 @@ import static ltd.qubit.commons.lang.Argument.requireIndexInCloseRange;
 import static ltd.qubit.commons.lang.Argument.requireLessEqual;
 
 /**
- * Abstract base class for {@link FloatList}s backed by random access structures
- * like arrays.
+ * 一个抽象基类，用于由数组等随机访问结构支持的 {@link FloatList}。
  *
- * <p>Read-only subclasses must override {@link #get} and {@link #size}. Mutable
- * subclasses should also override {@link #set}. Variably-sized subclasses
- * should also override {@link #add(float)} and {@link #removeAt}. All
- * other methods have at least some base implementation derived from these.
- * Subclasses may choose to override these methods to provide a more efficient
- * implementation.
+ * <p>只读子类必须重写 {@link #get} 和 {@link #size}。可变子类还应重写 {@link #set}。
+ * 可变大小的子类还应重写 {@link #add(float)} 和 {@link #removeAt}。
+ * 所有其他方法都至少有一些从这些派生的基本实现。子类可以选择重写这些方法以提供更高效的实现。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public abstract class RandomAccessFloatList extends AbstractFloatList {
 
+  @Serial
   private static final long serialVersionUID = -2479707511068859679L;
 
   public static final int DEFAULT_INITIAL_CAPACITY = 8;
@@ -56,6 +54,9 @@ public abstract class RandomAccessFloatList extends AbstractFloatList {
 
   protected abstract void sort(final int fromIndex, final int toIndex);
 
+  /**
+   * {@link RandomAccessFloatList} 的 {@link FloatListIterator} 实现。
+   */
   protected static class RandomAccessFloatListIterator implements FloatListIterator {
 
     protected RandomAccessFloatList source;
@@ -176,6 +177,9 @@ public abstract class RandomAccessFloatList extends AbstractFloatList {
     }
   }
 
+  /**
+   * {@link RandomAccessFloatList} 的子列表视图。
+   */
   protected static class RandomAccessFloatSubList extends RandomAccessFloatList {
 
     private static final long serialVersionUID = -8712643938421978670L;

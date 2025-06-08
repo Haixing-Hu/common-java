@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -34,15 +34,15 @@ public class CommonsConfigTest {
 
   @TempDir
   public File tempDir;
-  
+
   private String originalPropertyValue;
-  
+
   @BeforeEach
   public void setUp() {
     // 保存原始的系统属性值
     originalPropertyValue = System.getProperty(CommonsConfig.PROPERTY_RESOURCE);
   }
-  
+
   @AfterEach
   public void tearDown() {
     // 恢复原始的系统属性值
@@ -51,7 +51,7 @@ public class CommonsConfigTest {
     } else {
       System.setProperty(CommonsConfig.PROPERTY_RESOURCE, originalPropertyValue);
     }
-    
+
     // 由于CommonsConfig使用了单例模式，在测试后需要重置config字段
     // 但由于config是私有字段，这里使用Java反射来重置它
     try {
@@ -63,23 +63,23 @@ public class CommonsConfigTest {
       e.printStackTrace();
     }
   }
-  
+
   @Test
   public void testGetDefaultConfig() {
     // 使用默认配置
     Config config = CommonsConfig.get();
-    
+
     // 确保配置不为空
     assertNotNull(config);
   }
-  
+
   @Test
   public void testGetCustomConfig() throws Exception {
     // 创建临时目录
     Path tempDir = Files.createTempDirectory("junit");
     // 创建配置文件
     File configFile = new File(tempDir.toFile(), "test-commons-config.xml");
-    
+
     try (FileOutputStream fos = new FileOutputStream(configFile);
          OutputStreamWriter writer = new OutputStreamWriter(fos, "UTF-8")) {
       writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
@@ -93,35 +93,35 @@ public class CommonsConfigTest {
 
     System.out.println("Config file path: " + configFile.getAbsolutePath());
     System.out.println("Config file exists: " + configFile.exists());
-    
+
     // 直接使用XmlConfig加载配置文件，而不是通过系统属性
     Config config = new XmlConfig(configFile);
-    
+
     // 测试
     assertNotNull(config);
     assertTrue(config.contains("test.key"));
     assertEquals("test.value", config.getString("test.key"));
   }
-  
+
   @Test
   public void testSingleton() {
     // 获取配置实例两次
     Config config1 = CommonsConfig.get();
     Config config2 = CommonsConfig.get();
-    
+
     // 确保得到的是同一个实例（单例模式）
     assertSame(config1, config2);
   }
-  
+
   @Test
   public void testNonExistentConfigFile() {
     // 设置系统属性指向不存在的配置文件
     System.setProperty(CommonsConfig.PROPERTY_RESOURCE, "non-existent-file.xml");
-    
+
     // 获取配置
     Config config = CommonsConfig.get();
-    
+
     // 确保返回的是非空配置对象，即使配置文件不存在
     assertNotNull(config);
   }
-} 
+}

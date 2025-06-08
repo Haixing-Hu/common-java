@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -36,10 +36,9 @@ import ltd.qubit.commons.reflect.ConstructorUtils;
 import ltd.qubit.commons.text.Replacer;
 
 /**
- * An {@link AbstractConfig} is an abstract base class for classes implementing
- * the {@link Config} interface.
+ * {@link Config} 接口的抽象基类。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public abstract class AbstractConfig implements Config, Serializable {
 
@@ -48,11 +47,17 @@ public abstract class AbstractConfig implements Config, Serializable {
 
   protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isEmpty() {
     return size() == 0;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String getDescription(final String name) {
     final Property prop = get(name);
@@ -62,6 +67,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getDescription();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Type getType(final String name) {
     final Property prop = get(name);
@@ -71,6 +79,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getType();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isFinal(final String name) {
     final Property prop = get(name);
@@ -80,6 +91,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.isFinal();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int getCount(final String name) {
     final Property prop = get(name);
@@ -90,6 +104,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean getBoolean(final String name) {
     final Property prop = get(name);
@@ -102,6 +119,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsBoolean();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean getBoolean(final String name, final boolean defaultValue) {
     final Property prop = get(name);
@@ -111,6 +131,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsBoolean();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean[] getBooleans(final String name) {
     final Property prop = get(name);
@@ -120,6 +143,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsBoolean();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean[] getBooleans(final String name,
       @Nullable final boolean[] defaultValues) {
@@ -130,6 +156,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsBoolean();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public char getChar(final String name) {
     final Property prop = get(name);
@@ -142,6 +171,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsChar();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public char getChar(final String name, final char defaultValue) {
     final Property prop = get(name);
@@ -151,6 +183,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsChar();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public char[] getChars(final String name) {
     final Property prop = get(name);
@@ -160,6 +195,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsChar();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public char[] getChars(final String name,
       @Nullable final char[] defaultValues) {
@@ -170,6 +208,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsChar();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public byte getByte(final String name) {
     final Property prop = get(name);
@@ -181,7 +222,10 @@ public abstract class AbstractConfig implements Config, Serializable {
     }
     return prop.getValueAsByte();
   }
-
+    
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public byte getByte(final String name, final byte defaultValue) {
     final Property prop = get(name);
@@ -191,6 +235,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsByte();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public byte[] getBytes(final String name) {
     final Property prop = get(name);
@@ -200,6 +247,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsByte();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public byte[] getBytes(final String name,
       @Nullable final byte[] defaultValues) {
@@ -210,6 +260,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsByte();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public short getShort(final String name) {
     final Property prop = get(name);
@@ -222,6 +275,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsShort();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public short getShort(final String name, final short defaultValue) {
     final Property prop = get(name);
@@ -231,6 +287,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsShort();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public short[] getShorts(final String name) {
     final Property prop = get(name);
@@ -240,6 +299,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsShort();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public short[] getShorts(final String name,
       @Nullable final short[] defaultValues) {
@@ -250,6 +312,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsShort();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int getInt(final String name) {
     final Property prop = get(name);
@@ -262,6 +327,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsInt();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int getInt(final String name, final int defaultValue) {
     final Property prop = get(name);
@@ -271,6 +339,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsInt();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int[] getInts(final String name) {
     final Property prop = get(name);
@@ -280,6 +351,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsInt();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int[] getInts(final String name, @Nullable final int[] defaultValues) {
     final Property prop = get(name);
@@ -289,6 +363,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsInt();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public long getLong(final String name) {
     final Property prop = get(name);
@@ -301,6 +378,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsLong();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public long getLong(final String name, final long defaultValue) {
     final Property prop = get(name);
@@ -310,6 +390,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsLong();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public long[] getLongs(final String name) {
     final Property prop = get(name);
@@ -319,6 +402,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsLong();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public long[] getLongs(final String name,
       @Nullable final long[] defaultValues) {
@@ -329,6 +415,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsLong();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public float getFloat(final String name) {
     final Property prop = get(name);
@@ -341,6 +430,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsFloat();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public float getFloat(final String name, final float defaultValue) {
     final Property prop = get(name);
@@ -350,6 +442,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsFloat();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public float[] getFloats(final String name) {
     final Property prop = get(name);
@@ -358,7 +453,10 @@ public abstract class AbstractConfig implements Config, Serializable {
     }
     return prop.getValuesAsFloat();
   }
-
+  
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public float[] getFloats(final String name,
       @Nullable final float[] defaultValues) {
@@ -369,6 +467,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsFloat();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public double getDouble(final String name) {
     final Property prop = get(name);
@@ -381,6 +482,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsDouble();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public double getDouble(final String name, final double defaultValue) {
     final Property prop = get(name);
@@ -390,6 +494,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsDouble();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public double[] getDoubles(final String name) {
     final Property prop = get(name);
@@ -399,6 +506,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsDouble();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public double[] getDoubles(final String name,
       @Nullable final double[] defaultValues) {
@@ -409,6 +519,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsDouble();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String getRawString(final String name) {
     final Property prop = get(name);
@@ -421,6 +534,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsString();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String getRawString(final String name,
       @Nullable final String defaultValue) {
@@ -431,6 +547,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsString();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String[] getRawStrings(final String name) {
     final Property prop = get(name);
@@ -440,6 +559,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsString();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String[] getRawStrings(final String name,
       @Nullable final String[] defaultValues) {
@@ -450,12 +572,18 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsString();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String getString(final String name) {
     final String result = getRawString(name);
     return substitute(result);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String getString(final String name,
       @Nullable final String defaultValue) {
@@ -466,6 +594,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return result;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String[] getStrings(final String name) {
     final String[] result = getRawStrings(name);
@@ -477,6 +608,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return result;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String[] getStrings(final String name,
       @Nullable final String[] defaultValues) {
@@ -491,6 +625,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return result;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String substitute(@Nullable final String value) {
     logger.trace("Getting the substituted string value: {}", value);
@@ -559,6 +696,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return result;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public BigDecimal getBigDecimal(final String name) {
     final Property prop = get(name);
@@ -571,6 +711,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsBigDecimal();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public BigDecimal getBigDecimal(final String name,
       @Nullable final BigDecimal defaultValue) {
@@ -581,6 +724,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsBigDecimal();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public BigDecimal[] getBigDecimals(final String name) {
     final Property prop = get(name);
@@ -590,6 +736,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsBigDecimal();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public BigDecimal[] getBigDecimals(final String name,
       @Nullable final BigDecimal[] defaultValues) {
@@ -600,6 +749,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsBigDecimal();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public BigInteger getBigInteger(final String name) {
     final Property prop = get(name);
@@ -612,6 +764,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsBigInteger();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public BigInteger getBigInteger(final String name,
       @Nullable final BigInteger defaultValue) {
@@ -622,6 +777,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsBigInteger();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public BigInteger[] getBigIntegers(final String name) {
     final Property prop = get(name);
@@ -631,6 +789,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsBigInteger();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public BigInteger[] getBigIntegers(final String name,
       @Nullable final BigInteger[] defaultValues) {
@@ -641,6 +802,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsBigInteger();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public LocalDate getDate(final String name) {
     final Property prop = get(name);
@@ -653,6 +817,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsDate();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public LocalDate getDate(final String name, @Nullable final LocalDate defaultValue) {
     final Property prop = get(name);
@@ -662,6 +829,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsDate();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public LocalDate[] getDates(final String name) {
     final Property prop = get(name);
@@ -671,6 +841,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsDate();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public LocalDate[] getDates(final String name, @Nullable final LocalDate[] defaultValues) {
     final Property prop = get(name);
@@ -680,6 +853,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsDate();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public LocalTime getTime(final String name) {
     final Property prop = get(name);
@@ -692,6 +868,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsTime();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public LocalTime getTime(final String name, @Nullable final LocalTime defaultValue) {
     final Property prop = get(name);
@@ -701,6 +880,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsTime();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public LocalTime[] getTimes(final String name) {
     final Property prop = get(name);
@@ -710,6 +892,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsTime();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public LocalTime[] getTimes(final String name, @Nullable final LocalTime[] defaultValues) {
     final Property prop = get(name);
@@ -719,6 +904,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsTime();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public LocalDateTime getDateTime(final String name) {
     final Property prop = get(name);
@@ -731,6 +919,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsDateTime();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public LocalDateTime getDateTime(final String name, @Nullable final LocalDateTime defaultValue) {
     final Property prop = get(name);
@@ -740,6 +931,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsDateTime();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public LocalDateTime[] getDateTimes(final String name) {
     final Property prop = get(name);
@@ -749,6 +943,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsDateTime();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public LocalDateTime[] getDateTimes(final String name, @Nullable final LocalDateTime[] defaultValues) {
     final Property prop = get(name);
@@ -758,6 +955,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsDateTime();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public byte[] getByteArray(final String name) {
     final Property prop = get(name);
@@ -770,6 +970,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsByteArray();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public byte[] getByteArray(final String name,
       @Nullable final byte[] defaultValue) {
@@ -780,6 +983,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsByteArray();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public byte[][] getByteArrays(final String name) {
     final Property prop = get(name);
@@ -789,6 +995,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsByteArray();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public byte[][] getByteArrays(final String name,
       @Nullable final byte[][] defaultValues) {
@@ -799,6 +1008,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsByteArray();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public <E extends Enum<E>>
   E getEnum(final String name, final Class<E> enumType) {
@@ -817,6 +1029,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public <E extends Enum<E>>
   E getEnum(final String name, @Nullable final E defaultValue, final Class<E> enumType) {
@@ -851,6 +1066,9 @@ public abstract class AbstractConfig implements Config, Serializable {
   //   }
   // }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Class<?> getClass(final String name) {
     final Property prop = get(name);
@@ -863,6 +1081,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsClass();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Class<?> getClass(final String name,
       @Nullable final Class<?> defaultValue) {
@@ -873,6 +1094,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValueAsClass();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Class<?> getClass(final String name,
       @Nullable final String defaultClassName) {
@@ -892,6 +1116,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Class<?>[] getClasses(final String name) {
     final Property prop = get(name);
@@ -901,6 +1128,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsClass();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Class<?>[] getClasses(final String name,
       @Nullable final Class<?>[] defaultValues) {
@@ -911,6 +1141,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     return prop.getValuesAsClass();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Class<?>[] getClasses(final String name,
       @Nullable final String[] defaultClassNames) {
@@ -935,6 +1168,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @SuppressWarnings("unchecked")
   @Override
   public <T> T getInstance(final String name) {
@@ -951,6 +1187,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @SuppressWarnings("unchecked")
   @Override
   public <T> T getInstance(final String name,
@@ -972,6 +1211,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @SuppressWarnings("unchecked")
   @Override
   public <T> T getInstance(final String name,
@@ -994,6 +1236,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @SuppressWarnings("unchecked")
   @Override
   public <T> T getInstance(final String name,
@@ -1014,6 +1259,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @SuppressWarnings("unchecked")
   @Override
   public <T> T[] getInstances(final String name, final Class<?> clazz) {
@@ -1037,6 +1285,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @SuppressWarnings("unchecked")
   @Override
   public <T> T[] getInstances(final String name, final Class<?> clazz,
@@ -1064,6 +1315,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @SuppressWarnings("unchecked")
   @Override
   public <T> T[] getInstances(final String name, final Class<?> clazz,
@@ -1091,6 +1345,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @SuppressWarnings("unchecked")
   @Override
   public <T> T[] getInstances(final String name, final Class<?> clazz,
@@ -1117,6 +1374,9 @@ public abstract class AbstractConfig implements Config, Serializable {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Config cloneEx() {
     try {

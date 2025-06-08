@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -36,10 +36,9 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * A {@link Config} object which loads/stores configurations from/to Java
- * properties files.
+ * 一个{@link Config}对象，用于从Java属性文件加载/存储配置。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public class PropertiesConfig extends DefaultConfig {
@@ -48,36 +47,36 @@ public class PropertiesConfig extends DefaultConfig {
   private static final long serialVersionUID = 6463503499725651996L;
 
   /**
-   * The default charset of the properties file.
+   * 属性文件的默认字符集。
    */
   public static final Charset DEFAULT_CHARSET = UTF_8;
 
   private volatile Charset charset;
 
   /**
-   * Constructs an empty {@link PropertiesConfig}, with the default charset.
+   * 使用默认字符集构造一个空的{@link PropertiesConfig}。
    */
   public PropertiesConfig() {
     charset = DEFAULT_CHARSET;
   }
 
   /**
-   * Constructs an empty {@link PropertiesConfig}, with the specified charset.
+   * 使用指定的字符集构造一个空的{@link PropertiesConfig}。
    *
    * @param charset
-   *     the charset of the properties file.
+   *     属性文件的字符集。
    */
   public PropertiesConfig(final Charset charset) {
     this.charset = requireNonNull("charset", charset);
   }
 
   /**
-   * Constructs an {@link PropertiesConfig}.
+   * 构造一个{@link PropertiesConfig}。
    *
    * @param resource
-   *     the path of the properties resource where to load the configuration.
+   *     要加载配置的属性资源的路径。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public PropertiesConfig(final String resource) {
     charset = DEFAULT_CHARSET;
@@ -85,14 +84,14 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Constructs an {@link PropertiesConfig}.
+   * 构造一个{@link PropertiesConfig}。
    *
    * @param resource
-   *     the path of the properties resource where to load the configuration.
+   *     要加载配置的属性资源的路径。
    * @param charset
-   *     the charset of the properties file.
+   *     属性文件的字符集。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public PropertiesConfig(final String resource, final Charset charset) {
     this.charset = requireNonNull("charset", charset);
@@ -100,14 +99,14 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Constructs an {@link PropertiesConfig}.
+   * 构造一个{@link PropertiesConfig}。
    *
    * @param resource
-   *     the path of the properties resource where to load the configuration.
+   *     要加载配置的属性资源的路径。
    * @param loaderClass
-   *     the class used to load the resource.
+   *     用于加载资源的类。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public PropertiesConfig(final String resource, final Class<?> loaderClass) {
     charset = DEFAULT_CHARSET;
@@ -115,16 +114,16 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Constructs an {@link PropertiesConfig}.
+   * 构造一个{@link PropertiesConfig}。
    *
    * @param resource
-   *     the path of the properties resource where to load the configuration.
+   *     要加载配置的属性资源的路径。
    * @param loaderClass
-   *     the class used to load the resource.
+   *     用于加载资源的类。
    * @param charset
-   *     the charset of the properties file.
+   *     属性文件的字符集。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public PropertiesConfig(final String resource, final Class<?> loaderClass,
       final Charset charset) {
@@ -133,14 +132,14 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Constructs an {@link PropertiesConfig}.
+   * 构造一个{@link PropertiesConfig}。
    *
    * @param resource
-   *     the path of the properties resource where to load the configuration.
+   *     要加载配置的属性资源的路径。
    * @param loader
-   *     the class loader use to load the resource.
+   *     用于加载资源的类加载器。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public PropertiesConfig(final String resource, final ClassLoader loader) {
     charset = DEFAULT_CHARSET;
@@ -148,16 +147,16 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Constructs an {@link PropertiesConfig}.
+   * 构造一个{@link PropertiesConfig}。
    *
    * @param resource
-   *     the path of the properties resource where to load the configuration.
+   *     要加载配置的属性资源的路径。
    * @param loader
-   *     the class loader use to load the resource.
+   *     用于加载资源的类加载器。
    * @param charset
-   *     the charset of the properties file.
+   *     属性文件的字符集。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public PropertiesConfig(final String resource, final ClassLoader loader,
       final Charset charset) {
@@ -166,12 +165,12 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Constructs an {@link PropertiesConfig}.
+   * 构造一个{@link PropertiesConfig}。
    *
    * @param url
-   *     the URL of the properties resource where to load the configuration.
+   *     要加载配置的属性资源的URL。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public PropertiesConfig(final Url url) {
     charset = DEFAULT_CHARSET;
@@ -179,14 +178,14 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Constructs an {@link PropertiesConfig}.
+   * 构造一个{@link PropertiesConfig}。
    *
    * @param url
-   *     the URL of the properties resource where to load the configuration.
+   *     要加载配置的属性资源的URL。
    * @param charset
-   *     the charset of the properties file.
+   *     属性文件的字符集。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public PropertiesConfig(final Url url, final Charset charset) {
     this.charset = requireNonNull("charset", charset);
@@ -194,12 +193,12 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Constructs an {@link PropertiesConfig}.
+   * 构造一个{@link PropertiesConfig}。
    *
    * @param url
-   *     the URL of the properties resource where to load the configuration.
+   *     要加载配置的属性资源的URL。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public PropertiesConfig(final URL url) {
     charset = DEFAULT_CHARSET;
@@ -207,14 +206,14 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Constructs an {@link PropertiesConfig}.
+   * 构造一个{@link PropertiesConfig}。
    *
    * @param url
-   *     the URL of the properties resource where to load the configuration.
+   *     要加载配置的属性资源的URL。
    * @param charset
-   *     the charset of the properties file.
+   *     属性文件的字符集。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public PropertiesConfig(final URL url, final Charset charset) {
     this.charset = requireNonNull("charset", charset);
@@ -222,12 +221,12 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Constructs an {@link PropertiesConfig}.
+   * 构造一个{@link PropertiesConfig}。
    *
    * @param uri
-   *     the URI of the properties resource where to load the configuration.
+   *     要加载配置的属性资源的URI。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public PropertiesConfig(final URI uri) {
     charset = DEFAULT_CHARSET;
@@ -235,14 +234,14 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Constructs an {@link PropertiesConfig}.
+   * 构造一个{@link PropertiesConfig}。
    *
    * @param uri
-   *     the URI of the properties resource where to load the configuration.
+   *     要加载配置的属性资源的URI。
    * @param charset
-   *     the charset of the properties file.
+   *     属性文件的字符集。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public PropertiesConfig(final URI uri, final Charset charset) {
     this.charset = requireNonNull("charset", charset);
@@ -250,12 +249,12 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Constructs an {@link PropertiesConfig}.
+   * 构造一个{@link PropertiesConfig}。
    *
    * @param file
-   *     the properties file where to load the configuration.
+   *     要加载配置的属性文件。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public PropertiesConfig(final File file) {
     charset = DEFAULT_CHARSET;
@@ -263,14 +262,14 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Constructs an {@link PropertiesConfig}.
+   * 构造一个{@link PropertiesConfig}。
    *
    * @param file
-   *     the properties file where to load the configuration.
+   *     要加载配置的属性文件。
    * @param charset
-   *     the charset of the properties file.
+   *     属性文件的字符集。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public PropertiesConfig(final File file, final Charset charset) {
     this.charset = requireNonNull("charset", charset);
@@ -278,15 +277,12 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Constructs an {@link PropertiesConfig}.
-   *
-   * <p>After calling this function, the input stream remains opened.
+   * 构造一个{@link PropertiesConfig}。
    *
    * @param in
-   *     the input stream storing the properties where to load the
-   *     configuration.
+   *     从中加载配置的属性文件的输入流。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public PropertiesConfig(final InputStream in) {
     charset = DEFAULT_CHARSET;
@@ -294,17 +290,14 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Constructs an {@link PropertiesConfig}.
-   *
-   * <p>After calling this function, the input stream remains opened.
+   * 构造一个{@link PropertiesConfig}。
    *
    * @param in
-   *     the input stream storing the properties where to load the
-   *     configuration.
+   *     从中加载配置的属性文件的输入流。
    * @param charset
-   *     the charset of the properties file.
+   *     属性文件的字符集。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public PropertiesConfig(final InputStream in, final Charset charset) {
     this.charset = requireNonNull("charset", charset);
@@ -312,14 +305,12 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Constructs an {@link PropertiesConfig}.
-   *
-   * <p>After calling this function, the reader remains opened.
+   * 构造一个{@link PropertiesConfig}。
    *
    * @param reader
-   *     the reader storing the properties where to load the configuration.
+   *     从中加载配置的属性文件的读取器。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public PropertiesConfig(final Reader reader) {
     charset = DEFAULT_CHARSET;
@@ -327,16 +318,14 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Constructs an {@link PropertiesConfig}.
-   *
-   * <p>After calling this function, the reader remains opened.
+   * 构造一个{@link PropertiesConfig}。
    *
    * @param reader
-   *     the reader storing the properties where to load the configuration.
+   *     从中加载配置的属性文件的读取器。
    * @param charset
-   *     the charset of the properties file.
+   *     属性文件的字符集。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public PropertiesConfig(final Reader reader, final Charset charset) {
     this.charset = requireNonNull("charset", charset);
@@ -344,31 +333,31 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Gets the charset.
+   * 获取此属性文件的字符集。
    *
-   * @return the charset.
+   * @return 此属性文件的字符集。
    */
   public Charset getCharset() {
     return charset;
   }
 
   /**
-   * Sets the charset.
+   * 设置此属性文件的字符集。
    *
    * @param charset
-   *     the new charset to set.
+   *     要设置的新字符集。
    */
   public void setCharset(final Charset charset) {
     this.charset = requireNonNull("charset", charset);
   }
 
   /**
-   * Loads the configuration from an properties file.
+   * 从指定的资源加载此配置。
    *
    * @param resource
-   *     the path of the properties resource where to load the configuration.
+   *     指定资源的路径。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何I/O错误。
    */
   public synchronized void load(final String resource) {
     logger.debug("Loading properties configuration from {}", resource);
@@ -381,14 +370,14 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Loads the configuration from an properties file.
+   * 从指定的资源加载此配置。
    *
    * @param resource
-   *     the path of the properties resource where to load the configuration.
+   *     指定资源的路径。
    * @param loaderClass
-   *     the class used to load the resource.
+   *     用于加载资源的类。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何I/O错误。
    */
   public synchronized void load(final String resource, final Class<?> loaderClass) {
     logger.debug("Loading properties configuration from {}", resource);
@@ -401,14 +390,14 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Loads the configuration from an properties file.
+   * 从指定的资源加载此配置。
    *
    * @param resource
-   *     the path of the properties resource where to load the configuration.
+   *     指定资源的路径。
    * @param loader
-   *     the class loader used to load the resource.
+   *     用于加载资源的类加载器。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何I/O错误。
    */
   public synchronized void load(final String resource, final ClassLoader loader) {
     logger.debug("Loading properties configuration from {}", resource);
@@ -421,12 +410,12 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Loads the configuration from an properties file.
+   * 从指定的URL加载此配置。
    *
    * @param url
-   *     the URL of the properties resource where to load the configuration.
+   *     指定的URL。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何I/O错误。
    */
   public synchronized void load(final Url url) {
     logger.debug("Loading properties configuration from {}", url);
@@ -439,12 +428,12 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Loads the configuration from an properties file.
+   * 从指定的URL加载此配置。
    *
    * @param url
-   *     the URL of the properties resource where to load the configuration.
+   *     指定的URL。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何I/O错误。
    */
   public synchronized void load(final URL url) {
     logger.debug("Loading properties configuration from {}", url);
@@ -457,12 +446,12 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Loads the configuration from an properties file.
+   * 从指定的URI加载此配置。
    *
    * @param uri
-   *     the URI of the properties resource where to load the configuration.
+   *     指定的URI。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何I/O错误。
    */
   public synchronized void load(final URI uri) {
     try {
@@ -474,12 +463,12 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Loads the configuration from an properties file.
+   * 从指定的文件加载此配置。
    *
    * @param file
-   *     the properties file where to load the configuration.
+   *     指定的文件。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何I/O错误。
    */
   public synchronized void load(final File file) {
     logger.debug("Loading properties configuration from {}", file);
@@ -492,15 +481,14 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Loads the configuration from a properties read from an input stream.
-   *
-   * <p>After calling this function, the input stream remains opened.
+   * 从指定的输入流加载此配置。
+   * <p>
+   * 此函数将<b>不</b>关闭指定的输入流。
    *
    * @param in
-   *     the input stream of the properties file where to load the
-   *     configuration.
+   *     指定的输入流。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何I/O错误。
    */
   public synchronized void load(final InputStream in) {
     logger.debug("Loading properties configuration from {}", in);
@@ -513,14 +501,14 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Loads the configuration from a properties read from a reader.
-   *
-   * <p>After calling this function, the reader remains opened.
+   * 从指定的读取器加载此配置。
+   * <p>
+   * 此函数将<b>不</b>关闭指定的读取器。
    *
    * @param reader
-   *     the reader of the properties file where to load the configuration.
+   *     指定的读取器。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何I/O错误。
    */
   public synchronized void load(final Reader reader) {
     logger.debug("Loading properties configuration from {}", reader);
@@ -534,15 +522,13 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Loads the configuration from an properties.
+   * 从指定的{@link Properties}对象加载此配置。
    *
    * @param properties
-   *     the properties where to load the configuration.
-   * @throws ConfigurationError
-   *     if any error occurs.
+   *     指定的{@link Properties}对象。
    */
   public synchronized void load(final Properties properties) {
-    removeAll();
+    clear();
     for (final Map.Entry<Object, Object> entry : properties.entrySet()) {
       final String name = (String) entry.getKey();
       final String value = (String) entry.getValue();
@@ -551,14 +537,12 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Stores this configuration to a output stream.
-   *
-   * <p>After calling this function, the stream is flushed but remains opened.
+   * 将此配置存储到指定的输出流。
    *
    * @param out
-   *     the output stream where to store the configuration.
+   *     指定的输出流。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何I/O错误。
    */
   public synchronized void store(final OutputStream out) {
     logger.debug("Storing properties configuration from {}", out);
@@ -571,14 +555,12 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Stores this configuration to a print stream.
-   *
-   * <p>After calling this function, the stream is flushed but remains opened.
+   * 将此配置存储到指定的打印流。
    *
    * @param out
-   *     the print stream where to store the configuration.
+   *     指定的打印流。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何I/O错误。
    */
   public synchronized void store(final PrintStream out) {
     logger.debug("Storing properties configuration from {}", out);
@@ -591,14 +573,12 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Stores this configuration to a writer.
-   *
-   * <p>After calling this function, the writer is flushed but remains opened.
+   * 将此配置存储到指定的写入器。
    *
    * @param writer
-   *     the writer where to store the configuration.
+   *     指定的写入器。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何I/O错误。
    */
   public synchronized void store(final Writer writer) {
     logger.debug("Storing properties configuration from {}", writer);
@@ -613,12 +593,12 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Stores this configuration to an properties file.
+   * 将此配置存储到指定的文件。
    *
    * @param file
-   *     the properties file where to store the configuration.
+   *     指定的文件。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何I/O错误。
    */
   public synchronized void store(final File file) {
     logger.debug("Storing properties configuration from {}", file);
@@ -635,14 +615,13 @@ public class PropertiesConfig extends DefaultConfig {
   }
 
   /**
-   * Stores this configuration to a properties.
+   * 将此配置存储到{@link Properties}对象中。
    *
-   * @return the properties storing this configuration.
+   * @return 存储此配置的{@link Properties}对象。
    */
   public synchronized Properties store() {
     final Properties result = new Properties();
-    for (final Map.Entry<String, DefaultProperty> entry : properties
-        .entrySet()) {
+    for (final Map.Entry<String, DefaultProperty> entry : properties.entrySet()) {
       final String name = entry.getKey();
       final DefaultProperty property = entry.getValue();
       result.setProperty(name, property.getValueAsString());

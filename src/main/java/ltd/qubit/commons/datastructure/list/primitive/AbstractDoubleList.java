@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,11 +8,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list.primitive;
 
+import java.io.Serial;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 
+/**
+ * {@link DoubleList} 的抽象基类。
+ *
+ * @author 胡海星
+ */
 public abstract class AbstractDoubleList extends AbstractDoubleCollection implements DoubleList {
 
+  @Serial
   private static final long serialVersionUID = -8869106754958585067L;
 
   protected int modifyCount = 0;

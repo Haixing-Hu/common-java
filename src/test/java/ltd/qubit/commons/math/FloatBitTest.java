@@ -1,11 +1,11 @@
-// ////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 //
 //    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //
-// ////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.math;
 
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * FloatBit类的单元测试。
- * 
+ *
  * @author Haixing Hu
  */
 class FloatBitTest {
@@ -35,7 +35,7 @@ class FloatBitTest {
         assertEquals(38, FloatBit.MAX_EXPONENT_10);
         assertEquals(-149, FloatBit.DENORM_MIN_EXPONENT);
         assertEquals(-44, FloatBit.DENORM_MIN_EXPONENT_10);
-        
+
         // 测试掩码常量
         assertEquals(0x80000000, FloatBit.SIGN_BIT_MASK);
         assertEquals(0x00800000, FloatBit.HIDDEN_BITS_MASK);
@@ -58,7 +58,7 @@ class FloatBitTest {
         for (final float value : testValues) {
             final int bits = FloatBit.toBits(value);
             final float restored = FloatBit.fromBits(bits);
-            
+
             if (Float.isNaN(value)) {
                 assertTrue(Float.isNaN(restored));
             } else {
@@ -73,7 +73,7 @@ class FloatBitTest {
         assertEquals(0, FloatBit.getSignBit(FloatBit.toBits(0.0f)));
         assertEquals(0, FloatBit.getSignBit(FloatBit.toBits(Float.POSITIVE_INFINITY)));
         assertEquals(0, FloatBit.getSignBit(FloatBit.toBits(Float.MAX_VALUE)));
-        
+
         assertTrue(FloatBit.getSignBit(FloatBit.toBits(-1.0f)) != 0);
         assertTrue(FloatBit.getSignBit(FloatBit.toBits(-0.0f)) != 0);
         assertTrue(FloatBit.getSignBit(FloatBit.toBits(Float.NEGATIVE_INFINITY)) != 0);
@@ -84,13 +84,13 @@ class FloatBitTest {
     void testGetMantissa() {
         final int bits1 = FloatBit.toBits(1.0f);
         assertEquals(0, FloatBit.getMantissa(bits1)); // 标准化数的尾数为0（隐含的1不包含在内）
-        
+
         final int bits2 = FloatBit.toBits(1.5f); // 1.5 = 1.1 * 2^0
         assertTrue(FloatBit.getMantissa(bits2) != 0);
-        
+
         final int bits3 = FloatBit.toBits(0.0f);
         assertEquals(0, FloatBit.getMantissa(bits3)); // 零的尾数为0
-        
+
         final int bits4 = FloatBit.toBits(Float.MIN_VALUE);
         assertEquals(1, FloatBit.getMantissa(bits4)); // 最小非标准化数的尾数为1
     }
@@ -100,18 +100,18 @@ class FloatBitTest {
         final int bits1 = FloatBit.toBits(1.0f);
         assertEquals(127, FloatBit.getExponent(bits1)); // 1.0f的指数为0+偏移量127
         assertEquals(0, FloatBit.getActualExponent(bits1)); // 实际指数为0
-        
+
         final int bits2 = FloatBit.toBits(2.0f);
         assertEquals(128, FloatBit.getExponent(bits2)); // 2.0f的指数为1+偏移量127
         assertEquals(1, FloatBit.getActualExponent(bits2)); // 实际指数为1
-        
+
         final int bits3 = FloatBit.toBits(0.5f);
         assertEquals(126, FloatBit.getExponent(bits3)); // 0.5f的指数为-1+偏移量127
         assertEquals(-1, FloatBit.getActualExponent(bits3)); // 实际指数为-1
-        
+
         final int bits4 = FloatBit.toBits(0.0f);
         assertEquals(0, FloatBit.getExponent(bits4)); // 零的指数为0
-        
+
         final int bits5 = FloatBit.toBits(Float.POSITIVE_INFINITY);
         assertEquals(255, FloatBit.getExponent(bits5)); // 无穷大的指数为最大值
     }
@@ -155,7 +155,7 @@ class FloatBitTest {
         assertTrue(FloatBit.isNormalized(-Float.MIN_NORMAL));
         assertTrue(FloatBit.isNormalized(Float.MAX_VALUE));
         assertTrue(FloatBit.isNormalized(-Float.MAX_VALUE));
-        
+
         assertFalse(FloatBit.isNormalized(0.0f));
         assertFalse(FloatBit.isNormalized(-0.0f));
         assertFalse(FloatBit.isNormalized(Float.MIN_VALUE));
@@ -174,7 +174,7 @@ class FloatBitTest {
         assertFalse(FloatBit.isDenormalized(Float.POSITIVE_INFINITY));
         assertFalse(FloatBit.isDenormalized(Float.NEGATIVE_INFINITY));
         assertFalse(FloatBit.isDenormalized(Float.NaN));
-        
+
         assertTrue(FloatBit.isDenormalized(Float.MIN_VALUE));
         assertTrue(FloatBit.isDenormalized(-Float.MIN_VALUE));
     }
@@ -239,7 +239,7 @@ class FloatBitTest {
         assertTrue(FloatBit.isFinite(-Float.MAX_VALUE));
         assertTrue(FloatBit.isFinite(Float.MIN_VALUE));
         assertTrue(FloatBit.isFinite(Float.MIN_NORMAL));
-        
+
         assertFalse(FloatBit.isFinite(Float.POSITIVE_INFINITY));
         assertFalse(FloatBit.isFinite(Float.NEGATIVE_INFINITY));
         assertFalse(FloatBit.isFinite(Float.NaN));
@@ -252,13 +252,13 @@ class FloatBitTest {
         assertEquals(1, FloatBit.sign(Float.MIN_VALUE));
         assertEquals(1, FloatBit.sign(Float.MIN_NORMAL));
         assertEquals(1, FloatBit.sign(0.5f));
-        
+
         assertEquals(-1, FloatBit.sign(-1.0f));
         assertEquals(-1, FloatBit.sign(-Float.MAX_VALUE));
         assertEquals(-1, FloatBit.sign(-Float.MIN_VALUE));
         assertEquals(-1, FloatBit.sign(-Float.MIN_NORMAL));
         assertEquals(-1, FloatBit.sign(-0.5f));
-        
+
         assertEquals(0, FloatBit.sign(0.0f));
         assertEquals(0, FloatBit.sign(-0.0f));
     }
@@ -268,19 +268,19 @@ class FloatBitTest {
         // 测试构造1.0f
         final float result1 = FloatBit.compose(0, 0, 0);
         assertEquals(1.0f, result1, 0.0f);
-        
+
         // 测试构造-1.0f
         final float result2 = FloatBit.compose(1, 0, 0);
         assertEquals(-1.0f, result2, 0.0f);
-        
+
         // 测试构造2.0f (指数为1)
         final float result3 = FloatBit.compose(0, 1, 0);
         assertEquals(2.0f, result3, 0.0f);
-        
+
         // 测试构造0.5f (指数为-1)
         final float result4 = FloatBit.compose(0, -1, 0);
         assertEquals(0.5f, result4, 0.0f);
-        
+
         // 测试构造1.5f (指数为0，尾数为0x400000)
         final float result5 = FloatBit.compose(0, 0, 0x400000);
         assertEquals(1.5f, result5, 0.0f);
@@ -292,15 +292,15 @@ class FloatBitTest {
         assertEquals(-1.0f, FloatBit.copySign(1.0f, -2.0f), 0.0f);
         assertEquals(3.14f, FloatBit.copySign(3.14f, 1.0f), 0.0f);
         assertEquals(-3.14f, FloatBit.copySign(3.14f, -1.0f), 0.0f);
-        
+
         // 测试零值
         assertEquals(0.0f, FloatBit.copySign(0.0f, 1.0f), 0.0f);
         assertEquals(-0.0f, FloatBit.copySign(0.0f, -1.0f), 0.0f);
-        
+
         // 测试无穷大
         assertEquals(Float.POSITIVE_INFINITY, FloatBit.copySign(Float.POSITIVE_INFINITY, 1.0f));
         assertEquals(Float.NEGATIVE_INFINITY, FloatBit.copySign(Float.POSITIVE_INFINITY, -1.0f));
-        
+
         // 测试NaN
         assertTrue(Float.isNaN(FloatBit.copySign(Float.NaN, 1.0f)));
         assertTrue(Float.isNaN(FloatBit.copySign(Float.NaN, -1.0f)));
@@ -311,22 +311,22 @@ class FloatBitTest {
         final float value = 1.0f;
         final float nextUp = FloatBit.nextUp(value);
         final float nextDown = FloatBit.nextDown(value);
-        
+
         assertTrue(nextUp > value);
         assertTrue(nextDown < value);
-        
+
         // 测试边界情况
         assertEquals(Float.POSITIVE_INFINITY, FloatBit.nextUp(Float.MAX_VALUE));
         assertEquals(Float.NEGATIVE_INFINITY, FloatBit.nextDown(-Float.MAX_VALUE));
-        
+
         // 测试零值
         assertTrue(FloatBit.nextUp(0.0f) > 0.0f);
         assertTrue(FloatBit.nextDown(0.0f) < 0.0f);
-        
+
         // 测试无穷大
         assertEquals(Float.POSITIVE_INFINITY, FloatBit.nextUp(Float.POSITIVE_INFINITY));
         assertEquals(Float.NEGATIVE_INFINITY, FloatBit.nextDown(Float.NEGATIVE_INFINITY));
-        
+
         // 测试NaN
         assertTrue(Float.isNaN(FloatBit.nextUp(Float.NaN)));
         assertTrue(Float.isNaN(FloatBit.nextDown(Float.NaN)));
@@ -350,7 +350,7 @@ class FloatBitTest {
         for (float value : specialValues) {
             int bits = FloatBit.toBits(value);
             float restored = FloatBit.fromBits(bits);
-            
+
             if (Float.isNaN(value)) {
                 assertTrue(Float.isNaN(restored));
             } else {
@@ -364,15 +364,15 @@ class FloatBitTest {
         // 测试位操作的正确性
         float value = 3.14159f;
         int bits = FloatBit.toBits(value);
-        
+
         int signBit = FloatBit.getSignBit(bits);
         int exponent = FloatBit.getExponent(bits);
         int mantissa = FloatBit.getMantissa(bits);
-        
+
         // 重新组合应该得到原始值
-        float reconstructed = FloatBit.compose(signBit != 0 ? 1 : 0, 
-                                               exponent - FloatBit.EXPONENT_BIAS, 
+        float reconstructed = FloatBit.compose(signBit != 0 ? 1 : 0,
+                                               exponent - FloatBit.EXPONENT_BIAS,
                                                mantissa);
         assertEquals(value, reconstructed, 1e-6f);
     }
-} 
+}

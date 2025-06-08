@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,14 +13,13 @@ import java.util.Locale;
 import javax.annotation.Nullable;
 
 /**
- * Simple implementation of the {@link LocaleContext} interface,
- * always returning a specified {@code Locale}.
+ * {@link LocaleContext} 接口的简单实现，始终返回指定的 {@code Locale}。
  * <p>
- * This class is a copy of {@code org.springframework.context.i18n.SimpleLocaleContext}
- * with slight modifications. It is used to avoid the dependency of Spring Framework.
+ * 此类是 {@code org.springframework.context.i18n.SimpleLocaleContext} 的副本，
+ * 稍作修改。它用于避免对 Spring Framework 的依赖。
  *
  * @author Juergen Hoeller
- * @author Haixing Hu
+ * @author 胡海星
  * @see LocaleContextHolder#setLocaleContext
  * @see LocaleContextHolder#getLocale()
  * @see SimpleTimeZoneAwareLocaleContext
@@ -31,14 +30,17 @@ public class SimpleLocaleContext implements LocaleContext {
   private final Locale locale;
 
   /**
-   * Create a new {@code SimpleLocaleContext} that exposes the specified {@link Locale}.
-   * <p>Every {@link #getLocale()} call will return this locale.
-   * @param locale the {@code Locale} to expose, or {@code null} for no specific one
+   * 创建一个新的 {@code SimpleLocaleContext}，暴露指定的 {@link Locale}。
+   * <p>每次 {@link #getLocale()} 调用都将返回此区域设置。
+   * @param locale 要暴露的 {@code Locale}，或 {@code null} 表示没有特定的区域设置
    */
   public SimpleLocaleContext(@Nullable final Locale locale) {
     this.locale = locale;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   @Nullable
   public Locale getLocale() {

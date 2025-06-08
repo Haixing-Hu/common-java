@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -12,29 +12,26 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.UndeclaredThrowableException;
 
 /**
- * Provides utility methods for handling exceptions.
- * <p>
- * This class is copied from the {@code org.springframework.util.ReflectionUtils}
- * class of the Spring Framework. It is used to avoid the dependency of Spring
- * Framework.
+ * 提供处理异常的实用方法。
  *
- * @author Haixing Hu
+ * <p>此类复制自 Spring Framework 的 {@code org.springframework.util.ReflectionUtils} 类。
+ * 它用于避免对 Spring Framework 的依赖。
+ *
+ * @author 胡海星
  */
 public class ExceptionUtils {
 
   /**
-   * Handle the given reflection exception.
-   * <p>
-   * Should only be called if no checked exception is expected to be thrown by a
-   * target method, or if an error occurs while accessing a method or field.
-   * <p>
-   * Throws the underlying RuntimeException or Error in case of an
-   * InvocationTargetException with such a root cause. Throws an
-   * IllegalStateException with an appropriate message or
-   * UndeclaredThrowableException otherwise.
+   * 处理给定的反射异常。
+   *
+   * <p>仅当目标方法不希望抛出检查异常，或者在访问方法或字段时发生错误时才应调用此方法。
+   *
+   * <p>在 InvocationTargetException 具有此类根原因的情况下，抛出底层的
+   * RuntimeException 或 Error。否则，抛出带有适当消息的 IllegalStateException
+   * 或 UndeclaredThrowableException。
    *
    * @param ex
-   *     the reflection exception to handle
+   *     要处理的反射异常。
    */
   public static void handleReflectionException(final Exception ex) {
     if (ex instanceof NoSuchMethodException) {
@@ -53,34 +50,33 @@ public class ExceptionUtils {
   }
 
   /**
-   * Handle the given invocation target exception. Should only be called if no
-   * checked exception is expected to be thrown by the target method.
-   * <p>
-   * Throws the underlying RuntimeException or Error in case of such a root
-   * cause. Throws an UndeclaredThrowableException otherwise.
+   * 处理给定的调用目标异常。
+   *
+   * <p>仅当目标方法不希望抛出检查异常时才应调用此方法。
+   *
+   * <p>在此类根原因的情况下，抛出底层的 RuntimeException 或 Error。否则抛出
+   * UndeclaredThrowableException。
    *
    * @param ex
-   *     the invocation target exception to handle
+   *     要处理的调用目标异常。
    */
   public static void handleInvocationTargetException(final InvocationTargetException ex) {
     rethrowRuntimeException(ex.getTargetException());
   }
 
   /**
-   * Rethrow the given {@link Throwable exception}, which is presumably the
-   * <em>target exception</em> of an {@link InvocationTargetException}.
-   * <p>
-   * Should only be called if no checked exception is expected to be thrown by
-   * the target method.
-   * <p>
-   * Rethrows the underlying exception cast to a {@link RuntimeException} or
-   * {@link Error} if appropriate; otherwise, throws an
-   * {@link UndeclaredThrowableException}.
+   * 重新抛出给定的 {@link Throwable exception}，它可能是
+   * {@link InvocationTargetException} 的<i>目标异常</i>。
+   *
+   * <p>仅当目标方法不希望抛出检查异常时才应调用此方法。
+   *
+   * <p>如果适用，将底层异常转换为 {@link RuntimeException} 或 {@link Error}
+   * 并重新抛出；否则，抛出 {@link UndeclaredThrowableException}。
    *
    * @param ex
-   *     the exception to rethrow
+   *     要重新抛出的异常。
    * @throws RuntimeException
-   *     the rethrown exception
+   *     重新抛出的异常。
    */
   public static void rethrowRuntimeException(final Throwable ex) {
     if (ex instanceof RuntimeException) {
@@ -93,20 +89,18 @@ public class ExceptionUtils {
   }
 
   /**
-   * Rethrow the given {@link Throwable exception}, which is presumably the
-   * <em>target exception</em> of an {@link InvocationTargetException}.
-   * <p>
-   * Should only be called if no checked exception is expected to be thrown by
-   * the target method.
-   * <p>
-   * Rethrows the underlying exception cast to an {@link Exception} or
-   * {@link Error} if appropriate; otherwise, throws an
-   * {@link UndeclaredThrowableException}.
+   * 重新抛出给定的 {@link Throwable exception}，它可能是
+   * {@link InvocationTargetException} 的<i>目标异常</i>。
+   *
+   * <p>仅当目标方法不希望抛出检查异常时才应调用此方法。
+   *
+   * <p>如果适用，将底层异常转换为 {@link Exception} 或 {@link Error}
+   * 并重新抛出；否则，抛出 {@link UndeclaredThrowableException}。
    *
    * @param throwable
-   *     the exception to rethrow
+   *     要重新抛出的异常。
    * @throws Exception
-   *     the rethrown exception (in case of a checked exception)
+   *     重新抛出的异常（在检查异常的情况下）。
    */
   public static void rethrowException(final Throwable throwable)
       throws Exception {

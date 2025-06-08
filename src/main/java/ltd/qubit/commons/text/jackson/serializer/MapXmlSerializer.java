@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -20,9 +20,9 @@ import static ltd.qubit.commons.text.jackson.deserializer.MapXmlDeserializer.KEY
 import static ltd.qubit.commons.text.jackson.deserializer.MapXmlDeserializer.VALUE_FIELD_NAME;
 
 /**
- * The {@link JsonSerializer} for serializing {@link Map} objects in XML format.
+ * 用于以 XML 格式序列化 {@link Map} 对象的 {@link JsonSerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @SuppressWarnings("rawtypes")
 public class MapXmlSerializer extends JsonSerializer<Map> {

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -28,9 +28,9 @@ import ltd.qubit.commons.net.Url;
 import ltd.qubit.commons.text.xml.XmlException;
 
 /**
- * A {@link Config} object which loads/stores configurations from/to XML files.
+ * 一个{@link Config}对象，用于从XML文件加载/存储配置。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public final class XmlConfig extends DefaultConfig {
@@ -39,134 +39,134 @@ public final class XmlConfig extends DefaultConfig {
   private static final long serialVersionUID = -2988726634410349164L;
 
   /**
-   * Constructs an empty {@link XmlConfig}.
+   * 构造一个空的{@link XmlConfig}。
    */
   public XmlConfig() {
   }
 
   /**
-   * Constructs an {@link XmlConfig}.
+   * 构造一个{@link XmlConfig}。
    *
    * @param resource
-   *     the path of the XML resource where to load the configuration.
+   *     要加载配置的XML资源的路径。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public XmlConfig(final String resource) {
     load(resource);
   }
 
   /**
-   * Constructs an {@link XmlConfig}.
+   * 构造一个{@link XmlConfig}。
    *
    * @param resource
-   *     the path of the XML resource where to load the configuration.
+   *     要加载配置的XML资源的路径。
    * @param loaderClass
-   *     the class used to load the resource.
+   *     用于加载资源的类。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public XmlConfig(final String resource, final Class<?> loaderClass) {
     load(resource, loaderClass);
   }
 
   /**
-   * Constructs an {@link XmlConfig}.
+   * 构造一个{@link XmlConfig}。
    *
    * @param resource
-   *     the path of the XML resource where to load the configuration.
+   *     要加载配置的XML资源的路径。
    * @param loader
-   *     the class loader use to load the resource.
+   *     用于加载资源的类加载器。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public XmlConfig(final String resource, final ClassLoader loader) {
     load(resource, loader);
   }
 
   /**
-   * Constructs an {@link XmlConfig}.
+   * 构造一个{@link XmlConfig}。
    *
    * @param url
-   *     the URL of the XML resource where to load the configuration.
+   *     要加载配置的XML资源的URL。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public XmlConfig(final Url url) {
     load(url);
   }
 
   /**
-   * Constructs an {@link XmlConfig}.
+   * 构造一个{@link XmlConfig}。
    *
    * @param url
-   *     the URL of the XML resource where to load the configuration.
+   *     要加载配置的XML资源的URL。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public XmlConfig(final URL url) {
     load(url);
   }
 
   /**
-   * Constructs an {@link XmlConfig}.
+   * 构造一个{@link XmlConfig}。
    *
    * @param uri
-   *     the URI of the XML resource where to load the configuration.
+   *     要加载配置的XML资源的URI。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public XmlConfig(final URI uri) {
     load(uri);
   }
 
   /**
-   * Constructs an {@link XmlConfig}.
+   * 构造一个{@link XmlConfig}。
    *
    * @param file
-   *     the XML file where to load the configuration.
+   *     要加载配置的XML文件。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public XmlConfig(final File file) {
     load(file);
   }
 
   /**
-   * Constructs an {@link XmlConfig}.
+   * 构造一个{@link XmlConfig}。
    *
-   * <p>After calling this function, the input stream remains opened.
+   * <p>调用此函数后，输入流保持打开状态。
    *
    * @param in
-   *     the input stream storing the XML file where to load the configuration.
+   *     存储要加载配置的XML文件的输入流。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public XmlConfig(final InputStream in) {
     load(in);
   }
 
   /**
-   * Constructs an {@link XmlConfig}.
+   * 构造一个{@link XmlConfig}。
    *
-   * <p>After calling this function, the reader remains opened.
+   * <p>调用此函数后，读取器保持打开状态。
    *
    * @param reader
-   *     the reader storing the XML file where to load the configuration.
+   *     存储要加载配置的XML文件的读取器。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public XmlConfig(final Reader reader) {
     load(reader);
   }
 
   /**
-   * Loads the configuration from an XML file.
+   * 从XML文件加载配置。
    *
    * @param resource
-   *     the path of the XML resource where to load the configuration.
+   *     要加载配置的XML资源的路径。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public synchronized void load(final String resource) {
     logger.debug("Loading XML configuration from {}", resource);
@@ -183,14 +183,14 @@ public final class XmlConfig extends DefaultConfig {
   }
 
   /**
-   * Loads the configuration from an XML file.
+   * 从XML文件加载配置。
    *
    * @param resource
-   *     the path of the XML resource where to load the configuration.
+   *     要加载配置的XML资源的路径。
    * @param loaderClass
-   *     the class used to load the resource.
+   *     用于加载资源的类。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public synchronized void load(final String resource, final Class<?> loaderClass) {
     logger.debug("Loading XML configuration from {}", resource);
@@ -204,14 +204,14 @@ public final class XmlConfig extends DefaultConfig {
   }
 
   /**
-   * Loads the configuration from an XML file.
+   * 从XML文件加载配置。
    *
    * @param resource
-   *     the path of the XML resource where to load the configuration.
+   *     要加载配置的XML资源的路径。
    * @param loader
-   *     the class loader used to load the resource.
+   *     用于加载资源的类加载器。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public synchronized void load(final String resource, final ClassLoader loader) {
     logger.debug("Loading XML configuration from {}", resource);
@@ -224,12 +224,12 @@ public final class XmlConfig extends DefaultConfig {
   }
 
   /**
-   * Loads the configuration from an XML file.
+   * 从XML文件加载配置。
    *
    * @param url
-   *     the URL of the XML resource where to load the configuration.
+   *     要加载配置的XML资源的URL。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public synchronized void load(final Url url) {
     logger.debug("Loading XML configuration from {}", url);
@@ -242,12 +242,12 @@ public final class XmlConfig extends DefaultConfig {
   }
 
   /**
-   * Loads the configuration from an XML file.
+   * 从XML文件加载配置。
    *
    * @param url
-   *     the URL of the XML resource where to load the configuration.
+   *     要加载配置的XML资源的URL。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public synchronized void load(final URL url) {
     logger.debug("Loading XML configuration from {}", url);
@@ -260,14 +260,15 @@ public final class XmlConfig extends DefaultConfig {
   }
 
   /**
-   * Loads the configuration from an XML file.
+   * 从XML文件加载配置。
    *
    * @param uri
-   *     the URI of the XML resource where to load the configuration.
+   *     要加载配置的XML资源的URI。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public synchronized void load(final URI uri) {
+    logger.debug("Loading XML configuration from {}", uri);
     try {
       final DefaultConfig config = XmlSerialization.deserialize(DefaultConfig.class, uri);
       properties = config.properties;
@@ -277,12 +278,12 @@ public final class XmlConfig extends DefaultConfig {
   }
 
   /**
-   * Loads the configuration from an XML file.
+   * 从XML文件加载配置。
    *
    * @param file
-   *     the XML file where to load the configuration.
+   *     要加载配置的XML文件。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public synchronized void load(final File file) {
     logger.debug("Loading XML configuration from {}", file);
@@ -295,14 +296,14 @@ public final class XmlConfig extends DefaultConfig {
   }
 
   /**
-   * Loads the configuration from an XML file.
+   * 从从输入流读取的XML加载配置。
    *
-   * <p>After calling this function, the input stream remains opened.
+   * <p>调用此函数后，输入流保持打开状态。
    *
    * @param in
-   *     the input stream storing the XML file where to load the configuration.
+   *     要加载配置的XML文件的输入流。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public synchronized void load(final InputStream in) {
     logger.debug("Loading XML configuration from {}", in);
@@ -315,14 +316,14 @@ public final class XmlConfig extends DefaultConfig {
   }
 
   /**
-   * Loads the configuration from an XML file.
+   * 从从读取器读取的XML加载配置。
    *
-   * <p>After calling this function, the input stream remains opened.
+   * <p>调用此函数后，读取器保持打开状态。
    *
    * @param reader
-   *     the reader storing the XML file where to load the configuration.
+   *     要加载配置的XML文件的读取器。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public synchronized void load(final Reader reader) {
     logger.debug("Loading XML configuration from {}", reader);
@@ -335,14 +336,14 @@ public final class XmlConfig extends DefaultConfig {
   }
 
   /**
-   * Stores this configuration to an output stream.
+   * 将此配置存储到输出流。
    *
-   * <p>After calling this function, the stream is flushed but remains opened.
+   * <p>调用此函数后，流被刷新但保持打开状态。
    *
    * @param out
-   *     the output stream where to store the configuration.
+   *     要存储配置的输出流。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public synchronized void store(final OutputStream out) {
     logger.debug("Storing XML configuration from {}", out);
@@ -354,14 +355,14 @@ public final class XmlConfig extends DefaultConfig {
   }
 
   /**
-   * Stores this configuration to a print stream.
+   * 将此配置存储到打印流。
    *
-   * <p>After calling this function, the stream is flushed but remains opened.
+   * <p>调用此函数后，流被刷新但保持打开状态。
    *
    * @param out
-   *     the print stream where to store the configuration.
+   *     要存储配置的打印流。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public synchronized void store(final PrintStream out) {
     logger.debug("Storing XML configuration from {}", out);
@@ -373,14 +374,14 @@ public final class XmlConfig extends DefaultConfig {
   }
 
   /**
-   * Stores this configuration to a writer.
+   * 将此配置存储到写入器。
    *
-   * <p>After calling this function, the writer is flushed but remains opened.
+   * <p>调用此函数后，写入器被刷新但保持打开状态。
    *
    * @param writer
-   *     the writer where to store the configuration.
+   *     要存储配置的写入器。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public synchronized void store(final Writer writer) {
     logger.debug("Storing XML configuration from {}", writer);
@@ -392,12 +393,12 @@ public final class XmlConfig extends DefaultConfig {
   }
 
   /**
-   * Stores this configuration to an XML file.
+   * 将此配置存储到XML文件。
    *
    * @param file
-   *     the XML file where to store the configuration.
+   *     要存储配置的XML文件。
    * @throws ConfigurationError
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public synchronized void store(final File file) {
     logger.debug("Storing XML configuration from {}", file);

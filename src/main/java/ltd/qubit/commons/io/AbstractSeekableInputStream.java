@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -12,21 +12,26 @@ import java.io.IOException;
 import java.nio.InvalidMarkException;
 
 /**
- * The {@link AbstractSeekableInputStream} is an abstract base class for
- * implementing the {@link SeekableInputStream} interface.
+ * {@link AbstractSeekableInputStream} 是实现 {@link SeekableInputStream} 接口的抽象基类。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public abstract class AbstractSeekableInputStream extends SeekableInputStream {
 
   protected long markPos;
   protected int markLimit;
 
+  /**
+   * 构造一个表示抽象的 seekable 输入流。
+   */
   protected AbstractSeekableInputStream() {
     markPos = -1;
     markLimit = -1;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int available() throws IOException {
     final long result = length() - position();
@@ -37,6 +42,9 @@ public abstract class AbstractSeekableInputStream extends SeekableInputStream {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public long skip(final long n) throws IOException {
     final long len = length();
@@ -57,11 +65,17 @@ public abstract class AbstractSeekableInputStream extends SeekableInputStream {
     return skipped;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean markSupported() {
     return true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void mark(final int readLimit) {
     try {
@@ -72,6 +86,9 @@ public abstract class AbstractSeekableInputStream extends SeekableInputStream {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void reset() throws IOException {
     if (markPos < 0) {

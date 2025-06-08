@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -125,7 +125,6 @@ public class InetAddressUtils {
    *     整数的字节序
    * @return
    *     格式化后的IPv4地址
-   * @author 胡海星
    */
   public static String formatIPv4Address(final int ip, final Endian endian) {
     final int x1 = (ip & 0xFF);         // lowest bits

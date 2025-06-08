@@ -16,64 +16,83 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nonnull;
 
 /**
- * A thread-safe hash set implementation based on {@link ConcurrentHashMap}.
+ * 基于 {@link ConcurrentHashMap} 实现的线程安全的哈希集合。
  *
  * @param <E>
- *     the type of elements in this set.
- * @author Haixing Hu
+ *     集合中元素的类型。
+ * @author 胡海星
  */
 public class ConcurrentHashSet<E> implements Set<E> {
 
   private final ConcurrentHashMap<E, Boolean> map;
 
-  // 默认构造器，初始化 ConcurrentHashMap
+  /**
+   * 构造一个新的 {@link ConcurrentHashSet}。
+   */
   public ConcurrentHashSet() {
     map = new ConcurrentHashMap<>();
   }
 
-  // 使用 putIfAbsent 来实现线程安全的添加
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean add(final E element) {
     return map.putIfAbsent(element, Boolean.TRUE) == null;
   }
 
-  // 使用 remove 来删除元素
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean remove(final Object element) {
     return map.remove(element) == Boolean.TRUE;
   }
 
-  // 判断元素是否存在
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean contains(final Object element) {
     return map.containsKey(element);
   }
 
-  // 返回集合的大小
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int size() {
     return map.size();
   }
 
-  // 判断集合是否为空
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isEmpty() {
     return map.isEmpty();
   }
 
-  // 清空集合
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void clear() {
     map.clear();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Nonnull
   @Override
   public Iterator<E> iterator() {
     return map.keySet().iterator();
   }
 
-  // 以下方法不需要实现，因为我们没有使用 `Map` 中的 `value` 部分
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean containsAll(final Collection<?> c) {
     for (final Object o : c) {
@@ -84,6 +103,9 @@ public class ConcurrentHashSet<E> implements Set<E> {
     return true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean addAll(final Collection<? extends E> c) {
     boolean modified = false;
@@ -95,6 +117,9 @@ public class ConcurrentHashSet<E> implements Set<E> {
     return modified;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean retainAll(final Collection<?> c) {
     boolean modified = false;
@@ -107,6 +132,9 @@ public class ConcurrentHashSet<E> implements Set<E> {
     return modified;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean removeAll(final Collection<?> c) {
     boolean modified = false;
@@ -118,15 +146,21 @@ public class ConcurrentHashSet<E> implements Set<E> {
     return modified;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Nonnull
   @Override
   public Object[] toArray() {
     return map.keySet().toArray();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Nonnull
   @Override
-  public <T> T[] toArray(@Nonnull final T[] array) {
+  public <T> T[] toArray(final T[] array) {
     return map.keySet().toArray(array);
   }
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,24 +8,25 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list.primitive;
 
+import java.io.Serial;
+
 import javax.annotation.Nullable;
 
 import ltd.qubit.commons.lang.Comparison;
 import ltd.qubit.commons.lang.Hash;
 
 /**
- * Abstract base class for {@link LongCollection}s.
+ * {@link LongCollection} 的抽象基类。
  *
- * <p>Read-only subclasses must override {@link #iterator} and {@link #size}.
- * Mutable subclasses should also override {@link #add} and
- * {@link LongIterator#remove LongIterator.remove}. All other methods have at
- * least some base implementation derived from these. Subclasses may choose to
- * override these methods to provide a more efficient implementation.
+ * <p>只读子类必须覆盖 {@link #iterator()} 和 {@link #size()}。
+ * 可变子类还应覆盖 {@link #add(long)} 和 {@link LongIterator#remove()}。
+ * 所有其他方法都至少有一些派生自这些方法的基本实现。子类可以选择覆盖这些方法以提供更有效的实现。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public abstract class AbstractLongCollection implements LongCollection {
 
+  @Serial
   private static final long serialVersionUID = -7800640379547955378L;
 
   @Override
@@ -37,6 +38,9 @@ public abstract class AbstractLongCollection implements LongCollection {
   @Override
   public abstract boolean add(final long element);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean addAll(final LongCollection c) {
     boolean modified = false;
@@ -46,6 +50,9 @@ public abstract class AbstractLongCollection implements LongCollection {
     return modified;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void clear() {
     for (final LongIterator iter = iterator(); iter.hasNext();) {
@@ -54,6 +61,9 @@ public abstract class AbstractLongCollection implements LongCollection {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean contains(final long element) {
     for (final LongIterator iter = iterator(); iter.hasNext();) {
@@ -64,6 +74,9 @@ public abstract class AbstractLongCollection implements LongCollection {
     return false;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean containsAll(final LongCollection c) {
     for (final LongIterator iter = c.iterator(); iter.hasNext();) {
@@ -74,11 +87,17 @@ public abstract class AbstractLongCollection implements LongCollection {
     return true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isEmpty() {
     return (0 == size());
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean remove(final long element) {
     for (final LongIterator iter = iterator(); iter.hasNext();) {
@@ -90,6 +109,9 @@ public abstract class AbstractLongCollection implements LongCollection {
     return false;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean removeAll(final LongCollection c) {
     boolean modified = false;
@@ -99,6 +121,9 @@ public abstract class AbstractLongCollection implements LongCollection {
     return modified;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean retainAll(final LongCollection c) {
     boolean modified = false;

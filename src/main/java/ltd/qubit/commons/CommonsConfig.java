@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -16,7 +16,7 @@ import static ltd.qubit.commons.config.ConfigUtils.loadXmlConfig;
 /**
  * 提供获取通用模块配置的功能，并定义属性的名称和默认值。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class CommonsConfig {
 

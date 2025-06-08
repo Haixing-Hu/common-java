@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -325,4 +325,4 @@ public class MathExBasicMathTest {
     assertEquals(Math.PI, MathEx.PI, DELTA);
     assertEquals(Math.log(2), MathEx.LOG_OF_2, DELTA);
   }
-} 
+}

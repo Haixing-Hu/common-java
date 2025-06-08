@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,36 +8,65 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list.primitive;
 
+import java.io.Serial;
+
 import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 
+/**
+ * {@link FloatList} 的抽象基类。
+ *
+ * @author 胡海星
+ */
 public abstract class AbstractFloatList extends AbstractFloatCollection implements FloatList {
 
+  @Serial
   private static final long serialVersionUID = 4768615621442643457L;
 
   protected int modifyCount = 0;
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract float get(int index);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract int size();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract float removeAt(int index);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract float set(int index, float element);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract void add(int index, float element);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean add(final float element) {
     add(size(), element);
     return true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean addAll(final int index, final FloatCollection collection) {
     boolean modified = false;
@@ -50,6 +79,9 @@ public abstract class AbstractFloatList extends AbstractFloatCollection implemen
     return modified;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int indexOf(final float element) {
     final FloatIterator iter = iterator();
@@ -64,6 +96,9 @@ public abstract class AbstractFloatList extends AbstractFloatCollection implemen
     return -1;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int lastIndexOf(final float element) {
     final FloatListIterator iter = listIterator(size());
@@ -75,19 +110,31 @@ public abstract class AbstractFloatList extends AbstractFloatCollection implemen
     return -1;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public FloatIterator iterator() {
     return listIterator();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public FloatListIterator listIterator() {
     return listIterator(0);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract FloatListIterator listIterator(final int index);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void unique() {
     final FloatListIterator iter = listIterator();

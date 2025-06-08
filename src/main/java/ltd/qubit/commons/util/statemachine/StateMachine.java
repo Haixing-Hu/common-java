@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -22,72 +22,67 @@ import ltd.qubit.commons.util.pair.Pair;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * This class represents a state machine.
- * <p>
- * This class use a simple implementation of state machine, which is a directed
- * graph. The nodes of the graph are the states of the state machine, and the
- * edges of the graph are the transitions of the state machine. The transitions
- * are labeled with events.
- * <p>
- * The subclass of this class should define the states, initial states, final
- * states and transitions of the state machine in its constructor. And the
- * constructed state machine should be immutable.
+ * 此类表示状态机。
+ *
+ * <p>此类使用状态机的简单实现,即有向图。图的节点是状态机的状态,图的边是状态机的转换。
+ * 转换用事件标记。
+ *
+ * <p>此类的子类应在其构造函数中定义状态机的状态,初始状态,最终状态和转换。
+ * 并且构造的状态机应该是不可变的。
  *
  * @param <S>
- *     the type of states.
+ *     状态的类型。
  * @param <E>
- *     the type of events.
- * @author Haixing Hu
+ *     事件的类型。
+ * @author 胡海星
  */
 @Immutable
 public class StateMachine<S extends Enum<S>, E extends Enum<E>> {
 
   /**
-   * The set of initial states of this state machine.
+   * 此状态机的初始状态集。
    */
   private final Set<S> initialStates = new HashSet<>();
 
   /**
-   * The set of final states of this state machine.
+   * 此状态机的最终状态集。
    */
   private final Set<S> finalStates = new HashSet<>();
 
   /**
-   * The set of all states of this state machine, including initial and final
-   * states.
+   * 此状态机的所有状态的集合,包括初始状态和最终状态。
    */
   private final Set<S> states = new HashSet<>();
 
   /**
-   * The set of transitions of this state machine.
+   * 此状态机的转换集。
    */
   private final Set<Transition<S, E>> transitions = new HashSet<>();
 
   /**
-   * The map of transitions of this state machine.
+   * 此状态机的转换映射。
    */
   private final Map<Pair<S, E>, S> transitionMap = new HashMap<>();
 
   /**
-   * Adds a state to this state machine.
-   * <p>
-   * This method is intended to be used by the subclass of this class.
+   * 将状态添加到此状态机。
+   *
+   * <p>此方法旨在供此类的子类使用。
    *
    * @param state
-   *     the state to be added.
+   *     要添加的状态。
    */
   protected void addState(final S state) {
     states.add(requireNonNull("state", state));
   }
 
   /**
-   * Adds all enumerators of an enumeration class as states to this state machine.
-   * <p>
-   * This method is intended to be used by the subclass of this class.
+   * 将枚举类的所有枚举器作为状态添加到此状态机。
+   *
+   * <p>此方法旨在供此类的子类使用。
    *
    * @param stateEnumClass
-   *     the class of an enumeration class, whose enumerators will be added as
-   *     states.
+   *     枚举类的类,其枚举器将作为状态添加。
    */
   protected void addStates(final Class<S> stateEnumClass) {
     requireNonNull("stateEnumClass", stateEnumClass);
@@ -95,28 +90,28 @@ public class StateMachine<S extends Enum<S>, E extends Enum<E>> {
   }
 
   /**
-   * Sets a state as the initial state of this state machine.
-   * <p>
-   * Note that a state machine may have multiple initial states.
-   * <p>
-   * This method is intended to be used by the subclass of this class.
+   * 将状态设置为此状态机的初始状态。
+   *
+   * <p>请注意,状态机可以具有多个初始状态。
+   *
+   * <p>此方法旨在供此类的子类使用。
    *
    * @param initialState
-   *     the initial state to be set.
+   *     要设置的初始状态。
    */
   protected void setInitialState(final S initialState) {
     initialStates.add(requireNonNull("initialState", initialState));
   }
 
   /**
-   * Sets a state as the initial state of this state machine.
-   * <p>
-   * Note that a state machine may have multiple initial states.
-   * <p>
-   * This method is intended to be used by the subclass of this class.
+   * 将状态设置为此状态机的初始状态。
+   *
+   * <p>请注意,状态机可以具有多个初始状态。
+   *
+   * <p>此方法旨在供此类的子类使用。
    *
    * @param initialStates
-   *     the initial states to be set.
+   *     要设置的初始状态。
    */
   @SafeVarargs
   @SuppressWarnings("varargs")
@@ -125,28 +120,28 @@ public class StateMachine<S extends Enum<S>, E extends Enum<E>> {
   }
 
   /**
-   * Sets a state as the final state of this state machine.
-   * <p>
-   * Note that a state machine may have multiple final states.
-   * <p>
-   * This method is intended to be used by the subclass of this class.
+   * 将状态设置为此状态机的最终状态。
+   *
+   * <p>请注意,状态机可以具有多个最终状态。
+   *
+   * <p>此方法旨在供此类的子类使用。
    *
    * @param finalState
-   *     the final state to be set.
+   *     要设置的最终状态。
    */
   protected void setFinalState(final S finalState) {
     finalStates.add(requireNonNull("finalState", finalState));
   }
 
   /**
-   * Sets a state as the final state of this state machine.
-   * <p>
-   * Note that a state machine may have multiple final states.
-   * <p>
-   * This method is intended to be used by the subclass of this class.
+   * 将状态设置为此状态机的最终状态。
+   *
+   * <p>请注意,状态机可以具有多个最终状态。
+   *
+   * <p>此方法旨在供此类的子类使用。
    *
    * @param finalStates
-   *     the final states to be set.
+   *     要设置的最终状态。
    */
   @SafeVarargs
   @SuppressWarnings("varargs")
@@ -155,12 +150,12 @@ public class StateMachine<S extends Enum<S>, E extends Enum<E>> {
   }
 
   /**
-   * Adds a transition to this state machine.
-   * <p>
-   * This method is intended to be used by the subclass of this class.
+   * 将转换添加到此状态机。
+   *
+   * <p>此方法旨在供此类的子类使用。
    *
    * @param transition
-   *     the transition to be added.
+   *     要添加的转换。
    */
   protected void addTransition(final Transition<S, E> transition) {
     transitions.add(requireNonNull("transition", transition));
@@ -169,97 +164,93 @@ public class StateMachine<S extends Enum<S>, E extends Enum<E>> {
   }
 
   /**
-   * Adds a transition to this state machine.
-   * <p>
-   * This method is intended to be used by the subclass of this class.
+   * 将转换添加到此状态机。
+   *
+   * <p>此方法旨在供此类的子类使用。
    *
    * @param source
-   *     the source state of the transition.
+   *     转换的源状态。
    * @param target
-   *     the target state of the transition.
+   *     转换的目标状态。
    * @param event
-   *     the event of the transition.
+   *     转换的事件。
    */
   protected void addTransition(final S source, final E event, final S target) {
     addTransition(new Transition<>(source, event, target));
   }
 
   /**
-   * Gets the set of all states of this state machine, including initial and
-   * final states.
+   * 获取此状态机的所有状态的集合,包括初始状态和最终状态。
    *
-   * @return the set of all states of this state machine.
+   * @return 此状态机的所有状态的集合。
    */
   public Set<S> getStates() {
     return states;
   }
 
   /**
-   * Gets the set of initial states of this state machine.
+   * 获取此状态机的初始状态集。
    *
    * @return
-   *     the set of initial states of this state machine.
+   *     此状态机的初始状态集。
    */
   public Set<S> getInitialStates() {
     return initialStates;
   }
 
   /**
-   * Gets the set of final states of this state machine.
+   * 获取此状态机的最终状态集。
    *
    * @return
-   *     the set of final states of this state machine.
+   *     此状态机的最终状态集。
    */
   public Set<S> getFinalStates() {
     return finalStates;
   }
 
   /**
-   * Gets the set of transitions of this state machine.
+   * 获取此状态机的转换集。
    *
    * @return
-   *     the set of transitions of this state machine.
+   *     此状态机的转换集。
    */
   public Set<Transition<S, E>> getTransitions() {
     return transitions;
   }
 
   /**
-   * Tests whether a state is an initial state of this state machine.
+   * 测试状态是否是此状态机的初始状态。
    *
    * @param state
-   *     the state to be tested.
+   *     要测试的状态。
    * @return
-   *     {@code true} if the state is an initial state of this state machine;
-   *     {@code false} otherwise.
+   *     如果状态是此状态机的初始状态,则为{@code true}；否则为{@code false}。
    */
   public boolean isInitialState(final S state) {
     return initialStates.contains(state);
   }
 
   /**
-   * Tests whether a state is a final state of this state machine.
+   * 测试状态是否是此状态机的最终状态。
    *
    * @param state
-   *     the state to be tested.
+   *     要测试的状态。
    * @return
-   *     {@code true} if the state is a final state of this state machine;
-   *     {@code false} otherwise.
+   *     如果状态是此状态机的最终状态,则为{@code true}；否则为{@code false}。
    */
   public boolean isFinalState(final S state) {
     return finalStates.contains(state);
   }
 
   /**
-   * Gets the target state of a transition from a source state with a given event.
+   * 在此状态机中触发事件。
    *
    * @param source
-   *     the source state of the transition.
+   *     事件的源状态。
    * @param event
-   *     the event of the transition.
+   *     要触发的事件。
    * @return
-   *     the target state of the transition, or {@code null} if the transition
-   *     does not exist.
+   *     如果转换成功,则为目标状态；否则为{@code null}。
    */
   @Nullable
   public S getTarget(final S source, final E event) {

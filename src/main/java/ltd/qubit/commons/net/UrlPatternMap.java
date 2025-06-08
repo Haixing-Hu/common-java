@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -14,10 +14,9 @@ import ltd.qubit.commons.text.Pattern;
 import ltd.qubit.commons.text.PatternMap;
 
 /**
- * The {@link PatternMap} maps a {@link Url} to an object according to
- * predefined patterns.
+ * {@link PatternMap} 根据预定义的模式将 {@link Url} 映射到一个对象。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class UrlPatternMap<VALUE> {
 
@@ -32,14 +31,27 @@ public class UrlPatternMap<VALUE> {
     size = 0;
   }
 
+  /**
+   * 获取此映射中的模式数。
+   *
+   * @return 此映射中的模式数。
+   */
   public int size() {
     return size;
   }
 
+  /**
+   * 测试此映射是否为空。
+   *
+   * @return 如果此映射为空，则返回 {@code true}；否则返回 {@code false}。
+   */
   public boolean isEmpty() {
     return (size == 0);
   }
 
+  /**
+   * 从此映射中删除所有模式。
+   */
   public void clear() {
     for (int i = 0; i < maps.length; ++i) {
       if (maps[i] != null) {
@@ -49,6 +61,14 @@ public class UrlPatternMap<VALUE> {
     size = 0;
   }
 
+  /**
+   * 在此映射中放置一个 URL 模式。
+   *
+   * @param urlPattern
+   *     要放置的 URL 模式。
+   * @param value
+   *     与 URL 模式关联的值。
+   */
   public void put(final UrlPattern urlPattern, final VALUE value) {
     final UrlPart part = urlPattern.getPart();
     final int index = part.ordinal();
@@ -57,8 +77,17 @@ public class UrlPatternMap<VALUE> {
     }
     final Pattern pattern = urlPattern.getPattern();
     maps[index].put(pattern, value);
+    size++;
   }
 
+  /**
+   * 获取与指定 URL 匹配的模式所关联的值。
+   *
+   * @param url
+   *     指定的 URL。
+   * @return
+   *     与指定 URL 匹配的模式所关联的值；如果没有模式匹配，则返回 {@code null}。
+   */
   public VALUE get(final Url url) {
     final UrlPart[] parts = UrlPart.values();
     assert (parts.length == maps.length);

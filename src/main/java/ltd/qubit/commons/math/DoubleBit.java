@@ -1,19 +1,19 @@
-// ////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 //
 //    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
 //
-// ////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.math;
 
 /**
  * 提供对IEEE 754双精度浮点数（double）的底层位操作工具类。
- * 
+ *
  * <p>该类提供了一系列静态方法来操作和解析64位双精度浮点数的内部
  * 二进制表示，包括符号位、指数位和尾数位的提取与构造。
- * 
+ *
  * <p>IEEE 754双精度浮点数格式：
  * <ul>
  * <li>总位数：64位</li>
@@ -22,7 +22,7 @@ package ltd.qubit.commons.math;
  * <li>尾数位：52位（第51-0位）</li>
  * <li>指数偏移量：1023</li>
  * </ul>
- * 
+ *
  * @author Haixing Hu
  */
 public final class DoubleBit {
@@ -141,7 +141,7 @@ public final class DoubleBit {
 
     /**
      * 将双精度浮点数转换为对应的位表示。
-     * 
+     *
      * @param value
      *     要转换的双精度浮点数
      * @return
@@ -153,7 +153,7 @@ public final class DoubleBit {
 
     /**
      * 将位表示转换为对应的双精度浮点数。
-     * 
+     *
      * @param bits
      *     64位长整数表示
      * @return
@@ -165,7 +165,7 @@ public final class DoubleBit {
 
     /**
      * 从位表示中获取符号位。
-     * 
+     *
      * @param bits
      *     双精度浮点数的位表示
      * @return
@@ -177,7 +177,7 @@ public final class DoubleBit {
 
     /**
      * 从位表示中获取尾数部分。
-     * 
+     *
      * @param bits
      *     双精度浮点数的位表示
      * @return
@@ -189,7 +189,7 @@ public final class DoubleBit {
 
     /**
      * 从位表示中获取指数部分。
-     * 
+     *
      * @param bits
      *     双精度浮点数的位表示
      * @return
@@ -201,7 +201,7 @@ public final class DoubleBit {
 
     /**
      * 从位表示中获取实际指数值（已减去偏移量）。
-     * 
+     *
      * @param bits
      *     双精度浮点数的位表示
      * @return
@@ -213,7 +213,7 @@ public final class DoubleBit {
 
     /**
      * 判断双精度浮点数是否为零。
-     * 
+     *
      * @param value
      *     要判断的双精度浮点数
      * @return
@@ -225,7 +225,7 @@ public final class DoubleBit {
 
     /**
      * 判断双精度浮点数是否为正零。
-     * 
+     *
      * @param value
      *     要判断的双精度浮点数
      * @return
@@ -237,7 +237,7 @@ public final class DoubleBit {
 
     /**
      * 判断双精度浮点数是否为负零。
-     * 
+     *
      * @param value
      *     要判断的双精度浮点数
      * @return
@@ -249,7 +249,7 @@ public final class DoubleBit {
 
     /**
      * 判断双精度浮点数是否为标准化数。
-     * 
+     *
      * @param value
      *     要判断的双精度浮点数
      * @return
@@ -263,7 +263,7 @@ public final class DoubleBit {
 
     /**
      * 判断双精度浮点数是否为非标准化数。
-     * 
+     *
      * @param value
      *     要判断的双精度浮点数
      * @return
@@ -278,7 +278,7 @@ public final class DoubleBit {
 
     /**
      * 判断双精度浮点数是否为无穷大。
-     * 
+     *
      * @param value
      *     要判断的双精度浮点数
      * @return
@@ -290,7 +290,7 @@ public final class DoubleBit {
 
     /**
      * 判断双精度浮点数是否为正无穷大。
-     * 
+     *
      * @param value
      *     要判断的双精度浮点数
      * @return
@@ -302,7 +302,7 @@ public final class DoubleBit {
 
     /**
      * 判断双精度浮点数是否为负无穷大。
-     * 
+     *
      * @param value
      *     要判断的双精度浮点数
      * @return
@@ -314,7 +314,7 @@ public final class DoubleBit {
 
     /**
      * 判断双精度浮点数是否为NaN（非数字）。
-     * 
+     *
      * @param value
      *     要判断的双精度浮点数
      * @return
@@ -326,7 +326,7 @@ public final class DoubleBit {
 
     /**
      * 判断双精度浮点数是否为安静NaN。
-     * 
+     *
      * @param value
      *     要判断的双精度浮点数
      * @return
@@ -339,7 +339,7 @@ public final class DoubleBit {
 
     /**
      * 判断双精度浮点数是否有限。
-     * 
+     *
      * @param value
      *     要判断的双精度浮点数
      * @return
@@ -351,7 +351,7 @@ public final class DoubleBit {
 
     /**
      * 获取双精度浮点数的符号。
-     * 
+     *
      * @param value
      *     要获取符号的双精度浮点数
      * @return
@@ -366,7 +366,7 @@ public final class DoubleBit {
 
     /**
      * 构造双精度浮点数。
-     * 
+     *
      * @param sign
      *     符号位，0表示正数，非0表示负数
      * @param exponent
@@ -378,25 +378,25 @@ public final class DoubleBit {
      */
     public static double compose(final int sign, final int exponent, final long mantissa) {
         long bits = 0;
-        
+
         // 设置符号位
         if (sign != 0) {
             bits |= SIGN_BIT_MASK;
         }
-        
+
         // 设置指数位（加上偏移量）
         final long biasedExponent = exponent + EXPONENT_BIAS;
         bits |= (biasedExponent & 0x7FFL) << MANTISSA_BITS;
-        
+
         // 设置尾数位
         bits |= mantissa & MANTISSA_MASK;
-        
+
         return fromBits(bits);
     }
 
     /**
      * 复制符号位。
-     * 
+     *
      * @param magnitude
      *     提供数值大小的双精度浮点数
      * @param sign
@@ -410,7 +410,7 @@ public final class DoubleBit {
 
     /**
      * 获取下一个可表示的双精度浮点数。
-     * 
+     *
      * @param value
      *     当前双精度浮点数
      * @return
@@ -422,7 +422,7 @@ public final class DoubleBit {
 
     /**
      * 获取上一个可表示的双精度浮点数。
-     * 
+     *
      * @param value
      *     当前双精度浮点数
      * @return

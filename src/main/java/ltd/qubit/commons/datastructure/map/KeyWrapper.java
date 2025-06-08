@@ -16,37 +16,40 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * Wrapper class for keys in a map.
- * <p>
- * This class wraps a key object and provides a custom hash function for the key.
- * <p>
- * The JDK's native HashMap has a problem: if the key is an native array, the
- * default implementation of the {@link Object#hashCode()} method will return the
- * hash code of the array object, not the hash code of the array's content. This
- * will cause the HashMap to fail to find the key in the map. This class can be
- * used to solve this problem.
+ * 映射中键的包装类。
+ *
+ * <p>这个类包装了一个键对象，并为该键提供了一个自定义的哈希函数。
+ *
+ * <p>JDK 原生的 HashMap 有一个问题：如果键是一个原生数组，
+ * {@link Object#hashCode()} 方法的默认实现将返回数组对象的哈希码，
+ * 而不是数组内容的哈希码。这将导致 HashMap 在映射中找不到键。这个类可以用来解决这个问题。
  *
  * @param <K>
- *     the type of the key.
- * @author Haixing Hu
+ *     键的类型。
+ * @author 胡海星
  */
 public class KeyWrapper<K> {
   private final K key;
   private final Function<K, Integer> hashFunction;
 
   /**
-   * Constructs a new {@link KeyWrapper} object.
+   * 构造一个新的 {@link KeyWrapper} 对象。
    *
    * @param key
-   *     the key object to be wrapped.
+   *     要包装的键对象。
    * @param hashFunction
-   *     the custom hash function for the key.
+   *     键的哈希函数。
    */
   public KeyWrapper(final K key, final Function<K, Integer> hashFunction) {
     this.key = key;
     this.hashFunction = hashFunction;
   }
 
+  /**
+   * 获取包装的键。
+   *
+   * @return 包装的键。
+   */
   public K getKey() {
     return key;
   }

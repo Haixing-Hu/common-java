@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -357,6 +357,9 @@ public abstract class AbstractListMap<KEY, VALUE> implements Map<KEY, VALUE> {
     }
   }
 
+  /**
+   * 此映射中包含的键的集合视图。
+   */
   private final class KeySet extends AbstractSet<KEY> {
 
     @Override
@@ -387,6 +390,9 @@ public abstract class AbstractListMap<KEY, VALUE> implements Map<KEY, VALUE> {
     }
   }
 
+  /**
+   * 键的迭代器。
+   */
   private final class KeyIterator implements Iterator<KEY> {
 
     private final ListIterator<Entry<KEY, VALUE>> iter;
@@ -416,6 +422,9 @@ public abstract class AbstractListMap<KEY, VALUE> implements Map<KEY, VALUE> {
     }
   }
 
+  /**
+   * 此映射中包含的值的集合视图。
+   */
   private final class ValueCollection extends AbstractCollection<VALUE> {
 
     @Override
@@ -444,9 +453,11 @@ public abstract class AbstractListMap<KEY, VALUE> implements Map<KEY, VALUE> {
     public boolean contains(final Object o) {
       return containsValue(o);
     }
-
   }
 
+  /**
+   * 值的迭代器。
+   */
   private final class ValueIterator implements Iterator<VALUE> {
 
     private final ListIterator<Entry<KEY, VALUE>> iter;

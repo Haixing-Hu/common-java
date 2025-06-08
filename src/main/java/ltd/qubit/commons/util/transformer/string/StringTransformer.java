@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -12,9 +12,9 @@ import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.util.transformer.Transformer;
 
 /**
- * A StringTransformer object transform a string to another.
+ * StringTransformer对象将一个字符串转换为另一个字符串。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @FunctionalInterface
 public interface StringTransformer extends Transformer<String>,

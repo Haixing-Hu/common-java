@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,26 +15,49 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * A {@link LowercaseTransformer} transform a string to its lowercase form.
+ * {@link LowercaseTransformer}将字符串转换为其小写形式。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class LowercaseTransformer extends AbstractStringTransformer {
 
   private Locale locale;
 
+  /**
+   * 构造一个{@link LowercaseTransformer}。
+   * <p>
+   * 转换时将使用默认的{@link Locale}。
+   */
   public LowercaseTransformer() {
     locale = null;
   }
 
+  /**
+   * 构造一个{@link LowercaseTransformer}。
+   *
+   * @param locale
+   *     转换时要使用的{@link Locale}。
+   */
   public LowercaseTransformer(final Locale locale) {
     this.locale = locale;
   }
 
+  /**
+   * 获取转换时要使用的{@link Locale}。
+   *
+   * @return
+   *     转换时要使用的{@link Locale}。
+   */
   public Locale getLocale() {
     return locale;
   }
 
+  /**
+   * 设置转换时要使用的{@link Locale}。
+   *
+   * @param locale
+   *     新的转换时要使用的{@link Locale}。
+   */
   public void setLocale(final Locale locale) {
     this.locale = locale;
   }

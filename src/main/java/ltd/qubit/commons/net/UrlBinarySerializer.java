@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -23,15 +23,21 @@ import ltd.qubit.commons.io.serialize.BinarySerializer;
 import static ltd.qubit.commons.io.InputUtils.readString;
 
 /**
- * The {@link BinarySerializer} for the {@link Url} class.
+ * {@link Url} 类的 {@link BinarySerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class UrlBinarySerializer implements BinarySerializer {
 
+  /**
+   * 本类的唯一实例。
+   */
   public static final UrlBinarySerializer INSTANCE = new UrlBinarySerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Url deserialize(final InputStream in, final boolean allowNull)
       throws IOException {
@@ -46,6 +52,9 @@ public final class UrlBinarySerializer implements BinarySerializer {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final OutputStream out, final Object obj)
       throws IOException {

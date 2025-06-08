@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -25,1590 +25,1381 @@ import ltd.qubit.commons.lang.CloneableEx;
 import ltd.qubit.commons.lang.Type;
 
 /**
- * A {@link Config} is a container of {@link Property}s.
+ * {@link Config} 是一个 {@link Property} 的容器。
  *
- * <p>The {@link Config} interface does not provides functions to modify the
- * property values, since a {@link Config} object is intended to be create and
- * write once, then read multiple times.
+ * <p>此 {@link Config} 接口不提供修改属性值的功能，因为 {@link Config} 对象旨在一次创建和写入，
+ * 然后多次读取。
  *
- * <p>The implementation of {@link Config} interface may read configurations
- * from an XML file, a database, or other sources.
+ * <p>{@link Config} 接口的实现可以从 XML 文件、数据库或其他来源读取配置。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see DefaultConfig
  */
 public interface Config extends CloneableEx<Config> {
 
   /**
-   * The regular expression pattern of variables substitution.
+   * 变量替换的正则表达式模式。
    */
   Pattern VARIABLE_PATTERN = Pattern.compile("\\$\\{[^\\}\\$\u0020]+\\}");
 
   /**
-   * The maximum depth of variables substitutions.
+   * 变量替换的最大深度。
    */
   int MAX_SUBSTITUTION_DEPTH = 64;
 
   /**
-   * Gets the description of this configuration.
+   * 获取此配置的描述。
    *
-   * @return the description of this configuration, or {@code null} if none.
+   * @return
+   *     此配置的描述，如果没有则返回 {@code null}。
    */
   String getDescription();
 
   /**
-   * Gets the description of the property with the specified name.
+   * 获取具有指定名称的属性的描述。
    *
    * @param name
-   *     the name of a property.
-   * @return the description of the property with the specified name. Note that
-   *     returning a null does not indicates there is no property with the
-   *     specified name; instead, it indicates that there is a property with the
-   *     specified name but has a null description.
+   *     属性的名称。
+   * @return
+   *     具有指定名称的属性的描述。请注意，返回 null 并不表示没有具有指定名称的属性；
+   *     而是表示存在具有指定名称的属性，但其描述为 null。
    * @throws ConfigurationError
-   *     if no property with the specified name.
+   *     如果不存在具有指定名称的属性。
    */
   String getDescription(String name);
 
   /**
-   * Tests whether this Config object is empty.
+   * 测试此配置对象是否为空。
    *
-   * @return true if this Config object is empty; false otherwise.
+   * @return 如果此配置对象为空，则返回 true；否则返回 false。
    */
   boolean isEmpty();
 
   /**
-   * Gets the number of properties in this Config object.
+   * 获取此配置对象中的属性数。
    *
-   * @return the number of properties in this Config object.
+   * @return 此配置对象中的属性数。
    */
   int size();
 
   /**
-   * Gets the collection of properties in this configuration.
+   * 获取此配置中的属性集合。
    *
-   * @return the collection of properties in this configuration.
+   * @return 此配置中的属性集合。
    */
   Collection<? extends Property> getProperties();
 
   /**
-   * Gets the set of names of properties in this configuration.
+   * 获取此配置中属性的名称集。
    *
-   * @return the set of names of properties in this configuration.
+   * @return 此配置中属性的名称集。
    */
   Set<String> getNames();
 
   /**
-   * Tests whether a specified property name is contained in this
-   * configuration.
+   * 测试此配置中是否包含指定的属性名称。
    *
    * @param name
-   *     a property name.
-   * @return true if the specified property name is contained in this
-   *     configuration; false otherwise.
+   *     属性名称。
+   * @return 如果此配置中包含指定的属性名称，则返回 true；否则返回 false。
    */
   boolean contains(String name);
 
   /**
-   * Gets the {@link Property} with the specified name.
+   * 获取具有指定名称的 {@link Property}。
    *
    * @param name
-   *     the name of the property to be get.
-   * @return the {@link Property} with the specified name, or null if no
-   *     property with the specified name.
+   *     要获取的属性的名称。
+   * @return
+   *     具有指定名称的 {@link Property}，如果不存在具有指定名称的属性，则返回 null。
    */
   Property get(String name);
 
   /**
-   * Gets the type of the property with the specified name.
+   * 获取具有指定名称的属性的类型。
    *
    * @param name
-   *     the name of a property.
-   * @return the type of the property with the specified name.
+   *     属性的名称。
+   * @return 具有指定名称的属性的类型。
    * @throws ConfigurationError
-   *     if no property with the specified name.
+   *     如果不存在具有指定名称的属性。
    */
   Type getType(String name);
 
   /**
-   * Tests whether the property with the specified name is final.
+   * 测试具有指定名称的属性是否是 final 的。
    *
    * @param name
-   *     the name of a property.
-   * @return true if the property with the specified name is final; false
-   *     otherwise.
+   *     属性的名称。
+   * @return
+   *     如果具有指定名称的属性是 final 的，则返回 true；否则返回 false。
    * @throws ConfigurationError
-   *     if no property with the specified name.
+   *     如果不存在具有指定名称的属性。
    */
   boolean isFinal(String name);
 
   /**
-   * Gets the number of values in the property with the specified name.
+   * 获取具有指定名称的属性中的值的数量。
    *
    * @param name
-   *     the name of a property.
-   * @return the number of values in the property with the specified name. Note
-   *     that if this configuration does not have the property with the
-   *     specified name, or this configuration has a property with the specified
-   *     name but the property has no value, the function returns 0.
+   *     属性的名称。
+   * @return
+   *     具有指定名称的属性中的值的数量。请注意，如果此配置没有具有指定名称的属性，
+   *     或者此配置具有具有指定名称的属性但该属性没有值，则该函数返回 0。
    */
   int getCount(String name);
 
   /**
-   * Gets the value of the specified property as a {@code boolean} value.
+   * 获取指定属性的值作为 {@code boolean} 值。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the value of the property with the specified name as a {@code
-   *     boolean}.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code boolean}。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code boolean}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code boolean}。
    */
   boolean getBoolean(String name);
 
   /**
-   * Gets the value of the specified property as a {@code boolean} value.
+   * 获取指定属性的值作为 {@code boolean} 值。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValue
-   *     the default values returned in case of there is no such property or the
-   *     property has no value.
-   * @return the value of the property with the specified name as a {@code
-   *     boolean}; or the {@code defaultValue} if there is no such property or
-   *     the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code boolean}；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValue}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code boolean} .
+   *     如果指定属性的类型不是 {@code boolean}。
    */
   boolean getBoolean(String name, boolean defaultValue);
 
   /**
-   * Gets the values of the specified property as an array of {@code boolean}
-   * values.
+   * 获取指定属性的值作为 {@code boolean} 值数组。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code boolean} array.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code boolean} 数组。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code boolean}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code boolean}。
    */
   boolean[] getBooleans(String name);
 
   /**
-   * Gets the values of the specified property as an array of {@code boolean}
-   * values.
+   * 获取指定属性的值作为 {@code boolean} 值数组。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValues
-   *     the default values returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code boolean} array; or the {@code defaultValues} if there is no
-   *     such property or the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code boolean} 数组；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValues}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code boolean} .
+   *     如果指定属性的类型不是 {@code boolean}。
    */
   boolean[] getBooleans(String name,
       @Nullable boolean[] defaultValues);
 
   /**
-   * Gets the value of the specified property as a {@code char} value.
+   * 获取指定属性的值作为 {@code char} 值。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the value of the property with the specified name as a {@code
-   *     char}.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code char}。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code char}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code char}。
    */
   char getChar(String name);
 
   /**
-   * Gets the value of the specified property as a {@code char} value.
+   * 获取指定属性的值作为 {@code char} 值。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValue
-   *     the default value returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the value of the property with the specified name as a {@code
-   *     char}; or the {@code defaultValue} if there is no such property or the
-   *     property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code char}；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValue}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code char}.
+   *     如果指定属性的类型不是 {@code char}。
    */
   char getChar(String name, char defaultValue);
 
   /**
-   * Gets the values of the specified property as an array of {@code char}
-   * values.
+   * 获取指定属性的值作为 {@code char} 值数组。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code char} array.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code char} 数组。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code char}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code char}。
    */
   char[] getChars(String name);
 
   /**
-   * Gets the values of the specified property as an array of {@code char}
-   * values.
+   * 获取指定属性的值作为 {@code char} 值数组。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValues
-   *     the default values returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code char} array; or the {@code defaultValues} if there is no such
-   *     property or the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code char} 数组；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValues}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code char}.
+   *     如果指定属性的类型不是 {@code char}。
    */
   char[] getChars(String name,
       @Nullable char[] defaultValues);
 
   /**
-   * Gets the value of the specified property as a {@code byte} value.
+   * 获取指定属性的值作为 {@code byte} 值。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the value of the property with the specified name as a {@code
-   *     byte}.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code byte}。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code byte}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code byte}。
    */
   byte getByte(String name);
 
   /**
-   * Gets the value of the specified property as a {@code byte} value.
+   * 获取指定属性的值作为 {@code byte} 值。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValue
-   *     the default value returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the value of the property with the specified name as a {@code
-   *     byte}; or the {@code defaultValue} if there is no such property or the
-   *     property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code byte}；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValue}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code byte}.
+   *     如果指定属性的类型不是 {@code byte}。
    */
   byte getByte(String name, byte defaultValue);
 
   /**
-   * Gets the values of the specified property as an array of {@code byte}
-   * values.
+   * 获取指定属性的值作为 {@code byte} 值数组。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code byte} array.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code byte} 数组。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code byte}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code byte}。
    */
   byte[] getBytes(String name);
 
   /**
-   * Gets the values of the specified property as an array of {@code byte}
-   * values.
+   * 获取指定属性的值作为 {@code byte} 值数组。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValues
-   *     the default values returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code byte} array; or the {@code defaultValues} if there is no such
-   *     property or the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code byte} 数组；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValues}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code byte}.
+   *     如果指定属性的类型不是 {@code byte}。
    */
   byte[] getBytes(String name, @Nullable byte[] defaultValues);
 
   /**
-   * Gets the value of the specified property as a {@code short} value.
+   * 获取指定属性的值作为 {@code short} 值。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the value of the property with the specified name as a {@code
-   *     short}.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code short}。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code short}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code short}。
    */
   short getShort(String name);
 
   /**
-   * Gets the value of the specified property as a {@code short} value.
+   * 获取指定属性的值作为 {@code short} 值。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValue
-   *     the default value returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the value of the property with the specified name as a {@code
-   *     short}; or the {@code defaultValue} if there is no such property or the
-   *     property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code short}；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValue}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code short}.
+   *     如果指定属性的类型不是 {@code short}。
    */
   short getShort(String name, short defaultValue);
 
   /**
-   * Gets the values of the specified property as an array of {@code short}
-   * values.
+   * 获取指定属性的值作为 {@code short} 值数组。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code short} array.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code short} 数组。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code short}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code short}。
    */
   short[] getShorts(String name);
 
   /**
-   * Gets the values of the specified property as an array of {@code short}
-   * values.
+   * 获取指定属性的值作为 {@code short} 值数组。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValues
-   *     the default values returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code short} array; or the {@code defaultValues} if there is no such
-   *     property or the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code short} 数组；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValues}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code short}.
+   *     如果指定属性的类型不是 {@code short}。
    */
   short[] getShorts(String name,
       @Nullable short[] defaultValues);
 
   /**
-   * Gets the value of the specified property as a {@code int} value.
+   * 获取指定属性的值作为 {@code int} 值。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the value of the property with the specified name as a {@code int}.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code int}。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code int}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code int}。
    */
   int getInt(String name);
 
   /**
-   * Gets the value of the specified property as a {@code int} value.
+   * 获取指定属性的值作为 {@code int} 值。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValue
-   *     the default value returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the value of the property with the specified name as a {@code int};
-   *     or the {@code defaultValue} if there is no such property or the
-   *     property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code int}；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValue}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code int}.
+   *     如果指定属性的类型不是 {@code int}。
    */
   int getInt(String name, int defaultValue);
 
   /**
-   * Gets the values of the specified property as an array of {@code int}
-   * values.
+   * 获取指定属性的值作为 {@code int} 值数组。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code int} array.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code int} 数组。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code int}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code int}。
    */
   int[] getInts(String name);
 
   /**
-   * Gets the values of the specified property as an array of {@code int}
-   * values.
+   * 获取指定属性的值作为 {@code int} 值数组。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValues
-   *     the default values returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code int} array; or the {@code defaultValues} if there is no such
-   *     property or the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code int} 数组；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValues}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code int}.
+   *     如果指定属性的类型不是 {@code int}。
    */
   int[] getInts(String name, @Nullable int[] defaultValues);
 
   /**
-   * Gets the value of the specified property as a {@code long} value.
+   * 获取指定属性的值作为 {@code long} 值。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the value of the property with the specified name as a {@code
-   *     long}.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code long}。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code long}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code long}。
    */
   long getLong(String name);
 
   /**
-   * Gets the value of the specified property as a {@code long} value.
+   * 获取指定属性的值作为 {@code long} 值。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValue
-   *     the default value returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the value of the property with the specified name as a {@code
-   *     long}; or the {@code defaultValue} if there is no such property or the
-   *     property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code long}；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValue}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code long}.
+   *     如果指定属性的类型不是 {@code long}。
    */
   long getLong(String name, long defaultValue);
 
   /**
-   * Gets the values of the specified property as an array of {@code long}
-   * values.
+   * 获取指定属性的值作为 {@code long} 值数组。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code long} array.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code long} 数组。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code long}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code long}。
    */
   long[] getLongs(String name);
 
   /**
-   * Gets the values of the specified property as an array of {@code long}
-   * values.
+   * 获取指定属性的值作为 {@code long} 值数组。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValues
-   *     the default values returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code long} array; or the {@code defaultValues} if there is no such
-   *     property or the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code long} 数组；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValues}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code long}.
+   *     如果指定属性的类型不是 {@code long}。
    */
   long[] getLongs(String name,
       @Nullable long[] defaultValues);
 
   /**
-   * Gets the value of the specified property as a {@code float} value.
+   * 获取指定属性的值作为 {@code float} 值。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the value of the property with the specified name as a {@code
-   *     float}.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code float}。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code float}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code float}。
    */
   float getFloat(String name);
 
   /**
-   * Gets the value of the specified property as a {@code float} value.
+   * 获取指定属性的值作为 {@code float} 值。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValue
-   *     the default value returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the value of the property with the specified name as a {@code
-   *     float}; or the {@code defaultValue} if there is no such property or the
-   *     property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code float}；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValue}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code float}.
+   *     如果指定属性的类型不是 {@code float}。
    */
   float getFloat(String name, float defaultValue);
 
   /**
-   * Gets the values of the specified property as an array of {@code float}
-   * values.
+   * 获取指定属性的值作为 {@code float} 值数组。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code float} array.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code float} 数组。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code float}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code float}。
    */
   float[] getFloats(String name);
 
   /**
-   * Gets the values of the specified property as an array of {@code float}
-   * values.
+   * 获取指定属性的值作为 {@code float} 值数组。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValues
-   *     the default values returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code float} array; or the {@code defaultValues} if there is no such
-   *     property or the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code float} 数组；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValues}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code float}.
+   *     如果指定属性的类型不是 {@code float}。
    */
   float[] getFloats(String name, @Nullable float[] defaultValues);
 
   /**
-   * Gets the value of the specified property as a {@code double} value.
+   * 获取指定属性的值作为 {@code double} 值。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the value of the property with the specified name as a {@code
-   *     double}.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code double}。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code double}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code double}。
    */
   double getDouble(String name);
 
   /**
-   * Gets the value of the specified property as a {@code double} value.
+   * 获取指定属性的值作为 {@code double} 值。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValue
-   *     the default value returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the value of the property with the specified name as a {@code
-   *     double}; or the {@code defaultValue} if there is no such property or
-   *     the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code double}；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValue}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code double}.
+   *     如果指定属性的类型不是 {@code double}。
    */
   double getDouble(String name, double defaultValue);
 
   /**
-   * Gets the values of the specified property as an array of {@code double}
-   * values.
+   * 获取指定属性的值作为 {@code double} 值数组。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code double} array.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code double} 数组。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code double}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code double}。
    */
   double[] getDoubles(String name);
 
   /**
-   * Gets the values of the specified property as an array of {@code double}
-   * values.
+   * 获取指定属性的值作为 {@code double} 值数组。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValues
-   *     the default values returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code double} array; or the {@code defaultValues} if there is no
-   *     such property or the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code double} 数组；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValues}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code double}.
+   *     如果指定属性的类型不是 {@code double}。
    */
   double[] getDoubles(String name, @Nullable double[] defaultValues);
 
   /**
-   * Gets the value of the specified property as a {@code String} value.
+   * 获取指定属性的值作为 {@code String} 值。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the value of the property with the specified name as a {@code
-   *     String}.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code String}。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code String}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是
+   *     {@code String}。
    * @see #getString(String)
    */
   String getRawString(String name);
 
   /**
-   * Gets the value of the specified property as a {@code String} value.
+   * 获取指定属性的值作为 {@code String} 值。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValue
-   *     the default value returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the value of the property with the specified name as a {@code
-   *     String}; or the {@code defaultValue} if there is no such property or
-   *     the property has no value. Note that if the {@code defaultValue} is
-   *     returned, it is also substituted.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code String}；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValue}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code String}.
+   *     如果指定属性的类型不是 {@code String}。
    * @see #getString(String, String)
    */
   String getRawString(String name, @Nullable String defaultValue);
 
   /**
-   * Gets the values of the specified property as an array of {@code String}
-   * values.
+   * 获取指定属性的值作为 {@code String} 值数组。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code String} array.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code String} 数组。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code String}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是
+   *     {@code String}。
    * @see #getStrings(String)
    */
   String[] getRawStrings(String name);
 
   /**
-   * Gets the values of the specified property as an array of {@code String}
-   * values.
+   * 获取指定属性的值作为 {@code String} 值数组。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValues
-   *     the default values returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code String} array; or the {@code defaultValues} if there is no
-   *     such property or the property has no value. Note that if the {@code
-   *     defaultValues} is returned, it is also substituted.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code String} 数组；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValues}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code String}.
+   *     如果指定属性的类型不是 {@code String}。
    * @see #getStrings(String, String[])
    */
   String[] getRawStrings(String name, @Nullable String[] defaultValues);
 
   /**
-   * Gets the value of the specified property as a substituted {@code String}
-   * value.
+   * 获取指定属性的值作为替换后的 {@code String} 值。
    *
-   * <p>That is, if the property value of the specified name contains
-   * substitutable variables, in the form of {@code ${var_name}}, the variable
-   * will be substituted by the property value of that name or the system
-   * property value of that name.
+   * <p>也就是说，如果指定名称的属性值包含可替换变量，形式为 {@code ${var_name}}，
+   * 则该变量将被该名称的属性值或该名称的系统属性值替换。
    *
-   * <p>The substitution may be recursive, but the maximum depth of the
-   * substitution is {@link #MAX_SUBSTITUTION_DEPTH}.
+   * <p>替换可能是递归的，但替换的最大深度为 {@link #MAX_SUBSTITUTION_DEPTH}。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the value of the property with the specified name as a substituted
-   *     {@code String}.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值，作为替换后的 {@code String}。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code String}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code String}。
    * @see #getRawString(String)
    */
   String getString(String name);
 
   /**
-   * Gets the value of the specified property as a substituted {@code String}
-   * value.
+   * 获取指定属性的值作为替换后的 {@code String} 值。
    *
-   * <p>That is, if the property value of the specified name contains
-   * substitutable variables, in the form of {@code ${var_name}}, the variable
-   * will be substituted by the property value of that name or the system
-   * property value of that name.
+   * <p>也就是说，如果指定名称的属性值包含可替换变量，形式为 {@code ${var_name}}，
+   * 则该变量将被该名称的属性值或该名称的系统属性值替换。
    *
-   * <p>The substitution may be recursive, but the maximum depth of the
-   * substitution is {@link #MAX_SUBSTITUTION_DEPTH}.
+   * <p>替换可能是递归的，但替换的最大深度为 {@link #MAX_SUBSTITUTION_DEPTH}。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValue
-   *     the default value returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the value of the property with the specified name as a substituted
-   *     {@code String}; or the {@code defaultValue} if there is no such
-   *     property or the property has no value. Note that if the {@code
-   *     defaultValue} is returned, it is also substituted.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值，作为替换后的 {@code String}；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValue}。请注意，如果返回了 {@code defaultValue}，它也会被替换。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code String}.
+   *     如果指定属性的类型不是 {@code String}。
    * @see #getRawString(String, String)
    */
   String getString(String name, @Nullable String defaultValue);
 
   /**
-   * Gets the values of the specified property as an array of substituted {@code
-   * String} values.
+   * 获取指定属性的值作为替换后的 {@code String} 值数组。
    *
-   * <p>That is, if the property value of the specified name contains
-   * substitutable variables, in the form of {@code ${var_name}}, the variable
-   * will be substituted by the property value of that name or the system
-   * property value of that name.
+   * <p>也就是说，如果指定名称的属性值包含可替换变量，形式为 {@code ${var_name}}，
+   * 则该变量将被该名称的属性值或该名称的系统属性值替换。
    *
-   * <p>The substitution may be recursive, but the maximum depth of the
-   * substitution is {@link #MAX_SUBSTITUTION_DEPTH}.
+   * <p>替换可能是递归的，但替换的最大深度为 {@link #MAX_SUBSTITUTION_DEPTH}。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the array of the values of the property with the specified name as
-   *     a substituted {@code String} array.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值数组，作为替换后的 {@code String} 数组。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code String}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code String}。
    * @see #getRawStrings(String)
    */
   String[] getStrings(String name);
 
   /**
-   * Gets the values of the specified property as an array of substituted {@code
-   * String} values.
+   * 获取指定属性的值作为替换后的 {@code String} 值数组。
    *
-   * <p>That is, if the property value of the specified name contains
-   * substitutable variables, in the form of {@code ${var_name}}, the variable
-   * will be substituted by the property value of that name or the system
-   * property value of that name.
+   * <p>也就是说，如果指定名称的属性值包含可替换变量，形式为 {@code ${var_name}}，
+   * 则该变量将被该名称的属性值或该名称的系统属性值替换。
    *
-   * <p>The substitution may be recursive, but the maximum depth of the
-   * substitution is {@link #MAX_SUBSTITUTION_DEPTH}.
+   * <p>替换可能是递归的，但替换的最大深度为 {@link #MAX_SUBSTITUTION_DEPTH}。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValues
-   *     the default values returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the array of the values of the property with the specified name as
-   *     a substituted {@code String} array; or the {@code defaultValues} if
-   *     there is no such property or the property has no value. Note that if
-   *     the {@code defaultValues} is returned, it is also substituted.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值数组，作为替换后的 {@code String} 数组；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValues}。请注意，如果返回了 {@code defaultValues}，它也会被替换。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code String}.
+   *     如果指定属性的类型不是 {@code String}。
    * @see #getRawStrings(String, String[])
    */
   String[] getStrings(String name, @Nullable String[] defaultValues);
 
   /**
-   * Substitutes all substitutable variables in a {@code String}, using the
-   * property values in this configuration and the system property values.
+   * 在 {@code String} 中替换所有可替换变量，使用此配置中的属性值和系统属性值。
    *
-   * <p>The substitution may be recursive, but the maximum depth of the
-   * substitution is {@link #MAX_SUBSTITUTION_DEPTH}.
+   * <p>替换可能是递归的，但替换的最大深度为 {@link #MAX_SUBSTITUTION_DEPTH}。
    *
    * @param value
-   *     the {@code String} value to be substituted. It could be null.
-   * @return the substituted result of the specified string; or null if the
-   *     specified string is null.
+   *     要替换的 {@code String} 值。它可以为 null。
+   * @return
+   *     指定字符串的替换结果；如果指定的字符串为 null，则返回 null。
    */
   String substitute(@Nullable String value);
 
   /**
-   * Gets the value of the specified property as a {@code BigDecimal} object.
+   * 获取指定属性的值作为 {@link BigDecimal} 对象。
    *
-   * <p>If the specified property does not exists or has no value, a {@code
-   * ConfigurationError} is thrown. If the specified property exists and has
-   * more than one value, the first value (earliest added into this
-   * configuration) is returned.
+   * <p>如果指定的属性不存在或没有值，则抛出 {@link ConfigurationError}。
+   * 如果指定的属性存在且有多个值，则返回第一个值（最早添加到此配置中的值）。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the value of the property with the specified name as a {@code
-   *     BigDecimal} object.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@link BigDecimal} 对象。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code BigDecimal}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@link BigDecimal}。
    */
   BigDecimal getBigDecimal(String name);
 
   /**
-   * Gets the value of the specified property as a {@code BigDecimal} object.
+   * 获取指定属性的值作为 {@link BigDecimal} 对象。
    *
-   * <p>If the specified property does not exists or has no value, the specified
-   * default value is returned. If the specified property exists and has more
-   * than one value, the first value (earliest added into this configuration) is
-   * returned.
+   * <p>如果指定的属性不存在或没有值，则返回指定的默认值。如果指定的属性存在且有多个值，
+   * 则返回第一个值（最早添加到此配置中的值）。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValue
-   *     the default value returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the value of the property with the specified name as a {@code
-   *     BigDecimal}; or the {@code defaultValue} if there is no such property
-   *     or the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@link BigDecimal}；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValue}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code BigDecimal}.
+   *     如果指定属性的类型不是 {@link BigDecimal}。
    */
   BigDecimal getBigDecimal(String name, @Nullable BigDecimal defaultValue);
 
   /**
-   * Gets the values of the specified property as an array of {@code BigDecimal}
-   * values. If the specified property does not exists or has no value, a {@code
-   * ConfigurationError} is thrown.
+   * 获取指定属性的值作为 {@link BigDecimal} 值数组。如果指定的属性不存在或没有值，
+   * 则抛出 {@link ConfigurationError}。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code BigDecimal} array.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@link BigDecimal} 数组。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the property has no
-   *     value, or the type of the property is not {@code BigDecimal}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@link BigDecimal}。
    */
   BigDecimal[] getBigDecimals(String name);
 
   /**
-   * Gets the values of the specified property as an array of {@code BigDecimal}
-   * values. If the specified property does not exists or has no value, a {@code
-   * ConfigurationError} is thrown.
+   * 获取指定属性的值作为 {@link BigDecimal} 值数组。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValues
-   *     the default values returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code BigDecimal} array; or the {@code defaultValues} if there is no
-   *     such property or the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@link BigDecimal} 数组；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValues}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code BigDecimal}.
+   *     如果指定属性的类型不是 {@link BigDecimal}。
    */
-  BigDecimal[] getBigDecimals(String name, @Nullable BigDecimal[] defaultValues);
+  BigDecimal[] getBigDecimals(String name,
+      @Nullable BigDecimal[] defaultValues);
 
   /**
-   * Gets the value of the specified property as a {@code BigInteger} value.
+   * 获取指定属性的值作为 {@link BigInteger} 对象。
+   *
+   * <p>如果指定的属性不存在或没有值，则抛出 {@link ConfigurationError}。
+   * 如果指定的属性存在且有多个值，则返回第一个值（最早添加到此配置中的值）。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the value of the property with the specified name as a {@code
-   *     BigInteger}.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@link BigInteger} 对象。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code BigInteger}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@link BigInteger}。
    */
   BigInteger getBigInteger(String name);
 
   /**
-   * Gets the value of the specified property as a {@code BigInteger} value.
+   * 获取指定属性的值作为 {@link BigInteger} 对象。
+   *
+   * <p>如果指定的属性不存在或没有值，则返回指定的默认值。如果指定的属性存在且有多个值，
+   * 则返回第一个值（最早添加到此配置中的值）。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValue
-   *     the default values returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the value of the property with the specified name as a {@code
-   *     BigInteger}; or the {@code defaultValue} if there is no such property
-   *     or the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@link BigInteger}；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValue}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code BigInteger}.
+   *     如果指定属性的类型不是 {@link BigInteger}。
    */
   BigInteger getBigInteger(String name, @Nullable BigInteger defaultValue);
 
   /**
-   * Gets the values of the specified property as an array of {@code BigInteger}
-   * values.
+   * 获取指定属性的值作为 {@link BigInteger} 值数组。如果指定的属性不存在或没有值，
+   * 则抛出 {@link ConfigurationError}。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code BigInteger} array.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@link BigInteger} 数组。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code BigInteger}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@link BigInteger}。
    */
   BigInteger[] getBigIntegers(String name);
 
   /**
-   * Gets the values of the specified property as an array of {@code BigInteger}
-   * values.
+   * 获取指定属性的值作为 {@link BigInteger} 值数组。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValues
-   *     the default values returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code BigInteger} array; or the {@code defaultValues} if there is no
-   *     such property or the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@link BigInteger} 数组；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValues}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code BigInteger}.
+   *     如果指定属性的类型不是 {@link BigInteger}。
    */
-  BigInteger[] getBigIntegers(String name, @Nullable BigInteger[] defaultValues);
+  BigInteger[] getBigIntegers(String name,
+      @Nullable BigInteger[] defaultValues);
 
   /**
-   * Gets the value of the specified property as a {@link LocalDate} value.
+   * 获取指定属性的值作为 {@link LocalDate} 值。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the value of the property with the specified name as a {@link LocalDate}.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@link LocalDate}。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@link LocalDate}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是
+   *     {@link LocalDate}。
    */
   LocalDate getDate(String name);
 
   /**
-   * Gets the value of the specified property as a {@link LocalDate} value.
+   * 获取指定属性的值作为 {@link LocalDate} 值。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValue
-   *     the default value returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the value of the property with the specified name as a {@link LocalDate};
-   *     or the {@code defaultValue} if there is no such property or the
-   *     property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@link LocalDate}；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValue}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@link LocalDate}.
+   *     如果指定属性的类型不是 {@link LocalDate}。
    */
   LocalDate getDate(String name, @Nullable LocalDate defaultValue);
 
   /**
-   * Gets the values of the specified property as an array of {@link LocalDate}
-   * values.
+   * 获取指定属性的值作为 {@link LocalDate} 值数组。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the array of the values of the property with the specified name as
-   *     a {@link LocalDate} array.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@link LocalDate} 数组。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@link LocalDate}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是
+   *     {@link LocalDate}。
    */
   LocalDate[] getDates(String name);
 
   /**
-   * Gets the values of the specified property as an array of {@link LocalDate}
-   * values.
+   * 获取指定属性的值作为 {@link LocalDate} 值数组。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValues
-   *     the default values returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the array of the values of the property with the specified name as
-   *     a {@link LocalDate} array; or the {@code defaultValues} if there is no such
-   *     property or the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@link LocalDate} 数组；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValues}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@link LocalDate}.
+   *     如果指定属性的类型不是 {@link LocalDate}。
    */
   LocalDate[] getDates(String name, @Nullable LocalDate[] defaultValues);
 
   /**
-   * Gets the value of the specified property as a {@link LocalTime} value.
+   * 获取指定属性的值作为 {@link LocalTime} 值。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the value of the property with the specified name as a {@link LocalTime}.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@link LocalTime}。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@link LocalTime}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是
+   *     {@link LocalTime}。
    */
   LocalTime getTime(String name);
 
   /**
-   * Gets the value of the specified property as a {@link LocalTime} value.
+   * 获取指定属性的值作为 {@link LocalTime} 值。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValue
-   *     the default value returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the value of the property with the specified name as a {@link LocalTime};
-   *     or the {@code defaultValue} if there is no such property or the
-   *     property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@link LocalTime}；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValue}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@link LocalTime}.
+   *     如果指定属性的类型不是 {@link LocalTime}。
    */
   LocalTime getTime(String name, @Nullable LocalTime defaultValue);
 
   /**
-   * Gets the values of the specified property as an array of {@link LocalTime}
-   * values.
+   * 获取指定属性的值作为 {@link LocalTime} 值数组。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the array of the values of the property with the specified name as
-   *     a {@link LocalTime} array.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@link LocalTime} 数组。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@link LocalTime}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是
+   *     {@link LocalTime}。
    */
   LocalTime[] getTimes(String name);
 
   /**
-   * Gets the values of the specified property as an array of {@link LocalTime}
-   * values.
+   * 获取指定属性的值作为 {@link LocalTime} 值数组。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValues
-   *     the default values returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the array of the values of the property with the specified name as
-   *     a {@link LocalTime} array; or the {@code defaultValues} if there is no such
-   *     property or the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@link LocalTime} 数组；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValues}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@link LocalTime}.
+   *     如果指定属性的类型不是 {@link LocalTime}。
    */
   LocalTime[] getTimes(String name, @Nullable LocalTime[] defaultValues);
 
   /**
-   * Gets the value of the specified property as a {@link LocalDateTime} value.
+   * 获取指定属性的值作为 {@link LocalDateTime} 值。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the value of the property with the specified name as a {@link LocalDateTime}.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@link LocalDateTime}。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@link LocalDateTime}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是
+   *     {@link LocalDateTime}。
    */
   LocalDateTime getDateTime(String name);
 
   /**
-   * Gets the value of the specified property as a {@link LocalDateTime} value.
+   * 获取指定属性的值作为 {@link LocalDateTime} 值。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValue
-   *     the default value returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the value of the property with the specified name as a {@link LocalDateTime};
-   *     or the {@code defaultValue} if there is no such property or the
-   *     property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@link LocalDateTime}；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValue}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@link LocalDateTime}.
+   *     如果指定属性的类型不是 {@link LocalDateTime}。
    */
   LocalDateTime getDateTime(String name, @Nullable LocalDateTime defaultValue);
 
   /**
-   * Gets the values of the specified property as an array of {@link LocalDateTime}
-   * values.
+   * 获取指定属性的值作为 {@link LocalDateTime} 值数组。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the array of the values of the property with the specified name as
-   *     a {@link LocalDateTime} array.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@link LocalDateTime} 数组。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@link LocalDateTime}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是
+   *     {@link LocalDateTime}。
    */
   LocalDateTime[] getDateTimes(String name);
 
   /**
-   * Gets the values of the specified property as an array of {@link LocalDateTime}
-   * values.
+   * 获取指定属性的值作为 {@link LocalDateTime} 值数组。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValues
-   *     the default values returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the array of the values of the property with the specified name as
-   *     a {@link LocalDateTime} array; or the {@code defaultValues} if there is no such
-   *     property or the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@link LocalDateTime} 数组；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValues}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@link LocalDateTime}.
+   *     如果指定属性的类型不是 {@link LocalDateTime}。
    */
   LocalDateTime[] getDateTimes(String name, @Nullable LocalDateTime[] defaultValues);
 
   /**
-   * Gets the value of the specified property as a {@code byte[]} value.
+   * 获取指定属性的值作为 {@code byte[]} 值。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the value of the property with the specified name as a {@code
-   *     byte[]}.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code byte[]}。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code byte[]}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是
+   *     {@code byte[]}。
    */
   byte[] getByteArray(String name);
 
   /**
-   * Gets the value of the specified property as a {@code byte[]} value.
+   * 获取指定属性的值作为 {@code byte[]} 值。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValue
-   *     the default value returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the value of the property with the specified name as a {@code
-   *     byte[]}; or the {@code defaultValue} if there is no such property or
-   *     the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code byte[]}；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValue}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code byte[]}.
+   *     如果指定属性的类型不是 {@code byte[]}。
    */
   byte[] getByteArray(String name, @Nullable byte[] defaultValue);
 
   /**
-   * Gets the values of the specified property as an array of {@code byte[]}
-   * values.
+   * 获取指定属性的值作为 {@code byte[]} 值数组。
    *
    * @param name
-   *     the name of the specified property.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code byte[]} array.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code byte[]} 数组。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code byte[]}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是
+   *     {@code byte[]}。
    */
   byte[][] getByteArrays(String name);
 
   /**
-   * Gets the values of the specified property as an array of {@code byte[]}
-   * values.
+   * 获取指定属性的值作为 {@code byte[]} 值数组。
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValues
-   *     the default values returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code byte[]} array; or the {@code defaultValues} if there is no
-   *     such property or the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code byte[]} 数组；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValues}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code byte[]}.
+   *     如果指定属性的类型不是 {@code byte[]}。
    */
   byte[][] getByteArrays(String name, @Nullable byte[][] defaultValues);
 
   /**
-   * Gets the value of the specified property as an enumeration object.
+   * 获取指定属性的值作为枚举对象。
    * <p>
-   * The value of the specified property must be stored as a string, and must be
-   * the name of an enumeration object.
+   * 指定属性的值必须存储为字符串，并且必须是枚举对象的名称。
    *
    * @param <E>
-   *     the enumeration type.
+   *     枚举类型。
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param enumType
-   *     the class of the enumeration class.
-   * @return the value of the specified property as an enumeration object.
+   *     枚举类的类对象。
+   * @return
+   *     指定属性的值，作为枚举对象。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code String}; or the
-   *     {@code String} value of the specified property can not be converted
-   *     to the specified enumeration object.
+   *     如果指定属性的类型不是 {@code String}；或者指定属性的 {@code String} 值无法转换为指定的枚举对象。
    */
   <E extends Enum<E>> E getEnum(String name, Class<E> enumType);
 
   /**
-   * Gets the value of the specified property as an enumeration object.
+   * 获取指定属性的值作为枚举对象。
    * <p>
-   * The value of the specified property must be stored as a string, and must be
-   * the name of an enumeration object.
+   * 指定属性的值必须存储为字符串，并且必须是枚举对象的名称。
    *
    * @param <E>
-   *     the enumeration type.
+   *     枚举类型。
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValue
-   *     the default enumerator returned in case of there is no such property
-   *     or the property has no value. It could be null.
+   *     在没有此类属性或属性没有值的情况下返回的默认枚举数。它可以为 null。
    * @param enumType
-   *     the class of the enumeration class.
-   * @return the value of the specified property as an enumeration object, which
-   *     may be {@code null}.
+   *     枚举类的类对象。
+   * @return
+   *     指定属性的值，作为枚举对象，可能为 {@code null}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code String}; or the
-   *     {@code String} value of the specified property can not be converted
-   *     to the specified enumeration object.
+   *     如果指定属性的类型不是 {@code String}；或者指定属性的 {@code String} 值无法转换为指定的枚举对象。
    */
   @Nullable
   <E extends Enum<E>> E getEnum(String name, @Nullable E defaultValue, Class<E> enumType);
 
-  // /**
-  //  * Gets the value of the specified property as an array of enumeration objects.
-  //  * <p>
-  //  * The value of the specified property must be stored as a string, and must be
-  //  * the names of an array of enumeration objects.
-  //  *
-  //  * @param <E>
-  //  *     the enumeration type.
-  //  * @param name
-  //  *     the name of the specified property.
-  //  * @param enumType
-  //  *     the class of the enumeration class.
-  //  * @return the values of the specified property as an array of enumeration
-  //  *     objects, which may be {@code null}.
-  //  * @throws ConfigurationError
-  //  *     if the type of the specified property is not {@code String}; or the
-  //  *     {@code String} value of the specified property can not be converted
-  //  *     to the specified enumeration object.
-  //  */
-  // <E extends Enum<E>> E[] getEnums(String name, Class<E> enumType);
-  //
-  // /**
-  //  * Gets the value of the specified property as an array of enumeration objects.
-  //  * <p>
-  //  * The value of the specified property must be stored as a string, and must be
-  //  * an array of names of an enumeration objects.
-  //  *
-  //  * @param <E>
-  //  *     the enumeration type.
-  //  * @param name
-  //  *     the name of the specified property.
-  //  * @param defaultValues
-  //  *     the default enumerators returned in case of there is no such property
-  //  *     or the property has no value. It could be null.
-  //  * @param enumType
-  //  *     the class of the enumeration class.
-  //  * @return the values of the specified property as an array of enumeration
-  //  *     objects, or the default values in case of there is no such property
-  //  *     or the property has no value, which may be {@code null}.
-  //  * @throws ConfigurationError
-  //  *     if the type of the specified property is not {@code String}; or the
-  //  *     {@code String} value of the specified property can not be converted
-  //  *     to the specified enumeration object.
-  //  */
-  // @Nullable
-  // <E extends Enum<E>> E[] getEnums(String name, @Nullable E[] defaultValues, Class<E> enumType);
+//   /**
+//    * 获取指定属性的值作为枚举对象数组。
+//    * <p>
+//    * 指定属性的值必须存储为字符串，并且必须是枚举对象的名称数组。
+//    *
+//    * @param <E>
+//    *     枚举类型。
+//    * @param name
+//    *     指定属性的名称。
+//    * @param enumType
+//    *     枚举类的类对象。
+//    * @return
+//    *     指定属性的值，作为枚举对象数组，可能为 {@code null}。
+//    * @throws ConfigurationError
+//    *     如果指定属性的类型不是 {@code String}；或者指定属性的 {@code String} 值无法转换为指定的枚举对象。
+//    */
+//   <E extends Enum<E>> E[] getEnums(String name, Class<E> enumType);
+
+//   /**
+//    * 获取指定属性的值作为枚举对象数组。
+//    * <p>
+//    * 指定属性的值必须存储为字符串，并且必须是枚举对象的名称数组。
+//    *
+//    * @param <E>
+//    *     枚举类型。
+//    * @param name
+//    *     指定属性的名称。
+//    * @param defaultValues
+//    *     在没有此类属性或属性没有值的情况下返回的默认枚举数。它可以为 null。
+//    * @param enumType
+//    *     枚举类的类对象。
+//    * @return
+//    *     指定属性的值，作为枚举对象数组，或者在没有此类属性或属性没有值的情况下返回默认值，可能为 {@code null}。
+//    * @throws ConfigurationError
+//    *     如果指定属性的类型不是 {@code String}；或者指定属性的 {@code String} 值无法转换为指定的枚举对象。
+//    */
+//   @Nullable
+//   <E extends Enum<E>> E[] getEnums(String name, @Nullable E[] defaultValues, Class<E> enumType);
 
   /**
-   * Gets the value of the specified property as a {@code Class} value.
+   * 获取指定属性的值作为 {@code Class} 值。
    *
-   * <p>Note: the type of the specified property must be either {@link
-   * Type#CLASS} or {@link Type#STRING}.</p>
+   * <p>注意：指定属性的类型必须是 {@link Type#CLASS} 或 {@link Type#STRING}。</p>
    *
    * @param name
-   *     the name of the specified property.
-   * @return the value of the property with the specified name as a {@code
-   *     Class}.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code Class}。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code Class}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是
+   *     {@code Class}。
    */
   Class<?> getClass(String name);
 
   /**
-   * Gets the value of the specified property as a {@code Class} value.
+   * 获取指定属性的值作为 {@code Class} 值。
    *
-   * <p>Note: the type of the specified property must be either {@link
-   * Type#CLASS} or {@link Type#STRING}.</p>
+   * <p>注意：指定属性的类型必须是 {@link Type#CLASS} 或 {@link Type#STRING}。</p>
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValue
-   *     the default value returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the value of the property with the specified name as a {@code
-   *     Class}; or the {@code defaultValue} if there is no such property or the
-   *     property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code Class}；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValue}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code Class} nor {@code
-   *     String}.
+   *     如果指定属性的类型不是 {@code Class} 也不是 {@code String}。
    */
   Class<?> getClass(String name, @Nullable Class<?> defaultValue);
 
   /**
-   * Gets the value of the specified property as a {@code Class} value.
+   * 获取指定属性的值作为 {@code Class} 值。
    *
-   * <p>Note: the type of the specified property must be either {@link
-   * Type#CLASS} or {@link Type#STRING}.</p>
+   * <p>注意：指定属性的类型必须是 {@link Type#CLASS} 或 {@link Type#STRING}。</p>
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultClassName
-   *     the name of default class returned in case of there is no such property
-   *     or the property has no value. It could be null.
-   * @return the value of the property with the specified name as a {@code
-   *     Class}; or the {@code defaultValue} if there is no such property or the
-   *     property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认类的名称。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值，类型为 {@code Class}；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValue}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code Class} nor {@code
-   *     String}, or there is no such property or the property has no value, but
-   *     the class with the name of {@code defaultClass} can not be created.
+   *     如果指定属性的类型不是 {@code Class} 也不是 {@code String}，或者不存在此类属性或属性没有值，
+   *     但无法创建名称为 {@code defaultClass} 的类。
    */
   Class<?> getClass(String name, @Nullable String defaultClassName);
 
   /**
-   * Gets the values of the specified property as an array of {@code Class}
-   * values.
+   * 获取指定属性的值作为 {@code Class} 值数组。
    *
-   * <p>Note: the type of the specified property must be either {@link
-   * Type#CLASS} or {@link Type#STRING}.</p>
+   * <p>注意：指定属性的类型必须是 {@link Type#CLASS} 或 {@link Type#STRING}。</p>
    *
    * @param name
-   *     the name of the specified property.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code Class} array.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code Class} 数组。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code Class}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是
+   *     {@code Class}。
    */
   Class<?>[] getClasses(String name);
 
   /**
-   * Gets the values of the specified property as an array of {@code Class}
-   * values.
+   * 获取指定属性的值作为 {@code Class} 值数组。
    *
-   * <p>Note: the type of the specified property must be either {@link
-   * Type#CLASS} or {@link Type#STRING}.</p>
+   * <p>注意：指定属性的类型必须是 {@link Type#CLASS} 或 {@link Type#STRING}。</p>
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValues
-   *     the default values returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code Class} array; or the {@code defaultValues} if there is no such
-   *     property or the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code Class} 数组；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValues}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code Class}.
+   *     如果指定属性的类型不是 {@code Class}。
    */
   Class<?>[] getClasses(String name, @Nullable Class<?>[] defaultValues);
 
   /**
-   * Gets the values of the specified property as an array of {@code Class}
-   * values.
+   * 获取指定属性的值作为 {@code Class} 值数组。
    *
-   * <p>Note: the type of the specified property must be either {@link
-   * Type#CLASS} or {@link Type#STRING}.</p>
+   * <p>注意：指定属性的类型必须是 {@link Type#CLASS} 或 {@link Type#STRING}。</p>
    *
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultClassNames
-   *     the names of default classes returned in case of there is no such
-   *     property or the property has no value. It could be null.
-   * @return the array of the values of the property with the specified name as
-   *     a {@code Class} array; or the {@code defaultValues} if there is no such
-   *     property or the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认类的名称。它可以为 null。
+   * @return
+   *     具有指定名称的属性的值数组，类型为 {@code Class} 数组；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValues}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code Class}, or there is
-   *     no such property or the property has no value, but the class with the
-   *     name of {@code defaultClass} can not be created.
+   *     如果指定属性的类型不是 {@code Class}，或者不存在此类属性或属性没有值，
+   *     但无法创建名称为 {@code defaultClass} 的类。
    */
   Class<?>[] getClasses(String name, @Nullable String[] defaultClassNames);
 
   /**
-   * Gets the value of the specified property as a {@code Class} value, then
-   * creates a instance of that class and returns it.
+   * 获取指定属性的值作为 {@code Class} 值，然后创建该类的实例并返回它。
    *
    * @param <T>
-   *     the type of the objects to be created and returned.
+   *     要创建和返回的对象的类型。
    * @param name
-   *     the name of the specified property.
-   * @return an instance of the {@code Class} value of the property with the
-   *     specified name.
+   *     指定属性的名称。
+   * @return
+   *     具有指定名称的属性的 {@code Class} 值的实例。
    * @throws ConfigurationError
-   *     if there is no property with the specified name; or the specified
-   *     property has a list of values; or the type of the specified property is
-   *     not {@code Class}; or the instance of the {@code Class} can not be
-   *     created.
+   *     如果不存在具有指定名称的属性；或者指定的属性具有值列表；或者指定属性的类型不是 {@code Class}；
+   *     或者无法创建 {@code Class} 的实例。
    */
   <T> T getInstance(String name);
 
   /**
-   * Gets the value of the specified property as a {@code Class} value, then
-   * creates a instance of that class and returns it.
+   * 获取指定属性的值作为 {@code Class} 值，然后创建该类的实例并返回它。
    *
    * @param <T>
-   *     the type of the objects to be created and returned.
+   *     要创建和返回的对象的类型。
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultClass
-   *     the class of the default value returned in case of there is no such
-   *     property or the property has no value. It could be null.
-   * @return an instance of the {@code Class} value of the property with the
-   *     specified name; or a instance of the {@code defaultClass} if there is
-   *     no such property or the property has no value; or null if there is no
-   *     such property or the property has no value and the default class is
-   *     null.
+   *     在没有此类属性或属性没有值的情况下返回的默认值的类。它可以为 null。
+   * @return
+   *     具有指定名称的属性的 {@code Class} 值的实例；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultClass} 的实例；如果不存在此类属性或属性没有值且默认类为 null，则返回 null。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code Class}; or the
-   *     instance of the {@code Class} value of the specified property can not
-   *     be created.
+   *     如果指定属性的类型不是 {@code Class}；或者无法创建指定属性的 {@code Class} 值的实例。
    */
   <T> T getInstance(String name, @Nullable Class<?> defaultClass);
 
   /**
-   * Gets the value of the specified property as a {@code Class} value, then
-   * creates a instance of that class and returns it.
+   * 获取指定属性的值作为 {@code Class} 值，然后创建该类的实例并返回它。
    *
    * @param <T>
-   *     the type of the objects to be created and returned.
+   *     要创建和返回的对象的类型。
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultClassName
-   *     the class name of the default value returned in case of there is no
-   *     such property or the property has no value. It could be null.
-   * @return an instance of the {@code Class} value of the property with the
-   *     specified name; or a instance of the class with the {@code
-   *     defaultClassName} if there is no such property or the property has no
-   *     value; or null if there is no such property or the property has no
-   *     value and the default class name is null.
+   *     在没有此类属性或属性没有值的情况下返回的默认值的类名。它可以为 null。
+   * @return
+   *     具有指定名称的属性的 {@code Class} 值的实例；如果不存在此类属性或属性没有值，
+   *     则返回具有 {@code defaultClassName} 的类的实例；如果不存在此类属性或属性没有值且默认类名为 null，
+   *     则返回 null。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code Class}; or the
-   *     instance of the {@code Class} value of the specified property can not
-   *     be created.
+   *     如果指定属性的类型不是 {@code Class}；或者无法创建指定属性的 {@code Class} 值的实例。
    */
   <T> T getInstance(String name, @Nullable String defaultClassName);
 
   /**
-   * Gets the value of the specified property as a {@code Class} value, then
-   * creates a instance of that class and returns it.
+   * 获取指定属性的值作为 {@code Class} 值，然后创建该类的实例并返回它。
    *
    * @param <T>
-   *     the type of the objects to be created and returned.
+   *     要创建和返回的对象的类型。
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param defaultValue
-   *     the default value returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return an instance of the {@code Class} value of the property with the
-   *     specified name; or the {@code defaultValue} if there is no such
-   *     property or the property has no value; or null if there is no such
-   *     property or the property has no value and the default class name is
-   *     null.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的 {@code Class} 值的实例；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValue}；如果不存在此类属性或属性没有值且默认类名为 null，
+   *     则返回 null。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code Class}; or the
-   *     instance of the {@code Class} value of the specified property can not
-   *     be created.
+   *     如果指定属性的类型不是 {@code Class}；或者无法创建指定属性的 {@code Class} 值的实例。
    */
   <T> T getInstance(String name, @Nullable T defaultValue);
 
   /**
-   * Gets the values of the specified property as a {@code Class} array, then
-   * creates a instance of each class in the array and returns the object
-   * array.
+   * 获取指定属性的值作为 {@code Class} 数组，然后创建数组中每个类的实例并返回对象数组。
    *
    * @param <T>
-   *     the type of the objects to be created.
+   *     要创建的对象的类型。
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param clazz
-   *     the class object of the type T. It is required to create the array of
-   *     type T.
-   * @return an array of instances of the {@code Class} values of the property
-   *     with the specified name.
+   *     类型 T 的类对象。创建类型 T 的数组需要它。
+   * @return
+   *     具有指定名称的属性的 {@code Class} 值的实例数组。
    * @throws ConfigurationError
-   *     if there is no property with the specified name; or the specified
-   *     property has a list of values; or the type of the specified property is
-   *     not {@code Class}; or the instance of the {@code Class} can not be
-   *     created.
+   *     如果不存在具有指定名称的属性；或者指定的属性具有值列表；或者指定属性的类型不是 {@code Class}；
+   *     或者无法创建 {@code Class} 的实例。
    */
   <T> T[] getInstances(String name, Class<?> clazz);
 
   /**
-   * Gets the values of the specified property as a {@code Class} array, then
-   * creates a instance of each class in the array and returns the object
-   * array.
+   * 获取指定属性的值作为 {@code Class} 数组，然后创建数组中每个类的实例并返回对象数组。
    *
    * @param <T>
-   *     the type of the objects to be created.
+   *     要创建的对象的类型。
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param clazz
-   *     the class object of the type T. It is required to create the array of
-   *     type T.
+   *     类型 T 的类对象。创建类型 T 的数组需要它。
    * @param defaultClasses
-   *     the classes of the default values returned in case of there is no such
-   *     property or the property has no value. It could be null.
-   * @return an array of instances of the {@code Class} values of the property
-   *     with the specified name; or a instance of the {@code defaultClass} if
-   *     there is no such property or the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值的类。它可以为 null。
+   * @return
+   *     具有指定名称的属性的 {@code Class} 值的实例数组；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultClass} 的实例。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code Class}; or the
-   *     instance of the {@code Class} value of the specified property can not
-   *     be created.
+   *     如果指定属性的类型不是 {@code Class}；或者无法创建指定属性的 {@code Class} 值的实例。
    */
   <T> T[] getInstances(String name, Class<?> clazz, @Nullable Class<?>[] defaultClasses);
 
   /**
-   * Gets the values of the specified property as a {@code Class} array, then
-   * creates a instance of each class in the array and returns the object
-   * array.
+   * 获取指定属性的值作为 {@code Class} 数组，然后创建数组中每个类的实例并返回对象数组。
    *
    * @param <T>
-   *     the type of the objects to be created.
+   *     要创建的对象的类型。
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param clazz
-   *     the class object of the type T. It is required to create the array of
-   *     type T.
+   *     类型 T 的类对象。创建类型 T 的数组需要它。
    * @param defaultClassNames
-   *     the class names of the default values returned in case of there is no
-   *     such property or the property has no value. It could be null.
-   * @return an array of instances of the {@code Class} values of the property
-   *     with the specified name; or a instance of the class with the {@code
-   *     defaultClassName} if there is no such property or the property has no
-   *     value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值的类名。它可以为 null。
+   * @return
+   *     具有指定名称的属性的 {@code Class} 值的实例数组；如果不存在此类属性或属性没有值，
+   *     则返回具有 {@code defaultClassName} 的类的实例。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code Class}; or the
-   *     instance of the {@code Class} value of the specified property can not
-   *     be created.
+   *     如果指定属性的类型不是 {@code Class}；或者无法创建指定属性的 {@code Class} 值的实例。
    */
   <T> T[] getInstances(String name, Class<?> clazz, @Nullable String[] defaultClassNames);
 
   /**
-   * Gets the values of the specified property as a {@code Class} array, then
-   * creates a instance of each class in the array and returns the object
-   * array.
+   * 获取指定属性的值作为 {@code Class} 数组，然后创建数组中每个类的实例并返回对象数组。
    *
    * @param <T>
-   *     the type of the objects to be created.
+   *     要创建的对象的类型。
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @param clazz
-   *     the class object of the type T. It is required to create the array of
-   *     type T.
+   *     类型 T 的类对象。创建类型 T 的数组需要它。
    * @param defaultValues
-   *     the default values returned in case of there is no such property or the
-   *     property has no value. It could be null.
-   * @return an array of instances of the {@code Class} values of the property
-   *     with the specified name; or the {@code defaultValues} if there is no
-   *     such property or the property has no value.
+   *     在没有此类属性或属性没有值的情况下返回的默认值。它可以为 null。
+   * @return
+   *     具有指定名称的属性的 {@code Class} 值的实例数组；如果不存在此类属性或属性没有值，
+   *     则返回 {@code defaultValues}。
    * @throws ConfigurationError
-   *     if the type of the specified property is not {@code Class}; or the
-   *     instance of the {@code Class} value of the specified property can not
-   *     be created.
+   *     如果指定属性的类型不是 {@code Class}；或者无法创建指定属性的 {@code Class} 值的实例。
    */
   <T> T[] getInstances(String name, Class<?> clazz, @Nullable T[] defaultValues);
 }

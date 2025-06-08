@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,10 +15,9 @@ import javax.annotation.concurrent.Immutable;
 import ltd.qubit.commons.util.codec.IsoDateCodec;
 
 /**
- * The JACKSON serializer of a {@link Date} object, in the ISO-8601
- * format of "yyyy-MM-dd'T'HH:mm:ss'Z'".
+ * {@link Date} 对象的 JACKSON 序列化器，使用 ISO-8601 格式 "yyyy-MM-dd'T'HH:mm:ss'Z'"。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public class IsoDateSerializer extends DateSerializer {

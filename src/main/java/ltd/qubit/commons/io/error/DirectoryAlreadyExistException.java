@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -18,9 +18,9 @@ import ltd.qubit.commons.error.ErrorInfoConvertable;
 import ltd.qubit.commons.util.pair.KeyValuePairList;
 
 /**
- * Thrown to indicate that a directory already exists.
+ * 抛出此异常以指示目录已存在。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class DirectoryAlreadyExistException extends IOException
     implements ErrorInfoConvertable {
@@ -30,23 +30,50 @@ public class DirectoryAlreadyExistException extends IOException
 
   private final String path;
 
+  /**
+   * 构造一个表示目录已存在的异常。
+   *
+   * @param path
+   *     目录路径。
+   */
   public DirectoryAlreadyExistException(final String path) {
     super("The directory already exists: " + path);
     this.path = path;
   }
 
+  /**
+   * 构造一个表示目录已存在的异常。
+   *
+   * @param file
+   *     目录文件。
+   */
   public DirectoryAlreadyExistException(final File file) {
     this(file.getAbsolutePath());
   }
 
+  /**
+   * 构造一个表示目录已存在的异常。
+   *
+   * @param path
+   *     目录路径。
+   */
   public DirectoryAlreadyExistException(final Path path) {
     this(path.toAbsolutePath().toString());
   }
 
+  /**
+   * 获取目录路径。
+   *
+   * @return
+   *     目录路径。
+   */
   public String getPath() {
     return path;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public ErrorInfo toErrorInfo() {
     return new ErrorInfo("IO_ERROR", "DIRECTORY_ALREADY_EXIST",

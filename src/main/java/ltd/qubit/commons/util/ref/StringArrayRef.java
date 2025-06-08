@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -9,11 +9,14 @@
 package ltd.qubit.commons.util.ref;
 
 /**
- * A trivial structure representing the reference of a String array variable,
- * which could be used as a reference argument in function calls.
+ * 此结构表示对{@code String}数组变量的引用，可在函数调用中用作引用参数。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class StringArrayRef {
+
+  /**
+   * 此引用指向的{@code String}数组变量。
+   */
   public String[] value;
 }

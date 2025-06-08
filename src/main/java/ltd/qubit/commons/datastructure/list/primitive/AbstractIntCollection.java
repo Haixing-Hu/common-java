@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,35 +8,49 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list.primitive;
 
+import java.io.Serial;
+
 import javax.annotation.Nullable;
 
 import ltd.qubit.commons.lang.Comparison;
 import ltd.qubit.commons.lang.Hash;
 
 /**
- * Abstract base class for {@link IntCollection}s.
+ * {@link IntCollection} 的抽象基类。
  *
- * <p>Read-only subclasses must override {@link #iterator} and {@link #size}.
- * Mutable subclasses should also override {@link #add} and
- * {@link IntIterator#remove IntIterator.remove}. All other methods have at
- * least some base implementation derived from these. Subclasses may choose to
- * override these methods to provide a more efficient implementation.
+ * <p>只读子类必须覆盖 {@link #iterator} 和 {@link #size}。
+ * 可变子类还应覆盖 {@link #add} 和
+ * {@link IntIterator#remove IntIterator.remove}。所有其他方法都至少具有
+ * 从这些方法派生的一些基本实现。子类可以选择覆盖这些方法以提供更有效的实现。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public abstract class AbstractIntCollection implements IntCollection {
 
+  @Serial
   private static final long serialVersionUID = 7717224828662524993L;
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract IntIterator iterator();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract int size();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract boolean add(final int element);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean addAll(final IntCollection c) {
     boolean modified = false;
@@ -46,6 +60,9 @@ public abstract class AbstractIntCollection implements IntCollection {
     return modified;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void clear() {
     for (final IntIterator iter = iterator(); iter.hasNext();) {
@@ -54,6 +71,9 @@ public abstract class AbstractIntCollection implements IntCollection {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean contains(final int element) {
     for (final IntIterator iter = iterator(); iter.hasNext();) {
@@ -64,6 +84,9 @@ public abstract class AbstractIntCollection implements IntCollection {
     return false;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean containsAll(final IntCollection c) {
     for (final IntIterator iter = c.iterator(); iter.hasNext();) {
@@ -74,11 +97,17 @@ public abstract class AbstractIntCollection implements IntCollection {
     return true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isEmpty() {
     return (0 == size());
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean remove(final int element) {
     for (final IntIterator iter = iterator(); iter.hasNext();) {
@@ -90,6 +119,9 @@ public abstract class AbstractIntCollection implements IntCollection {
     return false;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean removeAll(final IntCollection c) {
     boolean modified = false;
@@ -99,6 +131,9 @@ public abstract class AbstractIntCollection implements IntCollection {
     return modified;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean retainAll(final IntCollection c) {
     boolean modified = false;
@@ -111,6 +146,9 @@ public abstract class AbstractIntCollection implements IntCollection {
     return modified;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int[] toArray() {
     final int[] array = new int[size()];
@@ -122,6 +160,9 @@ public abstract class AbstractIntCollection implements IntCollection {
     return array;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int[] toArray(final int[] a) {
     if (a.length < size()) {

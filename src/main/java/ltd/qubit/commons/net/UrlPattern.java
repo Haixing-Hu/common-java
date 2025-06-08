@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -30,6 +30,9 @@ public class UrlPattern implements Serializable, CloneableEx<UrlPattern> {
 
   private static final long serialVersionUID = 9135054642012865500L;
 
+  /**
+   * 默认的URL部分，即整个URL。
+   */
   public static final UrlPart DEFAULT_PART = UrlPart.URL;
 
   static {

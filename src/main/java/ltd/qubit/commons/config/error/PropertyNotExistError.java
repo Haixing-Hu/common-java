@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -9,9 +9,9 @@
 package ltd.qubit.commons.config.error;
 
 /**
- * This error indicates that the property with a specified name does not exist.
+ * 此错误表示具有指定名称的属性不存在。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class PropertyNotExistError extends ConfigurationError {
 
@@ -19,11 +19,23 @@ public class PropertyNotExistError extends ConfigurationError {
 
   private final String propertyName;
 
+  /**
+   * 构造一个 {@link PropertyNotExistError}。
+   *
+   * @param propertyName
+   *     不存在的属性的名称。
+   */
   public PropertyNotExistError(final String propertyName) {
     super("The specified property does not exist: " + propertyName);
     this.propertyName = propertyName;
   }
 
+  /**
+   * 获取不存在的属性的名称。
+   *
+   * @return
+   *     不存在的属性的名称。
+   */
   public String getPropertyName() {
     return propertyName;
   }

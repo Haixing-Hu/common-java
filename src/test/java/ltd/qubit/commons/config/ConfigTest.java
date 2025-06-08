@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -1215,7 +1215,7 @@ public class ConfigTest {
     config.setString("prop4", "value4");
     assertFalse(config.isEmpty());
 
-    config.removeAll();
+    config.clear();
     assertTrue(config.isEmpty());
   }
 
@@ -1234,7 +1234,7 @@ public class ConfigTest {
 
     assertEquals(5, config.size());
 
-    config.removeAll();
+    config.clear();
     assertEquals(0, config.size());
   }
 
@@ -1558,11 +1558,11 @@ public class ConfigTest {
     // assertEquals(0, config.getCount(null));
 
     assertFalse(config.isEmpty());
-    config.removeAll();
+    config.clear();
     assertTrue(config.isEmpty());
 
     assertTrue(config.isEmpty());
-    config.removeAll();
+    config.clear();
     assertTrue(config.isEmpty());
   }
 
@@ -1640,7 +1640,7 @@ public class ConfigTest {
     assertEquals(modifiableConfig1, modifiableConfig2);
     assertEquals(config1, config2);
 
-    modifiableConfig2.removeAll();
+    modifiableConfig2.clear();
     assertNotEquals(modifiableConfig1, modifiableConfig2);
     assertNotEquals(config1, config2);
 
@@ -1672,7 +1672,7 @@ public class ConfigTest {
     assertEquals(modifiableConfig1, config2);
     assertNotSame(modifiableConfig1, config2);
 
-    modifiableConfig1.removeAll();
+    modifiableConfig1.clear();
     assertNotEquals(modifiableConfig1, modifiableConfig2);
     assertNotEquals(modifiableConfig1, config2);
 
@@ -1698,17 +1698,17 @@ public class ConfigTest {
     final DefaultConfig config2 = new DefaultConfig();
     final DefaultConfig expected = new DefaultConfig();
 
-    config1.removeAll();
+    config1.clear();
     config1.addString("prop1", "value1-1");
     config1.addString("prop1", "value1-2");
     config1.addString("prop2", "value2-1");
     config1.setFinal("prop2", true);
-    config2.removeAll();
+    config2.clear();
     config2.addString("prop1", "value1-3");
     config2.addString("prop2", "value2-2");
     config2.addString("prop3", "value3-1");
     config1.merge(config2, MergingPolicy.SKIP);
-    expected.removeAll();
+    expected.clear();
     expected.addString("prop1", "value1-1");
     expected.addString("prop1", "value1-2");
     expected.addString("prop2", "value2-1");
@@ -1716,17 +1716,17 @@ public class ConfigTest {
     expected.addString("prop3", "value3-1");
     assertEquals(expected, config1);
 
-    config1.removeAll();
+    config1.clear();
     config1.addString("prop1", "value1-1");
     config1.addString("prop1", "value1-2");
     config1.addString("prop2", "value2-1");
     config1.setFinal("prop2", true);
-    config2.removeAll();
+    config2.clear();
     config2.addString("prop1", "value1-3");
     config2.addString("prop2", "value2-2");
     config2.addString("prop3", "value3-1");
     config1.merge(config2, MergingPolicy.UNION);
-    expected.removeAll();
+    expected.clear();
     expected.addString("prop1", "value1-1");
     expected.addString("prop1", "value1-2");
     expected.addString("prop1", "value1-3");
@@ -1735,17 +1735,17 @@ public class ConfigTest {
     expected.addString("prop3", "value3-1");
     assertEquals(expected, config1);
 
-    config1.removeAll();
+    config1.clear();
     config1.addString("prop1", "value1-1");
     config1.addString("prop1", "value1-2");
     config1.addString("prop2", "value2-1");
     config1.setFinal("prop2", true);
-    config2.removeAll();
+    config2.clear();
     config2.addString("prop1", "value1-3");
     config2.addString("prop2", "value2-2");
     config2.addString("prop3", "value3-1");
     config1.merge(config2, MergingPolicy.OVERWRITE);
-    expected.removeAll();
+    expected.clear();
     expected.addString("prop1", "value1-3");
     expected.addString("prop2", "value2-1");
     expected.setFinal("prop2", true);

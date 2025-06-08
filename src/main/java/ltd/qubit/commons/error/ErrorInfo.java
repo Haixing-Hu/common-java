@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -60,31 +60,80 @@ public class ErrorInfo implements Serializable, Assignable<ErrorInfo> {
   @Nullable
   private KeyValuePairList params;
 
+  /**
+   * 构造一个新的错误信息。
+   */
   public ErrorInfo() {
   }
 
+  /**
+   * 构造一个新的错误信息，复制另一个错误信息的内容。
+   *
+   * @param other
+   *     要复制的错误信息。
+   */
   public ErrorInfo(final ErrorInfo other) {
     assign(other);
   }
 
+  /**
+   * 构造一个新的错误信息。
+   *
+   * @param type
+   *     错误类型。
+   * @param code
+   *     错误代码。
+   * @param message
+   *     错误消息。
+   */
   public ErrorInfo(final String type, final String code, final String message) {
     this.type = type;
     this.code = code;
     this.params = KeyValuePairList.of("message", message);
   }
 
+  /**
+   * 构造一个新的错误信息。
+   *
+   * @param type
+   *     错误类型。
+   * @param code
+   *     错误代码。
+   * @param e
+   *     异常对象。
+   */
   public ErrorInfo(final String type, final String code, final Throwable e) {
     this.type = type;
     this.code = code;
     this.params = KeyValuePairList.of("message", e.getMessage());
   }
 
+  /**
+   * 构造一个新的错误信息。
+   *
+   * @param type
+   *     错误类型。
+   * @param code
+   *     错误代码。
+   * @param params
+   *     错误参数。
+   */
   public ErrorInfo(final String type, final String code, final KeyValuePair ... params) {
     this.type = type;
     this.code = code;
     this.params = KeyValuePairList.ofArray(params);
   }
 
+  /**
+   * 构造一个新的错误信息。
+   *
+   * @param type
+   *     错误类型。
+   * @param code
+   *     错误代码。
+   * @param params
+   *     错误参数列表。
+   */
   public ErrorInfo(final String type, final String code,
       @Nullable final KeyValuePairList params) {
     this.type = type;
@@ -92,6 +141,20 @@ public class ErrorInfo implements Serializable, Assignable<ErrorInfo> {
     this.params = params;
   }
 
+  /**
+   * 构造一个新的错误信息。
+   *
+   * @param <E1>
+   *     错误类型枚举的类型。
+   * @param <E2>
+   *     错误代码枚举的类型。
+   * @param type
+   *     错误类型枚举。
+   * @param code
+   *     错误代码枚举。
+   * @param message
+   *     错误消息。
+   */
   public <E1 extends Enum<E1>, E2 extends Enum<E2>>
   ErrorInfo(final E1 type, final E2 code, final String message) {
     this.type = type.name();
@@ -99,6 +162,20 @@ public class ErrorInfo implements Serializable, Assignable<ErrorInfo> {
     this.params = KeyValuePairList.of("message", message);
   }
 
+  /**
+   * 构造一个新的错误信息。
+   *
+   * @param <E1>
+   *     错误类型枚举的类型。
+   * @param <E2>
+   *     错误代码枚举的类型。
+   * @param type
+   *     错误类型枚举。
+   * @param code
+   *     错误代码枚举。
+   * @param e
+   *     异常对象。
+   */
   public <E1 extends Enum<E1>, E2 extends Enum<E2>>
   ErrorInfo(final E1 type, final E2 code, final Throwable e) {
     this.type = type.name();
@@ -114,6 +191,20 @@ public class ErrorInfo implements Serializable, Assignable<ErrorInfo> {
     }
   }
 
+  /**
+   * 构造一个新的错误信息。
+   *
+   * @param <E1>
+   *     错误类型枚举的类型。
+   * @param <E2>
+   *     错误代码枚举的类型。
+   * @param type
+   *     错误类型枚举。
+   * @param code
+   *     错误代码枚举。
+   * @param params
+   *     错误参数。
+   */
   public <E1 extends Enum<E1>, E2 extends Enum<E2>>
   ErrorInfo(final E1 type, final E2 code, final KeyValuePair ... params) {
     this.type = type.name();
@@ -121,6 +212,20 @@ public class ErrorInfo implements Serializable, Assignable<ErrorInfo> {
     this.params = KeyValuePairList.ofArray(params);
   }
 
+  /**
+   * 构造一个新的错误信息。
+   *
+   * @param <E1>
+   *     错误类型枚举的类型。
+   * @param <E2>
+   *     错误代码枚举的类型。
+   * @param type
+   *     错误类型枚举。
+   * @param code
+   *     错误代码枚举。
+   * @param params
+   *     错误参数列表。
+   */
   public <E1 extends Enum<E1>, E2 extends Enum<E2>>
   ErrorInfo(final E1 type, final E2 code, @Nullable final KeyValuePairList params) {
     this.type = type.name();
@@ -128,6 +233,9 @@ public class ErrorInfo implements Serializable, Assignable<ErrorInfo> {
     this.params = params;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void assign(final ErrorInfo other) {
     type = other.type;
@@ -136,41 +244,92 @@ public class ErrorInfo implements Serializable, Assignable<ErrorInfo> {
     params = Assignment.clone(other.params);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public ErrorInfo cloneEx() {
     return new ErrorInfo(this);
   }
 
+  /**
+   * 获取错误类型。
+   *
+   * @return
+   *     错误类型。
+   */
   public String getType() {
     return type;
   }
 
+  /**
+   * 设置错误类型。
+   *
+   * @param type
+   *     错误类型。
+   */
   public void setType(final String type) {
     this.type = type;
   }
 
+  /**
+   * 获取错误代码。
+   *
+   * @return
+   *     错误代码。
+   */
   public String getCode() {
     return code;
   }
 
+  /**
+   * 设置错误代码。
+   *
+   * @param code
+   *     错误代码。
+   */
   public void setCode(final String code) {
     this.code = code;
   }
 
+  /**
+   * 获取错误消息。
+   *
+   * @return
+   *     错误消息。
+   */
   @Nullable
   public String getMessage() {
     return message;
   }
 
+  /**
+   * 设置错误消息。
+   *
+   * @param message
+   *     错误消息。
+   */
   public void setMessage(@Nullable final String message) {
     this.message = message;
   }
 
+  /**
+   * 获取错误参数。
+   *
+   * @return
+   *     错误参数。
+   */
   @Nullable
   public KeyValuePairList getParams() {
     return params;
   }
 
+  /**
+   * 设置错误参数。
+   *
+   * @param params
+   *     错误参数。
+   */
   public void setParams(@Nullable final KeyValuePairList params) {
     this.params = params;
   }

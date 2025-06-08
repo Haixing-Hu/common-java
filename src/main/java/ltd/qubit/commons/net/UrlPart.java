@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -46,7 +46,7 @@ public enum UrlPart {
    * 端口。
    */
   PORT,
-  
+
   /**
    * 路径。
    */

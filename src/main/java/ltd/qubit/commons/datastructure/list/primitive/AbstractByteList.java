@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,11 +8,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list.primitive;
 
+import java.io.Serial;
+
 import ltd.qubit.commons.lang.Hash;
 
+/**
+ * {@link ByteList} 的抽象基类。
+ *
+ * @author 胡海星
+ */
 public abstract class AbstractByteList extends AbstractByteCollection
     implements ByteList {
 
+  @Serial
   private static final long serialVersionUID = -8413030046337855832L;
 
   protected byte modifyCount = 0;

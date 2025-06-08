@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,56 +11,54 @@ package ltd.qubit.commons.io;
 import java.nio.ByteOrder;
 
 /**
- * The enumeration of endianness.
+ * 字节序的枚举。
  * <p>
- * This enumeration is used to indicate the endianness of a binary data. It is
- * similar to {@link java.nio.ByteOrder}, but it is represented as an enumeration
- * instead of a class, and it is more convenient to use.
+ * 此枚举用于指示二进制数据的字节序。它类似于 {@link java.nio.ByteOrder}，
+ * 但它表示为枚举而不是类，使用起来更方便。
  *
  * @see java.nio.ByteOrder
  * @see <a href="https://en.wikipedia.org/wiki/Endianness">Endianness</a>
- * @author Haixing Hu
+ * @author 胡海星
  */
 public enum Endian {
 
   /**
-   * The big-endian.
+   * 大端字节序。
    */
   BIG_ENDIAN(ByteOrder.BIG_ENDIAN),
 
   /**
-   * The little-endian.
+   * 小端字节序。
    */
   LITTLE_ENDIAN(ByteOrder.LITTLE_ENDIAN);
 
   /**
-   * Gets the network endianess.
+   * 获取网络字节序。
    *
    * @return
-   *     the network endianess, which is always {@link #BIG_ENDIAN}.
+   *     网络字节序，始终为 {@link #BIG_ENDIAN}。
    */
   static Endian networkEndian() {
     return BIG_ENDIAN;
   }
 
   /**
-   * Gets the native endianess of the host machine.
+   * 获取主机的本机字节序。
    *
    * @return
-   *     the native endianess of the host machine, which is either
-   *     {@link #BIG_ENDIAN} or {@link #LITTLE_ENDIAN}.
+   *     主机的本机字节序，为 {@link #BIG_ENDIAN} 或 {@link #LITTLE_ENDIAN}。
    */
   static Endian nativeEndian() {
     return ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN ? BIG_ENDIAN : LITTLE_ENDIAN;
   }
 
   /**
-   * Gets the endianness of a byte order.
+   * 获取字节顺序的字节序。
    *
    * @param byteOrder
-   *     the byte order.
+   *     字节顺序。
    * @return
-   *     the endianness of the byte order.
+   *     字节顺序的字节序。
    */
   static Endian forByteOrder(final ByteOrder byteOrder) {
     if (byteOrder == ByteOrder.BIG_ENDIAN) {
@@ -74,14 +72,21 @@ public enum Endian {
 
   private final ByteOrder byteOrder;
 
+  /**
+   * 构造一个表示字节序的枚举。
+   *
+   * @param byteOrder
+   *     字节顺序。
+   */
   Endian(final ByteOrder byteOrder) {
     this.byteOrder = byteOrder;
   }
 
   /**
-   * Gets the byte order of this endianness.
+   * 获取此字节序的字节顺序。
    *
-   * @return the byte order of this endianness.
+   * @return
+   *     此字节序的字节顺序。
    */
   public ByteOrder byteOrder() {
     return byteOrder;

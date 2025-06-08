@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -8,35 +8,64 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.datastructure.list.primitive;
 
+import java.io.Serial;
+
 import ltd.qubit.commons.lang.Hash;
 
+/**
+ * {@link IntList} 的抽象基类。
+ *
+ * @author 胡海星
+ */
 public abstract class AbstractIntList extends AbstractIntCollection implements IntList {
 
+  @Serial
   private static final long serialVersionUID = 2747013056428863977L;
 
   protected int modifyCount = 0;
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract int get(int index);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract int size();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract int removeAt(int index);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract int set(int index, int element);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract void add(int index, int element);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean add(final int element) {
     add(size(), element);
     return true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean addAll(final int index, final IntCollection collection) {
     boolean modified = false;
@@ -49,6 +78,9 @@ public abstract class AbstractIntList extends AbstractIntCollection implements I
     return modified;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int indexOf(final int element) {
     final IntIterator iter = iterator();
@@ -63,6 +95,9 @@ public abstract class AbstractIntList extends AbstractIntCollection implements I
     return -1;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int lastIndexOf(final int element) {
     final IntListIterator iter = listIterator(size());
@@ -74,19 +109,31 @@ public abstract class AbstractIntList extends AbstractIntCollection implements I
     return -1;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public IntIterator iterator() {
     return listIterator();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public IntListIterator listIterator() {
     return listIterator(0);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract IntListIterator listIterator(final int index);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void unique() {
     final IntListIterator iter = listIterator();

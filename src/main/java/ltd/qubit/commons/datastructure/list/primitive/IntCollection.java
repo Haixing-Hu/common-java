@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -11,9 +11,9 @@ package ltd.qubit.commons.datastructure.list.primitive;
 import java.io.Serializable;
 
 /**
- * A collection of {@code int} values.
+ * {@code int} 值的集合。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface IntCollection extends Comparable<IntCollection>, Serializable {
 

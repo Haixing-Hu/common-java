@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,26 +15,49 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * A {@link UppercaseTransformer} transform a string to its uppercase form.
+ * {@link UppercaseTransformer}将字符串转换为其大写形式。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class UppercaseTransformer extends AbstractStringTransformer {
 
   private Locale locale;
 
+  /**
+   * 构造一个{@link UppercaseTransformer}。
+   * <p>
+   * 转换时将使用默认的{@link Locale}。
+   */
   public UppercaseTransformer() {
     locale = null;
   }
 
+  /**
+   * 构造一个{@link UppercaseTransformer}。
+   *
+   * @param locale
+   *     转换时要使用的{@link Locale}。
+   */
   public UppercaseTransformer(final Locale locale) {
     this.locale = locale;
   }
 
+  /**
+   * 获取转换时要使用的{@link Locale}。
+   *
+   * @return
+   *     转换时要使用的{@link Locale}。
+   */
   public Locale getLocale() {
     return locale;
   }
 
+  /**
+   * 设置转换时要使用的{@link Locale}。
+   *
+   * @param locale
+   *     新的转换时要使用的{@link Locale}。
+   */
   public void setLocale(final Locale locale) {
     this.locale = locale;
   }

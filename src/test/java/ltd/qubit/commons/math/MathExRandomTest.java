@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -42,13 +42,13 @@ public class MathExRandomTest {
   void testRandomWithRange() {
     double lowerBound = 5.0;
     double upperBound = 10.0;
-    
+
     // 测试指定范围的random方法
     for (int i = 0; i < TEST_ITERATIONS; i++) {
       double value = MathEx.random(lowerBound, upperBound);
-      assertTrue(value >= lowerBound, 
+      assertTrue(value >= lowerBound,
           "随机数应该大于等于下界: " + value + " >= " + lowerBound);
-      assertTrue(value < upperBound, 
+      assertTrue(value < upperBound,
           "随机数应该小于上界: " + value + " < " + upperBound);
     }
   }
@@ -57,13 +57,13 @@ public class MathExRandomTest {
   void testRandomWithNegativeRange() {
     double lowerBound = -10.0;
     double upperBound = -5.0;
-    
+
     // 测试负数范围
     for (int i = 0; i < TEST_ITERATIONS; i++) {
       double value = MathEx.random(lowerBound, upperBound);
-      assertTrue(value >= lowerBound, 
+      assertTrue(value >= lowerBound,
           "随机数应该大于等于下界: " + value + " >= " + lowerBound);
-      assertTrue(value < upperBound, 
+      assertTrue(value < upperBound,
           "随机数应该小于上界: " + value + " < " + upperBound);
     }
   }
@@ -72,13 +72,13 @@ public class MathExRandomTest {
   void testRandomCrossZeroRange() {
     double lowerBound = -5.0;
     double upperBound = 5.0;
-    
+
     // 测试跨越零的范围
     for (int i = 0; i < TEST_ITERATIONS; i++) {
       double value = MathEx.random(lowerBound, upperBound);
-      assertTrue(value >= lowerBound, 
+      assertTrue(value >= lowerBound,
           "随机数应该大于等于下界: " + value + " >= " + lowerBound);
-      assertTrue(value < upperBound, 
+      assertTrue(value < upperBound,
           "随机数应该小于上界: " + value + " < " + upperBound);
     }
   }
@@ -102,12 +102,12 @@ public class MathExRandomTest {
   @Test
   void testRandomByteWithUpperBound() {
     byte upperBound = 10;
-    
+
     // 测试带上界的randomByte方法
     for (int i = 0; i < TEST_ITERATIONS; i++) {
       byte value = MathEx.randomByte(upperBound);
       assertTrue(value >= 0, "随机数应该大于等于0: " + value);
-      assertTrue(value < upperBound, 
+      assertTrue(value < upperBound,
           "随机数应该小于上界: " + value + " < " + upperBound);
     }
   }
@@ -116,13 +116,13 @@ public class MathExRandomTest {
   void testRandomByteWithRange() {
     byte lowerBound = 5;
     byte upperBound = 15;
-    
+
     // 测试指定范围的randomByte方法
     for (int i = 0; i < TEST_ITERATIONS; i++) {
       byte value = MathEx.randomByte(lowerBound, upperBound);
-      assertTrue(value >= lowerBound, 
+      assertTrue(value >= lowerBound,
           "随机数应该大于等于下界: " + value + " >= " + lowerBound);
-      assertTrue(value < upperBound, 
+      assertTrue(value < upperBound,
           "随机数应该小于上界: " + value + " < " + upperBound);
     }
   }
@@ -131,13 +131,13 @@ public class MathExRandomTest {
   void testRandomByteNegativeRange() {
     byte lowerBound = -15;
     byte upperBound = -5;
-    
+
     // 测试负数范围
     for (int i = 0; i < TEST_ITERATIONS; i++) {
       byte value = MathEx.randomByte(lowerBound, upperBound);
-      assertTrue(value >= lowerBound, 
+      assertTrue(value >= lowerBound,
           "随机数应该大于等于下界: " + value + " >= " + lowerBound);
-      assertTrue(value < upperBound, 
+      assertTrue(value < upperBound,
           "随机数应该小于上界: " + value + " < " + upperBound);
     }
   }
@@ -161,12 +161,12 @@ public class MathExRandomTest {
   @Test
   void testRandomShortWithUpperBound() {
     short upperBound = 100;
-    
+
     // 测试带上界的randomShort方法
     for (int i = 0; i < TEST_ITERATIONS; i++) {
       short value = MathEx.randomShort(upperBound);
       assertTrue(value >= 0, "随机数应该大于等于0: " + value);
-      assertTrue(value < upperBound, 
+      assertTrue(value < upperBound,
           "随机数应该小于上界: " + value + " < " + upperBound);
     }
   }
@@ -175,13 +175,13 @@ public class MathExRandomTest {
   void testRandomShortWithRange() {
     short lowerBound = 50;
     short upperBound = 150;
-    
+
     // 测试指定范围的randomShort方法
     for (int i = 0; i < TEST_ITERATIONS; i++) {
       short value = MathEx.randomShort(lowerBound, upperBound);
-      assertTrue(value >= lowerBound, 
+      assertTrue(value >= lowerBound,
           "随机数应该大于等于下界: " + value + " >= " + lowerBound);
-      assertTrue(value < upperBound, 
+      assertTrue(value < upperBound,
           "随机数应该小于上界: " + value + " < " + upperBound);
     }
   }
@@ -190,13 +190,13 @@ public class MathExRandomTest {
   void testRandomShortNegativeRange() {
     short lowerBound = -150;
     short upperBound = -50;
-    
+
     // 测试负数范围
     for (int i = 0; i < TEST_ITERATIONS; i++) {
       short value = MathEx.randomShort(lowerBound, upperBound);
-      assertTrue(value >= lowerBound, 
+      assertTrue(value >= lowerBound,
           "随机数应该大于等于下界: " + value + " >= " + lowerBound);
-      assertTrue(value < upperBound, 
+      assertTrue(value < upperBound,
           "随机数应该小于上界: " + value + " < " + upperBound);
     }
   }
@@ -220,12 +220,12 @@ public class MathExRandomTest {
   @Test
   void testRandomIntWithUpperBound() {
     int upperBound = 1000;
-    
+
     // 测试带上界的randomInt方法
     for (int i = 0; i < TEST_ITERATIONS; i++) {
       int value = MathEx.randomInt(upperBound);
       assertTrue(value >= 0, "随机数应该大于等于0: " + value);
-      assertTrue(value < upperBound, 
+      assertTrue(value < upperBound,
           "随机数应该小于上界: " + value + " < " + upperBound);
     }
   }
@@ -234,13 +234,13 @@ public class MathExRandomTest {
   void testRandomIntWithRange() {
     int lowerBound = 500;
     int upperBound = 1500;
-    
+
     // 测试指定范围的randomInt方法
     for (int i = 0; i < TEST_ITERATIONS; i++) {
       int value = MathEx.randomInt(lowerBound, upperBound);
-      assertTrue(value >= lowerBound, 
+      assertTrue(value >= lowerBound,
           "随机数应该大于等于下界: " + value + " >= " + lowerBound);
-      assertTrue(value < upperBound, 
+      assertTrue(value < upperBound,
           "随机数应该小于上界: " + value + " < " + upperBound);
     }
   }
@@ -249,13 +249,13 @@ public class MathExRandomTest {
   void testRandomIntNegativeRange() {
     int lowerBound = -1500;
     int upperBound = -500;
-    
+
     // 测试负数范围
     for (int i = 0; i < TEST_ITERATIONS; i++) {
       int value = MathEx.randomInt(lowerBound, upperBound);
-      assertTrue(value >= lowerBound, 
+      assertTrue(value >= lowerBound,
           "随机数应该大于等于下界: " + value + " >= " + lowerBound);
-      assertTrue(value < upperBound, 
+      assertTrue(value < upperBound,
           "随机数应该小于上界: " + value + " < " + upperBound);
     }
   }
@@ -264,13 +264,13 @@ public class MathExRandomTest {
   void testRandomIntLargeRange() {
     int lowerBound = -1000000;
     int upperBound = 1000000;
-    
+
     // 测试大范围
     for (int i = 0; i < TEST_ITERATIONS; i++) {
       int value = MathEx.randomInt(lowerBound, upperBound);
-      assertTrue(value >= lowerBound, 
+      assertTrue(value >= lowerBound,
           "随机数应该大于等于下界: " + value + " >= " + lowerBound);
-      assertTrue(value < upperBound, 
+      assertTrue(value < upperBound,
           "随机数应该小于上界: " + value + " < " + upperBound);
     }
   }
@@ -294,12 +294,12 @@ public class MathExRandomTest {
   @Test
   void testRandomLongWithUpperBound() {
     long upperBound = 10000L;
-    
+
     // 测试带上界的randomLong方法
     for (int i = 0; i < TEST_ITERATIONS; i++) {
       long value = MathEx.randomLong(upperBound);
       assertTrue(value >= 0L, "随机数应该大于等于0: " + value);
-      assertTrue(value < upperBound, 
+      assertTrue(value < upperBound,
           "随机数应该小于上界: " + value + " < " + upperBound);
     }
   }
@@ -308,13 +308,13 @@ public class MathExRandomTest {
   void testRandomLongWithRange() {
     long lowerBound = 5000L;
     long upperBound = 15000L;
-    
+
     // 测试指定范围的randomLong方法
     for (int i = 0; i < TEST_ITERATIONS; i++) {
       long value = MathEx.randomLong(lowerBound, upperBound);
-      assertTrue(value >= lowerBound, 
+      assertTrue(value >= lowerBound,
           "随机数应该大于等于下界: " + value + " >= " + lowerBound);
-      assertTrue(value < upperBound, 
+      assertTrue(value < upperBound,
           "随机数应该小于上界: " + value + " < " + upperBound);
     }
   }
@@ -323,13 +323,13 @@ public class MathExRandomTest {
   void testRandomLongNegativeRange() {
     long lowerBound = -15000L;
     long upperBound = -5000L;
-    
+
     // 测试负数范围
     for (int i = 0; i < TEST_ITERATIONS; i++) {
       long value = MathEx.randomLong(lowerBound, upperBound);
-      assertTrue(value >= lowerBound, 
+      assertTrue(value >= lowerBound,
           "随机数应该大于等于下界: " + value + " >= " + lowerBound);
-      assertTrue(value < upperBound, 
+      assertTrue(value < upperBound,
           "随机数应该小于上界: " + value + " < " + upperBound);
     }
   }
@@ -338,13 +338,13 @@ public class MathExRandomTest {
   void testRandomLongVeryLargeRange() {
     long lowerBound = -1000000000L;
     long upperBound = 1000000000L;
-    
+
     // 测试非常大的范围
     for (int i = 0; i < TEST_ITERATIONS; i++) {
       long value = MathEx.randomLong(lowerBound, upperBound);
-      assertTrue(value >= lowerBound, 
+      assertTrue(value >= lowerBound,
           "随机数应该大于等于下界: " + value + " >= " + lowerBound);
-      assertTrue(value < upperBound, 
+      assertTrue(value < upperBound,
           "随机数应该小于上界: " + value + " < " + upperBound);
     }
   }
@@ -360,14 +360,14 @@ public class MathExRandomTest {
     // 测试上下界相等的情况
     // 注意：大多数随机数实现不允许相等的边界，这可能会抛出异常
     double bound = 5.0;
-    
+
     // 如果底层实现不支持相等边界，则跳过此测试或期望异常
     try {
       double value = MathEx.random(bound, bound);
       assertEquals(bound, value, 1e-10, "相等边界时应该返回边界值");
     } catch (IllegalArgumentException e) {
       // 某些实现可能不允许相等的边界，这也是合理的
-      assertTrue(e.getMessage().contains("bound") || e.getMessage().contains("range"), 
+      assertTrue(e.getMessage().contains("bound") || e.getMessage().contains("range"),
           "异常信息应该与边界相关: " + e.getMessage());
     }
   }
@@ -375,7 +375,7 @@ public class MathExRandomTest {
   @Test
   void testRandomSingleValueRanges() {
     // 测试单值范围（上界比下界大1）
-    
+
     // byte类型
     byte byteLower = 5;
     byte byteUpper = 6;
@@ -383,7 +383,7 @@ public class MathExRandomTest {
       byte value = MathEx.randomByte(byteLower, byteUpper);
       assertEquals(byteLower, value, "单值范围应该返回下界值");
     }
-    
+
     // short类型
     short shortLower = 50;
     short shortUpper = 51;
@@ -391,7 +391,7 @@ public class MathExRandomTest {
       short value = MathEx.randomShort(shortLower, shortUpper);
       assertEquals(shortLower, value, "单值范围应该返回下界值");
     }
-    
+
     // int类型
     int intLower = 500;
     int intUpper = 501;
@@ -399,7 +399,7 @@ public class MathExRandomTest {
       int value = MathEx.randomInt(intLower, intUpper);
       assertEquals(intLower, value, "单值范围应该返回下界值");
     }
-    
+
     // long类型
     long longLower = 5000L;
     long longUpper = 5001L;
@@ -415,22 +415,22 @@ public class MathExRandomTest {
     int rangeSize = 10;
     int[] counts = new int[rangeSize];
     int iterations = 10000;
-    
+
     // 收集统计数据
     for (int i = 0; i < iterations; i++) {
       int value = MathEx.randomInt(rangeSize);
       counts[value]++;
     }
-    
+
     // 验证每个值都至少出现过
     for (int i = 0; i < rangeSize; i++) {
       assertTrue(counts[i] > 0, "值 " + i + " 应该至少出现一次");
     }
-    
+
     // 验证分布的合理性（每个值的出现次数不应该偏离期望值太远）
     double expectedCount = (double) iterations / rangeSize;
     double tolerance = expectedCount * 0.3; // 30%的容差
-    
+
     for (int i = 0; i < rangeSize; i++) {
       assertTrue(Math.abs(counts[i] - expectedCount) < tolerance,
           "值 " + i + " 的出现次数 " + counts[i] + " 应该接近期望值 " + expectedCount);
@@ -445,11 +445,11 @@ public class MathExRandomTest {
     for (int i = 0; i < values.length; i++) {
       values[i] = MathEx.randomInt(Integer.MAX_VALUE);
     }
-    
+
     // 检查是否存在明显的重复模式
     int consecutiveEqual = 0;
     int maxConsecutiveEqual = 0;
-    
+
     for (int i = 1; i < values.length; i++) {
       if (values[i] == values[i-1]) {
         consecutiveEqual++;
@@ -458,32 +458,32 @@ public class MathExRandomTest {
         consecutiveEqual = 0;
       }
     }
-    
+
     // 连续相等的值不应该太多（考虑到随机性，偶尔会有重复）
-    assertTrue(maxConsecutiveEqual < 5, 
+    assertTrue(maxConsecutiveEqual < 5,
         "连续相等的随机数不应该超过4个，实际为: " + maxConsecutiveEqual);
   }
 
   @Test
   void testEdgeCases() {
     // 测试边界值
-    
+
     // 测试byte的最大范围
     for (int i = 0; i < 100; i++) {
       byte value = MathEx.randomByte(Byte.MIN_VALUE, Byte.MAX_VALUE);
       assertTrue(value >= Byte.MIN_VALUE && value < Byte.MAX_VALUE);
     }
-    
+
     // 测试short的最大范围
     for (int i = 0; i < 100; i++) {
       short value = MathEx.randomShort(Short.MIN_VALUE, Short.MAX_VALUE);
       assertTrue(value >= Short.MIN_VALUE && value < Short.MAX_VALUE);
     }
-    
+
     // 测试零值范围
     assertEquals(0, MathEx.randomInt(0, 1));
     assertEquals((byte) 0, MathEx.randomByte((byte) 0, (byte) 1));
     assertEquals((short) 0, MathEx.randomShort((short) 0, (short) 1));
     assertEquals(0L, MathEx.randomLong(0L, 1L));
   }
-} 
+}

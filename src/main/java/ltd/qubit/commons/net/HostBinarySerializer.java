@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -24,15 +24,28 @@ import static ltd.qubit.commons.io.InputUtils.readNullMark;
 import static ltd.qubit.commons.io.InputUtils.readString;
 
 /**
- * The {@link BinarySerializer} for the {@link Host} class.
+ * {@link Host} 类的{@link BinarySerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class HostBinarySerializer implements BinarySerializer {
 
   public static final HostBinarySerializer INSTANCE = new HostBinarySerializer();
 
+  /**
+   * 从二进制输入流反序列化对象。
+   *
+   * @param in
+   *     二进制输入流。
+   * @param allowNull
+   *     指示是否允许返回的对象为 {@code null}。
+   * @return
+   *     从二进制输入流反序列化的对象；如果二进制输入流中存储的对象为 null
+   *     并且参数 {@code allowNull} 为 true，则返回 {@code null}。
+   * @throws IOException
+   *     如果发生任何 I/O 错误。
+   */
   @Override
   public Host deserialize(final InputStream in, final boolean allowNull)
       throws IOException {
@@ -50,6 +63,16 @@ public final class HostBinarySerializer implements BinarySerializer {
     }
   }
 
+  /**
+   * 将对象序列化到二进制输出流。
+   *
+   * @param out
+   *     二进制输出流。
+   * @param obj
+   *     要序列化的对象，可以为 {@code null}。
+   * @throws IOException
+   *     如果发生任何 I/O 错误。
+   */
   @Override
   public void serialize(final OutputStream out, final Object obj)
       throws IOException {

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -2624,7 +2624,7 @@ public final class MathEx {
     if (Float.isNaN(y)) {
       return -1; // 任何非NaN值 < NaN
     }
-    
+
     // 处理无穷大情况
     if (Float.isInfinite(x) && Float.isInfinite(y)) {
       return Float.compare(x, y);
@@ -2635,7 +2635,7 @@ public final class MathEx {
     if (Float.isInfinite(y)) {
       return y > 0 ? -1 : 1;
     }
-    
+
     // 使用精度比较
     if (equal(x, y, epsilon)) {
       return 0;
@@ -2707,7 +2707,7 @@ public final class MathEx {
     }
     if (Double.isNaN(y)) {
       return -1; // 任何非NaN值 < NaN
-    }    
+    }
     // 处理无穷大情况
     if (Double.isInfinite(x) && Double.isInfinite(y)) {
       return Double.compare(x, y);
@@ -2717,7 +2717,7 @@ public final class MathEx {
     }
     if (Double.isInfinite(y)) {
       return y > 0 ? -1 : 1;
-    }    
+    }
     // 使用精度比较
     if (equal(x, y, epsilon)) {
       return 0;
@@ -3138,7 +3138,7 @@ public final class MathEx {
   //                      浮点数特殊操作
   //
   // ///////////////////////////////////////////////////////////////////////////
-  
+
   /**
    * 返回指定的float值的符号。
    *

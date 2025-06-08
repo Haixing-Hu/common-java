@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -62,9 +62,9 @@ import static ltd.qubit.commons.lang.StringUtils.concat;
 import static ltd.qubit.commons.lang.StringUtils.isEmpty;
 
 /**
- * This class provides common file system operations.
+ * 此类提供常见的文件系统操作。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public final class FileUtils {
@@ -83,24 +83,24 @@ public final class FileUtils {
   public static final int DEFAULT_TEMP_FILE_RETRIES = 10;
 
   /**
-   * Generate a random filename with a specified prefix.
+   * 生成一个带有指定前缀的随机文件名。
    *
    * @param prefix
-   *     the prefix of the temporary filename.
-   * @return a random filename with the specified prefix.
+   *     临时文件名的前缀。
+   * @return 带有指定前缀的随机文件名。
    */
   public static String getRandomFileName(@Nullable final String prefix) {
     return getRandomFileName(prefix, null);
   }
 
   /**
-   * Generate a random filename with a specified prefix.
+   * 生成一个带有指定前缀的随机文件名。
    *
    * @param prefix
-   *     the prefix of the temporary filename.
+   *     临时文件名的前缀。
    * @param suffix
-   *     the suffix of the temporary filename.
-   * @return a random filename with the specified prefix.
+   *     临时文件名的后缀。
+   * @return 带有指定前缀的随机文件名。
    */
   public static String getRandomFileName(@Nullable final String prefix,
       @Nullable final String suffix) {
@@ -119,12 +119,12 @@ public final class FileUtils {
   }
 
   /**
-   * Get the path of the system temporary directory.
+   * 获取系统临时目录的路径。
    *
    * @return
-   *     the path of the system temporary directory.
+   *     系统临时目录的路径。
    * @throws IOException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public static File getTempDirectory() throws IOException {
     final String path = SystemUtils.JAVA_IO_TMPDIR;
@@ -135,26 +135,24 @@ public final class FileUtils {
   }
 
   /**
-   * Get a temporary file or directory pathname with a specified prefix.
+   * 获取带有指定前缀的临时文件或目录路径名。
    *
    * @param prefix
-   *     the prefix of the temporary filename.
-   * @return an abstract pathname of a file or directory in the system's default
-   *     temporary directory.
+   *     临时文件名的前缀。
+   * @return 系统默认临时目录中的文件或目录的抽象路径名。
    */
   public static String getTempFilePath(@Nullable final String prefix) {
     return getTempFilePath(prefix, null);
   }
 
   /**
-   * Get a temporary file or directory pathname with a specified prefix.
+   * 获取带有指定前缀的临时文件或目录路径名。
    *
    * @param prefix
-   *     the prefix of the temporary filename.
+   *     临时文件名的前缀。
    * @param suffix
-   *     the suffix of the temporary filename.
-   * @return an abstract pathname of a file or directory in the system's default
-   *     temporary directory.
+   *     临时文件名的后缀。
+   * @return 系统默认临时目录中的文件或目录的抽象路径名。
    */
   public static String getTempFilePath(@Nullable final String prefix,
       @Nullable final String suffix) {
@@ -164,36 +162,33 @@ public final class FileUtils {
   }
 
   /**
-   * Get a temporary file or directory pathname with a default prefix.
+   * 获取带有默认前缀的临时文件或目录路径名。
    *
-   * @return an abstract pathname of a file or directory in the system's default
-   *     temporary directory.
+   * @return 系统默认临时目录中的文件或目录的抽象路径名。
    */
   public static File getTempFile() {
     return getTempFile(DEFAULT_TEMP_FILE_PREFIX, null);
   }
 
   /**
-   * Get a temporary file or directory pathname with a specified prefix.
+   * 获取带有指定前缀的临时文件或目录路径名。
    *
    * @param prefix
-   *     the prefix of the temporary filename.
-   * @return an abstract pathname of a file or directory in the system's default
-   *     temporary directory.
+   *     临时文件名的前缀。
+   * @return 系统默认临时目录中的文件或目录的抽象路径名。
    */
   public static File getTempFile(@Nullable final String prefix) {
     return getTempFile(prefix, null);
   }
 
   /**
-   * Get a temporary file or directory pathname with a specified prefix.
+   * 获取带有指定前缀的临时文件或目录路径名。
    *
    * @param prefix
-   *     the prefix of the temporary filename.
+   *     临时文件名的前缀。
    * @param suffix
-   *     the suffix of the temporary filename.
-   * @return an abstract pathname of a file or directory in the system's default
-   *     temporary directory.
+   *     临时文件名的后缀。
+   * @return 系统默认临时目录中的文件或目录的抽象路径名。
    */
   public static File getTempFile(@Nullable final String prefix,
       @Nullable final String suffix) {
@@ -203,45 +198,39 @@ public final class FileUtils {
   }
 
   /**
-   * Create a new empty temporary file in the system's default temporary
-   * directory.
+   * 在系统默认临时目录中创建一个新的空临时文件。
    *
-   * @return a new temporary file in the system's default temporary directory
-   *     with the default prefix.
+   * @return 具有默认前缀的系统默认临时目录中的新临时文件。
    * @throws IOException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public static File createTempFile() throws IOException {
     return createTempFile(DEFAULT_TEMP_FILE_PREFIX, null, DEFAULT_TEMP_FILE_RETRIES);
   }
 
   /**
-   * Create a new empty temporary file in the system's default temporary
-   * directory.
+   * 在系统默认临时目录中创建一个新的空临时文件。
    *
    * @param prefix
-   *     the prefix of the temporary filename.
-   * @return a new temporary file in the system's default temporary directory
-   *     with the specified prefix.
+   *     临时文件名的前缀。
+   * @return 具有指定前缀的系统默认临时目录中的新临时文件。
    * @throws IOException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public static File createTempFile(@Nullable final String prefix) throws IOException {
     return createTempFile(prefix, null, DEFAULT_TEMP_FILE_RETRIES);
   }
 
   /**
-   * Create a new empty temporary file in the system's default temporary
-   * directory.
+   * 在系统默认临时目录中创建一个新的空临时文件。
    *
    * @param prefix
-   *     the prefix of the temporary filename.
+   *     临时文件名的前缀。
    * @param suffix
-   *     the suffix of the temporary filename.
-   * @return a new temporary file in the system's default temporary directory
-   *     with the specified prefix.
+   *     临时文件名的后缀。
+   * @return 具有指定前缀的系统默认临时目录中的新临时文件。
    * @throws IOException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public static File createTempFile(@Nullable final String prefix, @Nullable final String suffix)
       throws IOException {
@@ -249,17 +238,15 @@ public final class FileUtils {
   }
 
   /**
-   * Create a new empty temporary file in the system's default temporary
-   * directory.
+   * 在系统默认临时目录中创建一个新的空临时文件。
    *
    * @param prefix
-   *     the prefix of the temporary filename.
+   *     临时文件名的前缀。
    * @param maxTries
-   *     the maximum number of retries performed by this function.
-   * @return a new temporary file in the system's default temporary directory
-   *     with the specified prefix.
+   *     此函数执行的最大重试次数。
+   * @return 具有指定前缀的系统默认临时目录中的新临时文件。
    * @throws IOException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public static File createTempFile(@Nullable final String prefix, final int maxTries)
       throws IOException {
@@ -267,19 +254,17 @@ public final class FileUtils {
   }
 
   /**
-   * Create a new empty temporary file in the system's default temporary
-   * directory.
+   * 在系统默认临时目录中创建一个新的空临时文件。
    *
    * @param prefix
-   *     the prefix of the temporary filename.
+   *     临时文件名的前缀。
    * @param suffix
-   *     the suffix of the temporary filename.
+   *     临时文件名的后缀。
    * @param maxTries
-   *     the maximum number of retries performed by this function.
-   * @return a new temporary file in the system's default temporary directory
-   *     with the specified prefix and suffix.
+   *     此函数执行的最大重试次数。
+   * @return 具有指定前缀和后缀的系统默认临时目录中的新临时文件。
    * @throws IOException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public static File createTempFile(@Nullable final String prefix,
       @Nullable final String suffix, final int maxTries) throws IOException {
@@ -298,17 +283,15 @@ public final class FileUtils {
   }
 
   /**
-   * Create a new empty temporary directory in the system's default temporary
-   * directory.
+   * 创建一个新的空临时目录在系统默认临时目录中。
    *
    * @param prefix
-   *     the prefix of the temporary directory name.
+   *     临时目录名的前缀。
    * @param maxTries
-   *     the maximum number of retries performed by this function.
-   * @return a new temporary directory in the system's default temporary
-   *     directory with the specified prefix.
+   *     此函数执行的最大重试次数。
+   * @return 系统默认临时目录中的新临时目录。
    * @throws IOException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public static File createTempDir(final String prefix, final int maxTries)
       throws IOException {
@@ -331,14 +314,14 @@ public final class FileUtils {
   }
 
   /**
-   * Counts the size of a directory recursively (sum of the length of all
-   * files).
+   * 获取目录的大小。
    *
    * @param dir
-   *     directory to inspect, must not be {@code null}
-   * @return size of directory in bytes, 0 if directory is security restricted
-   * @throws FileNotExistException
-   *     if the directory does not exist.
+   *     给定的目录。
+   * @return
+   *     给定目录的大小，以字节为单位。
+   * @throws IOException
+   *     如果发生任何 I/O 错误。
    */
   public static long getSizeOfDirectory(final File dir) throws IOException {
     if (!dir.exists()) {
@@ -363,17 +346,12 @@ public final class FileUtils {
   }
 
   /**
-   * Make sure that the specified directory exists.
-   * <p>
-   * That is, if the specified directory does not exist, the function will
-   * create it.
+   * 确保给定的目录存在。
    *
    * @param dir
-   *     a specified directory.
+   *     给定的目录。
    * @throws IOException
-   *     if the directory does not exist and the function failed to create it;
-   *     or if the file of the specified pathname exists but is not a
-   *     directory.
+   *     如果无法创建给定的目录。
    */
   public static void ensureDirectoryExist(final File dir) throws IOException {
     if (!dir.exists()) {
@@ -428,6 +406,7 @@ public final class FileUtils {
         if (!parent.mkdirs()) {
           throw new DirectoryCannotCreateException(parent);
         }
+
       }
       // atomically creates a new, empty file
       file.createNewFile();

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -27,6 +27,23 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  */
 public class Utf8Control extends ResourceBundle.Control {
 
+  /**
+   * 创建一个新的资源包实例，该实例支持 UTF-8 编码的 .properties 文件。
+   *
+   * @param baseName
+   *     资源包的基础名称
+   * @param locale
+   *     期望的区域设置
+   * @param format
+   *     资源包格式
+   * @param loader
+   *     用于加载资源包的类加载器
+   * @param reload
+   *     是否重新加载资源包
+   * @return 新的资源包实例，如果找不到资源则返回 null
+   * @throws IOException
+   *     如果读取资源时发生 I/O 错误
+   */
   public ResourceBundle newBundle(final String baseName, final Locale locale,
       final String format, final ClassLoader loader, final boolean reload)
       throws IOException {

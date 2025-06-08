@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -9,39 +9,37 @@
 package ltd.qubit.commons.datastructure.list.primitive;
 
 /**
- * An iterator over {@code long} values.
+ * {@code long} 值的迭代器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface LongIterator {
 
   /**
-   * Returns {@code true} iff I have more elements. (In other words, returns
-   * {@code true} iff a subsequent call to {@link #next next} will return an
-   * element rather than throwing an exception.)
+   * 当且仅当我还有更多元素时返回 {@code true}。
    *
-   * @return {@code true} iff I have more elements
+   * <p>换句话说，当且仅当后续调用 {@link #next} 将返回元素而不是抛出异常时返回 {@code true}。
+   *
+   * @return 当且仅当我还有更多元素时返回 {@code true}
    */
   boolean hasNext();
 
   /**
-   * Returns the next element in me.
+   * 返回我的下一个元素。
    *
-   * @return the next element in me
+   * @return 我的下一个元素
    * @throws java.util.NoSuchElementException
-   *     if there is no next element
+   *     如果没有下一个元素
    */
   long next();
 
   /**
-   * Removes from my underlying collection the last element {@link #next
-   * returned} by me (optional operation).
+   * 从我的底层集合中移除我最后一次 {@link #next 返回} 的元素（可选操作）。
    *
    * @throws UnsupportedOperationException
-   *     if this operation is not supported
+   *     如果不支持此操作
    * @throws IllegalStateException
-   *     if {@link #next} has not yet been called, or {@link #remove} has
-   *     already been called since the last call to {@link #next}.
+   *     如果尚未调用 {@link #next}，或者自上次调用 {@link #next} 以来已经调用了 {@link #remove}。
    */
   void remove();
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -16,117 +16,100 @@ import java.util.Set;
 import ltd.qubit.commons.io.Openable;
 
 /**
- * The interface of a cache.
+ * 缓存接口。
  *
- * <p>A cache is a facility which reads data from a underlying data source, and
- * store them in the memory in order to provide fast access.
+ * <p>缓存是一种工具,它从底层数据源读取数据,并将其存储在内存中以提供快速访问。
  *
- * <p>The cache may store all data in the memory, or just store some amount of
- * data in the memory, depending on its caching policy.
+ * <p>根据其缓存策略,缓存可以将所有数据存储在内存中,也可以只在内存中存储部分数据。
  *
- * <p>The cache may fetch a piece of data from the data source a time, or fetch
- * a batch of data a time.
+ * <p>缓存可以一次从数据源获取一条数据,也可以一次获取一批数据。
  *
- * <p>Sometime the cached data may be abandoned, if they satisfy some condition
- * (i.e., too old, too little access frequency, etc). If the client request the
- * abandoned data again, the cache will fetch the data from the underlying data
- * source again.
+ * <p>有时,如果满足某些条件(例如,时间太长,访问频率太低等),则缓存的数据可能会被放弃。
+ * 如果客户端再次请求放弃的数据,则缓存将再次从底层数据源获取数据。
  *
- * <p>The implementation do NOT need to be thread-safe. In order to get a
- * thread-safe cache, use the {@link SynchronizedCache} to wrap a non
- * thread-safe {@link Cache} object.
+ * <p>实现不需要是线程安全的。为了获得线程安全的缓存,请使用{@link SynchronizedCache}来包装非线程安全的{@link Cache}对象。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface Cache<K, V> extends Closeable, Openable {
 
   /**
-   * Tests whether this cache is opened.
+   * 测试此缓存是否打开。
    *
-   * @return true if this cache is opened; false otherwise.
+   * @return 如果此缓存已打开,则为true；否则为false。
    */
   @Override
   boolean isOpened();
 
   /**
-   * Opens this cache.
+   * 打开此缓存。
    *
-   * <p>If this cache has already been opened, an {@link IOException} will be
-   * thrown.
+   * <p>如果此缓存已打开,则将引发{@link IOException}。
    *
    * @throws IOException
-   *     if any I/O error occurred.
+   *     如果发生任何I/O错误。
    */
   @Override
   void open() throws IOException;
 
   /**
-   * Gets the value for the given key from the cache.
+   * 从缓存中获取给定键的值。
    *
    * @param key
-   *     the key of the value to be get.
-   * @return the value corresponding to the key, or null if no such value.
+   *     要获取的值的键。
+   * @return 对应于键的值；如果不存在这样的值,则为null。
    * @throws IOException
-   *     if any I/O error occurred.
+   *     如果发生任何I/O错误。
    */
   V get(K key) throws IOException;
 
   /**
-   * Gets all values in the underlying data source of this cache.
+   * 获取此缓存的底层数据源中的所有值。
    *
-   * @return the collection of all values in the underlying data source of this
-   *     cache. The returned collection may be a simple collection, or a "lazy"
-   *     (i.e., request the data on demand) collection.
+   * @return 此缓存的底层数据源中所有值的集合。返回的集合可以是简单的集合,也可以是"惰性"(即按需请求数据)集合。
    * @throws IOException
-   *     if any I/O error occurred.
+   *     如果发生任何I/O错误。
    */
   Collection<V> getAll() throws IOException;
 
   /**
-   * Gets all keys of values in the underlying data source of this cache.
+   * 获取此缓存的底层数据源中所有值的键。
    *
-   * @return the set of all keys of values in the underlying data source of this
-   *     cache. The returned collection may be a simple set, or a "lazy" (i.e.,
-   *     request the data on demand) set.
+   * @return 此缓存的底层数据源中所有值的键的集合。返回的集合可以是简单的集合,也可以是"惰性"(即按需请求数据)集合。
    * @throws IOException
-   *     if any I/O error occurred.
+   *     如果发生任何I/O错误。
    */
   Set<K> keySet() throws IOException;
 
   /**
-   * Tests whether the data corresponding to the given key is contained in the
-   * underlying data source of this cache.
+   * 测试与给定键对应的数据是否包含在此缓存的底层数据源中。
    *
    * @param key
-   *     the key to be test.
-   * @return true if the data corresponding to the given key is contained in the
-   *     underlying data source of this cache; false otherwise.
+   *     要测试的键。
+   * @return 如果与给定键对应的数据包含在此缓存的底层数据源中,则为true；否则为false。
    * @throws IOException
-   *     if any I/O error occurred.
+   *     如果发生任何I/O错误。
    */
   boolean containsKey(K key) throws IOException;
 
   /**
-   * Tests whether the data corresponding to the given key is cached in this
-   * cache.
+   * 测试与给定键对应的数据是否已在此缓存中缓存。
    *
    * @param key
-   *     the key to be test.
-   * @return true if the data corresponding to the given key is cached in this
-   *     cache; false otherwise.
+   *     要测试的键。
+   * @return 如果与给定键对应的数据已在此缓存中缓存,则为true；否则为false。
    * @throws IOException
-   *     if any I/O error occurred.
+   *     如果发生任何I/O错误。
    */
   boolean cachesKey(K key) throws IOException;
 
   /**
-   * Closes this cache.
+   * 关闭此缓存。
    *
-   * <p>If this cache has already been closed, calling this function has no
-   * effect.
+   * <p>如果此缓存已关闭,则调用此函数无效。
    *
    * @throws IOException
-   *     if any I/O error occurred.
+   *     如果发生任何I/O错误。
    */
   @Override
   void close() throws IOException;

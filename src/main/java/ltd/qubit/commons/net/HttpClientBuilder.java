@@ -87,10 +87,22 @@ public class HttpClientBuilder implements HttpClientOptions {
     this.options = requireNonNull("options", options);
   }
 
+  /**
+   * 获取此构建器使用的日志记录器。
+   *
+   * @return 此构建器使用的日志记录器。
+   */
   public Logger getLogger() {
     return logger;
   }
 
+  /**
+   * 设置此构建器使用的日志记录器。
+   *
+   * @param logger
+   *     要使用的日志记录器，不能为 {@code null}。
+   * @return 此构建器，以支持方法链式调用。
+   */
   public HttpClientBuilder setLogger(final Logger logger) {
     this.logger = requireNonNull("logger", logger);
     return this;
@@ -386,7 +398,7 @@ public class HttpClientBuilder implements HttpClientOptions {
   }
 
   /**
-   * 清除之前添加到此构建器的所有拦截器。
+   * 清除所有网络拦截器。
    *
    * @return
    *     此构建器，以支持方法链式调用。

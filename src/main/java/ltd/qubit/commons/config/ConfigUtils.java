@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -26,31 +26,28 @@ import ltd.qubit.commons.lang.SystemUtils;
 import ltd.qubit.commons.text.xml.XmlException;
 
 /**
- * Provides utility functions about the {@link Config} objects.
+ * 提供{@link Config}对象的工具函数。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class ConfigUtils {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ConfigUtils.class);
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}.
+   *     {@link Config} 中指定属性的名称。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code boolean}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code boolean}。
    */
   public static boolean choose(@Nullable final Boolean value,
       final Config config, final String name) {
@@ -62,23 +59,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
+   *     {@link Config} 中指定属性的名称。
    * @param defaultValue
-   *     the default value to use if the specified {@link Config} has no
-   *     property with the specified name or the specified property has no
-   *     value.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}; if there is no such property or the property has no
-   *     value, returns the default value.
+   *     如果指定的 {@link Config} 没有具有指定名称的属性或指定的属性没有值，则使用的默认值。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值；如果没有这样的属性或属性没有值，则返回默认值。
    */
   public static boolean choose(@Nullable final Boolean value,
       final Config config, final String name, final boolean defaultValue) {
@@ -90,22 +83,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}.
+   *     {@link Config} 中指定属性的名称。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code char}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code char}。
    */
   public static char choose(@Nullable final Character value,
       final Config config, final String name) {
@@ -117,23 +107,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
+   *     {@link Config} 中指定属性的名称。
    * @param defaultValue
-   *     the default value to use if the specified {@link Config} has no
-   *     property with the specified name or the specified property has no
-   *     value.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}; if there is no such property or the property has no
-   *     value, returns the default value.
+   *     如果指定的 {@link Config} 没有具有指定名称的属性或指定的属性没有值，则使用的默认值。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值；如果没有这样的属性或属性没有值，则返回默认值。
    */
   public static char choose(@Nullable final Character value,
       final Config config, final String name, final char defaultValue) {
@@ -145,22 +131,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}.
+   *     {@link Config} 中指定属性的名称。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code byte}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code byte}。
    */
   public static byte choose(@Nullable final Byte value, final Config config,
       final String name) {
@@ -172,23 +155,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
+   *     {@link Config} 中指定属性的名称。
    * @param defaultValue
-   *     the default value to use if the specified {@link Config} has no
-   *     property with the specified name or the specified property has no
-   *     value.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}; if there is no such property or the property has no
-   *     value, returns the default value.
+   *     如果指定的 {@link Config} 没有具有指定名称的属性或指定的属性没有值，则使用的默认值。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值；如果没有这样的属性或属性没有值，则返回默认值。
    */
   public static byte choose(@Nullable final Byte value, final Config config,
       final String name, final byte defaultValue) {
@@ -200,22 +179,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}.
+   *     {@link Config} 中指定属性的名称。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code short}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code short}。
    */
   public static short choose(@Nullable final Short value, final Config config,
       final String name) {
@@ -227,23 +203,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
+   *     {@link Config} 中指定属性的名称。
    * @param defaultValue
-   *     the default value to use if the specified {@link Config} has no
-   *     property with the specified name or the specified property has no
-   *     value.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}; if there is no such property or the property has no
-   *     value, returns the default value.
+   *     如果指定的 {@link Config} 没有具有指定名称的属性或指定的属性没有值，则使用的默认值。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值；如果没有这样的属性或属性没有值，则返回默认值。
    */
   public static short choose(@Nullable final Short value, final Config config,
       final String name, final short defaultValue) {
@@ -255,22 +227,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}.
+   *     {@link Config} 中指定属性的名称。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code int}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code int}。
    */
   public static int choose(@Nullable final Integer value, final Config config,
       final String name) {
@@ -282,23 +251,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
+   *     {@link Config} 中指定属性的名称。
    * @param defaultValue
-   *     the default value to use if the specified {@link Config} has no
-   *     property with the specified name or the specified property has no
-   *     value.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}; if there is no such property or the property has no
-   *     value, returns the default value.
+   *     如果指定的 {@link Config} 没有具有指定名称的属性或指定的属性没有值，则使用的默认值。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值；如果没有这样的属性或属性没有值，则返回默认值。
    */
   public static int choose(@Nullable final Integer value, final Config config,
       final String name, final int defaultValue) {
@@ -310,22 +275,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}.
+   *     {@link Config} 中指定属性的名称。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code long}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code long}。
    */
   public static long choose(@Nullable final Long value, final Config config,
       final String name) {
@@ -337,23 +299,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
+   *     {@link Config} 中指定属性的名称。
    * @param defaultValue
-   *     the default value to use if the specified {@link Config} has no
-   *     property with the specified name or the specified property has no
-   *     value.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}; if there is no such property or the property has no
-   *     value, returns the default value.
+   *     如果指定的 {@link Config} 没有具有指定名称的属性或指定的属性没有值，则使用的默认值。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值；如果没有这样的属性或属性没有值，则返回默认值。
    */
   public static long choose(@Nullable final Long value, final Config config,
       final String name, final long defaultValue) {
@@ -365,22 +323,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}.
+   *     {@link Config} 中指定属性的名称。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code float}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code float}。
    */
   public static float choose(@Nullable final Float value, final Config config,
       final String name) {
@@ -392,23 +347,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
+   *     {@link Config} 中指定属性的名称。
    * @param defaultValue
-   *     the default value to use if the specified {@link Config} has no
-   *     property with the specified name or the specified property has no
-   *     value.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}; if there is no such property or the property has no
-   *     value, returns the default value.
+   *     如果指定的 {@link Config} 没有具有指定名称的属性或指定的属性没有值，则使用的默认值。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值；如果没有这样的属性或属性没有值，则返回默认值。
    */
   public static float choose(@Nullable final Float value, final Config config,
       final String name, final float defaultValue) {
@@ -420,22 +371,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}.
+   *     {@link Config} 中指定属性的名称。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code double}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code double}。
    */
   public static double choose(@Nullable final Double value,
       final Config config, final String name) {
@@ -447,23 +395,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
+   *     {@link Config} 中指定属性的名称。
    * @param defaultValue
-   *     the default value to use if the specified {@link Config} has no
-   *     property with the specified name or the specified property has no
-   *     value.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}; if there is no such property or the property has no
-   *     value, returns the default value.
+   *     如果指定的 {@link Config} 没有具有指定名称的属性或指定的属性没有值，则使用的默认值。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值；如果没有这样的属性或属性没有值，则返回默认值。
    */
   public static double choose(@Nullable final Double value,
       final Config config, final String name, final double defaultValue) {
@@ -475,22 +419,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}.
+   *     {@link Config} 中指定属性的名称。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code string}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code String}。
    */
   public static String choose(@Nullable final String value,
       final Config config, final String name) {
@@ -502,23 +443,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
+   *     {@link Config} 中指定属性的名称。
    * @param defaultValue
-   *     the default value to use if the specified {@link Config} has no
-   *     property with the specified name or the specified property has no
-   *     value.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}; if there is no such property or the property has no
-   *     value, returns the default value.
+   *     如果指定的 {@link Config} 没有具有指定名称的属性或指定的属性没有值，则使用的默认值。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值；如果没有这样的属性或属性没有值，则返回默认值。
    */
   public static String choose(@Nullable final String value,
       final Config config, final String name, final String defaultValue) {
@@ -530,22 +467,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}.
+   *     {@link Config} 中指定属性的名称。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code Date}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@link LocalDate}。
    */
   public static LocalDate choose(@Nullable final LocalDate value, final Config config,
       final String name) {
@@ -557,23 +491,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
+   *     {@link Config} 中指定属性的名称。
    * @param defaultValue
-   *     the default value to use if the specified {@link Config} has no
-   *     property with the specified name or the specified property has no
-   *     value.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}; if there is no such property or the property has no
-   *     value, returns the default value.
+   *     如果指定的 {@link Config} 没有具有指定名称的属性或指定的属性没有值，则使用的默认值。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值；如果没有这样的属性或属性没有值，则返回默认值。
    */
   public static LocalDate choose(@Nullable final LocalDate value, final Config config,
       final String name, @Nullable final LocalDate defaultValue) {
@@ -585,22 +515,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}.
+   *     {@link Config} 中指定属性的名称。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code Date}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@link LocalTime}。
    */
   public static LocalTime choose(@Nullable final LocalTime value, final Config config,
       final String name) {
@@ -612,23 +539,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
+   *     {@link Config} 中指定属性的名称。
    * @param defaultValue
-   *     the default value to use if the specified {@link Config} has no
-   *     property with the specified name or the specified property has no
-   *     value.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}; if there is no such property or the property has no
-   *     value, returns the default value.
+   *     如果指定的 {@link Config} 没有具有指定名称的属性或指定的属性没有值，则使用的默认值。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值；如果没有这样的属性或属性没有值，则返回默认值。
    */
   public static LocalTime choose(@Nullable final LocalTime value, final Config config,
       final String name, @Nullable final LocalTime defaultValue) {
@@ -640,22 +563,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}.
+   *     {@link Config} 中指定属性的名称。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code Date}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@link LocalDateTime}。
    */
   public static LocalDateTime choose(@Nullable final LocalDateTime value, final Config config,
       final String name) {
@@ -667,23 +587,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
+   *     {@link Config} 中指定属性的名称。
    * @param defaultValue
-   *     the default value to use if the specified {@link Config} has no
-   *     property with the specified name or the specified property has no
-   *     value.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}; if there is no such property or the property has no
-   *     value, returns the default value.
+   *     如果指定的 {@link Config} 没有具有指定名称的属性或指定的属性没有值，则使用的默认值。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值；如果没有这样的属性或属性没有值，则返回默认值。
    */
   public static LocalDateTime choose(@Nullable final LocalDateTime value, final Config config,
       final String name, @Nullable final LocalDateTime defaultValue) {
@@ -695,22 +611,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}.
+   *     {@link Config} 中指定属性的名称。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code BigInteger}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@link BigInteger}。
    */
   public static BigInteger choose(@Nullable final BigInteger value,
       final Config config, final String name) {
@@ -722,23 +635,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
+   *     {@link Config} 中指定属性的名称。
    * @param defaultValue
-   *     the default value to use if the specified {@link Config} has no
-   *     property with the specified name or the specified property has no
-   *     value.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}; if there is no such property or the property has no
-   *     value, returns the default value.
+   *     如果指定的 {@link Config} 没有具有指定名称的属性或指定的属性没有值，则使用的默认值。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值；如果没有这样的属性或属性没有值，则返回默认值。
    */
   public static BigInteger choose(@Nullable final BigInteger value,
       final Config config, final String name,
@@ -751,22 +660,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}.
+   *     {@link Config} 中指定属性的名称。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code BigDecimal}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@link BigDecimal}。
    */
   public static BigDecimal choose(@Nullable final BigDecimal value,
       final Config config, final String name) {
@@ -778,23 +684,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
+   *     {@link Config} 中指定属性的名称。
    * @param defaultValue
-   *     the default value to use if the specified {@link Config} has no
-   *     property with the specified name or the specified property has no
-   *     value.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}; if there is no such property or the property has no
-   *     value, returns the default value.
+   *     如果指定的 {@link Config} 没有具有指定名称的属性或指定的属性没有值，则使用的默认值。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值；如果没有这样的属性或属性没有值，则返回默认值。
    */
   public static BigDecimal choose(@Nullable final BigDecimal value,
       final Config config, final String name,
@@ -807,22 +709,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}.
+   *     {@link Config} 中指定属性的名称。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code class}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@link Class}。
    */
   public static Class<?> choose(@Nullable final Class<?> value,
       final Config config, final String name) {
@@ -834,23 +733,19 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
+   *     {@link Config} 中指定属性的名称。
    * @param defaultValue
-   *     the default value to use if the specified {@link Config} has no
-   *     property with the specified name or the specified property has no
-   *     value.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}; if there is no such property or the property has no
-   *     value, returns the default value.
+   *     如果指定的 {@link Config} 没有具有指定名称的属性或指定的属性没有值，则使用的默认值。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值；如果没有这样的属性或属性没有值，则返回默认值。
    */
   public static Class<?> choose(@Nullable final Class<?> value,
       final Config config, final String name,
@@ -863,24 +758,21 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param <T>
-   *     the generic type of the specified value.
+   *     要返回的值的类型。
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}.
+   *     {@link Config} 中指定属性的名称。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值。
    * @throws ConfigurationError
-   *     if there is no property with the specified name, or the specified
-   *     property has no value, or the type of the specified property is not
-   *     {@code class}.
+   *     如果不存在具有指定名称的属性，或者指定的属性没有值，或者指定属性的类型不是 {@code T}。
    */
   public static <T> T choose(@Nullable final T value, final Config config,
       final String name) {
@@ -892,25 +784,21 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param <T>
-   *     the generic type of the specified value.
+   *     要返回的值的类型。
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
+   *     {@link Config} 中指定属性的名称。
    * @param defaultValue
-   *     the default value to use if the specified {@link Config} has no
-   *     property with the specified name or the specified property has no
-   *     value.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the specified property value in the specified
-   *     {@link Config}; if there is no such property or the property has no
-   *     value, returns the default value.
+   *     如果指定的 {@link Config} 没有具有指定名称的属性或指定的属性没有值，则使用的默认值。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值；如果没有这样的属性或属性没有值，则返回默认值。
    */
   public static <T> T choose(@Nullable final T value, final Config config,
       final String name, @Nullable final T defaultValue) {
@@ -922,26 +810,21 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param <T>
-   *     the generic type of the specified value.
+   *     要返回的值的类型。
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
+   *     {@link Config} 中指定属性的名称。
    * @param defaultClass
-   *     the default class to use if the specified {@link Config} has no
-   *     property with the specified name or the specified property has no
-   *     value.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the instance created from the specified
-   *     property value in the specified {@link Config}; if there is no such
-   *     property or the property has no value, returns the instance created
-   *     from the default class.
+   *     如果指定的 {@link Config} 没有具有指定名称的属性或指定的属性没有值，则使用的默认类的类对象。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值；如果没有这样的属性或属性没有值，则返回默认类的实例。
    */
   public static <T> T choose(@Nullable final T value, final Config config,
       final String name, @Nullable final Class<?> defaultClass) {
@@ -953,26 +836,21 @@ public final class ConfigUtils {
   }
 
   /**
-   * Choose the non-null value of a specified value and a property value in a
-   * {@link Config}.
+   * 在 {@link Config} 中选择指定值和属性值中的非空值。
    *
    * @param <T>
-   *     the generic type of the specified value.
+   *     要返回的值的类型。
    * @param value
-   *     the specified value, which could be {@code null}.
+   *     指定的值，可以为 {@code null}。
    * @param config
-   *     the specified {@link Config}.
+   *     指定的 {@link Config}。
    * @param name
-   *     the name of the specified property in the {@link Config}.
+   *     {@link Config} 中指定属性的名称。
    * @param defaultClassName
-   *     the default class name to use if the specified {@link Config} has no
-   *     property with the specified name or the specified property has no
-   *     value.
-   * @return if the specified value is not {@code null}, returns the specified
-   *     value; otherwise, returns the instance created from the specified
-   *     property value in the specified {@link Config}; if there is no such
-   *     property or the property has no value, returns the instance created
-   *     from the default class name.
+   *     如果指定的 {@link Config} 没有具有指定名称的属性或指定的属性没有值，则使用的默认类的名称。
+   * @return
+   *     如果指定的值不为 {@code null}，则返回指定的值；否则，返回指定的
+   *     {@link Config} 中指定的属性值；如果没有这样的属性或属性没有值，则返回默认类的实例。
    */
   public static <T> T choose(@Nullable final T value, final Config config,
       final String name, @Nullable final String defaultClassName) {
@@ -984,40 +862,29 @@ public final class ConfigUtils {
   }
 
   /**
-   * Loads a configuration from the specified XML resource.
+   * 从指定的 XML 资源加载配置。
    *
-   * <p>The function will search the XML resource in the following order:
+   * <p>该函数将按如下顺序查找 XML 资源：
    *
    * <ol>
-   * <li>First it will search the system's properties (using
-   * {@link System#getProperty(String)}) for the specified property name, and if
-   * the property was presented, the property value will be used as the XML
-   * resource name.</li>
-   * <li>If no such system property, the default XML resource name will be used.
-   * </li>
+   * <li>首先，它会在系统属性中查找指定的属性名（使用
+   * {@link System#getProperty(String)}），如果该属性存在，则其属性值将被用作 XML 资源名。</li>
+   * <li>如果没有该系统属性，则使用默认的 XML 资源名。</li>
    * </ol>
    *
-   * <p>Then the function will try to load the configuration form the resource
-   * in the context of the specified class. If success, the configuration is
-   * returned; otherwise, an empty configuration is returned.
+   * <p>然后，该函数会尝试在指定类的上下文中从资源加载配置。如果成功，则返回该配置；否则，返回一个空配置。
    *
-   * <p>For example, suppose there is a system property
-   * "com.github.commons.config" whose value is "java-commons.xml",
-   * calling this function with the argument of
-   * "com.github.commons.config" will gets a configuration load from
-   * the resource "java-commons.xml".
+   * <p>例如，假设存在一个名为 "com.github.commons.config" 的系统属性，其值为 "java-commons.xml"，
+   * 调用该函数并传入 "com.github.commons.config" 作为参数时，将会从资源 "java-commons.xml" 加载配置。
    *
    * @param propertyName
-   *     the name for the property in the system properties which specifies the
-   *     resource name of the configuration. It could be null, indicating the
-   *     function should use the default resource directly.
+   *     系统属性的名称。此系统属性的值是 {@link Config} 的 XML 资源的路径。
+   *     如果此参数为 {@code null}，或指定名称的系统属性不存在，则该函数将尝试从默认资源加载。
    * @param defaultResource
-   *     the name of the default resource for the configuration. It can't be
-   *     null.
+   *     默认资源的路径。
    * @param clazz
-   *     the class under whose context the resource will be searched.
-   * @return the configuration load from that resource, or an empty
-   *     configuration if failed.
+   *     用于获取类加载器以加载资源的类。
+   * @return 从指定的 XML 资源加载的 {@link Config}。
    */
   public static Config loadXmlConfig(@Nullable final String propertyName,
       final String defaultResource, final Class<?> clazz) {
@@ -1043,5 +910,4 @@ public final class ConfigUtils {
       return new DefaultConfig();
     }
   }
-
 }

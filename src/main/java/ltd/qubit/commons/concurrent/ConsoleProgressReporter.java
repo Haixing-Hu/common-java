@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -13,15 +13,18 @@ import javax.annotation.concurrent.Immutable;
 import ltd.qubit.commons.io.PrintStreamPrinter;
 
 /**
- * A {@link ProgressReporter} that reports the progress to the {@link System#out}.
+ * 将进度报告给{@link System#out}的{@link ProgressReporter}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public class ConsoleProgressReporter extends PrinterProgressReporter {
 
   public static final ConsoleProgressReporter INSTANCE = new ConsoleProgressReporter();
 
+  /**
+   * 构造一个 {@link ConsoleProgressReporter}。
+   */
   public ConsoleProgressReporter() {
     super(new PrintStreamPrinter(System.out));
   }

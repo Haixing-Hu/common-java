@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -61,11 +61,11 @@ public class DefaultPortsTest {
     // 第一次调用会触发懒加载
     final int port1 = DefaultPorts.get("http");
     assertEquals(80, port1);
-    
+
     // 后续调用应该使用已缓存的数据
     final int port2 = DefaultPorts.get("http");
     assertEquals(80, port2);
-    
+
     // 测试不同的端口
     assertEquals(443, DefaultPorts.get("https"));
   }
@@ -87,7 +87,7 @@ public class DefaultPortsTest {
             final int httpPort = DefaultPorts.get("http");
             final int httpsPort = DefaultPorts.get("https");
             final int ftpPort = DefaultPorts.get("ftp");
-            
+
             if (httpPort == 80 && httpsPort == 443 && ftpPort == 21) {
               successCount.incrementAndGet();
             } else {
@@ -138,7 +138,7 @@ public class DefaultPortsTest {
 
     // 发出开始信号
     startLatch.countDown();
-    
+
     // 等待所有线程完成
     assertTrue(finishLatch.await(10, TimeUnit.SECONDS));
     executor.shutdown();
@@ -151,7 +151,7 @@ public class DefaultPortsTest {
   public void testConfigurationProperty() {
     // 测试配置属性的使用
     final Config config = CommonsConfig.get();
-    final String defaultResource = config.getString(DefaultPorts.PROPERTY_RESOURCE, 
+    final String defaultResource = config.getString(DefaultPorts.PROPERTY_RESOURCE,
         DefaultPorts.DEFAULT_RESOURCE);
     assertEquals(DefaultPorts.DEFAULT_RESOURCE, defaultResource);
   }
@@ -180,7 +180,7 @@ public class DefaultPortsTest {
     // 测试重复访问相同的协议
     final String scheme = "https";
     final int expectedPort = 443;
-    
+
     for (int i = 0; i < 1000; i++) {
       assertEquals(expectedPort, DefaultPorts.get(scheme));
     }

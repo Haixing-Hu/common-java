@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -15,33 +15,41 @@ import ltd.qubit.commons.config.impl.DefaultConfig;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * A base class implements the Configurable interface.
+ * 实现 Configurable 接口的基类。
  *
- * <p>The subclass of this class could override the {@link #onConfigChanged}
- * method, in order to do some additional operations after the configuration was
- * changed.
+ * <p>该类的子类可以覆盖 {@link #onConfigChanged} 方法，以便在配置更改后执行一些额外的操作。
  *
- * <p>NOTE: This class does not implement a constructor which accept a {@link
- * Config} as argument, since if it does, the {@link #onConfigChanged()} will be
- * called in the constructor, while the subclass may not have been
- * constructed.
+ * <p>注意：此类未实现接受 {@link Config} 作为参数的构造函数，因为如果这样做，
+ * {@link #onConfigChanged()} 将在构造函数中被调用，而此时子类可能尚未构造完成。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @NotThreadSafe
 public class Configured implements Configurable {
 
+  /**
+   * 配置对象。
+   */
   protected Config config;
 
+  /**
+   * 构造一个 {@link Configured} 对象。
+   */
   public Configured() {
     config = new DefaultConfig();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public final Config getConfig() {
     return config;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public final void setConfig(final Config config) {
     this.config = requireNonNull("config", config);
@@ -49,11 +57,9 @@ public class Configured implements Configurable {
   }
 
   /**
-   * This function is called at the last of the functions
-   * {@link #setConfig(Config)}.
+   * 此函数在 {@link #setConfig(Config)} 函数的最后被调用。
    *
-   * <p>The subclass of {@link Configured} may override this function in order
-   * to provide additional operations after the configuration is changed.
+   * <p>{@link Configured} 的子类可以覆盖此函数，以便在配置更改后提供额外的操作。
    */
   protected void onConfigChanged() {
     // do nothing, but it could be override by subclasses.

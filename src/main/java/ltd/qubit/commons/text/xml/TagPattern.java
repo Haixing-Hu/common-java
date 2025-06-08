@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//    Copyright (c) 2022 - 2024.
+//    Copyright (c) 2022 - 2025.
 //    Haixing Hu, Qubit Co. Ltd.
 //
 //    All rights reserved.
@@ -23,23 +23,19 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * The {@link TagPattern} object represent a pattern applied to an XML tag.
+ * {@link TagPattern} 对象表示应用于 XML 标签的模式。
  *
- * <p>The pattern may specify the tag name, the attribute name and the attribute
- * value.
+ * <p>该模式可以指定标签名称、属性名称和属性值。
  *
- * <p>If the tag name is specified, the node matches this pattern must have the
- * same tag name; if the attribute name is specified, the node matches this
- * pattern must have an attribute with the same name; if the attribute value is
- * specified (the attribute value has effect only if the attribute name is
- * specified), the node matches this pattern must have the same attribute value
- * for the specified attribute name.
+ * <p>如果指定了标签名称，匹配此模式的节点必须具有相同的标签名称；
+ * 如果指定了属性名称，匹配此模式的节点必须具有相同名称的属性；
+ * 如果指定了属性值（属性值仅在指定属性名称时有效），
+ * 匹配此模式的节点必须对指定的属性名称具有相同的属性值。
  *
- * <p>All the comparison of string values are case-sensitive. So if the pattern
- * is applied to the HTML node, the HTML parser must be configured to normalize
- * the tag name and attribute name (usually to lowercase).
+ * <p>所有字符串值的比较都是区分大小写的。因此，如果将模式应用于 HTML 节点，
+ * 必须配置 HTML 解析器以规范化标签名称和属性名称（通常为小写）。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class TagPattern implements CloneableEx<TagPattern>, Serializable {
 
@@ -66,34 +62,80 @@ public final class TagPattern implements CloneableEx<TagPattern>, Serializable {
     child = null;
   }
 
+  /**
+   * 获取标签名称。
+   *
+   * @return 标签名称
+   */
   public String getTagName() {
     return tagName;
   }
 
+  /**
+   * 设置标签名称。
+   *
+   * @param tagName
+   *     新的标签名称
+   */
   public void setTagName(@Nullable final String tagName) {
     this.tagName = tagName;
   }
 
+  /**
+   * 获取属性名称。
+   *
+   * @return 属性名称
+   */
   public String getAttributeName() {
     return attributeName;
   }
 
+  /**
+   * 设置属性名称。
+   *
+   * @param attributeName
+   *     新的属性名称
+   */
   public void setAttributeName(@Nullable final String attributeName) {
     this.attributeName = attributeName;
   }
 
+  /**
+   * 获取属性值。
+   *
+   * @return 属性值
+   */
   public String getAttributeValue() {
     return attributeValue;
   }
 
+  /**
+   * 设置属性值。
+   *
+   * @param attributeValue
+   *     新的属性值
+   */
   public void setAttributeValue(@Nullable final String attributeValue) {
     this.attributeValue = attributeValue;
   }
 
+  /**
+   * 获取顺序。
+   *
+   * @return 顺序
+   */
   public int getOrder() {
     return order;
   }
 
+  /**
+   * 设置顺序。
+   *
+   * @param order
+   *     新的顺序，必须为零或正数
+   * @throws IllegalArgumentException
+   *     如果顺序为负数
+   */
   public void setOrder(final int order) {
     if (order < 0) {
       throw new IllegalArgumentException("The order must be zero or positive.");
@@ -101,14 +143,32 @@ public final class TagPattern implements CloneableEx<TagPattern>, Serializable {
     this.order = order;
   }
 
+  /**
+   * 获取子模式。
+   *
+   * @return 子模式
+   */
   public TagPattern getChild() {
     return child;
   }
 
+  /**
+   * 设置子模式。
+   *
+   * @param child
+   *     新的子模式
+   */
   public void setChild(final TagPattern child) {
     this.child = child;
   }
 
+  /**
+   * 检查指定节点是否匹配此模式。
+   *
+   * @param node
+   *     要检查的节点
+   * @return 如果节点匹配此模式，则返回 {@code true}；否则返回 {@code false}
+   */
   public boolean matches(final Node node) {
     if (node.getNodeType() != Node.ELEMENT_NODE) {
       return false;
@@ -135,6 +195,13 @@ public final class TagPattern implements CloneableEx<TagPattern>, Serializable {
     return true;
   }
 
+  /**
+   * 在指定根节点中搜索匹配此模式的元素。
+   *
+   * @param root
+   *     要搜索的根节点
+   * @return 匹配此模式的第一个元素，如果未找到则返回 {@code null}
+   */
   public Element search(final Node root) {
     final DomNodeIterator iter = new DomNodeIterator(root);
     int n = 0;
@@ -229,12 +296,11 @@ public final class TagPattern implements CloneableEx<TagPattern>, Serializable {
   @Override
   public String toString() {
     return new ToStringBuilder(this)
-               .append("tagName", tagName)
-               .append("attributeName", attributeName)
-               .append("attributeValue", attributeValue)
-               .append("order", order)
-               .append("child", child)
-               .toString();
+        .append("tagName", tagName)
+        .append("attributeName", attributeName)
+        .append("attributeValue", attributeValue)
+        .append("order", order)
+        .append("child", child)
+        .toString();
   }
-
 }
