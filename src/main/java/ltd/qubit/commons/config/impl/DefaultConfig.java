@@ -275,7 +275,15 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
    */
   @Override
   public DefaultConfig setBoolean(final String name, final boolean value) {
-    return setBoolean(name, value, false);
+    requireNonNull("name", name);
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setBoolean(value);
+      return v;
+    });
+    return this;
   }
 
   /**
@@ -300,7 +308,15 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
    */
   @Override
   public DefaultConfig setBooleans(final String name, @Nullable final boolean... values) {
-    return setBooleans(name, values, false);
+    requireNonNull("name", name);
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setBooleans(values);
+      return v;
+    });
+    return this;
   }
 
   /**
@@ -325,7 +341,15 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
    */
   @Override
   public DefaultConfig setBooleans(final String name, @Nullable final BooleanCollection values) {
-    return setBooleans(name, (values == null ? null : values.toArray()), false);
+    requireNonNull("name", name);
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setBooleans(values);
+      return v;
+    });
+    return this;
   }
 
   /**
@@ -391,7 +415,15 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
    */
   @Override
   public DefaultConfig setChar(final String name, final char value) {
-    return setChar(name, value, false);
+    requireNonNull("name", name);
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setCharValue(value);
+      return v;
+    });
+    return this;
   }
 
   /**
@@ -416,7 +448,15 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
    */
   @Override
   public DefaultConfig setChars(final String name, @Nullable final char... values) {
-    return setChars(name, values, false);
+    requireNonNull("name", name);
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setCharValues(values);
+      return v;
+    });
+    return this;
   }
 
   /**
@@ -441,7 +481,15 @@ public class DefaultConfig extends AbstractConfig implements WritableConfig {
    */
   @Override
   public DefaultConfig setChars(final String name, @Nullable final CharCollection values) {
-    return setChars(name, (values == null ? null : values.toArray()), false);
+    requireNonNull("name", name);
+    properties.compute(name, (k, v) -> {
+      if (v == null) {
+        v = new DefaultProperty(name);
+      }
+      v.setCharValues(values);
+      return v;
+    });
+    return this;
   }
 
   /**
