@@ -35,322 +35,311 @@ import ltd.qubit.commons.reflect.ConstructorUtils;
 import static ltd.qubit.commons.lang.CharUtils.isAsciiDigit;
 
 /**
- * This class provides helper functions for {@code java.lang.System}.
+ * 此类为 {@code java.lang.System} 提供辅助函数。
  *
- * <p>If a system property cannot be read due to security restrictions, the
- * corresponding field in this class will be set to {@code null} and a
- * message will be written to the log.
+ * <p>如果由于安全限制无法读取系统属性，此类中相应的字段将被设置为 {@code null}，
+ * 并且会向日志写入一条消息。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public final class SystemUtils {
 
   /**
-   * The prefix String for all Windows OS.
+   * 所有 Windows 操作系统的前缀字符串。
    */
   private static final String OS_NAME_WINDOWS_PREFIX = "Windows";
 
   /**
-   * The System property key for the Java home directory.
+   * Java 主目录的系统属性键。
    */
   public static final String JAVA_HOME_KEY = "java.home";
 
   /**
-   * The System property key for the Java IO temporary directory.
+   * Java IO 临时目录的系统属性键。
    */
   public static final String JAVA_IO_TMPDIR_KEY = "java.io.tmpdir";
 
   /**
-   * The System property key for the Java class path.
+   * Java 类路径的系统属性键。
    */
   public static final String JAVA_CLASS_PATH_KEY = "java.class.path";
 
   /**
-   * The System property key for the Java class format version number.
+   * Java 类格式版本号的系统属性键。
    */
   public static final String JAVA_CLASS_VERSION_KEY = "java.class.version";
 
   /**
-   * The System property key for Java compiler name.
+   * Java 编译器名称的系统属性键。
    */
   public static final String JAVA_COMPILER_KEY = "java.compiler";
 
   /**
-   * The System property key for the Java endorsed directory or directories..
+   * Java 认可目录的系统属性键。
    */
   public static final String JAVA_ENDORSED_DIRS_KEY = "java.endorsed.dirs";
 
   /**
-   * The System property key for the Java extension directory or directories.
+   * Java 扩展目录的系统属性键。
    */
   public static final String JAVA_EXT_DIRS_KEY = "java.ext.dirs";
 
   /**
-   * The System property key for the list of paths to search when loading
-   * libraries.
+   * 加载库时搜索路径列表的系统属性键。
    */
   public static final String JAVA_LIBRARY_PATH_KEY = "java.library.path";
 
   /**
-   * The System property key for the Java runtime environment name.
+   * Java 运行时环境名称的系统属性键。
    */
   public static final String JAVA_RUNTIME_NAME_KEY = "java.runtime.name";
 
   /**
-   * The System property key for the Java runtime environment version.
+   * Java 运行时环境版本的系统属性键。
    */
   public static final String JAVA_RUNTIME_VERSION_KEY = "java.runtime.version";
 
   /**
-   * The System property key for the Java runtime environment specification
-   * name.
+   * Java 运行时环境规范名称的系统属性键。
    */
   public static final String JAVA_SPECIFICATION_NAME_KEY =
       "java.specification.name";
 
   /**
-   * The System property key for the Java runtime environment specification
-   * version.
+   * Java 运行时环境规范版本的系统属性键。
    */
   public static final String JAVA_SPECIFICATION_VERSION_KEY =
       "java.specification.version";
 
   /**
-   * The System property key for the Java runtime environment specification
-   * vendor.
+   * Java 运行时环境规范供应商的系统属性键。
    */
   public static final String JAVA_SPECIFICATION_VENDOR_KEY =
       "java.specification.vendor";
 
   /**
-   * The System property key for the Java PreferencesFactory class name.
+   * Java PreferencesFactory 类名的系统属性键。
    */
   public static final String JAVA_PREFERENCES_FACTORY_KEY =
       "java.util.prefs.PreferencesFactory";
 
   /**
-   * The System property key for the Java vendor-specific string.
+   * Java 供应商特定字符串的系统属性键。
    */
   public static final String JAVA_VENDOR_KEY = "java.vendor";
 
   /**
-   * The System property key for the Java vendor URL.
+   * Java 供应商 URL 的系统属性键。
    */
   public static final String JAVA_VENDOR_URL_KEY = "java.vendor.url";
 
   /**
-   * The System property key for the Java version number.
+   * Java 版本号的系统属性键。
    */
   public static final String JAVA_VERSION_KEY = "java.version";
 
   /**
-   * The System property key for the Java Virtual Machine implementation info.
+   * Java 虚拟机实现信息的系统属性键。
    */
   public static final String JAVA_VM_INFO_KEY = "java.vm.info";
 
   /**
-   * The System property key for the Java Virtual Machine implementation name.
+   * Java 虚拟机实现名称的系统属性键。
    */
   public static final String JAVA_VM_NAME_KEY = "java.vm.name";
 
   /**
-   * The System property key for the Java Virtual Machine implementation
-   * version.
+   * Java 虚拟机实现版本的系统属性键。
    */
   public static final String JAVA_VM_VERSION_KEY = "java.vm.version";
 
   /**
-   * The System property key for the Java Virtual Machine implementation vendor.
+   * Java 虚拟机实现供应商的系统属性键。
    */
   public static final String JAVA_VM_VENDOR_KEY = "java.vm.vendor";
 
   /**
-   * The System property key for the Java Virtual Machine specification name.
+   * Java 虚拟机规范名称的系统属性键。
    */
   public static final String JAVA_VM_SPECIFICATION_NAME_KEY =
       "java.vm.specification.name";
 
   /**
-   * The System property key for the Java Virtual Machine specification vendor.
+   * Java 虚拟机规范供应商的系统属性键。
    */
   public static final String JAVA_VM_SPECIFICATION_VENDOR_KEY =
       "java.vm.specification.vendor";
 
   /**
-   * The System property key for the Java Virtual Machine specification version.
+   * Java 虚拟机规范版本的系统属性键。
    */
   public static final String JAVA_VM_SPECIFICATION_VERSION_KEY =
       "java.vm.specification.version";
 
   /**
-   * The System property key for the operating system architecture.
+   * 操作系统架构的系统属性键。
    */
   public static final String OS_ARCH_KEY = "os.arch";
 
   /**
-   * The System property key for the operating system name.
+   * 操作系统名称的系统属性键。
    */
   public static final String OS_NAME_KEY = "os.name";
 
   /**
-   * The System property key for the operating system version.
+   * 操作系统版本的系统属性键。
    */
   public static final String OS_VERSION_KEY = "os.version";
 
   /**
-   * The System property key for the operating system line separator.
+   * 操作系统行分隔符的系统属性键。
    */
   public static final String LINE_SEPARATOR_KEY = "line.separator";
 
   /**
-   * The System property key for the operating system path separator.
+   * 操作系统路径分隔符的系统属性键。
    */
   public static final String PATH_SEPARATOR_KEY = "path.separator";
 
   /**
-   * The System property key for the user's country code.
+   * 用户国家代码的系统属性键。
    */
   public static final String USER_COUNTRY_KEY = "user.country";
 
   /**
-   * The System property key for the user's current working directory.
+   * 用户当前工作目录的系统属性键。
    */
   public static final String USER_DIR_KEY = "user.dir";
 
   /**
-   * The System property key for the user's home directory.
+   * 用户主目录的系统属性键。
    */
   public static final String USER_HOME_KEY = "user.home";
 
   /**
-   * The System property key for the user's language code, such as
-   * {@code "en"}.
+   * 用户语言代码的系统属性键，例如 {@code "en"}。
    */
   public static final String USER_LANGUAGE_KEY = "user.language";
 
   /**
-   * The System property key for the user's account name.
+   * 用户账户名的系统属性键。
    */
   public static final String USER_NAME_KEY = "user.name";
 
   /**
-   * The System property key for the user's time zone. For example:
-   * {@code "America/Los_Angeles"}.
+   * 用户时区的系统属性键。例如：{@code "America/Los_Angeles"}。
    */
   public static final String USER_TIMEZONE_KEY = "user.timezone";
 
   /**
-   * The System property key for the AWT toolkit class name.
+   * AWT 工具包类名的系统属性键。
    */
   public static final String AWT_TOOLKIT_KEY = "awt.toolkit";
 
   /**
-   * The System property key for the file encoding name.
+   * 文件编码名称的系统属性键。
    */
   public static final String FILE_ENCODING_KEY = "file.encoding";
 
   /**
-   * The System property key for the file separator.
+   * 文件分隔符的系统属性键。
    */
   public static final String FILE_SEPARATOR_KEY = "file.separator";
 
   /**
-   * The System property key for the AWT fonts.
+   * AWT 字体的系统属性键。
    */
   public static final String JAVA_AWT_FONTS_KEY = "java.awt.fonts";
 
   /**
-   * The System property key for the AWT graphic environment.
+   * AWT 图形环境的系统属性键。
    */
   public static final String JAVA_AWT_GRAPHICSENV_KEY = "java.awt.graphicsenv";
 
   /**
-   * The System property key for the AWT headless property. The value of this
-   * property is the String {@code "true"} or {@code "false"}.
+   * AWT 无头属性的系统属性键。此属性的值是字符串 {@code "true"} 或 {@code "false"}。
    */
   public static final String JAVA_AWT_HEADLESS_KEY = "java.awt.headless";
 
   /**
-   * The System property key for the AWT printer job property.
+   * AWT 打印作业属性的系统属性键。
    */
   public static final String JAVA_AWT_PRINTERJOB_KEY = "java.awt.printerjob";
 
   /**
-   * The System property key for the Sun's architecture data model.
+   * Sun 架构数据模型的系统属性键。
    */
   public static final String SUN_ARCH_DATA_MODEL_KEY = "sun.arch.data.model";
 
   /**
-   * The home directory of Java.
+   * Java 的主目录。
    */
   public static final String JAVA_HOME = getProperty(JAVA_HOME_KEY);
 
   /**
-   * The pathname of the Java IO temporary directory.
+   * Java IO 临时目录的路径名。
    */
   public static final String JAVA_IO_TMPDIR = getProperty(JAVA_IO_TMPDIR_KEY);
 
   /**
-   * The version string of the Java.
+   * Java 的版本字符串。
    */
   public static final String JAVA_VERSION = getProperty(JAVA_VERSION_KEY);
 
   /**
-   * Gets the Java version as a {@code String} trimming leading letters.
+   * 获取去除前导字母的 Java 版本字符串。
    *
-   * <p>The field will return {@code null} if {@link #JAVA_VERSION} is
-   * {@code null}.
+   * <p>如果 {@link #JAVA_VERSION} 是 {@code null}，则此字段将返回 {@code null}。
    */
   public static final String JAVA_VERSION_TRIMMED = getJavaVersionTrimmed(JAVA_VERSION);
 
   /**
-   * Gets the Java version as a {@code float}.
+   * 获取 Java 版本的 {@code float} 值。
    *
-   * <p>Example return values:
+   * <p>示例返回值：
    * <ul>
-   * <li>{@code 1.2f} for JDK 1.2
-   * <li>{@code 1.31f} for JDK 1.3.1
+   * <li>{@code 1.2f} 表示 JDK 1.2
+   * <li>{@code 1.31f} 表示 JDK 1.3.1
    * </ul>
    *
-   * <p>The field will return zero if {@link #JAVA_VERSION} is {@code null}.
+   * <p>如果 {@link #JAVA_VERSION} 是 {@code null}，则此字段将返回零。
    */
   public static final float JAVA_VERSION_FLOAT = getJavaVersionAsFloat(JAVA_VERSION);
 
   /**
-   * Gets the Java version as an {@code int}.
+   * 获取 Java 版本的 {@code int} 值。
    *
-   * <p>Example return values:
+   * <p>示例返回值：
    * <ul>
-   * <li>{@code 120} for JDK 1.2
-   * <li>{@code 131} for JDK 1.3.1
+   * <li>{@code 120} 表示 JDK 1.2
+   * <li>{@code 131} 表示 JDK 1.3.1
    * </ul>
    *
-   * <p>The field will return zero if {@link #JAVA_VERSION} is {@code null}.
+   * <p>如果 {@link #JAVA_VERSION} 是 {@code null}，则此字段将返回零。
    */
   public static final int JAVA_VERSION_INT = getJavaVersionAsInt(JAVA_VERSION);
 
   /**
-   * The operating system architecture.
+   * 操作系统架构。
    */
   public static final String OS_ARCH = getProperty(OS_ARCH_KEY);
 
   /**
-   * The operating system name.
+   * 操作系统名称。
    */
   public static final String OS_NAME = getProperty(OS_NAME_KEY);
 
   /**
-   * The operating system version.
+   * 操作系统版本。
    */
   public static final String OS_VERSION = getProperty(OS_VERSION_KEY);
 
   /**
-   * The operating system line separator.
+   * 操作系统行分隔符。
    *
-   * <p>If it is failed to get the {@link #LINE_SEPARATOR_KEY} property value
-   * from the system properties, the class will call the
-   * {@link PrintWriter#println()} function to get a line separator.
+   * <p>如果无法从系统属性中获取 {@link #LINE_SEPARATOR_KEY} 属性值，
+   * 则类将调用 {@link PrintWriter#println()} 函数来获取行分隔符。
    */
   public static final String LINE_SEPARATOR;
 
@@ -366,115 +355,103 @@ public final class SystemUtils {
   }
 
   /**
-   * The operating system path separator.
+   * 操作系统路径分隔符。
    */
   public static final String PATH_SEPARATOR = getProperty(PATH_SEPARATOR_KEY);
 
   /**
-   * The user's home directory pathname.
+   * 用户主目录路径名。
    */
   public static final String USER_HOME = getProperty(USER_HOME_KEY);
 
   /**
-   * The user's current working directory pathname.
+   * 用户当前工作目录路径名。
    */
   public static final String USER_DIR = getProperty(USER_DIR_KEY);
 
   /**
-   * The user's language code, such as {@code "en"}.
+   * 用户语言代码，例如 {@code "en"}。
    */
   public static final String USER_LANGUAGE = getProperty(USER_LANGUAGE_KEY);
 
   /**
-   * The user's account name.
+   * 用户账户名。
    */
   public static final String USER_NAME = getProperty(USER_NAME_KEY);
 
   /**
-   * The user's time zone. For example: {@code "America/Los_Angeles"}.
+   * 用户时区。例如：{@code "America/Los_Angeles"}。
    */
   public static final String USER_TIMEZONE = getProperty(USER_TIMEZONE_KEY);
 
   /**
-   * Is {@code true} if this is Java version 1.1 (also 1.1.x versions).
+   * 如果这是 Java 版本 1.1（也包括 1.1.x 版本），则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@link #JAVA_VERSION} is
-   * {@code null}.
+   * <p>如果 {@link #JAVA_VERSION} 是 {@code null}，则此字段将返回 {@code false}。
    */
   public static final boolean IS_JAVA_1 =
       getJavaVersionMatches(JAVA_VERSION, "1.1");
 
   /**
-   * Is {@code true} if this is Java version 1.2 (also 1.2.x versions).
+   * 如果这是 Java 版本 1.2（也包括 1.2.x 版本），则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@link #JAVA_VERSION} is
-   * {@code null}.
+   * <p>如果 {@link #JAVA_VERSION} 是 {@code null}，则此字段将返回 {@code false}。
    */
   public static final boolean IS_JAVA_2 =
       getJavaVersionMatches(JAVA_VERSION, "1.2");
 
   /**
-   * Is {@code true} if this is Java version 1.3 (also 1.3.x versions).
+   * 如果这是 Java 版本 1.3（也包括 1.3.x 版本），则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@link #JAVA_VERSION} is
-   * {@code null}.
+   * <p>如果 {@link #JAVA_VERSION} 是 {@code null}，则此字段将返回 {@code false}。
    */
   public static final boolean IS_JAVA_3 =
       getJavaVersionMatches(JAVA_VERSION, "1.3");
 
   /**
-   * Is {@code true} if this is Java version 1.4 (also 1.4.x versions).
+   * 如果这是 Java 版本 1.4（也包括 1.4.x 版本），则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@link #JAVA_VERSION} is
-   * {@code null}.
+   * <p>如果 {@link #JAVA_VERSION} 是 {@code null}，则此字段将返回 {@code false}。
    */
   public static final boolean IS_JAVA_4 =
       getJavaVersionMatches(JAVA_VERSION, "1.4");
 
   /**
-   * Is {@code true} if this is Java version 5 or Java version 1.5
-   * (also 1.5.x versions).
+   * 如果这是 Java 版本 5 或 Java 版本 1.5（也包括 1.5.x 版本），则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@link #JAVA_VERSION} is
-   * {@code null}.
+   * <p>如果 {@link #JAVA_VERSION} 是 {@code null}，则此字段将返回 {@code false}。
    */
   public static final boolean IS_JAVA_5 =
       getJavaVersionMatches(JAVA_VERSION, "1.5");
 
   /**
-   * Is {@code true} if this is Java version 6 or Java version 1.6
-   * (also 1.6.x versions).
+   * 如果这是 Java 版本 6 或 Java 版本 1.6（也包括 1.6.x 版本），则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@link #JAVA_VERSION} is
-   * {@code null}.
+   * <p>如果 {@link #JAVA_VERSION} 是 {@code null}，则此字段将返回 {@code false}。
    */
   public static final boolean IS_JAVA_6 =
       getJavaVersionMatches(JAVA_VERSION, "1.6");
 
   /**
-   * Is {@code true} if this is Java version 7 or Java version 1.7
-   * (also 1.7.x versions).
+   * 如果这是 Java 版本 7 或 Java 版本 1.7（也包括 1.7.x 版本），则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@link #JAVA_VERSION} is
-   * {@code null}.
+   * <p>如果 {@link #JAVA_VERSION} 是 {@code null}，则此字段将返回 {@code false}。
    */
   public static final boolean IS_JAVA_7 =
       getJavaVersionMatches(JAVA_VERSION, "1.7");
 
   /**
-   * Is {@code true} if this is Java version 8 or Java version 1.8
-   * (also 1.8.x versions).
+   * 如果这是 Java 版本 8 或 Java 版本 1.8（也包括 1.8.x 版本），则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@link #JAVA_VERSION} is
-   * {@code null}.
+   * <p>如果 {@link #JAVA_VERSION} 是 {@code null}，则此字段将返回 {@code false}。
    */
   public static final boolean IS_JAVA_8 =
       getJavaVersionMatches(JAVA_VERSION, "1.8");
 
   /**
-   * Is {@code true} if this is Java version 9 (also 9.x.x versions).
+   * 如果这是 Java 版本 9（也包括 9.x.x 版本），则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@link #JAVA_VERSION} is {@code null}.
+   * <p>如果 {@link #JAVA_VERSION} 是 {@code null}，则此字段将返回 {@code false}。
    *
    * @see <a href="https://www.oracle.com/java/technologies/9all-relnotes.html">
    * Release Notes for JDK 9 and JDK 9 Update Releases</a>
@@ -483,54 +460,49 @@ public final class SystemUtils {
       getJavaVersionMatches(JAVA_VERSION, "9.");
 
   /**
-   * Is {@code true} if this is Java version 10 (also 10.x.x versions).
+   * 如果这是 Java 版本 10（也包括 10.x.x 版本），则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@link #JAVA_VERSION} is
-   * {@code null}.
+   * <p>如果 {@link #JAVA_VERSION} 是 {@code null}，则此字段将返回 {@code false}。
    */
   public static final boolean IS_JAVA_10 =
       getJavaVersionMatches(JAVA_VERSION, "10.");
 
   /**
-   * Is {@code true} if this is Java version 11 (also 11.x.x versions).
+   * 如果这是 Java 版本 11（也包括 11.x.x 版本），则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@link #JAVA_VERSION} is
-   * {@code null}.
+   * <p>如果 {@link #JAVA_VERSION} 是 {@code null}，则此字段将返回 {@code false}。
    */
   public static final boolean IS_JAVA_11 =
       getJavaVersionMatches(JAVA_VERSION, "11.");
 
   /**
-   * Is {@code true} if this is Java version 12 (also 12.x.x versions).
+   * 如果这是 Java 版本 12（也包括 12.x.x 版本），则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@link #JAVA_VERSION} is
-   * {@code null}.
+   * <p>如果 {@link #JAVA_VERSION} 是 {@code null}，则此字段将返回 {@code false}。
    */
   public static final boolean IS_JAVA_12 =
       getJavaVersionMatches(JAVA_VERSION, "12.");
 
   /**
-   * Is {@code true} if this is Java version 13 (also 13.x.x versions).
+   * 如果这是 Java 版本 13（也包括 13.x.x 版本），则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@link #JAVA_VERSION} is
-   * {@code null}.
+   * <p>如果 {@link #JAVA_VERSION} 是 {@code null}，则此字段将返回 {@code false}。
    */
   public static final boolean IS_JAVA_13 =
       getJavaVersionMatches(JAVA_VERSION, "13.");
 
   /**
-   * Is {@code true} if this is Java version 14 (also 14.x.x versions).
+   * 如果这是 Java 版本 14（也包括 14.x.x 版本），则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@link #JAVA_VERSION} is
-   * {@code null}.
+   * <p>如果 {@link #JAVA_VERSION} 是 {@code null}，则此字段将返回 {@code false}。
    */
   public static final boolean IS_JAVA_14 =
       getJavaVersionMatches(JAVA_VERSION, "14.");
 
   /**
-   * Is {@code true} if the current JRE is 64-bit.
+   * 如果当前 JRE 是 64 位，则为 {@code true}。
    *
-   * <p>FIXME: this logic may not be correct.
+   * <p>FIXME: 此逻辑可能不正确。
    */
   public static final boolean IS_JAVA_64BIT;
 
@@ -544,99 +516,88 @@ public final class SystemUtils {
   }
 
   /**
-   * Is {@code true} if the current JRE is 32-bit.
+   * 如果当前 JRE 是 32 位，则为 {@code true}。
    */
   public static final boolean IS_JAVA_32BIT = (! IS_JAVA_64BIT);
 
   /**
-   * Is {@code true} if this is AIX.
+   * 如果这是 AIX，则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@code OS_NAME} is
-   * {@code null}.
+   * <p>如果 {@code OS_NAME} 是 {@code null}，则此字段将返回 {@code false}。
    */
   public static final boolean IS_OS_AIX = getOsMatches(OS_NAME, "AIX");
 
   /**
-   * Is {@code true} if this is HP-UX.
+   * 如果这是 HP-UX，则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@code OS_NAME} is
-   * {@code null}.
+   * <p>如果 {@code OS_NAME} 是 {@code null}，则此字段将返回 {@code false}。
    */
   public static final boolean IS_OS_HP_UX = getOsMatches(OS_NAME, "HP-UX");
 
   /**
-   * Is {@code true} if this is Irix.
+   * 如果这是 Irix，则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@code OS_NAME} is
-   * {@code null}.
+   * <p>如果 {@code OS_NAME} 是 {@code null}，则此字段将返回 {@code false}。
    */
   public static final boolean IS_OS_IRIX = getOsMatches(OS_NAME, "Irix");
 
   /**
-   * Is {@code true} if this is Linux.
+   * 如果这是 Linux，则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@code OS_NAME} is
-   * {@code null}.
+   * <p>如果 {@code OS_NAME} 是 {@code null}，则此字段将返回 {@code false}。
    */
   public static final boolean IS_OS_LINUX = getOsMatches(OS_NAME, "Linux")
           || getOsMatches(OS_NAME, "LINUX");
 
   /**
-   * Is {@code true} if this is Mac.
+   * 如果这是 Mac，则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@code OS_NAME} is
-   * {@code null}.
+   * <p>如果 {@code OS_NAME} 是 {@code null}，则此字段将返回 {@code false}。
    *
    * @since 2.0
    */
   public static final boolean IS_OS_MAC = getOsMatches(OS_NAME, "Mac");
 
   /**
-   * Is {@code true} if this is Mac.
+   * 如果这是 Mac，则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@code OS_NAME} is
-   * {@code null}.
+   * <p>如果 {@code OS_NAME} 是 {@code null}，则此字段将返回 {@code false}。
    *
    * @since 2.0
    */
   public static final boolean IS_OS_MAC_OSX = getOsMatches(OS_NAME, "Mac OS X");
 
   /**
-   * Is {@code true} if this is OS/2.
+   * 如果这是 OS/2，则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@code OS_NAME} is
-   * {@code null}.
+   * <p>如果 {@code OS_NAME} 是 {@code null}，则此字段将返回 {@code false}。
    *
    * @since 2.0
    */
   public static final boolean IS_OS_OS2 = getOsMatches(OS_NAME, "OS/2");
 
   /**
-   * Is {@code true} if this is Solaris.
+   * 如果这是 Solaris，则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@code OS_NAME} is
-   * {@code null}.
+   * <p>如果 {@code OS_NAME} 是 {@code null}，则此字段将返回 {@code false}。
    *
    * @since 2.0
    */
   public static final boolean IS_OS_SOLARIS = getOsMatches(OS_NAME, "Solaris");
 
   /**
-   * Is {@code true} if this is SunOS.
+   * 如果这是 SunOS，则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@code OS_NAME} is
-   * {@code null}.
+   * <p>如果 {@code OS_NAME} 是 {@code null}，则此字段将返回 {@code false}。
    *
    * @since 2.0
    */
   public static final boolean IS_OS_SUN_OS = getOsMatches(OS_NAME, "SunOS");
 
   /**
-   * Is {@code true} if this is a POSIX compilant system, as in any of AIX,
-   * HP-UX, Irix, Linux, MacOSX, Solaris or SUN OS.
+   * 如果这是一个 POSIX 兼容系统，则为 {@code true}，包括 AIX、HP-UX、Irix、Linux、MacOSX、Solaris 或 SUN OS 中的任何一个。
    *
-   * <p>The field will return {@code false} if {@code OS_NAME} is
-   * {@code null}.
+   * <p>如果 {@code OS_NAME} 是 {@code null}，则此字段将返回 {@code false}。
    *
    * @since 2.1
    */
@@ -645,10 +606,9 @@ public final class SystemUtils {
           || IS_OS_SUN_OS;
 
   /**
-   * Is {@code true} if this is Windows.
+   * 如果这是 Windows，则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@code OS_NAME} is
-   * {@code null}.
+   * <p>如果 {@code OS_NAME} 是 {@code null}，则此字段将返回 {@code false}。
    *
    * @since 2.0
    */
@@ -656,10 +616,9 @@ public final class SystemUtils {
       getOsMatches(OS_NAME, OS_NAME_WINDOWS_PREFIX);
 
   /**
-   * Is {@code true} if this is Windows 2000.
+   * 如果这是 Windows 2000，则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@code OS_NAME} is
-   * {@code null}.
+   * <p>如果 {@code OS_NAME} 是 {@code null}，则此字段将返回 {@code false}。
    *
    * @since 2.0
    */
@@ -667,10 +626,9 @@ public final class SystemUtils {
       getOsMatches(OS_NAME, OS_VERSION, OS_NAME_WINDOWS_PREFIX, "5.0");
 
   /**
-   * Is {@code true} if this is Windows 95.
+   * 如果这是 Windows 95，则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@code OS_NAME} is
-   * {@code null}.
+   * <p>如果 {@code OS_NAME} 是 {@code null}，则此字段将返回 {@code false}。
    *
    * @since 2.0
    */
@@ -679,10 +637,9 @@ public final class SystemUtils {
   // JDK 1.2 running on Windows98 returns 'Windows 95', hence the above
 
   /**
-   * Is {@code true} if this is Windows 98.
+   * 如果这是 Windows 98，则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@code OS_NAME} is
-   * {@code null}.
+   * <p>如果 {@code OS_NAME} 是 {@code null}，则此字段将返回 {@code false}。
    *
    * @since 2.0
    */
@@ -690,55 +647,48 @@ public final class SystemUtils {
       getOsMatches(OS_NAME, OS_VERSION, OS_NAME_WINDOWS_PREFIX + " 9", "4.1");
 
   /**
-   * Is {@code true} if this is Windows ME.
+   * 如果这是 Windows ME，则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@code OS_NAME} is
-   * {@code null}.
+   * <p>如果 {@code OS_NAME} 是 {@code null}，则此字段将返回 {@code false}。
    */
   public static final boolean IS_OS_WINDOWS_ME =
       getOsMatches(OS_NAME, OS_VERSION, OS_NAME_WINDOWS_PREFIX, "4.9");
 
   /**
-   * Is {@code true} if this is Windows NT.
+   * 如果这是 Windows NT，则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@code OS_NAME} is
-   * {@code null}.
+   * <p>如果 {@code OS_NAME} 是 {@code null}，则此字段将返回 {@code false}。
    */
   public static final boolean IS_OS_WINDOWS_NT =
       getOsMatches(OS_NAME, OS_NAME_WINDOWS_PREFIX + " NT");
 
   /**
-   * Is {@code true} if this is Windows XP.
+   * 如果这是 Windows XP，则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@code OS_NAME} is
-   * {@code null}.
+   * <p>如果 {@code OS_NAME} 是 {@code null}，则此字段将返回 {@code false}。
    */
   public static final boolean IS_OS_WINDOWS_XP =
       getOsMatches(OS_NAME, OS_VERSION, OS_NAME_WINDOWS_PREFIX, "5.1");
 
   /**
-   * Is {@code true} if this is Windows Vista.
+   * 如果这是 Windows Vista，则为 {@code true}。
    *
-   * <p>The field will return {@code false} if {@code OS_NAME} is
-   * {@code null}.
+   * <p>如果 {@code OS_NAME} 是 {@code null}，则此字段将返回 {@code false}。
    */
   public static final boolean IS_OS_WINDOWS_VISTA =
       getOsMatches(OS_NAME, OS_VERSION, OS_NAME_WINDOWS_PREFIX, "6.0");
 
   /**
-   * The native {@code ByteOrder} of this system.
+   * 此系统的本机 {@code ByteOrder}。
    *
-   * <p><b>NOTE: </b>The default byte order, specified by
-   * {@link ByteArrayUtils#DEFAULT_BYTE_ORDER}, is the standard network byte
-   * order, i.e., the big endian, according to the RFC 1700. The native byte
-   * order specified by {@link SystemUtils#NATIVE_BYTE_ORDER}, depends on the
-   * current operation system. On Windows it is usually little endian, on Mac or
-   * Linux, it is usually big endian.
+   * <p><b>注意：</b>{@link ByteArrayUtils#DEFAULT_BYTE_ORDER} 指定的默认字节序是标准网络字节序，
+   * 即根据 RFC 1700 的大端序。{@link SystemUtils#NATIVE_BYTE_ORDER} 指定的本机字节序，
+   * 取决于当前操作系统。在 Windows 上通常是小端序，在 Mac 或 Linux 上通常是大端序。
    */
   public static final ByteOrder NATIVE_BYTE_ORDER = ByteOrder.nativeOrder();
 
   /**
-   * Indicates whether this platform supports unmapping mmapped files.
+   * 指示此平台是否支持取消映射内存映射文件。
    */
   public static final boolean UNMAP_MMAP_SUPPORTED;
 
@@ -757,26 +707,24 @@ public final class SystemUtils {
   private static final Logger LOGGER = LoggerFactory.getLogger(SystemUtils.class);
 
   /**
-   * Private constructor.
+   * 私有构造函数。
    */
   private SystemUtils() {}
 
   /**
-   * Gets the Java version number as a {@code float}.
+   * 获取 Java 版本号的 {@code float} 值。
    *
-   * <p>Example return values:
+   * <p>示例返回值：
    * <ul>
-   * <li>{@code 1.2f} for JDK 1.2
-   * <li>{@code 1.31f} for JDK 1.3.1
-   * <li>{@code }
+   * <li>{@code 1.2f} 表示 JDK 1.2
+   * <li>{@code 1.31f} 表示 JDK 1.3.1
    * </ul>
    *
-   * <p>Patch releases are not reported. Zero is returned if
-   * {@link #JAVA_VERSION_TRIMMED} is {@code null}.
+   * <p>不报告补丁版本。如果 {@link #JAVA_VERSION_TRIMMED} 是 {@code null}，则返回零。
    *
    * @param version
-   *     the java version string.
-   * @return the version, for example 1.31f for JDK 1.3.1
+   *     Java 版本字符串。
+   * @return 版本号，例如 JDK 1.3.1 返回 1.31f
    */
   static float getJavaVersionAsFloat(final String version) {
     String versionTrimmed = getJavaVersionTrimmed(version);
@@ -825,20 +773,19 @@ public final class SystemUtils {
   }
 
   /**
-   * Gets the Java version number as an {@code int}.
+   * 获取 Java 版本号的 {@code int} 值。
    *
-   * <p>Example return values:
+   * <p>示例返回值：
    * <ul>
-   * <li>{@code 120} for JDK 1.2
-   * <li>{@code 131} for JDK 1.3.1
+   * <li>{@code 120} 表示 JDK 1.2
+   * <li>{@code 131} 表示 JDK 1.3.1
    * </ul>
    *
-   * <p>Patch releases are not reported. Zero is returned if
-   * {@link #JAVA_VERSION_TRIMMED} is {@code null}.
+   * <p>不报告补丁版本。如果 {@link #JAVA_VERSION_TRIMMED} 是 {@code null}，则返回零。
    *
    * @param version
-   *     the Java version string.
-   * @return the version, for example 131 for JDK 1.3.1
+   *     Java 版本字符串。
+   * @return 版本号，例如 JDK 1.3.1 返回 131
    */
   static int getJavaVersionAsInt(final String version) {
     String versionTrimmed = getJavaVersionTrimmed(version);
@@ -888,11 +835,11 @@ public final class SystemUtils {
   }
 
   /**
-   * Trims the text of the java version to start with numbers.
+   * 修剪 Java 版本文本以数字开头。
    *
    * @param version
-   *     the java version string.
-   * @return the trimmed java version
+   *     Java 版本字符串。
+   * @return 修剪后的 Java 版本
    */
   private static String getJavaVersionTrimmed(final String version) {
     if (version != null) {
@@ -907,13 +854,13 @@ public final class SystemUtils {
   }
 
   /**
-   * Decides if the java version matches.
+   * 判断 Java 版本是否匹配。
    *
    * @param version
-   *     the JAVA version string.
+   *     Java 版本字符串。
    * @param versionPrefix
-   *     the prefix for the java version
-   * @return true if matches, or false if not or can't determine
+   *     Java 版本的前缀
+   * @return 如果匹配则返回 true，如果不匹配或无法确定则返回 false
    */
   static boolean getJavaVersionMatches(final String version,
       final String versionPrefix) {
@@ -925,13 +872,13 @@ public final class SystemUtils {
   }
 
   /**
-   * Decides if the operating system matches.
+   * 判断操作系统是否匹配。
    *
    * @param name
-   *     the name of the operating system
+   *     操作系统的名称
    * @param namePrefix
-   *     the prefix for the name of the operating system
-   * @return true if matches, or false if not or can't determine
+   *     操作系统名称的前缀
+   * @return 如果匹配则返回 true，如果不匹配或无法确定则返回 false
    */
   static boolean getOsMatches(final String name, final String namePrefix) {
     if (name == null) {
@@ -941,17 +888,17 @@ public final class SystemUtils {
   }
 
   /**
-   * Decides if the operating system matches.
+   * 判断操作系统是否匹配。
    *
    * @param name
-   *     the name of the operating system
+   *     操作系统的名称
    * @param version
-   *     the version of the operating system
+   *     操作系统的版本
    * @param namePrefix
-   *     the prefix for the name of the operating system
+   *     操作系统名称的前缀
    * @param versionPrefix
-   *     the prefix for the version of the operating system
-   * @return true if matches, or false if not or can't determine
+   *     操作系统版本的前缀
+   * @return 如果匹配则返回 true，如果不匹配或无法确定则返回 false
    */
   static boolean getOsMatches(final String name, final String version,
       final String namePrefix, final String versionPrefix) {
@@ -962,16 +909,13 @@ public final class SystemUtils {
   }
 
   /**
-   * Gets a System property, defaulting to {@code null} if the property cannot
-   * be read.
+   * 获取系统属性，如果无法读取属性则默认返回 {@code null}。
    *
-   * <p>If a {@code SecurityException} is caught, the return value is
-   * {@code null} and a message is written to the log.
+   * <p>如果捕获到 {@code SecurityException}，返回值为 {@code null} 并且会向日志写入一条消息。
    *
    * @param property
-   *     the system property name
-   * @return the system property value or {@code null} if no such property or a
-   *     security problem occurs.
+   *     系统属性名称
+   * @return 系统属性值，如果没有此属性或发生安全问题则返回 {@code null}
    */
   public static String getProperty(final String property) {
     try {
@@ -984,49 +928,45 @@ public final class SystemUtils {
   }
 
   /**
-   * Is the Java version at least the requested version.
+   * 判断 Java 版本是否至少达到所请求的版本。
    *
-   * <p>Example input:
+   * <p>示例输入：
    * <ul>
-   * <li>{@code 1.2f} to test for JDK 1.2</li>
-   * <li>{@code 1.31f} to test for JDK 1.3.1</li>
+   * <li>{@code 1.2f} 测试 JDK 1.2</li>
+   * <li>{@code 1.31f} 测试 JDK 1.3.1</li>
    * </ul>
    *
    * @param requiredVersion
-   *     the required version, for example 1.31f
-   * @return {@code true} if the actual version is equal or greater than the
-   *     required version
+   *     所需的版本，例如 1.31f
+   * @return 如果实际版本等于或大于所需版本则返回 {@code true}
    */
   public static boolean isJavaVersionAtLeast(final float requiredVersion) {
     return JAVA_VERSION_FLOAT >= requiredVersion;
   }
 
   /**
-   * Is the Java version at least the requested version.
+   * 判断 Java 版本是否至少达到所请求的版本。
    *
-   * <p>Example input:
+   * <p>示例输入：
    * <ul>
-   * <li>{@code 120} to test for JDK 1.2 or greater</li>
-   * <li>{@code 131} to test for JDK 1.3.1 or greater</li>
+   * <li>{@code 120} 测试 JDK 1.2 或更高版本</li>
+   * <li>{@code 131} 测试 JDK 1.3.1 或更高版本</li>
    * </ul>
    *
    * @param requiredVersion
-   *     the required version, for example 131
-   * @return {@code true} if the actual version is equal or greater than the
-   *     required version
+   *     所需的版本，例如 131
+   * @return 如果实际版本等于或大于所需版本则返回 {@code true}
    */
   public static boolean isJavaVersionAtLeast(final int requiredVersion) {
     return JAVA_VERSION_INT >= requiredVersion;
   }
 
   /**
-   * Gets the size in bytes of the default constructed object of a specified
-   * class.
+   * 获取指定类的默认构造对象的字节大小。
    *
    * @param clazz
-   *     a specified class, which must has a default constructor.
-   * @return the size in bytes of the default constructed object of the
-   *     specified class.
+   *     指定的类，必须具有默认构造函数。
+   * @return 指定类的默认构造对象的字节大小
    */
   public static long getSizeOf(final Class<?> clazz) {
     final Runtime runtime = Runtime.getRuntime();
@@ -1052,7 +992,7 @@ public final class SystemUtils {
   private static final int SIZE_OF_OBJECT_COUNT = 100;
 
   /**
-   * Try to run the garbage collection of the JVM.
+   * 尝试运行 JVM 的垃圾回收。
    */
   public static void runGC() {
     final Runtime runtime = Runtime.getRuntime();
@@ -1095,6 +1035,13 @@ public final class SystemUtils {
   private static final String CLASSPATH_STAR_PREFIX = "classpath*:";
 
 
+  /**
+   * 清理资源名称，去除 classpath: 或 classpath*: 前缀。
+   *
+   * @param resource
+   *     资源名称
+   * @return 清理后的资源名称
+   */
   private static String cleanResourceName(final String resource) {
     if (resource == null) {
       throw new NullPointerException("resource");
@@ -1109,16 +1056,13 @@ public final class SystemUtils {
   }
 
   /**
-   * Gets the URL of a specified resource.
+   * 获取指定资源的 URL。
    *
    * @param resource
-   *     the name of the specified resource. If the resource name starts with
-   *     "/", it is considered an absolute file path. If not, it is considered a
-   *     relative file path. If the resource name starts with "classpath:" or
-   *     "classpath*:", the prefix is removed and the resource is loaded from the
-   *     classpath.
-   * @return the URL of the specified resource, or {@code null} if the resource
-   *     is not found.
+   *     指定资源的名称。如果资源名称以 "/" 开头，则被视为绝对文件路径。
+   *     如果不是，则被视为相对文件路径。如果资源名称以 "classpath:" 或
+   *     "classpath*:" 开头，则去除前缀并从类路径加载资源。
+   * @return 指定资源的 URL，如果未找到资源则返回 {@code null}。
    */
   @Nullable
   public static URL getResource(final String resource) {
@@ -1142,18 +1086,15 @@ public final class SystemUtils {
   }
 
   /**
-   * Gets the URL of a specified resource associated with a given class.
+   * 获取与给定类关联的指定资源的 URL。
    *
    * @param resource
-   *     the name of the specified resource. If the resource name starts with
-   *     "/", it is considered an absolute file path. If not, it is considered a
-   *     relative file path. If the resource name starts with "classpath:" or
-   *     "classpath*:", the prefix is removed and the resource is loaded from the
-   *     classpath.
+   *     指定资源的名称。如果资源名称以 "/" 开头，则被视为绝对文件路径。
+   *     如果不是，则被视为相对文件路径。如果资源名称以 "classpath:" 或
+   *     "classpath*:" 开头，则去除前缀并从类路径加载资源。
    * @param clazz
-   *     the class to which the resource is associated with.
-   * @return the URL of the specified resource, or {@code null} if the resource
-   *     is not found.
+   *     与资源关联的类。
+   * @return 指定资源的 URL，如果未找到资源则返回 {@code null}。
    */
   @Nullable
   public static URL getResource(final String resource, final Class<?> clazz) {
@@ -1186,18 +1127,15 @@ public final class SystemUtils {
   }
 
   /**
-   * Gets the URL of a specified resource associated with a given class loader.
+   * 获取与给定类加载器关联的指定资源的 URL。
    *
    * @param resource
-   *     the name of the specified resource. If the resource name starts with
-   *     "/", it is considered an absolute file path. If not, it is considered a
-   *     relative file path. If the resource name starts with "classpath:" or
-   *     "classpath*:", the prefix is removed and the resource is loaded from the
-   *     classpath.
+   *     指定资源的名称。如果资源名称以 "/" 开头，则被视为绝对文件路径。
+   *     如果不是，则被视为相对文件路径。如果资源名称以 "classpath:" 或
+   *     "classpath*:" 开头，则去除前缀并从类路径加载资源。
    * @param loader
-   *     the class loader to which the resource is associated with.
-   * @return the URL of the specified resource, or {@code null} if the resource
-   *     is not found.
+   *     与资源关联的类加载器。
+   * @return 指定资源的 URL，如果未找到资源则返回 {@code null}。
    */
   @Nullable
   public static URL getResource(final String resource,
@@ -1224,17 +1162,15 @@ public final class SystemUtils {
   }
 
   /**
-   * Gets the URL of a specified resource.
+   * 获取指定资源的 URL。
    *
    * @param resource
-   *     the name of the specified resource. If the resource name starts with
-   *     "/", it is considered an absolute file path. If not, it is considered a
-   *     relative file path. If the resource name starts with "classpath:" or
-   *     "classpath*:", the prefix is removed and the resource is loaded from the
-   *     classpath.
-   * @return the URL of the specified resource.
+   *     指定资源的名称。如果资源名称以 "/" 开头，则被视为绝对文件路径。
+   *     如果不是，则被视为相对文件路径。如果资源名称以 "classpath:" 或
+   *     "classpath*:" 开头，则去除前缀并从类路径加载资源。
+   * @return 指定资源的 URL。
    * @throws ConfigurationError
-   *     If the resource is not found.
+   *     如果未找到资源。
    */
   public static URL getResourceElseThrow(final String resource)
       throws ConfigurationError {
@@ -1246,19 +1182,17 @@ public final class SystemUtils {
   }
 
   /**
-   * Gets the URL of a specified resource associated with a given class.
+   * 获取与给定类关联的指定资源的 URL。
    *
    * @param resource
-   *     the name of the specified resource. If the resource name starts with
-   *     "/", it is considered an absolute file path. If not, it is considered a
-   *     relative file path. If the resource name starts with "classpath:" or
-   *     "classpath*:", the prefix is removed and the resource is loaded from the
-   *     classpath.
+   *     指定资源的名称。如果资源名称以 "/" 开头，则被视为绝对文件路径。
+   *     如果不是，则被视为相对文件路径。如果资源名称以 "classpath:" 或
+   *     "classpath*:" 开头，则去除前缀并从类路径加载资源。
    * @param clazz
-   *     the class to which the resource is associated with.
-   * @return the URL of the specified resource.
+   *     与资源关联的类。
+   * @return 指定资源的 URL。
    * @throws ConfigurationError
-   *     If the resource is not found.
+   *     如果未找到资源。
    */
   public static URL getResourceElseThrow(final String resource, final Class<?> clazz)
       throws ConfigurationError {
@@ -1270,19 +1204,17 @@ public final class SystemUtils {
   }
 
   /**
-   * Gets the URL of a specified resource associated with a given class loader.
+   * 获取与给定类加载器关联的指定资源的 URL。
    *
    * @param resource
-   *     the name of the specified resource. If the resource name starts with
-   *     "/", it is considered an absolute file path. If not, it is considered a
-   *     relative file path. If the resource name starts with "classpath:" or
-   *     "classpath*:", the prefix is removed and the resource is loaded from the
-   *     classpath.
+   *     指定资源的名称。如果资源名称以 "/" 开头，则被视为绝对文件路径。
+   *     如果不是，则被视为相对文件路径。如果资源名称以 "classpath:" 或
+   *     "classpath*:" 开头，则去除前缀并从类路径加载资源。
    * @param loader
-   *     the class loader to which the resource is associated with.
-   * @return the URL of the specified resource.
+   *     与资源关联的类加载器。
+   * @return 指定资源的 URL。
    * @throws ConfigurationError
-   *     If the resource is not found.
+   *     如果未找到资源。
    */
   public static URL getResourceElseThrow(final String resource, final ClassLoader loader)
       throws ConfigurationError {
@@ -1296,9 +1228,9 @@ public final class SystemUtils {
   private static final int STACK_DEPTH = 20;
 
   /**
-   * Dump all of the thread's information and stack traces.
+   * 转储所有线程的信息和堆栈跟踪。
    *
-   * @return the thread's information and stack traces as a string.
+   * @return 线程信息和堆栈跟踪的字符串表示。
    */
   public static String getThreadInfo() {
     final StringBuilder builder = new StringBuilder();
@@ -1345,43 +1277,45 @@ public final class SystemUtils {
   }
 
   /**
-   * Gets a lazy initialized globally {@link SecureRandom} object.
+   * 获取一个延迟初始化的全局 {@link SecureRandom} 对象。
    *
-   * @return a lazy initialized globally {@link SecureRandom} object.
+   * @return 一个延迟初始化的全局 {@link SecureRandom} 对象。
    */
   public static SecureRandom getSecureRandom() {
     return LazySecureRandom.random;
   }
 
-  // lazy initialization of SecureRandom
+  /**
+   * SecureRandom 的延迟初始化持有者类。
+   */
   private static class LazySecureRandom {
     static final SecureRandom random = new SecureRandom();
   }
 
   /**
-   * Gets a lazy initialized globally {@link Random} object.
+   * 获取一个延迟初始化的全局 {@link Random} 对象。
    *
-   * @return a lazy initialized globally {@link Random} object.
+   * @return 一个延迟初始化的全局 {@link Random} 对象。
    */
   public static Random getRandom() {
     return LazyRandom.random;
   }
 
-  // lazy initialization of Random
+  /**
+   * Random 的延迟初始化持有者类。
+   */
   private static class LazyRandom {
     static final Random random = new Random();
   }
 
   /**
-   * Generates a random name with the specified prefix and suffix.
+   * 生成带有指定前缀和后缀的随机名称。
    *
    * @param prefix
-   *     a specified prefix, which could not be null but can be an empty
-   *     string.
+   *     指定的前缀，不能为 null 但可以是空字符串。
    * @param suffix
-   *     a specified suffix, which could not be null but can be an empty
-   *     string.
-   * @return a randomly generated temporary name.
+   *     指定的后缀，不能为 null 但可以是空字符串。
+   * @return 随机生成的临时名称。
    */
   public static String generateRandomName(final String prefix,
           final String suffix) {
@@ -1395,18 +1329,14 @@ public final class SystemUtils {
   }
 
   /**
-   * Return the default ClassLoader to use: typically the thread context
-   * ClassLoader, if available; the ClassLoader that loaded the
-   * {@link SystemUtils} class will be used as fallback.
+   * 返回要使用的默认 ClassLoader：通常是线程上下文 ClassLoader（如果可用）；
+   * 加载 {@link SystemUtils} 类的 ClassLoader 将用作备用。
    * <p>
-   * Call this method if you intend to use the thread context ClassLoader in a
-   * scenario where you clearly prefer a non-null ClassLoader reference: for
-   * example, for class path resource loading (but not necessarily for
-   * {@code Class.forName}, which accepts a {@code null} ClassLoader reference
-   * as well).
+   * 如果您打算在明确希望非 null ClassLoader 引用的场景中使用线程上下文 ClassLoader，
+   * 请调用此方法：例如，用于类路径资源加载（但不一定用于 {@code Class.forName}，
+   * 它也接受 {@code null} ClassLoader 引用）。
    *
-   * @return the default ClassLoader (only {@code null} if even the system
-   *     ClassLoader isn't accessible)
+   * @return 默认的 ClassLoader（只有在连系统 ClassLoader 都无法访问时才为 {@code null}）
    * @see Thread#getContextClassLoader()
    * @see ClassLoader#getSystemClassLoader()
    */
@@ -1434,22 +1364,21 @@ public final class SystemUtils {
   }
 
   /**
-   * Load instances from a specified resource.
+   * 从指定资源加载实例。
    * <p>
-   * The resource file is a text file contains a list of full qualified class
-   * names, each class name is in a separate line. This function will load the
-   * classes and create instances of them.
+   * 资源文件是一个文本文件，包含完全限定类名的列表，每个类名在单独的行中。
+   * 此函数将加载这些类并创建它们的实例。
    *
    * @param <T>
-   *     the type of the class of the instances to be loaded.
+   *     要加载的实例的类的类型。
    * @param cls
-   *     the class of the instances.
+   *     实例的类。
    * @param resource
-   *     the path of the specified resources.
+   *     指定资源的路径。
    * @param loader
-   *     the class loader.
+   *     类加载器。
    * @return
-   *     a list of instances loaded from the specified resource.
+   *     从指定资源加载的实例列表。
    */
   public static <T> List<T> loadInstance(final Class<T> cls,
       final String resource, final ClassLoader loader)
