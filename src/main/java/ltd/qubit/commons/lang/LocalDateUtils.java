@@ -16,30 +16,61 @@ import ltd.qubit.commons.util.codec.IsoLocalDateCodec;
 import ltd.qubit.commons.util.codec.LocalDateCodec;
 
 /**
- * This class provides operations on {@link LocalDate} objects.
+ * 此类提供对{@link LocalDate}对象的操作。
  * <p>
- * This class tries to handle {@code null} input gracefully. An exception
- * will not be thrown for a {@code null} input. Each method documents its
- * behavior in more detail.
+ * 此类尝试优雅地处理{@code null}输入。对于{@code null}输入不会抛出异常。
+ * 每个方法都会详细记录其行为。
  * </p>
  * <p>
- * This class also handle the conversion from {@link LocalDate} objects to common
- * types.
+ * 此类还处理从{@link LocalDate}对象到常见类型的转换。
  * </p>
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class LocalDateUtils {
 
+  /**
+   * 将{@link LocalDate}值转换为字符串表示。
+   * <p>
+   * 使用ISO日期格式进行转换。
+   * </p>
+   *
+   * @param value
+   *     要转换的{@link LocalDate}值，可以为{@code null}。
+   * @return
+   *     转换后的字符串表示；如果输入为{@code null}，则返回{@code null}。
+   */
   public static String toString(@Nullable final LocalDate value) {
     return toString(value, null, IsoLocalDateCodec.DEFAULT_ENCODE_PATTERN);
   }
 
+  /**
+   * 使用指定的模式将{@link LocalDate}值转换为字符串表示。
+   *
+   * @param value
+   *     要转换的{@link LocalDate}值，可以为{@code null}。
+   * @param pattern
+   *     日期格式模式。
+   * @return
+   *     转换后的字符串表示；如果输入为{@code null}，则返回{@code null}。
+   */
   public static String toString(@Nullable final LocalDate value,
       final String pattern) {
     return toString(value, null, pattern);
   }
 
+  /**
+   * 使用指定的模式将{@link LocalDate}值转换为字符串表示，当值为{@code null}时返回默认值。
+   *
+   * @param value
+   *     要转换的{@link LocalDate}值，可以为{@code null}。
+   * @param defaultValue
+   *     当{@code value}为{@code null}时返回的默认值，可以为{@code null}。
+   * @param pattern
+   *     日期格式模式。
+   * @return
+   *     转换后的字符串表示；如果输入为{@code null}，则返回{@code defaultValue}。
+   */
   public static String toString(@Nullable final LocalDate value,
       @Nullable final String defaultValue, final String pattern) {
     if (value == null) {
@@ -49,10 +80,30 @@ public class LocalDateUtils {
     return codec.encode(value);
   }
 
+  /**
+   * 获取{@link LocalDate}值对应的类型。
+   *
+   * @param value
+   *     {@link LocalDate}值，可以为{@code null}。
+   * @return
+   *     如果{@code value}不为{@code null}，返回{@link LocalDate}.class；
+   *     否则返回{@code null}。
+   */
   public static Class<?> toClass(@Nullable final LocalDate value) {
     return (value == null ? null : LocalDate.class);
   }
 
+  /**
+   * 获取{@link LocalDate}值对应的类型，当值为{@code null}时返回默认类型。
+   *
+   * @param value
+   *     {@link LocalDate}值，可以为{@code null}。
+   * @param defaultValue
+   *     当{@code value}为{@code null}时返回的默认类型，可以为{@code null}。
+   * @return
+   *     如果{@code value}不为{@code null}，返回{@link LocalDate}.class；
+   *     否则返回{@code defaultValue}。
+   */
   public static Class<?> toClass(@Nullable final LocalDate value,
       @Nullable final Class<?> defaultValue) {
     return (value == null ? defaultValue : LocalDate.class);
@@ -72,6 +123,23 @@ public class LocalDateUtils {
         || (type == java.sql.Date.class);
   }
 
+  /**
+   * 将指定的对象转换为{@link LocalDate}值。
+   * <p>
+   * 支持以下类型的转换：
+   * </p>
+   * <ul>
+   * <li>{@link LocalDate} - 直接返回</li>
+   * <li>{@link java.sql.Date} - 转换为{@link LocalDate}</li>
+   * </ul>
+   *
+   * @param value
+   *     要转换的对象，可以为{@code null}。
+   * @return
+   *     转换后的{@link LocalDate}值；如果输入为{@code null}，则返回{@code null}。
+   * @throws IllegalArgumentException
+   *     如果对象不是可转换为{@link LocalDate}的类型。
+   */
   public static LocalDate toLocalDate(@Nullable final Object value) {
     if (value == null) {
       return null;

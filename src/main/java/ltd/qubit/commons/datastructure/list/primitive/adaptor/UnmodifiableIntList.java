@@ -265,10 +265,7 @@ public final class UnmodifiableIntList extends AbstractIntCollection
   }
 
   /**
-   * 不支持此操作。
-   *
-   * @throws UnmodifiableIntListIterator
-   *     总是抛出。
+   * {@inheritDoc}
    */
   @Override
   public IntList subList(final int fromIndex, final int toIndex) {

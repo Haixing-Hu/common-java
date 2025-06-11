@@ -13,79 +13,78 @@ import java.util.LinkedList;
 import javax.annotation.Nullable;
 
 /**
- * This class defines the approximate size in bytes of common data types.
+ * 本类定义了常见数据类型的近似字节大小。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class Size {
 
   /**
-   * The size in bytes of a {@code boolean} variable in this JVM.
+   * 在此JVM中{@code boolean}变量的字节大小。
    */
   public static final long BOOL = 1L;
 
   /**
-   * The size in bytes of a {@code char} variable in this JVM.
+   * 在此JVM中{@code char}变量的字节大小。
    */
   public static final long CHAR = Character.BYTES;
 
   /**
-   * The size in bytes of a {@code byte} variable in this JVM.
+   * 在此JVM中{@code byte}变量的字节大小。
    */
   public static final long BYTE = Byte.BYTES;
 
   /**
-   * The size in bytes of a {@code short} variable in this JVM.
+   * 在此JVM中{@code short}变量的字节大小。
    */
   public static final long SHORT = Short.BYTES;
 
   /**
-   * The size in bytes of a {@code int} variable in this JVM.
+   * 在此JVM中{@code int}变量的字节大小。
    */
   public static final long INT = Integer.BYTES;
 
   /**
-   * The size in bytes of a {@code long} variable in this JVM.
+   * 在此JVM中{@code long}变量的字节大小。
    */
   public static final long LONG = Long.BYTES;
 
   /**
-   * The size in bytes of a {@code float} variable in this JVM.
+   * 在此JVM中{@code float}变量的字节大小。
    */
   public static final long FLOAT = Float.BYTES;
 
   /**
-   * The size in bytes of a {@code double} variable in this JVM.
+   * 在此JVM中{@code double}变量的字节大小。
    */
   public static final long DOUBLE = Double.BYTES;
 
   /**
-   * The size in bytes of an object reference variable in this JVM.
+   * 在此JVM中对象引用变量的字节大小。
    */
   public static final long REFERENCE = (SystemUtils.IS_JAVA_64BIT ? Long.BYTES : Integer.BYTES);
 
   /**
-   * The size in bytes of a {@code Date} variable in this JVM.
+   * 在此JVM中{@code Date}变量的字节大小。
    */
   public static final long DATE = Long.BYTES;
 
   /**
-   * The size in bytes of a entry object of the {@link LinkedList} class.
+   * {@link LinkedList}类的条目对象的字节大小。
    */
   public static final long LINKED_LIST_ENTRY = 3 * REFERENCE;
 
   /**
-   * The size in bytes of an empty {@link LinkedList} object.
+   * 空{@link LinkedList}对象的字节大小。
    */
   public static final long LINKED_LIST = REFERENCE + 2 * INT + LINKED_LIST_ENTRY;
 
   /**
-   * Gets the size in bytes of a {@code String} object.
+   * 获取{@code String}对象的字节大小。
    *
    * @param str
-   *     a reference to a {@code String} object, which could be null.
-   * @return the size in bytes of the specified {@code String} object; or 0 if
-   *     the reference is {@code null}.
+   *     指向{@code String}对象的引用，可以为null。
+   * @return 指定的{@code String}对象的字节大小；如果引用为{@code null}则返回0。
    */
   public static long of(@Nullable final String str) {
     return (str == null ? 0 : str.length() * CHAR);

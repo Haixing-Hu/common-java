@@ -36,7 +36,7 @@ import static ltd.qubit.commons.lang.ArrayUtils.createArrayOfSameElementType;
  *
  * <p>Instances of {@link RandomEx} are thread-safe.</p>
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public class RandomEx extends Random {

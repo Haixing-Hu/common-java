@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * 简单的 {@link Resource} 实现，持有资源描述但不指向实际可读的资源。

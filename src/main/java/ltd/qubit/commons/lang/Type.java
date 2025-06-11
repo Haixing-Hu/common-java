@@ -28,9 +28,9 @@ import ltd.qubit.commons.util.codec.LocalDateTimeCodec;
 import ltd.qubit.commons.util.codec.TimestampCodec;
 
 /**
- * The enumeration of common data types.
+ * 常见数据类型的枚举。
  *
- * <p>Currently this enumeration supports the following types:
+ * <p>目前此枚举支持以下类型：
  *
  * <ul>
  * <li>{@code bool}</li>
@@ -52,7 +52,7 @@ import ltd.qubit.commons.util.codec.TimestampCodec;
  * <li>{@link BigDecimal}</li>
  * </ul>
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public enum Type {
   BOOL,
@@ -135,6 +135,13 @@ public enum Type {
     TYPE_CLASS_MAP.put(ENUM_ARRAY, new ClassKey(Enum[].class));
   }
 
+  /**
+   * 根据类获取对应的类型。
+   *
+   * @param clazz
+   *     要获取类型的类。
+   * @return 对应的类型，如果不支持该类则返回{@code null}。
+   */
   @Nullable
   public static Type forClass(final Class<?> clazz) {
     if (clazz.isEnum()) {
@@ -146,6 +153,13 @@ public enum Type {
     return CLASS_TYPE_MAP.get(new ClassKey(clazz));
   }
 
+  /**
+   * 将类型转换为对应的类。
+   *
+   * @param type
+   *     要转换的类型。
+   * @return 对应的类，如果不支持该类型则返回{@code null}。
+   */
   @Nullable
   public static Class<?> toClass(final Type type) {
     final ClassKey result = TYPE_CLASS_MAP.get(type);
@@ -153,12 +167,12 @@ public enum Type {
   }
 
   /**
-   * Parses a text to an object of this type.
+   * 将文本解析为此类型的对象。
    *
    * @param text
-   *     the text to be parsed, which must be trimmed if necessary.
+   *     要解析的文本，必须已经过必要的修剪。
    * @return
-   *     the parsed object.
+   *     解析后的对象。
    */
   public Object parse(final String text) {
     switch (this) {
@@ -211,14 +225,14 @@ public enum Type {
 
 
   /**
-   * Parses a text to an object of this type.
+   * 将文本解析为指定类型的对象。
    *
    * @param cls
-   *     the class of the object to be parsed.
+   *     要解析对象的类。
    * @param text
-   *     the text to be parsed, which must be trimmed if necessary.
+   *     要解析的文本，必须已经过必要的修剪。
    * @return
-   *     the parsed object.
+   *     解析后的对象。
    */
   public static Object parse(final Class<?> cls, final String text) {
     final Type type = forClass(cls);
@@ -251,6 +265,14 @@ public enum Type {
     return result;
   }
 
+  /**
+   * 将值格式化为字符串。
+   *
+   * @param value
+   *     要格式化的值。
+   * @return
+   *     格式化后的字符串。
+   */
   public String format(final Object value) {
     switch (this) {
       case BOOL:

@@ -12,9 +12,9 @@ import javax.annotation.concurrent.ThreadSafe;
 
 
 /**
- * A class providing functions for bit manipulation of {@code long}.
+ * 提供对 {@code long} 类型进行位操作功能的工具类。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public final class LongBit {

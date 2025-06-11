@@ -15,11 +15,11 @@ import javax.annotation.concurrent.ThreadSafe;
 import ltd.qubit.commons.error.NullArgumentException;
 
 /**
- * This class provides the selection related algorithms.
+ * 此类提供选择相关的算法。
  *
- * <p>TODO: 1. add the select median functions; 2. finish the unit tests.
+ * <p>TODO: 1. 添加选择中位数的函数；2. 完善单元测试。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public final class Selection {
@@ -28,16 +28,16 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of two {@code boolean} values.
+   * 返回两个{@code boolean}值中的最小值。
    *
-   * <p>Assume {@code true &gt; false} for {@code boolean} values.
+   * <p>对于{@code boolean}值，假设{@code true > false}。
    *
    * @param value1
-   *     a {@code boolean} value;
+   *     一个{@code boolean}值；
    * @param value2
-   *     a {@code boolean} value;
-   * @return the minimum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the smallest position.
+   *     一个{@code boolean}值；
+   * @return {@code value1}和{@code value2}的最小值。在相等的情况下，
+   *     返回位置最小的那个。
    */
   public static boolean min(final boolean value1, final boolean value2) {
     if (!value1) {
@@ -48,7 +48,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of three {@code boolean} values.
+   * 返回三个 {@code boolean} values.
    *
    * <p>Assume {@code true &gt; false} for {@code boolean} values.
    *
@@ -71,7 +71,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum value in a {@code boolean} array.
+   * 返回 {@code boolean} array.
    *
    * <p>Assume {@code true &gt; false} for {@code boolean} values.
    *
@@ -95,7 +95,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of two {@code Boolean} objects.
+   * 返回两个 {@code Boolean} objects.
    *
    * <p>Assume {@code Boolean.TRUE &gt; Boolean.FALSE &gt; null} for {@code
    * Boolean} objects.
@@ -127,7 +127,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of three {@code Boolean} objects.
+   * 返回三个 {@code Boolean} objects.
    *
    * <p>Assume {@code Boolean.TRUE &gt; Boolean.FALSE &gt; null} for {@code
    * Boolean} objects.
@@ -165,7 +165,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum object in a {@code Boolean} array.
+   * 返回 {@code Boolean} array.
    *
    * <p>Assume that {@code Boolean.TRUE &gt; Boolean.FALSE &gt; null} for {@code
    * Boolean} objects.
@@ -201,7 +201,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of two {@code char} values.
+   * 返回两个 {@code char} values.
    *
    * @param value1
    *     a {@code char} value;
@@ -215,16 +215,16 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of three {@code char} values.
+   * 返回三个{@code char}值中的最小值。
    *
    * @param value1
-   *     a {@code char} value;
+   *     一个{@code char}值；
    * @param value2
-   *     a {@code char} value;
+   *     一个{@code char}值；
    * @param value3
-   *     a {@code char} value;
-   * @return the minimum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the smallest position.
+   *     一个{@code char}值；
+   * @return {@code value1}、{@code value2}和{@code value3}的最小值。
+   *     在相等的情况下，返回位置最小的那个。
    */
   public static char min(final char value1, final char value2,
       final char value3) {
@@ -242,7 +242,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum value in a {@code char} array.
+   * 返回 {@code char} array.
    *
    * @param array
    *     a {@code char} array, must not be {@code null} nor empty.
@@ -266,7 +266,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of two {@code Character} objects.
+   * 返回两个 {@code Character} objects.
    *
    * <p>Assume that null is the minimum value of {@code Character} objects.
    *
@@ -289,7 +289,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of three {@code Character} objects.
+   * 返回三个 {@code Character} objects.
    *
    * <p>Assume that null is the minimum value of {@code Character} objects.
    *
@@ -326,7 +326,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum object in a {@code Character} array.
+   * 返回 {@code Character} array.
    *
    * <p>Assume that null is the minimum value of {@code Character} objects.
    *
@@ -362,7 +362,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of two {@code byte} values.
+   * 返回两个 {@code byte} values.
    *
    * @param value1
    *     a {@code byte} value;
@@ -376,7 +376,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of three {@code byte} values.
+   * 返回三个 {@code byte} values.
    *
    * @param value1
    *     a {@code byte} value;
@@ -403,7 +403,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum value in a {@code byte} array.
+   * 返回 {@code byte} array.
    *
    * @param array
    *     a {@code byte} array, must not be {@code null} nor empty.
@@ -427,7 +427,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of two {@code Byte} objects.
+   * 返回两个 {@code Byte} objects.
    *
    * <p>Assume that null is the minimum value of {@code Byte} objects.
    *
@@ -450,7 +450,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of three {@code Byte} objects.
+   * 返回三个 {@code Byte} objects.
    *
    * <p>Assume that null is the minimum value of {@code Byte} objects.
    *
@@ -487,7 +487,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum object in a {@code Byte} array.
+   * 返回 {@code Byte} array.
    *
    * <p>Assume that null is the minimum value of {@code Byte} objects.
    *
@@ -523,7 +523,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of two {@code short} values.
+   * 返回两个 {@code short} values.
    *
    * @param value1
    *     a {@code short} value;
@@ -537,7 +537,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of three {@code short} values.
+   * 返回三个 {@code short} values.
    *
    * @param value1
    *     a {@code short} value;
@@ -564,7 +564,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum value in a {@code short} array.
+   * 返回 {@code short} array.
    *
    * @param array
    *     a {@code short} array, must not be {@code null} nor empty.
@@ -588,7 +588,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of two {@code Short} objects.
+   * 返回两个 {@code Short} objects.
    *
    * <p>Assume that null is the minimum value of {@code Short} objects.
    *
@@ -611,7 +611,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of three {@code Short} objects.
+   * 返回三个 {@code Short} objects.
    *
    * <p>Assume that null is the minimum value of {@code Short} objects.
    *
@@ -648,7 +648,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum object in a {@code Short} array.
+   * 返回 {@code Short} array.
    *
    * <p>Assume that null is the minimum value of {@code Short} objects.
    *
@@ -684,7 +684,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of two {@code int} values.
+   * 返回两个 {@code int} values.
    *
    * @param value1
    *     a {@code int} value;
@@ -698,7 +698,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of three {@code int} values.
+   * 返回三个 {@code int} values.
    *
    * @param value1
    *     a {@code int} value;
@@ -724,7 +724,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum value in a {@code int} array.
+   * 返回 {@code int} array.
    *
    * @param array
    *     a {@code int} array, must not be {@code null} nor empty.
@@ -748,7 +748,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of two {@code Integer} objects.
+   * 返回两个 {@code Integer} objects.
    *
    * <p>Assume that null is the minimum value of {@code Integer} objects.
    *
@@ -771,7 +771,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of three {@code Integer} objects.
+   * 返回三个 {@code Integer} objects.
    *
    * <P>Assume that null is the minimum value of {@code Integer} objects.
    *
@@ -808,7 +808,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum object in a {@code Integer} array.
+   * 返回 {@code Integer} array.
    *
    * <P>Assume that null is the minimum value of {@code Integer} objects.
    *
@@ -844,7 +844,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of two {@code long} values.
+   * 返回两个 {@code long} values.
    *
    * @param value1
    *     a {@code long} value;
@@ -858,7 +858,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of three {@code long} values.
+   * 返回三个 {@code long} values.
    *
    * @param value1
    *     a {@code long} value;
@@ -885,7 +885,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum value in a {@code long} array.
+   * 返回 {@code long} array.
    *
    * @param array
    *     a {@code long} array, must not be {@code null} nor empty.
@@ -909,7 +909,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of two {@code Long} objects.
+   * 返回两个 {@code Long} objects.
    *
    * <P>Assume that null is the minimum value of {@code Long} objects.
    *
@@ -932,7 +932,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of three {@code Long} objects.
+   * 返回三个 {@code Long} objects.
    *
    * <P>Assume that null is the minimum value of {@code Long} objects.
    *
@@ -969,7 +969,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum object in a {@code Long} array.
+   * 返回 {@code Long} array.
    *
    * <P>Assume that null is the minimum value of {@code Long} objects.
    *
@@ -1005,7 +1005,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of two {@code float} values.
+   * 返回两个 {@code float} values.
    *
    * @param value1
    *     a {@code float} value;
@@ -1023,7 +1023,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of three {@code float} values.
+   * 返回三个 {@code float} values.
    *
    * @param value1
    *     a {@code float} value;
@@ -1050,7 +1050,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum value in a {@code float} array.
+   * 返回 {@code float} array.
    *
    * @param array
    *     a {@code float} array, must not be {@code null} nor empty.
@@ -1074,7 +1074,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of two {@code Float} objects.
+   * 返回两个 {@code Float} objects.
    *
    * <P>Assume that null is the minimum value of {@code Float} objects.
    *
@@ -1100,7 +1100,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of three {@code Float} objects.
+   * 返回三个 {@code Float} objects.
    *
    * <P>Assume that null is the minimum value of {@code Float} objects.
    *
@@ -1137,7 +1137,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum object in a {@code Float} array.
+   * 返回 {@code Float} array.
    *
    * <P>Assume that null is the minimum value of {@code Float} objects.
    *
@@ -1173,7 +1173,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of two {@code double} values.
+   * 返回两个 {@code double} values.
    *
    * @param value1
    *     a {@code double} value;
@@ -1191,7 +1191,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of three {@code double} values.
+   * 返回三个 {@code double} values.
    *
    * @param value1
    *     a {@code double} value;
@@ -1218,7 +1218,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum value in a {@code double} array.
+   * 返回 {@code double} array.
    *
    * @param array
    *     a {@code double} array, must not be {@code null} nor empty.
@@ -1242,7 +1242,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of two {@code Double} objects.
+   * 返回两个 {@code Double} objects.
    *
    * <P>Assume that null is the minimum value of {@code Double} objects.
    *
@@ -1268,7 +1268,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of three {@code Double} objects.
+   * 返回三个 {@code Double} objects.
    *
    * <P>Assume that null is the minimum value of {@code Double} objects.
    *
@@ -1305,7 +1305,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum object in a {@code Double} array.
+   * 返回 {@code Double} array.
    *
    * <P>Assume that null is the minimum value of {@code Double} objects.
    *
@@ -1341,7 +1341,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of two {@code String} objects.
+   * 返回两个 {@code String} objects.
    *
    * <P>Assume that {@code null} is the minimum value of {@code String} objects.
    *
@@ -1363,7 +1363,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of three {@code String} objects.
+   * 返回三个 {@code String} objects.
    *
    * <P>Assume that {@code null} is the minimum value of {@code String} objects.
    *
@@ -1395,7 +1395,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum object in a {@code String} array.
+   * 返回 {@code String} array.
    *
    * <P>Assume that null is the minimum value of {@code String} objects.
    *
@@ -1426,7 +1426,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of two {@code Comparable} objects.
+   * 返回两个 {@code Comparable} objects.
    *
    * <P>Assume that {@code null} is the minimum value.
    *
@@ -1449,7 +1449,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum of three {@code Comparable} objects.
+   * 返回三个 {@code Comparable} objects.
    *
    * <P>Assume that {@code null} is the minimum value.
    *
@@ -1480,7 +1480,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum object in a {@code Comparable} array.
+   * 返回 {@code Comparable} array.
    *
    * <P>Assume that null is the minimum value .
    *
@@ -1515,7 +1515,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the minimum object in a {@code Comparable} {@code Iterable}
+   * 返回 {@code Comparable} {@code Iterable}
    * object.
    *
    * <P>Assume that null is the minimum value.
@@ -1557,7 +1557,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of two {@code boolean} values.
+   * 返回两个 {@code boolean} values.
    *
    * <P>Assume {@code true &gt; false} for {@code boolean} values.
    *
@@ -1577,7 +1577,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of three {@code boolean} values.
+   * 返回三个 {@code boolean} values.
    *
    * <P>Assume {@code true &gt; false} for {@code boolean} values.
    *
@@ -1600,7 +1600,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum value in a {@code boolean} array.
+   * 返回 {@code boolean} array.
    *
    * <P>Assume {@code true &gt; false} for {@code boolean} values.
    *
@@ -1624,7 +1624,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of two {@code Boolean} objects.
+   * 返回两个 {@code Boolean} objects.
    *
    * <P>Assume {@code Boolean.TRUE &gt;Boolean.FALSE &gt; null} for {@code Boolean}
    * objects.
@@ -1654,7 +1654,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of three {@code Boolean} objects.
+   * 返回三个 {@code Boolean} objects.
    *
    * <P>Assume {@code Boolean.TRUE &gt; Boolean.FALSE &gt; null} for {@code
    * Boolean} objects.
@@ -1698,7 +1698,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum object in a {@code Boolean} array.
+   * 返回 {@code Boolean} array.
    *
    * <P>Assume that {@code Boolean.TRUE &gt; Boolean.FALSE &gt; null} for {@code
    * Boolean} objects.
@@ -1739,7 +1739,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of two {@code char} values.
+   * 返回两个 {@code char} values.
    *
    * @param value1
    *     a {@code char} value;
@@ -1753,7 +1753,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of three {@code char} values.
+   * 返回三个 {@code char} values.
    *
    * @param value1
    *     a {@code char} value;
@@ -1780,7 +1780,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum value in a {@code char} array.
+   * 返回 {@code char} array.
    *
    * @param array
    *     a {@code char} array, must not be {@code null} nor empty.
@@ -1805,7 +1805,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of two {@code Character} objects.
+   * 返回两个 {@code Character} objects.
    *
    * <P>Assume that null is the minimum value of {@code Character} objects.
    *
@@ -1830,7 +1830,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of three {@code Character} objects.
+   * 返回三个 {@code Character} objects.
    *
    * <P>Assume that null is the minimum value of {@code Character} objects.
    *
@@ -1872,7 +1872,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum object in a {@code Character} array.
+   * 返回 {@code Character} array.
    *
    * <P>Assume that null is the minimum value of {@code Character} objects.
    *
@@ -1914,7 +1914,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of two {@code byte} values.
+   * 返回两个 {@code byte} values.
    *
    * @param value1
    *     a {@code byte} value;
@@ -1928,7 +1928,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of three {@code byte} values.
+   * 返回三个 {@code byte} values.
    *
    * @param value1
    *     a {@code byte} value;
@@ -1955,7 +1955,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum value in a {@code byte} array.
+   * 返回 {@code byte} array.
    *
    * @param array
    *     a {@code byte} array, must not be {@code null} nor empty.
@@ -1980,7 +1980,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of two {@code Byte} objects.
+   * 返回两个 {@code Byte} objects.
    *
    * <P>Assume that null is the maximum value of {@code Byte} objects.
    *
@@ -2005,7 +2005,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of three {@code Byte} objects.
+   * 返回三个 {@code Byte} objects.
    *
    * <P>Assume that null is the maximum value of {@code Byte} objects.
    *
@@ -2047,7 +2047,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum object in a {@code Byte} array.
+   * 返回 {@code Byte} array.
    *
    * <P>Assume that null is the maximum value of {@code Byte} objects.
    *
@@ -2089,7 +2089,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of two {@code short} values.
+   * 返回两个 {@code short} values.
    *
    * @param value1
    *     a {@code short} value;
@@ -2103,7 +2103,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of three {@code short} values.
+   * 返回三个 {@code short} values.
    *
    * @param value1
    *     a {@code short} value;
@@ -2130,7 +2130,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum value in a {@code short} array.
+   * 返回 {@code short} array.
    *
    * @param array
    *     a {@code short} array, must not be {@code null} nor empty.
@@ -2155,7 +2155,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of two {@code Short} objects.
+   * 返回两个 {@code Short} objects.
    *
    * <P>Assume that null is the maximum value of {@code Short} objects.
    *
@@ -2180,7 +2180,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of three {@code Short} objects.
+   * 返回三个 {@code Short} objects.
    *
    * <P>Assume that null is the maximum value of {@code Short} objects.
    *
@@ -2222,7 +2222,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum object in a {@code Short} array.
+   * 返回 {@code Short} array.
    *
    * <P>Assume that null is the maximum value of {@code Short} objects.
    *
@@ -2264,7 +2264,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of two {@code int} values.
+   * 返回两个 {@code int} values.
    *
    * @param value1
    *     a {@code int} value;
@@ -2278,7 +2278,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of three {@code int} values.
+   * 返回三个 {@code int} values.
    *
    * @param value1
    *     a {@code int} value;
@@ -2304,7 +2304,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum value in a {@code int} array.
+   * 返回 {@code int} array.
    *
    * @param array
    *     a {@code int} array, must not be {@code null} nor empty.
@@ -2329,7 +2329,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of two {@code Integer} objects.
+   * 返回两个 {@code Integer} objects.
    *
    * <P>Assume that null is the maximum value of {@code Integer} objects.
    *
@@ -2354,7 +2354,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of three {@code Integer} objects.
+   * 返回三个 {@code Integer} objects.
    *
    * <P>Assume that null is the maximum value of {@code Integer} objects.
    *
@@ -2396,7 +2396,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum object in a {@code Integer} array.
+   * 返回 {@code Integer} array.
    *
    * <P>Assume that null is the maximum value of {@code Integer} objects.
    *
@@ -2438,7 +2438,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of two {@code long} values.
+   * 返回两个 {@code long} values.
    *
    * @param value1
    *     a {@code long} value;
@@ -2452,7 +2452,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of three {@code long} values.
+   * 返回三个 {@code long} values.
    *
    * @param value1
    *     a {@code long} value;
@@ -2479,7 +2479,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum value in a {@code long} array.
+   * 返回 {@code long} array.
    *
    * @param array
    *     a {@code long} array, must not be {@code null} nor empty.
@@ -2504,7 +2504,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of two {@code Long} objects.
+   * 返回两个 {@code Long} objects.
    *
    * <P>Assume that null is the maximum value of {@code Long} objects.
    *
@@ -2529,7 +2529,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of three {@code Long} objects.
+   * 返回三个 {@code Long} objects.
    *
    * <P>Assume that null is the maximum value of {@code Long} objects.
    *
@@ -2571,7 +2571,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum object in a {@code Long} array.
+   * 返回 {@code Long} array.
    *
    * <P>Assume that null is the maximum value of {@code Long} objects.
    *
@@ -2613,7 +2613,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of two {@code float} values.
+   * 返回两个 {@code float} values.
    *
    * @param value1
    *     a {@code float} value;
@@ -2631,7 +2631,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of three {@code float} values.
+   * 返回三个 {@code float} values.
    *
    * @param value1
    *     a {@code float} value;
@@ -2658,7 +2658,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum value in a {@code float} array.
+   * 返回 {@code float} array.
    *
    * @param array
    *     a {@code float} array, must not be {@code null} nor empty.
@@ -2683,7 +2683,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of two {@code Float} objects.
+   * 返回两个 {@code Float} objects.
    *
    * <P>Assume that null is the maximum value of {@code Float} objects.
    *
@@ -2708,7 +2708,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of three {@code Float} objects.
+   * 返回三个 {@code Float} objects.
    *
    * <P>Assume that null is the maximum value of {@code Float} objects.
    *
@@ -2750,7 +2750,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum object in a {@code Float} array.
+   * 返回 {@code Float} array.
    *
    * <P>Assume that null is the maximum value of {@code Float} objects.
    *
@@ -2792,7 +2792,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of two {@code double} values.
+   * 返回两个 {@code double} values.
    *
    * @param value1
    *     a {@code double} value;
@@ -2810,7 +2810,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of three {@code double} values.
+   * 返回三个 {@code double} values.
    *
    * @param value1
    *     a {@code double} value;
@@ -2837,7 +2837,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum value in a {@code double} array.
+   * 返回 {@code double} array.
    *
    * @param array
    *     a {@code double} array, must not be {@code null} nor empty.
@@ -2862,7 +2862,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of two {@code Double} objects.
+   * 返回两个 {@code Double} objects.
    *
    * <P>Assume that null is the maximum value of {@code Double} objects.
    *
@@ -2887,7 +2887,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of three {@code Double} objects.
+   * 返回三个 {@code Double} objects.
    *
    * <P>Assume that null is the maximum value of {@code Double} objects.
    *
@@ -2929,7 +2929,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum object in a {@code Double} array.
+   * 返回 {@code Double} array.
    *
    * <P>Assume that null is the maximum value of {@code Double} objects.
    *
@@ -2971,7 +2971,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of two {@code String} objects.
+   * 返回两个 {@code String} objects.
    *
    * <P>Assume that {@code null} is the maximum value of {@code String} objects.
    *
@@ -2995,7 +2995,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of three {@code String} objects.
+   * 返回三个 {@code String} objects.
    *
    * <P>Assume that {@code null} is the maximum value of {@code String} objects.
    *
@@ -3032,7 +3032,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum object in a {@code String} array.
+   * 返回 {@code String} array.
    *
    * <P>Assume that null is the maximum value of {@code String} objects.
    *
@@ -3071,7 +3071,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of two {@code Comparable} objects.
+   * 返回两个 {@code Comparable} objects.
    *
    * <P>Assume that {@code null} is the maximum value.
    *
@@ -3094,7 +3094,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum of three {@code Comparable} objects.
+   * 返回三个 {@code Comparable} objects.
    *
    * <P>Assume that {@code null} is the maximum value.
    *
@@ -3125,7 +3125,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum object in a {@code Comparable} array.
+   * 返回 {@code Comparable} array.
    *
    * <P>Assume that null is the maximum value .
    *
@@ -3168,7 +3168,7 @@ public final class Selection {
   }
 
   /**
-   * Returns the maximum object in a {@code Comparable} {@code Iterable}
+   * 返回 {@code Comparable} {@code Iterable}
    * object.
    *
    * <P>Assume that null is the maximum value.

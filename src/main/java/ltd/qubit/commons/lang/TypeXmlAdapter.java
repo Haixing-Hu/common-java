@@ -11,12 +11,15 @@ package ltd.qubit.commons.lang;
 import ltd.qubit.commons.text.xml.jaxb.EnumXmlAdapter;
 
 /**
- * The JAXB adaptor for the {@link Type} enumeration class.
+ * {@link Type}枚举类的JAXB适配器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class TypeXmlAdapter extends EnumXmlAdapter<Type> {
 
+  /**
+   * 构造一个新的{@link TypeXmlAdapter}实例。
+   */
   public TypeXmlAdapter() {
     super(Type.class);
   }

@@ -12,9 +12,9 @@ import javax.annotation.concurrent.ThreadSafe;
 
 
 /**
- * A class providing functions for bit manipulation of {@code int}.
+ * 提供对 {@code int} 类型进行位操作功能的工具类。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public final class IntBit {

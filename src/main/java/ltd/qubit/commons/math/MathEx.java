@@ -35,7 +35,7 @@ import javax.annotation.Nullable;
  * <p>使用本类可以避免在不同工具类之间切换，提供了一站式的数学运算解决方案。
  * 所有方法都是静态的，遵循{@link java.lang.Math}的设计模式。</p>
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class MathEx {
 

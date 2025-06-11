@@ -17,38 +17,33 @@ import javax.annotation.concurrent.ThreadSafe;
 import ltd.qubit.commons.reflect.ConstructorUtils;
 
 /**
- * This class provides operations on {@code Object}.
+ * 此类提供对{@code Object}的操作。
  *
- * <p>This class tries to handle {@code null} input gracefully. An exception
- * will generally not be thrown for a {@code null} input. Each method documents
- * its behavior in more detail.
+ * <p>此类尝试优雅地处理{@code null}输入。通常不会对{@code null}输入抛出异常。
+ * 每个方法都会详细记录其行为。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public final class ObjectUtils {
 
   /**
-   * Singleton used as a {@code null} place holder where {@code null} has
-   * another meaning.
+   * 用作{@code null}占位符的单例对象，当{@code null}有其他含义时使用。
    *
-   * <p>For example, in a {@code HashMap} the
-   * {@link java.util.HashMap#get(Object)} method returns {@code null} if the
-   * {@code Map} contains {@code null} or if there is no matching key. The
-   * {@code Null} placeholder can be used to distinguish between these two
-   * cases.
+   * <p>例如，在{@code HashMap}中，{@link java.util.HashMap#get(Object)}方法
+   * 如果{@code Map}包含{@code null}或者没有匹配的键时都会返回{@code null}。
+   * {@code Null}占位符可以用来区分这两种情况。
    *
-   * <p>Another example is {@code Hashtable}, where {@code null} cannot
-   * be stored.
+   * <p>另一个例子是{@code Hashtable}，其中不能存储{@code null}。
    *
-   * <p>This instance is Serializable.
+   * <p>此实例是可序列化的。
    */
   public static final Null NULL = new Null();
 
   private ObjectUtils() {}
 
   /**
-   * Returns a default value if the object passed is {@code null}.
+   * 如果传入的对象为{@code null}，则返回默认值。
    *
    * <pre>
    * ObjectUtils.defaultIfNull(null, null)      = null
@@ -59,30 +54,29 @@ public final class ObjectUtils {
    * </pre>
    *
    * @param <T>
-   *      the type of the object.
+   *      对象的类型。
    * @param obj
-   *      the {@code Object} to test, may be {@code null}
+   *      要测试的{@code Object}，可以为{@code null}
    * @param defaultValue
-   *      the default value to return, may be {@code null}
+   *      要返回的默认值，可以为{@code null}
    * @return
-   *      {@code obj} if it is not {@code null}, {@code defaultValue} otherwise.
+   *      如果{@code obj}不为{@code null}则返回{@code obj}，否则返回{@code defaultValue}。
    */
   public static <T> T defaultIfNull(@Nullable final T obj, final T defaultValue) {
     return (obj != null ? obj : defaultValue);
   }
 
   /**
-   * Returns a default collection if the collection passed is {@code null} or empty.
+   * 如果传入的集合为{@code null}或空，则返回默认集合。
    *
    * @param <T>
-   *      the type of the object in the collection.
+   *      集合中对象的类型。
    * @param col
-   *      the {@code Collection} to test, may be {@code null} or empty/
+   *      要测试的{@code Collection}，可以为{@code null}或空
    * @param defaultValue
-   *      the default collection to return, may be {@code null}.
+   *      要返回的默认集合，可以为{@code null}。
    * @return
-   *      {@code col} if it is not {@code null} nor empty, {@code defaultValue}
-   *      otherwise.
+   *      如果{@code col}不为{@code null}且非空则返回{@code col}，否则返回{@code defaultValue}。
    */
   public static <T> Collection<T> defaultIfEmpty(@Nullable final Collection<T> col,
       final Collection<T> defaultValue) {
@@ -90,15 +84,14 @@ public final class ObjectUtils {
   }
 
   /**
-   * Returns a default string if the string passed is {@code null} or empty.
+   * 如果传入的字符串为{@code null}或空，则返回默认字符串。
    *
    * @param str
-   *      the string to test, may be {@code null} or empty.
+   *      要测试的字符串，可以为{@code null}或空。
    * @param defaultValue
-   *      the default string to return, may be {@code null}.
+   *      要返回的默认字符串，可以为{@code null}。
    * @return
-   *      {@code str} if it is not {@code null} nor empty, {@code defaultValue}
-   *      otherwise.
+   *      如果{@code str}不为{@code null}且非空则返回{@code str}，否则返回{@code defaultValue}。
    */
   public static String defaultIfEmpty(@Nullable final String str,
       final String defaultValue) {
@@ -106,7 +99,7 @@ public final class ObjectUtils {
   }
 
   /**
-   * Returns a new instance if the object passed is {@code null}.
+   * 如果传入的对象为{@code null}，则返回新实例。
    *
    * <pre>
    * ObjectUtils.createIfNull(null, null)               = null
@@ -117,20 +110,20 @@ public final class ObjectUtils {
    * </pre>
    *
    * @param <T>
-   *      the type of the object.
+   *      对象的类型。
    * @param obj
-   *      the {@code Object} to test, may be {@code null}
+   *      要测试的{@code Object}，可以为{@code null}
    * @param cls
-   *      the class object used to create the new instance.
+   *      用于创建新实例的类对象。
    * @return
-   *     {@code obj} if it is not {@code null}, a new instance otherwise.
+   *     如果{@code obj}不为{@code null}则返回{@code obj}，否则返回新实例。
    */
   public static <T> T createIfNull(@Nullable final T obj, final Class<T> cls) {
     return (obj != null ? obj : (cls == null ? null : ConstructorUtils.newInstance(cls)));
   }
 
   /**
-   * Gets the hash code of an object.
+   * 获取对象的哈希码。
    *
    * <pre>
    * ObjectUtils.hashCode(null)   = 0
@@ -139,10 +132,10 @@ public final class ObjectUtils {
    * </pre>
    *
    * @param obj
-   *     the object to obtain the hash code of, may be {@code null}
+   *     要获取哈希码的对象，可以为{@code null}
    * @return
-   *     the hash code of the object, or zero if null. If the object is an array,
-   *     this method will delegate to {@link ArrayUtils#hashCode(Object)}.
+   *     对象的哈希码，如果为null则返回零。如果对象是数组，
+   *     此方法将委托给{@link ArrayUtils#hashCode(Object)}。
    */
   public static int hashCode(final Object obj) {
     if (obj == null) {
@@ -155,8 +148,8 @@ public final class ObjectUtils {
   }
 
   /**
-   * Gets the toString that would be produced by {@code Object} if a class did
-   * not override toString itself. {@code null} will return {@code null}.
+   * 获取如果类没有重写toString方法时{@code Object}会产生的toString。
+   * {@code null}将返回{@code null}。
    *
    * <pre>
    * ObjectUtils.identityToString(null)         = null
@@ -165,9 +158,8 @@ public final class ObjectUtils {
    * </pre>
    *
    * @param object
-   *     the object to create a toString for, may be {@code null}
-   * @return the default toString text, or {@code null} if {@code null} passed
-   *     in
+   *     要为其创建toString的对象，可以为{@code null}
+   * @return 默认的toString文本，如果传入{@code null}则返回{@code null}
    */
   public static String identityToString(final Object object) {
     if (object == null) {
@@ -179,9 +171,8 @@ public final class ObjectUtils {
   }
 
   /**
-   * Appends the toString that would be produced by {@code Object} if a class
-   * did not override toString itself. {@code null} will throw a
-   * NullPointerException for either of the two parameters.
+   * 追加如果类没有重写toString方法时{@code Object}会产生的toString。
+   * 对于两个参数中的任何一个为{@code null}都会抛出NullPointerException。
    *
    * <pre>
    * ObjectUtils.identityToString(buf, "")            = buf.append("java.lang.String@1e23"
@@ -190,9 +181,9 @@ public final class ObjectUtils {
    * </pre>
    *
    * @param builder
-   *     the builder to append to
+   *     要追加到的构建器
    * @param object
-   *     the object to create a toString for
+   *     要为其创建toString的对象
    */
   public static void identityToString(final StringBuilder builder,
       final Object object) {
@@ -203,8 +194,7 @@ public final class ObjectUtils {
   }
 
   /**
-   * Gets the {@code toString} of an {@code Object} returning null for
-   * {@code null} input.
+   * 获取{@code Object}的{@code toString}，对于{@code null}输入返回null。
    *
    * <pre>
    * ObjectUtils.toString(null)         = null
@@ -215,10 +205,9 @@ public final class ObjectUtils {
    * </pre>
    *
    * @param obj
-   *     the Object to {@code toString}, may be null
+   *     要{@code toString}的Object，可以为null
    * @return
-   *     the passed in Object's toString, or {@code null} if {@code obj} is
-   *     {@code null}.
+   *     传入的Object的toString，或者如果{@code obj}为{@code null}则返回{@code null}。
    * @see String#valueOf(Object)
    */
   public static String toString(@Nullable final Object obj) {
@@ -239,8 +228,7 @@ public final class ObjectUtils {
   }
 
   /**
-   * Gets the {@code toString} of an {@code Object} returning a specified text
-   * if {@code null} input.
+   * 获取{@code Object}的{@code toString}，如果{@code null}输入则返回指定的文本。
    *
    * <pre>
    * ObjectUtils.toString(null, null)                  = null
@@ -252,10 +240,10 @@ public final class ObjectUtils {
    * </pre>
    *
    * @param obj
-   *     the Object to {@code toString}, may be null
+   *     要{@code toString}的Object，可以为null
    * @param nullStr
-   *     the String to return if {@code null} input, may be null
-   * @return the passed in Object's toString, or nullStr if {@code null} input.
+   *     如果{@code null}输入时要返回的String，可以为null
+   * @return 传入的Object的toString，或者如果{@code null}输入则返回nullStr。
    * @see String#valueOf(Object)
    */
   public static String toString(final Object obj, final String nullStr) {
@@ -269,15 +257,13 @@ public final class ObjectUtils {
   }
 
   /**
-   * Class used as a null place holder where {@code null} has another meaning.
+   * 用作null占位符的类，当{@code null}有其他含义时使用。
    *
-   * <p>For example, in a {@code HashMap} the {@link java.util.HashMap#get(Object)}
-   * method returns {@code null} if the {@code Map} contains {@code null} or if
-   * there is no matching key. The {@code Null} place holder can be used to
-   * distinguish between these two cases.
+   * <p>例如，在{@code HashMap}中，{@link java.util.HashMap#get(Object)}
+   * 方法如果{@code Map}包含{@code null}或者没有匹配的键时都会返回{@code null}。
+   * {@code Null}占位符可以用来区分这两种情况。
    *
-   * <p>Another example is {@code Hashtable}, where {@code null} cannot be
-   * stored.
+   * <p>另一个例子是{@code Hashtable}，其中不能存储{@code null}。
    */
   public static class Null implements Serializable {
 
@@ -286,9 +272,9 @@ public final class ObjectUtils {
     Null() {}
 
     /**
-     * Ensure singleton.
+     * 确保单例。
      *
-     * @return the singleton value
+     * @return 单例值
      */
     private Object readResolve() {
       return NULL;

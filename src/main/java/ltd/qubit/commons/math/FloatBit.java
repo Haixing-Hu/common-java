@@ -23,7 +23,7 @@ package ltd.qubit.commons.math;
  * <li>指数偏移量：127</li>
  * </ul>
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class FloatBit {
 

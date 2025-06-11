@@ -9,40 +9,39 @@
 package ltd.qubit.commons.lang;
 
 /**
- * Defaults the constants of splitting operations.
+ * 分割操作的默认常量。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface SplitOption {
 
   /**
-   * Neither trim nor ignore empty.
+   * 既不修剪也不忽略空字符串。
    */
   int NONE = 0;
 
   /**
-   * Trim the splitted substrings.
+   * 修剪分割后的子字符串。
    */
   int TRIM = 0x0001;
 
   /**
-   * Ignore the empty splitted substrings.
+   * 忽略空的分割子字符串。
    */
   int IGNORE_EMPTY = 0x0002;
 
   /**
-   * Use so-called "camel-case" for letter types.
+   * 对字母类型使用所谓的"驼峰命名法"。
    */
   int CAMEL_CASE = 0x0004;
 
   /**
-   * Comparing the substring and separator ignoring the case.
+   * 比较子字符串和分隔符时忽略大小写。
    */
   int IGNORE_CASE = 0x0008;
 
   /**
-   * Default options, which will trim the splitted substrings and ignore the
-   * empty substrings.
+   * 默认选项，将修剪分割后的子字符串并忽略空字符串。
    */
   int DEFAULT = TRIM | IGNORE_EMPTY;
 }

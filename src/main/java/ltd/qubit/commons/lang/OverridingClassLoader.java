@@ -16,26 +16,23 @@ import javax.annotation.Nullable;
 import ltd.qubit.commons.io.IoUtils;
 
 /**
- * {@code ClassLoader} that does <i>not</i> always delegate to the parent loader
- * as normal class loaders do.
+ * {@code ClassLoader}不像普通类加载器那样<i>总是</i>委托给父加载器。
  * <p>
- * This enables, for example, instrumentation to be
- * forced in the overriding ClassLoader, or a "throwaway" class loading behavior
- * where selected application classes are temporarily loaded in the overriding
- * {@code ClassLoader} for introspection purposes before eventually loading an
- * instrumented version of the class in the given parent {@code ClassLoader}.
+ * 例如，这使得可以强制在重写的ClassLoader中进行增强，或者在"临时"类加载行为中，
+ * 选定的应用程序类被临时加载到重写的{@code ClassLoader}中用于自省目的，
+ * 然后最终在给定的父{@code ClassLoader}中加载类的增强版本。
  * <p>
- * This class is a copy of {@code org.springframework.core.OverridingClassLoader}
- * with slight modifications. It is used to avoid the dependency of Spring Framework.
+ * 此类是{@code org.springframework.core.OverridingClassLoader}的副本，
+ * 经过轻微修改。用于避免对Spring框架的依赖。
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class OverridingClassLoader extends DecoratingClassLoader {
 
   /**
-   *  Packages that are excluded by default.
+   * 默认排除的包。
    */
   public static final String[] DEFAULT_EXCLUDED_PACKAGES = new String[]
       {"java.", "javax.", "sun.", "oracle.", "javassist.", "org.aspectj.", "net.sf.cglib."};
@@ -50,22 +47,22 @@ public class OverridingClassLoader extends DecoratingClassLoader {
   private final ClassLoader overrideDelegate;
 
   /**
-   * Create a new OverridingClassLoader for the given ClassLoader.
+   * 为给定的ClassLoader创建一个新的OverridingClassLoader。
    *
    * @param parent
-   *     the ClassLoader to build an overriding ClassLoader for
+   *     要为其构建重写ClassLoader的ClassLoader
    */
   public OverridingClassLoader(@Nullable final ClassLoader parent) {
     this(parent, null);
   }
 
   /**
-   * Create a new OverridingClassLoader for the given ClassLoader.
+   * 为给定的ClassLoader创建一个新的OverridingClassLoader。
    *
    * @param parent
-   *     the ClassLoader to build an overriding ClassLoader for
+   *     要为其构建重写ClassLoader的ClassLoader
    * @param overrideDelegate
-   *     the ClassLoader to delegate to for overriding
+   *     用于重写委托的ClassLoader
    */
   public OverridingClassLoader(@Nullable final ClassLoader parent,
       @Nullable final ClassLoader overrideDelegate) {
@@ -100,12 +97,11 @@ public class OverridingClassLoader extends DecoratingClassLoader {
   }
 
   /**
-   * Determine whether the specified class is eligible for overriding by this
-   * class loader.
+   * 确定指定的类是否符合被此类加载器重写的条件。
    *
    * @param className
-   *     the class name to check
-   * @return whether the specified class is eligible
+   *     要检查的类名
+   * @return 指定的类是否符合条件
    * @see #isExcluded
    */
   protected boolean isEligibleForOverriding(final String className) {
@@ -113,15 +109,15 @@ public class OverridingClassLoader extends DecoratingClassLoader {
   }
 
   /**
-   * Load the specified class for overriding purposes in this ClassLoader.
-   * <p>The default implementation delegates to {@link #findLoadedClass},
-   * {@link #loadBytesForClass} and {@link #defineClass}.
+   * 在此ClassLoader中加载指定的类以进行重写。
+   * <p>默认实现委托给{@link #findLoadedClass}、
+   * {@link #loadBytesForClass}和{@link #defineClass}。
    *
    * @param name
-   *     the name of the class
-   * @return the Class object, or {@code null} if no class defined for that name
+   *     类的名称
+   * @return Class对象，如果没有为该名称定义类则返回{@code null}
    * @throws ClassNotFoundException
-   *     if the class for the given name couldn't be loaded
+   *     如果无法加载给定名称的类
    */
   @Nullable
   protected Class<?> loadClassForOverriding(final String name)
@@ -137,18 +133,16 @@ public class OverridingClassLoader extends DecoratingClassLoader {
   }
 
   /**
-   * Load the defining bytes for the given class, to be turned into a Class
-   * object through a {@link #defineClass} call.
+   * 加载给定类的定义字节，通过{@link #defineClass}调用转换为Class对象。
    * <p>
-   * The default implementation delegates to {@link #openStreamForClass} and
-   * {@link #transformIfNecessary}.
+   * 默认实现委托给{@link #openStreamForClass}和
+   * {@link #transformIfNecessary}。
    *
    * @param name
-   *     the name of the class
-   * @return the byte content (with transformers already applied), or
-   *     {@code null} if no class defined for that name
+   *     类的名称
+   * @return 字节内容（已应用转换器），如果没有为该名称定义类则返回{@code null}
    * @throws ClassNotFoundException
-   *     if the class for the given name couldn't be loaded
+   *     如果无法加载给定名称的类
    */
   @Nullable
   protected byte[] loadBytesForClass(final String name)
@@ -168,14 +162,14 @@ public class OverridingClassLoader extends DecoratingClassLoader {
   }
 
   /**
-   * Open an InputStream for the specified class.
+   * 为指定的类打开InputStream。
    * <p>
-   * The default implementation loads a standard class file through the parent
-   * ClassLoader's {@code getResourceAsStream} method.
+   * 默认实现通过父ClassLoader的{@code getResourceAsStream}方法
+   * 加载标准类文件。
    *
    * @param name
-   *     the name of the class
-   * @return the InputStream containing the byte code for the specified class
+   *     类的名称
+   * @return 包含指定类字节码的InputStream
    */
   @Nullable
   protected InputStream openStreamForClass(final String name) {
@@ -184,16 +178,16 @@ public class OverridingClassLoader extends DecoratingClassLoader {
   }
 
   /**
-   * Transformation hook to be implemented by subclasses.
+   * 由子类实现的转换钩子。
    * <p>
-   * The default implementation simply returns the given bytes as-is.
+   * 默认实现简单地按原样返回给定的字节。
    *
    * @param name
-   *     the fully-qualified name of the class being transformed
+   *     被转换类的完全限定名称
    * @param bytes
-   *     the raw bytes of the class
-   * @return the transformed bytes (never {@code null}; same as the input bytes
-   *     if the transformation produced no changes)
+   *     类的原始字节
+   * @return 转换后的字节（永远不会是{@code null}；如果转换没有产生任何更改，
+   *     则与输入字节相同）
    */
   protected byte[] transformIfNecessary(final String name, final byte[] bytes) {
     return bytes;
