@@ -51,9 +51,9 @@ import static ltd.qubit.commons.lang.Argument.requirePositive;
 import static ltd.qubit.commons.lang.SystemUtils.LINE_SEPARATOR;
 
 /**
- * This class provides common file operation functions.
+ * 此类提供常见的文件操作函数。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public final class IoUtils {
@@ -61,7 +61,7 @@ public final class IoUtils {
   private static final Logger LOGGER = LoggerFactory.getLogger(IoUtils.class);
 
   /**
-   * The default buffer size to use.
+   * 要使用的默认缓冲区大小。
    */
   public static final int BUFFER_SIZE = 16384;
 
@@ -69,14 +69,13 @@ public final class IoUtils {
       "The maxLength argument can't be negative.";
 
   /**
-   * Unconditionally close a {@code Closeable} object.
+   * 无条件关闭一个 {@code Closeable} 对象。
    *
-   * <p>Equivalent to {@link Closeable#close()}, except any exceptions will be
-   * ignored and logged as an warning message. This is typically used in finally
-   * blocks.
+   * <p>等价于 {@link Closeable#close()}，除了任何异常都会被忽略并记录为警告消息。
+   * 这通常在 finally 块中使用。
    *
    * @param closeable
-   *     the Closeable object to close, may be null or already closed.
+   *     要关闭的 Closeable 对象，可能为 null 或已经关闭。
    */
   public static void closeQuietly(final Closeable closeable) {
     try {
@@ -91,14 +90,13 @@ public final class IoUtils {
   }
 
   /**
-   * Unconditionally close a {@code Socket} object.
+   * 无条件关闭一个 {@code Socket} 对象。
    *
-   * <p>Equivalent to {@link Socket#close()}, except any exceptions will be
-   * ignored and logged as an warning message. This is typically used in finally
-   * blocks.
+   * <p>等价于 {@link Socket#close()}，除了任何异常都会被忽略并记录为警告消息。
+   * 这通常在 finally 块中使用。
    *
    * @param socket
-   *     the socket to close, may be null or already closed.
+   *     要关闭的套接字，可能为 null 或已经关闭。
    */
   public static void closeQuietly(final Socket socket) {
     try {
@@ -113,14 +111,13 @@ public final class IoUtils {
   }
 
   /**
-   * Unconditionally close a {@code Connection} object.
+   * 无条件关闭一个 {@code Connection} 对象。
    *
-   * <p>Equivalent to {@link Closeable#close()}, except any exceptions will be
-   * ignored and logged as an warning message. This is typically used in finally
-   * blocks.
+   * <p>等价于 {@link Closeable#close()}，除了任何异常都会被忽略并记录为警告消息。
+   * 这通常在 finally 块中使用。
    *
    * @param connection
-   *     the Connection object to close, may be null or already closed.
+   *     要关闭的 Connection 对象，可能为 null 或已经关闭。
    */
   public static void closeQuietly(final Connection connection) {
     try {
@@ -135,21 +132,19 @@ public final class IoUtils {
   }
 
   /**
-   * Try to read a specified number of bytes from an input stream.
+   * 尝试从输入流读取指定数量的字节。
    *
-   * <p>This function will try to read from the input stream, until either the
-   * specified number of bytes has been read, or the end-of-file has been met.
+   * <p>此函数将尝试从输入流读取，直到读取了指定数量的字节或遇到文件结尾。
    *
    * @param input
-   *     the {@link InputStream} to read from.
+   *     要读取的 {@link InputStream}。
    * @param bytes
-   *     the number of bytes has to read.
+   *     需要读取的字节数。
    * @param buffer
-   *     the buffer used to store the bytes, which must be larger enough to hold
-   *     the bytes.
-   * @return the actual number of bytes has been read.
+   *     用于存储字节的缓冲区，必须足够大以容纳这些字节。
+   * @return 实际读取的字节数。
    * @throws IOException
-   *     If any I/O error occurred.
+   *     如果发生任何 I/O 错误。
    */
   public static int readFully(final InputStream input, final int bytes,
       final byte[] buffer) throws IOException {
@@ -169,21 +164,19 @@ public final class IoUtils {
   }
 
   /**
-   * Try to read a specified number of bytes from an input stream.
+   * 尝试从输入流读取指定数量的字节。
    *
-   * <p>This function will try to read from the input stream, until either the
-   * specified number of bytes has been read, or the end-of-file has been met.
+   * <p>此函数将尝试从输入流读取，直到读取了指定数量的字节或遇到文件结尾。
    *
    * @param input
-   *     the {@link InputStream} to read from.
+   *     要读取的 {@link InputStream}。
    * @param bytes
-   *     the number of bytes has to read.
-   * @return the bytes has been read.
+   *     需要读取的字节数。
+   * @return 已读取的字节。
    * @throws EOFException
-   *     If the end-of-file has been met before reading the desired number of
-   *     bytes.
+   *     如果在读取所需字节数之前遇到文件结尾。
    * @throws IOException
-   *     If any I/O error occurred.
+   *     如果发生任何 I/O 错误。
    */
   public static byte[] readFully(final InputStream input, final int bytes)
       throws IOException {
@@ -203,22 +196,21 @@ public final class IoUtils {
   }
 
   /**
-   * Copy bytes from an byte array to an {@link OutputStream}.
+   * 将字节数组中的字节复制到 {@link OutputStream}。
    * <p>
-   * This method buffers the input internally, so there is no need to use a
-   * {@link BufferedInputStream}.
+   * 此方法在内部缓冲输入，因此无需使用 {@link BufferedInputStream}。
    * <p>
-   * <b>NOTE:</b> This method does NOT close the output stream.
+   * <b>注意：</b>此方法不会关闭输出流。
    * <p>
-   * TODO: add the supporting of a progress displaying call-back function.
+   * TODO: 添加进度显示回调函数的支持。
    *
    * @param input
-   *     the byte array to read from.
+   *     要读取的字节数组。
    * @param output
-   *     the {@link OutputStream} to write to.
-   * @return the number of bytes copied, which may be larger than 2 GB.
+   *     要写入的 {@link OutputStream}。
+   * @return 复制的字节数，可能大于 2 GB。
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生任何 I/O 错误
    * @see #copy(InputStream, long, OutputStream, byte[])
    */
   public static long copy(final byte[] input, final OutputStream output)
@@ -227,23 +219,21 @@ public final class IoUtils {
   }
 
   /**
-   * Copy bytes from an {@link InputStream} to an {@link OutputStream}.
+   * 将字节从 {@link InputStream} 复制到 {@link OutputStream}。
    * <p>
-   * This method buffers the input internally, so there is no need to use a
-   * {@link BufferedInputStream}.
+   * 此方法在内部缓冲输入，因此无需使用 {@link BufferedInputStream}。
    * <p>
-   * <b>NOTE:</b> This method does NOT close the input stream, nor does it
-   * close the output stream.
+   * <b>注意：</b>此方法不会关闭输入流，也不会关闭输出流。
    * <p>
-   * TODO: add the supporting of a progress displaying call-back function.
+   * TODO: 添加进度显示回调函数的支持。
    *
    * @param input
-   *     the {@link InputStream} to read from.
+   *     要读取的 {@link InputStream}。
    * @param output
-   *     the {@link OutputStream} to write to.
-   * @return the number of bytes copied, which may be larger than 2 GB.
+   *     要写入的 {@link OutputStream}。
+   * @return 复制的字节数，可能大于 2 GB。
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生任何 I/O 错误
    * @see #copy(InputStream, long, OutputStream, byte[])
    */
   public static long copy(final InputStream input, final OutputStream output)
@@ -252,26 +242,23 @@ public final class IoUtils {
   }
 
   /**
-   * Copy bytes from an {@link InputStream} to an {@link OutputStream}.
+   * 将字节从 {@link InputStream} 复制到 {@link OutputStream}。
    * <p>
-   * This method buffers the input internally, so there is no need to use a
-   * {@link BufferedInputStream}.
+   * 此方法在内部缓冲输入，因此无需使用 {@link BufferedInputStream}。
    * <p>
-   * <b>NOTE:</b> This method does NOT close the input stream, nor does it
-   * close the output stream.
+   * <b>注意：</b>此方法不会关闭输入流，也不会关闭输出流。
    *
-   * <p>TODO: add the supporting of a progress displaying call-back function.
+   * <p>TODO: 添加进度显示回调函数的支持。
    *
    * @param input
-   *     the {@link InputStream} to read from.
+   *     要读取的 {@link InputStream}。
    * @param maxBytes
-   *     the maximum number of bytes to be copied. It could be {@code
-   *     Long.MAX_VALUE}, indicating no limit.
+   *     要复制的最大字节数。可以是 {@code Long.MAX_VALUE}，表示无限制。
    * @param output
-   *     the {@link OutputStream} to write to.
-   * @return the number of bytes copied, which may be larger than 2 GB.
+   *     要写入的 {@link OutputStream}。
+   * @return 复制的字节数，可能大于 2 GB。
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生任何 I/O 错误
    * @see #copy(InputStream, long, OutputStream, byte[])
    */
   public static long copy(final InputStream input, final long maxBytes,
@@ -281,28 +268,25 @@ public final class IoUtils {
   }
 
   /**
-   * Copy bytes from an {@link InputStream} to an {@link OutputStream}.
+   * 将字节从 {@link InputStream} 复制到 {@link OutputStream}。
    * <p>
-   * This method buffers the input internally, so there is no need to use a
-   * {@link BufferedInputStream}.
+   * 此方法在内部缓冲输入，因此无需使用 {@link BufferedInputStream}。
    * <p>
-   * <b>NOTE:</b> This method does NOT close the input stream, nor does it
-   * close the output stream.
+   * <b>注意：</b>此方法不会关闭输入流，也不会关闭输出流。
    * <p>
-   * TODO: add the supporting of a progress displaying call-back function.
+   * TODO: 添加进度显示回调函数的支持。
    *
    * @param input
-   *     the {@link InputStream} to read from
+   *     要读取的 {@link InputStream}
    * @param output
-   *     the {@link OutputStream} to write to.
+   *     要写入的 {@link OutputStream}。
    * @param maxBytes
-   *     the maximum number of bytes to be copied. It could be {@code
-   *     Long.MAX_VALUE}, indicating no limit.
+   *     要复制的最大字节数。可以是 {@code Long.MAX_VALUE}，表示无限制。
    * @param buffer
-   *     a buffer used for copying.
-   * @return the number of bytes copied, which may be larger than 2 GB.
+   *     用于复制的缓冲区。
+   * @return 复制的字节数，可能大于 2 GB。
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生任何 I/O 错误
    * @see #copy(InputStream, long, OutputStream)
    */
   public static long copy(final InputStream input, final long maxBytes,
@@ -337,26 +321,23 @@ public final class IoUtils {
   }
 
   /**
-   * Copy bytes from a {@code Reader} to an {@code Writer}.
+   * 将字符从 {@code Reader} 复制到 {@code Writer}。
    * <p>
-   * This method buffers the input internally, so there is no need to use a
-   * {@code BufferedReader}.
+   * 此方法在内部缓冲输入，因此无需使用 {@code BufferedReader}。
    * <p>
-   * <b>NOTE:</b> This method does NOT close the input reader, nor does it
-   * close the output writer.
+   * <b>注意：</b>此方法不会关闭输入阅读器，也不会关闭输出写入器。
    *
-   * <p>TODO: add the supporting of a progress displaying call-back function.
+   * <p>TODO: 添加进度显示回调函数的支持。
    *
    * @param input
-   *     the {@code Reader} to read from.
+   *     要读取的 {@code Reader}。
    * @param maxChars
-   *     the maximum number of characters to be copied. It count be
-   *     Long.MAX_VALUE, indicating no limit.
+   *     要复制的最大字符数。可以是 Long.MAX_VALUE，表示无限制。
    * @param output
-   *     the {@code Writer} to write to.
-   * @return the number of characters copied, which may be larger than 2 GB.
+   *     要写入的 {@code Writer}。
+   * @return 复制的字符数，可能大于 2 GB。
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生任何 I/O 错误
    * @see #copy(Reader, long, Writer, char[])
    */
   public static long copy(final Reader input, final long maxChars, final Writer output)
@@ -366,28 +347,25 @@ public final class IoUtils {
   }
 
   /**
-   * Copy bytes from a {@code Reader} to an {@code Writer}.
+   * 将字符从 {@code Reader} 复制到 {@code Writer}。
    * <p>
-   * This method buffers the input internally, so there is no need to use a
-   * {@code BufferedReader}.
+   * 此方法在内部缓冲输入，因此无需使用 {@code BufferedReader}。
    * <p>
-   * <b>NOTE:</b> This method does NOT close the input reader, nor does it
-   * close the output writer.
+   * <b>注意：</b>此方法不会关闭输入阅读器，也不会关闭输出写入器。
    * <p>
-   * TODO: add the supporting of a progress displaying call-back function.
+   * TODO: 添加进度显示回调函数的支持。
    *
    * @param input
-   *     the {@code Reader} to read from.
+   *     要读取的 {@code Reader}。
    * @param maxChars
-   *     the maximum number of characters to be copied. It count be
-   *     Long.MAX_VALUE, indicating no limit.
+   *     要复制的最大字符数。可以是 Long.MAX_VALUE，表示无限制。
    * @param output
-   *     the {@code Writer} to write to.
+   *     要写入的 {@code Writer}。
    * @param buffer
-   *     a buffer used for copying.
-   * @return the number of characters copied, which may be larger than 2 GB.
+   *     用于复制的缓冲区。
+   * @return 复制的字符数，可能大于 2 GB。
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生任何 I/O 错误
    * @see #copy(Reader, long, Writer)
    */
   public static long copy(final Reader input, final long maxChars,
@@ -422,24 +400,21 @@ public final class IoUtils {
   }
 
   /**
-   * Gets the first few bytes of an {@link InputStream}.
+   * 获取 {@link InputStream} 的前几个字节。
    * <p>
-   * <b>NOTE:</b> This method does NOT close the input stream.
+   * <b>注意：</b>此方法不会关闭输入流。
    *
    * @param input
-   *     an input stream.
+   *     输入流。
    * @param maxBytes
-   *     the maximum number of bytes to get. If it is {@link Integer#MAX_VALUE},
-   *     there is no limit on the number of bytes to get (except the memory
-   *     limit).
-   * @return the first few bytes of the {@link InputStream}; if the {@link
-   *     InputStream} has less than maxLength bytes, all the bytes of the {@link
-   *     InputStream} were get and returned; otherwise, the first {@code
-   *     maxLength} bytes of the {@link InputStream} were get and returned; if
-   *     the {@link InputStream} has no content because of the {@code EOF}, a
-   *     byte array of length 0 is returned.
+   *     要获取的最大字节数。如果是 {@link Integer#MAX_VALUE}，
+   *     则对要获取的字节数没有限制（除了内存限制）。
+   * @return {@link InputStream} 的前几个字节；如果 {@link InputStream} 的字节数少于 maxLength，
+   *     则获取并返回 {@link InputStream} 的所有字节；否则，获取并返回 {@link InputStream} 的前 
+   *     {@code maxLength} 个字节；如果 {@link InputStream} 因为 {@code EOF} 而没有内容，
+   *     则返回长度为 0 的字节数组。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static byte[] getBytes(final InputStream input, final int maxBytes)
       throws IOException {
@@ -478,18 +453,17 @@ public final class IoUtils {
   }
 
   /**
-   * Get the contents of an {@code InputStream} as a {@code byte[]}.
+   * 获取 {@code InputStream} 的内容作为 {@code byte[]}。
    * <p>
-   * This method buffers the input internally, so there is no need to use a
-   * {@code BufferedInputStream}.
+   * 此方法在内部缓冲输入，因此无需使用 {@code BufferedInputStream}。
    * <p>
-   * <b>NOTE:</b> This method does NOT close the input stream.
+   * <b>注意：</b>此方法不会关闭输入流。
    *
    * @param input
-   *     the {@code InputStream} to read from.
-   * @return the requested byte array
+   *     要读取的 {@code InputStream}。
+   * @return 请求的字节数组
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生 I/O 错误
    */
   public static byte[] toByteArray(final InputStream input) throws IOException {
     final ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -498,20 +472,19 @@ public final class IoUtils {
   }
 
   /**
-   * Get the contents of a {@code Reader} as a character array.
+   * 获取 {@code Reader} 的内容作为字符数组。
    * <p>
-   * This method buffers the input internally, so there is no need to use a
-   * {@code BufferedReader}.
+   * 此方法在内部缓冲输入，因此无需使用 {@code BufferedReader}。
    * <p>
-   * <b>NOTE:</b> This method does NOT close the input reader.
+   * <b>注意：</b>此方法不会关闭输入阅读器。
    *
    * @param input
-   *     the {@code Reader} to read from
-   * @return the requested character array
+   *     要读取的 {@code Reader}
+   * @return 请求的字符数组
    * @throws NullPointerException
-   *     if the input is null
+   *     如果输入为 null
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生 I/O 错误
    */
   public static char[] toCharArray(final Reader input) throws IOException {
     final CharArrayWriter output = new CharArrayWriter();
@@ -520,18 +493,17 @@ public final class IoUtils {
   }
 
   /**
-   * Get the contents of a {@code Reader} as a String.
+   * 获取 {@code Reader} 的内容作为字符串。
    * <p>
-   * <b>NOTE:</b> This method does NOT close the input reader.
+   * <b>注意：</b>此方法不会关闭输入阅读器。
    * <p>
-   * This method buffers the input internally, so there is no need to use a
-   * {@code BufferedReader}.
+   * 此方法在内部缓冲输入，因此无需使用 {@code BufferedReader}。
    *
    * @param input
-   *     the {@code Reader} to read from
-   * @return the requested String
+   *     要读取的 {@code Reader}
+   * @return 请求的字符串
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生 I/O 错误
    */
   public static String toString(final Reader input) throws IOException {
     final StringWriter output = new StringWriter();
@@ -540,16 +512,15 @@ public final class IoUtils {
   }
 
   /**
-   * Get the contents of a {@code Reader} as a String.
+   * 获取 {@code Reader} 的内容作为字符串。
    * <p>
-   * <b>NOTE:</b> This method does NOT close the input stream.
+   * <b>注意：</b>此方法不会关闭输入流。
    *
    * @param input
-   *     the {@code InputStream} to read from, which will be decoded using the
-   *     default charset of the system.
-   * @return the requested String
+   *     要读取的 {@code InputStream}，将使用系统默认字符集进行解码。
+   * @return 请求的字符串
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生 I/O 错误
    */
   public static String toString(final InputStream input)
       throws IOException {
@@ -558,17 +529,17 @@ public final class IoUtils {
   }
 
   /**
-   * Get the contents of a {@code Reader} as a String.
+   * 获取 {@code Reader} 的内容作为字符串。
    * <p>
-   * <b>NOTE:</b> This method does NOT close the input stream.
+   * <b>注意：</b>此方法不会关闭输入流。
    *
    * @param input
-   *     the {@code InputStream} to read from.
+   *     要读取的 {@code InputStream}。
    * @param charset
-   *     the charset of the resource.
-   * @return the requested String
+   *     资源的字符集。
+   * @return 请求的字符串
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生 I/O 错误
    */
   public static String toString(final InputStream input, final Charset charset)
       throws IOException {
@@ -577,18 +548,17 @@ public final class IoUtils {
   }
 
   /**
-   * Get the contents of the specified {@code File} as a string.
+   * 获取指定 {@code File} 的内容作为字符串。
    * <p>
-   * This method buffers the input internally, so there is no need to use a
-   * {@code BufferedReader}.
+   * 此方法在内部缓冲输入，因此无需使用 {@code BufferedReader}。
    *
    * @param file
-   *     the {@code File} where the content to read from.
+   *     要读取内容的 {@code File}。
    * @param charset
-   *     the charset of the resource.
-   * @return the requested string.
+   *     资源的字符集。
+   * @return 请求的字符串。
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生 I/O 错误
    */
   public static String toString(final File file, final Charset charset)
       throws IOException {
@@ -602,19 +572,17 @@ public final class IoUtils {
   }
 
   /**
-   * Get the contents of the resource located at the specified {@code URL} as a
-   * String.
+   * 获取位于指定 {@code URL} 的资源内容作为字符串。
    *
-   * <p>This method buffers the input internally, so there is no need to use a
-   * {@code BufferedReader}.
+   * <p>此方法在内部缓冲输入，因此无需使用 {@code BufferedReader}。
    *
    * @param url
-   *     the {@code URL} where the resource to read from.
+   *     要读取资源的 {@code URL}。
    * @param charset
-   *     the charset of the resource.
-   * @return the requested string.
+   *     资源的字符集。
+   * @return 请求的字符串。
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生 I/O 错误
    */
   public static String toString(final URL url, final Charset charset)
       throws IOException {
@@ -628,20 +596,19 @@ public final class IoUtils {
   }
 
   /**
-   * Get the contents of the specified resource as a String.
+   * 获取指定资源的内容作为字符串。
    *
-   * <p>This method buffers the input internally, so there is no need to use a
-   * {@code BufferedReader}.
+   * <p>此方法在内部缓冲输入，因此无需使用 {@code BufferedReader}。
    *
    * @param resource
-   *     the resource of the file to read from, which can not be null.
+   *     要读取的文件资源，不能为 null。
    * @param cls
-   *     the class whose class loader will be used to load the resource.
+   *     将使用其类加载器来加载资源的类。
    * @param charset
-   *     the charset of the encoding of the file, which can not be null.
-   * @return the requested string.
+   *     文件编码的字符集，不能为 null。
+   * @return 请求的字符串。
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生 I/O 错误
    */
   public static String toString(final String resource, final Class<?> cls,
       final Charset charset) throws IOException {
@@ -653,19 +620,17 @@ public final class IoUtils {
   }
 
   /**
-   * Get the contents of a {@code Reader} as a list of Strings, one entry per
-   * line.
+   * 获取 {@code Reader} 的内容作为字符串列表，每行一个条目。
    *
-   * <p>This method buffers the input internally, so there is no need to use a
-   * {@code BufferedReader}.
+   * <p>此方法在内部缓冲输入，因此无需使用 {@code BufferedReader}。
    *
-   * <p>Note that the caller MUST close the reader by itself.
+   * <p>注意调用者必须自己关闭阅读器。
    *
    * @param input
-   *     the {@code Reader} to read from, which can not be null.
-   * @return the array list of Strings. It cannot be null, but could be empty.
+   *     要读取的 {@code Reader}，不能为 null。
+   * @return 字符串的数组列表。不能为 null，但可以为空。
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生 I/O 错误
    */
   public static List<String> readLines(final Reader input) throws IOException {
     final BufferedReader reader = new BufferedReader(input);
@@ -679,17 +644,17 @@ public final class IoUtils {
   }
 
   /**
-   * Get the contents of a file as a list of Strings, one entry per line.
+   * 获取文件的内容作为字符串列表，每行一个条目。
    *
-   * <p>Note that the caller MUST close the reader by itself.
+   * <p>注意调用者必须自己关闭阅读器。
    *
    * @param file
-   *     the path of the file to read from, which can not be null.
+   *     要读取的文件路径，不能为 null。
    * @param charset
-   *     the charset of the encoding of the file, which can not be null.
-   * @return the array list of Strings. It cannot be null, but could be empty.
+   *     文件编码的字符集，不能为 null。
+   * @return 字符串的数组列表。不能为 null，但可以为空。
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生 I/O 错误
    */
   public static List<String> readLines(final File file, final Charset charset)
       throws IOException {
@@ -699,17 +664,17 @@ public final class IoUtils {
   }
 
   /**
-   * Get the contents of a file as a list of Strings, one entry per line.
+   * 获取文件的内容作为字符串列表，每行一个条目。
    *
-   * <p>Note that the caller MUST close the reader by itself.
+   * <p>注意调用者必须自己关闭阅读器。
    *
    * @param path
-   *     the path of the file to read from, which can not be null.
+   *     要读取的文件路径，不能为 null。
    * @param charset
-   *     the charset of the encoding of the file, which can not be null.
-   * @return the array list of Strings. It cannot be null, but could be empty.
+   *     文件编码的字符集，不能为 null。
+   * @return 字符串的数组列表。不能为 null，但可以为空。
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生 I/O 错误
    */
   public static List<String> readLines(final Path path, final Charset charset)
       throws IOException {
@@ -720,17 +685,17 @@ public final class IoUtils {
   }
 
   /**
-   * Get the contents of a file as a list of Strings, one entry per line.
+   * 获取文件的内容作为字符串列表，每行一个条目。
    *
-   * <p>Note that the caller MUST close the reader by itself.
+   * <p>注意调用者必须自己关闭阅读器。
    *
    * @param url
-   *     the URL of the file to read from, which can not be null.
+   *     要读取文件的 URL，不能为 null。
    * @param charset
-   *     the charset of the encoding of the file, which can not be null.
-   * @return the array list of Strings. It cannot be null, but could be empty.
+   *     文件编码的字符集，不能为 null。
+   * @return 字符串的数组列表。不能为 null，但可以为空。
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生 I/O 错误
    */
   public static List<String> readLines(final URL url, final Charset charset)
       throws IOException {
@@ -741,19 +706,19 @@ public final class IoUtils {
   }
 
   /**
-   * Get the contents of a file as a list of Strings, one entry per line.
+   * 获取文件的内容作为字符串列表，每行一个条目。
    *
-   * <p>Note that the caller MUST close the reader by itself.
+   * <p>注意调用者必须自己关闭阅读器。
    *
    * @param resource
-   *     the resource of the file to read from, which can not be null.
+   *     要读取的文件资源，不能为 null。
    * @param cls
-   *     the class whose class loader will be used to load the resource.
+   *     将使用其类加载器来加载资源的类。
    * @param charset
-   *     the charset of the encoding of the file, which can not be null.
-   * @return the array list of Strings. It cannot be null, but could be empty.
+   *     文件编码的字符集，不能为 null。
+   * @return 字符串的数组列表。不能为 null，但可以为空。
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生 I/O 错误
    */
   public static List<String> readLines(final String resource,
       final Class<?> cls, final Charset charset) throws IOException {
@@ -765,20 +730,19 @@ public final class IoUtils {
   }
 
   /**
-   * Writes the {@code toString()} value of each item in a collection to a
-   * {@code Writer} line by line, using the specified line ending.
+   * 将集合中每个项的 {@code toString()} 值逐行写入 {@code Writer}，使用指定的行结束符。
    *
-   * <p>Note that after calling this function, the {@code Writer} was NOT
-   * flushed NOR closed, instead, it MUST be flushed or closed by the caller.
+   * <p>注意调用此函数后，{@code Writer} 不会被刷新也不会被关闭，
+   * 而是必须由调用者刷新或关闭。
    *
    * @param lines
-   *     the lines to write, null entries produce blank lines.
+   *     要写入的行，null 条目产生空行。
    * @param lineEnding
-   *     the line separator to use, null is system default.
+   *     要使用的行分隔符，null 表示系统默认值。
    * @param writer
-   *     the {@code Writer} to write to, not null, not closed.
+   *     要写入的 {@code Writer}，非 null，未关闭。
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生 I/O 错误
    */
   public static void writeLines(final Iterable<String> lines,
       @Nullable final String lineEnding, final Writer writer)
@@ -796,22 +760,21 @@ public final class IoUtils {
   }
 
   /**
-   * Writes the {@code toString()} value of each item in a collection to a
-   * {@code Writer} line by line, using the specified line ending.
+   * 将集合中每个项的 {@code toString()} 值逐行写入 {@code Writer}，使用指定的行结束符。
    *
-   * <p>Note that after calling this function, the {@code OutputStream} was NOT
-   * flushed NOR closed, instead, it MUST be flushed or closed by the caller.
+   * <p>注意调用此函数后，{@code OutputStream} 不会被刷新也不会被关闭，
+   * 而是必须由调用者刷新或关闭。
    *
    * @param lines
-   *     the lines to write, null entries produce blank lines.
+   *     要写入的行，null 条目产生空行。
    * @param lineEnding
-   *     the line separator to use, null is system default.
+   *     要使用的行分隔符，null 表示系统默认值。
    * @param output
-   *     the {@code OutputStream} to write to, not null, not closed.
+   *     要写入的 {@code OutputStream}，非 null，未关闭。
    * @param charset
-   *     the charset of the encoding of the file, which can not be null.
+   *     文件编码的字符集，不能为 null。
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生 I/O 错误
    */
   public static void writeLines(final Iterable<String> lines,
       @Nullable final String lineEnding, final OutputStream output,
@@ -821,19 +784,18 @@ public final class IoUtils {
   }
 
   /**
-   * Writes the {@code toString()} value of each item in a collection to a
-   * file line by line, using the specified line ending.
+   * 将集合中每个项的 {@code toString()} 值逐行写入文件，使用指定的行结束符。
    *
    * @param lines
-   *     the lines to write, null entries produce blank lines.
+   *     要写入的行，null 条目产生空行。
    * @param lineEnding
-   *     the line separator to use, null is system default.
+   *     要使用的行分隔符，null 表示系统默认值。
    * @param file
-   *     the path of file to write to, not null, not closed.
+   *     要写入的文件路径，非 null，未关闭。
    * @param charset
-   *     the charset of the encoding of the file, which can not be null.
+   *     文件编码的字符集，不能为 null。
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生 I/O 错误
    */
   public static void writeLines(final Iterable<String> lines,
       @Nullable final String lineEnding, final File file,
@@ -844,19 +806,18 @@ public final class IoUtils {
   }
 
   /**
-   * Writes the {@code toString()} value of each item in a collection to a
-   * file line by line, using the specified line ending.
+   * 将集合中每个项的 {@code toString()} 值逐行写入文件，使用指定的行结束符。
    *
    * @param lines
-   *     the lines to write, null entries produce blank lines.
+   *     要写入的行，null 条目产生空行。
    * @param lineEnding
-   *     the line separator to use, null is system default.
+   *     要使用的行分隔符，null 表示系统默认值。
    * @param path
-   *     the path of file to write to, not null, not closed.
+   *     要写入的文件路径，非 null，未关闭。
    * @param charset
-   *     the charset of the encoding of the file, which can not be null.
+   *     文件编码的字符集，不能为 null。
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生 I/O 错误
    */
   public static void writeLines(final Iterable<String> lines,
       @Nullable final String lineEnding, final Path path,
@@ -867,23 +828,21 @@ public final class IoUtils {
   }
 
   /**
-   * Compare the contents of two input streams lexicographically.
+   * 按字典序比较两个输入流的内容。
    *
-   * <p>This method buffers the input internally using {@code BufferedInputStream}
-   * if they are not already buffered.
+   * <p>如果输入流尚未缓冲，此方法会使用 {@code BufferedInputStream} 在内部缓冲输入。
    *
-   * <p>Note that after calling this function, the two input streams were NOT
-   * closed by this function, instead, they MUST be closed by the caller.
+   * <p>注意调用此函数后，两个输入流不会被此函数关闭，
+   * 而是必须由调用者关闭。
    *
    * @param in1
-   *     the first stream
+   *     第一个流
    * @param in2
-   *     the second stream
-   * @return An integer less than, equal to or greater than 0, if the content of
-   *     the first input stream compares lexicographically less than, equal to,
-   *     or greater than the content of the second input stream.
+   *     第二个流
+   * @return 一个小于、等于或大于 0 的整数，如果第一个输入流的内容按字典序比较
+   *     小于、等于或大于第二个输入流的内容。
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生 I/O 错误
    */
   public static int compareContent(final InputStream in1, final InputStream in2)
       throws IOException {
@@ -913,23 +872,21 @@ public final class IoUtils {
   }
 
   /**
-   * Compare the contents of two readers lexicographically.
+   * 按字典序比较两个阅读器的内容。
    *
-   * <p>This method buffers the input internally using {@code BufferedReader} if
-   * they are not already buffered.
+   * <p>如果阅读器尚未缓冲，此方法会使用 {@code BufferedReader} 在内部缓冲输入。
    *
-   * <p>Note that after calling this function, the two readers were NOT closed by
-   * this function, instead, they MUST be closed by the caller.
+   * <p>注意调用此函数后，两个阅读器不会被此函数关闭，
+   * 而是必须由调用者关闭。
    *
    * @param in1
-   *     the first reader
+   *     第一个阅读器
    * @param in2
-   *     the second reader
-   * @return An integer less than, equal to or greater than 0, if the content of
-   *     the first reader compares lexicographically less than, equal to, or
-   *     greater than the content of the second reader.
+   *     第二个阅读器
+   * @return 一个小于、等于或大于 0 的整数，如果第一个阅读器的内容按字典序比较
+   *     小于、等于或大于第二个阅读器的内容。
    * @throws IOException
-   *     if an I/O error occurs
+   *     如果发生 I/O 错误
    */
   public static int compareContent(final Reader in1, final Reader in2)
       throws IOException {

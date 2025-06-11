@@ -54,9 +54,9 @@ import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.lang.StringUtils;
 
 /**
- * Provides functions to read data from the {@link InputStream} object.
+ * 提供从 {@link InputStream} 对象读取数据的函数。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class InputUtils {
 
@@ -79,41 +79,37 @@ public final class InputUtils {
   private static final int VAR_LONG_LAST_BYTE_MAX = 0x7F;
 
   /**
-   * Reads specified number of bytes from the input.
+   * 从输入流读取指定数量的字节。
    *
-   * <p>This method blocks until one of the following conditions occurs:</p>
+   * <p>此方法会一直阻塞，直到出现以下条件之一：</p>
    *
    * <ul>
-   * <li>{@code len} bytes of input data are available, in which case a
-   * normal return is made.</li>
-   * <li>End of file is detected, in which case an {@code EOFException} is
-   * thrown.</li>
-   * <li>An I/O error occurs, in which case an {@code IOException} other
-   * than {@code EOFException} is thrown.</li>
+   * <li>有 {@code len} 个字节的输入数据可用，在这种情况下正常返回。</li>
+   * <li>检测到文件结束，在这种情况下抛出 {@code EOFException}。</li>
+   * <li>发生 I/O 错误，在这种情况下抛出 {@code IOException}（而不是 {@code EOFException}）。</li>
    * </ul>
    *
-   * <p>If {@code len} is zero, then no bytes are read. Otherwise, the first
-   * byte read is stored into element {@code buffer[off]}, the next one
-   * into {@code buffer[off+1]}, and so on. The number of bytes read is
-   * always equal to {@code len}.</p>
+   * <p>如果 {@code len} 为零，则不读取任何字节。否则，读取的第一个字节存储到
+   * {@code buffer[off]} 元素中，下一个存储到 {@code buffer[off+1]}，以此类推。
+   * 读取的字节数始终等于 {@code len}。</p>
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param buf
-   *     the byte array where to store the bytes read from the input.
+   *     存储从输入流读取的字节的字节数组。
    * @param off
-   *     the start offset in array {@code buffer} at which the data is written.
+   *     在数组 {@code buffer} 中写入数据的起始偏移量。
    * @param len
-   *     the number of bytes need to read.
+   *     需要读取的字节数。
    * @throws NullPointerException
-   *     If {@code buffer} is null.
+   *     如果 {@code buffer} 为 null。
    * @throws IndexOutOfBoundsException
-   *     If {@code off} is negative, {@code len} is negative, or {@code len} is
-   *     greater than {@code buff.length - off}.
+   *     如果 {@code off} 为负数，{@code len} 为负数，或 {@code len} 大于
+   *     {@code buff.length - off}。
    * @throws EOFException
-   *     if this input reaches the end before reading {@code len} bytes.
+   *     如果此输入在读取 {@code len} 个字节之前到达末尾。
    * @throws IOException
-   *     if an I/O error occurs.
+   *     如果发生 I/O 错误。
    */
   public static void readFully(final InputStream in, final byte[] buf,
       final int off, final int len) throws IOException {
@@ -136,16 +132,15 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code boolean} value from the input.
+   * 从输入流读取一个 {@code boolean} 值。
    *
    * @param in
-   *     the input source where to read the data.
-   * @return a {@code boolean} value read from the input.
+   *     读取数据的输入源。
+   * @return 从输入流读取的 {@code boolean} 值。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code boolean}
-   *     value.
+   *     如果输入在读取完整的 {@code boolean} 值之前到达末尾。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static boolean readBoolean(final InputStream in) throws IOException {
     final int ch = in.read();
@@ -156,21 +151,19 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code Boolean} object from the input.
+   * 从输入流读取一个 {@code Boolean} 对象。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code Boolean} object to be read could be a null
-   *     value; otherwise, if the {@code Boolean} object read from the input is
-   *     null, an {@code InvalidFormatException} will be thrown.
-   * @return a {@code Boolean} object read from the input, which could be {@code
-   *     null}.
+   *     如果为 true，要读取的 {@code Boolean} 对象可以是 null 值；
+   *     否则，如果从输入流读取的 {@code Boolean} 对象为 null，
+   *     将抛出 {@code InvalidFormatException}。
+   * @return 从输入流读取的 {@code Boolean} 对象，可能为 {@code null}。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code Boolean}
-   *     object.
+   *     如果输入在读取完整的 {@code Boolean} 对象之前到达末尾。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Boolean readBooleanObject(final InputStream in,
       final boolean allowNull) throws IOException {
@@ -185,36 +178,34 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code char} value from the input.
+   * 从输入流读取一个 {@code char} 值。
    *
    * @param in
-   *     the input source where to read the data.
-   * @return a {@code char} value read from the input.
+   *     读取数据的输入源。
+   * @return 从输入流读取的 {@code char} 值。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code char}
-   *     value.
+   *     如果输入在读取完整的 {@code char} 值之前到达末尾。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static char readChar(final InputStream in) throws IOException {
     return (char) readVarShort(in);
   }
 
   /**
-   * Reads a {@code Character} object from the input.
+   * 从输入流读取一个 {@code Character} 对象。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code Character} object to be read could be a null
-   *     value; otherwise, if the {@code Character} object read from the input
-   *     is null, an {@code InvalidFormatException} will be thrown.
-   * @return a {@code Character} object read from the input.
+   *     如果为 true，要读取的 {@code Character} 对象可以是 null 值；
+   *     否则，如果从输入流读取的 {@code Character} 对象为 null，
+   *     将抛出 {@code InvalidFormatException}。
+   * @return 从输入流读取的 {@code Character} 对象。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code Character}
-   *     object.
+   *     如果输入在读取完整的 {@code Character} 对象之前到达末尾。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Character readCharObject(final InputStream in,
       final boolean allowNull) throws IOException {
@@ -229,16 +220,15 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code byte} value from the input.
+   * 从输入流读取一个 {@code byte} 值。
    *
    * @param in
-   *     the input source where to read the data.
-   * @return a {@code byte} value read from the input.
+   *     读取数据的输入源。
+   * @return 从输入流读取的 {@code byte} 值。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code byte}
-   *     value.
+   *     如果输入在读取完整的 {@code byte} 值之前到达末尾。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static byte readByte(final InputStream in) throws IOException {
     final int ch = in.read();
@@ -249,20 +239,19 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code Byte} object from the input.
+   * 从输入流读取一个 {@code Byte} 对象。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code Byte} object to be read could be a null
-   *     value; otherwise, if the {@code Byte} object read from the input is
-   *     null, an {@code InvalidFormatException} will be thrown.
-   * @return a {@code Byte} object read from the input.
+   *     如果为 true，要读取的 {@code Byte} 对象可以是 null 值；
+   *     否则，如果从输入流读取的 {@code Byte} 对象为 null，
+   *     将抛出 {@code InvalidFormatException}。
+   * @return 从输入流读取的 {@code Byte} 对象。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code Byte}
-   *     object.
+   *     如果输入在读取完整的 {@code Byte} 对象之前到达末尾。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Byte readByteObject(final InputStream in,
       final boolean allowNull) throws IOException {
@@ -277,16 +266,15 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code short} value from the input.
+   * 从输入流读取一个 {@code short} 值。
    *
    * @param in
-   *     the input source where to read the data.
-   * @return a {@code short} value read from the input.
+   *     读取数据的输入源。
+   * @return 从输入流读取的 {@code short} 值。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code short}
-   *     value.
+   *     如果输入在读取完整的 {@code short} 值之前到达末尾。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static short readShort(final InputStream in) throws IOException {
     final int ch1 = in.read();
@@ -298,20 +286,19 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code Short} object from the input.
+   * 从输入流读取一个 {@code Short} 对象。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code Short} object to be read could be a null
-   *     value; otherwise, if the {@code Short} object read from the input is
-   *     null, an {@code InvalidFormatException} will be thrown.
-   * @return a {@code Short} object read from the input.
+   *     如果为 true，要读取的 {@code Short} 对象可以是 null 值；
+   *     否则，如果从输入流读取的 {@code Short} 对象为 null，
+   *     将抛出 {@code InvalidFormatException}。
+   * @return 从输入流读取的 {@code Short} 对象。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code Short}
-   *     object.
+   *     如果输入在读取完整的 {@code Short} 对象之前到达末尾。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Short readShortObject(final InputStream in,
       final boolean allowNull) throws IOException {
@@ -326,30 +313,26 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a variant length encoded {@code short} value from the input.
+   * 从输入流读取一个变长编码的 {@code short} 值。
    *
-   * <p>A variable-length format for positive integers is defined where the
-   * high-order bit of each byte indicates whether more bytes remain to be read.
-   * The low-order seven bits are appended as increasingly more significant bits
-   * in the resulting integer value. Thus values from zero to 127 may be stored
-   * in a single byte, values from 128 to 16,383 may be stored in two bytes, and
-   * so on. This provides compression while still being efficient to decode.
+   * <p>定义了一种用于正整数的变长格式，其中每个字节的高位指示是否还有更多字节需要读取。
+   * 低位的七个位作为结果整数值中越来越重要的位被追加。因此，0 到 127 的值可以存储在
+   * 单个字节中，128 到 16,383 的值可以存储在两个字节中，依此类推。这提供了压缩，
+   * 同时仍然高效解码。
    *
-   * <p>This function will read between one and three bytes. Smaller values
-   * take fewer bytes. Negative numbers are not supported.
+   * <p>此函数将读取一到三个字节。较小的值占用较少的字节。不支持负数。
    *
    * @param in
-   *     the input source where to read the data.
-   * @return a variant length encoded {@code short} value read from the input.
-   *     Note that the {@code short} value encoded is always a positive value,
-   *     therefore the returned value is always between 0 and 32767.
+   *     读取数据的输入源。
+   * @return 从输入流读取的变长编码的 {@code short} 值。
+   *     注意，编码的 {@code short} 值始终是正值，
+   *     因此返回值始终在 0 到 32767 之间。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code short}
-   *     value.
+   *     如果输入在读取完整的 {@code short} 值之前到达末尾。
    * @throws InvalidFormatException
-   *     if the {@code short} value is not correctly encoded.
+   *     如果 {@code short} 值编码不正确。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static short readVarShort(final InputStream in) throws IOException {
     int ch = in.read();
@@ -380,20 +363,19 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a variable length {@code Short} object from the input.
+   * 从输入流读取一个变长编码的 {@code Short} 对象。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code Short} object to be read could be a null
-   *     value; otherwise, if the {@code Short} object read from the input is
-   *     null, an {@code InvalidFormatException} will be thrown.
-   * @return a {@code Short} object read from the input.
+   *     如果为 true，要读取的 {@code Short} 对象可以是 null 值；
+   *     否则，如果从输入流读取的 {@code Short} 对象为 null，
+   *     将抛出 {@code InvalidFormatException}。
+   * @return 从输入流读取的 {@code Short} 对象。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code Short}
-   *     object.
+   *     如果输入在读取完整的 {@code Short} 对象之前到达末尾。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Short readVarShortObject(final InputStream in,
       final boolean allowNull) throws IOException {
@@ -408,16 +390,15 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code int} value from the input.
+   * 从输入流读取一个 {@code int} 值。
    *
    * @param in
-   *     the input source where to read the data.
-   * @return a {@code int} value read from the input.
+   *     读取数据的输入源。
+   * @return 从输入流读取的 {@code int} 值。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code int}
-   *     value.
+   *     如果输入在读取完整的 {@code int} 值之前到达末尾。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static int readInt(final InputStream in) throws IOException {
     final int ch1 = in.read();
@@ -434,20 +415,19 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code Integer} object from the input.
+   * 从输入流读取一个 {@code Integer} 对象。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code Integer} object to be read could be a null
-   *     value; otherwise, if the {@code Integer} object read from the input is
-   *     null, an {@code InvalidFormatException} will be thrown.
-   * @return a {@code Integer} object read from the input.
+   *     如果为 true，要读取的 {@code Integer} 对象可以是 null 值；
+   *     否则，如果从输入流读取的 {@code Integer} 对象为 null，
+   *     将抛出 {@code InvalidFormatException}。
+   * @return 从输入流读取的 {@code Integer} 对象。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code Integer}
-   *     object.
+   *     如果输入在读取完整的 {@code Integer} 对象之前到达末尾。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Integer readIntObject(final InputStream in,
       final boolean allowNull) throws IOException {
@@ -462,31 +442,26 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a variant length encoded {@code int} value from the input.
+   * 从输入流读取一个变长编码的 {@code int} 值。
    *
-   * <p>A variable-length format for positive integers is defined where the
-   * high-order bit of each byte indicates whether more bytes remain to be read.
-   * The low-order seven bits are appended as increasingly more significant bits
-   * in the resulting integer value. Thus values from zero to 127 may be stored
-   * in a single byte, values from 128 to 16,383 may be stored in two bytes, and
-   * so on. This provides compression while still being efficient to
-   * decode.</p>
+   * <p>定义了一种用于正整数的变长格式，其中每个字节的高位指示是否还有更多字节需要读取。
+   * 低位的七个位作为结果整数值中越来越重要的位被追加。因此，0 到 127 的值可以存储在
+   * 单个字节中，128 到 16,383 的值可以存储在两个字节中，依此类推。这提供了压缩，
+   * 同时仍然高效解码。</p>
    *
-   * <p>This function will read between one and five bytes. Smaller values take
-   * fewer bytes. Negative numbers are not supported.</p>
+   * <p>此函数将读取一到五个字节。较小的值占用较少的字节。不支持负数。</p>
    *
    * @param in
-   *     the input source where to read the data.
-   * @return a variant length encoded {@code int} value read from the input.
-   *     Note that the {@code int} value encoded is always a positive value,
-   *     therefore the returned value is always between 0 and 2147483647.
+   *     读取数据的输入源。
+   * @return 从输入流读取的变长编码的 {@code int} 值。
+   *     注意，编码的 {@code int} 值始终是正值，
+   *     因此返回值始终在 0 到 2147483647 之间。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code int}
-   *     value.
+   *     如果输入在读取完整的 {@code int} 值之前到达末尾。
    * @throws InvalidFormatException
-   *     if the {@code int} value is not correctly encoded.
+   *     如果 {@code int} 值编码不正确。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static int readVarInt(final InputStream in) throws IOException {
     int ch = in.read();
@@ -516,20 +491,19 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a variable length {@code Integer} object from the input.
+   * 从输入流读取一个变长编码的 {@code Integer} 对象。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code Integer} object to be read could be a null
-   *     value; otherwise, if the {@code Integer} object read from the input is
-   *     null, an {@code InvalidFormatException} will be thrown.
-   * @return a {@code Integer} object read from the input.
+   *     如果为 true，要读取的 {@code Integer} 对象可以是 null 值；
+   *     否则，如果从输入流读取的 {@code Integer} 对象为 null，
+   *     将抛出 {@code InvalidFormatException}。
+   * @return 从输入流读取的 {@code Integer} 对象。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code Integer}
-   *     object.
+   *     如果输入在读取完整的 {@code Integer} 对象之前到达末尾。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Integer readVarIntObject(final InputStream in,
       final boolean allowNull) throws IOException {
@@ -544,16 +518,15 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code long} value from the input.
+   * 从输入流读取一个 {@code long} 值。
    *
    * @param in
-   *     the input source where to read the data.
-   * @return a {@code long} value read from the input.
+   *     读取数据的输入源。
+   * @return 从输入流读取的 {@code long} 值。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code long}
-   *     value.
+   *     如果输入在读取完整的 {@code long} 值之前到达末尾。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static long readLong(final InputStream in) throws IOException {
     final byte[] buffer = new byte[LONG_BYTES];
@@ -571,20 +544,19 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code Long} object from the input.
+   * 从输入流读取一个 {@code Long} 对象。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code Long} object to be read could be a null
-   *     value; otherwise, if the {@code Long} object read from the input is
-   *     null, an {@code InvalidFormatException} will be thrown.
-   * @return a {@code Long} object read from the input.
+   *     如果为 true，要读取的 {@code Long} 对象可以是 null 值；
+   *     否则，如果从输入流读取的 {@code Long} 对象为 null，
+   *     将抛出 {@code InvalidFormatException}。
+   * @return 从输入流读取的 {@code Long} 对象。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code Long}
-   *     object.
+   *     如果输入在读取完整的 {@code Long} 对象之前到达末尾。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Long readLongObject(final InputStream in, final boolean allowNull)
       throws IOException {
@@ -599,32 +571,26 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a variant length encoded {@code long} value from the input.
+   * 从输入流读取一个变长编码的 {@code long} 值。
    *
-   * <p>A variable-length format for positive integers is defined where the
-   * high-order bit of each byte indicates whether more bytes remain to be read.
-   * The low-order seven bits are appended as increasingly more significant bits
-   * in the resulting integer value. Thus values from zero to 127 may be stored
-   * in a single byte, values from 128 to 16,383 may be stored in two bytes, and
-   * so on. This provides compression while still being efficient to
-   * decode.</p>
+   * <p>定义了一种用于正整数的变长格式，其中每个字节的高位指示是否还有更多字节需要读取。
+   * 低位的七个位作为结果整数值中越来越重要的位被追加。因此，0 到 127 的值可以存储在
+   * 单个字节中，128 到 16,383 的值可以存储在两个字节中，依此类推。这提供了压缩，
+   * 同时仍然高效解码。</p>
    *
-   * <p>This function will read between one and nine bytes. Smaller values take
-   * fewer bytes. Negative numbers are not supported.</p>
+   * <p>此函数将读取一到九个字节。较小的值占用较少的字节。不支持负数。</p>
    *
    * @param in
-   *     the input source where to read the data.
-   * @return a variant length encoded {@code long} value read from the input.
-   *     Note that the {@code long} value encoded is always a positive value,
-   *     therefore the returned value is always between 0 and
-   *     9223372036854775807.
+   *     读取数据的输入源。
+   * @return 从输入流读取的变长编码的 {@code long} 值。
+   *     注意，编码的 {@code long} 值始终是正值，
+   *     因此返回值始终在 0 到 9223372036854775807 之间。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code long}
-   *     value.
+   *     如果输入在读取完整的 {@code long} 值之前到达末尾。
    * @throws InvalidFormatException
-   *     if the {@code long} value is not correctly encoded.
+   *     如果 {@code long} 值编码不正确。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static long readVarLong(final InputStream in) throws IOException {
     int ch = in.read();
@@ -655,20 +621,19 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a variable length{@code Long} object from the input.
+   * 从输入流读取一个变长编码的 {@code Long} 对象。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code Long} object to be read could be a null
-   *     value; otherwise, if the {@code Long} object read from the input is
-   *     null, an {@code InvalidFormatException} will be thrown.
-   * @return a {@code Long} object read from the input.
+   *     如果为 true，要读取的 {@code Long} 对象可以是 null 值；
+   *     否则，如果从输入流读取的 {@code Long} 对象为 null，
+   *     将抛出 {@code InvalidFormatException}。
+   * @return 从输入流读取的 {@code Long} 对象。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code Long}
-   *     object.
+   *     如果输入在读取完整的 {@code Long} 对象之前到达末尾。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Long readVarLongObject(final InputStream in,
       final boolean allowNull) throws IOException {
@@ -683,16 +648,15 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code float} value from the input.
+   * 从输入流读取一个 {@code float} 值。
    *
    * @param in
-   *     the input source where to read the data.
-   * @return a {@code float} value read from the input.
+   *     读取数据的输入源。
+   * @return 从输入流读取的 {@code float} 值。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code float}
-   *     value.
+   *     如果输入在读取完整的 {@code float} 值之前到达末尾。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static float readFloat(final InputStream in) throws IOException {
     final int intBits = readInt(in);
@@ -700,20 +664,19 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code Float} object from the input.
+   * 从输入流读取一个 {@code Float} 对象。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code Float} object to be read could be a null
-   *     value; otherwise, if the {@code Float} object read from the input is
-   *     null, an {@code InvalidFormatException} will be thrown.
-   * @return a {@code Float} object read from the input.
+   *     如果为 true，要读取的 {@code Float} 对象可以是 null 值；
+   *     否则，如果从输入流读取的 {@code Float} 对象为 null，
+   *     将抛出 {@code InvalidFormatException}。
+   * @return 从输入流读取的 {@code Float} 对象。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code Float}
-   *     object.
+   *     如果输入在读取完整的 {@code Float} 对象之前到达末尾。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Float readFloatObject(final InputStream in,
       final boolean allowNull) throws IOException {
@@ -728,16 +691,15 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code double} value from the input.
+   * 从输入流读取一个 {@code double} 值。
    *
    * @param in
-   *     the input source where to read the data.
-   * @return a {@code double} value read from the input.
+   *     读取数据的输入源。
+   * @return 从输入流读取的 {@code double} 值。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code double}
-   *     value.
+   *     如果输入在读取完整的 {@code double} 值之前到达末尾。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static double readDouble(final InputStream in) throws IOException {
     final long longBits = readLong(in);
@@ -745,20 +707,19 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code Double} object from the input.
+   * 从输入流读取一个 {@code Double} 对象。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code Double} object to be read could be a null
-   *     value; otherwise, if the {@code Double} object read from the input is
-   *     null, an {@code InvalidFormatException} will be thrown.
-   * @return a {@code Double} object read from the input.
+   *     如果为 true，要读取的 {@code Double} 对象可以是 null 值；
+   *     否则，如果从输入流读取的 {@code Double} 对象为 null，
+   *     将抛出 {@code InvalidFormatException}。
+   * @return 从输入流读取的 {@code Double} 对象。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code Double}
-   *     object.
+   *     如果输入在读取完整的 {@code Double} 对象之前到达末尾。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Double readDoubleObject(final InputStream in,
       final boolean allowNull) throws IOException {
@@ -773,28 +734,25 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code String} value from the input.
+   * 从输入流读取一个 {@code String} 值。
    *
-   * <p>The {@code String} is encoded in the modified UTF-8 format, as
-   * described in the {@link java.io.DataInput} interface.</p>
+   * <p>{@code String} 以修改过的 UTF-8 格式编码，如 {@link java.io.DataInput} 
+   * 接口中所述。</p>
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code String} value to be read could be a null
-   *     value; otherwise, if the {@code String} value read from the input is
-   *     null, an {@code InvalidFormatException} will be thrown.
-   * @return a {@code String} value read from the input. Note that it could be
-   *     null if the value read from the input is a null and the argument
-   *     <code>allowNull</code> is true.
+   *     如果为 true，要读取的 {@code String} 值可以是 null 值；
+   *     否则，如果从输入流读取的 {@code String} 值为 null，
+   *     将抛出 {@code InvalidFormatException}。
+   * @return 从输入流读取的 {@code String} 值。注意，如果从输入流读取的值为 null
+   *     且参数 <code>allowNull</code> 为 true，则返回值可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code String}
-   *     value.
+   *     如果输入在读取完整的 {@code String} 值之前到达末尾。
    * @throws InvalidFormatException
-   *     if the value read from the input is a null value and the argument
-   *     {@code allowNull} is false.
+   *     如果从输入流读取的值为 null 值且参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static String readString(final InputStream in,
       final boolean allowNull) throws IOException {
@@ -888,25 +846,22 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code Date} value from the input.
+   * 从输入流读取一个 {@code Date} 值。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code Date} value to be read could be a null value;
-   *     otherwise, if the {@code Date} value read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
-   * @return a {@code Date} value read from the input. Note that it could be
-   *     null if the value read from the input is a null and the argument
-   *     <code>allowNull</code> is true.
+   *     如果为 true，要读取的 {@code Date} 值可以是 null 值；
+   *     否则，如果从输入流读取的 {@code Date} 值为 null，
+   *     将抛出 {@code InvalidFormatException}。
+   * @return 从输入流读取的 {@code Date} 值。注意，如果从输入流读取的值为 null
+   *     且参数 <code>allowNull</code> 为 true，则返回值可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code Date }
-   *     value.
+   *     如果输入在读取完整的 {@code Date} 值之前到达末尾。
    * @throws InvalidFormatException
-   *     if the value read from the input is a null value and the argument
-   *     {@code allowNull} is false.
+   *     如果从输入流读取的值为 null 值且参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Date readDate(final InputStream in, final boolean allowNull)
       throws IOException {
@@ -922,25 +877,22 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code BigInteger} value from the input.
+   * 从输入流读取一个 {@code BigInteger} 值。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code BigInteger} value to be read could be a null
-   *     value; otherwise, if the {@code BigInteger} value read from the input
-   *     is null, an {@code InvalidFormatException} will be thrown.
-   * @return a {@code BigInteger} value read from the input. Note that it could
-   *     be null if the value read from the input is a null and the argument
-   *     <code>allowNull</code> is true.
+   *     如果为 true，要读取的 {@code BigInteger} 值可以是 null 值；
+   *     否则，如果从输入流读取的 {@code BigInteger} 值为 null，
+   *     将抛出 {@code InvalidFormatException}。
+   * @return 从输入流读取的 {@code BigInteger} 值。注意，如果从输入流读取的值为 null
+   *     且参数 <code>allowNull</code> 为 true，则返回值可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code
-   *     BigInteger} value.
+   *     如果输入在读取完整的 {@code BigInteger} 值之前到达末尾。
    * @throws InvalidFormatException
-   *     if the value read from the input is a null value and the argument
-   *     {@code allowNull} is false.
+   *     如果从输入流读取的值为 null 值且参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static BigInteger readBigInteger(final InputStream in, final boolean allowNull)
       throws IOException {
@@ -962,25 +914,22 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code BigDecimal} value from the input.
+   * 从输入流读取一个 {@code BigDecimal} 值。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code BigDecimal} value to be read could be a null
-   *     value; otherwise, if the {@code BigDecimal} value read from the input
-   *     is null, an {@code InvalidFormatException} will be thrown.
-   * @return a {@code BigDecimal} value read from the input. Note that it could
-   *     be null if the value read from the input is a null and the argument
-   *     <code>allowNull</code> is true.
+   *     如果为 true，要读取的 {@code BigDecimal} 值可以是 null 值；
+   *     否则，如果从输入流读取的 {@code BigDecimal} 值为 null，
+   *     将抛出 {@code InvalidFormatException}。
+   * @return 从输入流读取的 {@code BigDecimal} 值。注意，如果从输入流读取的值为 null
+   *     且参数 <code>allowNull</code> 为 true，则返回值可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code
-   *     BigDecimal} value.
+   *     如果输入在读取完整的 {@code BigDecimal} 值之前到达末尾。
    * @throws InvalidFormatException
-   *     if the value read from the input is a null value and the argument
-   *     {@code allowNull} is false.
+   *     如果从输入流读取的值为 null 值且参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static BigDecimal readBigDecimal(final InputStream in, final boolean allowNull)
       throws IOException {
@@ -1004,25 +953,22 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code Class} value from the input.
+   * 从输入流读取一个 {@code Class} 值。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code Class} value to be read could be a null
-   *     value; otherwise, if the {@code Class} value read from the input is
-   *     null, an {@code InvalidFormatException} will be thrown.
-   * @return a {@code Class} value read from the input. Note that it could be
-   *     null if the value read from the input is a null and the argument
-   *     <code>allowNull</code> is true.
+   *     如果为 true，要读取的 {@code Class} 值可以是 null 值；
+   *     否则，如果从输入流读取的 {@code Class} 值为 null，
+   *     将抛出 {@code InvalidFormatException}。
+   * @return 从输入流读取的 {@code Class} 值。注意，如果从输入流读取的值为 null
+   *     且参数 <code>allowNull</code> 为 true，则返回值可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code Class }
-   *     value.
+   *     如果输入在读取完整的 {@code Class} 值之前到达末尾。
    * @throws InvalidFormatException
-   *     if the value read from the input is a null value and the argument
-   *     {@code allowNull} is false.
+   *     如果从输入流读取的值为 null 值且参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Class<?> readClass(final InputStream in, final boolean allowNull)
       throws IOException {
@@ -1044,29 +990,26 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code Enum} value from the input.
+   * 从输入流读取一个 {@code Enum} 值。
    *
    * @param <T>
-   *     the enumeration type.
+   *     枚举类型。
    * @param enumClass
-   *     the class object of the {@code Enum} type.
+   *     {@code Enum} 类型的类对象。
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code Enum} value to be read could be a null value;
-   *     otherwise, if the {@code Enum} value read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
-   * @return a {@code Enum} value read from the input. Note that it could be
-   *     null if the value read from the input is a null and the argument
-   *     <code>allowNull</code> is true.
+   *     如果为 true，要读取的 {@code Enum} 值可以是 null 值；
+   *     否则，如果从输入流读取的 {@code Enum} 值为 null，
+   *     将抛出 {@code InvalidFormatException}。
+   * @return 从输入流读取的 {@code Enum} 值。注意，如果从输入流读取的值为 null
+   *     且参数 <code>allowNull</code> 为 true，则返回值可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code Enum }
-   *     value.
+   *     如果输入在读取完整的 {@code Enum} 值之前到达末尾。
    * @throws InvalidFormatException
-   *     if the value read from the input is a null value and the argument
-   *     {@code allowNull} is false.
+   *     如果从输入流读取的值为 null 值且参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static <T extends Enum<T>> T readEnum(final Class<T> enumClass,
       final InputStream in, final boolean allowNull) throws IOException {
@@ -1087,30 +1030,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code boolean} array from the input.
+   * 从输入流读取一个 {@code boolean} 数组。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code boolean} array to be read could be a null
-   *     value; otherwise, if the {@code boolean} array read from the input is
-   *     null, an {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code boolean} 数组可以是 null 值；
+   *     否则，如果从输入流读取的 {@code boolean} 数组为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code boolean} array used to store the result. It could be null.
-   * @return a {@code boolean} array read from the input. If the length of the
-   *     result array is of the same as the length of the argument {@code
-   *     result}, the returned values are stored in the argument {@code result};
-   *     otherwise, a new {@code boolean} array is created to store the returned
-   *     values. Note that the returned array may be null if {@code allowNull}
-   *     is true and the array read from the input is a null value.
+   *     用于存储结果的 {@code boolean} 数组。可以为 null。
+   * @return 从输入流读取的 {@code boolean} 数组。如果结果数组的长度与参数 {@code buffer}
+   *     的长度相同，则返回值存储在参数 {@code buffer} 中；
+   *     否则，创建一个新的 {@code boolean} 数组来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的数组为 null 值，
+   *     则返回的数组可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code boolean}
-   *     array.
+   *     如果输入在读取完整的 {@code boolean} 数组之前到达末尾。
    * @throws InvalidFormatException
-   *     if the array read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的数组为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static boolean[] readBooleanArray(final InputStream in,
       final boolean allowNull, @Nullable final boolean[] buffer)
@@ -1140,31 +1080,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code boolean} list from the input.
+   * 从输入流读取一个 {@code boolean} 列表。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code boolean} list to be read could be a null
-   *     value; otherwise, if the {@code boolean} list read from the input is
-   *     null, an {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code boolean} 列表可以是 null 值；
+   *     否则，如果从输入流读取的 {@code boolean} 列表为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code boolean} list used to store the result. It could be null.
-   * @return a {@code boolean} list read from the input. If the argument {@code
-   *     result} is not null, and the list to be read is not a null value, the
-   *     argument {@code result} is cleared and the returned values are stored
-   *     in it; otherwise, a new array list of {@code boolean} is created to
-   *     store the returned values. Note that the returned list may be null if
-   *     {@code allowNull} is true and the list read from the input is a null
-   *     value.
+   *     用于存储结果的 {@code boolean} 列表。可以为 null。
+   * @return 从输入流读取的 {@code boolean} 列表。如果参数 {@code buffer} 不为 null，
+   *     且要读取的列表不是 null 值，则参数 {@code buffer} 被清空并将返回值存储在其中；
+   *     否则，创建一个新的 {@code boolean} 数组列表来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的列表为 null 值，
+   *     则返回的列表可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code boolean}
-   *     list.
+   *     如果输入在读取完整的 {@code boolean} 列表之前到达末尾。
    * @throws InvalidFormatException
-   *     if the list read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的列表为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static BooleanList readBooleanList(final InputStream in,
       final boolean allowNull, @Nullable final BooleanList buffer)
@@ -1201,30 +1137,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code boolean} set from the input.
+   * 从输入流读取一个 {@code boolean} 集合。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code boolean} set to be read could be a null
-   *     value; otherwise, if the {@code boolean} set read from the input is
-   *     null, an {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code boolean} 集合可以是 null 值；
+   *     否则，如果从输入流读取的 {@code boolean} 集合为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code boolean} set used to store the result. It could be null.
-   * @return a {@code boolean} set read from the input. If the argument {@code
-   *     result} is not null, and the set to be read is not a null value, the
-   *     argument {@code result} is cleared and the returned values are stored
-   *     in it; otherwise, a new hash set of {@code boolean} is created to store
-   *     the returned values. Note that the returned set may be null if {@code
-   *     allowNull} is true and the set read from the input is a null value.
+   *     用于存储结果的 {@code boolean} 集合。可以为 null。
+   * @return 从输入流读取的 {@code boolean} 集合。如果参数 {@code buffer} 不为 null，
+   *     且要读取的集合不是 null 值，则参数 {@code buffer} 被清空并将返回值存储在其中；
+   *     否则，创建一个新的 {@code boolean} 哈希集合来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的集合为 null 值，
+   *     则返回的集合可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code boolean}
-   *     set.
+   *     如果输入在读取完整的 {@code boolean} 集合之前到达末尾。
    * @throws InvalidFormatException
-   *     if the set read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的集合为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Set<Boolean> readBooleanSet(final InputStream in,
       final boolean allowNull, @Nullable final Set<Boolean> buffer)
@@ -1261,30 +1194,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code char} array from the input.
+   * 从输入流读取一个 {@code char} 数组。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code char} array to be read could be a null value;
-   *     otherwise, if the {@code char} array read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code char} 数组可以是 null 值；
+   *     否则，如果从输入流读取的 {@code char} 数组为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code char} array used to store the result. It could be null.
-   * @return a {@code char} array read from the input. If the length of the
-   *     result array is of the same as the length of the argument {@code
-   *     result}, the returned values are stored in the argument {@code result};
-   *     otherwise, a new {@code char} array is created to store the returned
-   *     values. Note that the returned array may be null if {@code allowNull}
-   *     is true and the array read from the input is a null value.
+   *     用于存储结果的 {@code char} 数组。可以为 null。
+   * @return 从输入流读取的 {@code char} 数组。如果结果数组的长度与参数 {@code buffer}
+   *     的长度相同，则返回值存储在参数 {@code buffer} 中；
+   *     否则，创建一个新的 {@code char} 数组来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的数组为 null 值，
+   *     则返回的数组可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code char}
-   *     array.
+   *     如果输入在读取完整的 {@code char} 数组之前到达末尾。
    * @throws InvalidFormatException
-   *     if the array read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的数组为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static char[] readCharArray(final InputStream in, final boolean allowNull,
       @Nullable final char[] buffer) throws IOException {
@@ -1313,30 +1243,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code char} list from the input.
+   * 从输入流读取一个 {@code char} 列表。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code char} list to be read could be a null value;
-   *     otherwise, if the {@code char} list read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code char} 列表可以是 null 值；
+   *     否则，如果从输入流读取的 {@code char} 列表为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code char} list used to store the result. It could be null.
-   * @return a {@code char} list read from the input. If the argument {@code
-   *     result} is not null, and the list to be read is not a null value, the
-   *     argument {@code result} is cleared and the returned values are stored
-   *     in it; otherwise, a new array list of {@code char} is created to store
-   *     the returned values. Note that the returned list may be null if {@code
-   *     allowNull} is true and the list read from the input is a null value.
+   *     用于存储结果的 {@code char} 列表。可以为 null。
+   * @return 从输入流读取的 {@code char} 列表。如果参数 {@code buffer} 不为 null，
+   *     且要读取的列表不是 null 值，则参数 {@code buffer} 被清空并将返回值存储在其中；
+   *     否则，创建一个新的 {@code char} 数组列表来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的列表为 null 值，
+   *     则返回的列表可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code char}
-   *     list.
+   *     如果输入在读取完整的 {@code char} 列表之前到达末尾。
    * @throws InvalidFormatException
-   *     if the list read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的列表为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static CharList readCharList(final InputStream in,
       final boolean allowNull, @Nullable final CharList buffer)
@@ -1373,30 +1300,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code char} set from the input.
+   * 从输入流读取一个 {@code char} 集合。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code char} set to be read could be a null value;
-   *     otherwise, if the {@code char} set read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code char} 集合可以是 null 值；
+   *     否则，如果从输入流读取的 {@code char} 集合为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code char} set used to store the result. It could be null.
-   * @return a {@code char} set read from the input. If the argument {@code
-   *     result} is not null, and the set to be read is not a null value, the
-   *     argument {@code result} is cleared and the returned values are stored
-   *     in it; otherwise, a new hash set of {@code char} is created to store
-   *     the returned values. Note that the returned set may be null if {@code
-   *     allowNull} is true and the set read from the input is a null value.
+   *     用于存储结果的 {@code char} 集合。可以为 null。
+   * @return 从输入流读取的 {@code char} 集合。如果参数 {@code buffer} 不为 null，
+   *     且要读取的集合不是 null 值，则参数 {@code buffer} 被清空并将返回值存储在其中；
+   *     否则，创建一个新的 {@code char} 哈希集合来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的集合为 null 值，
+   *     则返回的集合可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code char}
-   *     set.
+   *     如果输入在读取完整的 {@code char} 集合之前到达末尾。
    * @throws InvalidFormatException
-   *     if the set read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的集合为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Set<Character> readCharSet(final InputStream in,
       final boolean allowNull, @Nullable final Set<Character> buffer)
@@ -1433,30 +1357,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code byte} array from the input.
+   * 从输入流读取一个 {@code byte} 数组。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code byte} array to be read could be a null value;
-   *     otherwise, if the {@code byte} array read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code byte} 数组可以是 null 值；
+   *     否则，如果从输入流读取的 {@code byte} 数组为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code byte} array used to store the result. It could be null.
-   * @return a {@code byte} array read from the input. If the length of the
-   *     result array is of the same as the length of the argument {@code
-   *     result}, the returned values are stored in the argument {@code result};
-   *     otherwise, a new {@code byte} array is created to store the returned
-   *     values. Note that the returned array may be null if {@code allowNull}
-   *     is true and the array read from the input is a null value.
+   *     用于存储结果的 {@code byte} 数组。可以为 null。
+   * @return 从输入流读取的 {@code byte} 数组。如果结果数组的长度与参数 {@code buffer}
+   *     的长度相同，则返回值存储在参数 {@code buffer} 中；
+   *     否则，创建一个新的 {@code byte} 数组来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的数组为 null 值，
+   *     则返回的数组可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code byte}
-   *     array.
+   *     如果输入在读取完整的 {@code byte} 数组之前到达末尾。
    * @throws InvalidFormatException
-   *     if the array read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的数组为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static byte[] readByteArray(final InputStream in, final boolean allowNull,
       @Nullable final byte[] buffer) throws IOException {
@@ -1483,30 +1404,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code byte} list from the input.
+   * 从输入流读取一个 {@code byte} 列表。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code byte} list to be read could be a null value;
-   *     otherwise, if the {@code byte} list read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code byte} 列表可以是 null 值；
+   *     否则，如果从输入流读取的 {@code byte} 列表为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code byte} list used to store the result. It could be null.
-   * @return a {@code byte} list read from the input. If the argument {@code
-   *     result} is not null, and the list to be read is not a null value, the
-   *     argument {@code result} is cleared and the returned values are stored
-   *     in it; otherwise, a new array list of {@code byte} is created to store
-   *     the returned values. Note that the returned list may be null if {@code
-   *     allowNull} is true and the list read from the input is a null value.
+   *     用于存储结果的 {@code byte} 列表。可以为 null。
+   * @return 从输入流读取的 {@code byte} 列表。如果参数 {@code buffer} 不为 null，
+   *     且要读取的列表不是 null 值，则参数 {@code buffer} 被清空并将返回值存储在其中；
+   *     否则，创建一个新的 {@code byte} 数组列表来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的列表为 null 值，
+   *     则返回的列表可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code byte}
-   *     list.
+   *     如果输入在读取完整的 {@code byte} 列表之前到达末尾。
    * @throws InvalidFormatException
-   *     if the list read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的列表为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static ByteList readByteList(final InputStream in, final boolean allowNull,
       @Nullable final ByteList buffer) throws IOException {
@@ -1542,30 +1460,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code byte} set from the input.
+   * 从输入流读取一个 {@code byte} 集合。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code byte} set to be read could be a null value;
-   *     otherwise, if the {@code byte} set read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code byte} 集合可以是 null 值；
+   *     否则，如果从输入流读取的 {@code byte} 集合为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code byte} set used to store the result. It could be null.
-   * @return a {@code byte} set read from the input. If the argument {@code
-   *     result} is not null, and the set to be read is not a null value, the
-   *     argument {@code result} is cleared and the returned values are stored
-   *     in it; otherwise, a new hash set of {@code byte} is created to store
-   *     the returned values. Note that the returned set may be null if {@code
-   *     allowNull} is true and the set read from the input is a null value.
+   *     用于存储结果的 {@code byte} 集合。可以为 null。
+   * @return 从输入流读取的 {@code byte} 集合。如果参数 {@code buffer} 不为 null，
+   *     且要读取的集合不是 null 值，则参数 {@code buffer} 被清空并将返回值存储在其中；
+   *     否则，创建一个新的 {@code byte} 哈希集合来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的集合为 null 值，
+   *     则返回的集合可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code byte}
-   *     set.
+   *     如果输入在读取完整的 {@code byte} 集合之前到达末尾。
    * @throws InvalidFormatException
-   *     if the set read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的集合为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Set<Byte> readByteSet(final InputStream in, final boolean allowNull,
       @Nullable final Set<Byte> buffer) throws IOException {
@@ -1601,30 +1516,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code short} array from the input.
+   * 从输入流读取一个 {@code short} 数组。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code short} array to be read could be a null
-   *     value; otherwise, if the {@code short} array read from the input is
-   *     null, an {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code short} 数组可以是 null 值；
+   *     否则，如果从输入流读取的 {@code short} 数组为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code short} array used to store the result. It could be null.
-   * @return a {@code short} array read from the input. If the length of the
-   *     result array is of the same as the length of the argument {@code
-   *     result}, the returned values are stored in the argument {@code result};
-   *     otherwise, a new {@code short} array is created to store the returned
-   *     values. Note that the returned array may be null if {@code allowNull}
-   *     is true and the array read from the input is a null value.
+   *     用于存储结果的 {@code short} 数组。可以为 null。
+   * @return 从输入流读取的 {@code short} 数组。如果结果数组的长度与参数 {@code buffer}
+   *     的长度相同，则返回值存储在参数 {@code buffer} 中；
+   *     否则，创建一个新的 {@code short} 数组来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的数组为 null 值，
+   *     则返回的数组可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code short}
-   *     array.
+   *     如果输入在读取完整的 {@code short} 数组之前到达末尾。
    * @throws InvalidFormatException
-   *     if the array read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的数组为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static short[] readShortArray(final InputStream in, final boolean allowNull,
       @Nullable final short[] buffer) throws IOException {
@@ -1653,30 +1565,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code short} list from the input.
+   * 从输入流读取一个 {@code short} 列表。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code short} list to be read could be a null value;
-   *     otherwise, if the {@code short} list read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code short} 列表可以是 null 值；
+   *     否则，如果从输入流读取的 {@code short} 列表为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code short} list used to store the result. It could be null.
-   * @return a {@code short} list read from the input. If the argument {@code
-   *     result} is not null, and the list to be read is not a null value, the
-   *     argument {@code result} is cleared and the returned values are stored
-   *     in it; otherwise, a new array list of {@code short} is created to store
-   *     the returned values. Note that the returned list may be null if {@code
-   *     allowNull} is true and the list read from the input is a null value.
+   *     用于存储结果的 {@code short} 列表。可以为 null。
+   * @return 从输入流读取的 {@code short} 列表。如果参数 {@code buffer} 不为 null，
+   *     且要读取的列表不是 null 值，则参数 {@code buffer} 被清空并将返回值存储在其中；
+   *     否则，创建一个新的 {@code short} 数组列表来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的列表为 null 值，
+   *     则返回的列表可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code short}
-   *     list.
+   *     如果输入在读取完整的 {@code short} 列表之前到达末尾。
    * @throws InvalidFormatException
-   *     if the list read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的列表为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static ShortList readShortList(final InputStream in, final boolean allowNull,
       @Nullable final ShortList buffer) throws IOException {
@@ -1712,30 +1621,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code short} set from the input.
+   * 从输入流读取一个 {@code short} 集合。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code short} set to be read could be a null value;
-   *     otherwise, if the {@code short} set read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code short} 集合可以是 null 值；
+   *     否则，如果从输入流读取的 {@code short} 集合为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code short} set used to store the result. It could be null.
-   * @return a {@code short} set read from the input. If the argument {@code
-   *     result} is not null, and the set to be read is not a null value, the
-   *     argument {@code result} is cleared and the returned values are stored
-   *     in it; otherwise, a new hash set of {@code short} is created to store
-   *     the returned values. Note that the returned set may be null if {@code
-   *     allowNull} is true and the set read from the input is a null value.
+   *     用于存储结果的 {@code short} 集合。可以为 null。
+   * @return 从输入流读取的 {@code short} 集合。如果参数 {@code buffer} 不为 null，
+   *     且要读取的集合不是 null 值，则参数 {@code buffer} 被清空并将返回值存储在其中；
+   *     否则，创建一个新的 {@code short} 哈希集合来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的集合为 null 值，
+   *     则返回的集合可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code short}
-   *     set.
+   *     如果输入在读取完整的 {@code short} 集合之前到达末尾。
    * @throws InvalidFormatException
-   *     if the set read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的集合为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Set<Short> readShortSet(final InputStream in, final boolean allowNull,
       @Nullable final Set<Short> buffer) throws IOException {
@@ -1771,32 +1677,28 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a variable length encoded {@code short} array from the input.
+   * 从输入流读取一个变长编码的 {@code short} 数组。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code short} array to be read could be a null
-   *     value; otherwise, if the {@code short} array read from the input is
-   *     null, an {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code short} 数组可以是 null 值；
+   *     否则，如果从输入流读取的 {@code short} 数组为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code short} array used to store the result. It could be null.
-   * @return a variable length encoded {@code short} array read from the input.
-   *     If the length of the result array is of the same as the length of the
-   *     argument {@code result}, the returned values are stored in the argument
-   *     {@code result}; otherwise, a new {@code short} array is created to
-   *     store the returned values. Note that the returned array may be null if
-   *     {@code allowNull} is true and the array read from the input is a null
-   *     value.
+   *     用于存储结果的 {@code short} 数组。可以为 null。
+   * @return 从输入流读取的变长编码 {@code short} 数组。
+   *     如果结果数组的长度与参数 {@code buffer} 的长度相同，
+   *     则返回值存储在参数 {@code buffer} 中；否则，创建一个新的 {@code short} 数组来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的数组为 null 值，
+   *     则返回的数组可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code short}
-   *     array.
+   *     如果输入在读取完整的 {@code short} 数组之前到达末尾。
    * @throws InvalidFormatException
-   *     if the array read from the input is null, while the argument {@code
-   *     allowNull} is false; or a variable length encoded {@code short} value
-   *     has invalid format.
+   *     如果从输入流读取的数组为 null，而参数 {@code allowNull} 为 false；
+   *     或变长编码的 {@code short} 值格式无效。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static short[] readVarShortArray(final InputStream in, final boolean allowNull,
       @Nullable final short[] buffer) throws IOException {
@@ -1825,32 +1727,28 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a variable length encoded {@code short} list from the input.
+   * 从输入流读取一个变长编码的 {@code short} 列表。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code short} list to be read could be a null value;
-   *     otherwise, if the {@code short} list read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code short} 列表可以是 null 值；
+   *     否则，如果从输入流读取的 {@code short} 列表为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code short} list used to store the result. It could be null.
-   * @return a variable length encoded {@code short} list read from the input.
-   *     If the argument {@code result} is not null, and the list to be read is
-   *     not a null value, the argument {@code result} is cleared and the
-   *     returned values are stored in it; otherwise, a new array list of {@code
-   *     short} is created to store the returned values. Note that the returned
-   *     list may be null if {@code allowNull} is true and the list read from
-   *     the input is a null value.
+   *     用于存储结果的 {@code short} 列表。可以为 null。
+   * @return 从输入流读取的变长编码 {@code short} 列表。
+   *     如果参数 {@code buffer} 不为 null，且要读取的列表不是 null 值，
+   *     则参数 {@code buffer} 被清空并将返回值存储在其中；否则，创建一个新的 {@code short} 数组列表来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的列表为 null 值，
+   *     则返回的列表可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code short}
-   *     list.
+   *     如果输入在读取完整的 {@code short} 列表之前到达末尾。
    * @throws InvalidFormatException
-   *     if the list read from the input is null, while the argument {@code
-   *     allowNull} is false; or a variable length encoded {@code short} value
-   *     has invalid format.
+   *     如果从输入流读取的列表为 null，而参数 {@code allowNull} 为 false；
+   *     或变长编码的 {@code short} 值格式无效。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static ShortList readVarShortList(final InputStream in, final boolean allowNull,
       @Nullable final ShortList buffer) throws IOException {
@@ -1886,32 +1784,28 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a variable length encoded {@code short} set from the input.
+   * 从输入流读取一个变长编码的 {@code short} 集合。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code short} set to be read could be a null value;
-   *     otherwise, if the {@code short} set read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code short} 集合可以是 null 值；
+   *     否则，如果从输入流读取的 {@code short} 集合为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code short} set used to store the result. It could be null.
-   * @return a variable length encoded {@code short} set read from the input. If
-   *     the argument {@code result} is not null, and the set to be read is not
-   *     a null value, the argument {@code result} is cleared and the returned
-   *     values are stored in it; otherwise, a new hash set of {@code short} is
-   *     created to store the returned values. Note that the returned set may be
-   *     null if {@code allowNull} is true and the set read from the input is a
-   *     null value.
+   *     用于存储结果的 {@code short} 集合。可以为 null。
+   * @return 从输入流读取的变长编码 {@code short} 集合。如果参数 {@code buffer} 不为 null，
+   *     且要读取的集合不是 null 值，则参数 {@code buffer} 被清空并将返回值存储在其中；
+   *     否则，创建一个新的 {@code short} 哈希集合来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的集合为 null 值，
+   *     则返回的集合可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code short}
-   *     set.
+   *     如果输入在读取完整的 {@code short} 集合之前到达末尾。
    * @throws InvalidFormatException
-   *     if the set read from the input is null, while the argument {@code
-   *     allowNull} is false; or a variable length encoded {@code short} value
-   *     has invalid format.
+   *     如果从输入流读取的集合为 null，而参数 {@code allowNull} 为 false；
+   *     或变长编码的 {@code short} 值格式无效。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Set<Short> readVarShortSet(final InputStream in, final boolean allowNull,
       @Nullable final Set<Short> buffer) throws IOException {
@@ -1947,30 +1841,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code int} array from the input.
+   * 从输入流读取一个 {@code int} 数组。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code int} array to be read could be a null value;
-   *     otherwise, if the {@code int} array read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code int} 数组可以是 null 值；
+   *     否则，如果从输入流读取的 {@code int} 数组为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code int} array used to store the result. It could be null.
-   * @return a {@code int} array read from the input. If the length of the
-   *     result array is of the same as the length of the argument {@code
-   *     result}, the returned values are stored in the argument {@code result};
-   *     otherwise, a new {@code int} array is created to store the returned
-   *     values. Note that the returned array may be null if {@code allowNull}
-   *     is true and the array read from the input is a null value.
+   *     用于存储结果的 {@code int} 数组。可以为 null。
+   * @return 从输入流读取的 {@code int} 数组。如果结果数组的长度与参数 {@code buffer}
+   *     的长度相同，则返回值存储在参数 {@code buffer} 中；
+   *     否则，创建一个新的 {@code int} 数组来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的数组为 null 值，
+   *     则返回的数组可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code int}
-   *     array.
+   *     如果输入在读取完整的 {@code int} 数组之前到达末尾。
    * @throws InvalidFormatException
-   *     if the array read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的数组为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static int[] readIntArray(final InputStream in, final boolean allowNull,
       @Nullable final int[] buffer) throws IOException {
@@ -1999,30 +1890,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code int} list from the input.
+   * 从输入流读取一个 {@code int} 列表。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code int} list to be read could be a null value;
-   *     otherwise, if the {@code int} list read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code int} 列表可以是 null 值；
+   *     否则，如果从输入流读取的 {@code int} 列表为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code int} list used to store the result. It could be null.
-   * @return a {@code int} list read from the input. If the argument {@code
-   *     result} is not null, and the list to be read is not a null value, the
-   *     argument {@code result} is cleared and the returned values are stored
-   *     in it; otherwise, a new array list of {@code int} is created to store
-   *     the returned values. Note that the returned list may be null if {@code
-   *     allowNull} is true and the list read from the input is a null value.
+   *     用于存储结果的 {@code int} 列表。可以为 null。
+   * @return 从输入流读取的 {@code int} 列表。如果参数 {@code buffer} 不为 null，
+   *     且要读取的列表不是 null 值，则参数 {@code buffer} 被清空并将返回值存储在其中；
+   *     否则，创建一个新的 {@code int} 数组列表来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的列表为 null 值，
+   *     则返回的列表可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code int}
-   *     list.
+   *     如果输入在读取完整的 {@code int} 列表之前到达末尾。
    * @throws InvalidFormatException
-   *     if the list read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的列表为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static IntList readIntList(final InputStream in, final boolean allowNull,
       @Nullable final IntList buffer) throws IOException {
@@ -2058,29 +1946,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code int} set from an input stream.
+   * 从输入流读取一个 {@code int} 集合。
    *
    * @param in
-   *     the input stream.
+   *     输入流。
    * @param allowNull
-   *     if it is true, the {@code int} set to be read could be a null value;
-   *     otherwise, if the {@code int} set read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code int} 集合可以是 null 值；
+   *     否则，如果从输入流读取的 {@code int} 集合为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code int} set used to store the result. It could be null.
-   * @return a {@code int} set read from the input. If the argument {@code
-   *     result} is not null, and the set to be read is not a null value, the
-   *     argument {@code result} is cleared and the returned values are stored
-   *     in it; otherwise, a new hash set of {@code int} is created to store the
-   *     returned values. Note that the returned set may be null if {@code
-   *     allowNull} is true and the set read from the input is a null value.
+   *     用于存储结果的 {@code int} 集合。可以为 null。
+   * @return 从输入流读取的 {@code int} 集合。如果参数 {@code buffer} 不为 null，
+   *     且要读取的集合不是 null 值，则参数 {@code buffer} 被清空并将返回值存储在其中；
+   *     否则，创建一个新的 {@code int} 哈希集合来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的集合为 null 值，
+   *     则返回的集合可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code int} set.
+   *     如果输入在读取完整的 {@code int} 集合之前到达末尾。
    * @throws InvalidFormatException
-   *     if the set read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的集合为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Set<Integer> readIntSet(final InputStream in, final boolean allowNull,
       @Nullable final Set<Integer> buffer) throws IOException {
@@ -2116,31 +2002,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a variable length encoded {@code int} array from the input.
+   * 从输入流读取一个变长编码的 {@code int} 数组。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code int} array to be read could be a null value;
-   *     otherwise, if the {@code int} array read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code int} 数组可以是 null 值；
+   *     否则，如果从输入流读取的 {@code int} 数组为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code int} array used to store the result. It could be null.
-   * @return a variable length encoded {@code int} array read from the input. If
-   *     the length of the result array is of the same as the length of the
-   *     argument {@code result}, the returned values are stored in the argument
-   *     {@code result}; otherwise, a new {@code int} array is created to store
-   *     the returned values. Note that the returned array may be null if {@code
-   *     allowNull} is true and the array read from the input is a null value.
+   *     用于存储结果的 {@code int} 数组。可以为 null。
+   * @return 从输入流读取的变长编码 {@code int} 数组。如果结果数组的长度与参数 {@code buffer}
+   *     的长度相同，则返回值存储在参数 {@code buffer} 中；否则，创建一个新的 {@code int} 数组来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的数组为 null 值，
+   *     则返回的数组可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code int}
-   *     array.
+   *     如果输入在读取完整的 {@code int} 数组之前到达末尾。
    * @throws InvalidFormatException
-   *     if the array read from the input is null, while the argument {@code
-   *     allowNull} is false; or a variable length encoded {@code short} value
-   *     has invalid format.
+   *     如果从输入流读取的数组为 null，而参数 {@code allowNull} 为 false；
+   *     或变长编码的 {@code short} 值格式无效。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static int[] readVarIntArray(final InputStream in, final boolean allowNull,
       @Nullable final int[] buffer) throws IOException {
@@ -2169,32 +2051,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a variable length encoded {@code int} list from the input.
+   * 从输入流读取一个变长编码的 {@code int} 列表。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code int} list to be read could be a null value;
-   *     otherwise, if the {@code int} list read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code int} 列表可以是 null 值；
+   *     否则，如果从输入流读取的 {@code int} 列表为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code int} list used to store the result. It could be null.
-   * @return a variable length encoded {@code int} list read from the input. If
-   *     the argument {@code result} is not null, and the list to be read is not
-   *     a null value, the argument {@code result} is cleared and the returned
-   *     values are stored in it; otherwise, a new array list of {@code int} is
-   *     created to store the returned values. Note that the returned list may
-   *     be null if {@code allowNull} is true and the list read from the input
-   *     is a null value.
+   *     用于存储结果的 {@code int} 列表。可以为 null。
+   * @return 从输入流读取的变长编码 {@code int} 列表。如果参数 {@code buffer} 不为 null，
+   *     且要读取的列表不是 null 值，则参数 {@code buffer} 被清空并将返回值存储在其中；否则，创建一个新的 {@code int} 数组列表来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的列表为 null 值，
+   *     则返回的列表可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code int}
-   *     list.
+   *     如果输入在读取完整的 {@code int} 列表之前到达末尾。
    * @throws InvalidFormatException
-   *     if the list read from the input is null, while the argument {@code
-   *     allowNull} is false; or a variable length encoded {@code short} value
-   *     has invalid format.
+   *     如果从输入流读取的列表为 null，而参数 {@code allowNull} 为 false；
+   *     或变长编码的 {@code short} 值格式无效。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static IntList readVarIntList(final InputStream in, final boolean allowNull,
       @Nullable final IntList buffer) throws IOException {
@@ -2230,31 +2107,28 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a variable length encoded {@code int} set from the input.
+   * 从输入流读取一个变长编码的 {@code int} 集合。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code int} set to be read could be a null value;
-   *     otherwise, if the {@code int} set read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code int} 集合可以是 null 值；
+   *     否则，如果从输入流读取的 {@code int} 集合为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code int} set used to store the result. It could be null.
-   * @return a variable length encoded {@code int} set read from the input. If
-   *     the argument {@code result} is not null, and the set to be read is not
-   *     a null value, the argument {@code result} is cleared and the returned
-   *     values are stored in it; otherwise, a new hash set of {@code int} is
-   *     created to store the returned values. Note that the returned set may be
-   *     null if {@code allowNull} is true and the set read from the input is a
-   *     null value.
+   *     用于存储结果的 {@code int} 集合。可以为 null。
+   * @return 从输入流读取的变长编码 {@code int} 集合。如果参数 {@code buffer} 不为 null，
+   *     且要读取的集合不是 null 值，则参数 {@code buffer} 被清空并将返回值存储在其中；
+   *     否则，创建一个新的 {@code int} 哈希集合来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的集合为 null 值，
+   *     则返回的集合可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code int} set.
+   *     如果输入在读取完整的 {@code int} 集合之前到达末尾。
    * @throws InvalidFormatException
-   *     if the set read from the input is null, while the argument {@code
-   *     allowNull} is false; or a variable length encoded {@code short} value
-   *     has invalid format.
+   *     如果从输入流读取的集合为 null，而参数 {@code allowNull} 为 false；
+   *     或变长编码的 {@code short} 值格式无效。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Set<Integer> readVarIntSet(final InputStream in, final boolean allowNull,
       @Nullable final Set<Integer> buffer) throws IOException {
@@ -2290,30 +2164,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code char} array from the input.
+   * 从输入流读取一个 {@code long} 数组。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code long} array to be read could be a null value;
-   *     otherwise, if the {@code long} array read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code long} 数组可以是 null 值；
+   *     否则，如果从输入流读取的 {@code long} 数组为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code long} array used to store the result. It could be null.
-   * @return a {@code long} array read from the input. If the length of the
-   *     result array is of the same as the length of the argument {@code
-   *     result}, the returned values are stored in the argument {@code result};
-   *     otherwise, a new {@code long} array is created to store the returned
-   *     values. Note that the returned array may be null if {@code allowNull}
-   *     is true and the array read from the input is a null value.
+   *     用于存储结果的 {@code long} 数组。可以为 null。
+   * @return 从输入流读取的 {@code long} 数组。如果结果数组的长度与参数 {@code buffer}
+   *     的长度相同，则返回值存储在参数 {@code buffer} 中；
+   *     否则，创建一个新的 {@code long} 数组来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的数组为 null 值，
+   *     则返回的数组可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code long}
-   *     array.
+   *     如果输入在读取完整的 {@code long} 数组之前到达末尾。
    * @throws InvalidFormatException
-   *     if the array read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的数组为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static long[] readLongArray(final InputStream in, final boolean allowNull,
       @Nullable final long[] buffer) throws IOException {
@@ -2342,30 +2213,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code long} list from the input.
+   * 从输入流读取一个 {@code long} 列表。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code long} list to be read could be a null value;
-   *     otherwise, if the {@code long} list read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code long} 列表可以是 null 值；
+   *     否则，如果从输入流读取的 {@code long} 列表为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code long} list used to store the result. It could be null.
-   * @return a {@code long} list read from the input. If the argument {@code
-   *     result} is not null, and the list to be read is not a null value, the
-   *     argument {@code result} is cleared and the returned values are stored
-   *     in it; otherwise, a new array list of {@code long} is created to store
-   *     the returned values. Note that the returned list may be null if {@code
-   *     allowNull} is true and the list read from the input is a null value.
+   *     用于存储结果的 {@code long} 列表。可以为 null。
+   * @return 从输入流读取的 {@code long} 列表。如果参数 {@code buffer} 不为 null，
+   *     且要读取的列表不是 null 值，则参数 {@code buffer} 被清空并将返回值存储在其中；
+   *     否则，创建一个新的 {@code long} 数组列表来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的列表为 null 值，
+   *     则返回的列表可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code long}
-   *     list.
+   *     如果输入在读取完整的 {@code long} 列表之前到达末尾。
    * @throws InvalidFormatException
-   *     if the list read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的列表为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static LongList readLongList(final InputStream in, final boolean allowNull,
       @Nullable final LongList buffer) throws IOException {
@@ -2401,30 +2269,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code long} set from the input.
+   * 从输入流读取一个 {@code long} 集合。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code long} set to be read could be a null value;
-   *     otherwise, if the {@code long} set read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code long} 集合可以是 null 值；
+   *     否则，如果从输入流读取的 {@code long} 集合为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code long} set used to store the result. It could be null.
-   * @return a {@code long} set read from the input. If the argument {@code
-   *     result} is not null, and the set to be read is not a null value, the
-   *     argument {@code result} is cleared and the returned values are stored
-   *     in it; otherwise, a new hash set of {@code long} is created to store
-   *     the returned values. Note that the returned set may be null if {@code
-   *     allowNull} is true and the set read from the input is a null value.
+   *     用于存储结果的 {@code long} 集合。可以为 null。
+   * @return 从输入流读取的 {@code long} 集合。如果参数 {@code buffer} 不为 null，
+   *     且要读取的集合不是 null 值，则参数 {@code buffer} 被清空并将返回值存储在其中；
+   *     否则，创建一个新的 {@code long} 哈希集合来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的集合为 null 值，
+   *     则返回的集合可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code long}
-   *     set.
+   *     如果输入在读取完整的 {@code long} 集合之前到达末尾。
    * @throws InvalidFormatException
-   *     if the set read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的集合为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Set<Long> readLongSet(final InputStream in, final boolean allowNull,
       @Nullable final Set<Long> buffer) throws IOException {
@@ -2460,31 +2325,28 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a variable length encoded {@code char} array from the input.
+   * 从输入流读取一个变长编码的 {@code long} 数组。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code long} array to be read could be a null value;
-   *     otherwise, if the {@code long} array read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code long} 数组可以是 null 值；
+   *     否则，如果从输入流读取的 {@code long} 数组为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code long} array used to store the result. It could be null.
-   * @return a variable length encoded {@code long} array read from the input.
-   *     If the length of the result array is of the same as the length of the
-   *     argument {@code result}, the returned values are stored in the argument
-   *     {@code result}; otherwise, a new {@code long} array is created to store
-   *     the returned values. Note that the returned array may be null if {@code
-   *     allowNull} is true and the array read from the input is a null value.
+   *     用于存储结果的 {@code long} 数组。可以为 null。
+   * @return 从输入流读取的变长编码 {@code long} 数组。
+   *     如果结果数组的长度与参数 {@code buffer} 的长度相同，
+   *     则返回值存储在参数 {@code buffer} 中；否则，创建一个新的 {@code long} 数组来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的数组为 null 值，
+   *     则返回的数组可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code long}
-   *     array.
+   *     如果输入在读取完整的 {@code long} 数组之前到达末尾。
    * @throws InvalidFormatException
-   *     if the array read from the input is null, while the argument {@code
-   *     allowNull} is false; or a variable length encoded {@code short} value
-   *     has invalid format.
+   *     如果从输入流读取的数组为 null，而参数 {@code allowNull} 为 false；
+   *     或变长编码的 {@code long} 值格式无效。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static long[] readVarLongArray(final InputStream in, final boolean allowNull,
       @Nullable final long[] buffer) throws IOException {
@@ -2513,32 +2375,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a variable length encoded {@code long} list from the input.
+   * 从输入流读取一个变长编码的 {@code long} 列表。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code long} list to be read could be a null value;
-   *     otherwise, if the {@code long} list read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code long} 列表可以是 null 值；
+   *     否则，如果从输入流读取的 {@code long} 列表为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code long} list used to store the result. It could be null.
-   * @return a variable length encoded {@code long} list read from the input. If
-   *     the argument {@code result} is not null, and the list to be read is not
-   *     a null value, the argument {@code result} is cleared and the returned
-   *     values are stored in it; otherwise, a new array list of {@code long} is
-   *     created to store the returned values. Note that the returned list may
-   *     be null if {@code allowNull} is true and the list read from the input
-   *     is a null value.
+   *     用于存储结果的 {@code long} 列表。可以为 null。
+   * @return 从输入流读取的变长编码 {@code long} 列表。如果参数 {@code buffer} 不为 null，
+   *     且要读取的列表不是 null 值，则参数 {@code buffer} 被清空并将返回值存储在其中；否则，创建一个新的 {@code long} 数组列表来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的列表为 null 值，
+   *     则返回的列表可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code long}
-   *     list.
+   *     如果输入在读取完整的 {@code long} 列表之前到达末尾。
    * @throws InvalidFormatException
-   *     if the list read from the input is null, while the argument {@code
-   *     allowNull} is false; or a variable length encoded {@code short} value
-   *     has invalid format.
+   *     如果从输入流读取的列表为 null，而参数 {@code allowNull} 为 false；
+   *     或变长编码的 {@code long} 值格式无效。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static LongList readVarLongList(final InputStream in, final boolean allowNull,
       @Nullable final LongList buffer) throws IOException {
@@ -2574,32 +2431,28 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a variable length encoded {@code long} set from the input.
+   * 从输入流读取一个变长编码的 {@code long} 集合。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code long} set to be read could be a null value;
-   *     otherwise, if the {@code long} set read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code long} 集合可以是 null 值；
+   *     否则，如果从输入流读取的 {@code long} 集合为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code long} set used to store the result. It could be null.
-   * @return a variable length encoded {@code long} set read from the input. If
-   *     the argument {@code result} is not null, and the set to be read is not
-   *     a null value, the argument {@code result} is cleared and the returned
-   *     values are stored in it; otherwise, a new hash set of {@code long} is
-   *     created to store the returned values. Note that the returned set may be
-   *     null if {@code allowNull} is true and the set read from the input is a
-   *     null value.
+   *     用于存储结果的 {@code long} 集合。可以为 null。
+   * @return 从输入流读取的变长编码 {@code long} 集合。如果参数 {@code buffer} 不为 null，
+   *     且要读取的集合不是 null 值，则参数 {@code buffer} 被清空并将返回值存储在其中；
+   *     否则，创建一个新的 {@code long} 哈希集合来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的集合为 null 值，
+   *     则返回的集合可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code long}
-   *     set.
+   *     如果输入在读取完整的 {@code long} 集合之前到达末尾。
    * @throws InvalidFormatException
-   *     if the set read from the input is null, while the argument {@code
-   *     allowNull} is false; or a variable length encoded {@code short} value
-   *     has invalid format.
+   *     如果从输入流读取的集合为 null，而参数 {@code allowNull} 为 false；
+   *     或变长编码的 {@code long} 值格式无效。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Set<Long> readVarLongSet(final InputStream in, final boolean allowNull,
       @Nullable final Set<Long> buffer) throws IOException {
@@ -2635,30 +2488,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code float} array from the input.
+   * 从输入流读取一个 {@code float} 数组。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code float} array to be read could be a null
-   *     value; otherwise, if the {@code float} array read from the input is
-   *     null, an {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code float} 数组可以是 null 值；
+   *     否则，如果从输入流读取的 {@code float} 数组为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code float} array used to store the result. It could be null.
-   * @return a {@code float} array read from the input. If the length of the
-   *     result array is of the same as the length of the argument {@code
-   *     result}, the returned values are stored in the argument {@code result};
-   *     otherwise, a new {@code float} array is created to store the returned
-   *     values. Note that the returned array may be null if {@code allowNull}
-   *     is true and the array read from the input is a null value.
+   *     用于存储结果的 {@code float} 数组。可以为 null。
+   * @return 从输入流读取的 {@code float} 数组。如果结果数组的长度与参数 {@code buffer}
+   *     的长度相同，则返回值存储在参数 {@code buffer} 中；
+   *     否则，创建一个新的 {@code float} 数组来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的数组为 null 值，
+   *     则返回的数组可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code float}
-   *     array.
+   *     如果输入在读取完整的 {@code float} 数组之前到达末尾。
    * @throws InvalidFormatException
-   *     if the array read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的数组为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static float[] readFloatArray(final InputStream in, final boolean allowNull,
       @Nullable final float[] buffer) throws IOException {
@@ -2687,30 +2537,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code float} list from the input.
+   * 从输入流读取一个 {@code float} 列表。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code float} list to be read could be a null value;
-   *     otherwise, if the {@code float} list read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code float} 列表可以是 null 值；
+   *     否则，如果从输入流读取的 {@code float} 列表为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code float} list used to store the result. It could be null.
-   * @return a {@code float} list read from the input. If the argument {@code
-   *     result} is not null, and the list to be read is not a null value, the
-   *     argument {@code result} is cleared and the returned values are stored
-   *     in it; otherwise, a new array list of {@code float} is created to store
-   *     the returned values. Note that the returned list may be null if {@code
-   *     allowNull} is true and the list read from the input is a null value.
+   *     用于存储结果的 {@code float} 列表。可以为 null。
+   * @return 从输入流读取的 {@code float} 列表。如果参数 {@code buffer} 不为 null，
+   *     且要读取的列表不是 null 值，则参数 {@code buffer} 被清空并将返回值存储在其中；
+   *     否则，创建一个新的 {@code float} 数组列表来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的列表为 null 值，
+   *     则返回的列表可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code float}
-   *     list.
+   *     如果输入在读取完整的 {@code float} 列表之前到达末尾。
    * @throws InvalidFormatException
-   *     if the list read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的列表为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static FloatList readFloatList(final InputStream in, final boolean allowNull,
       @Nullable final FloatList buffer) throws IOException {
@@ -2746,30 +2593,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code float} set from the input.
+   * 从输入流读取一个 {@code float} 集合。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code float} set to be read could be a null value;
-   *     otherwise, if the {@code float} set read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code float} 集合可以是 null 值；
+   *     否则，如果从输入流读取的 {@code float} 集合为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code float} set used to store the result. It could be null.
-   * @return a {@code float} set read from the input. If the argument {@code
-   *     result} is not null, and the set to be read is not a null value, the
-   *     argument {@code result} is cleared and the returned values are stored
-   *     in it; otherwise, a new hash set of {@code float} is created to store
-   *     the returned values. Note that the returned set may be null if {@code
-   *     allowNull} is true and the set read from the input is a null value.
+   *     用于存储结果的 {@code float} 集合。可以为 null。
+   * @return 从输入流读取的 {@code float} 集合。如果参数 {@code buffer} 不为 null，
+   *     且要读取的集合不是 null 值，则参数 {@code buffer} 被清空并将返回值存储在其中；
+   *     否则，创建一个新的 {@code float} 哈希集合来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的集合为 null 值，
+   *     则返回的集合可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code float}
-   *     set.
+   *     如果输入在读取完整的 {@code float} 集合之前到达末尾。
    * @throws InvalidFormatException
-   *     if the set read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的集合为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Set<Float> readFloatSet(final InputStream in, final boolean allowNull,
       @Nullable final Set<Float> buffer) throws IOException {
@@ -2805,30 +2649,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code double} array from the input.
+   * 从输入流读取一个 {@code double} 数组。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code double} array to be read could be a null
-   *     value; otherwise, if the {@code double} array read from the input is
-   *     null, an {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code double} 数组可以是 null 值；
+   *     否则，如果从输入流读取的 {@code double} 数组为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code double} array used to store the result. It could be null.
-   * @return a {@code double} array read from the input. If the length of the
-   *     result array is of the same as the length of the argument {@code
-   *     result}, the returned values are stored in the argument {@code result};
-   *     otherwise, a new {@code double} array is created to store the returned
-   *     values. Note that the returned array may be null if {@code allowNull}
-   *     is true and the array read from the input is a null value.
+   *     用于存储结果的 {@code double} 数组。可以为 null。
+   * @return 从输入流读取的 {@code double} 数组。如果结果数组的长度与参数 {@code buffer}
+   *     的长度相同，则返回值存储在参数 {@code buffer} 中；
+   *     否则，创建一个新的 {@code double} 数组来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的数组为 null 值，
+   *     则返回的数组可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code double}
-   *     array.
+   *     如果输入在读取完整的 {@code double} 数组之前到达末尾。
    * @throws InvalidFormatException
-   *     if the array read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的数组为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static double[] readDoubleArray(final InputStream in, final boolean allowNull,
       @Nullable final double[] buffer) throws IOException {
@@ -2857,31 +2698,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code double} list from the input.
+   * 从输入流读取一个 {@code double} 列表。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code double} list to be read could be a null
-   *     value; otherwise, if the {@code double} list read from the input is
-   *     null, an {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code double} 列表可以是 null 值；
+   *     否则，如果从输入流读取的 {@code double} 列表为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code double} list used to store the result. It could be null.
-   * @return a {@code double} list read from the input. If the argument {@code
-   *     result} is not null, and the list to be read is not a null value, the
-   *     argument {@code result} is cleared and the returned values are stored
-   *     in it; otherwise, a new array list of {@code double} is created to
-   *     store the returned values. Note that the returned list may be null if
-   *     {@code allowNull} is true and the list read from the input is a null
-   *     value.
+   *     用于存储结果的 {@code double} 列表。可以为 null。
+   * @return 从输入流读取的 {@code double} 列表。如果参数 {@code buffer} 不为 null，
+   *     且要读取的列表不是 null 值，则参数 {@code buffer} 被清空并将返回值存储在其中；
+   *     否则，创建一个新的 {@code double} 数组列表来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的列表为 null 值，
+   *     则返回的列表可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code double}
-   *     list.
+   *     如果输入在读取完整的 {@code double} 列表之前到达末尾。
    * @throws InvalidFormatException
-   *     if the list read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的列表为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static DoubleList readDoubleList(final InputStream in, final boolean allowNull,
       @Nullable final DoubleList buffer) throws IOException {
@@ -2917,30 +2754,27 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a {@code double} set from the input.
+   * 从输入流读取一个 {@code double} 集合。
    *
    * @param in
-   *     the input source where to read the data.
+   *     读取数据的输入源。
    * @param allowNull
-   *     if it is true, the {@code double} set to be read could be a null value;
-   *     otherwise, if the {@code double} set read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，要读取的 {@code double} 集合可以是 null 值；
+   *     否则，如果从输入流读取的 {@code double} 集合为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a {@code double} set used to store the result. It could be null.
-   * @return a {@code double} set read from the input. If the argument {@code
-   *     result} is not null, and the set to be read is not a null value, the
-   *     argument {@code result} is cleared and the returned values are stored
-   *     in it; otherwise, a new hash set of {@code double} is created to store
-   *     the returned values. Note that the returned set may be null if {@code
-   *     allowNull} is true and the set read from the input is a null value.
+   *     用于存储结果的 {@code double} 集合。可以为 null。
+   * @return 从输入流读取的 {@code double} 集合。如果参数 {@code buffer} 不为 null，
+   *     且要读取的集合不是 null 值，则参数 {@code buffer} 被清空并将返回值存储在其中；
+   *     否则，创建一个新的 {@code double} 哈希集合来存储返回值。
+   *     注意，如果 {@code allowNull} 为 true 且从输入流读取的集合为 null 值，
+   *     则返回的集合可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole {@code double}
-   *     set.
+   *     如果输入在读取完整的 {@code double} 集合之前到达末尾。
    * @throws InvalidFormatException
-   *     if the set read from the input is null, while the argument {@code
-   *     allowNull} is false.
+   *     如果从输入流读取的集合为 null，而参数 {@code allowNull} 为 false。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static Set<Double> readDoubleSet(final InputStream in, final boolean allowNull,
       @Nullable final Set<Double> buffer) throws IOException {
@@ -2976,21 +2810,19 @@ public final class InputUtils {
   }
 
   /**
-   * Reads an object from the input.
+   * 从输入流读取一个对象。
    *
    * @param <T>
-   *     The type of the class. The binary serializer of the class {@code T}
-   *     must have already been registered.
+   *     类的类型。类 {@code T} 的二进制序列化器必须已经被注册。
    * @param objClass
-   *     The class of objects to be deserialized.
+   *     要反序列化的对象的类。
    * @param in
-   *     A binary input stream. Note that this function does NOT close the input
-   *     stream.
+   *     二进制输入流。注意，此函数不会关闭输入流。
    * @param allowNull
-   *     Indicates whether to allowed the serialized object to be null.
-   * @return The deserialized object.
+   *     指示是否允许序列化的对象为 null。
+   * @return 反序列化的对象。
    * @throws IOException
-   *     If any I/O error occurred.
+   *     如果发生任何 I/O 错误。
    */
   @SuppressWarnings("unchecked")
   public static <T> T readObject(final Class<T> objClass, final InputStream in,
@@ -3007,37 +2839,31 @@ public final class InputUtils {
   }
 
   /**
-   * Reads an array of objects from the input stream.
+   * 从输入流读取一个对象数组。
    *
    * @param <T>
-   *     the type of the elements of the array to be read. The binary serializer
-   *     of the class {@code T} must have already been registered.
+   *     要读取的数组元素的类型。类 {@code T} 的二进制序列化器必须已经被注册。
    * @param valueClass
-   *     the class of the elements of the array to be read.
+   *     要读取的数组元素的类。
    * @param in
-   *     a binary input stream.
+   *     二进制输入流。
    * @param allowNullArray
-   *     if it is true, the array to be read could be null; otherwise, if the
-   *     array read from the input is null, an {@code InvalidFormatException}
-   *     will be thrown.
+   *     如果为 true，要读取的数组可以是 null；否则，如果从输入流读取的数组为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param allowNullValue
-   *     if it is true, the elements in the array to be read could be null;
-   *     otherwise, if any element of the array read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，数组中的元素可以是 null；否则，如果从输入流读取的数组中的任何元素为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     the object array used to store the results, or {@code null} if not
-   *     specified.
-   * @return an array of objects read from the input. The returned array may be
-   *     null if {@code allowNullArray} is true, and the element in the returned
-   *     array may be null if {@code allowNullValue} is true.
+   *     用于存储结果的对象数组，如果未指定则为 {@code null}。
+   * @return 从输入流读取的对象数组。如果 {@code allowNullArray} 为 true，返回的数组可能为 null；
+   *     如果 {@code allowNullValue} 为 true，返回数组中的元素可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole array.
+   *     如果输入在读取完整数组之前到达末尾。
    * @throws InvalidFormatException
-   *     if the array read from the input is null, while the argument {@code
-   *     allowNullArray} is false; or any element in the array read from the
-   *     input is null, while the argument {@code allowNullValue} is false.
+   *     如果从输入流读取的数组为 null，而参数 {@code allowNullArray} 为 false；
+   *     或从输入流读取的数组中的任何元素为 null，而参数 {@code allowNullValue} 为 false。
    * @throws IOException
-   *     if any I/O other error occurs.
+   *     如果发生任何其他 I/O 错误。
    */
   @SuppressWarnings("unchecked")
   public static <T> T[] readArray(final Class<T> valueClass, final InputStream in,
@@ -3081,36 +2907,31 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a list of objects from the input stream.
+   * 从输入流读取一个对象列表。
    *
    * @param <T>
-   *     the type of the elements of the list to be read. The binary serializer
-   *     of the class {@code T} must have already been registered.
+   *     要读取的列表元素的类型。类 {@code T} 的二进制序列化器必须已经被注册。
    * @param valueClass
-   *     the class of the elements of the list to be read.
+   *     要读取的列表元素的类。
    * @param in
-   *     a binary input stream.
+   *     二进制输入流。
    * @param allowNullList
-   *     if it is true, the list to be read could be null; otherwise, if the
-   *     list read from the input is null, an {@code InvalidFormatException}
-   *     will be thrown.
+   *     如果为 true，要读取的列表可以是 null；否则，如果从输入流读取的列表为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param allowNullValue
-   *     if it is true, the elements in the list to be read could be null;
-   *     otherwise, if any element of the list read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，列表中的元素可以是 null；否则，如果从输入流读取的列表中的任何元素为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a list used to store the result. It could be null.
-   * @return a list of objects read from the input. The returned list may be
-   *     null if {@code allowNullList} is true, and the element in the returned
-   *     list may be null if {@code allowNullValue} is true.
+   *     用于存储结果的列表。可以为 null。
+   * @return 从输入流读取的对象列表。如果 {@code allowNullList} 为 true，返回的列表可能为 null；
+   *     如果 {@code allowNullValue} 为 true，返回列表中的元素可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole list.
+   *     如果输入在读取完整列表之前到达末尾。
    * @throws InvalidFormatException
-   *     if the list read from the input is null, while the argument {@code
-   *     allowNullList} is false; or any element in the list read from the input
-   *     is null, while the argument {@code allowNullValue} is false.
+   *     如果从输入流读取的列表为 null，而参数 {@code allowNullList} 为 false；
+   *     或从输入流读取的列表中的任何元素为 null，而参数 {@code allowNullValue} 为 false。
    * @throws IOException
-   *     if any I/O other error occurs.
+   *     如果发生任何其他 I/O 错误。
    */
   @SuppressWarnings("unchecked")
   @Nullable
@@ -3158,36 +2979,31 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a set of objects from the input stream.
+   * 从输入流读取一个对象集合。
    *
    * @param <T>
-   *     the type of the elements of the set to be read. The binary serializer
-   *     of the class {@code T} must have already been registered.
+   *     要读取的集合元素的类型。类 {@code T} 的二进制序列化器必须已经被注册。
    * @param valueClass
-   *     the class of the elements of the set to be read.
+   *     要读取的集合元素的类。
    * @param in
-   *     a binary input stream.
+   *     二进制输入流。
    * @param allowNullSet
-   *     if it is true, the set to be read could be null; otherwise, if the set
-   *     read from the input is null, an {@code InvalidFormatException} will be
-   *     thrown.
+   *     如果为 true，要读取的集合可以是 null；否则，如果从输入流读取的集合为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param allowNullValue
-   *     if it is true, the elements in the set to be read could be null;
-   *     otherwise, if any element of the set read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，集合中的元素可以是 null；否则，如果从输入流读取的集合中的任何元素为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a set used to store the result. It could be null.
-   * @return a set of objects read from the input. The returned set may be null
-   *     if {@code allowNullList} is true, and the element in the returned set
-   *     may be null if {@code allowNullValue} is true.
+   *     用于存储结果的集合。可以为 null。
+   * @return 从输入流读取的对象集合。如果 {@code allowNullSet} 为 true，返回的集合可能为 null；
+   *     如果 {@code allowNullValue} 为 true，返回集合中的元素可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole set.
+   *     如果输入在读取完整集合之前到达末尾。
    * @throws InvalidFormatException
-   *     if the set read from the input is null, while the argument {@code
-   *     allowNullSet} is false; or any element in the set read from the input
-   *     is null, while the argument {@code allowNullValue} is false.
+   *     如果从输入流读取的集合为 null，而参数 {@code allowNullSet} 为 false；
+   *     或从输入流读取的集合中的任何元素为 null，而参数 {@code allowNullValue} 为 false。
    * @throws IOException
-   *     if any I/O other error occurs.
+   *     如果发生任何其他 I/O 错误。
    */
   @SuppressWarnings("unchecked")
   public static <T> Set<T> readSet(final Class<T> valueClass,
@@ -3233,48 +3049,40 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a map of objects from the input stream.
+   * 从输入流读取一个对象映射。
    *
    * @param <K>
-   *     the type of the keys of the map to be read. The binary serializer of
-   *     the class {@code K} must have already been registered.
+   *     要读取的映射键的类型。类 {@code K} 的二进制序列化器必须已经被注册。
    * @param <V>
-   *     the type of the values of the map to be read. The binary serializer of
-   *     the class {@code V} must have already been registered.
+   *     要读取的映射值的类型。类 {@code V} 的二进制序列化器必须已经被注册。
    * @param keyClass
-   *     the class of the keys of the map to be read.
+   *     要读取的映射键的类。
    * @param valueClass
-   *     the class of the values of the map to be read.
+   *     要读取的映射值的类。
    * @param in
-   *     a binary input stream.
+   *     二进制输入流。
    * @param allowNullMap
-   *     if it is true, the map to be read could be null; otherwise, if the map
-   *     read from the input is null, an {@code InvalidFormatException} will be
-   *     thrown.
+   *     如果为 true，要读取的映射可以是 null；否则，如果从输入流读取的映射为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param allowNullKey
-   *     if it is true, the key in the map to be read could be null; otherwise,
-   *     if any key of the map read from the input is null, an {@code
-   *     InvalidFormatException} will be thrown.
+   *     如果为 true，映射中的键可以是 null；否则，如果从输入流读取的映射中的任何键为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param allowNullValue
-   *     if it is true, the value in the map to be read could be null;
-   *     otherwise, if any value of the map read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，映射中的值可以是 null；否则，如果从输入流读取的映射中的任何值为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a map used to store the result. It could be null.
-   * @return a map read from the input. The returned map may be null if {@code
-   *     allowNullMap} is true; the key in the returned map may be null if
-   *     {@code allowNullKey} is true; and the value in the returned map may be
-   *     null if {@code allowNullValue} is true.
+   *     用于存储结果的映射。可以为 null。
+   * @return 从输入流读取的映射。如果 {@code allowNullMap} 为 true，返回的映射可能为 null；
+   *     如果 {@code allowNullKey} 为 true，返回映射中的键可能为 null；
+   *     如果 {@code allowNullValue} 为 true，返回映射中的值可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole map.
+   *     如果输入在读取完整映射之前到达末尾。
    * @throws InvalidFormatException
-   *     if the map read from the input is null, while the argument {@code
-   *     allowNullMap} is false; or any key in the map read from the input is
-   *     null, while the argument {@code allowNullKey} is false; or any value in
-   *     the map read from the input is null, while the argument {@code
-   *     allowNullValue} is false.
+   *     如果从输入流读取的映射为 null，而参数 {@code allowNullMap} 为 false；
+   *     或从输入流读取的映射中的任何键为 null，而参数 {@code allowNullKey} 为 false；
+   *     或从输入流读取的映射中的任何值为 null，而参数 {@code allowNullValue} 为 false。
    * @throws IOException
-   *     if any I/O other error occurs.
+   *     如果发生任何其他 I/O 错误。
    */
   @SuppressWarnings("unchecked")
   public static <K, V> Map<K, V> readMap(final Class<K> keyClass,
@@ -3329,48 +3137,40 @@ public final class InputUtils {
   }
 
   /**
-   * Reads a multimap of objects from the input stream.
+   * 从输入流读取一个对象多重映射。
    *
    * @param <K>
-   *     the type of the keys of the multimap to be read. The binary serializer
-   *     of the class {@code K} must have already been registered.
+   *     要读取的多重映射键的类型。类 {@code K} 的二进制序列化器必须已经被注册。
    * @param <V>
-   *     the type of the values of the multimap to be read. The binary
-   *     serializer of the class {@code V} must have already been registered.
+   *     要读取的多重映射值的类型。类 {@code V} 的二进制序列化器必须已经被注册。
    * @param keyClass
-   *     the class of the keys of the multimap to be read.
+   *     要读取的多重映射键的类。
    * @param valueClass
-   *     the class of the values of the multimap to be read.
+   *     要读取的多重映射值的类。
    * @param in
-   *     a binary input stream.
+   *     二进制输入流。
    * @param allowNullMap
-   *     if it is true, the multimap to be read could be null; otherwise, if the
-   *     multimap read from the input is null, an {@code InvalidFormatException}
-   *     will be thrown.
+   *     如果为 true，要读取的多重映射可以是 null；否则，如果从输入流读取的多重映射为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param allowNullKey
-   *     if it is true, the key in the multimap to be read could be null;
-   *     otherwise, if any key of the multimap read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，多重映射中的键可以是 null；否则，如果从输入流读取的多重映射中的任何键为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param allowNullValue
-   *     if it is true, the value in the multimap to be read could be null;
-   *     otherwise, if any value of the multimap read from the input is null, an
-   *     {@code InvalidFormatException} will be thrown.
+   *     如果为 true，多重映射中的值可以是 null；否则，如果从输入流读取的多重映射中的任何值为 null，
+   *     将抛出 {@code InvalidFormatException}。
    * @param buffer
-   *     a multimap used to store the result. It could be null.
-   * @return a multimap read from the input. The returned multimap may be null
-   *     if {@code allowNullMap} is true; the key in the returned multimap may
-   *     be null if {@code allowNullKey} is true; and the value in the returned
-   *     multimap may be null if {@code allowNullValue} is true.
+   *     用于存储结果的多重映射。可以为 null。
+   * @return 从输入流读取的多重映射。如果 {@code allowNullMap} 为 true，返回的多重映射可能为 null；
+   *     如果 {@code allowNullKey} 为 true，返回多重映射中的键可能为 null；
+   *     如果 {@code allowNullValue} 为 true，返回多重映射中的值可能为 null。
    * @throws EOFException
-   *     if the input reaches the end before reading the whole multimap.
+   *     如果输入在读取完整多重映射之前到达末尾。
    * @throws InvalidFormatException
-   *     if the multimap read from the input is null, while the argument {@code
-   *     allowNullMap} is false; or any key in the multimap read from the input
-   *     is null, while the argument {@code allowNullKey} is false; or any value
-   *     in the multimap read from the input is null, while the argument {@code
-   *     allowNullValue} is false.
+   *     如果从输入流读取的多重映射为 null，而参数 {@code allowNullMap} 为 false；
+   *     或从输入流读取的多重映射中的任何键为 null，而参数 {@code allowNullKey} 为 false；
+   *     或从输入流读取的多重映射中的任何值为 null，而参数 {@code allowNullValue} 为 false。
    * @throws IOException
-   *     if any I/O other error occurs.
+   *     如果发生任何其他 I/O 错误。
    */
   @SuppressWarnings("unchecked")
   public static <K, V> Multimap<K, V> readMultimap(final Class<K> keyClass,

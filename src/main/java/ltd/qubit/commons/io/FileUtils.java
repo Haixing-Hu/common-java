@@ -283,13 +283,13 @@ public final class FileUtils {
   }
 
   /**
-   * 创建一个新的空临时目录在系统默认临时目录中。
+   * 确保指定文件的父目录存在。
+   * <p>
+   * 也就是说，如果指定文件的父目录不存在，该函数将创建它。
    *
-   * @param prefix
-   *     临时目录名的前缀。
-   * @param maxTries
-   *     此函数执行的最大重试次数。
-   * @return 系统默认临时目录中的新临时目录。
+   * @param dir
+   *     要创建的目录。
+   * @return 创建的隐藏目录的File对象。
    * @throws IOException
    *     如果发生任何错误。
    */
@@ -364,15 +364,14 @@ public final class FileUtils {
   }
 
   /**
-   * Make sure that the parent directory of the specified file exists.
+   * 确保指定文件的父目录存在。
    *
-   * <p>That is, if the parent directory of the specified file does not exist,
-   * the function will create it.
+   * <p>也就是说，如果指定文件的父目录不存在，该函数将创建它。
    *
    * @param file
-   *     a specified file.
+   *     指定的文件。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static void ensureParentExist(final File file) throws IOException {
     if (!file.exists()) {
@@ -386,18 +385,16 @@ public final class FileUtils {
   }
 
   /**
-   * Implements the same behavior as the "touch" utility on Unix. It creates a
-   * new file with size 0 or, if the file exists already, it is opened and
-   * closed without modifying it, but updating the file date and time.
+   * 实现与 Unix 上的 "touch" 实用程序相同的行为。它创建一个大小为 0 的新文件，
+   * 或者，如果文件已经存在，则在不修改文件的情况下打开和关闭文件，但更新文件的日期和时间。
    *
-   * <p>NOTE: This method throws an IOException if the last modified date of
-   * the file cannot be set. Also, this method creates parent directories if
-   * they do not exist.
+   * <p>注意：如果无法设置文件的最后修改日期，此方法会抛出 IOException。
+   * 此外，如果父目录不存在，此方法会创建父目录。
    *
    * @param file
-   *     the File to touch
+   *     要触摸的文件
    * @throws IOException
-   *     If an I/O problem occurs
+   *     如果发生 I/O 问题
    */
   public static void touch(final File file) throws IOException {
     if (!file.exists()) {
@@ -418,16 +415,15 @@ public final class FileUtils {
   }
 
   /**
-   * Create a new hidden directory. The name may change on Unix.
+   * 创建一个新的隐藏目录。在 Unix 上名称可能会更改。
    *
-   * <p>If the directory already exists, that directory is returned without
-   * creating a new one.
+   * <p>如果目录已经存在，则返回该目录而不创建新目录。
    *
    * @param dir
-   *     the directory to be created.
-   * @return the File object of the created hidden directory.
+   *     要创建的目录。
+   * @return 创建的隐藏目录的 File 对象。
    * @throws IOException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public static File createHiddenDirectory(final File dir) throws IOException {
     if (SystemUtils.IS_OS_WINDOWS) {
@@ -467,16 +463,15 @@ public final class FileUtils {
   }
 
   /**
-   * Gets a File object represents the directory of a specified path. If the
-   * path does not exists, crate a directory of that path; otherwise, if the
-   * path exists and is not a directory, returns null.
+   * 获取表示指定路径目录的 File 对象。如果路径不存在，则创建该路径的目录；
+   * 否则，如果路径存在但不是目录，则抛出异常。
    *
    * @param path
-   *     the path of the directory.
+   *     目录的路径。
    * @return
-   *     a {@link File} object represents the directory of a specified path.
+   *     表示指定路径目录的 {@link File} 对象。
    * @throws IOException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public static File getOrCreateDirectory(final String path) throws IOException {
     final File result = new File(path);
@@ -496,15 +491,13 @@ public final class FileUtils {
   }
 
   /**
-   * Gets a File object represents the directory of a specified path. If the
-   * path does not exists, crate a directory of that path; otherwise, if the
-   * path exists and is not a directory, returns null.
+   * 获取表示指定路径目录的 File 对象。如果路径不存在，则创建该路径的目录；
+   * 否则，如果路径存在但不是目录，则返回 null。
    *
    * @param path
-   *     the path of the directory.
+   *     目录的路径。
    * @return
-   *     a {@link File} object represents the directory of a specified path, or
-   *     {@code null} if failed to create the specified directory.
+   *     表示指定路径目录的 {@link File} 对象，如果创建指定目录失败则返回 {@code null}。
    */
   @Nullable
   public static File getOrCreateDirectoryNoThrow(final String path) {
@@ -525,21 +518,18 @@ public final class FileUtils {
   }
 
   /**
-   * Compares the binary contents of two files to determine if they are equal or
-   * not.
+   * 比较两个文件的二进制内容以确定它们是否相等。
    *
-   * <p>This method checks to see if the two files are different lengths or if
-   * they point to the same file, before resorting to byte-by-byte comparison of
-   * the contents.
+   * <p>此方法在进行逐字节内容比较之前，会检查两个文件的长度是否不同或
+   * 它们是否指向同一个文件。
    *
    * @param file1
-   *     the first file
+   *     第一个文件
    * @param file2
-   *     the second file
-   * @return true if the binary content of the files are equal or they both
-   *     don't exist, false otherwise
+   *     第二个文件
+   * @return 如果文件的二进制内容相等或两个文件都不存在，则返回 true，否则返回 false
    * @throws IOException
-   *     in case of an I/O error
+   *     如果发生 I/O 错误
    */
   public static boolean contentEquals(final File file1, final File file2)
       throws IOException {
@@ -574,21 +564,19 @@ public final class FileUtils {
   }
 
   /**
-   * Compares the binary contents of two files lexicographically.
+   * 按字典序比较两个文件的二进制内容。
    *
-   * <p>This method checks to see if the two files are different lengths or if
-   * they point to the same file, before resorting to byte-by-byte comparison of
-   * the contents.
+   * <p>此方法在进行逐字节内容比较之前，会检查两个文件的长度是否不同或
+   * 它们是否指向同一个文件。
    *
    * @param file1
-   *     the first file
+   *     第一个文件
    * @param file2
-   *     the second file
-   * @return An integer less than, equal to or greater than 0, if the binary
-   *     content of the first file compares lexicographically less than, equal
-   *     to, or greater than the binary content of the second file.
+   *     第二个文件
+   * @return 如果第一个文件的二进制内容按字典序小于、等于或大于第二个文件的二进制内容，
+   *     则返回小于、等于或大于 0 的整数。
    * @throws IOException
-   *     in case of an I/O error
+   *     如果发生 I/O 错误
    */
   public static int compareContent(final File file1, final File file2)
       throws IOException {
@@ -625,38 +613,33 @@ public final class FileUtils {
   }
 
   /**
-   * Copies a file to a new location.
+   * 将文件复制到新位置。
    *
-   * <p>This method copies the contents of the specified source file to the
-   * specified destination file. The directory holding the destination file is
-   * created if it does not exist.
+   * <p>此方法将指定源文件的内容复制到指定目标文件。如果目标文件所在的目录不存在，
+   * 则会创建该目录。
    *
-   * <p>TODO: add the supporting of a progress displaying call-back function.
+   * <p>TODO: 添加对进度显示回调函数的支持。
    *
    * @param srcFile
-   *     an existing file to copy.
+   *     要复制的现有文件。
    * @param destFile
-   *     the destination file.
+   *     目标文件。
    * @param options
-   *     a bitwise combination of the constants defined in the
-   *     {@link OperationOption} class.
+   *     {@link OperationOption} 类中定义的常量的按位组合。
    * @throws FileNotExistException
-   *     if the {@code srcFile} does not exist.
+   *     如果 {@code srcFile} 不存在。
    * @throws FileAlreadyExistException
-   *     if the {@code destFile} already exists, and the {@link OperationOption#OVERWRITE}
-   *     option is not provided.
+   *     如果 {@code destFile} 已经存在，且未提供 {@link OperationOption#OVERWRITE} 选项。
    * @throws FileIsDirectoryException
-   *     if the {@code srcFile} is a directory.
+   *     如果 {@code srcFile} 是目录。
    * @throws FileCannotWriteException
-   *     if the {@code srcFile} cannot be written.
+   *     如果 {@code srcFile} 无法写入。
    * @throws DirectoryNotExistException
-   *     if the parent directory of the {@code destFile} does not exist, and the
-   *     {@link OperationOption#MAKE_DIRS} option is not provided.
+   *     如果 {@code destFile} 的父目录不存在，且未提供 {@link OperationOption#MAKE_DIRS} 选项。
    * @throws DirectoryCannotCreateException
-   *     if the parent directory of the {@code destFile} does not exist and cannot
-   *     be created.
+   *     如果 {@code destFile} 的父目录不存在且无法创建。
    * @throws IOException
-   *     if any other IO error occurs during copying.
+   *     如果复制过程中发生任何其他 IO 错误。
    * @see OperationOption
    */
   public static void copyFile(final File srcFile, final File destFile,
@@ -721,37 +704,31 @@ public final class FileUtils {
   }
 
   /**
-   * Copies a file to a directory optionally preserving the file date.
+   * 将文件复制到目录，可选择保留文件日期。
    *
-   * <p>This method copies the contents of the specified source file to a file
-   * of the same name in the specified destination directory. The destination
-   * directory is created if it does not exist. If the destination file exists,
-   * then this method will overwrite it.
+   * <p>此方法将指定源文件的内容复制到指定目标目录中的同名文件。
+   * 如果目标目录不存在，则会创建该目录。如果目标文件存在，则此方法会覆盖它。
    *
    * @param srcFile
-   *     an existing file to copy, must not be {@code null}
+   *     要复制的现有文件，不得为 {@code null}
    * @param destDir
-   *     the directory to place the copy in, must not be {@code null}
+   *     放置副本的目录，不得为 {@code null}
    * @param options
-   *     a bitwise combination of the constants defined in the
-   *     {@link OperationOption} class.
+   *     {@link OperationOption} 类中定义的常量的按位组合。
    * @throws FileNotExistException
-   *     if the {@code srcFile} does not exist.
+   *     如果 {@code srcFile} 不存在。
    * @throws FileAlreadyExistException
-   *     if the {@code destFile} already exists, and the {@link OperationOption#OVERWRITE}
-   *     option is not provided.
+   *     如果 {@code destFile} 已经存在，且未提供 {@link OperationOption#OVERWRITE} 选项。
    * @throws FileIsDirectoryException
-   *     if the {@code srcFile} is a directory.
+   *     如果 {@code srcFile} 是目录。
    * @throws FileCannotWriteException
-   *     if the {@code srcFile} cannot be written.
+   *     如果 {@code srcFile} 无法写入。
    * @throws DirectoryNotExistException
-   *     if the parent directory of the {@code destFile} does not exist, and the
-   *     {@link OperationOption#MAKE_DIRS} option is not provided.
+   *     如果 {@code destFile} 的父目录不存在，且未提供 {@link OperationOption#MAKE_DIRS} 选项。
    * @throws DirectoryCannotCreateException
-   *     if the parent directory of the {@code destFile} does not exist and cannot
-   *     be created.
+   *     如果 {@code destFile} 的父目录不存在且无法创建。
    * @throws IOException
-   *     if any other IO error occurs during copying.
+   *     如果复制过程中发生任何其他 IO 错误。
    * @see OperationOption
    */
   public static void copyFileToDirectory(final File srcFile,
@@ -766,48 +743,45 @@ public final class FileUtils {
   }
 
   /**
-   * Copies a filtered directory to a new location.
+   * 将过滤后的目录复制到新位置。
    *
-   * <p>This method copies the contents of the specified source directory to
-   * within the specified destination directory.
+   * <p>此方法将指定源目录的内容复制到指定目标目录中。
    *
-   * <p>The destination directory is created if it does not exist. If the
-   * destination directory did exist, then this method merges the source with
-   * the destination, with the source taking precedence.
+   * <p>如果目标目录不存在，则会创建该目录。如果目标目录已存在，
+   * 则此方法会将源目录与目标目录合并，源目录优先。
    *
-   * <p>Example: Copy directories only
+   * <p>示例：仅复制目录
    * <pre>
-   * // only copy the directory structure
+   * // 仅复制目录结构
    * FileUtils.copyDirectory(srcDir, destDir, DirectoryFileFilter.DIRECTORY, false);
    * </pre>
    *
-   * <p>Example: Copy directories and txt files
+   * <p>示例：复制目录和txt文件
    * <pre>
-   * // Create a filter for &quot;.txt&quot; files
-   * IOFileFilter txtSuffixFilter = FileFilterUtils.suffixFileFilter(&quot;.txt&quot;);
+   * // 为 ".txt" 文件创建过滤器
+   * IOFileFilter txtSuffixFilter = FileFilterUtils.suffixFileFilter(".txt");
    * IOFileFilter txtFiles = FileFilterUtils.andFileFilter(FileFileFilter.FILE,
    *     txtSuffixFilter);
-   * // Create a filter for either directories or &quot;.txt&quot; files
+   * // 为目录或 ".txt" 文件创建过滤器
    * FileFilter filter = FileFilterUtils.orFileFilter(DirectoryFileFilter.DIRECTORY,
    *     txtFiles);
-   * // Copy using the filter
+   * // 使用过滤器进行复制
    * FileUtils.copyDirectory(srcDir, destDir, filter, false);
    * </pre>
    *
    * @param srcDir
-   *     an existing directory to copy, must not be {@code null}
+   *     要复制的现有目录，不得为 {@code null}
    * @param destDir
-   *     the new directory, must not be {@code null}
+   *     新目录，不得为 {@code null}
    * @param filter
-   *     the filter to apply, null means copy all directories and files
+   *     要应用的过滤器，null 表示复制所有目录和文件
    * @param options
-   *     a bitwise combination of the constants defined in the
-   *     {@link OperationOption} class.
-   * @return the number of files or directories copied.
+   *     {@link OperationOption} 类中定义的常量的按位组合。
+   * @return 复制的文件或目录数量。
    * @throws FileNotExistException
-   *     if the srcDir does not exist.
+   *     如果 srcDir 不存在。
    * @throws IOException
-   *     if an IO error occurs during copying
+   *     如果复制过程中发生 IO 错误
    * @see OperationOption
    */
   public static int copyDirectory(final File srcDir, final File destDir,
@@ -921,20 +895,19 @@ public final class FileUtils {
   }
 
   /**
-   * Deletes a file. If file is a directory, delete it and all sub-directories.
+   * 删除文件。如果文件是目录，则删除它及其所有子目录。
    *
-   * <p>The difference between File.delete() and this method are:
+   * <p>File.delete() 和此方法的区别是：
    * <ul>
-   * <li>A directory to be deleted does not have to be empty.</li>
-   * <li>You get exceptions when a file or directory cannot be deleted.
-   * (java.io.File methods returns a boolean)</li>
+   * <li>要删除的目录不需要为空。</li>
+   * <li>当文件或目录无法删除时，您会收到异常。
+   * （java.io.File 方法返回布尔值）</li>
    * </ul>
    *
    * @param file
-   *     file or directory to delete. Note that if the file does not exist, the
-   *     function do nothing.
+   *     要删除的文件或目录。注意，如果文件不存在，函数不执行任何操作。
    * @throws IOException
-   *     in case deletion is unsuccessful
+   *     如果删除不成功
    */
   public static void forceDelete(final File file) throws IOException {
     if (!file.exists()) {
@@ -968,16 +941,15 @@ public final class FileUtils {
   }
 
   /**
-   * Deletes the specified file.
+   * 删除指定的文件。
    * <p>
-   * This function is similar to the {@link File#delete()}, but it throws an
-   * {@link IOException} if the file cannot be deleted or any security error
-   * occurs.
+   * 此函数类似于 {@link File#delete()}，但如果文件无法删除或发生任何安全错误，
+   * 它会抛出 {@link IOException}。
    *
    * @param file
-   *     the file to delete.
+   *     要删除的文件。
    * @throws IOException
-   *     if the file cannot be deleted, or any error occurs.
+   *     如果文件无法删除或发生任何错误。
    */
   public static void delete(final File file) throws IOException {
     if (!file.exists()) {
@@ -996,17 +968,16 @@ public final class FileUtils {
   }
 
   /**
-   * Cleans a directory without deleting it.
+   * 清空目录但不删除目录本身。
    *
-   * <p>After calling this function, all files and sub-directories under the
-   * directory is deleted, while the directory itself is kept.
+   * <p>调用此函数后，目录下的所有文件和子目录都将被删除，但目录本身会保留。
    *
    * @param dir
-   *     directory to clean
+   *     要清空的目录
    * @throws FileNotExistException
-   *     if dir does not exist
+   *     如果目录不存在
    * @throws IOException
-   *     in case cleaning is unsuccessful
+   *     如果清空操作不成功
    */
   public static void cleanDirectory(final File dir) throws IOException {
     if (!dir.exists()) {
@@ -1033,14 +1004,12 @@ public final class FileUtils {
   }
 
   /**
-   * Schedules a file to be deleted when JVM exits. If file is directory delete
-   * it and all sub-directories.
+   * 安排文件在 JVM 退出时删除。如果文件是目录，则删除它及其所有子目录。
    *
    * @param file
-   *     file or directory to delete. If the file does not exist, the function
-   *     does nothing.
+   *     要删除的文件或目录。如果文件不存在，函数不执行任何操作。
    * @throws IOException
-   *     in case deletion is unsuccessful
+   *     如果删除操作不成功
    */
   public static void forceDeleteOnExit(final File file) throws IOException {
     if (!file.exists()) {
@@ -1067,20 +1036,19 @@ public final class FileUtils {
   }
 
   /**
-   * Cleans a directory without deleting it.
+   * 清空目录但不删除目录本身。
    *
-   * <p>Schedules a directory to be cleaned when JVM exits. That is, all files
-   * and sub-directories under the directory will be deleted when JVM exits,
-   * while the directory itself is kept.
+   * <p>安排目录在 JVM 退出时清空。也就是说，目录下的所有文件和子目录将在 JVM 退出时删除，
+   * 但目录本身会保留。
    *
    * @param dir
-   *     directory to clean
+   *     要清空的目录
    * @throws DirectoryNotExistException
-   *     if the directory does not exist.
+   *     如果目录不存在。
    * @throws FileIsNotDirectoryException
-   *     if the specified path is not a directory.
+   *     如果指定的路径不是目录。
    * @throws IOException
-   *     in case cleaning is unsuccessful
+   *     如果清空操作不成功
    */
   public static void cleanDirectoryOnExit(final File dir) throws IOException {
     if (!dir.exists()) {
@@ -1107,25 +1075,24 @@ public final class FileUtils {
   }
 
   /**
-   * Computes the checksum of a file using the specified checksum object.
-   * Multiple files may be checked using one {@code Checksum} instance if
-   * desired simply by reusing the same checksum object. For example:
+   * 使用指定的校验和对象计算文件的校验和。
+   * 如果需要，可以通过重用相同的校验和对象来检查多个文件。例如：
    *
    * <pre>
    * long csum = FileUtils.checksum(file, new CRC32()).getValue();
    * </pre>
    *
    * @param file
-   *     the file to checksum, must not be {@code null}
+   *     要计算校验和的文件，不得为 {@code null}
    * @param checksum
-   *     the checksum object to be used, must not be {@code null}
-   * @return the checksum specified, updated with the content of the file
+   *     要使用的校验和对象，不得为 {@code null}
+   * @return 使用文件内容更新的指定校验和
    * @throws NullPointerException
-   *     if the file or checksum is {@code null}
+   *     如果文件或校验和为 {@code null}
    * @throws IllegalArgumentException
-   *     if the file is a directory
+   *     如果文件是目录
    * @throws IOException
-   *     if an IO error occurs reading the file
+   *     如果读取文件时发生 IO 错误
    * @since Commons IO 1.3
    */
   public static Checksum checksum(final File file, final Checksum checksum)
@@ -1144,28 +1111,28 @@ public final class FileUtils {
   }
 
   /**
-   * Composes the file path.
+   * 组合文件路径。
    *
    * @param folder
-   *     the path of the folder, may or may not end with the path separator.
+   *     文件夹的路径，可能以路径分隔符结尾，也可能不以路径分隔符结尾。
    * @param filename
-   *     the name of the file.
-   * @return the composed file path.
+   *     文件名。
+   * @return 组合后的文件路径。
    */
   public static String getPath(final String folder, final String filename) {
     return getPath(folder, filename, null);
   }
 
   /**
-   * Composes the file path.
+   * 组合文件路径。
    *
    * @param folder
-   *     the path of the folder, may or may not end with the path separator.
+   *     文件夹的路径，可能以路径分隔符结尾，也可能不以路径分隔符结尾。
    * @param filename
-   *     the name of the file.
+   *     文件名。
    * @param extension
-   *     the extension of the file, which may be null or empty.
-   * @return the composed file path.
+   *     文件的扩展名，可能为 null 或空。
+   * @return 组合后的文件路径。
    */
   public static String getPath(final String folder, final String filename,
       @Nullable final String extension) {
@@ -1185,29 +1152,29 @@ public final class FileUtils {
   }
 
   /**
-   * Gets the canonical version of the abstract path.
+   * 获取抽象路径的规范版本。
    *
    * @param file
-   *     a File object representing an abstract path.
-   * @return the canonical version of the abstract path.
+   *     表示抽象路径的 File 对象。
+   * @return 抽象路径的规范版本。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static File getCanonicalFile(final File file) throws IOException {
     return new File(file.getCanonicalPath());
   }
 
   /**
-   * Lists all regular files (not sub-directories) in a specified directory.
-   * This method never returns null (throws {@link IOException} instead).
+   * 列出指定目录中的所有常规文件（不包括子目录）。
+   * 此方法永远不会返回 null（而是抛出 {@link IOException}）。
    *
    * @param dir
-   *     the directory.
-   * @return the files in the specified directory.
+   *     目录。
+   * @return 指定目录中的文件。
    * @throws DirectoryNotExistException
-   *     if the directory does not exist, or does exist but is not a directory.
+   *     如果目录不存在，或存在但不是目录。
    * @throws IOException
-   *     if list() returns null
+   *     如果 list() 返回 null
    */
   public static String[] listFiles(final File dir) throws IOException {
     if (!dir.exists()) {
@@ -1223,16 +1190,15 @@ public final class FileUtils {
   }
 
   /**
-   * Lists all sub-directories in a specified directory. This method never
-   * returns null (throws {@link IOException} instead).
+   * 列出指定目录中的所有子目录。此方法永远不会返回 null（而是抛出 {@link IOException}）。
    *
    * @param dir
-   *     the specified directory.
-   * @return the sub-directories in the specified directory.
+   *     指定的目录。
+   * @return 指定目录中的子目录。
    * @throws DirectoryNotExistException
-   *     if the directory does not exist, or does exist but is not a directory.
+   *     如果目录不存在，或存在但不是目录。
    * @throws IOException
-   *     if list() returns null
+   *     如果 list() 返回 null
    */
   public static String[] listSubDirectories(final File dir) throws IOException {
     if (!dir.exists()) {
@@ -1248,16 +1214,16 @@ public final class FileUtils {
   }
 
   /**
-   * Copy or move a file.
+   * 复制或移动文件。
    *
    * @param source
-   *     the source file.
+   *     源文件。
    * @param dest
-   *     the destination file.
+   *     目标文件。
    * @param move
-   *     {@code true} to move the file; and {@code false} to copy the file.
+   *     {@code true} 表示移动文件；{@code false} 表示复制文件。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static void copyOrMoveFile(final File source, final File dest,
       final boolean move) throws IOException {
@@ -1276,14 +1242,14 @@ public final class FileUtils {
   }
 
   /**
-   * Reads the data from the specified file.
+   * 从指定文件读取数据。
    *
    * @param file
-   *     the file to read the data from.
+   *     要读取数据的文件。
    * @return
-   *     the data read from the file.
+   *     从文件读取的数据。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static byte[] readFromFile(final File file) throws IOException {
     try (final FileInputStream input = new FileInputStream(file)) {
@@ -1292,14 +1258,14 @@ public final class FileUtils {
   }
 
   /**
-   * Writes the specified data to the specified file.
+   * 将指定数据写入指定文件。
    *
    * @param data
-   *     the data to be written.
+   *     要写入的数据。
    * @param file
-   *     the file to write the data to.
+   *     要写入数据的文件。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static void writeToFile(final byte[] data, final File file) throws IOException {
     try (final FileOutputStream output = new FileOutputStream(file)) {
@@ -1309,14 +1275,14 @@ public final class FileUtils {
   }
 
   /**
-   * Writes the specified data to the specified file.
+   * 将指定数据写入指定文件。
    *
    * @param data
-   *     the data to be written.
+   *     要写入的数据。
    * @param filename
-   *     the path of the file to write the data to.
+   *     要写入数据的文件路径。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static void writeToFile(final byte[] data, final String filename) throws IOException {
     final File file = new File(filename);
@@ -1324,14 +1290,14 @@ public final class FileUtils {
   }
 
   /**
-   * Writes the specified data to the specified file.
+   * 将指定数据写入指定文件。
    *
    * @param data
-   *     the data to be written.
+   *     要写入的数据。
    * @param path
-   *     the path of the file to write the data to.
+   *     要写入数据的文件路径。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static void writeToFile(final byte[] data, final Path path) throws IOException {
     try (final OutputStream output = Files.newOutputStream(path)) {
@@ -1341,16 +1307,16 @@ public final class FileUtils {
   }
 
   /**
-   * Writes the specified text data to the specified file.
+   * 将指定的文本数据写入指定文件。
    *
    * @param data
-   *     the text data to be written.
+   *     要写入的文本数据。
    * @param file
-   *     the file to write the data to.
+   *     要写入数据的文件。
    * @param charset
-   *     the charset to encode the data.
+   *     编码数据的字符集。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static void writeToFile(final String data, final File file,
       final Charset charset) throws IOException {
@@ -1362,16 +1328,16 @@ public final class FileUtils {
   }
 
   /**
-   * Writes the specified text data to the specified file.
+   * 将指定的文本数据写入指定文件。
    *
    * @param data
-   *     the text data to be written.
+   *     要写入的文本数据。
    * @param filename
-   *     the path of the file to write the data to.
+   *     要写入数据的文件路径。
    * @param charset
-   *     the charset to encode the data.
+   *     编码数据的字符集。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static void writeToFile(final String data, final String filename,
       final Charset charset) throws IOException {
@@ -1380,16 +1346,16 @@ public final class FileUtils {
   }
 
   /**
-   * Writes the specified text data to the specified file.
+   * 将指定的文本数据写入指定文件。
    *
    * @param data
-   *     the text data to be written.
+   *     要写入的文本数据。
    * @param path
-   *     the path of the file to write the data to.
+   *     要写入数据的文件路径。
    * @param charset
-   *     the charset to encode the data.
+   *     编码数据的字符集。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何 I/O 错误。
    */
   public static void writeToFile(final String data, final Path path,
       final Charset charset) throws IOException {
@@ -1401,23 +1367,22 @@ public final class FileUtils {
   }
 
   /**
-   * Opens a {@link BufferedInputStream} for the specified file.
+   * 为指定文件打开 {@link BufferedInputStream}。
    * <p>
-   * At the end of the method either the stream will be successfully opened,
-   * or an exception will have been thrown.
+   * 方法结束时，要么流成功打开，要么抛出异常。
    *
    * @param file
-   *     the file to open for input, must not be {@code null}.
+   *     要打开以供输入的文件，不得为 {@code null}。
    * @return
-   *     a new {@link BufferedInputStream} for the specified file.
+   *     指定文件的新 {@link BufferedInputStream}。
    * @throws FileNotExistException
-   *     if the file does not exist.
+   *     如果文件不存在。
    * @throws FileIsDirectoryException
-   *     if the file exists but is a directory.
+   *     如果文件存在但是目录。
    * @throws FileCannotReadException
-   *     if the file cannot be read.
+   *     如果文件无法读取。
    * @throws IOException
-   *     if any other I/O error occurs.
+   *     如果发生任何其他 I/O 错误。
    */
   public static BufferedInputStream openInputStream(final File file)
       throws IOException {
@@ -1435,28 +1400,24 @@ public final class FileUtils {
   }
 
   /**
-   * Opens a {@link BufferedOutputStream} for the specified file, checking and
-   * creating the parent directory if it does not exist.
+   * 为指定文件打开 {@link BufferedOutputStream}，如果父目录不存在则检查并创建。
    * <p>
-   * At the end of the method either the stream will be successfully opened,
-   * or an exception will have been thrown.
+   * 方法结束时，要么流成功打开，要么抛出异常。
    * <p>
-   * The parent directory will be created if it does not exist. The file will
-   * be created if it does not exist. An exception is thrown if the file object
-   * exists but is a directory. An exception is thrown if the file exists but
-   * cannot be written to. An exception is thrown if the parent directory cannot
-   * be created.
+   * 如果父目录不存在，则会创建它。如果文件不存在，则会创建它。
+   * 如果文件对象存在但是目录，则抛出异常。如果文件存在但无法写入，则抛出异常。
+   * 如果无法创建父目录，则抛出异常。
    *
    * @param file
-   *     the file to open for output, must not be {@code null}.
+   *     要打开以供输出的文件，不得为 {@code null}。
    * @return
-   *     a new {@link BufferedOutputStream} for the specified file.
+   *     指定文件的新 {@link BufferedOutputStream}。
    * @throws FileIsDirectoryException
-   *     if the file exists but is a directory.
+   *     如果文件存在但是目录。
    * @throws FileCannotReadException
-   *     if the file cannot be written.
+   *     如果文件无法写入。
    * @throws IOException
-   *     if a parent directory needs creating but that fails
+   *     如果需要创建父目录但失败
    */
   public static BufferedOutputStream openOutputStream(final File file)
       throws IOException {
@@ -1474,27 +1435,24 @@ public final class FileUtils {
   }
 
   /**
-   * Opens a {@link BufferedReader} for the specified file with the specified
-   * charset.
+   * 使用指定的字符集为指定文件打开 {@link BufferedReader}。
    * <p>
-   * At the end of the method either the reader will be successfully opened,
-   * or an exception will have been thrown.
+   * 方法结束时，要么读取器成功打开，要么抛出异常。
    *
    * @param file
-   *     the file to open for input, must not be {@code null}.
+   *     要打开以供输入的文件，不得为 {@code null}。
    * @param charset
-   *     the charset to use.
+   *     要使用的字符集。
    * @return
-   *     a new {@link BufferedReader} for the specified file, opened with the
-   *     specified charset.
+   *     为指定文件打开的、使用指定字符集的新 {@link BufferedReader}。
    * @throws FileNotExistException
-   *     if the file does not exist.
+   *     如果文件不存在。
    * @throws FileIsDirectoryException
-   *     if the file exists but is a directory.
+   *     如果文件存在但是目录。
    * @throws FileCannotReadException
-   *     if the file cannot be read.
+   *     如果文件无法读取。
    * @throws IOException
-   *     if any other I/O error occurs.
+   *     如果发生任何其他 I/O 错误。
    */
   public static BufferedReader openReader(final File file, final Charset charset)
       throws IOException {
@@ -1513,31 +1471,26 @@ public final class FileUtils {
   }
 
   /**
-   * Opens a {@link BufferedWriter} for the specified file with the specified
-   * charset, checking and creating the parent directory if it does not exist.
+   * 使用指定的字符集为指定文件打开 {@link BufferedWriter}，如果父目录不存在则检查并创建。
    * <p>
-   * At the end of the method either the stream will be successfully opened,
-   * or an exception will have been thrown.
+   * 方法结束时，要么流成功打开，要么抛出异常。
    * <p>
-   * The parent directory will be created if it does not exist. The file will
-   * be created if it does not exist. An exception is thrown if the file object
-   * exists but is a directory. An exception is thrown if the file exists but
-   * cannot be written to. An exception is thrown if the parent directory cannot
-   * be created.
+   * 如果父目录不存在，则会创建它。如果文件不存在，则会创建它。
+   * 如果文件对象存在但是目录，则抛出异常。如果文件存在但无法写入，则抛出异常。
+   * 如果无法创建父目录，则抛出异常。
    *
    * @param file
-   *     the file to open for output, must not be {@code null}.
+   *     要打开以供输出的文件，不得为 {@code null}。
    * @param charset
-   *     the charset to use.
+   *     要使用的字符集。
    * @return
-   *     a new {@link BufferedWriter} for the specified file, opened with the
-   *     specified charset.
+   *     为指定文件打开的、使用指定字符集的新 {@link BufferedWriter}。
    * @throws FileIsDirectoryException
-   *     if the file exists but is a directory.
+   *     如果文件存在但是目录。
    * @throws FileCannotReadException
-   *     if the file cannot be written.
+   *     如果文件无法写入。
    * @throws IOException
-   *     if a parent directory needs creating but that fails
+   *     如果需要创建父目录但失败
    */
   public static BufferedWriter openWriter(final File file, final Charset charset)
       throws IOException {

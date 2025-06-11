@@ -43,9 +43,9 @@ import ltd.qubit.commons.util.buffer.ByteBuffer;
 import static ltd.qubit.commons.io.serialize.BinarySerialization.getSerializer;
 
 /**
- * Provides functions to write data to the {@link OutputStream} object.
+ * 提供向 {@link OutputStream} 对象写入数据的函数。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class OutputUtils {
 
@@ -54,6 +54,14 @@ public final class OutputUtils {
 
   //  stop checkstyle: MagicNumberCheck
 
+  /**
+   * 向输出流写入空值标记。
+   *
+   * @param out 输出流。
+   * @param object 要检查的对象。
+   * @return 如果对象为空则返回 true，否则返回 false。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static boolean writeNullMark(final OutputStream out,
       final Object object) throws IOException {
     if (object == null) {
@@ -65,6 +73,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入布尔值。
+   *
+   * @param out 输出流。
+   * @param value 要写入的布尔值。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeBoolean(final OutputStream out, final boolean value)
       throws IOException {
     if (value) {
@@ -74,6 +89,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入布尔值对象。
+   *
+   * @param out 输出流。
+   * @param value 要写入的布尔值对象，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeBooleanObject(final OutputStream out,
       @Nullable final Boolean value) throws IOException {
     if (! writeNullMark(out, value)) {
@@ -81,11 +103,25 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入字符。
+   *
+   * @param out 输出流。
+   * @param value 要写入的字符。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeChar(final OutputStream out, final char value)
       throws IOException {
     writeVarShort(out, (short) value);
   }
 
+  /**
+   * 向输出流写入字符对象。
+   *
+   * @param out 输出流。
+   * @param value 要写入的字符对象，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeCharObject(final OutputStream out,
       @Nullable final Character value) throws IOException {
     if (! writeNullMark(out, value)) {
@@ -93,11 +129,25 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入字节。
+   *
+   * @param out 输出流。
+   * @param value 要写入的字节。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeByte(final OutputStream out, final byte value)
       throws IOException {
     out.write(value);
   }
 
+  /**
+   * 向输出流写入字节对象。
+   *
+   * @param out 输出流。
+   * @param value 要写入的字节对象，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeByteObject(final OutputStream out,
       @Nullable final Byte value)
       throws IOException {
@@ -106,12 +156,26 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入短整型。
+   *
+   * @param out 输出流。
+   * @param value 要写入的短整型。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeShort(final OutputStream out, final short value)
       throws IOException {
     out.write(value >>> 8);
     out.write(value);
   }
 
+  /**
+   * 向输出流写入短整型对象。
+   *
+   * @param out 输出流。
+   * @param value 要写入的短整型对象，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeShortObject(final OutputStream out,
       @Nullable final Short value) throws IOException {
     if (! writeNullMark(out, value)) {
@@ -119,11 +183,26 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入可变长度的短整型。
+   *
+   * @param out 输出流。
+   * @param value 要写入的短整型。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeVarShort(final OutputStream out, final short value)
       throws IOException {
     writeVarInt(out, value);
   }
 
+  /**
+   * 向输出流写入可变长度的短整型对象。
+   *
+   * @param out 输出流。
+   * @param value 要写入的短整型对象，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   * @throws IllegalArgumentException 如果值为负数。
+   */
   public static void writeVarShortObject(final OutputStream out,
       @Nullable final Short value) throws IOException {
     if ((value != null) && (value < 0)) {
@@ -134,6 +213,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入整型。
+   *
+   * @param out 输出流。
+   * @param value 要写入的整型。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeInt(final OutputStream out, final int value)
       throws IOException {
     out.write(value >>> 24);
@@ -142,6 +228,13 @@ public final class OutputUtils {
     out.write(value);
   }
 
+  /**
+   * 向输出流写入整型对象。
+   *
+   * @param out 输出流。
+   * @param value 要写入的整型对象，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeIntObject(final OutputStream out,
       @Nullable final Integer value) throws IOException {
     if (! writeNullMark(out, value)) {
@@ -149,6 +242,14 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入可变长度的整型。
+   *
+   * @param out 输出流。
+   * @param value 要写入的整型。
+   * @throws IOException 如果发生 I/O 错误。
+   * @throws IllegalArgumentException 如果值为负数。
+   */
   public static void writeVarInt(final OutputStream out, final int value)
       throws IOException {
     if (value < 0) {
@@ -162,6 +263,14 @@ public final class OutputUtils {
     out.write(v);
   }
 
+  /**
+   * 向输出流写入可变长度的整型对象。
+   *
+   * @param out 输出流。
+   * @param value 要写入的整型对象，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   * @throws IllegalArgumentException 如果值为负数。
+   */
   public static void writeVarIntObject(final OutputStream out,
       @Nullable final Integer value) throws IOException {
     if ((value != null) && (value < 0)) {
@@ -172,6 +281,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入长整型。
+   *
+   * @param out 输出流。
+   * @param value 要写入的长整型。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeLong(final OutputStream out, final long value)
       throws IOException {
     final byte[] buffer = new byte[8];
@@ -186,6 +302,13 @@ public final class OutputUtils {
     out.write(buffer, 0, 8);
   }
 
+  /**
+   * 向输出流写入长整型对象。
+   *
+   * @param out 输出流。
+   * @param value 要写入的长整型对象，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeLongObject(final OutputStream out,
       @Nullable final Long value) throws IOException {
     if (! writeNullMark(out, value)) {
@@ -193,6 +316,14 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入可变长度的长整型。
+   *
+   * @param out 输出流。
+   * @param value 要写入的长整型。
+   * @throws IOException 如果发生 I/O 错误。
+   * @throws IllegalArgumentException 如果值为负数。
+   */
   public static void writeVarLong(final OutputStream out, final long value)
       throws IOException {
     if (value < 0) {
@@ -206,6 +337,14 @@ public final class OutputUtils {
     out.write((int) v);
   }
 
+  /**
+   * 向输出流写入可变长度的长整型对象。
+   *
+   * @param out 输出流。
+   * @param value 要写入的长整型对象，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   * @throws IllegalArgumentException 如果值为负数。
+   */
   public static void writeVarLongObject(final OutputStream out,
       @Nullable final Long value) throws IOException {
     if ((value != null) && (value < 0)) {
@@ -216,12 +355,26 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入浮点型。
+   *
+   * @param out 输出流。
+   * @param value 要写入的浮点型。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeFloat(final OutputStream out, final float value)
       throws IOException {
     final int intBits = Float.floatToIntBits(value);
     writeInt(out, intBits);
   }
 
+  /**
+   * 向输出流写入浮点型对象。
+   *
+   * @param out 输出流。
+   * @param value 要写入的浮点型对象，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeFloatObject(
           final OutputStream out, @Nullable final Float value)
       throws IOException {
@@ -230,12 +383,26 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入双精度浮点型。
+   *
+   * @param out 输出流。
+   * @param value 要写入的双精度浮点型。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeDouble(final OutputStream out, final double value)
       throws IOException {
     final long longBits = Double.doubleToLongBits(value);
     writeLong(out, longBits);
   }
 
+  /**
+   * 向输出流写入双精度浮点型对象。
+   *
+   * @param out 输出流。
+   * @param value 要写入的双精度浮点型对象，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeDoubleObject(final OutputStream out,
       @Nullable final Double value) throws IOException {
     if (! writeNullMark(out, value)) {
@@ -243,6 +410,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入字符串。
+   *
+   * @param out 输出流。
+   * @param value 要写入的字符串，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeString(final OutputStream out,
       @Nullable final String value) throws IOException {
     if (! writeNullMark(out, value)) {
@@ -272,6 +446,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入日期。
+   *
+   * @param out 输出流。
+   * @param value 要写入的日期，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeDate(final OutputStream out,
       @Nullable final Date value) throws IOException {
     if (! writeNullMark(out, value)) {
@@ -280,6 +461,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入大整数。
+   *
+   * @param out 输出流。
+   * @param value 要写入的大整数，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeBigInteger(final OutputStream out,
       @Nullable final BigInteger value) throws IOException {
     if (! writeNullMark(out, value)) {
@@ -293,6 +481,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入大十进制数。
+   *
+   * @param out 输出流。
+   * @param value 要写入的大十进制数，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeBigDecimal(final OutputStream out,
       @Nullable final BigDecimal value) throws IOException {
     if (! writeNullMark(out, value)) {
@@ -308,6 +503,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入类对象。
+   *
+   * @param out 输出流。
+   * @param value 要写入的类对象，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeClass(final OutputStream out,
       @Nullable final Class<?> value) throws IOException {
     if (value == null) {
@@ -317,6 +519,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入枚举值。
+   *
+   * @param out 输出流。
+   * @param value 要写入的枚举值，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeEnum(final OutputStream out,
       @Nullable final Enum<?> value) throws IOException {
     if (! writeNullMark(out, value)) {
@@ -324,6 +533,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入布尔值数组。
+   *
+   * @param out 输出流。
+   * @param array 要写入的布尔值数组，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeBooleanArray(final OutputStream out,
       @Nullable final boolean[] array) throws IOException {
     if (! writeNullMark(out, array)) {
@@ -334,6 +550,15 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入布尔值数组的一部分。
+   *
+   * @param out 输出流。
+   * @param array 要写入的布尔值数组。
+   * @param off 数组的起始偏移量。
+   * @param len 要写入的元素数量。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeBooleanArray(final OutputStream out,
       final boolean[] array, final int off, final int len) throws IOException {
     if ((off < 0) || (len < 0) || (len > array.length - off)) {
@@ -346,6 +571,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入布尔值集合。
+   *
+   * @param out 输出流。
+   * @param col 要写入的布尔值集合，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeBooleanCollection(final OutputStream out,
       @Nullable final BooleanCollection col) throws IOException {
     if (! writeNullMark(out, col)) {
@@ -358,6 +590,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入字符数组。
+   *
+   * @param out 输出流。
+   * @param array 要写入的字符数组，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeCharArray(final OutputStream out,
       @Nullable final char[] array) throws IOException {
     if (! writeNullMark(out, array)) {
@@ -368,6 +607,15 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入字符数组的一部分。
+   *
+   * @param out 输出流。
+   * @param array 要写入的字符数组。
+   * @param off 数组的起始偏移量。
+   * @param len 要写入的元素数量。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeCharArray(final OutputStream out, final char[] array,
       final int off, final int len) throws IOException {
     if ((off < 0) || (len < 0) || (len > array.length - off)) {
@@ -380,6 +628,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入字符集合。
+   *
+   * @param out 输出流。
+   * @param col 要写入的字符集合，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeCharCollection(final OutputStream out,
       @Nullable final CharCollection col) throws IOException {
     if (! writeNullMark(out, col)) {
@@ -392,6 +647,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入字节数组。
+   *
+   * @param out 输出流。
+   * @param array 要写入的字节数组，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeByteArray(final OutputStream out,
       @Nullable final byte[] array) throws IOException {
     if (! writeNullMark(out, array)) {
@@ -401,6 +663,15 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入字节数组的一部分。
+   *
+   * @param out 输出流。
+   * @param array 要写入的字节数组。
+   * @param off 数组的起始偏移量。
+   * @param len 要写入的元素数量。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeByteArray(final OutputStream out, final byte[] array,
       final int off, final int len) throws IOException {
     if ((off < 0) || (len < 0) || (len > array.length - off)) {
@@ -410,6 +681,13 @@ public final class OutputUtils {
     out.write(array, off, len);
   }
 
+  /**
+   * 向输出流写入字节集合。
+   *
+   * @param out 输出流。
+   * @param col 要写入的字节集合，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeByteCollection(final OutputStream out,
       @Nullable final ByteCollection col) throws IOException {
     if (! writeNullMark(out, col)) {
@@ -422,6 +700,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入短整型数组。
+   *
+   * @param out 输出流。
+   * @param array 要写入的短整型数组，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeShortArray(final OutputStream out,
       @Nullable final short[] array) throws IOException {
     if (! writeNullMark(out, array)) {
@@ -432,6 +717,15 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入短整型数组的一部分。
+   *
+   * @param out 输出流。
+   * @param array 要写入的短整型数组。
+   * @param off 数组的起始偏移量。
+   * @param len 要写入的元素数量。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeShortArray(final OutputStream out, final short[] array,
       final int off, final int len) throws IOException {
     if ((off < 0) || (len < 0) || (len > array.length - off)) {
@@ -444,6 +738,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入短整型集合。
+   *
+   * @param out 输出流。
+   * @param col 要写入的短整型集合，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeShortCollection(final OutputStream out,
       @Nullable final ShortCollection col) throws IOException {
     if (! writeNullMark(out, col)) {
@@ -456,6 +757,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入可变长度的短整型数组。
+   *
+   * @param out 输出流。
+   * @param array 要写入的短整型数组，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeVarShortArray(final OutputStream out,
       @Nullable final short[] array) throws IOException {
     if (! writeNullMark(out, array)) {
@@ -466,6 +774,15 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入可变长度的短整型数组的一部分。
+   *
+   * @param out 输出流。
+   * @param array 要写入的短整型数组。
+   * @param off 数组的起始偏移量。
+   * @param len 要写入的元素数量。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeVarShortArray(final OutputStream out, final short[] array,
       final int off, final int len) throws IOException {
     if ((off < 0) || (len < 0) || (len > array.length - off)) {
@@ -478,6 +795,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入可变长度的短整型集合。
+   *
+   * @param out 输出流。
+   * @param col 要写入的短整型集合，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeVarShortCollection(final OutputStream out,
       @Nullable final ShortCollection col) throws IOException {
     if (! writeNullMark(out, col)) {
@@ -490,6 +814,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入整型数组。
+   *
+   * @param out 输出流。
+   * @param array 要写入的整型数组，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeIntArray(final OutputStream out,
       @Nullable final int[] array) throws IOException {
     if (! writeNullMark(out, array)) {
@@ -500,6 +831,15 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入整型数组的一部分。
+   *
+   * @param out 输出流。
+   * @param array 要写入的整型数组。
+   * @param off 数组的起始偏移量。
+   * @param len 要写入的元素数量。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeIntArray(final OutputStream out, final int[] array,
       final int off, final int len) throws IOException {
     if ((off < 0) || (len < 0) || (len > array.length - off)) {
@@ -512,6 +852,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入整型集合。
+   *
+   * @param out 输出流。
+   * @param col 要写入的整型集合，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeIntCollection(final OutputStream out,
       @Nullable final IntCollection col) throws IOException {
     if (! writeNullMark(out, col)) {
@@ -524,6 +871,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入可变长度的整型数组。
+   *
+   * @param out 输出流。
+   * @param array 要写入的整型数组，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeVarIntArray(final OutputStream out,
       @Nullable final int[] array) throws IOException {
     if (! writeNullMark(out, array)) {
@@ -534,6 +888,15 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入可变长度的整型数组的一部分。
+   *
+   * @param out 输出流。
+   * @param array 要写入的整型数组。
+   * @param off 数组的起始偏移量。
+   * @param len 要写入的元素数量。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeVarIntArray(final OutputStream out, final int[] array,
       final int off, final int len) throws IOException {
     if ((off < 0) || (len < 0) || (len > array.length - off)) {
@@ -546,6 +909,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入可变长度的整型集合。
+   *
+   * @param out 输出流。
+   * @param col 要写入的整型集合，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeVarIntCollection(final OutputStream out,
       @Nullable final IntCollection col) throws IOException {
     if (! writeNullMark(out, col)) {
@@ -558,6 +928,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入长整型数组。
+   *
+   * @param out 输出流。
+   * @param array 要写入的长整型数组，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeLongArray(final OutputStream out,
       @Nullable final long[] array) throws IOException {
     if (! writeNullMark(out, array)) {
@@ -568,6 +945,15 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入长整型数组的一部分。
+   *
+   * @param out 输出流。
+   * @param array 要写入的长整型数组。
+   * @param off 数组的起始偏移量。
+   * @param len 要写入的元素数量。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeLongArray(final OutputStream out, final long[] array,
       final int off, final int len) throws IOException {
     if ((off < 0) || (len < 0) || (len > array.length - off)) {
@@ -580,6 +966,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入长整型集合。
+   *
+   * @param out 输出流。
+   * @param col 要写入的长整型集合，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeLongCollection(final OutputStream out,
       @Nullable final LongCollection col) throws IOException {
     if (! writeNullMark(out, col)) {
@@ -592,6 +985,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入可变长度的长整型数组。
+   *
+   * @param out 输出流。
+   * @param array 要写入的长整型数组，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeVarLongArray(final OutputStream out,
       @Nullable final long[] array) throws IOException {
     if (! writeNullMark(out, array)) {
@@ -602,6 +1002,15 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入可变长度的长整型数组的一部分。
+   *
+   * @param out 输出流。
+   * @param array 要写入的长整型数组。
+   * @param off 数组的起始偏移量。
+   * @param len 要写入的元素数量。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeVarLongArray(final OutputStream out, final long[] array,
       final int off, final int len) throws IOException {
     if ((off < 0) || (len < 0) || (len > array.length - off)) {
@@ -614,6 +1023,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入可变长度的长整型集合。
+   *
+   * @param out 输出流。
+   * @param col 要写入的长整型集合，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeVarLongCollection(final OutputStream out,
       @Nullable final LongCollection col) throws IOException {
     if (! writeNullMark(out, col)) {
@@ -626,6 +1042,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入浮点型数组。
+   *
+   * @param out 输出流。
+   * @param array 要写入的浮点型数组，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeFloatArray(final OutputStream out,
       @Nullable final float[] array) throws IOException {
     if (! writeNullMark(out, array)) {
@@ -636,6 +1059,15 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入浮点型数组的一部分。
+   *
+   * @param out 输出流。
+   * @param array 要写入的浮点型数组。
+   * @param off 数组的起始偏移量。
+   * @param len 要写入的元素数量。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeFloatArray(final OutputStream out, final float[] array,
       final int off, final int len) throws IOException {
     if ((off < 0) || (len < 0) || (len > array.length - off)) {
@@ -648,6 +1080,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入浮点型集合。
+   *
+   * @param out 输出流。
+   * @param col 要写入的浮点型集合，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeFloatCollection(final OutputStream out,
       @Nullable final FloatCollection col) throws IOException {
     if (! writeNullMark(out, col)) {
@@ -660,6 +1099,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入双精度浮点型数组。
+   *
+   * @param out 输出流。
+   * @param array 要写入的双精度浮点型数组，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeDoubleArray(final OutputStream out,
       @Nullable final double[] array) throws IOException {
     if (! writeNullMark(out, array)) {
@@ -670,6 +1116,15 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入双精度浮点型数组的一部分。
+   *
+   * @param out 输出流。
+   * @param array 要写入的双精度浮点型数组。
+   * @param off 数组的起始偏移量。
+   * @param len 要写入的元素数量。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeDoubleArray(final OutputStream out, final double[] array,
       final int off, final int len) throws IOException {
     if ((off < 0) || (len < 0) || (len > array.length - off)) {
@@ -682,6 +1137,13 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入双精度浮点型集合。
+   *
+   * @param out 输出流。
+   * @param col 要写入的双精度浮点型集合，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static void writeDoubleCollection(final OutputStream out,
       @Nullable final DoubleCollection col) throws IOException {
     if (! writeNullMark(out, col)) {
@@ -695,18 +1157,18 @@ public final class OutputUtils {
   }
 
   /**
-   * Writes an object to an binary output stream.
+   * 向二进制输出流写入对象。
    *
    * @param <T>
-   *          The type of the class.
+   *          类的类型。
    * @param valueClass
-   *          The class object of the object to be serialized.
+   *          要序列化对象的类对象。
    * @param out
-   *          A binary output stream.
+   *          二进制输出流。
    * @param value
-   *          The object to be serialized. It could be null.
+   *          要序列化的对象。可以为空。
    * @throws IOException
-   *           If any I/O error occurred.
+   *           如果发生任何 I/O 错误。
    */
   public static <T> void writeObject(final Class<T> valueClass,
       final OutputStream out, @Nullable final T value) throws IOException {
@@ -717,6 +1179,15 @@ public final class OutputUtils {
     serializer.serialize(out, value);
   }
 
+  /**
+   * 向输出流写入对象数组。
+   *
+   * @param <T> 数组元素的类型。
+   * @param valueClass 数组元素的类对象。
+   * @param out 输出流。
+   * @param array 要写入的对象数组，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static <T> void writeArray(final Class<T> valueClass,
       final OutputStream out, @Nullable final T[] array) throws IOException {
     final BinarySerializer serializer = getSerializer(valueClass);
@@ -731,6 +1202,17 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入对象数组的一部分。
+   *
+   * @param <T> 数组元素的类型。
+   * @param valueClass 数组元素的类对象。
+   * @param out 输出流。
+   * @param array 要写入的对象数组。
+   * @param off 数组的起始偏移量。
+   * @param len 要写入的元素数量。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static <T> void writeArray(final Class<T> valueClass,
       final OutputStream out, final T[] array, final int off, final int len)
       throws IOException {
@@ -748,6 +1230,15 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入对象集合。
+   *
+   * @param <T> 集合元素的类型。
+   * @param valueClass 集合元素的类对象。
+   * @param out 输出流。
+   * @param col 要写入的对象集合，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static <T> void writeCollection(final Class<T> valueClass,
       final OutputStream out, @Nullable final Collection<T> col)
       throws IOException {
@@ -763,6 +1254,17 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入映射表。
+   *
+   * @param <K> 映射表键的类型。
+   * @param <V> 映射表值的类型。
+   * @param keyClass 映射表键的类对象。
+   * @param valueClass 映射表值的类对象。
+   * @param out 输出流。
+   * @param map 要写入的映射表，可以为空。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static <K, V> void writeMap(final Class<K> keyClass,
       final Class<V> valueClass, final OutputStream out,
       @Nullable final Map<K, V> map) throws IOException {
@@ -785,6 +1287,17 @@ public final class OutputUtils {
     }
   }
 
+  /**
+   * 向输出流写入多重映射表。
+   *
+   * @param <K> 映射表键的类型。
+   * @param <V> 映射表值的类型。
+   * @param out 输出流。
+   * @param map 要写入的多重映射表，可以为空。
+   * @param keyClass 映射表键的类对象。
+   * @param valueClass 映射表值的类对象。
+   * @throws IOException 如果发生 I/O 错误。
+   */
   public static <K, V> void writeMultimap(final OutputStream out,
       @Nullable final Multimap<K, V> map, final Class<K> keyClass,
       final Class<V> valueClass) throws IOException {
