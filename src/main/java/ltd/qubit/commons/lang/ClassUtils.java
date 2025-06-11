@@ -92,17 +92,20 @@ public class ClassUtils {
    *
    * @since 1.0.0
    */
-  private static final Map<Class<?>, Class<?>> PRIMITIVE_WRAPPER_MAP =
+   // 使用 ClassKey 作为 Map 的键，而不是直接使用 Class 对象。
+   // 这样可以避免在 Web 容器热部署环境中因为保留对类加载器的引用而导致的内存泄漏问题。
+   // 详细说明请参考 ClassKey 类的 javadoc。
+  private static final Map<ClassKey, Class<?>> PRIMITIVE_WRAPPER_MAP =
       Map.ofEntries(
-          entry(boolean.class, Boolean.class),
-          entry(byte.class, Byte.class),
-          entry(char.class, Character.class),
-          entry(short.class, Short.class),
-          entry(int.class, Integer.class),
-          entry(long.class, Long.class),
-          entry(double.class, Double.class),
-          entry(float.class, Float.class),
-          entry(void.class, Void.class)
+          entry(new ClassKey(boolean.class), Boolean.class),
+          entry(new ClassKey(byte.class), Byte.class),
+          entry(new ClassKey(char.class), Character.class),
+          entry(new ClassKey(short.class), Short.class),
+          entry(new ClassKey(int.class), Integer.class),
+          entry(new ClassKey(long.class), Long.class),
+          entry(new ClassKey(double.class), Double.class),
+          entry(new ClassKey(float.class), Float.class),
+          entry(new ClassKey(void.class), Void.class)
       );
 
   /**
@@ -110,8 +113,21 @@ public class ClassUtils {
    *
    * @since 1.0.0
    */
-  private static final Map<Class<?>, Class<?>> WRAPPER_PRIMITIVE_MAP =
-      invertAsUnmodifiable(PRIMITIVE_WRAPPER_MAP);
+   // 使用 ClassKey 作为 Map 的键，而不是直接使用 Class 对象。
+   // 这样可以避免在 Web 容器热部署环境中因为保留对类加载器的引用而导致的内存泄漏问题。
+   // 详细说明请参考 ClassKey 类的 javadoc。
+  private static final Map<ClassKey, Class<?>> WRAPPER_PRIMITIVE_MAP =
+      Map.ofEntries(
+          entry(new ClassKey(Boolean.class), boolean.class),
+          entry(new ClassKey(Byte.class), byte.class),
+          entry(new ClassKey(Character.class), char.class),
+          entry(new ClassKey(Short.class), short.class),
+          entry(new ClassKey(Integer.class), int.class),
+          entry(new ClassKey(Long.class), long.class),
+          entry(new ClassKey(Double.class), double.class),
+          entry(new ClassKey(Float.class), float.class),
+          entry(new ClassKey(Void.class), void.class)
+      );
 
   /**
    * Maps a primitive class name to its corresponding abbreviation used in array
@@ -350,37 +366,31 @@ public class ClassUtils {
   }
 
   /**
-   * 将指定的包装类转换为其对应的基本类。
-   *
-   * <p>该方法是 {@code primitiveToWrapper()} 的对应方法。如果传入的类是基本类型的包装类，
-   * 将返回该基本类型（例如，{@code Integer.class} 对应 {@code Integer.TYPE}）。
-   * 对于其他类，或如果参数为 <b>null</b>，返回值为 <b>null</b>。
+   * 获取指定包装类对应的基本类型。
    *
    * @param cls
-   *     要转换的类，可能为 <b>null</b>。
-   * @return 如果 {@code cls} 是包装类则返回对应的基本类型，否则返回 <b>null</b>。
-   * @see #primitiveToWrapper(Class)
+   *     要转换的包装类，可以为 null
+   * @return 对应的基本类型，如果 cls 为 null 或不是包装类则返回 null
    * @since 1.0.0
    */
   public static Class<?> wrapperToPrimitive(final Class<?> cls) {
-    return (cls == null ? null : WRAPPER_PRIMITIVE_MAP.get(cls));
+    return (cls == null ? null : WRAPPER_PRIMITIVE_MAP.get(new ClassKey(cls)));
   }
 
   /**
-   * 将指定的基本 Class 对象转换为其对应的包装 Class 对象。
+   * 获取指定基本类型对应的包装类。
    *
    * @param cls
-   *     要转换的类，可以为 null。
-   * @return {@code cls} 的包装类，如果 {@code cls} 不是基本类型则返回 {@code cls}。
-   *     如果输入为 null 则返回 {@code null}。
+   *     要转换的基本类型，可以为 null
+   * @return 对应的包装类，如果 cls 为 null 或不是基本类型则返回 null
    * @since 1.0.0
    */
   public static Class<?> primitiveToWrapper(final Class<?> cls) {
-    if ((cls != null) && cls.isPrimitive()) {
-      return PRIMITIVE_WRAPPER_MAP.get(cls);
-    } else {
-      return cls;
+    Class<?> convertedClass = cls;
+    if (cls != null && cls.isPrimitive()) {
+      convertedClass = PRIMITIVE_WRAPPER_MAP.get(new ClassKey(cls));
     }
+    return convertedClass;
   }
 
   /**
@@ -601,7 +611,7 @@ public class ClassUtils {
    * @since 1.0.0
    */
   public static String getShortClassName(final String className) {
-    if ((className == null) || (className.length() == 0)) {
+    if ((className == null) || className.isEmpty()) {
       return StringUtils.EMPTY;
     }
     final int lastDotIdx = className.lastIndexOf(PACKAGE_SEPARATOR_CHAR);
@@ -993,16 +1003,11 @@ public class ClassUtils {
           }
           name = name.substring(1, len);
         } else {
-          if (name.length() > 0) {
+          if (!name.isEmpty()) {
             name = REVERSE_ABBREVIATION_MAP.get(name.substring(0, 1));
           }
         }
-        final StringBuilder builder = new StringBuilder();
-        builder.append(name);
-        for (int i = 0; i < dim; ++i) {
-          builder.append("[]");
-        }
-        return builder.toString();
+        return name + "[]".repeat(dim);
       }
     }
   }

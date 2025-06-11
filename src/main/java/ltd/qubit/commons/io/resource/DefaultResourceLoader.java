@@ -18,12 +18,13 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nullable;
 
+import ltd.qubit.commons.lang.ClassKey;
 import ltd.qubit.commons.lang.SystemUtils;
 
 /**
  * {@link ResourceLoader} 接口的默认实现。
  * <p>
- * 由 {@link ResourceEditor} 使用，并作为 
+ * 由 {@link org.springframework.core.io.ResourceEditor} 使用，并作为
  * {@link org.springframework.context.support.AbstractApplicationContext} 的基类。
  * 也可以独立使用。
  * <p>
@@ -44,8 +45,10 @@ public class DefaultResourceLoader implements ResourceLoader {
   private final Set<ProtocolResolver> protocolResolvers = new LinkedHashSet<>(
       4);
 
-  private final Map<Class<?>, Map<Resource, ?>> resourceCaches = new ConcurrentHashMap<>(
-      4);
+  // 使用 ClassKey 作为 Map 的键，而不是直接使用 Class 对象。
+  // 这样可以避免在 Web 容器热部署环境中因为保留对类加载器的引用而导致的内存泄漏问题。
+  // 详细说明请参考 ClassKey 类的 javadoc。
+  private final Map<ClassKey, Map<Resource, ?>> resourceCaches = new ConcurrentHashMap<>(4);
 
   /**
    * 创建新的 DefaultResourceLoader。
@@ -124,8 +127,8 @@ public class DefaultResourceLoader implements ResourceLoader {
    */
   @SuppressWarnings("unchecked")
   public <T> Map<Resource, T> getResourceCache(final Class<T> valueType) {
-    return (Map<Resource, T>) this.resourceCaches.computeIfAbsent(valueType,
-        key -> new ConcurrentHashMap<>());
+    return (Map<Resource, T>) this.resourceCaches.computeIfAbsent(new ClassKey(valueType),
+        (key) -> new ConcurrentHashMap<>());
   }
 
   /**

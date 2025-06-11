@@ -24,6 +24,7 @@ import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.dynamic.DynamicType;
 
 import ltd.qubit.commons.lang.ArrayUtils;
+import ltd.qubit.commons.lang.ClassKey;
 import ltd.qubit.commons.reflect.ConstructorUtils;
 import ltd.qubit.commons.reflect.ReflectionException;
 
@@ -98,7 +99,10 @@ public class GetRecordMethodByReferenceImpl {
   }
 
   private static Function<Class<?>, Object> uniqueValueBuilder() {
-    final Map<Class<?>, Long> index = new IdentityHashMap<>();
+    // 使用 ClassKey 作为 Map 的键，而不是直接使用 Class 对象。
+    // 这样可以避免在 Web 容器热部署环境中因为保留对类加载器的引用而导致的内存泄漏问题。
+    // 详细说明请参考 ClassKey 类的 javadoc。
+    final Map<ClassKey, Long> index = new IdentityHashMap<>();
     return (type) -> {
       if (type.isAssignableFrom(boolean.class)) {
         // Note: When the record has more than one primitive boolean component,
@@ -107,7 +111,7 @@ public class GetRecordMethodByReferenceImpl {
       } else if (type.isPrimitive()
           || type.isAssignableFrom(String.class)
           || Number.class.isAssignableFrom(type)) {
-        final long currentIndex = index.compute(type,
+        final long currentIndex = index.compute(new ClassKey(type),
             (k, value) -> value == null ? 1L : value + 1L);
         if (type.isAssignableFrom(String.class)) {
           return String.valueOf(currentIndex);
