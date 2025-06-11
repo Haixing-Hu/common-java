@@ -28,8 +28,10 @@ import javax.annotation.concurrent.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ltd.qubit.commons.concurrent.Lazy;
 import ltd.qubit.commons.config.error.ConfigurationError;
 import ltd.qubit.commons.io.IoUtils;
+import ltd.qubit.commons.math.RandomEx;
 import ltd.qubit.commons.reflect.ConstructorUtils;
 
 import static ltd.qubit.commons.lang.CharUtils.isAsciiDigit;
@@ -1277,35 +1279,26 @@ public final class SystemUtils {
   }
 
   /**
+   * 延迟初始化的全局 {@link SecureRandom} 对象。
+   */
+  private static final Lazy<SecureRandom> LAZY_SECURE_RANDOM = Lazy.of(SecureRandom::new);
+
+  /**
    * 获取一个延迟初始化的全局 {@link SecureRandom} 对象。
    *
    * @return 一个延迟初始化的全局 {@link SecureRandom} 对象。
    */
   public static SecureRandom getSecureRandom() {
-    return LazySecureRandom.random;
+    return LAZY_SECURE_RANDOM.get();
   }
 
   /**
-   * SecureRandom 的延迟初始化持有者类。
-   */
-  private static class LazySecureRandom {
-    static final SecureRandom random = new SecureRandom();
-  }
-
-  /**
-   * 获取一个延迟初始化的全局 {@link Random} 对象。
+   * 获取一个延迟初始化的全局 {@link RandomEx} 对象。
    *
-   * @return 一个延迟初始化的全局 {@link Random} 对象。
+   * @return 一个延迟初始化的全局 {@link RandomEx} 对象。
    */
-  public static Random getRandom() {
-    return LazyRandom.random;
-  }
-
-  /**
-   * Random 的延迟初始化持有者类。
-   */
-  private static class LazyRandom {
-    static final Random random = new Random();
+  public static RandomEx getRandom() {
+    return RandomEx.LAZY.get();
   }
 
   /**
@@ -1319,7 +1312,7 @@ public final class SystemUtils {
    */
   public static String generateRandomName(final String prefix,
           final String suffix) {
-    long n = LazySecureRandom.random.nextLong();
+    long n = LAZY_SECURE_RANDOM.get().nextLong();
     if (n == Long.MIN_VALUE) {
       n = 0;  // corner case
     } else {
