@@ -41,10 +41,10 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * Provides functions to manager {@link XmlSerializer}s, as well as functions to
- * help serializing and deserializing objects to and from XML DOM trees.
+ * 提供管理{@link XmlSerializer}的函数，以及帮助序列化和反序列化对象到XML DOM树以及从XML
+ * DOM树反序列化和序列化对象的函数。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class XmlSerialization {
 
@@ -53,12 +53,12 @@ public class XmlSerialization {
   private static final Map<ClassKey, XmlSerializer> REGISTRY = new ConcurrentHashMap<>();
 
   /**
-   * Registers an XML serializer for a class.
+   * 为指定的类注册一个XML序列化器。
    *
    * @param objClass
-   *     The class object.
+   *     类对象。
    * @param serializer
-   *     The XML serializer for the specified class.
+   *     为指定类构造的XML序列化器。
    */
   public static void register(final Class<?> objClass,
       final XmlSerializer serializer) {
@@ -69,12 +69,12 @@ public class XmlSerialization {
   }
 
   /**
-   * Gets the registered XML serializer for a specified class.
+   * 获取为指定类注册的XML序列化器。
    *
    * @param objClass
-   *     The class object.
-   * @return The registered XML serializer for the specified class, or null if
-   *     no XML serializer was registered for the specified class.
+   *     类对象。
+   * @return
+   *     为指定类构造的XML序列化器，如果该类没有注册的XML序列化器，则返回{@code null}。
    */
   public static XmlSerializer getSerializer(final Class<?> objClass) {
     requireNonNull("objClass", objClass);
@@ -91,18 +91,18 @@ public class XmlSerialization {
   }
 
   /**
-   * Serializes an object into XML.
+   * 将对象序列化为XML。
    *
    * @param <T>
-   *     the type of the object to be serialized.
+   *     待序列化对象的类型。
    * @param objClass
-   *     the class of the object to be serialized.
+   *     待序列化对象的类。
    * @param obj
-   *     the object to be serialized.
-   * @return the string representation of the XML node serialized from the
-   *     object.
+   *     待序列化的对象。
+   * @return
+   *     从对象序列化得到的XML的字符串表示。
    * @throws XmlException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public static <T> String serialize(final Class<T> objClass, final T obj)
       throws XmlException {
@@ -118,19 +118,20 @@ public class XmlSerialization {
   }
 
   /**
-   * Serializes an object into XML.
+   * 将对象序列化为XML。
    *
    * @param <T>
-   *     the type of the object to be serialized.
+   *     待序列化对象的类型。
    * @param objClass
-   *     the class of the object to be serialized.
+   *     待序列化对象的类。
    * @param obj
-   *     the object to be serialized.
+   *     待序列化的对象。
    * @param doc
-   *     an XML DOM document which is used to construct the XML DOM node.
-   * @return the XML DOM node serialized from the object.
+   *     用于构造XML DOM节点的XML DOM文档。
+   * @return
+   *     从对象序列化得到的XML DOM节点。
    * @throws XmlException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public static <T> Element serialize(final Class<T> objClass, final T obj,
       final Document doc) throws XmlException {
@@ -142,20 +143,20 @@ public class XmlSerialization {
   }
 
   /**
-   * Serializes an object into XML and prints the XML to an output stream.
+   * 将对象序列化为XML并将其打印到输出流。
    *
-   * <p>After calling this function, the stream is flushed but remains opened.
+   * <p>调用此函数后，该流将被刷新但仍保持打开状态。
    *
    * @param <T>
-   *     the type of the object to be serialized.
+   *     待序列化对象的类型。
    * @param objClass
-   *     the class of the object to be serialized.
+   *     待序列化对象的类。
    * @param obj
-   *     the object to be serialized.
+   *     待序列化的对象。
    * @param out
-   *     an output stream where to write the serialized XML.
+   *     一个输出流，用于写入序列化后的XML。
    * @throws XmlException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public static <T> void serialize(final Class<T> objClass, final T obj,
       final OutputStream out) throws XmlException {
@@ -170,20 +171,20 @@ public class XmlSerialization {
   }
 
   /**
-   * Serializes an object into XML and prints the XML to an print stream.
+   * 将对象序列化为XML并将其打印到打印流。
    *
-   * <p>After calling this function, the stream is flushed but remains opened.
+   * <p>调用此函数后，该流将被刷新但仍保持打开状态。
    *
    * @param <T>
-   *     the type of the object to be serialized.
+   *     待序列化对象的类型。
    * @param objClass
-   *     the class of the object to be serialized.
+   *     待序列化对象的类。
    * @param obj
-   *     the object to be serialized.
+   *     待序列化的对象。
    * @param out
-   *     a print stream where to print the serialized XML.
+   *     一个打印流，用于写入序列化后的XML。
    * @throws XmlException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public static <T> void serialize(final Class<T> objClass, final T obj,
       final PrintStream out) throws XmlException {
@@ -198,20 +199,20 @@ public class XmlSerialization {
   }
 
   /**
-   * Serializes an object into XML and prints the XML to a writer.
+   * 将对象序列化为XML并将其打印到写入器。
    *
-   * <p>After calling this function, the writer is flushed but remains opened.
+   * <p>调用此函数后，该写入器将被刷新但仍保持打开状态。
    *
    * @param <T>
-   *     the type of the object to be serialized.
+   *     待序列化对象的类型。
    * @param objClass
-   *     the class of the object to be serialized.
+   *     待序列化对象的类。
    * @param obj
-   *     the object to be serialized.
+   *     待序列化的对象。
    * @param writer
-   *     a writer where to print the serialized XML.
+   *     一个写入器，用于写入序列化后的XML。
    * @throws XmlException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public static <T> void serialize(final Class<T> objClass, final T obj,
       final Writer writer) throws XmlException {
@@ -226,18 +227,18 @@ public class XmlSerialization {
   }
 
   /**
-   * Serializes an object into XML and store the XML to a file.
+   * 将对象序列化为XML并将其存储到文件。
    *
    * @param <T>
-   *     the type of the object to be serialized.
+   *     待序列化对象的类型。
    * @param objClass
-   *     the class of the object to be serialized.
+   *     待序列化对象的类。
    * @param obj
-   *     the object to be serialized.
+   *     待序列化的对象。
    * @param file
-   *     a file where to store the serialized XML.
+   *     一个文件，用于存储序列化后的XML。
    * @throws XmlException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public static <T> void serialize(final Class<T> objClass, final T obj,
       final File file) throws XmlException {
@@ -263,17 +264,18 @@ public class XmlSerialization {
   }
 
   /**
-   * Deserializes an object from an XML node.
+   * 从XML节点反序列化对象。
    *
    * @param <T>
-   *     the type of the object to be deserialized.
+   *     待反序列化对象的类型。
    * @param objClass
-   *     the class of the object.
+   *     对象的类。
    * @param node
-   *     the XML node.
-   * @return the object deserialized from the XML node.
+   *     XML节点。
+   * @return
+   *     从XML节点反序列化得到的对象。
    * @throws XmlException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   @SuppressWarnings("unchecked")
   public static <T> T deserialize(final Class<T> objClass, final Element node)
@@ -290,17 +292,18 @@ public class XmlSerialization {
   }
 
   /**
-   * Deserializes an object from the string representation of an XML node.
+   * 从XML节点的字符串表示反序列化对象。
    *
    * @param <T>
-   *     the type of the object to be deserialized.
+   *     待反序列化对象的类型。
    * @param objClass
-   *     the class of the object.
+   *     对象的类。
    * @param xml
-   *     the string representation of an XML node.
-   * @return the object deserialized from the XML node.
+   *     XML节点的字符串表示。
+   * @return
+   *     从XML节点反序列化得到的对象。
    * @throws XmlException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   @SuppressWarnings("unchecked")
   public static <T> T deserialize(final Class<T> objClass, final String xml)
@@ -320,19 +323,20 @@ public class XmlSerialization {
   }
 
   /**
-   * Deserializes an object from the string representation of an XML node.
+   * 从XML节点的字符串表示反序列化对象。
    *
-   * <p>After calling this function, the reader remains opened.
+   * <p>调用此函数后，该读取器仍保持打开状态。
    *
    * @param <T>
-   *     the type of the object to be deserialized.
+   *     待反序列化对象的类型。
    * @param objClass
-   *     the class of the object.
+   *     对象的类。
    * @param reader
-   *     the reader where to read the string representation of an XML node.
-   * @return the object deserialized from the XML node.
+   *     一个读取器，从中读取XML节点的字符串表示。
+   * @return
+   *     从XML节点反序列化得到的对象。
    * @throws XmlException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   @SuppressWarnings("unchecked")
   public static <T> T deserialize(final Class<T> objClass, final Reader reader)
@@ -351,20 +355,20 @@ public class XmlSerialization {
   }
 
   /**
-   * Deserializes an object from the string representation of an XML node.
+   * 从XML节点的字符串表示反序列化对象。
    *
-   * <p>After calling this function, the input stream remains opened.
+   * <p>调用此函数后，该输入流仍保持打开状态。
    *
    * @param <T>
-   *     the type of the object to be deserialized.
+   *     待反序列化对象的类型。
    * @param objClass
-   *     the class of the object.
+   *     对象的类。
    * @param in
-   *     the input stream where to read the string representation of an XML
-   *     node.
-   * @return the object deserialized from the XML node.
+   *     一个输入流，从中读取XML节点的字符串表示。
+   * @return
+   *     从XML节点反序列化得到的对象。
    * @throws XmlException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   @SuppressWarnings("unchecked")
   public static <T> T deserialize(final Class<T> objClass, final InputStream in)
@@ -383,17 +387,18 @@ public class XmlSerialization {
   }
 
   /**
-   * Deserializes an object from the string representation of an XML node.
+   * 从XML节点的字符串表示反序列化对象。
    *
    * @param <T>
-   *     the type of the object to be deserialized.
+   *     待反序列化对象的类型。
    * @param objClass
-   *     the class of the object.
+   *     对象的类。
    * @param file
-   *     the file where to read the string representation of an XML node.
-   * @return the object deserialized from the XML node.
+   *     一个文件，从中读取XML节点的字符串表示。
+   * @return
+   *     从XML节点反序列化得到的对象。
    * @throws XmlException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   @SuppressWarnings("unchecked")
   public static <T> T deserialize(final Class<T> objClass, final File file)
@@ -412,18 +417,18 @@ public class XmlSerialization {
   }
 
   /**
-   * Deserializes an object from the string representation of an XML node.
+   * 从XML节点的字符串表示反序列化对象。
    *
    * @param <T>
-   *     the type of the object to be deserialized.
+   *     待反序列化对象的类型。
    * @param objClass
-   *     the class of the object.
+   *     对象的类。
    * @param url
-   *     the URL of the file where to read the string representation of an XML
-   *     node.
-   * @return the object deserialized from the XML node.
+   *     一个URL，指向一个文件，从中读取XML节点的字符串表示。
+   * @return
+   *     从XML节点反序列化得到的对象。
    * @throws XmlException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   @SuppressWarnings("unchecked")
   public static <T> T deserialize(final Class<T> objClass, final Url url)
@@ -442,18 +447,18 @@ public class XmlSerialization {
   }
 
   /**
-   * Deserializes an object from the string representation of an XML node.
+   * 从XML节点的字符串表示反序列化对象。
    *
    * @param <T>
-   *     the type of the object to be deserialized.
+   *     待反序列化对象的类型。
    * @param objClass
-   *     the class of the object.
+   *     对象的类。
    * @param url
-   *     the URL of the file where to read the string representation of an XML
-   *     node.
-   * @return the object deserialized from the XML node.
+   *     一个URL，指向一个文件，从中读取XML节点的字符串表示。
+   * @return
+   *     从XML节点反序列化得到的对象。
    * @throws XmlException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   @SuppressWarnings("unchecked")
   public static <T> T deserialize(final Class<T> objClass, final URL url)
@@ -472,18 +477,18 @@ public class XmlSerialization {
   }
 
   /**
-   * Deserializes an object from the string representation of an XML node.
+   * 从XML节点的字符串表示反序列化对象。
    *
    * @param <T>
-   *     the type of the object to be deserialized.
+   *     待反序列化对象的类型。
    * @param objClass
-   *     the class of the object.
+   *     对象的类。
    * @param uri
-   *     the URI of the file where to read the string representation of an XML
-   *     node.
-   * @return the object deserialized from the XML node.
+   *     一个URI，指向一个文件，从中读取XML节点的字符串表示。
+   * @return
+   *     从XML节点反序列化得到的对象。
    * @throws XmlException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   @SuppressWarnings("unchecked")
   public static <T> T deserialize(final Class<T> objClass, final URI uri)
@@ -502,20 +507,20 @@ public class XmlSerialization {
   }
 
   /**
-   * Deserializes an object from the string representation of an XML node.
+   * 从资源反序列化对象。
    *
    * @param <T>
-   *     the type of the object to be deserialized.
+   *     待反序列化对象的类型。
    * @param objClass
-   *     the class of the object.
+   *     对象的类。
    * @param resource
-   *     the resource path of the file where to read the string representation
-   *     of an XML node.
+   *     资源的路径。
    * @param loaderClass
-   *     the class used to load the resource.
-   * @return the object deserialized from the XML node.
+   *     用于加载资源的类。
+   * @return
+   *     从XML节点反序列化得到的对象。
    * @throws XmlException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   @SuppressWarnings("unchecked")
   public static <T> T deserialize(final Class<T> objClass,
@@ -534,20 +539,20 @@ public class XmlSerialization {
   }
 
   /**
-   * Deserializes an object from the string representation of an XML node.
+   * 从资源反序列化对象。
    *
    * @param <T>
-   *     the type of the object to be deserialized.
+   *     待反序列化对象的类型。
    * @param objClass
-   *     the class of the object.
+   *     对象的类。
    * @param resource
-   *     the resource path of the file where to read the string representation
-   *     of an XML node.
+   *     资源的路径。
    * @param loader
-   *     the class loader used to load the resource.
-   * @return the object deserialized from the XML node.
+   *     用于加载资源的类加载器。
+   * @return
+   *     从XML节点反序列化得到的对象。
    * @throws XmlException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   @SuppressWarnings("unchecked")
   public static <T> T deserialize(final Class<T> objClass,

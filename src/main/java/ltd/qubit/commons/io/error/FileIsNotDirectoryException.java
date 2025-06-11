@@ -18,9 +18,9 @@ import ltd.qubit.commons.error.ErrorInfoConvertable;
 import ltd.qubit.commons.util.pair.KeyValuePairList;
 
 /**
- * Thrown to indicate that the file exists but is not a directory.
+ * 抛出此异常表示文件存在但不是目录。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class FileIsNotDirectoryException extends IOException
     implements ErrorInfoConvertable {
@@ -30,24 +30,50 @@ public class FileIsNotDirectoryException extends IOException
 
   private final String path;
 
+  /**
+   * 构造一个 {@link FileIsNotDirectoryException}。
+   */
   public FileIsNotDirectoryException() {
     super("The file exists but is not a directory. ");
     this.path = "<unknown>";
   }
 
+  /**
+   * 构造一个 {@link FileIsNotDirectoryException}。
+   *
+   * @param path
+   *     不是目录的文件的路径。
+   */
   public FileIsNotDirectoryException(final String path) {
     super("The file exists but is not a directory: " + path);
     this.path = path;
   }
 
+  /**
+   * 构造一个 {@link FileIsNotDirectoryException}。
+   *
+   * @param file
+   *     不是目录的文件。
+   */
   public FileIsNotDirectoryException(final File file) {
     this(file.getAbsolutePath());
   }
 
+  /**
+   * 构造一个 {@link FileIsNotDirectoryException}。
+   *
+   * @param path
+   *     不是目录的文件的路径。
+   */
   public FileIsNotDirectoryException(final Path path) {
     this(path.toAbsolutePath().toString());
   }
 
+  /**
+   * 获取不是目录的文件的路径。
+   *
+   * @return 不是目录的文件的路径。
+   */
   public String getPath() {
     return path;
   }

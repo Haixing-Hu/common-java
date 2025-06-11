@@ -17,13 +17,15 @@ import java.nio.channels.FileChannel;
 import ltd.qubit.commons.io.error.AlreadyClosedException;
 
 /**
- * A {@link SeekableOutputStream} which writes data to a file using the
- * {@code java.nio} APIs.
+ * 一个使用 {@code java.nio} API 向文件写入数据的 {@link SeekableOutputStream}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class NioFileOutputStream extends SeekableOutputStream {
 
+  /**
+   * 默认的缓冲区大小。
+   */
   public static final int DEFAULT_BUFFER_SIZE = 8192;
 
   private RandomAccessFile descriptor;
@@ -31,20 +33,48 @@ public class NioFileOutputStream extends SeekableOutputStream {
   private ByteBuffer buffer;
   private long offset;
 
+  /**
+   * 构造一个使用默认缓冲区大小且不追加模式的 NIO 文件输出流。
+   *
+   * @param file 要写入的文件
+   * @throws IOException 如果发生 I/O 错误
+   */
   public NioFileOutputStream(final File file) throws IOException {
     this(file, DEFAULT_BUFFER_SIZE, false);
   }
 
+  /**
+   * 构造一个使用默认缓冲区大小的 NIO 文件输出流。
+   *
+   * @param file 要写入的文件
+   * @param append 是否以追加模式打开文件
+   * @throws IOException 如果发生 I/O 错误
+   */
   public NioFileOutputStream(final File file, final boolean append)
       throws IOException {
     this(file, DEFAULT_BUFFER_SIZE, append);
   }
 
+  /**
+   * 构造一个使用指定缓冲区大小且不追加模式的 NIO 文件输出流。
+   *
+   * @param file 要写入的文件
+   * @param bufferSize 缓冲区大小
+   * @throws IOException 如果发生 I/O 错误
+   */
   public NioFileOutputStream(final File file, final int bufferSize)
       throws IOException {
     this(file, bufferSize, false);
   }
 
+  /**
+   * 构造一个使用指定缓冲区大小的 NIO 文件输出流。
+   *
+   * @param file 要写入的文件
+   * @param bufferSize 缓冲区大小
+   * @param append 是否以追加模式打开文件
+   * @throws IOException 如果发生 I/O 错误
+   */
   public NioFileOutputStream(final File file, final int bufferSize,
       final boolean append) throws IOException {
     descriptor = new RandomAccessFile(file, "rws");
@@ -58,6 +88,9 @@ public class NioFileOutputStream extends SeekableOutputStream {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void write(final int ch) throws IOException {
     if (descriptor == null) {
@@ -69,6 +102,9 @@ public class NioFileOutputStream extends SeekableOutputStream {
     buffer.put((byte) ch);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void write(final byte[] buf, final int offset, final int length)
       throws IOException {
@@ -117,6 +153,9 @@ public class NioFileOutputStream extends SeekableOutputStream {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public long length() throws IOException {
     if (descriptor == null) {
@@ -125,6 +164,9 @@ public class NioFileOutputStream extends SeekableOutputStream {
     return descriptor.length();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public long position() throws IOException {
     if (descriptor == null) {
@@ -133,6 +175,9 @@ public class NioFileOutputStream extends SeekableOutputStream {
     return offset + buffer.position();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void seek(final long newPos) throws IOException {
     if (descriptor == null) {
@@ -146,6 +191,9 @@ public class NioFileOutputStream extends SeekableOutputStream {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void flush() throws IOException {
     if (descriptor == null) {
@@ -160,6 +208,9 @@ public class NioFileOutputStream extends SeekableOutputStream {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void close() throws IOException {
     if (descriptor != null) {

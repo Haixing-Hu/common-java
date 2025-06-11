@@ -22,21 +22,27 @@ import static ltd.qubit.commons.io.InputUtils.readString;
 import static ltd.qubit.commons.io.OutputUtils.writeString;
 
 /**
- * The {@link BinarySerializer} for {@link String} class.
+ * {@link String} 类的 {@link BinarySerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class StringBinarySerializer implements BinarySerializer {
 
   public static final StringBinarySerializer INSTANCE = new StringBinarySerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String deserialize(final InputStream in, final boolean allowNull)
       throws IOException {
     return readString(in, allowNull);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final OutputStream out, @Nullable final Object obj)
       throws IOException {

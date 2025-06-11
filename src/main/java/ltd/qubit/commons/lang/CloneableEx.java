@@ -9,12 +9,17 @@
 package ltd.qubit.commons.lang;
 
 /**
- * An extended version of the {@link java.lang.Cloneable} interface,
- * which explicitly provides the {@link #cloneEx()} method.
+ * {@link java.lang.Cloneable} 接口的扩展版本，
+ * 显式提供 {@link #cloneEx()} 方法。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface CloneableEx<T> {
 
+  /**
+   * 创建并返回此对象的副本。
+   *
+   * @return 此对象的副本。
+   */
   T cloneEx();
 }

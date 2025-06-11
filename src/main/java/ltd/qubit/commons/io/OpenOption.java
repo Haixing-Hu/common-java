@@ -11,88 +11,74 @@ package ltd.qubit.commons.io;
 import java.io.IOException;
 
 /**
- * The enumeration of the file open options.
+ * 文件打开选项的枚举。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public enum OpenOption {
 
   /**
-   * Creates a new file or device, always.
+   * 总是创建新文件或设备。
    *
-   * <p>If the specified file or device exists and is writable, the open function
-   * creates a new file or device and overwrites the old one; If the specified
-   * file or device does not exist and the pathname is a valid path to a
-   * writable location, the open function create a new file or device and
-   * succeeds.
+   * <p>如果指定的文件或设备存在且可写，打开函数会创建新文件或设备并覆盖旧的；
+   * 如果指定的文件或设备不存在且路径名是可写位置的有效路径，打开函数会创建新文件或设备并成功。
    */
   CREATE_ALWAYS,
 
   /**
-   * Creates a new file or device, only if it does not already exist.
+   * 仅当文件或设备不存在时才创建新文件或设备。
    *
-   * <p>If the specified file or device exists, the open function fails and an
-   * {@link IOException} is thrown; if the specified file or device does not
-   * exist and the pathname a valid path to a writable location, the open
-   * function create a new file or device and succeeds.
+   * <p>如果指定的文件或设备存在，打开函数失败并抛出 {@link IOException}；
+   * 如果指定的文件或设备不存在且路径名是可写位置的有效路径，打开函数会创建新文件或设备并成功。
    */
   CREATE_NEW,
 
   /**
-   * Opens a file or device, always.
+   * 总是打开文件或设备。
    *
-   * <p>If the specified file or device exists, the open function succeeds. If the
-   * specified file or device does not exist and is a valid path to a writable
-   * location, the open function creates a new file or device and succeeds.
+   * <p>如果指定的文件或设备存在，打开函数成功。如果指定的文件或设备不存在且是可写位置的有效路径，
+   * 打开函数会创建新文件或设备并成功。
    */
   OPEN_ALWAYS,
 
   /**
-   * Opens a file or device, only if it exists.
+   * 仅当文件或设备存在时才打开。
    *
-   * <p>If the specified file or device does not exist, the open function fails and
-   * an {@link IOException} is thrown.
+   * <p>如果指定的文件或设备不存在，打开函数失败并抛出 {@link IOException}。
    */
   OPEN_EXISTING,
 
   /**
-   * Opens a file or device for appending, always.
+   * 总是打开文件或设备进行追加。
    *
-   * <p>If the specified file or device exists, the open function opens it for
-   * writing, sets the writing pointer to the end for appending, and succeeds.
-   * If the specified file or device does not exist and is a valid path to a
-   * writable location, the open function creates a new file or device, opens it
-   * for writing, set the writing pointer to the beginning, and succeeds.
+   * <p>如果指定的文件或设备存在，打开函数会打开它进行写入，将写入指针设置到末尾进行追加，并成功。
+   * 如果指定的文件或设备不存在且是可写位置的有效路径，打开函数会创建新文件或设备，
+   * 打开它进行写入，将写入指针设置到开头，并成功。
    */
   APPEND_ALWAYS,
 
   /**
-   * Opens a file or device for appending, only if it exists.
+   * 仅当文件或设备存在时才打开进行追加。
    *
-   * <p>If the specified file or device exists, the open function opens it for
-   * writing, sets the writing pointer to the end for appending, and succeeds.
-   * If the specified file or device does not exist, the open function fails and
-   * an {@link IOException} is thrown.
+   * <p>如果指定的文件或设备存在，打开函数会打开它进行写入，将写入指针设置到末尾进行追加，并成功。
+   * 如果指定的文件或设备不存在，打开函数失败并抛出 {@link IOException}。
    */
   APPEND_EXISTING,
 
   /**
-   * Opens a file or device, and truncates it to zero byte, only if it exists.
+   * 仅当文件或设备存在时才打开，并将其截断为零字节。
    *
-   * <p>If the specified file or device does not exist, the open function fails and
-   * and an {@link IOException} is thrown; otherwise, the open function opens it
-   * and truncates it to zero byte.
+   * <p>如果指定的文件或设备不存在，打开函数失败并抛出 {@link IOException}；
+   * 否则，打开函数会打开它并将其截断为零字节。
    */
   TRUNCATE_EXISTING;
 
   /**
-   * Tests whether this open option is compatible with the specified access
-   * mode.
+   * 测试此打开选项是否与指定的访问模式兼容。
    *
    * @param accessMode
-   *     a specified access mode.
-   * @return true if this open option is compatible with the specified access
-   *     mode; false otherwise.
+   *     指定的访问模式。
+   * @return 如果此打开选项与指定的访问模式兼容则返回 true；否则返回 false。
    */
   public boolean isCompatibleWith(final AccessMode accessMode) {
     switch (this) {

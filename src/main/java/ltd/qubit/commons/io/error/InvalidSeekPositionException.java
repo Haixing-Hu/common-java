@@ -11,9 +11,9 @@ package ltd.qubit.commons.io.error;
 import java.io.IOException;
 
 /**
- * Thrown to indicate an invalid seek position.
+ * 抛出此异常以指示寻道位置无效。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class InvalidSeekPositionException extends IOException {
 
@@ -23,11 +23,22 @@ public class InvalidSeekPositionException extends IOException {
 
   private final long pos;
 
+  /**
+   * 构造一个 {@link InvalidSeekPositionException}。
+   *
+   * @param pos
+   *     无效的寻道位置。
+   */
   public InvalidSeekPositionException(final long pos) {
     super(MESSAGE + pos);
     this.pos = pos;
   }
 
+  /**
+   * 获取无效的寻道位置。
+   *
+   * @return 无效的寻道位置。
+   */
   public long position() {
     return pos;
   }

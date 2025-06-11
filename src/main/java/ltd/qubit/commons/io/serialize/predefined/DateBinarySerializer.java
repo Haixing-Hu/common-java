@@ -23,21 +23,27 @@ import static ltd.qubit.commons.io.InputUtils.readDate;
 import static ltd.qubit.commons.io.OutputUtils.writeDate;
 
 /**
- * The {@link BinarySerializer} for {@link Date} class.
+ * {@link Date} 类的 {@link BinarySerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class DateBinarySerializer implements BinarySerializer {
 
   public static final DateBinarySerializer INSTANCE = new DateBinarySerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Date deserialize(final InputStream in, final boolean allowNull)
       throws IOException {
     return readDate(in, allowNull);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final OutputStream out, @Nullable final Object obj)
       throws IOException {

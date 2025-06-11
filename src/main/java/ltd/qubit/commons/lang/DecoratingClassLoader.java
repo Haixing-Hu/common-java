@@ -15,16 +15,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nullable;
 
 /**
- * Base class for decorating ClassLoaders such as {@link OverridingClassLoader}
- * and {@link ShadowingClassLoader}, providing common handling of excluded
- * packages and classes.
+ * 用于装饰 ClassLoader 的基类，如 {@link OverridingClassLoader} 和 {@link ShadowingClassLoader}，
+ * 提供对排除包和类的通用处理。
  * <p>
- * This class is a copy of {@code org.springframework.core.DecoratingClassLoader}
- * with slight modifications. It is used to avoid the dependency of Spring Framework.
+ * 此类是 {@code org.springframework.core.DecoratingClassLoader} 的副本，略有修改。
+ * 用于避免对 Spring Framework 的依赖。
  *
  * @author Juergen Hoeller
  * @author Rod Johnson
- * @author Haixing Hu
+ * @author 胡海星
  */
 public abstract class DecoratingClassLoader extends ClassLoader {
 
@@ -39,25 +38,23 @@ public abstract class DecoratingClassLoader extends ClassLoader {
       Collections.newSetFromMap(new ConcurrentHashMap<>(8));
 
   /**
-   * Create a new DecoratingClassLoader with no parent ClassLoader.
+   * 创建一个没有父 ClassLoader 的新 DecoratingClassLoader。
    */
   public DecoratingClassLoader() {}
 
   /**
-   * Create a new DecoratingClassLoader using the given parent ClassLoader for
-   * delegation.
+   * 使用给定的父 ClassLoader 创建一个新的 DecoratingClassLoader 进行委托。
    */
   public DecoratingClassLoader(@Nullable final ClassLoader parent) {
     super(parent);
   }
 
   /**
-   * Add a package name to exclude from decoration (e.g. overriding).
-   * <p>Any class whose fully-qualified name starts with the name registered
-   * here will be handled by the parent ClassLoader in the usual fashion.
+   * 添加要从装饰（例如覆盖）中排除的包名。
+   * <p>任何完全限定名以此处注册的名称开头的类都将以通常的方式由父 ClassLoader 处理。
    *
    * @param packageName
-   *     the package name to exclude
+   *     要排除的包名
    */
   public void excludePackage(final String packageName) {
     if (packageName == null) {
@@ -67,12 +64,11 @@ public abstract class DecoratingClassLoader extends ClassLoader {
   }
 
   /**
-   * Add a class name to exclude from decoration (e.g. overriding).
-   * <p>Any class name registered here will be handled by the parent
-   * ClassLoader in the usual fashion.
+   * 添加要从装饰（例如覆盖）中排除的类名。
+   * <p>此处注册的任何类名都将以通常的方式由父 ClassLoader 处理。
    *
    * @param className
-   *     the class name to exclude
+   *     要排除的类名
    */
   public void excludeClass(final String className) {
     if (className == null) {
@@ -82,14 +78,13 @@ public abstract class DecoratingClassLoader extends ClassLoader {
   }
 
   /**
-   * Determine whether the specified class is excluded from decoration by this
-   * class loader.
+   * 确定指定的类是否被此类加载器排除在装饰之外。
    * <p>
-   * The default implementation checks against excluded packages and classes.
+   * 默认实现检查排除的包和类。
    *
    * @param className
-   *     the class name to check
-   * @return whether the specified class is eligible
+   *     要检查的类名
+   * @return 指定的类是否符合条件
    * @see #excludePackage
    * @see #excludeClass
    */

@@ -14,9 +14,9 @@ import ltd.qubit.commons.io.AccessMode;
 import ltd.qubit.commons.io.OpenOption;
 
 /**
- * Thrown to indicate an invalid access mode.
+ * 抛出此异常表示访问模式无效。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class InvalidAccessModeException extends IOException {
 
@@ -24,11 +24,25 @@ public class InvalidAccessModeException extends IOException {
 
   private final AccessMode accessMode;
 
+  /**
+   * 构造一个 {@link InvalidAccessModeException}。
+   *
+   * @param accessMode
+   *     无效的访问模式。
+   */
   public InvalidAccessModeException(final AccessMode accessMode) {
     super("Invalid access mode for the operation: " + accessMode);
     this.accessMode = accessMode;
   }
 
+  /**
+   * 构造一个 {@link InvalidAccessModeException}。
+   *
+   * @param accessMode
+   *     无效的访问模式。
+   * @param openOption
+   *     导致此异常的打开选项。
+   */
   public InvalidAccessModeException(final AccessMode accessMode,
       final OpenOption openOption) {
     super("Invalid access mode for the open option "
@@ -36,6 +50,11 @@ public class InvalidAccessModeException extends IOException {
     this.accessMode = accessMode;
   }
 
+  /**
+   * 获取无效的访问模式。
+   *
+   * @return 无效的访问模式。
+   */
   public AccessMode getAccessMode() {
     return accessMode;
   }

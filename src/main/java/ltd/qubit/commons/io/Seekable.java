@@ -11,38 +11,37 @@ package ltd.qubit.commons.io;
 import java.io.IOException;
 
 /**
- * This interface provides random seeking functions for input streams.
+ * 此接口为输入流提供随机寻道功能。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface Seekable {
 
   /**
-   * Gets the length of the stream in bytes.
+   * 获取流的长度（以字节为单位）。
    *
-   * @return the length of the stream in bytes.
+   * @return 流的长度（以字节为单位）。
    * @throws IOException
-   *           if any I/O error occurs.
+   *           如果发生任何 I/O 错误。
    */
   long length() throws IOException;
 
   /**
-   * Gets the current position in the stream.
+   * 获取流中的当前位置。
    *
-   * @return the current position in the stream.
+   * @return 流中的当前位置。
    * @throws IOException
-   *           if any I/O error occurs.
+   *           如果发生任何 I/O 错误。
    */
   long position() throws IOException;
 
   /**
-   * Seeks to a specified position.
+   * 寻道到指定位置。
    *
    * @param pos
-   *          the new position, measured in bytes from the beginning of the
-   *          file, at which to set the current position.
+   *          新位置，从文件开头以字节为单位测量，用于设置当前位置。
    * @throws IOException
-   *           if any I/O error occurs.
+   *           如果发生任何 I/O 错误。
    */
   void seek(long pos) throws IOException;
 }

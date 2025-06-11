@@ -39,16 +39,14 @@ import static ltd.qubit.commons.lang.ArrayUtils.isSameLength;
 import static ltd.qubit.commons.lang.ObjectUtils.defaultIfNull;
 
 /**
- * This class provides operations on {@link Class} objects.
+ * 该类提供对 {@link Class} 对象的操作。
  *
- * <p>This class tries to handle {@code null} input gracefully. An exception
- * will not be thrown for a {@code null} input. Each method documents its
- * behavior in more detail.
+ * <p>该类尽量优雅地处理 {@code null} 输入。对于 {@code null} 输入不会抛出异常。
+ * 每个方法在其文档中详细说明了其行为。
  *
- * <p>This class also handle the conversion from {@link Class} objects to
- * common types.
+ * <p>该类还处理从 {@link Class} 对象到常见类型的转换。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @since 1.0.0
  */
 public class ClassUtils {
@@ -145,37 +143,31 @@ public class ClassUtils {
   private static final float AUTOBOXING_JDK_VERSION = 1.5f;
 
   /**
-   * Checks if an array of Classes can be assigned to another array of Classes.
+   * 检查一个 Classes 数组是否可以赋值给另一个 Classes 数组。
    *
-   * <p>This method calls {@link #isAssignable(Class, Class) isAssignable} for
-   * each Class pair in the input arrays. It can be used to check if a set of
-   * arguments (the first parameter) are suitably compatible with a set of
-   * method parameter types (the second parameter).
+   * <p>该方法对输入数组中的每个 Class 对调用 {@link #isAssignable(Class, Class) isAssignable}。
+   * 它可以用于检查一组参数（第一个参数）是否与一组方法参数类型（第二个参数）适当兼容。
    *
-   * <p>Unlike the {@link Class#isAssignableFrom(Class)} method, this
-   * method takes into account widenings of primitive classes and {@code null}s.
+   * <p>与 {@link Class#isAssignableFrom(Class)} 方法不同，该方法考虑了基本类的
+   * 拓宽和 {@code null}。
    *
-   * <p>Primitive widenings allow an int to be assigned to a {@code long},
-   * {@code float} or {@code double}. This method returns the correct result for
-   * these cases.
+   * <p>基本类型拓宽允许将 int 赋值给 {@code long}、{@code float} 或 {@code double}。
+   * 该方法对这些情况返回正确的结果。
    *
-   * <p>{@code Null} may be assigned to any reference type. This method will
-   * return {@code true} if {@code null} is passed in and the toClass is
-   * non-primitive.
+   * <p>{@code Null} 可以赋值给任何引用类型。如果传入 {@code null} 且 toClass 是
+   * 非基本类型，该方法将返回 {@code true}。
    *
-   * <p>Specifically, this method tests whether the type represented by the
-   * specified {@code Class} parameter can be converted to the type represented
-   * by this {@code Class} object via an identity conversion widening primitive
-   * or widening reference conversion.
+   * <p>具体来说，该方法测试指定 {@code Class} 参数表示的类型是否可以通过恒等转换、
+   * 拓宽基本类型或拓宽引用转换转换为此 {@code Class} 对象表示的类型。
    *
-   * <p>See <em><a href="http://java.sun.com/docs/books/jls/">The Java Language
-   * Specification</a></em>, sections 5.1.1, 5.1.2 and 5.1.4 for details.
+   * <p>详细信息请参见 <em><a href="http://java.sun.com/docs/books/jls/">The Java Language
+   * Specification</a></em> 第 5.1.1、5.1.2 和 5.1.4 节。
    *
    * @param classArray
-   *     the array of Classes to check, may be {@code null}.
+   *     要检查的 Classes 数组，可以为 {@code null}。
    * @param toClassArray
-   *     the array of Classes to try to assign into, may be {@code null}.
-   * @return {@code true} if assignment possible.
+   *     要尝试赋值到的 Classes 数组，可以为 {@code null}。
+   * @return 如果可以赋值则返回 {@code true}。
    * @since 1.0.0
    */
   public static boolean isAssignable(final Class<?>[] classArray,
@@ -194,33 +186,28 @@ public class ClassUtils {
   }
 
   /**
-   * Checks if one {@code Class} can be assigned to a variable of another {@code
-   * Class}.
+   * 检查一个 {@code Class} 是否可以赋值给另一个 {@code Class} 的变量。
    *
-   * <p>Unlike the {@link Class#isAssignableFrom(Class)} method, this
-   * method takes into account widening of primitive classes and {@code null}s.
+   * <p>与 {@link Class#isAssignableFrom(Class)} 方法不同，该方法考虑了基本类的
+   * 拓宽和 {@code null}。
    *
-   * <p>Primitive widening allow an int to be assigned to a long, float or
-   * double.
-   * This method returns the correct result for these cases.
+   * <p>基本类型拓宽允许将 int 赋值给 {@code long}、{@code float} 或 {@code double}。
+   * 该方法对这些情况返回正确的结果。
    *
-   * <p>{@code Null} may be assigned to any reference type. This method will
-   * return {@code true} if {@code null} is passed in and the toClass is
-   * non-primitive.
+   * <p>{@code Null} 可以赋值给任何引用类型。如果传入 {@code null} 且 toClass 是
+   * 非基本类型，该方法将返回 {@code true}。
    *
-   * <p>Specifically, this method tests whether the type represented by the
-   * specified {@code cls} parameter can be converted to the type represented by
-   * the {@code toClass} parameter via an identity conversion widening primitive
-   * or widening reference conversion.
+   * <p>具体来说，该方法测试指定 {@code cls} 参数表示的类型是否可以通过恒等转换、
+   * 拓宽基本类型或拓宽引用转换转换为 {@code toClass} 参数表示的类型。
    *
-   * <p>See <em><a href="http://java.sun.com/docs/books/jls/">The Java Language
-   * Specification</a></em>, sections 5.1.1, 5.1.2 and 5.1.4 for details.
+   * <p>详细信息请参见 <em><a href="http://java.sun.com/docs/books/jls/">The Java Language
+   * Specification</a></em> 第 5.1.1、5.1.2 和 5.1.4 节。
    *
    * @param cls
-   *     the Class to check, may be null.
+   *     要检查的 Class，可以为 null。
    * @param toClass
-   *     the Class to try to assign into, returns false if null.
-   * @return {@code true} if assignment possible.
+   *     要尝试赋值到的 Class，如果为 null 则返回 false。
+   * @return 如果可以赋值则返回 {@code true}。
    * @since 1.0.0
    */
   public static boolean isAssignable(final Class<?> cls,
@@ -293,12 +280,11 @@ public class ClassUtils {
   }
 
   /**
-   * Tests whether the specified class an inner class or static nested class.
+   * 测试指定的类是否为内部类或静态嵌套类。
    *
    * @param cls
-   *     the class to check, may be null.
-   * @return {@code true} if the class is an inner or static nested class, false
-   *     if not or {@code null}.
+   *     要检查的类，可以为 null。
+   * @return 如果类是内部类或静态嵌套类则返回 {@code true}，否则或为 {@code null} 时返回 false。
    * @since 1.0.0
    */
   public static boolean isInnerClass(final Class<?> cls) {
@@ -309,19 +295,16 @@ public class ClassUtils {
   }
 
   /**
-   * Given a {@code List} of class names, this method converts them into
-   * classes.
+   * 给定类名的 {@code List}，该方法将它们转换为类。
    *
-   * <p>A new {@code List} is returned. If the class name cannot be found,
-   * {@code null} is stored in the {@code List}. If the class name in the {@code
-   * List} is {@code null}, {@code null} is stored in the output {@code List}.
+   * <p>返回一个新的 {@code List}。如果找不到类名，在 {@code List} 中存储 {@code null}。
+   * 如果 {@code List} 中的类名为 {@code null}，在输出 {@code List} 中存储 {@code null}。
    *
    * @param classNames
-   *     the classNames to change.
-   * @return a {@code List} of Class objects corresponding to the class names,
-   *     {@code null} if null input.
+   *     要转换的类名。
+   * @return 对应于类名的 Class 对象的 {@code List}，如果输入为 null 则返回 {@code null}。
    * @throws ClassCastException
-   *     if classNames contains a non String entry.
+   *     如果 classNames 包含非 String 条目。
    * @since 1.0.0
    */
   public static List<Class<?>> namesToClasses(final List<String> classNames) {
@@ -340,18 +323,15 @@ public class ClassUtils {
   }
 
   /**
-   * Given a {@code List} of {@code Class} objects, this method converts them
-   * into class names.
+   * 给定 {@code Class} 对象的 {@code List}，该方法将它们转换为类名。
    *
-   * <p>A new {@code List} is returned. {@code null} objects will be
-   * copied into the returned list as {@code null}.
+   * <p>返回一个新的 {@code List}。{@code null} 对象将作为 {@code null} 复制到返回的列表中。
    *
    * @param classes
-   *     the classes to change.
-   * @return a {@code List} of class names corresponding to the Class objects,
-   *     {@code null} if null input.
+   *     要转换的类。
+   * @return 对应于 Class 对象的类名的 {@code List}，如果输入为 null 则返回 {@code null}。
    * @throws ClassCastException
-   *     if {@code classes} contains a non-{@code Class} entry.
+   *     如果 {@code classes} 包含非 {@code Class} 条目。
    * @since 1.0.0
    */
   public static List<String> classesToNames(final List<Class<?>> classes) {
@@ -370,18 +350,15 @@ public class ClassUtils {
   }
 
   /**
-   * Converts the specified wrapper class to its corresponding primitive class.
+   * 将指定的包装类转换为其对应的基本类。
    *
-   * <p>This method is the counter part of {@code primitiveToWrapper()}. If
-   * the passed in class is a wrapper class for a primitive type, this primitive
-   * type will be returned (e.g. {@code Integer.TYPE} for {@code
-   * Integer.class}). For other classes, or if the parameter is
-   * <b>null</b>, the return value is <b>null</b>.
+   * <p>该方法是 {@code primitiveToWrapper()} 的对应方法。如果传入的类是基本类型的包装类，
+   * 将返回该基本类型（例如，{@code Integer.class} 对应 {@code Integer.TYPE}）。
+   * 对于其他类，或如果参数为 <b>null</b>，返回值为 <b>null</b>。
    *
    * @param cls
-   *     the class to convert, may be <b>null</b>.
-   * @return the corresponding primitive type if {@code cls} is a wrapper class,
-   *     <b>null</b> otherwise.
+   *     要转换的类，可能为 <b>null</b>。
+   * @return 如果 {@code cls} 是包装类则返回对应的基本类型，否则返回 <b>null</b>。
    * @see #primitiveToWrapper(Class)
    * @since 1.0.0
    */
@@ -390,13 +367,12 @@ public class ClassUtils {
   }
 
   /**
-   * Converts the specified primitive Class object to its corresponding wrapper
-   * Class object.
+   * 将指定的基本 Class 对象转换为其对应的包装 Class 对象。
    *
    * @param cls
-   *     the class to convert, may be null.
-   * @return the wrapper class for {@code cls} or {@code cls} if {@code cls} is
-   *     not a primitive. {@code null} if null input.
+   *     要转换的类，可以为 null。
+   * @return {@code cls} 的包装类，如果 {@code cls} 不是基本类型则返回 {@code cls}。
+   *     如果输入为 null 则返回 {@code null}。
    * @since 1.0.0
    */
   public static Class<?> primitiveToWrapper(final Class<?> cls) {
@@ -408,17 +384,14 @@ public class ClassUtils {
   }
 
   /**
-   * Converts the specified array of wrapper Class objects to an array of its
-   * corresponding primitive Class objects.
+   * 将指定的包装 Class 对象数组转换为其对应的基本 Class 对象数组。
    *
-   * <p>This method invokes {@code wrapperToPrimitive()} for each element of
-   * the passed in array.
+   * <p>该方法对传入数组的每个元素调用 {@code wrapperToPrimitive()}。
    *
    * @param classes
-   *     the class array to convert, may be null or empty
-   * @return an array which contains for each given class, the primitive class
-   *     or <b>null</b> if the original class is not a wrapper class. {@code
-   *     null} if null input. Empty array if an empty array passed in.
+   *     要转换的类数组，可以为 null 或空。
+   * @return 对于给定数组中的每个类，包含对应基本类或 <b>null</b>（如果原始类不是包装类）的数组。
+   *     如果输入为 null 则返回 {@code null}。如果传入空数组则返回空数组。
    * @see #wrapperToPrimitive(Class)
    * @since 1.0.0
    */
@@ -437,14 +410,12 @@ public class ClassUtils {
   }
 
   /**
-   * Converts the specified array of primitive Class objects to an array of its
-   * corresponding wrapper Class objects.
+   * 将指定的基本 Class 对象数组转换为其对应的包装 Class 对象数组。
    *
    * @param classes
-   *     the class array to convert, may be null or empty
-   * @return an array which contains for each given class, the wrapper class or
-   *     the original class if class is not a primitive. {@code null} if null
-   *     input. Empty array if an empty array passed in.
+   *     要转换的类数组，可以为 null 或空。
+   * @return 对于给定数组中的每个类，包含对应包装类或原始类（如果类不是基本类型）的数组。
+   *     如果输入为 null 则返回 {@code null}。如果传入空数组则返回空数组。
    * @since 1.0.0
    */
   public static Class<?>[] primitivesToWrappers(final Class<?>[] classes) {
@@ -462,14 +433,13 @@ public class ClassUtils {
   }
 
   /**
-   * Converts an array of {@code Object} in to an array of {@code Class}
-   * objects.
+   * 将 {@code Object} 数组转换为 {@code Class} 对象数组。
    *
-   * <p>This method returns {@code null} for a {@code null} input array.
+   * <p>该方法对 {@code null} 输入数组返回 {@code null}。
    *
    * @param array
-   *     an {@code Object} array.
-   * @return a {@code Class} array, {@code null} if null array input.
+   *     {@code Object} 数组。
+   * @return {@code Class} 数组，如果输入数组为 null 则返回 {@code null}。
    * @since 1.0.0
    */
   public static Class<?>[] toClass(final Object[] array) {
@@ -486,24 +456,22 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the class represented by {@code className} using the {@code
-   * classLoader}.
+   * 使用 {@code classLoader} 获取 {@code className} 表示的类。
    *
-   * <p>This implementation supports names like " {@code java.lang.String[]}
-   * " as well as " {@code [Ljava.lang.String;}".
+   * <p>该实现支持诸如 " {@code java.lang.String[]} " 以及 " {@code [Ljava.lang.String;}"
+   * 这样的名称。
    *
    * @param classLoader
-   *     the class loader to use to load the class
+   *     用于加载类的类加载器。
    * @param className
-   *     the class name
+   *     类名。
    * @param initialize
-   *     whether the class must be initialized
-   * @return the class represented by {@code className} using the {@code
-   *     classLoader}
+   *     类是否必须被初始化。
+   * @return 使用 {@code classLoader} 获取的 {@code className} 表示的类。
    * @throws NullPointerException
-   *     if any argument is null.
+   *     如果任何参数为 null。
    * @throws ClassNotFoundException
-   *     if the class is not found.
+   *     如果找不到类。
    * @since 1.0.0
    */
   public static Class<?> getClass(final ClassLoader classLoader,
@@ -520,22 +488,20 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the (initialized) class represented by {@code className} using the
-   * {@code classLoader}.
+   * 使用 {@code classLoader} 获取 {@code className} 表示的（已初始化的）类。
    *
-   * <p>This implementation supports names like " {@code java.lang.String[]}
-   * " as well as " {@code [Ljava.lang.String;}".
+   * <p>该实现支持诸如 " {@code java.lang.String[]} " 以及 " {@code [Ljava.lang.String;}"
+   * 这样的名称。
    *
    * @param classLoader
-   *     the class loader to use to load the class.
+   *     用于加载类的类加载器。
    * @param className
-   *     the class name.
-   * @return the class represented by {@code className} using the {@code
-   *     classLoader}.
+   *     类名。
+   * @return 使用 {@code classLoader} 获取的 {@code className} 表示的类。
    * @throws NullPointerException
-   *     if any argument is null.
+   *     如果任何参数为 null。
    * @throws ClassNotFoundException
-   *     if the class is not found.
+   *     如果找不到类。
    * @since 1.0.0
    */
   public static Class<?> getClass(final ClassLoader classLoader,
@@ -544,20 +510,18 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the (initialized )class represented by {@code className} using the
-   * current thread's context class loader.
+   * 使用当前线程的上下文类加载器获取 {@code className} 表示的（已初始化的）类。
    *
-   * <p>This implementation supports names like "{@code java.lang.String[]}
-   * " as well as " {@code [Ljava.lang.String;}".
+   * <p>该实现支持诸如 "{@code java.lang.String[]} " 以及 " {@code [Ljava.lang.String;}"
+   * 这样的名称。
    *
    * @param className
-   *     the class name.
-   * @return the class represented by {@code className} using the current
-   *     thread's context class loader.
+   *     类名。
+   * @return 使用当前线程的上下文类加载器获取的 {@code className} 表示的类。
    * @throws NullPointerException
-   *     if any argument is null.
+   *     如果任何参数为 null。
    * @throws ClassNotFoundException
-   *     if the class is not found.
+   *     如果找不到类。
    * @since 1.0.0
    */
   public static Class<?> getClass(final String className)
@@ -566,22 +530,20 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the class represented by {@code className} using the current thread's
-   * context class loader.
+   * 使用当前线程的上下文类加载器获取 {@code className} 表示的类。
    *
-   * <p>This implementation supports names like " {@code java.lang.String[]}
-   * " as well as " {@code [Ljava.lang.String;}".
+   * <p>该实现支持诸如 " {@code java.lang.String[]} " 以及 " {@code [Ljava.lang.String;}"
+   * 这样的名称。
    *
    * @param className
-   *     the class name.
+   *     类名。
    * @param initialize
-   *     whether the class must be initialized.
-   * @return the class represented by {@code className} using the current
-   *     thread's context class loader.
+   *     类是否必须被初始化。
+   * @return 使用当前线程的上下文类加载器获取的 {@code className} 表示的类。
    * @throws NullPointerException
-   *     if any argument is null.
+   *     如果任何参数为 null。
    * @throws ClassNotFoundException
-   *     if the class is not found.
+   *     如果找不到类。
    * @since 1.0.0
    */
   public static Class<?> getClass(final String className,
@@ -594,14 +556,13 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the class name minus the package name for an {@code Object}.
+   * 获取 {@code Object} 的类名，不包含包名。
    *
    * @param object
-   *     the class to get the short name for, may be null.
+   *     要获取短名称的类，可以为 null。
    * @param valueIfNull
-   *     the value to return if null.
-   * @return the class name of the object without the package name, or the null
-   *     value.
+   *     为 null 时返回的值。
+   * @return 对象的类名（不包含包名），或 null 值。
    * @since 1.0.0
    */
   public static String getShortClassName(final Object object,
@@ -614,11 +575,11 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the class name minus the package name from a {@code Class}.
+   * 从 {@code Class} 获取类名，不包含包名。
    *
    * @param cls
-   *     the class to get the short name for.
-   * @return the class name without the package name or an empty string.
+   *     要获取短名称的类。
+   * @return 不包含包名的类名或空字符串。
    * @since 1.0.0
    */
   public static String getShortClassName(final Class<?> cls) {
@@ -630,14 +591,13 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the class name minus the package name from a String.
+   * 从字符串获取类名，不包含包名。
    *
-   * <p>The string passed in is assumed to be a class name - it is not checked.
+   * <p>传入的字符串假定为类名 - 不会进行检查。
    *
    * @param className
-   *     the className to get the short name for.
-   * @return the class name of the class without the package name or an empty
-   *     string.
+   *     要获取短名称的类名。
+   * @return 不包含包名的类的类名或空字符串。
    * @since 1.0.0
    */
   public static String getShortClassName(final String className) {
@@ -655,13 +615,13 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the package name of an {@code Object}.
+   * 获取 {@code Object} 的包名。
    *
    * @param object
-   *     the class to get the package name for, may be null.
+   *     要获取包名的类，可以为 null。
    * @param valueIfNull
-   *     the value to return if null.
-   * @return the package name of the object, or the null value.
+   *     为 null 时返回的值。
+   * @return 对象的包名，或 null 值。
    * @since 1.0.0
    */
   public static String getPackageName(final Object object,
@@ -674,11 +634,11 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the package name of a {@code Class}.
+   * 获取 {@code Class} 的包名。
    *
    * @param cls
-   *     the class to get the package name for, may be {@code null}.
-   * @return the package name or an empty string.
+   *     要获取包名的类，可以为 {@code null}。
+   * @return 包名或空字符串。
    * @since 1.0.0
    */
   public static String getPackageName(final Class<?> cls) {
@@ -690,15 +650,15 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the package name from a {@code String}.
+   * 从 {@code String} 获取包名。
    *
-   * <p>The string passed in is assumed to be a class name - it is not checked.
+   * <p>传入的字符串假定为类名 - 不会进行检查。
    *
-   * <p>If the class is unpackaged, return an empty string.
+   * <p>如果类未打包，返回空字符串。
    *
    * @param className
-   *     the className to get the package name for, may be {@code null}.
-   * @return the package name or an empty string.
+   *     要获取包名的类名，可以为 {@code null}。
+   * @return 包名或空字符串。
    * @since 1.0.0
    */
   public static String getPackageName(final String className) {
@@ -713,13 +673,13 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the full canonical name of the class of an {@code Object}.
+   * 获取 {@code Object} 类的完整规范名称。
    *
    * @param object
-   *     the class to get the short name for, may be null.
+   *     要获取短名称的类，可以为 null。
    * @param valueIfNull
-   *     the value to return if null.
-   * @return the full canonical name of the class of the object, or {@code null}.
+   *     为 null 时返回的值。
+   * @return 对象类的完整规范名称，或 {@code null}。
    */
   public static String getFullCanonicalName(final Object object,
       final String valueIfNull) {
@@ -730,11 +690,11 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the full canonical name of a {@code Class}.
+   * 获取 {@code Class} 的完整规范名称。
    *
    * @param cls
-   *     the class to get the short name for.
-   * @return the full canonical name of the class, or an empty string.
+   *     要获取短名称的类。
+   * @return 类的完整规范名称，或空字符串。
    */
   public static String getFullCanonicalName(final Class<?> cls) {
     if (cls == null) {
@@ -744,14 +704,13 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the full canonical name of a class name.
+   * 获取类名的完整规范名称。
    *
-   * <p>The string passed in is assumed to be a canonical name - it is not
-   * checked.
+   * <p>传入的字符串假定为规范名称 - 不会进行检查。
    *
    * @param canonicalName
-   *     the class name to get the short name for.
-   * @return the full canonical name of the class or an empty string.
+   *     要获取短名称的类名。
+   * @return 类的完整规范名称或空字符串。
    * @since 1.0.0
    */
   public static String getFullCanonicalName(final String canonicalName) {
@@ -759,14 +718,13 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the canonical name minus the package name for an {@code Object}.
+   * 获取 {@code Object} 的规范名称，不包含包名。
    *
    * @param object
-   *     the class to get the short name for, may be null.
+   *     要获取短名称的类，可以为 null。
    * @param valueIfNull
-   *     the value to return if null.
-   * @return the canonical name of the object without the package name, or the
-   *     null value.
+   *     为 null 时返回的值。
+   * @return 对象的规范名称（不包含包名），或 null 值。
    * @since 1.0.0
    */
   public static String getShortCanonicalName(final Object object,
@@ -778,11 +736,11 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the canonical name minus the package name from a {@code Class}.
+   * 从 {@code Class} 获取规范名称，不包含包名。
    *
    * @param cls
-   *     the class to get the short name for.
-   * @return the canonical name without the package name or an empty string.
+   *     要获取短名称的类。
+   * @return 不包含包名的规范名称或空字符串。
    * @since 1.0.0
    */
   public static String getShortCanonicalName(final Class<?> cls) {
@@ -793,15 +751,13 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the canonical name minus the package name from a String.
+   * 从字符串获取规范名称，不包含包名。
    *
-   * <p>The string passed in is assumed to be a canonical name - it is not
-   * checked.
+   * <p>传入的字符串假定为规范名称 - 不会进行检查。
    *
    * @param canonicalName
-   *     the class name to get the short name for.
-   * @return the canonical name of the class without the package name or an
-   *     empty string.
+   *     要获取短名称的类名。
+   * @return 不包含包名的类的规范名称或空字符串。
    * @since 1.0.0
    */
   public static String getShortCanonicalName(final String canonicalName) {
@@ -809,13 +765,13 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the package name from the canonical name of an {@code Object}.
+   * 从 {@code Object} 的规范名称获取包名。
    *
    * @param object
-   *     the class to get the package name for, may be null.
+   *     要获取包名的类，可以为 null。
    * @param valueIfNull
-   *     the value to return if null.
-   * @return the package name of the object, or the null value.
+   *     为 null 时返回的值。
+   * @return 对象的包名，或 null 值。
    * @since 1.0.0
    */
   public static String getPackageCanonicalName(final Object object,
@@ -827,11 +783,11 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the package name from the canonical name of a {@code Class}.
+   * 从 {@code Class} 的规范名称获取包名。
    *
    * @param cls
-   *     the class to get the package name for, may be {@code null}.
-   * @return the package name or an empty string.
+   *     要获取包名的类，可以为 {@code null}。
+   * @return 包名或空字符串。
    * @since 1.0.0
    */
   public static String getPackageCanonicalName(final Class<?> cls) {
@@ -842,16 +798,15 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the package name from the canonical name.
+   * 从规范名称获取包名。
    *
-   * <p>The string passed in is assumed to be a canonical name - it is not
-   * checked.
+   * <p>传入的字符串假定为规范名称 - 不会进行检查。
    *
-   * <p>If the class is unpackaged, return an empty string.
+   * <p>如果类未打包，返回空字符串。
    *
    * @param canonicalName
-   *     the canonical name to get the package name for, may be {@code null}.
-   * @return the package name or an empty string.
+   *     要获取包名的规范名称，可以为 {@code null}。
+   * @return 包名或空字符串。
    * @since 1.0.0
    */
   public static String getPackageCanonicalName(final String canonicalName) {
@@ -859,12 +814,11 @@ public class ClassUtils {
   }
 
   /**
-   * Gets a {@code List} of super-classes for the given class.
+   * 获取给定类的超类的 {@code List}。
    *
    * @param cls
-   *     the class to look up, may be {@code null}.
-   * @return the {@code List} of super-classes in order going up from this one
-   *     {@code null} if null input.
+   *     要查找的类，可以为 {@code null}。
+   * @return 从该类向上排列的超类的 {@code List}，如果输入为 null 则返回 {@code null}。
    * @since 1.0.0
    */
   public static List<Class<?>> getAllSuperclasses(final Class<?> cls) {
@@ -881,18 +835,14 @@ public class ClassUtils {
   }
 
   /**
-   * Gets a {@code List} of all interfaces implemented by the given class and
-   * its super-classes.
+   * 获取给定类及其超类实现的所有接口的 {@code List}。
    * <p>
-   * The order is determined by looking through each interface in turn as
-   * declared in the source file and following its hierarchy up. Then each
-   * superclass is considered in the same way. Later duplicates are ignored, so
-   * the order is maintained.
+   * 顺序由按照源文件中声明的顺序依次查看每个接口并跟随其层次结构向上确定。
+   * 然后以同样的方式考虑每个超类。后面的重复项被忽略，因此保持顺序。
    *
    * @param cls
-   *     the class to look up, may be {@code null}.
-   * @return
-   *     the {@code List} of interfaces in order, {@code null} if null input.
+   *     要查找的类，可以为 {@code null}。
+   * @return 按顺序排列的接口的 {@code List}，如果输入为 null 则返回 {@code null}。
    */
   public static List<Class<?>> getAllInterfaces(final Class<?> cls) {
     if (cls == null) {
@@ -919,11 +869,9 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the desired Method much like {@code Class.getMethod}, however it
-   * ensures that the returned Method is from a public class or interface and
-   * not from an anonymous inner class. This means that the Method is
-   * invokable and doesn't fall foul of Java bug
-   * <a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4071957">4071957</a>).
+   * 获取所需的 Method，很像 {@code Class.getMethod}，但它确保返回的 Method 来自
+   * 公共类或接口，而不是来自匿名内部类。这意味着 Method 是可调用的，并且不会遇到
+   * Java bug <a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4071957">4071957</a>。
    *
    * <pre>
    * Set set = Collections.unmodifiableSet(...);
@@ -932,20 +880,19 @@ public class ClassUtils {
    * </pre>
    *
    * @param cls
-   *     the class to check, not null
+   *     要检查的类，不能为 null
    * @param methodName
-   *     the name of the method
+   *     方法的名称
    * @param parameterTypes
-   *     the list of parameters
-   * @return the method
+   *     参数列表
+   * @return 方法
    * @throws NullPointerException
-   *     if the class is null
+   *     如果类为 null
    * @throws SecurityException
-   *     if a a security violation occurred.
+   *     如果发生安全违规。
    * @throws NoSuchMethodException
-   *     if the method is not found in the given class or if the method doesn't
-   *     conform with the requirements.
-   * @deprecated use {@link MethodUtils#getMethod(Class, int, String, Class[])} instead.
+   *     如果在给定类中找不到方法，或者方法不符合要求。
+   * @deprecated 使用 {@link MethodUtils#getMethod(Class, int, String, Class[])} 代替。
    */
   @Deprecated
   public static Method getPublicMethod(final Class<?> cls,
@@ -1061,16 +1008,14 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the default value of a specified type.
+   * 获取指定类型的默认值。
    *
-   * <p>If the specified type is a primitive type, the default value depends on
-   * its actual type; otherwise, the default value of a non-primitive type is
-   * always {@code null}.</p>
+   * <p>如果指定的类型是基本类型，默认值取决于其实际类型；否则，非基本类型的默认值
+   * 总是 {@code null}。</p>
    *
    * @param type
-   *     the class object of the specified type.
-   * @return
-   *     the default value object of the specified type.
+   *     指定类型的类对象。
+   * @return 指定类型的默认值对象。
    */
   public static Object getDefaultValueObject(final Class<?> type) {
     if (type.isPrimitive()) {
@@ -1099,77 +1044,75 @@ public class ClassUtils {
     return null;
   }
 
-
   /**
-   * Check if a type is an interface.
+   * 检查一个类型是否为接口。
    *
    * @param type
-   *     the type to check
-   * @return true if the type is an interface, false otherwise
+   *     要检查的类型。
+   * @return 如果类型是接口则返回 true，否则返回 false。
    */
   public static boolean isInterface(final Class<?> type) {
     return type.isInterface();
   }
 
   /**
-   * Check if the type is abstract (either an interface or an abstract class).
+   * 检查一个类型是否为抽象的（接口或抽象类）。
    *
    * @param type
-   *     the type to check
+   *     要检查的类型。
    * @param <T>
-   *     the actual type to check
-   * @return true if the type is abstract, false otherwise
+   *     要检查的实际类型。
+   * @return 如果类型是抽象的则返回 true，否则返回 false。
    */
   public static <T> boolean isAbstract(final Class<T> type) {
     return Modifier.isAbstract(type.getModifiers());
   }
 
   /**
-   * Check if the type is public.
+   * 检查一个类型是否为公共的。
    *
    * @param type
-   *     the type to check
+   *     要检查的类型。
    * @param <T>
-   *     the actual type to check
-   * @return true if the type is public, false otherwise
+   *     要检查的实际类型。
+   * @return 如果类型是公共的则返回 true，否则返回 false。
    */
   public static <T> boolean isPublic(final Class<T> type) {
     return Modifier.isPublic(type.getModifiers());
   }
 
   /**
-   * Check if the type is protected.
+   * 检查一个类型是否为受保护的。
    *
    * @param type
-   *     the type to check
+   *     要检查的类型。
    * @param <T>
-   *     the actual type to check
-   * @return true if the type is protected, false otherwise
+   *     要检查的实际类型。
+   * @return 如果类型是受保护的则返回 true，否则返回 false。
    */
   public static <T> boolean isProtected(final Class<T> type) {
     return Modifier.isProtected(type.getModifiers());
   }
 
   /**
-   * Check if the type is private.
+   * 检查一个类型是否为私有的。
    *
    * @param type
-   *     the type to check
+   *     要检查的类型。
    * @param <T>
-   *     the actual type to check
-   * @return true if the type is private, false otherwise
+   *     要检查的实际类型。
+   * @return 如果类型是私有的则返回 true，否则返回 false。
    */
   public static <T> boolean isPrivate(final Class<T> type) {
     return Modifier.isPrivate(type.getModifiers());
   }
 
   /**
-   * Check whether a class object is a proxy class.
+   * 检查一个类对象是否为代理类。
    *
    * @param type
-   *     the class object be checked.
-   * @return
-   *     true if the class object is a proxy class; false otherwise.
+   *     要检查的类对象。
+   * @return 如果类对象是代理类则返回 true；否则返回 false。
    */
   public static boolean isProxy(final Class<?> type) {
     if (type == null) {
@@ -1181,6 +1124,13 @@ public class ClassUtils {
     }
   }
 
+  /**
+   * 检查类名是否匹配已知的代理类名称模式。
+   *
+   * @param className
+   *     要检查的类名。
+   * @return 如果类名匹配已知的代理类名称模式则返回 true。
+   */
   static boolean matchesWellKnownProxyClassNamePattern(final String className) {
     return className.contains(BYTE_BUDDY_CLASS_SEPARATOR)
         || className.contains(CGLIB_JAVASSIST_CLASS_SEPARATOR)
@@ -1192,71 +1142,69 @@ public class ClassUtils {
   private static final String HIBERNATE_PROXY_CLASS_SEPARATOR = "$HibernateProxy$";
 
   /**
-   * Check if a type is a primitive type.
+   * 检查一个类型是否为基本类型。
    *
    * @param type
-   *     the type to check.
-   * @return true if the type is a primitive type, false otherwise.
+   *     要检查的类型。
+   * @return 如果类型是基本类型则返回 true，否则返回 false。
    */
   public static boolean isPrimitiveType(final Class<?> type) {
     return type.isPrimitive();
   }
 
   /**
-   * Check if a type is an array type.
+   * 检查一个类型是否为数组类型。
    *
    * @param type
-   *     the type to check.
-   * @return true if the type is an array type, false otherwise.
+   *     要检查的类型。
+   * @return 如果类型是数组类型则返回 true，否则返回 false。
    */
   public static boolean isArrayType(final Class<?> type) {
     return type.isArray();
   }
 
   /**
-   * 检测指定的类型是否是个枚举类行。
+   * 检测指定的类型是否是个枚举类型。
    * <p>
    * <b>注意：</b>不能直接使用{@link Class#isEnum()}判定枚举类型，因为{@code Enum.class.isEnum()}
    * 会返回{@code false}。而对于此函数，{@code isEnumType(Enum.class)}返回{@code true}。
    *
    * @param type
    *     待检测的类型的类对象。
-   * @return
-   *     若指定的类型是枚举类型，返回{@code true}；否则返回{@code false}。
+   * @return 若指定的类型是枚举类型，返回{@code true}；否则返回{@code false}。
    */
   public static boolean isEnumType(final Class<?> type) {
     return type.isEnum() || Enum.class.isAssignableFrom(type);
   }
 
   /**
-   * 检查指定的类型是否是个记录类。
+   * 检查指定的类型是否是记录类。
    *
    * @param type
    *     待检测的类型的类对象。
-   * @return
-   *     若指定的类型是记录类，返回{@code true}；否则返回{@code false}。
+   * @return 若指定的类型是记录类，返回 {@code true}；否则返回 {@code false}。
    */
   public static boolean isRecordType(final Class<?> type) {
     return type.isRecord();
   }
 
   /**
-   * Check if a type is a collection type.
+   * 检查一个类型是否为集合类型。
    *
    * @param type
-   *     the type to check.
-   * @return true if the type is a collection type, false otherwise
+   *     要检查的类型。
+   * @return 如果类型是集合类型则返回 true，否则返回 false。
    */
   public static boolean isCollectionType(final Class<?> type) {
     return Collection.class.isAssignableFrom(type);
   }
 
   /**
-   * Check if a type is a collection type.
+   * 检查一个类型是否为集合类型。
    *
    * @param type
-   *     the type to check.
-   * @return true if the type is a collection type, false otherwise
+   *     要检查的类型。
+   * @return 如果类型是集合类型则返回 true，否则返回 false。
    */
   public static boolean isCollectionType(final java.lang.reflect.Type type) {
     return isParameterizedType(type)
@@ -1264,22 +1212,22 @@ public class ClassUtils {
   }
 
   /**
-   * Check if a type is a list type.
+   * 检查一个类型是否为列表类型。
    *
    * @param type
-   *     the type to check.
-   * @return true if the type is a list type, false otherwise
+   *     要检查的类型。
+   * @return 如果类型是列表类型则返回 true，否则返回 false。
    */
   public static boolean isListType(final Class<?> type) {
     return List.class.isAssignableFrom(type);
   }
 
   /**
-   * Check if a type is a list type.
+   * 检查一个类型是否为列表类型。
    *
    * @param type
-   *     the type to check.
-   * @return true if the type is a list type, false otherwise
+   *     要检查的类型。
+   * @return 如果类型是列表类型则返回 true，否则返回 false。
    */
   public static boolean isListType(final java.lang.reflect.Type type) {
     return isParameterizedType(type)
@@ -1287,22 +1235,22 @@ public class ClassUtils {
   }
 
   /**
-   * Check if a type is a set type.
+   * 检查一个类型是否为集合类型。
    *
    * @param type
-   *     the type to check.
-   * @return true if the type is a set type, false otherwise
+   *     要检查的类型。
+   * @return 如果类型是集合类型则返回 true，否则返回 false。
    */
   public static boolean isSetType(final Class<?> type) {
     return Set.class.isAssignableFrom(type);
   }
 
   /**
-   * Check if a type is a set type.
+   * 检查一个类型是否为集合类型。
    *
    * @param type
-   *     the type to check.
-   * @return true if the type is a set type, false otherwise
+   *     要检查的类型。
+   * @return 如果类型是集合类型则返回 true，否则返回 false。
    */
   public static boolean isSetType(final java.lang.reflect.Type type) {
     return isParameterizedType(type)
@@ -1310,22 +1258,22 @@ public class ClassUtils {
   }
 
   /**
-   * Check if a type is a map type.
+   * 检查一个类型是否为映射类型。
    *
    * @param type
-   *     the type to check
-   * @return true if the type is a map type, false otherwise.
+   *     要检查的类型。
+   * @return 如果类型是映射类型则返回 true，否则返回 false。
    */
   public static boolean isMapType(final Class<?> type) {
     return Map.class.isAssignableFrom(type);
   }
 
   /**
-   * Check if a type is a map type.
+   * 检查一个类型是否为映射类型。
    *
    * @param type
-   *     the type to check.
-   * @return true if the type is a map type, false otherwise
+   *     要检查的类型。
+   * @return 如果类型是映射类型则返回 true，否则返回 false。
    */
   public static boolean isMapType(final java.lang.reflect.Type type) {
     return isParameterizedType(type)
@@ -1333,11 +1281,11 @@ public class ClassUtils {
   }
 
   /**
-   * Check if a type is a JDK built-in class.
+   * 检查一个类型是否为 JDK 内置类。
    *
    * @param type
-   *     the type to check
-   * @return true if the type is a built-in class, false otherwise.
+   *     要检查的类型。
+   * @return 如果类型是内置类则返回 true，否则返回 false。
    */
   public static boolean isJdkBuiltIn(final Class<?> type) {
     final String name = type.getName();
@@ -1345,13 +1293,11 @@ public class ClassUtils {
   }
 
   /**
-   * Check whether a type is the boxing type of primitive type.
+   * 检查一个类型是否为基本类型的包装类型。
    *
    * @param type
-   *     the class object of the type to check.
-   * @return
-   *     {@code true} if the type is the boxing type of primitive type,
-   *     {@code false} otherwise.
+   *     要检查的类型的类对象。
+   * @return 如果类型是基本类型的包装类型则返回 {@code true}，否则返回 {@code false}。
    */
   public static boolean isBoxingType(final Class<?> type) {
     return (type == Character.class)
@@ -1365,14 +1311,12 @@ public class ClassUtils {
   }
 
   /**
-   * Check whether a type is the type representing a permission.
+   * 检查一个类型是否表示权限。
    *
    * @param type
-   *     the class object of the type to check.
-   * @return
-   *     {@code true} if the type is the type representing a permission, i.e.,
-   *     the subclass of {@link java.security.Permission}; {@code false}
-   *     otherwise.
+   *     要检查的类型的类对象。
+   * @return 如果类型表示权限（即 {@link java.security.Permission} 的子类）则返回 {@code true}；
+   *     否则返回 {@code false}。
    */
   public static boolean isPermissionType(final Class<?> type) {
     return java.security.Permission.class.isAssignableFrom(type);
@@ -1455,13 +1399,11 @@ public class ClassUtils {
   }
 
   /**
-   * Check whether a type is a type of immutable objects.
+   * 检查一个类型是否为不可变对象的类型。
    *
    * @param type
-   *     the class object of the type to check.
-   * @return
-   *     {@code true} if the type is a type of immutable objects, {@code false}
-   *     otherwise.
+   *     要检查的类型的类对象。
+   * @return 如果类型是不可变对象的类型则返回 {@code true}，否则返回 {@code false}。
    */
   public static boolean isImmutableType(final Class<?> type) {
     return IMMUTABLE_JDK_CLASSES.contains(type)
@@ -1471,27 +1413,24 @@ public class ClassUtils {
   }
 
   /**
-   * Check whether a type is a type of mutable objects.
+   * 检查一个类型是否为可变对象的类型。
    *
    * @param type
-   *     the class object of the type to check.
-   * @return
-   *     {@code true} if the type is a type of mutable objects, {@code false}
-   *     otherwise.
+   *     要检查的类型的类对象。
+   * @return 如果类型是可变对象的类型则返回 {@code true}，否则返回 {@code false}。
    */
   public static boolean isMutableType(final Class<?> type) {
     return !isImmutableType(type);
   }
 
   /**
-   * Check if a type should be introspected for internal fields.
+   * 检查一个类型是否应该被内省其内部字段。
    * <p>
-   * FIXME: this method is only used by common-random, and it should be moved to
-   *   the common-random library.
+   * 注意：此方法仅由 common-random 使用，应该移动到 common-random 库中。
    *
    * @param type
-   *     the type to check
-   * @return true if the type should be introspected, false otherwise
+   *     要检查的类型。
+   * @return 如果类型应该被内省则返回 true，否则返回 false。
    */
   public static boolean isIntrospectable(final Class<?> type) {
     return !isEnumType(type)
@@ -1501,14 +1440,13 @@ public class ClassUtils {
   }
 
   /**
-   * Check if a type is populatable.
+   * 检查一个类型是否可填充。
    * <p>
-   * FIXME: this method is only used by common-random, and it should be moved to
-   *   the common-random library.
+   * 注意：此方法仅由 common-random 使用，应该移动到 common-random 库中。
    *
    * @param type
-   *     the type to check
-   * @return true if the type is populatable, false otherwise
+   *     要检查的类型。
+   * @return 如果类型可填充则返回 true，否则返回 false。
    */
   public static boolean isPopulatable(final java.lang.reflect.Type type) {
     return !isWildcardType(type)
@@ -1518,11 +1456,11 @@ public class ClassUtils {
   }
 
   /**
-   * Check if a type is a parameterized type.
+   * 检查一个类型是否为参数化类型。
    *
    * @param type
-   *     the type to check
-   * @return true if the type is parameterized, false otherwise
+   *     要检查的类型。
+   * @return 如果类型是参数化的则返回 true，否则返回 false。
    */
   public static boolean isParameterizedType(final java.lang.reflect.Type type) {
     return (type instanceof ParameterizedType)
@@ -1530,36 +1468,35 @@ public class ClassUtils {
   }
 
   /**
-   * Check if a type is a wildcard type.
+   * 检查一个类型是否为通配符类型。
    *
    * @param type
-   *     the type to check
-   * @return true if the type is a wildcard type, false otherwise
+   *     要检查的类型。
+   * @return 如果类型是通配符类型则返回 true，否则返回 false。
    */
   public static boolean isWildcardType(final java.lang.reflect.Type type) {
     return (type instanceof WildcardType);
   }
 
   /**
-   * Check if a type is a type variable.
+   * 检查一个类型是否为类型变量。
    *
    * @param type
-   *     the type to check
-   * @return true if the type is a type variable, false otherwise
+   *     要检查的类型。
+   * @return 如果类型是类型变量则返回 true，否则返回 false。
    */
   public static boolean isTypeVariable(final Type type) {
     return (type instanceof TypeVariable<?>);
   }
 
   /**
-   * Searches the specified interface of a class.
+   * 搜索类的指定接口。
    *
    * @param type
-   *     the specified class.
+   *     指定的类。
    * @param simpleName
-   *     the simple name of the interface to be searched.
-   * @return the interface of the class with the specified simple name; or
-   *     {@code null} if no such interface.
+   *     要搜索的接口的简单名称。
+   * @return 具有指定简单名称的类的接口；如果没有这样的接口则返回 {@code null}。
    */
   public static Class<?> getInterface(final Class<?> type, final String simpleName) {
     for (final Class<?> cls : type.getInterfaces()) {
@@ -1571,14 +1508,13 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the real class object of a possible proxy class object.
+   * 获取可能的代理类对象的真实类对象。
    *
    * @param <T>
-   *     the type parameter of the class object.
+   *     类对象的类型参数。
    * @param clazz
-   *     a class object, possibly a proxy class object.
-   * @return
-   *     the real class object of the specified possible proxy class object.
+   *     类对象，可能是代理类对象。
+   * @return 指定的可能代理类对象的真实类对象。
    */
   @SuppressWarnings("unchecked")
   public static <T> Class<T> getRealClass(final Class<T> clazz) {
@@ -1600,14 +1536,13 @@ public class ClassUtils {
   }
 
   /**
-   * Gets the real class object of a possible proxy object.
+   * 获取可能的代理对象的真实类对象。
    *
    * @param <T>
-   *     the type of the object.
+   *     对象的类型。
    * @param object
-   *     the object, possibly a proxy object.
-   * @return
-   *     the real class object of the specified possible proxy object.
+   *     对象，可能是代理对象。
+   * @return 指定的可能代理对象的真实类对象。
    */
   public static <T> Class<T> getRealClass(final T object) {
     if (object instanceof Class<?>) {

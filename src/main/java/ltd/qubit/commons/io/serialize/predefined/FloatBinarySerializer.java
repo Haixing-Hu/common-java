@@ -22,21 +22,27 @@ import static ltd.qubit.commons.io.InputUtils.readFloatObject;
 import static ltd.qubit.commons.io.OutputUtils.writeFloatObject;
 
 /**
- * The {@link BinarySerializer} for {@link Float} class.
+ * {@link Float} 类的 {@link BinarySerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class FloatBinarySerializer implements BinarySerializer {
 
   public static final FloatBinarySerializer INSTANCE = new FloatBinarySerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Float deserialize(final InputStream in, final boolean allowNull)
       throws IOException {
     return readFloatObject(in, allowNull);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final OutputStream out, @Nullable final Object obj)
       throws IOException {

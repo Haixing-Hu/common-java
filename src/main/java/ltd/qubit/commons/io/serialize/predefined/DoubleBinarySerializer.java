@@ -22,21 +22,27 @@ import static ltd.qubit.commons.io.InputUtils.readDoubleObject;
 import static ltd.qubit.commons.io.OutputUtils.writeDoubleObject;
 
 /**
- * The {@link BinarySerializer} for {@link Double} class.
+ * {@link Double} 类的 {@link BinarySerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class DoubleBinarySerializer implements BinarySerializer {
 
   public static final DoubleBinarySerializer INSTANCE = new DoubleBinarySerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Double deserialize(final InputStream in, final boolean allowNull)
       throws IOException {
     return readDoubleObject(in, allowNull);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final OutputStream out, @Nullable final Object obj)
       throws IOException {

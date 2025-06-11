@@ -20,16 +20,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides APIs for launching the default application to browse an URI, mail to
- * an URI, open a file, or edit a file.
+ * 提供用于启动默认应用程序来浏览 URI、发送邮件到 URI、打开文件或编辑文件的 API。
  *
- * <p>Since the "java.awt.Desktop" is not fully supported in some operating
- * systems, the implementation of this class will first try to execute a system
- * dependent command to perform the action; if the command failed, it will fall
- * back to call the API provided by "java.awt.Desktop".
+ * <p>由于 "java.awt.Desktop" 在某些操作系统中不完全支持，此类的实现将首先尝试执行
+ * 系统相关命令来执行操作；如果命令失败，它将回退到调用 "java.awt.Desktop" 提供的 API。
  *
  * @author MightyPork (http://www.ondrovo.com/)
- * @author Haixing Hu (https://github.com/Haixing-Hu/)
+ * @author 胡海星 (https://github.com/Haixing-Hu/)
  * @see <a href="http://stackoverflow.com/questions/18004150/desktop-api-is-not-supported-on-the-current-platform">Desktop
  *     API is not supported on the current platform</a>
  */
@@ -39,15 +36,13 @@ public final class DesktopApi {
       .getLogger(DesktopApi.class);
 
   /**
-   * Launches the default browser to display a URI. If the default browser is
-   * not able to handle the specified URI, the application registered for
-   * handling URIs of the specified type is invoked. The application is
-   * determined from the protocol and path of the URI, as defined by the URI
-   * class.
+   * 启动默认浏览器来显示 URI。如果默认浏览器无法处理指定的 URI，
+   * 则会调用注册用于处理指定类型 URI 的应用程序。应用程序是根据 URI 的协议和路径确定的，
+   * 如 URI 类所定义。
    *
    * @param uri
-   *     the URI to be browser.
-   * @return true if success; false otherwise.
+   *     要浏览的 URI。
+   * @return 如果成功则返回 true；否则返回 false。
    */
   public static boolean browse(final URI uri) {
     if (openSystemSpecific(uri.toString())) {
@@ -57,15 +52,13 @@ public final class DesktopApi {
   }
 
   /**
-   * Launches the default browser to display a URI. If the default browser is
-   * not able to handle the specified URI, the application registered for
-   * handling URIs of the specified type is invoked. The application is
-   * determined from the protocol and path of the URI, as defined by the URI
-   * class.
+   * 启动默认浏览器来显示 URI。如果默认浏览器无法处理指定的 URI，
+   * 则会调用注册用于处理指定类型 URI 的应用程序。应用程序是根据 URI 的协议和路径确定的，
+   * 如 URI 类所定义。
    *
    * @param uri
-   *     the string representation of the URI to be browser.
-   * @return true if success; false otherwise.
+   *     要浏览的 URI 的字符串表示。
+   * @return 如果成功则返回 true；否则返回 false。
    */
   public static boolean browse(final String uri) {
     try {
@@ -77,12 +70,11 @@ public final class DesktopApi {
   }
 
   /**
-   * Launches the mail composing window of the user default mail client, filling
-   * the message fields specified by a "mailto:" URI.
+   * 启动用户默认邮件客户端的邮件撰写窗口，填充由 "mailto:" URI 指定的邮件字段。
    *
    * @param uri
-   *     the URI to be browser.
-   * @return true if success; false otherwise.
+   *     要发送邮件的 URI。
+   * @return 如果成功则返回 true；否则返回 false。
    */
   public static boolean mail(final URI uri) {
     if (openSystemSpecific(uri.toString())) {
@@ -92,12 +84,11 @@ public final class DesktopApi {
   }
 
   /**
-   * Launches the mail composing window of the user default mail client, filling
-   * the message fields specified by a "mailto:" URI.
+   * 启动用户默认邮件客户端的邮件撰写窗口，填充由 "mailto:" URI 指定的邮件字段。
    *
    * @param uri
-   *     the string representation of the URI to be browser.
-   * @return true if success; false otherwise.
+   *     要发送邮件的 URI 的字符串表示。
+   * @return 如果成功则返回 true；否则返回 false。
    */
   public static boolean mail(final String uri) {
     final String str = (uri.startsWith("mailto:") ? uri : "mailto:" + uri);
@@ -110,14 +101,13 @@ public final class DesktopApi {
   }
 
   /**
-   * Launches the associated application to open the file.
+   * 启动关联的应用程序来打开文件。
    *
-   * <p>If the specified file is a directory, the file manager of the current
-   * platform is launched to open it.
+   * <p>如果指定的文件是目录，则会启动当前平台的文件管理器来打开它。
    *
    * @param file
-   *     the file to be opened.
-   * @return true if success; false otherwise.
+   *     要打开的文件。
+   * @return 如果成功则返回 true；否则返回 false。
    */
   public static boolean open(final File file) {
     if (openSystemSpecific(file.getPath())) {
@@ -127,25 +117,24 @@ public final class DesktopApi {
   }
 
   /**
-   * Launches the associated application to open the file.
+   * 启动关联的应用程序来打开文件。
    *
-   * <p>If the specified file is a directory, the file manager of the current
-   * platform is launched to open it.
+   * <p>如果指定的文件是目录，则会启动当前平台的文件管理器来打开它。
    *
    * @param path
-   *     the path of the file to be opened.
-   * @return true if success; false otherwise.
+   *     要打开的文件的路径。
+   * @return 如果成功则返回 true；否则返回 false。
    */
   public static boolean open(final String path) {
     return open(new File(path));
   }
 
   /**
-   * Edit a file using the operating system's default application.
+   * 使用操作系统的默认应用程序编辑文件。
    *
    * @param file
-   *     the file to be edited.
-   * @return true if success; false otherwise.
+   *     要编辑的文件。
+   * @return 如果成功则返回 true；否则返回 false。
    */
   public static boolean edit(final File file) {
     // you can try something like
@@ -158,11 +147,11 @@ public final class DesktopApi {
   }
 
   /**
-   * Edit a file using the operating system's default application.
+   * 使用操作系统的默认应用程序编辑文件。
    *
    * @param path
-   *     the path of the file to be edited.
-   * @return true if success; false otherwise.
+   *     要编辑的文件的路径。
+   * @return 如果成功则返回 true；否则返回 false。
    */
   public static boolean edit(final String path) {
     return edit(new File(path));

@@ -22,21 +22,27 @@ import static ltd.qubit.commons.io.InputUtils.readLongObject;
 import static ltd.qubit.commons.io.OutputUtils.writeLongObject;
 
 /**
- * The {@link BinarySerializer} for {@link Long} class.
+ * {@link Long} 类的 {@link BinarySerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class LongBinarySerializer implements BinarySerializer {
 
   public static final LongBinarySerializer INSTANCE = new LongBinarySerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Long deserialize(final InputStream in, final boolean allowNull)
       throws IOException {
     return readLongObject(in, allowNull);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final OutputStream out, @Nullable final Object obj)
       throws IOException {

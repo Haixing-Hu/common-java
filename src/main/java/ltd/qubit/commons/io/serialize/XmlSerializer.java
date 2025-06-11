@@ -16,51 +16,48 @@ import org.w3c.dom.Element;
 import ltd.qubit.commons.text.xml.XmlException;
 
 /**
- * A {@link XmlSerializer} provides interface to serialize and deserialize
- * objects to and from an XML DOM true.
+ * {@link XmlSerializer} 接口提供了将对象序列化为 XML DOM 树以及从 XML DOM 树反序列化对象
+ * 的功能。
  *
- * <p><b>NOTE</b>: All implementation of this interface <b>MUST</b> be thread
- * safe.
+ * <p><b>注意</b>：此接口的所有实现都<b>必须</b>是线程安全的。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public interface XmlSerializer {
 
   /**
-   * Gets the name of the root node of the XML DOM tree for the objects of this
-   * class.
+   * 获取此类的对象的XML DOM树的根节点的名称。
    *
-   * @return the name of the root node in the XML DOM tree for the objects of
-   *     this class.
+   * @return 此类的对象的XML DOM树的根节点的名称。
    */
   String getRootNodeName();
 
   /**
-   * Deserializes an object from an XML DOM true.
+   * 从XML DOM树反序列化对象。
    *
    * @param root
-   *     The root node of the XML DOM tree.
-   * @return The object deserialized from XML DOM tree.
+   *     XML DOM树的根节点。
+   * @return 从XML DOM树反序列化得到的对象。
    * @throws NullPointerException
-   *     If the {@code root} is {@code null}.
+   *     如果 {@code root} 为 {@code null}。
    * @throws XmlException
-   *     If any XML error occurred.
+   *     如果发生任何XML错误。
    */
   Object deserialize(Element root) throws XmlException;
 
   /**
-   * Serializes an object to an XML DOM true.
+   * 将对象序列化为XML DOM树。
    *
    * @param doc
-   *     The XML DOM document used to create XML DOM node.
+   *     用于创建XML DOM节点的XML DOM文档。
    * @param obj
-   *     The object to be serialized. It can't be {@code null}.
-   * @return The root node of the resulting XML DOM tree.
+   *     待序列化的对象。它不能为{@code null}。
+   * @return 生成的XML DOM树的根节点。
    * @throws NullPointerException
-   *     If the {@code obj} is {@code null}.
+   *     如果 {@code obj} 为 {@code null}。
    * @throws XmlException
-   *     If any XML error occurred.
+   *     如果发生任何XML错误。
    */
   Element serialize(Document doc, Object obj) throws XmlException;
 

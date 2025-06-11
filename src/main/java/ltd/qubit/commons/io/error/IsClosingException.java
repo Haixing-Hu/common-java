@@ -11,18 +11,27 @@ package ltd.qubit.commons.io.error;
 import java.io.IOException;
 
 /**
- * Thrown to indicate a file or a device is being closed.
+ * 抛出此异常表示文件或设备正在关闭。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class IsClosingException extends IOException {
 
   private static final long serialVersionUID = - 4707122216334525975L;
 
+  /**
+   * 构造一个 {@link IsClosingException}。
+   */
   public IsClosingException() {
     super("The file, directory or device is being closed.");
   }
 
+  /**
+   * 构造一个 {@link IsClosingException}。
+   *
+   * @param message
+   *     详细信息。
+   */
   public IsClosingException(final String message) {
     super(message);
   }

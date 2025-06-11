@@ -9,14 +9,17 @@
 package ltd.qubit.commons.io.error;
 
 /**
- * Thrown to indicate trying to serialize a null object.
+ * 序列化一个空对象时抛出此异常。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class SerializeNullObjectException extends SerializationException {
 
   private static final long serialVersionUID = -3566512187781686495L;
 
+  /**
+   * 构造一个 {@code SerializeNullObjectException}.
+   */
   public SerializeNullObjectException() {
     super("Try to serialize a null object.");
   }

@@ -11,44 +11,44 @@ package ltd.qubit.commons.io;
 import javax.annotation.Nonnull;
 
 /**
- * A simple printer that prints messages to a destination.
+ * 一个简单的打印器，用于将消息打印到目标位置。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface Printer {
   /**
-   * Prints an empty line to the destination.
+   * 向目标位置打印一个空行。
    *
    * @return
-   *     this printer.
+   *     此打印器。
    */
   default Printer println() {
     return println("");
   }
 
   /**
-   * Prints a line of message to the destination.
+   * 向目标位置打印一行消息。
    * <p>
-   * The message will be followed by a line separator.
+   * 消息后面会跟上一个行分隔符。
    *
    * @param line
-   *     the line of message to be printed.
+   *     要打印的消息行。
    * @return
-   *     this printer.
+   *     此打印器。
    */
   Printer println(@Nonnull String line);
 
   /**
-   * Prints a line of formatted message to the destination.
+   * 向目标位置打印一行格式化的消息。
    * <p>
-   * The message will be followed by a line separator.
+   * 消息后面会跟上一个行分隔符。
    *
    * @param format
-   *     the format string.
+   *     格式字符串。
    * @param args
-   *     the arguments of the format string.
+   *     格式字符串的参数。
    * @return
-   *     this printer.
+   *     此打印器。
    */
   default Printer println(@Nonnull final String format, final Object... args) {
     return println(String.format(format, args));

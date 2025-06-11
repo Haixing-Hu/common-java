@@ -26,19 +26,16 @@ import static ltd.qubit.commons.lang.ByteArrayUtils.DEFAULT_BYTE_ORDER;
 import static ltd.qubit.commons.text.NumberFormatSymbols.DEFAULT_UPPERCASE_DIGITS;
 
 /**
- * This class provides operations on {@code char} primitives and
- * {@link Character} objects.
+ * 该类提供对 {@code char} 基本类型和 {@link Character} 对象的操作。
  * <p>
- * This class tries to handle {@code null} input gracefully. An exception will
- * not be thrown for a {@code null} input. Each method documents its behavior in
- * more detail.
+ * 该类尽量优雅地处理 {@code null} 输入。对于 {@code null} 输入不会抛出异常。
+ * 每个方法在其文档中详细说明了其行为。
  * </p>
  * <p>
- * This class also handle the conversion from {@code char} values or
- * {@link Character} objects to common types.
+ * 该类还处理从 {@code char} 值或 {@link Character} 对象到常见类型的转换。
  * </p>
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public final class CharUtils {
@@ -110,27 +107,25 @@ public final class CharUtils {
   }
 
   /**
-   * Tests whether a character is an ASCII digit.
+   * 测试字符是否为 ASCII 数字。
    *
    * @param ch
-   *     the character to be tested.
+   *     要测试的字符。
    * @return
-   *     {@code true} if the character is an ASCII digit, i.e., between '0' and
-   *     '9'; {@code false} otherwise.
+   *     如果字符是 ASCII 数字（即在 '0' 和 '9' 之间）则返回 {@code true}；否则返回 {@code false}。
    */
   public static boolean isAsciiDigit(final char ch) {
     return (ch >= '0' && ch <= '9');
   }
 
   /**
-   * Tests whether a character is an ASCII hex digit.
+   * 测试字符是否为 ASCII 十六进制数字。
    *
    * @param ch
-   *     the character to be tested.
+   *     要测试的字符。
    * @return
-   *     {@code true} if the character is a hex ASCII digit, i.e., between
-   *     '0' and '9', or between 'a' and 'f', or between 'A' and 'F';
-   *     {@code false} otherwise.
+   *     如果字符是十六进制 ASCII 数字（即在 '0' 和 '9' 之间，或在 'a' 和 'f' 之间，或在 'A' 和 'F' 之间）
+   *     则返回 {@code true}；否则返回 {@code false}。
    */
   public static boolean isAsciiHexDigit(final char ch) {
     return (ch >= '0' && ch <= '9')
@@ -139,32 +134,28 @@ public final class CharUtils {
   }
 
   /**
-   * Tests whether a character is an octal hex digit.
+   * 测试字符是否为八进制数字。
    *
    * @param ch
-   *     the character to be tested.
+   *     要测试的字符。
    * @return
-   *     {@code true} if the character is a octal ASCII digit, i.e., between
-   *     '0' and '7'; {@code false} otherwise.
+   *     如果字符是八进制 ASCII 数字（即在 '0' 和 '7' 之间）则返回 {@code true}；否则返回 {@code false}。
    */
   public static boolean isAsciiOctalDigit(final char ch) {
     return (ch >= '0' && ch <= '7');
   }
 
   /**
-   * Determines whether the specified code point is a "graphic" character
-   * (printable, excluding spaces).
+   * 判断指定的码点是否为"图形"字符（可打印，不包括空格）。
    *
-   * <p>True for all characters except those with general categories "Cc"
-   * (control codes), "Cf" (format controls), "Cs" (surrogates), "Cn"
-   * (unassigned), and "Z" (separators).
+   * <p>除了一般类别为 "Cc"（控制码）、"Cf"（格式控制）、"Cs"（代理）、"Cn"（未分配）
+   * 和 "Z"（分隔符）的字符外，所有字符都返回 true。
    *
-   * <p>Note that a code point is either graph or blank.
+   * <p>注意：码点要么是图形字符，要么是空白字符。
    *
    * @param codePoint
-   *     the code point of an Unicode.
-   * @return true if the specified code point is a "graphic" character; false
-   *     otherwise.
+   *     Unicode 的码点。
+   * @return 如果指定的码点是"图形"字符则返回 true；否则返回 false。
    * @see #isBlank(int)
    */
   public static boolean isGraph(final int codePoint) {
@@ -179,19 +170,16 @@ public final class CharUtils {
   }
 
   /**
-   * Determines whether the specified code point is a "blank" character
-   * (non-printable or white spaces).
+   * 判断指定的码点是否为"空白"字符（不可打印或空白字符）。
    *
-   * <p>True for all characters with general categories "Cc" (control codes),
-   * "Cf" (format controls), "Cs" (surrogates), "Cn" (unassigned), and "Z"
-   * (separators).
+   * <p>对于一般类别为 "Cc"（控制码）、"Cf"（格式控制）、"Cs"（代理）、
+   * "Cn"（未分配）和 "Z"（分隔符）的所有字符都返回 true。
    *
-   * <p>Note that a code point is either graph or blank.
+   * <p>注意：码点要么是图形字符，要么是空白字符。
    *
    * @param codePoint
-   *     the code point of an Unicode.
-   * @return true if the specified code point is a "graphic" character; false
-   *     otherwise.
+   *     Unicode 的码点。
+   * @return 如果指定的码点是"空白"字符则返回 true；否则返回 false。
    * @see #isGraph(int)
    */
   public static boolean isBlank(final int codePoint) {
@@ -518,193 +506,458 @@ public final class CharUtils {
     return (value == null ? defaultValue : value.charValue());
   }
 
+  /**
+   * 将字符值转换为 boolean 值。
+   *
+   * @param value 要转换的字符值
+   * @return 如果字符值不为 0 则返回 {@code true}，否则返回 {@code false}
+   */
   public static boolean toBoolean(final char value) {
     return (value != 0);
   }
 
+  /**
+   * 将 Character 对象转换为 boolean 值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 boolean 值
+   */
   public static boolean toBoolean(@Nullable final Character value) {
     return (value == null ? BooleanUtils.DEFAULT : toBoolean(value.charValue()));
   }
 
+  /**
+   * 将 Character 对象转换为 boolean 值，使用指定的默认值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @param defaultValue 当 Character 对象为 null 时使用的默认值
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 boolean 值
+   */
   public static boolean toBoolean(@Nullable final Character value,
       final boolean defaultValue) {
     return (value == null ? defaultValue : toBoolean(value.charValue()));
   }
 
+  /**
+   * 将字符值转换为 Boolean 对象。
+   *
+   * @param value 要转换的字符值
+   * @return 转换后的 Boolean 对象
+   */
   public static Boolean toBooleanObject(final char value) {
     return Boolean.valueOf(toBoolean(value));
   }
 
+  /**
+   * 将 Character 对象转换为 Boolean 对象。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @return 如果 Character 对象为 null 则返回 null，否则返回转换后的 Boolean 对象
+   */
   public static Boolean toBooleanObject(@Nullable final Character value) {
     return (value == null ? null : toBooleanObject(value.charValue()));
   }
 
+  /**
+   * 将 Character 对象转换为 Boolean 对象，使用指定的默认值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @param defaultValue 当 Character 对象为 null 时使用的默认值
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 Boolean 对象
+   */
   public static Boolean toBooleanObject(@Nullable final Character value,
       @Nullable final Boolean defaultValue) {
     return (value == null ? defaultValue : toBooleanObject(value.charValue()));
   }
 
+  /**
+   * 将字符值转换为 byte 值。
+   *
+   * @param value 要转换的字符值
+   * @return 转换后的 byte 值
+   */
   public static byte toByte(final char value) {
     return (byte) value;
   }
 
+  /**
+   * 将 Character 对象转换为 byte 值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 byte 值
+   */
   public static byte toByte(@Nullable final Character value) {
     return (value == null ? ByteUtils.DEFAULT : toByte(value.charValue()));
   }
 
+  /**
+   * 将 Character 对象转换为 byte 值，使用指定的默认值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @param defaultValue 当 Character 对象为 null 时使用的默认值
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 byte 值
+   */
   public static byte toByte(@Nullable final Character value,
       final byte defaultValue) {
     return (value == null ? defaultValue : toByte(value.charValue()));
   }
 
+  /**
+   * 将字符值转换为 Byte 对象。
+   *
+   * @param value 要转换的字符值
+   * @return 转换后的 Byte 对象
+   */
   public static Byte toByteObject(final char value) {
     return Byte.valueOf(toByte(value));
   }
 
+  /**
+   * 将 Character 对象转换为 Byte 对象。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @return 如果 Character 对象为 null 则返回 null，否则返回转换后的 Byte 对象
+   */
   public static Byte toByteObject(@Nullable final Character value) {
     return (value == null ? null : toByteObject(value.charValue()));
   }
 
+  /**
+   * 将 Character 对象转换为 Byte 对象，使用指定的默认值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @param defaultValue 当 Character 对象为 null 时使用的默认值
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 Byte 对象
+   */
   public static Byte toByteObject(@Nullable final Character value,
       @Nullable final Byte defaultValue) {
     return (value == null ? defaultValue : toByteObject(value.charValue()));
   }
 
+  /**
+   * 将字符值转换为 short 值。
+   *
+   * @param value 要转换的字符值
+   * @return 转换后的 short 值
+   */
   public static short toShort(final char value) {
     return (short) value;
   }
 
+  /**
+   * 将 Character 对象转换为 short 值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 short 值
+   */
   public static short toShort(@Nullable final Character value) {
     return (value == null ? ShortUtils.DEFAULT : toShort(value.charValue()));
   }
 
+  /**
+   * 将 Character 对象转换为 short 值，使用指定的默认值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @param defaultValue 当 Character 对象为 null 时使用的默认值
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 short 值
+   */
   public static short toShort(@Nullable final Character value,
       final short defaultValue) {
     return (value == null ? defaultValue : toShort(value.charValue()));
   }
 
+  /**
+   * 将字符值转换为 Short 对象。
+   *
+   * @param value 要转换的字符值
+   * @return 转换后的 Short 对象
+   */
   public static Short toShortObject(final char value) {
     return toShort(value);
   }
 
+  /**
+   * 将 Character 对象转换为 Short 对象。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @return 如果 Character 对象为 null 则返回 null，否则返回转换后的 Short 对象
+   */
   public static Short toShortObject(@Nullable final Character value) {
     return (value == null ? null : toShortObject(value.charValue()));
   }
 
+  /**
+   * 将 Character 对象转换为 Short 对象，使用指定的默认值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @param defaultValue 当 Character 对象为 null 时使用的默认值
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 Short 对象
+   */
   public static Short toShortObject(@Nullable final Character value,
       @Nullable final Short defaultValue) {
     return (value == null ? defaultValue : toShortObject(value.charValue()));
   }
 
+  /**
+   * 将字符值转换为 int 值。
+   *
+   * @param value 要转换的字符值
+   * @return 转换后的 int 值
+   */
   public static int toInt(final char value) {
     return value;
   }
 
+  /**
+   * 将 Character 对象转换为 int 值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 int 值
+   */
   public static int toInt(@Nullable final Character value) {
     return (value == null ? IntUtils.DEFAULT : toInt(value.charValue()));
   }
 
+  /**
+   * 将 Character 对象转换为 int 值，使用指定的默认值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @param defaultValue 当 Character 对象为 null 时使用的默认值
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 int 值
+   */
   public static int toInt(@Nullable final Character value,
       final int defaultValue) {
     return (value == null ? defaultValue : toInt(value.charValue()));
   }
 
+  /**
+   * 将字符值转换为 Integer 对象。
+   *
+   * @param value 要转换的字符值
+   * @return 转换后的 Integer 对象
+   */
   public static Integer toIntObject(final char value) {
     return toInt(value);
   }
 
+  /**
+   * 将 Character 对象转换为 Integer 对象。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @return 如果 Character 对象为 null 则返回 null，否则返回转换后的 Integer 对象
+   */
   public static Integer toIntObject(@Nullable final Character value) {
     return (value == null ? null : toIntObject(value.charValue()));
   }
 
+  /**
+   * 将 Character 对象转换为 Integer 对象，使用指定的默认值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @param defaultValue 当 Character 对象为 null 时使用的默认值
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 Integer 对象
+   */
   public static Integer toIntObject(@Nullable final Character value,
       @Nullable final Integer defaultValue) {
     return (value == null ? defaultValue : toIntObject(value.charValue()));
   }
 
+  /**
+   * 将字符值转换为 long 值。
+   *
+   * @param value 要转换的字符值
+   * @return 转换后的 long 值
+   */
   public static long toLong(final char value) {
     return value;
   }
 
+  /**
+   * 将 Character 对象转换为 long 值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 long 值
+   */
   public static long toLong(@Nullable final Character value) {
     return (value == null ? LongUtils.DEFAULT : toLong(value.charValue()));
   }
 
+  /**
+   * 将 Character 对象转换为 long 值，使用指定的默认值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @param defaultValue 当 Character 对象为 null 时使用的默认值
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 long 值
+   */
   public static long toLong(@Nullable final Character value,
       final long defaultValue) {
     return (value == null ? defaultValue : toLong(value.charValue()));
   }
 
+  /**
+   * 将字符值转换为 Long 对象。
+   *
+   * @param value 要转换的字符值
+   * @return 转换后的 Long 对象
+   */
   public static Long toLongObject(final char value) {
     return toLong(value);
   }
 
+  /**
+   * 将 Character 对象转换为 Long 对象。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @return 如果 Character 对象为 null 则返回 null，否则返回转换后的 Long 对象
+   */
   public static Long toLongObject(@Nullable final Character value) {
     return (value == null ? null : toLongObject(value.charValue()));
   }
 
+  /**
+   * 将 Character 对象转换为 Long 对象，使用指定的默认值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @param defaultValue 当 Character 对象为 null 时使用的默认值
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 Long 对象
+   */
   public static Long toLongObject(@Nullable final Character value,
       @Nullable final Long defaultValue) {
     return (value == null ? defaultValue : toLongObject(value.charValue()));
   }
 
+  /**
+   * 将字符值转换为 float 值。
+   *
+   * @param value 要转换的字符值
+   * @return 转换后的 float 值
+   */
   public static float toFloat(final char value) {
     return value;
   }
 
+  /**
+   * 将 Character 对象转换为 float 值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 float 值
+   */
   public static float toFloat(@Nullable final Character value) {
     return (value == null ? FloatUtils.DEFAULT : toFloat(value.charValue()));
   }
 
+  /**
+   * 将 Character 对象转换为 float 值，使用指定的默认值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @param defaultValue 当 Character 对象为 null 时使用的默认值
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 float 值
+   */
   public static float toFloat(@Nullable final Character value,
       final float defaultValue) {
     return (value == null ? defaultValue : toFloat(value.charValue()));
   }
 
+  /**
+   * 将字符值转换为 Float 对象。
+   *
+   * @param value 要转换的字符值
+   * @return 转换后的 Float 对象
+   */
   public static Float toFloatObject(final char value) {
     return toFloat(value);
   }
 
+  /**
+   * 将 Character 对象转换为 Float 对象。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @return 如果 Character 对象为 null 则返回 null，否则返回转换后的 Float 对象
+   */
   public static Float toFloatObject(@Nullable final Character value) {
     return (value == null ? null : toFloatObject(value.charValue()));
   }
 
+  /**
+   * 将 Character 对象转换为 Float 对象，使用指定的默认值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @param defaultValue 当 Character 对象为 null 时使用的默认值
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 Float 对象
+   */
   public static Float toFloatObject(@Nullable final Character value,
       @Nullable final Float defaultValue) {
     return (value == null ? defaultValue : toFloatObject(value.charValue()));
   }
 
+  /**
+   * 将字符值转换为 double 值。
+   *
+   * @param value 要转换的字符值
+   * @return 转换后的 double 值
+   */
   public static double toDouble(final char value) {
     return value;
   }
 
+  /**
+   * 将 Character 对象转换为 double 值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 double 值
+   */
   public static double toDouble(@Nullable final Character value) {
     return (value == null ? DoubleUtils.DEFAULT : toDouble(value.charValue()));
   }
 
+  /**
+   * 将 Character 对象转换为 double 值，使用指定的默认值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @param defaultValue 当 Character 对象为 null 时使用的默认值
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 double 值
+   */
   public static double toDouble(@Nullable final Character value,
       final double defaultValue) {
     return (value == null ? defaultValue : toDouble(value.charValue()));
   }
 
+  /**
+   * 将字符值转换为 Double 对象。
+   *
+   * @param value 要转换的字符值
+   * @return 转换后的 Double 对象
+   */
   public static Double toDoubleObject(final char value) {
     return toDouble(value);
   }
 
+  /**
+   * 将 Character 对象转换为 Double 对象。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @return 如果 Character 对象为 null 则返回 null，否则返回转换后的 Double 对象
+   */
   public static Double toDoubleObject(@Nullable final Character value) {
     return (value == null ? null : toDoubleObject(value.charValue()));
   }
 
+  /**
+   * 将 Character 对象转换为 Double 对象，使用指定的默认值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @param defaultValue 当 Character 对象为 null 时使用的默认值
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 Double 对象
+   */
   public static Double toDoubleObject(@Nullable final Character value,
       @Nullable final Double defaultValue) {
     return (value == null ? defaultValue : toDoubleObject(value.charValue()));
   }
 
   /**
-   * Converts the character to a String that contains the one character.
+   * 将字符转换为包含该字符的字符串。
    *
-   * <p>For ASCII 7 bit characters, this uses a cache that will return the same
-   * String object each time.
+   * <p>对于 ASCII 7 位字符，使用缓存，每次返回相同的 String 对象。
    *
    * <pre>
    *   CharUtils.toString(' ')  = " "
@@ -712,8 +965,8 @@ public final class CharUtils {
    * </pre>
    *
    * @param value
-   *     the character to convert
-   * @return a String containing the one specified character
+   *     要转换的字符
+   * @return 包含指定字符的字符串
    */
   public static String toString(final char value) {
     if (value <= Ascii.MAX) {
@@ -725,12 +978,11 @@ public final class CharUtils {
   }
 
   /**
-   * Converts the character to a String that contains the one character.
+   * 将 Character 对象转换为包含该字符的字符串。
    *
-   * <p>For ASCII 7 bit characters, this uses a cache that will return the same
-   * String object each time.
+   * <p>对于 ASCII 7 位字符，使用缓存，每次返回相同的 String 对象。
    *
-   * <p>If {@code null} is passed in, {@code null} will be returned.
+   * <p>如果传入 {@code null}，则返回 {@code null}。
    *
    * <pre>
    *   CharUtils.toString(null) = null
@@ -739,28 +991,34 @@ public final class CharUtils {
    * </pre>
    *
    * @param value
-   *     the character to convert, which could be null.
-   * @return a String containing the one specified character, or null if the
-   *     value is null.
+   *     要转换的字符，可以为 null。
+   * @return 包含指定字符的字符串，如果值为 null 则返回 null。
    */
   public static String toString(@Nullable final Character value) {
     return (value == null ? null : toString(value.charValue()));
   }
 
+  /**
+   * 将 Character 对象转换为包含该字符的字符串，使用指定的默认值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @param defaultValue 当 Character 对象为 null 时使用的默认值
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回包含该字符的字符串
+   */
   public static String toString(@Nullable final Character value,
       @Nullable final String defaultValue) {
     return (value == null ? defaultValue : toString(value.charValue()));
   }
 
   /**
-   * Convert a {@code char} value into a 4-digits Unicode hex string.
+   * 将 {@code char} 值转换为 4 位数的 Unicode 十六进制字符串。
    *
    * @param value
-   *     the value to be converted.
+   *     要转换的值。
    * @param builder
-   *     a {@link StringBuilder} where to append the 4-digits Unicode hex string,
-   *     including the leading "\\u".
-   * @deprecated Use {@link #toUnicodeHexString(char, StringBuilder)} instead.
+   *     要追加 4 位数 Unicode 十六进制字符串的 {@link StringBuilder}，
+   *     包括前导的 "\\u"。
+   * @deprecated 使用 {@link #toUnicodeHexString(char, StringBuilder)} 代替。
    */
   @Deprecated
   public static void toHexString(final char value,
@@ -769,13 +1027,13 @@ public final class CharUtils {
   }
 
   /**
-   * Convert a {@code char} value into a 4-digits Unicode hex string.
+   * 将 {@code char} 值转换为 4 位数的 Unicode 十六进制字符串。
    *
    * @param value
-   *     the value to be converted.
+   *     要转换的值。
    * @return
-   *     the 4-digits hex Unicode string of the value, including the leading "\\u".
-   * @deprecated Use {@link #toUnicodeHexString(char)} instead.
+   *     值的 4 位数十六进制 Unicode 字符串，包括前导的 "\\u"。
+   * @deprecated 使用 {@link #toUnicodeHexString(char)} 代替。
    */
   @Deprecated
   public static String toHexString(final char value) {
@@ -783,13 +1041,13 @@ public final class CharUtils {
   }
 
   /**
-   * Convert a {@code char} value into a 4-digits Unicode hex string.
+   * 将 {@code char} 值转换为 4 位数的 Unicode 十六进制字符串。
    *
    * @param value
-   *     the value to be converted.
+   *     要转换的值。
    * @param builder
-   *     a {@link StringBuilder} where to append the 4-digits Unicode hex string,
-   *     including the leading "\\u".
+   *     要追加 4 位数 Unicode 十六进制字符串的 {@link StringBuilder}，
+   *     包括前导的 "\\u"。
    */
   public static void toUnicodeHexString(final char value,
       final StringBuilder builder) {
@@ -803,12 +1061,12 @@ public final class CharUtils {
   }
 
   /**
-   * Convert a {@code char} value into a 4-digits Unicode hex string.
+   * 将 {@code char} 值转换为 4 位数的 Unicode 十六进制字符串。
    *
    * @param value
-   *     the value to be converted.
+   *     要转换的值。
    * @return
-   *     the 4-digits hex Unicode string of the value, including the leading "\\u".
+   *     值的 4 位数十六进制 Unicode 字符串，包括前导的 "\\u"。
    */
   public static String toUnicodeHexString(final char value) {
     final StringBuilder builder = new StringBuilder();
@@ -817,13 +1075,12 @@ public final class CharUtils {
   }
 
   /**
-   * Escape the control character.
+   * 转义控制字符。
    *
    * @param value
-   *     the character to be escaped.
+   *     要转义的字符。
    * @return
-   *     the escaped string of the control character, or the string of the
-   *     original character if it is not a control character.
+   *     控制字符的转义字符串，如果不是控制字符则返回原字符的字符串。
    */
   public static String escapeControlChar(final char value) {
     if (value <= 0x1F) {  // Control character (ASCII 0-31)
@@ -847,23 +1104,55 @@ public final class CharUtils {
     }
   }
 
+  /**
+   * 将字符值转换为 Date 对象。
+   *
+   * @param value 要转换的字符值
+   * @return 转换后的 Date 对象
+   */
   public static Date toDate(final char value) {
     return new Date(value);
   }
 
+  /**
+   * 将 Character 对象转换为 Date 对象。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @return 如果 Character 对象为 null 则返回 null，否则返回转换后的 Date 对象
+   */
   public static Date toDate(@Nullable final Character value) {
     return (value == null ? null : new Date(value));
   }
 
+  /**
+   * 将 Character 对象转换为 Date 对象，使用指定的默认值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @param defaultValue 当 Character 对象为 null 时使用的默认值
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 Date 对象
+   */
   public static Date toDate(@Nullable final Character value,
       @Nullable final Date defaultValue) {
     return (value == null ? defaultValue : new Date(value));
   }
 
+  /**
+   * 将字符值转换为字节数组。
+   *
+   * @param value 要转换的字符值
+   * @return 转换后的字节数组
+   */
   public static byte[] toByteArray(final char value) {
     return toByteArray(value, DEFAULT_BYTE_ORDER);
   }
 
+  /**
+   * 将字符值转换为字节数组，使用指定的字节序。
+   *
+   * @param value 要转换的字符值
+   * @param byteOrder 要使用的字节序
+   * @return 转换后的字节数组
+   */
   public static byte[] toByteArray(final char value, final ByteOrder byteOrder) {
     final byte[] result = new byte[2];
     if (byteOrder == ByteOrder.BIG_ENDIAN) {
@@ -878,77 +1167,162 @@ public final class CharUtils {
     return result;
   }
 
+  /**
+   * 将 Character 对象转换为字节数组。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @return 如果 Character 对象为 null 则返回 null，否则返回转换后的字节数组
+   */
   public static byte[] toByteArray(@Nullable final Character value) {
     return (value == null ? null : toByteArray(value.charValue()));
   }
 
+  /**
+   * 将 Character 对象转换为字节数组，使用指定的字节序。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @param byteOrder 要使用的字节序
+   * @return 如果 Character 对象为 null 则返回 null，否则返回转换后的字节数组
+   */
   public static byte[] toByteArray(@Nullable final Character value,
       final ByteOrder byteOrder) {
     return (value == null ? null : toByteArray(value.charValue(), byteOrder));
   }
 
+  /**
+   * 将 Character 对象转换为字节数组，使用指定的默认值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @param defaultValue 当 Character 对象为 null 时使用的默认值
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的字节数组
+   */
   public static byte[] toByteArray(@Nullable final Character value,
       @Nullable final byte[] defaultValue) {
     return (value == null ? defaultValue : toByteArray(value.charValue()));
   }
 
+  /**
+   * 将 Character 对象转换为字节数组，使用指定的默认值和字节序。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @param defaultValue 当 Character 对象为 null 时使用的默认值
+   * @param byteOrder 要使用的字节序
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的字节数组
+   */
   public static byte[] toByteArray(@Nullable final Character value,
       @Nullable final byte[] defaultValue, final ByteOrder byteOrder) {
     return (value == null ? defaultValue
                           : toByteArray(value.charValue(), byteOrder));
   }
 
+  /**
+   * 将字符值转换为 Class 对象。
+   *
+   * @param value 要转换的字符值
+   * @return Character.TYPE
+   */
   public static Class<?> toClass(final char value) {
     return Character.TYPE;
   }
 
+  /**
+   * 将 Character 对象转换为 Class 对象。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @return 如果 Character 对象为 null 则返回 null，否则返回 Character.class
+   */
   public static Class<?> toClass(@Nullable final Character value) {
     return (value == null ? null : Character.class);
   }
 
+  /**
+   * 将 Character 对象转换为 Class 对象，使用指定的默认值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @param defaultValue 当 Character 对象为 null 时使用的默认值
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回 Character.class
+   */
   public static Class<?> toClass(@Nullable final Character value,
       @Nullable final Class<?> defaultValue) {
     return (value == null ? defaultValue : Character.class);
   }
 
+  /**
+   * 将字符值转换为 BigInteger 对象。
+   *
+   * @param value 要转换的字符值
+   * @return 转换后的 BigInteger 对象
+   */
   public static BigInteger toBigInteger(final char value) {
     return BigInteger.valueOf(value);
   }
 
+  /**
+   * 将 Character 对象转换为 BigInteger 对象。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @return 如果 Character 对象为 null 则返回 null，否则返回转换后的 BigInteger 对象
+   */
   public static BigInteger toBigInteger(@Nullable final Character value) {
     return (value == null ? null : BigInteger.valueOf(value));
   }
 
+  /**
+   * 将 Character 对象转换为 BigInteger 对象，使用指定的默认值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @param defaultValue 当 Character 对象为 null 时使用的默认值
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 BigInteger 对象
+   */
   public static BigInteger toBigInteger(@Nullable final Character value,
       @Nullable final BigInteger defaultValue) {
     return (value == null ? defaultValue : BigInteger.valueOf(value));
   }
 
+  /**
+   * 将字符值转换为 BigDecimal 对象。
+   *
+   * @param value 要转换的字符值
+   * @return 转换后的 BigDecimal 对象
+   */
   public static BigDecimal toBigDecimal(final char value) {
     return BigDecimal.valueOf(value);
   }
 
+  /**
+   * 将 Character 对象转换为 BigDecimal 对象。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @return 如果 Character 对象为 null 则返回 null，否则返回转换后的 BigDecimal 对象
+   */
   public static BigDecimal toBigDecimal(@Nullable final Character value) {
     return (value == null ? null : BigDecimal.valueOf(value));
   }
 
+  /**
+   * 将 Character 对象转换为 BigDecimal 对象，使用指定的默认值。
+   *
+   * @param value 要转换的 Character 对象，可以为 null
+   * @param defaultValue 当 Character 对象为 null 时使用的默认值
+   * @return 如果 Character 对象为 null 则返回默认值，否则返回转换后的 BigDecimal 对象
+   */
   public static BigDecimal toBigDecimal(@Nullable final Character value,
       @Nullable final BigDecimal defaultValue) {
     return (value == null ? defaultValue : BigDecimal.valueOf(value));
   }
 
   /**
-   * Converts the string to the unicode format '\u0020'.
+   * 将字符串转换为 Unicode 格式 '\u0020'。
    *
-   * <p>This format is the Java source code format.
+   * <p>此格式是 Java 源代码格式。
    * <pre>
    *   CharUtils.toUnicodeEscape(' ') = "\u0020"
    *   CharUtils.toUnicodeEscape('A') = "\u0041"
    * </pre>
    *
    * @param ch
-   *     the character to convert
-   * @return the escaped unicode string
+   *     要转换的字符
+   * @return 转义的 Unicode 字符串
    */
   public static String toUnicodeEscape(final int ch) {
     final StringBuilder builder = new StringBuilder();
@@ -957,19 +1331,19 @@ public final class CharUtils {
   }
 
   /**
-   * Converts the string to the unicode format '\u0020'.
+   * 将字符串转换为 Unicode 格式 '\u0020'。
    *
-   * <p>This format is the Java source code format.
+   * <p>此格式是 Java 源代码格式。
    * <pre>
    *   CharUtils.toUnicodeEscape(' ') = "\u0020"
    *   CharUtils.toUnicodeEscape('A') = "\u0041"
    * </pre>
    *
    * @param ch
-   *     the character to convert.
+   *     要转换的字符。
    * @param builder
-   *     the {@link StringBuilder} where to append the result.
-   * @return the {@link StringBuilder}.
+   *     要追加结果的 {@link StringBuilder}。
+   * @return {@link StringBuilder}。
    */
   public static StringBuilder toUnicodeEscape(final int ch,
       final StringBuilder builder) {
@@ -983,11 +1357,11 @@ public final class CharUtils {
   }
 
   /**
-   * Converts the string to the unicode format '\u0020'.
+   * 将字符串转换为 Unicode 格式 '\u0020'。
    *
-   * <p>This format is the Java source code format.
+   * <p>此格式是 Java 源代码格式。
    *
-   * <p>If {@code null} is passed in, {@code null} will be returned.
+   * <p>如果传入 {@code null}，则返回 {@code null}。
    * <pre>
    *   CharUtils.toUnicodeEscape(null) = null
    *   CharUtils.toUnicodeEscape(' ')  = "\u0020"
@@ -995,8 +1369,8 @@ public final class CharUtils {
    * </pre>
    *
    * @param ch
-   *     the character to convert, may be null
-   * @return the escaped unicode string, null if null input
+   *     要转换的字符，可以为 null
+   * @return 转义的 Unicode 字符串，如果输入为 null 则返回 null
    */
   public static String toUnicodeEscape(@Nullable final Character ch) {
     if (ch == null) {
@@ -1009,11 +1383,11 @@ public final class CharUtils {
   }
 
   /**
-   * Converts the string to the unicode format '\u0020'.
+   * 将字符串转换为 Unicode 格式 '\u0020'。
    *
-   * <p>This format is the Java source code format.
+   * <p>此格式是 Java 源代码格式。
    *
-   * <p>If {@code null} is passed in, {@code null} will be returned.
+   * <p>如果传入 {@code null}，则返回 {@code null}。
    * <pre>
    *   CharUtils.toUnicodeEscape(null) = null
    *   CharUtils.toUnicodeEscape(' ')  = "\u0020"
@@ -1021,10 +1395,10 @@ public final class CharUtils {
    * </pre>
    *
    * @param ch
-   *     the character to convert, which can't be null
+   *     要转换的字符，不能为 null
    * @param builder
-   *     the {@link StringBuilder} where to append the result.
-   * @return the {@link StringBuilder}.
+   *     要追加结果的 {@link StringBuilder}。
+   * @return {@link StringBuilder}。
    */
   public static StringBuilder toUnicodeEscape(final Character ch,
       final StringBuilder builder) {

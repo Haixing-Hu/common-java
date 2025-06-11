@@ -23,59 +23,54 @@ import ltd.qubit.commons.error.NoSuchMessageException;
 import ltd.qubit.commons.i18n.message.ResourceBundleMessageSource;
 
 /**
- * Provides utilities functions for {@link Enum}.
+ * 为 {@link Enum} 提供实用工具函数。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class EnumUtils {
 
   /**
-   * Gets the short name of an {@link Enum} value.
+   * 获取 {@link Enum} 值的短名称。
    *
-   * <p>A short name of an {@link Enum} value comes from lowercase the
-   * enumeration name of the {@link Enum} value and replacing all '_' with '-'.
+   * <p>{@link Enum} 值的短名称来自于将枚举名称转换为小写，并将所有的 '_' 替换为 '-'。
    *
    * @param <E>
-   *     The type of a {@link Enum} class.
+   *     {@link Enum} 类的类型。
    * @param e
-   *     A {@link Enum} value.
-   * @return The short name of the {@link Enum} value.
+   *     一个 {@link Enum} 值。
+   * @return {@link Enum} 值的短名称。
    */
   public static <E extends Enum<E>> String getShortName(final E e) {
     return e.name().toLowerCase().replace('_', '-');
   }
 
   /**
-   * Gets the enumeration name of a short name of an {@link Enum} value.
+   * 根据 {@link Enum} 值的短名称获取其枚举名称。
    *
    * @param shortName
-   *     The short name of an {@link Enum} value. A short name of an {@link
-   *     Enum} value comes from lowercase the enumeration name of the {@link
-   *     Enum} value and replacing all '_' with '-'.
-   * @return The enumeration name of the {@link Enum} value.
+   *     {@link Enum} 值的短名称。{@link Enum} 值的短名称来自于将枚举名称转换为小写，
+   *     并将所有的 '_' 替换为 '-'。
+   * @return {@link Enum} 值的枚举名称。
    */
   public static String getFullName(final String shortName) {
     return shortName.replace('-', '_').toUpperCase();
   }
 
   /**
-   * Gets the {@link Enum} value according to its name.
+   * 根据名称获取 {@link Enum} 值。
    *
    * @param <E>
-   *     The type of a {@link Enum} class.
+   *     {@link Enum} 类的类型。
    * @param name
-   *     The name of an {@link Enum} value, either the enumeration name or the
-   *     short name. A short name of an {@link Enum} value comes from lowercase
-   *     the enumeration name of the {@link Enum} value and replacing all '_'
-   *     with '-'.
+   *     {@link Enum} 值的名称，可以是枚举名称或短名称。{@link Enum} 值的短名称来自于
+   *     将枚举名称转换为小写，并将所有的 '_' 替换为 '-'。
    * @param isShortName
-   *     whether the name is the short name.
+   *     名称是否为短名称。
    * @param ignoreCase
-   *     whether to ignore the case while comparing strings.
+   *     比较字符串时是否忽略大小写。
    * @param enumClass
-   *     The class object of the {@link Enum} class.
-   * @return the {@link Enum} value corresponds to the name, or {@code null} if
-   *     no such value.
+   *     {@link Enum} 类的类对象。
+   * @return 对应于该名称的 {@link Enum} 值，如果没有这样的值则返回 {@code null}。
    */
   public static <E extends Enum<E>> E forName(final String name,
       final boolean isShortName, final boolean ignoreCase,
@@ -99,19 +94,17 @@ public class EnumUtils {
   }
 
   /**
-   * Converts an enumerator to its string representation.
+   * 将枚举值转换为其字符串表示形式。
    *
    * @param <E>
-   *     The type of a {@link Enum} class.
+   *     {@link Enum} 类的类型。
    * @param value
-   *     an enumerator.
+   *     一个枚举值。
    * @param useShortName
-   *     indicates whether to convert to short name of the enumerator. A short
-   *     name of an {@link Enum} value comes from lowercase the enumeration name
-   *     of the {@link Enum} value and replacing all '_' with '-'. If this
-   *     argument is {@code false}, the string representation of an enumerator
-   *     is its name (without case changing).
-   * @return the string representation of the enumerator.
+   *     指示是否转换为枚举值的短名称。{@link Enum} 值的短名称来自于将枚举名称转换为
+   *     小写，并将所有的 '_' 替换为 '-'。如果此参数为 {@code false}，枚举值的字符串
+   *     表示形式就是其名称（不改变大小写）。
+   * @return 枚举值的字符串表示形式。
    */
   public static <E extends Enum<E>> String toString(@Nullable final E value,
       final boolean useShortName) {
@@ -125,14 +118,13 @@ public class EnumUtils {
   }
 
   /**
-   * Gets the next enumerator.
+   * 获取下一个枚举值。
    *
    * @param e
-   *     the current enumerator.
+   *     当前枚举值。
    * @param <E>
-   *     the type of the enumeration class.
-   * @return the enumerator next to {@code e}, or the first enumerator if {@code
-   *     e} is the lase one.
+   *     枚举类的类型。
+   * @return {@code e} 的下一个枚举值，如果 {@code e} 是最后一个，则返回第一个枚举值。
    */
   public static <E extends Enum<E>> E next(final E e) {
     @SuppressWarnings("unchecked") final Class<E> cls = (Class<E>) e.getClass();
@@ -140,11 +132,20 @@ public class EnumUtils {
     return values[(e.ordinal() + 1) % values.length];
   }
 
+  /**
+   * 默认字符编码。
+   */
   private static final String DEFAULT_ENCODING = "UTF-8";
 
+  /**
+   * 资源包映射表，将类键映射到资源包的基础名称。
+   */
   private static final Map<ClassKey, String>
       RESOURCE_BUNDLE_MAP = new ConcurrentSkipListMap<>();
 
+  /**
+   * 类本地化名称映射表，将类键映射到区域设置和名称的映射。
+   */
   private static final Map<ClassKey, Map<Locale, Map<String, String>>>
       CLASS_LOCALIZED_NAME_MAP = new ConcurrentSkipListMap<>();
 
@@ -199,6 +200,17 @@ public class EnumUtils {
     return map.get(e.name());
   }
 
+  /**
+   * 加载指定枚举类在指定区域设置下的本地化名称映射。
+   *
+   * @param cls
+   *     枚举类的类对象。
+   * @param bundle
+   *     资源包的基础名称。
+   * @param locale
+   *     指定的区域设置。
+   * @return 枚举名称到本地化名称的映射。
+   */
   private static Map<String, String>
   loadLocalizedNameMap(final Class<? extends Enum<?>> cls, final String bundle, final Locale locale) {
     final ResourceBundleMessageSource source = new ResourceBundleMessageSource();
@@ -256,6 +268,9 @@ public class EnumUtils {
     return COMPARABLE_TYPES.contains(type) || Enum.class.isAssignableFrom(type);
   }
 
+  /**
+   * 可与枚举类型进行比较的类型集合。
+   */
   private static final Set<Class<?>> COMPARABLE_TYPES =
       ImmutableSet.of(char.class, Character.class, String.class);
 

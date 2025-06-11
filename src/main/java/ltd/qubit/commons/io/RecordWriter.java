@@ -14,22 +14,21 @@ import java.io.IOException;
 import javax.annotation.Nullable;
 
 /**
- * This interface provides functions to write key-value pair records input an
- * output destination.
+ * 此接口提供将键值对记录写入输出目标的功能。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface RecordWriter<KEY, VALUE> extends Closeable {
 
   /**
-   * Writes a key/value pair to the output.
+   * 将键值对写入输出。
    *
    * @param key
-   *     the key to be written.
+   *     要写入的键。
    * @param value
-   *     the value to be written.
+   *     要写入的值。
    * @throws IOException
-   *     if any I/O error occurred.
+   *     如果发生任何 I/O 错误。
    */
   void write(@Nullable KEY key, @Nullable VALUE value) throws IOException;
 }

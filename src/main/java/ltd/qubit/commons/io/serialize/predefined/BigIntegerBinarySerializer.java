@@ -23,21 +23,27 @@ import static ltd.qubit.commons.io.InputUtils.readBigInteger;
 import static ltd.qubit.commons.io.OutputUtils.writeBigInteger;
 
 /**
- * The {@link BinarySerializer} for {@link BigInteger} class.
+ * {@link BigInteger} 类的 {@link BinarySerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class BigIntegerBinarySerializer implements BinarySerializer {
 
   public static final BigIntegerBinarySerializer INSTANCE = new BigIntegerBinarySerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public BigInteger deserialize(final InputStream in, final boolean allowNull)
       throws IOException {
     return readBigInteger(in, allowNull);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final OutputStream out, @Nullable final Object obj)
       throws IOException {

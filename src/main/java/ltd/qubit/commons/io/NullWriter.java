@@ -13,33 +13,32 @@ import java.io.Writer;
 import javax.annotation.concurrent.Immutable;
 
 /**
- * This {@link Writer} writes all data to the famous <b>/dev/null</b>.
+ * 一个将所有数据写入到著名的 <b>/dev/null</b> 的 {@link Writer}。
  *
- * <p>This {@code Writer} has no destination (file/socket etc.) and all
- * characters written to it are ignored and lost.
+ * <p>这个 {@code Writer} 没有目标（文件/套接字等），所有写入的字符都被忽略和丢弃。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class NullWriter extends Writer {
 
   /**
-   * The singleton instance of the NullWriter.
+   * NullWriter 的单例实例。
    */
   public static final NullWriter INSTANCE = new NullWriter();
 
   /**
-   * The restrictive constructor.
+   * 限制性构造函数。
    */
   private NullWriter() {
     // empty
   }
 
   /**
-   * Does nothing - output to {@code /dev/null}.
+   * 什么都不做 - 输出到 {@code /dev/null}。
    *
    * @param idx
-   *          The character to write
+   *          要写入的字符
    */
   @Override
   public void write(final int idx) {
@@ -47,10 +46,10 @@ public final class NullWriter extends Writer {
   }
 
   /**
-   * Does nothing - output to {@code /dev/null}.
+   * 什么都不做 - 输出到 {@code /dev/null}。
    *
    * @param chr
-   *          The characters to write
+   *          要写入的字符数组
    */
   @Override
   public void write(final char[] chr) {
@@ -58,14 +57,14 @@ public final class NullWriter extends Writer {
   }
 
   /**
-   * Does nothing - output to {@code /dev/null}.
+   * 什么都不做 - 输出到 {@code /dev/null}。
    *
    * @param chr
-   *          The characters to write
+   *          要写入的字符数组
    * @param st
-   *          The start offset
+   *          起始偏移量
    * @param end
-   *          The number of characters to write
+   *          要写入的字符数
    */
   @Override
   public void write(final char[] chr, final int st, final int end) {
@@ -73,10 +72,10 @@ public final class NullWriter extends Writer {
   }
 
   /**
-   * Does nothing - output to {@code /dev/null}.
+   * 什么都不做 - 输出到 {@code /dev/null}。
    *
    * @param str
-   *          The string to write
+   *          要写入的字符串
    */
   @Override
   public void write(final String str) {
@@ -84,14 +83,14 @@ public final class NullWriter extends Writer {
   }
 
   /**
-   * Does nothing - output to {@code /dev/null}.
+   * 什么都不做 - 输出到 {@code /dev/null}。
    *
    * @param str
-   *          The string to write
+   *          要写入的字符串
    * @param st
-   *          The start offset
+   *          起始偏移量
    * @param end
-   *          The number of characters to write
+   *          要写入的字符数
    */
   @Override
   public void write(final String str, final int st, final int end) {
@@ -99,7 +98,7 @@ public final class NullWriter extends Writer {
   }
 
   /**
-   *  @see Writer#flush()
+   *  {@inheritDoc}
    */
   @Override
   public void flush() {
@@ -107,7 +106,7 @@ public final class NullWriter extends Writer {
   }
 
   /**
-   * @see Writer#close()
+   * {@inheritDoc}
    */
   @Override
   public void close() {

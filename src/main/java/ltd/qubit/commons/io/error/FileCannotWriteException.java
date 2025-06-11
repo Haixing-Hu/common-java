@@ -18,9 +18,9 @@ import ltd.qubit.commons.error.ErrorInfoConvertable;
 import ltd.qubit.commons.util.pair.KeyValuePairList;
 
 /**
- * Thrown to indicate that a file or directory or device can not be write.
+ * 抛出此异常表示无法写入文件、目录或设备。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class FileCannotWriteException extends IOException
     implements ErrorInfoConvertable {
@@ -30,24 +30,50 @@ public class FileCannotWriteException extends IOException
 
   private final String path;
 
+  /**
+   * 构造一个 {@link FileCannotWriteException}。
+   */
   public FileCannotWriteException() {
     super("The file can't be written to. ");
     this.path = "<unknown>";
   }
 
+  /**
+   * 使用指定的路径构造一个新的 {@link FileCannotWriteException}。
+   *
+   * @param path
+   *     无法写入的文件的路径。
+   */
   public FileCannotWriteException(final String path) {
     super("The file can't be written to: " + path);
     this.path = path;
   }
 
+  /**
+   * 使用指定的文件构造一个新的 {@link FileCannotWriteException}。
+   *
+   * @param file
+   *     无法写入的文件。
+   */
   public FileCannotWriteException(final File file) {
     this(file.getAbsolutePath());
   }
 
+  /**
+   * 使用指定的路径构造一个新的 {@link FileCannotWriteException}。
+   *
+   * @param path
+   *     无法写入的文件的路径。
+   */
   public FileCannotWriteException(final Path path) {
     this(path.toAbsolutePath().toString());
   }
 
+  /**
+   * 获取此异常相关联的路径。
+   *
+   * @return 此异常相关联的路径。
+   */
   public String getPath() {
     return path;
   }

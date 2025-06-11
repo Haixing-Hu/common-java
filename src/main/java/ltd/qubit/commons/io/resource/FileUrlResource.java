@@ -21,22 +21,20 @@ import java.nio.file.StandardOpenOption;
 import javax.annotation.Nullable;
 
 /**
- * Subclass of {@link UrlResource} which assumes file resolution, to the degree
- * of implementing the {@link WritableResource} interface for it. This resource
- * variant also caches resolved {@link File} handles from {@link #getFile()}.
+ * {@link UrlResource} 的子类，它假定进行文件解析，以至于为其实现了
+ * {@link WritableResource} 接口。此资源变体还缓存从 {@link #getFile()}
+ * 解析的 {@link File} 句柄。
  * <p>
- * This is the class resolved by {@link DefaultResourceLoader} for a "file:..."
- * URL location, allowing a downcast to {@link WritableResource} for it.
+ * 这是 {@link DefaultResourceLoader} 为 "file:..." URL 位置解析的类，允许对其
+ * 向下转型为 {@link WritableResource}。
  * <p>
- * Alternatively, for direct construction from a {@link java.io.File} handle or
- * NIO {@link java.nio.file.Path}, consider using {@link FileSystemResource}.
+ * 或者，对于直接从 {@link java.io.File} 句柄或 NIO {@link java.nio.file.Path}
+ * 构造，请考虑使用 {@link FileSystemResource}。
  * <p>
- * This class is a copy of {@code org.springframework.core.io.FileUrlResource}
- * with slight modifications. It is used to avoid the dependency of Spring
- * Framework.
+ * 此类是 {@code org.springframework.core.io.FileUrlResource} 的副本，经过少量修改。
+ * 它用于避免对 Spring Framework 的依赖。
  *
- * @author Juergen Hoeller
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class FileUrlResource extends UrlResource implements WritableResource {
 
@@ -44,14 +42,14 @@ public class FileUrlResource extends UrlResource implements WritableResource {
   private volatile File file;
 
   /**
-   * Create a new {@code FileUrlResource} based on the given URL object.
+   * 基于给定的 URL 对象创建一个新的 {@code FileUrlResource}。
    * <p>
-   * Note that this does not enforce "file" as URL protocol. If a protocol
-   * is known to be resolvable to a file, it is acceptable for this purpose.
+   * 请注意，这并不强制 "file" 作为 URL 协议。如果已知某个协议可以解析为文件，
+   * 那么它对于此目的是可接受的。
    *
    * @param url
-   *     a URL
-   * @see org.springframework.util.ResourceUtils#isFileURL(URL)
+   *     一个 URL。
+   * @see ResourceUtils#isFileURL(URL)
    * @see #getFile()
    */
   public FileUrlResource(final URL url) {
@@ -59,22 +57,24 @@ public class FileUrlResource extends UrlResource implements WritableResource {
   }
 
   /**
-   * Create a new {@code FileUrlResource} based on the given file location,
-   * using the URL protocol "file".
+   * 基于给定的文件位置创建一个新的 {@code FileUrlResource}，使用 "file" URL 协议。
    * <p>
-   * The given parts will automatically get encoded if necessary.
+   * 如有必要，给定的部分将自动进行编码。
    *
    * @param location
-   *     the location (i.e. the file path within that protocol)
+   *     位置（即该协议内的文件路径）。
    * @throws MalformedURLException
-   *     if the given URL specification is not valid
+   *     如果给定的 URL 规范无效。
    * @see UrlResource#UrlResource(String, String)
-   * @see org.springframework.util.ResourceUtils#URL_PROTOCOL_FILE
+   * @see ResourceUtils#URL_PROTOCOL_FILE
    */
   public FileUrlResource(final String location) throws MalformedURLException {
     super(ResourceUtils.URL_PROTOCOL_FILE, location);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public File getFile() throws IOException {
     File theFile = this.file;
@@ -86,6 +86,9 @@ public class FileUrlResource extends UrlResource implements WritableResource {
     return theFile;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isWritable() {
     try {
@@ -96,16 +99,25 @@ public class FileUrlResource extends UrlResource implements WritableResource {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public OutputStream getOutputStream() throws IOException {
     return Files.newOutputStream(getFile().toPath());
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public WritableByteChannel writableChannel() throws IOException {
     return FileChannel.open(getFile().toPath(), StandardOpenOption.WRITE);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Resource createRelative(final String relativePath)
       throws MalformedURLException {

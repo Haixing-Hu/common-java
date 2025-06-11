@@ -22,21 +22,27 @@ import static ltd.qubit.commons.io.InputUtils.readLongArray;
 import static ltd.qubit.commons.io.OutputUtils.writeLongArray;
 
 /**
- * The {@link BinarySerializer} for {@code long[]} class.
+ * {@code long[]} 的 {@link BinarySerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class LongArrayBinarySerializer implements BinarySerializer {
 
   public static final LongArrayBinarySerializer INSTANCE = new LongArrayBinarySerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public long[] deserialize(final InputStream in, final boolean allowNull)
       throws IOException {
     return readLongArray(in, allowNull, null);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final OutputStream out, @Nullable final Object obj)
       throws IOException {

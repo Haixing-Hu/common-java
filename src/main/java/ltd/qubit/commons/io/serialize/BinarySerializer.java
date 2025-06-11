@@ -16,42 +16,40 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 /**
- * A {@link BinarySerializer} provides interface to serialize and deserialize
- * objects to and from binary streams.
+ * {@link BinarySerializer} 提供将对象序列化和反序列化到二进制流和从二进制流反序列化的接口。
  *
- * <p><b>NOTE</b>: the implementation of this interface <b>MUST</b> be thread
- * safe.
+ * <p><b>注意</b>：此接口的实现<b>必须</b>是线程安全的。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public interface BinarySerializer {
 
   /**
-   * Deserializes an object from a binary input stream.
+   * 从二进制输入流中反序列化对象。
    *
    * @param in
-   *     A binary input stream.
+   *     二进制输入流。
    * @param allowNull
-   *     Indicates whether to allowed the returned object to be {@code null}.
-   * @return The object deserialized from the binary input stream, or {@code
-   *     null} if the object stored in the binary input stream is null and the
-   *     argument {@code allowNull} is true.
+   *     指示是否允许返回的对象为 {@code null}。
+   * @return 
+   *    从二进制输入流反序列化的对象，如果存储在二进制输入流中的对象为 null 且参数 
+   *    {@code allowNull} 为 true，则返回 {@code null}。
    * @throws IOException
-   *     If any I/O error occurred.
+   *     如果发生任何 I/O 错误。
    */
   Object deserialize(InputStream in, boolean allowNull)
       throws IOException;
 
   /**
-   * Serializes an object to a binary output stream.
+   * 将对象序列化到二进制输出流中。
    *
    * @param out
-   *     A binary output stream.
+   *     二进制输出流。
    * @param obj
-   *     The object to be serialized. It could be {@code null}.
+   *     要序列化的对象。它可以为 {@code null}。
    * @throws IOException
-   *     If any I/O error occurred.
+   *     如果发生任何 I/O 错误。
    */
   void serialize(OutputStream out, @Nullable Object obj)
       throws IOException;

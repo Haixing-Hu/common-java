@@ -20,21 +20,19 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * {@link Resource} implementation for a given byte array.
+ * 给定字节数组的 {@link Resource} 实现。
  * <p>
- * Creates a {@link ByteArrayInputStream} for the given byte array.
+ * 为给定的字节数组创建 {@link ByteArrayInputStream}。
  * <p>
- * Useful for loading content from any given byte array, without having to
- * resort to a single-use {@link InputStreamResource}. Particularly useful for
- * creating mail attachments from local content, where JavaMail needs to be able
- * to read the stream multiple times.
+ * 对于从任何给定字节数组加载内容很有用，无需依赖一次性使用的 {@link InputStreamResource}。
+ * 特别适用于从本地内容创建邮件附件，其中 JavaMail 需要能够多次读取流。
  * <p>
- * This class is a copy of {@code org.springframework.core.io.ByteArrayResource}
- * with slight modifications. It is used to avoid the dependency of Spring Framework.
+ * 此类是 {@code org.springframework.core.io.ByteArrayResource} 的副本，
+ * 略有修改。用于避免对 Spring Framework 的依赖。
  *
  * @author Juergen Hoeller
  * @author Sam Brannen
- * @author Haixing Hu
+ * @author 胡海星
  * @see ByteArrayInputStream
  * @see InputStreamResource
  */
@@ -45,22 +43,22 @@ public class ByteArrayResource extends AbstractResource {
   private final String description;
 
   /**
-   * Create a new {@code ByteArrayResource}.
+   * 创建一个新的 {@code ByteArrayResource}。
    *
    * @param byteArray
-   *     the byte array to wrap
+   *     要包装的字节数组
    */
   public ByteArrayResource(final byte[] byteArray) {
     this(byteArray, "resource loaded from byte array");
   }
 
   /**
-   * Create a new {@code ByteArrayResource} with a description.
+   * 创建一个带有描述的新 {@code ByteArrayResource}。
    *
    * @param byteArray
-   *     the byte array to wrap
+   *     要包装的字节数组
    * @param description
-   *     where the byte array comes from
+   *     字节数组的来源
    */
   public ByteArrayResource(final byte[] byteArray, @Nullable final String description) {
     if (byteArray == null) {
@@ -71,14 +69,16 @@ public class ByteArrayResource extends AbstractResource {
   }
 
   /**
-   * Return the underlying byte array.
+   * 返回底层字节数组。
+   *
+   * @return 底层字节数组。
    */
   public final byte[] getByteArray() {
     return this.byteArray;
   }
 
   /**
-   * This implementation always returns {@code true}.
+   * 此实现始终返回 {@code true}。
    */
   @Override
   public boolean exists() {
@@ -86,7 +86,7 @@ public class ByteArrayResource extends AbstractResource {
   }
 
   /**
-   * This implementation returns the length of the underlying byte array.
+   * 此实现返回底层字节数组的长度。
    */
   @Override
   public long contentLength() {
@@ -94,8 +94,7 @@ public class ByteArrayResource extends AbstractResource {
   }
 
   /**
-   * This implementation returns a ByteArrayInputStream for the underlying byte
-   * array.
+   * 此实现为底层字节数组返回 ByteArrayInputStream。
    *
    * @see ByteArrayInputStream
    */
@@ -104,6 +103,9 @@ public class ByteArrayResource extends AbstractResource {
     return new ByteArrayInputStream(this.byteArray);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public byte[] getContentAsByteArray() throws IOException {
     final int length = this.byteArray.length;
@@ -112,20 +114,25 @@ public class ByteArrayResource extends AbstractResource {
     return result;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String getContentAsString(final Charset charset) throws IOException {
     return new String(this.byteArray, charset);
   }
 
   /**
-   * This implementation returns a description that includes the passed-in
-   * {@code description}, if any.
+   * 此实现返回包含传入的 {@code description}（如果有）的描述。
    */
   @Override
   public String getDescription() {
     return "Byte array resource [" + this.description + "]";
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public boolean equals(final Object o) {
     if (this == o) {
       return true;
@@ -137,6 +144,9 @@ public class ByteArrayResource extends AbstractResource {
     return Equality.equals(byteArray, other.byteArray);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public int hashCode() {
     final int multiplier = 7;
     int result = 3;
@@ -144,6 +154,9 @@ public class ByteArrayResource extends AbstractResource {
     return result;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public String toString() {
     return new ToStringBuilder(this)
         .append("byteArray", byteArray)

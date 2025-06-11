@@ -63,10 +63,9 @@ import ltd.qubit.commons.net.UrlUtils;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * Provides functions to manager {@link BinarySerializer}s, as well as functions
- * to help serializing and deserializing objects to and from binary streams.
+ * 提供管理 {@link BinarySerializer} 的功能，以及帮助将对象序列化和反序列化到二进制流和从二进制流反序列化的功能。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class BinarySerialization {
 
@@ -100,12 +99,12 @@ public final class BinarySerialization {
   }
 
   /**
-   * Registers a binary serializer for a class.
+   * 为一个类注册二进制序列化器。
    *
    * @param objClass
-   *     The class object.
+   *     类对象。
    * @param serializer
-   *     The binary serializer for the specified class.
+   *     指定类的二进制序列化器。
    */
   public static void register(final Class<?> objClass,
       final BinarySerializer serializer) {
@@ -116,12 +115,11 @@ public final class BinarySerialization {
   }
 
   /**
-   * Gets the registered binary serializer for a specified class.
+   * 获取为指定类注册的二进制序列化器。
    *
    * @param objClass
-   *     The class object.
-   * @return The registered binary serializer for the specified class, or null
-   *     if no binary serializer was registered for the specified class.
+   *     类对象。
+   * @return 为指定类注册的二进制序列化器，如果没有为指定类注册二进制序列化器则返回 null。
    */
   public static BinarySerializer getSerializer(final Class<?> objClass) {
     requireNonNull("objClass", objClass);
@@ -138,19 +136,18 @@ public final class BinarySerialization {
   }
 
   /**
-   * Serializes an object to an binary output stream.
+   * 将对象序列化到二进制输出流中。
    *
    * @param <T>
-   *     The type of the class.
+   *     类的类型。
    * @param objClass
-   *     The class object of the object to be serialized.
+   *     要序列化对象的类对象。
    * @param obj
-   *     The object to be serialized. It could be null.
+   *     要序列化的对象。它可以为 null。
    * @param out
-   *     A binary output stream. Note that the output stream will be closed
-   *     after calling this function.
+   *     二进制输出流。注意，调用此函数后输出流将被关闭。
    * @throws IOException
-   *     If any I/O error occurred.
+   *     如果发生任何 I/O 错误。
    */
   public static <T> void serialize(final Class<T> objClass,
       @Nullable final T obj, final OutputStream out) throws IOException {
@@ -166,19 +163,18 @@ public final class BinarySerialization {
   }
 
   /**
-   * Serializes an object to a local file.
+   * 将对象序列化到本地文件中。
    *
    * @param <T>
-   *     The type of the class.
+   *     类的类型。
    * @param objClass
-   *     The class object of the object to be serialized.
+   *     要序列化对象的类对象。
    * @param obj
-   *     The object to be serialized. It could be null.
+   *     要序列化的对象。它可以为 null。
    * @param file
-   *     The abstract path of the local file where to store the binary
-   *     serialization of the object.
+   *     存储对象二进制序列化的本地文件的抽象路径。
    * @throws IOException
-   *     If any I/O error occurred.
+   *     如果发生任何 I/O 错误。
    */
   public static <T> void serialize(final Class<T> objClass,
       @Nullable final T obj, final File file) throws IOException {
@@ -198,18 +194,17 @@ public final class BinarySerialization {
   }
 
   /**
-   * Serializes an object to a binary array.
+   * 将对象序列化到二进制数组中。
    *
    * @param <T>
-   *     The type of the class.
+   *     类的类型。
    * @param objClass
-   *     The class object of the object to be serialized.
+   *     要序列化对象的类对象。
    * @param obj
-   *     The object to be serialized. It could be null.
-   * @return The binary array where to store the binary serialization of the
-   *     object.
+   *     要序列化的对象。它可以为 null。
+   * @return 存储对象二进制序列化的二进制数组。
    * @throws IOException
-   *     If any I/O error occurred.
+   *     如果发生任何 I/O 错误。
    */
   public static <T> byte[] serialize(final Class<T> objClass,
       @Nullable final T obj) throws IOException {
@@ -228,20 +223,19 @@ public final class BinarySerialization {
   }
 
   /**
-   * Deserializes an object from an binary input stream.
+   * 从二进制输入流中反序列化对象。
    *
    * @param <T>
-   *     The type of the class.
+   *     类的类型。
    * @param objClass
-   *     The class of the objects to serialize.
+   *     要序列化对象的类。
    * @param in
-   *     A binary input stream. Note that the input stream will be closed after
-   *     calling this function.
+   *     二进制输入流。注意，调用此函数后输入流将被关闭。
    * @param allowNull
-   *     Indicates whether to allowed the serialized object to be null.
-   * @return The deserialized object.
+   *     指示是否允许序列化对象为 null。
+   * @return 反序列化的对象。
    * @throws IOException
-   *     If any I/O error occurred.
+   *     如果发生任何 I/O 错误。
    */
   @SuppressWarnings("unchecked")
   public static <T> T deserialize(final Class<T> objClass,
@@ -260,19 +254,19 @@ public final class BinarySerialization {
   }
 
   /**
-   * Deserializes an object from a local file.
+   * 从本地文件中反序列化对象。
    *
    * @param <T>
-   *     The type of the class.
+   *     类的类型。
    * @param objClass
-   *     The class of the objects to serialize.
+   *     要序列化对象的类。
    * @param file
-   *     An abstract path of a local file.
+   *     本地文件的抽象路径。
    * @param allowNull
-   *     Indicates whether to allowed the serialized object to be null.
-   * @return The deserialized object.
+   *     指示是否允许序列化对象为 null。
+   * @return 反序列化的对象。
    * @throws IOException
-   *     If any I/O error occurred.
+   *     如果发生任何 I/O 错误。
    */
   @SuppressWarnings("unchecked")
   public static <T> T deserialize(final Class<T> objClass, final File file,
@@ -294,19 +288,19 @@ public final class BinarySerialization {
   }
 
   /**
-   * Deserializes an object from a URL.
+   * 从 URL 中反序列化对象。
    *
    * @param <T>
-   *     The type of the class.
+   *     类的类型。
    * @param objClass
-   *     The class of the objects to serialize.
+   *     要序列化对象的类。
    * @param url
-   *     An URL.
+   *     一个 URL。
    * @param allowNull
-   *     Indicates whether to allowed the serialized object to be null.
-   * @return The deserialized object.
+   *     指示是否允许序列化对象为 null。
+   * @return 反序列化的对象。
    * @throws IOException
-   *     If any I/O error occurred.
+   *     如果发生任何 I/O 错误。
    */
   @SuppressWarnings("unchecked")
   public static <T> T deserialize(final Class<T> objClass, final URL url,
@@ -317,7 +311,7 @@ public final class BinarySerialization {
     }
     InputStream in = null;
     try {
-      in = UrlUtils.openStream(url);
+      in = url.openStream();
       if (!(in instanceof BufferedInputStream)) {
         in = new BufferedInputStream(in);
       }
@@ -330,19 +324,19 @@ public final class BinarySerialization {
   }
 
   /**
-   * Deserializes an object from a URI.
+   * 从 URI 中反序列化对象。
    *
    * @param <T>
-   *     The type of the class.
+   *     类的类型。
    * @param objClass
-   *     The class of the objects to serialize.
+   *     要序列化对象的类。
    * @param uri
-   *     An URI.
+   *     一个 URI。
    * @param allowNull
-   *     Indicates whether to allowed the serialized object to be null.
-   * @return The deserialized object.
+   *     指示是否允许序列化对象为 null。
+   * @return 反序列化的对象。
    * @throws IOException
-   *     If any I/O error occurred.
+   *     如果发生任何 I/O 错误。
    */
   @SuppressWarnings("unchecked")
   public static <T> T deserialize(final Class<T> objClass, final URI uri,
@@ -367,19 +361,19 @@ public final class BinarySerialization {
   }
 
   /**
-   * Deserializes an object from a URL.
+   * 从 URL 中反序列化对象。
    *
    * @param <T>
-   *     The type of the class.
+   *     类的类型。
    * @param objClass
-   *     The class of the objects to serialize.
+   *     要序列化对象的类。
    * @param url
-   *     An URL.
+   *     一个 URL。
    * @param allowNull
-   *     Indicates whether to allowed the serialized object to be null.
-   * @return The deserialized object.
+   *     指示是否允许序列化对象为 null。
+   * @return 反序列化的对象。
    * @throws IOException
-   *     If any I/O error occurred.
+   *     如果发生任何 I/O 错误。
    */
   @SuppressWarnings("unchecked")
   public static <T> T deserialize(final Class<T> objClass, final Url url,
@@ -403,19 +397,19 @@ public final class BinarySerialization {
   }
 
   /**
-   * Deserializes an object from a byte array.
+   * 从字节数组中反序列化对象。
    *
    * @param <T>
-   *     The type of the class.
+   *     类的类型。
    * @param objClass
-   *     The class of the objects to serialize.
+   *     要序列化对象的类。
    * @param data
-   *     An byte array.
+   *     一个字节数组。
    * @param allowNull
-   *     Indicates whether to allowed the serialized object to be null.
-   * @return The deserialized object.
+   *     指示是否允许序列化对象为 null。
+   * @return 反序列化的对象。
    * @throws IOException
-   *     If any I/O error occurred.
+   *     如果发生任何 I/O 错误。
    */
   @SuppressWarnings("unchecked")
   public static <T> T deserialize(final Class<T> objClass, final byte[] data,

@@ -12,60 +12,70 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 /**
- * Simple {@link Resource} implementation that holds a resource description
- * but does not point to an actually readable resource.
+ * 简单的 {@link Resource} 实现，持有资源描述但不指向实际可读的资源。
  * <p>
- * To be used as placeholder if a {@code Resource} argument is
- * expected by an API but not necessarily used for actual reading.
+ * 当 API 期望 {@code Resource} 参数但不一定用于实际读取时，用作占位符。
  * <p>
- * This class is a copy of {@code org.springframework.core.io.DescriptiveResource}
- * with slight modifications. It is used to avoid the dependency of Spring Framework.
+ * 此类是 {@code org.springframework.core.io.DescriptiveResource} 的副本，
+ * 略有修改。用于避免对 Spring Framework 的依赖。
  *
  * @author Juergen Hoeller
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class DescriptiveResource extends AbstractResource {
 
   private final String description;
 
   /**
-   * Create a new DescriptiveResource.
-   * @param description the resource description
+   * 创建新的 DescriptiveResource。
+   * @param description 资源描述
    */
   public DescriptiveResource(@Nullable final String description) {
     this.description = (description != null ? description : "");
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean exists() {
     return false;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isReadable() {
     return false;
   }
 
-  @Nullable
+  /**
+   * {@inheritDoc}
+   */
+  @Nonnull
   @Override
   public InputStream getInputStream() throws IOException {
     throw new FileNotFoundException(getDescription()
         + " cannot be opened because it does not point to a readable resource");
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String getDescription() {
     return this.description;
   }
 
   /**
-   * This implementation compares the underlying description String.
+   * 此实现比较底层的描述字符串。
    */
   @Override
-  public boolean equals(@Nullable final Object other) {
+  public boolean equals(final Object other) {
     if (this == other) {
       return true;
     }
@@ -77,7 +87,7 @@ public class DescriptiveResource extends AbstractResource {
   }
 
   /**
-   * This implementation returns the hash code of the underlying description String.
+   * 此实现返回底层描述字符串的哈希码。
    */
   @Override
   public int hashCode() {

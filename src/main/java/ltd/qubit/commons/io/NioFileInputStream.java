@@ -17,13 +17,15 @@ import java.nio.channels.FileChannel;
 import ltd.qubit.commons.io.error.AlreadyClosedException;
 
 /**
- * A {@link SeekableInputStream} which reads data from a file using the
- * {@code java.nio} APIs.
+ * 一个使用 {@code java.nio} API 从文件读取数据的 {@link SeekableInputStream}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class NioFileInputStream extends SeekableInputStream {
 
+  /**
+   * 默认的缓冲区大小。
+   */
   public static final int DEFAULT_BUFFER_SIZE = 8192;
 
   private RandomAccessFile descriptor;
@@ -32,10 +34,23 @@ public class NioFileInputStream extends SeekableInputStream {
   private long offset;
   private long length;
 
+  /**
+   * 构造一个使用默认缓冲区大小的 NIO 文件输入流。
+   *
+   * @param file 要读取的文件
+   * @throws IOException 如果发生 I/O 错误
+   */
   public NioFileInputStream(final File file) throws IOException {
     this(file, DEFAULT_BUFFER_SIZE);
   }
 
+  /**
+   * 构造一个使用指定缓冲区大小的 NIO 文件输入流。
+   *
+   * @param file 要读取的文件
+   * @param bufferSize 缓冲区大小
+   * @throws IOException 如果发生 I/O 错误
+   */
   public NioFileInputStream(final File file, final int bufferSize)
       throws IOException {
     descriptor = new RandomAccessFile(file, "r");
@@ -45,6 +60,9 @@ public class NioFileInputStream extends SeekableInputStream {
     length = descriptor.length();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int read() throws IOException {
     if (descriptor == null) {
@@ -58,6 +76,9 @@ public class NioFileInputStream extends SeekableInputStream {
     return (buffer.get() & 0xFF);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int read(final byte[] buf, final int offset, final int length)
       throws IOException {
@@ -126,6 +147,12 @@ public class NioFileInputStream extends SeekableInputStream {
     }
   }
 
+  /**
+   * 填充缓冲区。
+   *
+   * @return 如果成功读取数据则返回 true，如果到达文件末尾则返回 false
+   * @throws IOException 如果发生 I/O 错误
+   */
   private boolean fillBuffer() throws IOException {
     // fix the start offset of the buffer
     offset += buffer.position();
@@ -139,11 +166,17 @@ public class NioFileInputStream extends SeekableInputStream {
     return (n > 0);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public long length() {
     return length;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public long position() throws IOException {
     if (descriptor == null) {
@@ -152,6 +185,9 @@ public class NioFileInputStream extends SeekableInputStream {
     return offset + buffer.position();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void seek(final long newPos) throws IOException {
     if (descriptor == null) {
@@ -170,6 +206,9 @@ public class NioFileInputStream extends SeekableInputStream {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void close() throws IOException {
     if (descriptor != null) {

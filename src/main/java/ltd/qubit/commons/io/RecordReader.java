@@ -13,102 +13,88 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * This interface provides functions to read key-value pair records from an
- * input source.
+ * 此接口提供从输入源读取键值对记录的功能。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface RecordReader<KEY, VALUE> extends Closeable {
 
   /**
-   * Creates a key.
+   * 创建一个键。
    *
-   * @return A default constructed key object.
+   * @return 默认构造的键对象。
    * @throws IllegalAccessException
-   *           if the class or its nullary constructor is not accessible.
+   *           如果类或其无参构造函数不可访问。
    * @throws InstantiationException
-   *           if this Class represents an abstract class, an interface, an
-   *           array class, a primitive type, or void; or if the class has no
-   *           nullary constructor; or if the instantiation fails for some other
-   *           reason.
+   *           如果此 Class 表示抽象类、接口、数组类、基本类型或 void；
+   *           或者如果类没有无参构造函数；或者如果实例化由于其他原因失败。
    * @throws ExceptionInInitializerError
-   *           if the initialization provoked by this method fails.
+   *           如果此方法引发的初始化失败。
    * @throws SecurityException
-   *           If a security manager, s, is present and any of the following
-   *           conditions is met:
+   *           如果存在安全管理器 s，并且满足以下任一条件：
    *           <ul>
-   *           <li>invocation of s.checkMemberAccess(this, Member.PUBLIC) denies
-   *           creation of new instances of this class.</li>
-   *           <li>the caller's class loader is not the same as or an ancestor
-   *           of the class loader for the current class and invocation of
-   *           s.checkPackageAccess() denies access to the package of this
-   *           class.</li>
+   *           <li>调用 s.checkMemberAccess(this, Member.PUBLIC) 拒绝创建此类的新实例。</li>
+   *           <li>调用者的类加载器与当前类的类加载器不同且不是其祖先，
+   *           并且调用 s.checkPackageAccess() 拒绝访问此类的包。</li>
    *           </ul>
    */
   KEY createKey() throws IllegalAccessException, InstantiationException;
 
   /**
-   * Creates a value.
+   * 创建一个值。
    *
-   * @return A default constructed value object.
+   * @return 默认构造的值对象。
    * @throws IllegalAccessException
-   *           if the class or its nullary constructor is not accessible.
+   *           如果类或其无参构造函数不可访问。
    * @throws InstantiationException
-   *           if this Class represents an abstract class, an interface, an
-   *           array class, a primitive type, or void; or if the class has no
-   *           nullary constructor; or if the instantiation fails for some other
-   *           reason.
+   *           如果此 Class 表示抽象类、接口、数组类、基本类型或 void；
+   *           或者如果类没有无参构造函数；或者如果实例化由于其他原因失败。
    * @throws ExceptionInInitializerError
-   *           if the initialization provoked by this method fails.
+   *           如果此方法引发的初始化失败。
    * @throws SecurityException
-   *           If a security manager, s, is present and any of the following
-   *           conditions is met:
+   *           如果存在安全管理器 s，并且满足以下任一条件：
    *           <ul>
-   *           <li>invocation of s.checkMemberAccess(this, Member.PUBLIC) denies
-   *           creation of new instances of this class</li>
-   *           <li>the caller's class loader is not the same as or an ancestor
-   *           of the class loader for the current class and invocation of
-   *           s.checkPackageAccess() denies access to the package of this
-   *           class.</li>
+   *           <li>调用 s.checkMemberAccess(this, Member.PUBLIC) 拒绝创建此类的新实例</li>
+   *           <li>调用者的类加载器与当前类的类加载器不同且不是其祖先，
+   *           并且调用 s.checkPackageAccess() 拒绝访问此类的包。</li>
    *           </ul>
    */
   VALUE createValue() throws IllegalAccessException,
       InstantiationException;
 
   /**
-   * Gets the current position in the input.
+   * 获取输入中的当前位置。
    *
-   * @return the current position in the input.
+   * @return 输入中的当前位置。
    * @throws IOException
-   *           if any I/O error occurred.
+   *           如果发生任何 I/O 错误。
    */
   long getPosition() throws IOException;
 
   /**
-   * Gets the radio of the input this RecordReader has consumed.
+   * 获取此 RecordReader 已消费的输入比例。
    *
-   * @return the radio of the input this RecordReader has consumed, between 0.0f
-   *         and 1.0f.
+   * @return 此 RecordReader 已消费的输入比例，介于 0.0f 和 1.0f 之间。
    * @throws IOException
-   *           if any I/O error occurred.
+   *           如果发生任何 I/O 错误。
    */
   float getProgress() throws IOException;
 
   /**
-   * Tests whether the EOF is encountered.
+   * 测试是否遇到文件结尾。
    *
-   * @return true if there is record could be read; false if at EOF.
+   * @return 如果还有记录可以读取则返回 true；如果到达文件结尾则返回 false。
    * @throws IOException
-   *           if any I/O error occurred.
+   *           如果发生任何 I/O 错误。
    */
   boolean hasNext() throws IOException;
 
   /**
-   * Reads the next key/value pair from the input for processing.
+   * 从输入中读取下一个键值对进行处理。
    *
-   * @return the next key/value pair read from the input.
+   * @return 从输入中读取的下一个键值对。
    * @throws IOException
-   *           if any I/O error occurred.
+   *           如果发生任何 I/O 错误。
    */
   Map.Entry<KEY, VALUE> next() throws IOException;
 }

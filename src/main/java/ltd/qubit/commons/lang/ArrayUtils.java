@@ -40,7 +40,7 @@ import ltd.qubit.commons.text.tostring.ToStringBuilder;
  * <p>这个类尝试优雅地处理 {@code null} 输入。对于 {@code null} 数组输入不会抛出异常。
  * 但是，包含 {@code null} 元素的对象数组可能会抛出异常。每个方法都会记录其行为。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public class ArrayUtils {
@@ -64,11 +64,6 @@ public class ArrayUtils {
    * 一个空的不可变 {@code String} 数组。
    */
   public static final String[] EMPTY_STRING_ARRAY = new String[0];
-
-  /**
-   * 一个空的不可变 {@code String[]} 二维数组。
-   */
-  public static final String[][] EMPTY_STRING_ARRAY_2D = new String[0][0];
 
   /**
    * 一个空的不可变 {@code long} 数组。
@@ -151,11 +146,6 @@ public class ArrayUtils {
   public static final Character[] EMPTY_CHARACTER_OBJECT_ARRAY = new Character[0];
 
   /**
-   * 一个空的不可变 {@code byte[]} 数组。
-   */
-  public static final byte[][] EMPTY_BYTE_ARRAY_ARRAY = new byte[0][];
-
-  /**
    * 一个空的不可变 {@link BigInteger} 数组。
    */
   public static final BigInteger[] EMPTY_BIG_INTEGER_ARRAY = new BigInteger[0];
@@ -194,6 +184,51 @@ public class ArrayUtils {
    * 一个空的不可变 {@link LocalDateTime} 数组。
    */
   public static final LocalDateTime[] EMPTY_LOCAL_DATETIME_ARRAY = new LocalDateTime[0];
+
+  /**
+   * 一个空的不可变 {@code char[]} 数组。
+   */
+  public static final char[][] EMPTY_CHAR_ARRAY_ARRAY = new char[0][];
+
+  /**
+   * 一个空的不可变 {@code boolean[]} 数组。
+   */
+  public static final boolean[][] EMPTY_BOOLEAN_ARRAY_ARRAY = new boolean[0][];
+
+  /**
+   * 一个空的不可变 {@code byte[]} 数组。
+   */
+  public static final byte[][] EMPTY_BYTE_ARRAY_ARRAY = new byte[0][];
+
+  /**
+   * 一个空的不可变 {@code short[]} 数组。
+   */
+  public static final short[][] EMPTY_SHORT_ARRAY_ARRAY = new short[0][];
+
+  /**
+   * 一个空的不可变 {@code int[]} 数组。
+   */
+  public static final int[][] EMPTY_INT_ARRAY_ARRAY = new int[0][];
+
+  /**
+   * 一个空的不可变 {@code long[]} 数组。
+   */
+  public static final long[][] EMPTY_LONG_ARRAY_ARRAY = new long[0][];
+
+  /**
+   * 一个空的不可变 {@code float[]} 数组。
+   */
+  public static final float[][] EMPTY_FLOAT_ARRAY_ARRAY = new float[0][];
+
+  /**
+   * 一个空的不可变 {@code double[]} 数组。
+   */
+  public static final double[][] EMPTY_DOUBLE_ARRAY_ARRAY = new double[0][];
+
+  /**
+   * 一个空的不可变 {@code String[]} 数组。
+   */
+  public static final String[][] EMPTY_STRING_ARRAY_ARRAY = new String[0][];
 
   /**
    * 当在列表或数组中找不到元素时的当前值：{@code -1}。
@@ -5924,15 +5959,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Removes the first occurrence of the specified element from the specified
-   * array. All subsequent elements are shifted to the left (substracts one from
-   * their indices). If the array doesn't contains such an element, no elements
-   * are removed from the array.
+   * 从指定数组中删除第一次出现的指定元素。所有后续元素都向左移动（从它们的索引中减去 1）。
+   * 如果数组不包含这样的元素，则不会从数组中删除任何元素。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * except the first occurrence of the specified element. The component type of
-   * the returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 除了第一次出现的指定元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
    * <pre>
    * Arrays.removeElement(null, 1)      = null
@@ -5943,11 +5974,10 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to remove the element from, may be {@code null}
+   *     要从中删除元素的数组，可能为 {@code null}
    * @param element
-   *     the element to be removed
-   * @return A new array containing the existing elements except the first
-   *     occurrence of the specified element.
+   *     要删除的元素
+   * @return 包含现有元素的新数组，但不包含第一次出现的指定元素。
    */
   public static int[] removeElement(@Nullable final int[] array,
       final int element) {
@@ -5959,15 +5989,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Removes the first occurrence of the specified element from the specified
-   * array. All subsequent elements are shifted to the left (substracts one from
-   * their indices). If the array doesn't contains such an element, no elements
-   * are removed from the array.
+   * 从指定数组中删除第一次出现的指定元素。所有后续元素都向左移动（从它们的索引中减去 1）。
+   * 如果数组不包含这样的元素，则不会从数组中删除任何元素。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * except the first occurrence of the specified element. The component type of
-   * the returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 除了第一次出现的指定元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
    * <pre>
    * Arrays.removeElement(null, 1)      = null
@@ -5978,11 +6004,10 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to remove the element from, may be {@code null}
+   *     要从中删除元素的数组，可能为 {@code null}
    * @param element
-   *     the element to be removed
-   * @return A new array containing the existing elements except the first
-   *     occurrence of the specified element.
+   *     要删除的元素
+   * @return 包含现有元素的新数组，但不包含第一次出现的指定元素。
    */
   public static long[] removeElement(@Nullable final long[] array,
       final long element) {
@@ -5994,15 +6019,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Removes the first occurrence of the specified element from the specified
-   * array. All subsequent elements are shifted to the left (substracts one from
-   * their indices). If the array doesn't contains such an element, no elements
-   * are removed from the array.
+   * 从指定数组中删除第一次出现的指定元素。所有后续元素都向左移动（从它们的索引中减去 1）。
+   * 如果数组不包含这样的元素，则不会从数组中删除任何元素。
    *
-   * <p>This method returns a new array with the same elements of the input
-   * array
-   * except the first occurrence of the specified element. The component type of
-   * the returned array is always the same as that of the input array.
+   * <p>此方法返回一个新数组，其中包含输入数组的所有元素，
+   * 除了第一次出现的指定元素。返回数组的组件类型始终与输入数组的组件类型相同。
    *
    * <pre>
    * Arrays.removeElement(null, 1)      = null
@@ -6013,11 +6034,10 @@ public class ArrayUtils {
    * </pre>
    *
    * @param array
-   *     the array to remove the element from, may be {@code null}
+   *     要从中删除元素的数组，可能为 {@code null}
    * @param element
-   *     the element to be removed
-   * @return A new array containing the existing elements except the first
-   *     occurrence of the specified element.
+   *     要删除的元素
+   * @return 包含现有元素的新数组，但不包含第一次出现的指定元素。
    */
   public static short[] removeElement(@Nullable final short[] array,
       final short element) {
@@ -6092,54 +6112,43 @@ public class ArrayUtils {
   }
 
   /**
-   * Find the current of the first element in the sorted range [begin, end) of a
-   * specified array which does not compare less than a specified value.
+   * 查找有序范围 [begin, end) 中第一个不小于指定值的元素的索引。
    *
-   * <p>For the function to yield the expected result, the elements in the
-   * range
-   * shall already be ordered from the lower to the higher.
+   * <p>为了使函数产生预期结果，范围内的元素应该已经按照从低到高的顺序排序。
    *
-   * <p>Note that if there is an element equal to the specified value in the
-   * range,
-   * this function returns the current of the first such element; otherwise,
-   * this function returns the current of the first smallest element which is
-   * greater than the specified value.
+   * <p>注意，如果范围内有等于指定值的元素，此函数返回第一个这样的元素的索引；
+   * 否则，此函数返回第一个大于指定值的最小元素的索引。
    *
-   * <p>The function name {@code lowerBound} comes from the fact that if there
-   * is a
-   * continuous range [iter1, iter2) in [begin, end), such that
+   * <p>函数名称 {@code lowerBound} 来源于这样一个事实：如果在 [begin, end) 中存在
+   * 连续范围 [iter1, iter2)，使得
    *
    * <ul>
-   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; and</li>
-   * <li>for every i in [begin, iter1), array[i] &lt; value; and</li>
-   * <li>for every i in [iter1, iter2), array[i] == value; and</li>
-   * <li>for every i in [iter2, last), array[i] &gt; value.</li>
+   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; 且</li>
+   * <li>对于 [begin, iter1) 中的每个 i，array[i] &lt; value; 且</li>
+   * <li>对于 [iter1, iter2) 中的每个 i，array[i] == value; 且</li>
+   * <li>对于 [iter2, last) 中的每个 i，array[i] &gt; value.</li>
    * </ul>
    *
-   * <p>Then the function {@code lowerBound(array, begin, end, value)} will
-   * return {@code iter1}, which is the "lower bound" of the maximum
-   * continuous range equals to value in the sorted range. If no such continuous
-   * range exists, that is, no elements in [begin, end) equals to value, the
-   * function will returns the position of the smallest element in [begin, end)
-   * which is greater than value.
+   * <p>那么函数 {@code lowerBound(array, begin, end, value)} 将返回 {@code iter1}，
+   * 它是有序范围中等于 value 的最大连续范围的"下界"。如果不存在这样的连续范围，
+   * 即 [begin, end) 中没有元素等于 value，则函数将返回 [begin, end) 中大于 value 的
+   * 最小元素的位置。
    *
-   * <p>The function use a binary search algorithm to search the lower bound, which
-   * has a time complexity of {@code O(log n)}.
+   * <p>该函数使用二分查找算法来搜索下界，其时间复杂度为 {@code O(log n)}。
    *
    * @param array
-   *     a {@code byte} array, sorted from the lower to the higher.
+   *     一个 {@code byte} 数组，按照从低到高排序。
    * @param begin
-   *     the begin current.
+   *     开始索引。
    * @param end
-   *     the end current. The range of the array is defined as [begin, end).
+   *     结束索引。数组的范围定义为 [begin, end)。
    * @param value
-   *     the value to be found.
-   * @return the current of the first element in [begin, end) which does not
-   *     compare less than the specified value. If the range [begin, end) is not
-   *     correctly sorted, the behavior of this function is not defined.
+   *     要查找的值。
+   * @return [begin, end) 中第一个不小于指定值的元素的索引。如果范围 [begin, end) 没有
+   *     正确排序，则此函数的行为未定义。
    * @throws IllegalArgumentException
-   *     if {@code begin &lt; 0} or {@code begin &gt; end} or
-   *     {@code end &gt; array.length}.
+   *     如果 {@code begin &lt; 0} 或 {@code begin &gt; end} 或
+   *     {@code end &gt; array.length}。
    */
   public static int lowerBound(final byte[] array, final int begin,
       final int end, final byte value) {
@@ -6166,54 +6175,43 @@ public class ArrayUtils {
   }
 
   /**
-   * Find the current of the first element in the sorted range [begin, end) of a
-   * specified array which does not compare less than a specified value.
+   * 在指定数组的有序范围 [begin, end) 内，查找第一个不小于指定值的元素的索引。
    *
-   * <p>For the function to yield the expected result, the elements in the
-   * range
-   * shall already be ordered from the lower to the higher.
+   * <p>为了使函数产生预期的结果，该范围内的元素应已按从低到高的顺序排列。
    *
-   * <p>Note that if there is an element equal to the specified value in the
-   * range,
-   * this function returns the current of the first such element; otherwise,
-   * this function returns the current of the first smallest element which is
-   * greater than the specified value.
+   * <p>请注意，如果范围内存在等于指定值的元素，则此函数返回第一个此类元素的索引；
+   * 否则，此函数返回大于指定值的第一个最小元素的索引。
    *
-   * <p>The function name {@code lowerBound} comes from the fact that if there
-   * is a
-   * continuous range [iter1, iter2) in [begin, end), such that
+   * <p>函数名 {@code lowerBound} 源于这样一个事实：如果在 [begin, end) 中存在一个连续范围 [iter1, iter2)，
+   * 使得
    *
    * <ul>
-   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; and</li>
-   * <li>for every i in [begin, iter1), array[i] &lt; value; and</li>
-   * <li>for every i in [iter1, iter2), array[i] == value; and</li>
-   * <li>for every i in [iter2, last), array[i] &gt; value.</li>
+   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; 且</li>
+   * <li>对于 [begin, iter1) 中的每个 i，array[i] &lt; value; 且</li>
+   * <li>对于 [iter1, iter2) 中的每个 i，array[i] == value; 且</li>
+   * <li>对于 [iter2, end) 中的每个 i，array[i] &gt; value。</li>
    * </ul>
    *
-   * <p>Then the function {@code lowerBound(array, begin, end, value)} will
-   * return {@code iter1}, which is the "lower bound" of the maximum
-   * continuous range equals to value in the sorted range. If no such continuous
-   * range exists, that is, no elements in [begin, end) equals to value, the
-   * function will returns the position of the smallest element in [begin, end)
-   * which is greater than value.
+   * <p>那么函数 {@code lowerBound(array, begin, end, value)} 将返回 {@code iter1}，
+   * 这是有序范围中等于 value 的最大连续范围的“下界”。
+   * 如果不存在这样的连续范围，即 [begin, end) 中没有元素等于 value，
+   * 则函数将返回 [begin, end) 中大于 value 的最小元素的位置。
    *
-   * <p>The function use a binary search algorithm to search the lower bound, which
-   * has a time complexity of {@code O(log n)}.
+   * <p>该函数使用二分搜索算法来搜索下界，其时间复杂度为 {@code O(log n)}。
    *
    * @param array
-   *     a {@code short} array, sorted from the lower to the higher.
+   *     一个 {@code short} 数组，已按从低到高的顺序排序。
    * @param begin
-   *     the begin current.
+   *     起始索引。
    * @param end
-   *     the end current. The range of the array is defined as [begin, end).
+   *     结束索引。数组的范围定义为 [begin, end)。
    * @param value
-   *     the value to be found.
-   * @return the current of the first element in [begin, end) which does not
-   *     compare less than the specified value. If the range [begin, end) is not
-   *     correctly sorted, the behavior of this function is not defined.
+   *     要查找的值。
+   * @return [begin, end) 中第一个不小于指定值的元素的索引。
+   *     如果范围 [begin, end) 没有正确排序，则此函数的行为未定义。
    * @throws IllegalArgumentException
-   *     if {@code begin &lt; 0} or {@code begin &gt; end} or
-   *     {@code end &gt; array.length}.
+   *     如果 {@code begin < 0} 或 {@code begin > end} 或
+   *     {@code end > array.length}。
    */
   public static int lowerBound(final short[] array, final int begin,
       final int end, final short value) {
@@ -6238,56 +6236,45 @@ public class ArrayUtils {
     }
     return index;
   }
-
+  
   /**
-   * Find the current of the first element in the sorted range [begin, end) of a
-   * specified array which does not compare less than a specified value.
+   * 在指定数组的有序范围 [begin, end) 内，查找第一个不小于指定值的元素的索引。
    *
-   * <p>For the function to yield the expected result, the elements in the
-   * range
-   * shall already be ordered from the lower to the higher.
+   * <p>为了使函数产生预期的结果，该范围内的元素应已按从低到高的顺序排列。
    *
-   * <p>Note that if there is an element equal to the specified value in the
-   * range,
-   * this function returns the current of the first such element; otherwise,
-   * this function returns the current of the first smallest element which is
-   * greater than the specified value.
+   * <p>请注意，如果范围内存在等于指定值的元素，则此函数返回第一个此类元素的索引；
+   * 否则，此函数返回大于指定值的第一个最小元素的索引。
    *
-   * <p>The function name {@code lowerBound} comes from the fact that if there
-   * is a
-   * continuous range [iter1, iter2) in [begin, end), such that
+   * <p>函数名 {@code lowerBound} 源于这样一个事实：如果在 [begin, end) 中存在一个连续范围 [iter1, iter2)，
+   * 使得
    *
    * <ul>
-   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; and</li>
-   * <li>for every i in [begin, iter1), array[i] &lt; value; and</li>
-   * <li>for every i in [iter1, iter2), array[i] == value; and</li>
-   * <li>for every i in [iter2, last), array[i] &gt; value.</li>
+   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; 且</li>
+   * <li>对于 [begin, iter1) 中的每个 i，array[i] &lt; value; 且</li>
+   * <li>对于 [iter1, iter2) 中的每个 i，array[i] == value; 且</li>
+   * <li>对于 [iter2, end) 中的每个 i，array[i] &gt; value。</li>
    * </ul>
    *
-   * <p>Then the function {@code lowerBound(array, begin, end, value)} will
-   * return {@code iter1}, which is the "lower bound" of the maximum
-   * continuous range equals to value in the sorted range. If no such continuous
-   * range exists, that is, no elements in [begin, end) equals to value, the
-   * function will returns the position of the smallest element in [begin, end)
-   * which is greater than value.
+   * <p>那么函数 {@code lowerBound(array, begin, end, value)} 将返回 {@code iter1}，
+   * 这是有序范围中等于 value 的最大连续范围的“下界”。
+   * 如果不存在这样的连续范围，即 [begin, end) 中没有元素等于 value，
+   * 则函数将返回 [begin, end) 中大于 value 的最小元素的位置。
    *
-   * <p>The function use a binary search algorithm to search the lower bound, which
-   * has a time complexity of {@code O(log n)}.
+   * <p>该函数使用二分搜索算法来搜索下界，其时间复杂度为 {@code O(log n)}。
    *
    * @param array
-   *     a {@code int} array, sorted from the lower to the higher.
+   *     一个 {@code int} 数组，已按从低到高的顺序排序。
    * @param begin
-   *     the begin current.
+   *     起始索引。
    * @param end
-   *     the end current. The range of the array is defined as [begin, end).
+   *     结束索引。数组的范围定义为 [begin, end)。
    * @param value
-   *     the value to be found.
-   * @return the current of the first element in [begin, end) which does not
-   *     compare less than the specified value. If the range [begin, end) is not
-   *     correctly sorted, the behavior of this function is not defined.
+   *     要查找的值。
+   * @return [begin, end) 中第一个不小于指定值的元素的索引。
+   *     如果范围 [begin, end) 没有正确排序，则此函数的行为未定义。
    * @throws IllegalArgumentException
-   *     if {@code begin &lt; 0} or {@code begin &gt; end} or
-   *     {@code end &gt; array.length}.
+   *     如果 {@code begin < 0} 或 {@code begin > end} 或
+   *     {@code end > array.length}。
    */
   public static int lowerBound(final int[] array, final int begin,
       final int end, final int value) {
@@ -6314,54 +6301,43 @@ public class ArrayUtils {
   }
 
   /**
-   * Find the current of the first element in the sorted range [begin, end) of a
-   * specified array which does not compare less than a specified value.
+   * 在指定数组的有序范围 [begin, end) 内，查找第一个不小于指定值的元素的索引。
    *
-   * <p>For the function to yield the expected result, the elements in the
-   * range
-   * shall already be ordered from the lower to the higher.
+   * <p>为了使函数产生预期的结果，该范围内的元素应已按从低到高的顺序排列。
    *
-   * <p>Note that if there is an element equal to the specified value in the
-   * range,
-   * this function returns the current of the first such element; otherwise,
-   * this function returns the current of the first smallest element which is
-   * greater than the specified value.
+   * <p>请注意，如果范围内存在等于指定值的元素，则此函数返回第一个此类元素的索引；
+   * 否则，此函数返回大于指定值的第一个最小元素的索引。
    *
-   * <p>The function name {@code lowerBound} comes from the fact that if there
-   * is a
-   * continuous range [iter1, iter2) in [begin, end), such that
+   * <p>函数名 {@code lowerBound} 源于这样一个事实：如果在 [begin, end) 中存在一个连续范围 [iter1, iter2)，
+   * 使得
    *
    * <ul>
-   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; and</li>
-   * <li>for every i in [begin, iter1), array[i] &lt; value; and</li>
-   * <li>for every i in [iter1, iter2), array[i] == value; and</li>
-   * <li>for every i in [iter2, last), array[i] &gt; value.</li>
+   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; 且</li>
+   * <li>对于 [begin, iter1) 中的每个 i，array[i] &lt; value; 且</li>
+   * <li>对于 [iter1, iter2) 中的每个 i，array[i] == value; 且</li>
+   * <li>对于 [iter2, end) 中的每个 i，array[i] &gt; value。</li>
    * </ul>
    *
-   * <p>Then the function {@code lowerBound(array, begin, end, value)} will
-   * return {@code iter1}, which is the "lower bound" of the maximum
-   * continuous range equals to value in the sorted range. If no such continuous
-   * range exists, that is, no elements in [begin, end) equals to value, the
-   * function will returns the position of the smallest element in [begin, end)
-   * which is greater than value.
+   * <p>那么函数 {@code lowerBound(array, begin, end, value)} 将返回 {@code iter1}，
+   * 这是有序范围中等于 value 的最大连续范围的“下界”。
+   * 如果不存在这样的连续范围，即 [begin, end) 中没有元素等于 value，
+   * 则函数将返回 [begin, end) 中大于 value 的最小元素的位置。
    *
-   * <p>The function use a binary search algorithm to search the lower bound, which
-   * has a time complexity of {@code O(log n)}.
+   * <p>该函数使用二分搜索算法来搜索下界，其时间复杂度为 {@code O(log n)}。
    *
    * @param array
-   *     a {@code long} array, sorted from the lower to the higher.
+   *     一个 {@code long} 数组，已按从低到高的顺序排序。
    * @param begin
-   *     the begin current.
+   *     起始索引。
    * @param end
-   *     the end current. The range of the array is defined as [begin, end).
+   *     结束索引。数组的范围定义为 [begin, end)。
    * @param value
-   *     the value to be found.
-   * @return the current of the first element in [begin, end) which does not
-   *     compare less than the specified value. If the range [begin, end) is not
-   *     correctly sorted, the behavior of this function is not defined.
+   *     要查找的值。
+   * @return [begin, end) 中第一个不小于指定值的元素的索引。
+   *     如果范围 [begin, end) 没有正确排序，则此函数的行为未定义。
    * @throws IllegalArgumentException
-   *     if {@code begin &lt; 0} or {@code begin &gt; end} or
-   *     {@code end &gt; array.length}.
+   *     如果 {@code begin < 0} 或 {@code begin > end} 或
+   *     {@code end > array.length}。
    */
   public static int lowerBound(final long[] array, final int begin,
       final int end, final long value) {
@@ -6388,52 +6364,43 @@ public class ArrayUtils {
   }
 
   /**
-   * Find the current of the first element in the sorted range [begin, end) of a
-   * specified array which does not compare less than a specified value.
+   * 在指定数组的有序范围 [begin, end) 内，查找第一个不小于指定值的元素的索引。
    *
-   * <p>For the function to yield the expected result, the elements in the
-   * range
-   * shall already be ordered from the lower to the higher.
+   * <p>为了使函数产生预期的结果，该范围内的元素应已按从低到高的顺序排列。
    *
-   * <p>Note that if there is an element equal to the specified value in the
-   * range, this function returns the current of the first such element;
-   * otherwise, this function returns the current of the first smallest element
-   * which is greater than the specified value.
+   * <p>请注意，如果范围内存在等于指定值的元素，则此函数返回第一个此类元素的索引；
+   * 否则，此函数返回大于指定值的第一个最小元素的索引。
    *
-   * <p>The function name {@code lowerBound} comes from the fact that if there
-   * is a continuous range [iter1, iter2) in [begin, end), such that
+   * <p>函数名 {@code lowerBound} 源于这样一个事实：如果在 [begin, end) 中存在一个连续范围 [iter1, iter2)，
+   * 使得
    *
    * <ul>
-   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; and</li>
-   * <li>for every i in [begin, iter1), array[i] &lt; value; and</li>
-   * <li>for every i in [iter1, iter2), array[i] == value; and</li>
-   * <li>for every i in [iter2, last), array[i] &gt; value.</li>
+   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; 且</li>
+   * <li>对于 [begin, iter1) 中的每个 i，array[i] &lt; value; 且</li>
+   * <li>对于 [iter1, iter2) 中的每个 i，array[i] == value; 且</li>
+   * <li>对于 [iter2, end) 中的每个 i，array[i] &gt; value。</li>
    * </ul>
    *
-   * <p>Then the function {@code lowerBound(array, begin, end, value)} will
-   * return {@code iter1}, which is the "lower bound" of the maximum
-   * continuous range equals to value in the sorted range. If no such continuous
-   * range exists, that is, no elements in [begin, end) equals to value, the
-   * function will returns the position of the smallest element in [begin, end)
-   * which is greater than value.
+   * <p>那么函数 {@code lowerBound(array, begin, end, value)} 将返回 {@code iter1}，
+   * 这是有序范围中等于 value 的最大连续范围的“下界”。
+   * 如果不存在这样的连续范围，即 [begin, end) 中没有元素等于 value，
+   * 则函数将返回 [begin, end) 中大于 value 的最小元素的位置。
    *
-   * <p>The function use a binary search algorithm to search the lower bound, which
-   * has a time complexity of {@code O(log n)}.
+   * <p>该函数使用二分搜索算法来搜索下界，其时间复杂度为 {@code O(log n)}。
    *
    * @param array
-   *     a {@code float} array, sorted from the lower to the higher.
+   *     一个 {@code float} 数组，已按从低到高的顺序排序。
    * @param begin
-   *     the begin current.
+   *     起始索引。
    * @param end
-   *     the end current. The range of the array is defined as [begin, end).
+   *     结束索引。数组的范围定义为 [begin, end)。
    * @param value
-   *     the value to be found.
-   * @return the current of the first element in [begin, end) which does not
-   *     compare less than the specified value. If the range [begin, end) is not
-   *     correctly sorted, the behavior of this function is not defined.
+   *     要查找的值。
+   * @return [begin, end) 中第一个不小于指定值的元素的索引。
+   *     如果范围 [begin, end) 没有正确排序，则此函数的行为未定义。
    * @throws IllegalArgumentException
-   *     if {@code begin &lt; 0} or {@code begin &gt; end} or
-   *     {@code end &gt; array.length}.
+   *     如果 {@code begin < 0} 或 {@code begin > end} 或
+   *     {@code end > array.length}。
    */
   public static int lowerBound(final float[] array, final int begin,
       final int end, final float value) {
@@ -6460,54 +6427,43 @@ public class ArrayUtils {
   }
 
   /**
-   * Find the current of the first element in the sorted range [begin, end) of a
-   * specified array which does not compare less than a specified value.
+   * 在指定数组的有序范围 [begin, end) 内，查找第一个不小于指定值的元素的索引。
    *
-   * <p>For the function to yield the expected result, the elements in the
-   * range
-   * shall already be ordered from the lower to the higher.
+   * <p>为了使函数产生预期的结果，该范围内的元素应已按从低到高的顺序排列。
    *
-   * <p>Note that if there is an element equal to the specified value in the
-   * range,
-   * this function returns the current of the first such element; otherwise,
-   * this function returns the current of the first smallest element which is
-   * greater than the specified value.
+   * <p>请注意，如果范围内存在等于指定值的元素，则此函数返回第一个此类元素的索引；
+   * 否则，此函数返回大于指定值的第一个最小元素的索引。
    *
-   * <p>The function name {@code lowerBound} comes from the fact that if there
-   * is a
-   * continuous range [iter1, iter2) in [begin, end), such that
+   * <p>函数名 {@code lowerBound} 源于这样一个事实：如果在 [begin, end) 中存在一个连续范围 [iter1, iter2)，
+   * 使得
    *
    * <ul>
-   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; and</li>
-   * <li>for every i in [begin, iter1), array[i] &lt; value; and</li>
-   * <li>for every i in [iter1, iter2), array[i] == value; and</li>
-   * <li>for every i in [iter2, last), array[i] &gt; value.</li>
+   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; 且</li>
+   * <li>对于 [begin, iter1) 中的每个 i，array[i] &lt; value; 且</li>
+   * <li>对于 [iter1, iter2) 中的每个 i，array[i] == value; 且</li>
+   * <li>对于 [iter2, end) 中的每个 i，array[i] &gt; value。</li>
    * </ul>
    *
-   * <p>Then the function {@code lowerBound(array, begin, end, value)} will
-   * return {@code iter1}, which is the "lower bound" of the maximum
-   * continuous range equals to value in the sorted range. If no such continuous
-   * range exists, that is, no elements in [begin, end) equals to value, the
-   * function will returns the position of the smallest element in [begin, end)
-   * which is greater than value.
+   * <p>那么函数 {@code lowerBound(array, begin, end, value)} 将返回 {@code iter1}，
+   * 这是有序范围中等于 value 的最大连续范围的“下界”。
+   * 如果不存在这样的连续范围，即 [begin, end) 中没有元素等于 value，
+   * 则函数将返回 [begin, end) 中大于 value 的最小元素的位置。
    *
-   * <p>The function use a binary search algorithm to search the lower bound, which
-   * has a time complexity of {@code O(log n)}.
+   * <p>该函数使用二分搜索算法来搜索下界，其时间复杂度为 {@code O(log n)}。
    *
    * @param array
-   *     a {@code double} array, sorted from the lower to the higher.
+   *     一个 {@code double} 数组，已按从低到高的顺序排序。
    * @param begin
-   *     the begin current.
+   *     起始索引。
    * @param end
-   *     the end current. The range of the array is defined as [begin, end).
+   *     结束索引。数组的范围定义为 [begin, end)。
    * @param value
-   *     the value to be found.
-   * @return the current of the first element in [begin, end) which does not
-   *     compare less than the specified value. If the range [begin, end) is not
-   *     correctly sorted, the behavior of this function is not defined.
+   *     要查找的值。
+   * @return [begin, end) 中第一个不小于指定值的元素的索引。
+   *     如果范围 [begin, end) 没有正确排序，则此函数的行为未定义。
    * @throws IllegalArgumentException
-   *     if {@code begin &lt; 0} or {@code begin &gt; end} or
-   *     {@code end &gt; array.length}.
+   *     如果 {@code begin < 0} 或 {@code begin > end} 或
+   *     {@code end > array.length}。
    */
   public static int lowerBound(final double[] array, final int begin,
       final int end, final double value) {
@@ -6534,57 +6490,45 @@ public class ArrayUtils {
   }
 
   /**
-   * Find the current of the first element in the sorted range [begin, end) of a
-   * specified array which does not compare less than a specified value.
+   * 在指定数组的有序范围 [begin, end) 内，查找第一个不小于指定值的元素的索引。
    *
-   * <p>For the function to yield the expected result, the elements in the
-   * range
-   * shall already be ordered from the lower to the higher.
+   * <p>为了使函数产生预期的结果，该范围内的元素应已按从低到高的顺序排列。
    *
-   * <p>Note that if there is an element equal to the specified value in the
-   * range,
-   * this function returns the current of the first such element; otherwise,
-   * this function returns the current of the first smallest element which is
-   * greater than the specified value.
+   * <p>请注意，如果范围内存在等于指定值的元素，则此函数返回第一个此类元素的索引；
+   * 否则，此函数返回大于指定值的第一个最小元素的索引。
    *
-   * <p>The function name {@code lowerBound} comes from the fact that if there
-   * is a
-   * continuous range [iter1, iter2) in [begin, end), such that
+   * <p>函数名 {@code lowerBound} 源于这样一个事实：如果在 [begin, end) 中存在一个连续范围 [iter1, iter2)，
+   * 使得
    *
    * <ul>
-   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; and</li>
-   * <li>for every i in [begin, iter1), array[i] &lt; value; and</li>
-   * <li>for every i in [iter1, iter2), array[i] == value; and</li>
-   * <li>for every i in [iter2, last), array[i] &gt; value.</li>
+   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; 且</li>
+   * <li>对于 [begin, iter1) 中的每个 i，array[i] &lt; value; 且</li>
+   * <li>对于 [iter1, iter2) 中的每个 i，array[i] == value; 且</li>
+   * <li>对于 [iter2, end) 中的每个 i，array[i] &gt; value。</li>
    * </ul>
    *
-   * <p>Then the function {@code lowerBound(array, begin, end, value)} will
-   * return {@code iter1}, which is the "lower bound" of the maximum
-   * continuous range equals to value in the sorted range. If no such continuous
-   * range exists, that is, no elements in [begin, end) equals to value, the
-   * function will returns the position of the smallest element in [begin, end)
-   * which is greater than value.
+   * <p>那么函数 {@code lowerBound(array, begin, end, value)} 将返回 {@code iter1}，
+   * 这是有序范围中等于 value 的最大连续范围的“下界”。
+   * 如果不存在这样的连续范围，即 [begin, end) 中没有元素等于 value，
+   * 则函数将返回 [begin, end) 中大于 value 的最小元素的位置。
    *
-   * <p>The function use a binary search algorithm to search the lower bound, which
-   * has a time complexity of {@code O(log n)}.
+   * <p>该函数使用二分搜索算法来搜索下界，其时间复杂度为 {@code O(log n)}。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     a {@code Comparable} objects array, sorted from the lower to the
-   *     higher.
+   *     一个 {@code Comparable} 对象数组，已按从低到高的顺序排序。
    * @param begin
-   *     the begin current.
+   *     起始索引。
    * @param end
-   *     the end current. The range of the array is defined as [begin, end).
+   *     结束索引。数组的范围定义为 [begin, end)。
    * @param value
-   *     the value to be found.
-   * @return the current of the first element in [begin, end) which does not
-   *     compare less than the specified value. If the range [begin, end) is not
-   *     correctly sorted, the behavior of this function is not defined.
+   *     要查找的值。
+   * @return [begin, end) 中第一个不小于指定值的元素的索引。
+   *     如果范围 [begin, end) 没有正确排序，则此函数的行为未定义。
    * @throws IllegalArgumentException
-   *     if {@code begin &lt; 0} or {@code begin &gt; end} or
-   *     {@code end &gt; array.length}.
+   *     如果 {@code begin < 0} 或 {@code begin > end} 或
+   *     {@code end > array.length}。
    */
   public static <T extends Comparable<T>> int lowerBound(final T[] array,
       final int begin, final int end, final T value) {
@@ -6675,28 +6619,21 @@ public class ArrayUtils {
   }
 
   /**
-   * Find the current of the first element in the sorted range [begin, end) of a
-   * specified array which compares greater than a specified value.
+   * 查找有序范围 [begin, end) 中第一个大于指定值的元素的索引。
    *
-   * <p>For the function to yield the expected result, the elements in the
-   * range
-   * shall already be ordered from the lower to the higher.
+   * <p>为了使函数产生预期结果，范围内的元素应该已经按照从低到高的顺序排序。
    *
-   * <p>Note that if there is an element equal to the specified value in the
-   * range,
-   * this function does NOT return the current of such element; instead, it
-   * returns the current of the first smallest element which is strictly greater
-   * than the specified value.
+   * <p>注意，如果范围内有等于指定值的元素，此函数不会返回这样元素的索引；
+   * 相反，它返回第一个严格大于指定值的最小元素的索引。
    *
-   * <p>The function name {@code upperBound} comes from the fact that if there
-   * is a
-   * continuous range [iter1, iter2) in [begin, end), such that
+   * <p>函数名称 {@code upperBound} 来源于这样一个事实：如果在 [begin, end) 中存在
+   * 连续范围 [iter1, iter2)，使得
    *
    * <ul>
-   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; and</li>
-   * <li>for every i in [begin, iter1), array[i] &lt; value; and</li>
-   * <li>for every i in [iter1, iter2), array[i] == value; and</li>
-   * <li>for every i in [iter2, last), array[i] &gt; value.</li>
+   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; 且</li>
+   * <li>对于 [begin, iter1) 中的每个 i，array[i] &lt; value; 且</li>
+   * <li>对于 [iter1, iter2) 中的每个 i，array[i] == value; 且</li>
+   * <li>对于 [iter2, last) 中的每个 i，array[i] &gt; value.</li>
    * </ul>
    *
    * <p>那么函数 {@code upperBound(array, begin, end, value)} 将返回 {@code iter2}，
@@ -6748,51 +6685,41 @@ public class ArrayUtils {
   /**
    * 查找有序范围 [begin, end) 中第一个大于指定值的元素的索引。
    *
-   * <p>For the function to yield the expected result, the elements in the
-   * range
-   * shall already be ordered from the lower to the higher.
+   * <p>为了使函数产生预期结果，范围内的元素应该已经按照从低到高的顺序排序。
    *
-   * <p>Note that if there is an element equal to the specified value in the
-   * range,
-   * this function does NOT return the current of such element; instead, it
-   * returns the current of the first smallest element which is strictly greater
-   * than the specified value.
+   * <p>注意，如果范围内有等于指定值的元素，此函数不会返回这样元素的索引；
+   * 相反，它返回第一个严格大于指定值的最小元素的索引。
    *
-   * <p>The function name {@code upperBound} comes from the fact that if there
-   * is a
-   * continuous range [iter1, iter2) in [begin, end), such that
+   * <p>函数名称 {@code upperBound} 来源于这样一个事实：如果在 [begin, end) 中存在
+   * 连续范围 [iter1, iter2)，使得
    *
    * <ul>
-   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; and</li>
-   * <li>for every i in [begin, iter1), array[i] &lt; value; and</li>
-   * <li>for every i in [iter1, iter2), array[i] == value; and</li>
-   * <li>for every i in [iter2, last), array[i] &gt; value.</li>
+   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; 且</li>
+   * <li>对于 [begin, iter1) 中的每个 i，array[i] &lt; value; 且</li>
+   * <li>对于 [iter1, iter2) 中的每个 i，array[i] == value; 且</li>
+   * <li>对于 [iter2, last) 中的每个 i，array[i] &gt; value.</li>
    * </ul>
    *
-   * <p>Then the function {@code upperBound(array, begin, end, value)} will
-   * return {@code iter2}, which is the "upper bound" of the maximum
-   * continuous range equals to the specified value in the sorted range. If no
-   * such continuous range exists, that is, no elements in [begin, end) equals
-   * to the specified value, the function will returns the current of the smallest
-   * element in [begin, end) which is greater than value.
+   * <p>那么函数 {@code upperBound(array, begin, end, value)} 将返回 {@code iter2}，
+   * 它是有序范围中等于指定值的最大连续范围的“上界”。如果不存在这样的连续范围，
+   * 即 [begin, end) 中没有元素等于指定值，则函数将返回 [begin, end) 中大于 value 的
+   * 最小元素的索引。
    *
-   * <p>The function use a binary search algorithm to search the upper bound, which
-   * has a time complexity of {@code O(log n)}.
+   * <p>该函数使用二分查找算法来搜索上界，其时间复杂度为 {@code O(log n)}。
    *
    * @param array
-   *     a {@code short} array, sorted from the lower to the higher.
+   *     一个 {@code short} 数组，按照从低到高排序。
    * @param begin
-   *     the begin current.
+   *     开始索引。
    * @param end
-   *     the end current. The range of the array is defined as [begin, end).
+   *     结束索引。数组的范围定义为 [begin, end)。
    * @param value
-   *     the value to be found.
-   * @return the current of the first element in [begin, end) which compares
-   *     greater than the specified value. If the range [begin, end) is not
-   *     correctly sorted, the behavior of this function is not defined.
+   *     要查找的值。
+   * @return [begin, end) 中第一个大于指定值的元素的索引。如果范围 [begin, end) 没有
+   *     正确排序，则此函数的行为未定义。
    * @throws IllegalArgumentException
-   *     if {@code begin &lt; 0} or {@code begin &gt; end} or
-   *     {@code end &gt; array.length}.
+   *     如果 {@code begin &lt; 0} 或 {@code begin &gt; end} 或
+   *     {@code end &gt; array.length}。
    */
   public static int upperBound(final short[] array, final int begin,
       final int end, final short value) {
@@ -6820,54 +6747,43 @@ public class ArrayUtils {
   }
 
   /**
-   * Find the current of the first element in the sorted range [begin, end) of a
-   * specified array which compares greater than a specified value.
+   * 查找有序范围 [begin, end) 中第一个大于指定值的元素的索引。
    *
-   * <p>For the function to yield the expected result, the elements in the
-   * range
-   * shall already be ordered from the lower to the higher.
+   * <p>为了使函数产生预期结果，范围内的元素应该已经按照从低到高的顺序排序。
    *
-   * <p>Note that if there is an element equal to the specified value in the
-   * range,
-   * this function does NOT return the current of such element; instead, it
-   * returns the current of the first smallest element which is strictly greater
-   * than the specified value.
+   * <p>注意，如果范围内有等于指定值的元素，此函数不会返回这样元素的索引；
+   * 相反，它返回第一个严格大于指定值的最小元素的索引。
    *
-   * <p>The function name {@code upperBound} comes from the fact that if there
-   * is a
-   * continuous range [iter1, iter2) in [begin, end), such that
+   * <p>函数名称 {@code upperBound} 来源于这样一个事实：如果在 [begin, end) 中存在
+   * 连续范围 [iter1, iter2)，使得
    *
    * <ul>
-   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; and</li>
-   * <li>for every i in [begin, iter1), array[i] &lt; value; and</li>
-   * <li>for every i in [iter1, iter2), array[i] == value; and</li>
-   * <li>for every i in [iter2, last), array[i] &gt; value.</li>
+   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; 且</li>
+   * <li>对于 [begin, iter1) 中的每个 i，array[i] &lt; value; 且</li>
+   * <li>对于 [iter1, iter2) 中的每个 i，array[i] == value; 且</li>
+   * <li>对于 [iter2, last) 中的每个 i，array[i] &gt; value.</li>
    * </ul>
    *
-   * <p>Then the function {@code upperBound(array, begin, end, value)} will
-   * return {@code iter2}, which is the "upper bound" of the maximum
-   * continuous range equals to the specified value in the sorted range. If no
-   * such continuous range exists, that is, no elements in [begin, end) equals
-   * to the specified value, the function will returns the current of the smallest
-   * element in [begin, end) which is greater than value.
+   * <p>那么函数 {@code upperBound(array, begin, end, value)} 将返回 {@code iter2}，
+   * 它是有序范围中等于指定值的最大连续范围的“上界”。如果不存在这样的连续范围，
+   * 即 [begin, end) 中没有元素等于指定值，则函数将返回 [begin, end) 中大于 value 的
+   * 最小元素的索引。
    *
-   * <p>The function use a binary search algorithm to search the upper bound, which
-   * has a time complexity of {@code O(log n)}.
+   * <p>该函数使用二分查找算法来搜索上界，其时间复杂度为 {@code O(log n)}。
    *
    * @param array
-   *     a {@code int} array, sorted from the lower to the higher.
+   *     一个 {@code int} 数组，按照从低到高排序。
    * @param begin
-   *     the begin current.
+   *     开始索引。
    * @param end
-   *     the end current. The range of the array is defined as [begin, end).
+   *     结束索引。数组的范围定义为 [begin, end)。
    * @param value
-   *     the value to be found.
-   * @return the current of the first element in [begin, end) which compares
-   *     greater than the specified value. If the range [begin, end) is not
-   *     correctly sorted, the behavior of this function is not defined.
+   *     要查找的值。
+   * @return [begin, end) 中第一个大于指定值的元素的索引。如果范围 [begin, end) 没有
+   *     正确排序，则此函数的行为未定义。
    * @throws IllegalArgumentException
-   *     if {@code begin &lt; 0} or {@code begin &gt; end} or
-   *     {@code end &gt; array.length}.
+   *     如果 {@code begin &lt; 0} 或 {@code begin &gt; end} 或
+   *     {@code end &gt; array.length}。
    */
   public static int upperBound(final int[] array, final int begin,
       final int end, final int value) {
@@ -6895,54 +6811,43 @@ public class ArrayUtils {
   }
 
   /**
-   * Find the current of the first element in the sorted range [begin, end) of a
-   * specified array which compares greater than a specified value.
+   * 查找有序范围 [begin, end) 中第一个大于指定值的元素的索引。
    *
-   * <p>For the function to yield the expected result, the elements in the
-   * range
-   * shall already be ordered from the lower to the higher.
+   * <p>为了使函数产生预期结果，范围内的元素应该已经按照从低到高的顺序排序。
    *
-   * <p>Note that if there is an element equal to the specified value in the
-   * range,
-   * this function does NOT return the current of such element; instead, it
-   * returns the current of the first smallest element which is strictly greater
-   * than the specified value.
+   * <p>注意，如果范围内有等于指定值的元素，此函数不会返回这样元素的索引；
+   * 相反，它返回第一个严格大于指定值的最小元素的索引。
    *
-   * <p>The function name {@code upperBound} comes from the fact that if there
-   * is a
-   * continuous range [iter1, iter2) in [begin, end), such that
+   * <p>函数名称 {@code upperBound} 来源于这样一个事实：如果在 [begin, end) 中存在
+   * 连续范围 [iter1, iter2)，使得
    *
    * <ul>
-   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; and</li>
-   * <li>for every i in [begin, iter1), array[i] &lt; value; and</li>
-   * <li>for every i in [iter1, iter2), array[i] == value; and</li>
-   * <li>for every i in [iter2, last), array[i] &gt; value.</li>
+   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; 且</li>
+   * <li>对于 [begin, iter1) 中的每个 i，array[i] &lt; value; 且</li>
+   * <li>对于 [iter1, iter2) 中的每个 i，array[i] == value; 且</li>
+   * <li>对于 [iter2, last) 中的每个 i，array[i] &gt; value.</li>
    * </ul>
    *
-   * <p>Then the function {@code upperBound(array, begin, end, value)} will
-   * return {@code iter2}, which is the "upper bound" of the maximum
-   * continuous range equals to the specified value in the sorted range. If no
-   * such continuous range exists, that is, no elements in [begin, end) equals
-   * to the specified value, the function will returns the current of the smallest
-   * element in [begin, end) which is greater than value.
+   * <p>那么函数 {@code upperBound(array, begin, end, value)} 将返回 {@code iter2}，
+   * 它是有序范围中等于指定值的最大连续范围的“上界”。如果不存在这样的连续范围，
+   * 即 [begin, end) 中没有元素等于指定值，则函数将返回 [begin, end) 中大于 value 的
+   * 最小元素的索引。
    *
-   * <p>The function use a binary search algorithm to search the upper bound, which
-   * has a time complexity of {@code O(log n)}.
+   * <p>该函数使用二分查找算法来搜索上界，其时间复杂度为 {@code O(log n)}。
    *
    * @param array
-   *     a {@code long} array, sorted from the lower to the higher.
+   *     一个 {@code long} 数组，按照从低到高排序。
    * @param begin
-   *     the begin current.
+   *     开始索引。
    * @param end
-   *     the end current. The range of the array is defined as [begin, end).
+   *     结束索引。数组的范围定义为 [begin, end)。
    * @param value
-   *     the value to be found.
-   * @return the current of the first element in [begin, end) which compares
-   *     greater than the specified value. If the range [begin, end) is not
-   *     correctly sorted, the behavior of this function is not defined.
+   *     要查找的值。
+   * @return [begin, end) 中第一个大于指定值的元素的索引。如果范围 [begin, end) 没有
+   *     正确排序，则此函数的行为未定义。
    * @throws IllegalArgumentException
-   *     if {@code begin &lt; 0} or {@code begin &gt; end} or
-   *     {@code end &gt; array.length}.
+   *     如果 {@code begin &lt; 0} 或 {@code begin &gt; end} 或
+   *     {@code end &gt; array.length}。
    */
   public static int upperBound(final long[] array, final int begin,
       final int end, final long value) {
@@ -6970,54 +6875,43 @@ public class ArrayUtils {
   }
 
   /**
-   * Find the current of the first element in the sorted range [begin, end) of a
-   * specified array which compares greater than a specified value.
+   * 查找有序范围 [begin, end) 中第一个大于指定值的元素的索引。
    *
-   * <p>For the function to yield the expected result, the elements in the
-   * range
-   * shall already be ordered from the lower to the higher.
+   * <p>为了使函数产生预期结果，范围内的元素应该已经按照从低到高的顺序排序。
    *
-   * <p>Note that if there is an element equal to the specified value in the
-   * range,
-   * this function does NOT return the current of such element; instead, it
-   * returns the current of the first smallest element which is strictly greater
-   * than the specified value.
+   * <p>注意，如果范围内有等于指定值的元素，此函数不会返回这样元素的索引；
+   * 相反，它返回第一个严格大于指定值的最小元素的索引。
    *
-   * <p>The function name {@code upperBound} comes from the fact that if there
-   * is a
-   * continuous range [iter1, iter2) in [begin, end), such that
+   * <p>函数名称 {@code upperBound} 来源于这样一个事实：如果在 [begin, end) 中存在
+   * 连续范围 [iter1, iter2)，使得
    *
    * <ul>
-   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; and</li>
-   * <li>for every i in [begin, iter1), array[i] &lt; value; and</li>
-   * <li>for every i in [iter1, iter2), array[i] == value; and</li>
-   * <li>for every i in [iter2, last), array[i] &gt; value.</li>
+   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; 且</li>
+   * <li>对于 [begin, iter1) 中的每个 i，array[i] &lt; value; 且</li>
+   * <li>对于 [iter1, iter2) 中的每个 i，array[i] == value; 且</li>
+   * <li>对于 [iter2, last) 中的每个 i，array[i] &gt; value.</li>
    * </ul>
    *
-   * <p>Then the function {@code upperBound(array, begin, end, value)} will
-   * return {@code iter2}, which is the "upper bound" of the maximum
-   * continuous range equals to the specified value in the sorted range. If no
-   * such continuous range exists, that is, no elements in [begin, end) equals
-   * to the specified value, the function will returns the current of the smallest
-   * element in [begin, end) which is greater than value.
+   * <p>那么函数 {@code upperBound(array, begin, end, value)} 将返回 {@code iter2}，
+   * 它是有序范围中等于指定值的最大连续范围的“上界”。如果不存在这样的连续范围，
+   * 即 [begin, end) 中没有元素等于指定值，则函数将返回 [begin, end) 中大于 value 的
+   * 最小元素的索引。
    *
-   * <p>The function use a binary search algorithm to search the upper bound, which
-   * has a time complexity of {@code O(log n)}.
+   * <p>该函数使用二分查找算法来搜索上界，其时间复杂度为 {@code O(log n)}。
    *
    * @param array
-   *     a {@code float} array, sorted from the lower to the higher.
+   *     一个 {@code float} 数组，按照从低到高排序。
    * @param begin
-   *     the begin current.
+   *     开始索引。
    * @param end
-   *     the end current. The range of the array is defined as [begin, end).
+   *     结束索引。数组的范围定义为 [begin, end)。
    * @param value
-   *     the value to be found.
-   * @return the current of the first element in [begin, end) which compares
-   *     greater than the specified value. If the range [begin, end) is not
-   *     correctly sorted, the behavior of this function is not defined.
+   *     要查找的值。
+   * @return [begin, end) 中第一个大于指定值的元素的索引。如果范围 [begin, end) 没有
+   *     正确排序，则此函数的行为未定义。
    * @throws IllegalArgumentException
-   *     if {@code begin &lt; 0} or {@code begin &gt; end} or
-   *     {@code end &gt; array.length}.
+   *     如果 {@code begin &lt; 0} 或 {@code begin &gt; end} 或
+   *     {@code end &gt; array.length}。
    */
   public static int upperBound(final float[] array, final int begin,
       final int end, final float value) {
@@ -7045,54 +6939,43 @@ public class ArrayUtils {
   }
 
   /**
-   * Find the current of the first element in the sorted range [begin, end) of a
-   * specified array which compares greater than a specified value.
+   * 查找有序范围 [begin, end) 中第一个大于指定值的元素的索引。
    *
-   * <p>For the function to yield the expected result, the elements in the
-   * range
-   * shall already be ordered from the lower to the higher.
+   * <p>为了使函数产生预期结果，范围内的元素应该已经按照从低到高的顺序排序。
    *
-   * <p>Note that if there is an element equal to the specified value in the
-   * range,
-   * this function does NOT return the current of such element; instead, it
-   * returns the current of the first smallest element which is strictly greater
-   * than the specified value.
+   * <p>注意，如果范围内有等于指定值的元素，此函数不会返回这样元素的索引；
+   * 相反，它返回第一个严格大于指定值的最小元素的索引。
    *
-   * <p>The function name {@code upperBound} comes from the fact that if there
-   * is a
-   * continuous range [iter1, iter2) in [begin, end), such that
+   * <p>函数名称 {@code upperBound} 来源于这样一个事实：如果在 [begin, end) 中存在
+   * 连续范围 [iter1, iter2)，使得
    *
    * <ul>
-   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; and</li>
-   * <li>for every i in [begin, iter1), array[i] &lt; value; and</li>
-   * <li>for every i in [iter1, iter2), array[i] == value; and</li>
-   * <li>for every i in [iter2, last), array[i] &gt; value.</li>
+   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; 且</li>
+   * <li>对于 [begin, iter1) 中的每个 i，array[i] &lt; value; 且</li>
+   * <li>对于 [iter1, iter2) 中的每个 i，array[i] == value; 且</li>
+   * <li>对于 [iter2, last) 中的每个 i，array[i] &gt; value.</li>
    * </ul>
    *
-   * <p>Then the function {@code upperBound(array, begin, end, value)} will
-   * return {@code iter2}, which is the "upper bound" of the maximum
-   * continuous range equals to the specified value in the sorted range. If no
-   * such continuous range exists, that is, no elements in [begin, end) equals
-   * to the specified value, the function will returns the current of the smallest
-   * element in [begin, end) which is greater than value.
+   * <p>那么函数 {@code upperBound(array, begin, end, value)} 将返回 {@code iter2}，
+   * 它是有序范围中等于指定值的最大连续范围的“上界”。如果不存在这样的连续范围，
+   * 即 [begin, end) 中没有元素等于指定值，则函数将返回 [begin, end) 中大于 value 的
+   * 最小元素的索引。
    *
-   * <p>The function use a binary search algorithm to search the upper bound, which
-   * has a time complexity of {@code O(log n)}.
+   * <p>该函数使用二分查找算法来搜索上界，其时间复杂度为 {@code O(log n)}。
    *
    * @param array
-   *     a {@code double} array, sorted from the lower to the higher.
+   *     一个 {@code double} 数组，按照从低到高排序。
    * @param begin
-   *     the begin current.
+   *     开始索引。
    * @param end
-   *     the end current. The range of the array is defined as [begin, end).
+   *     结束索引。数组的范围定义为 [begin, end)。
    * @param value
-   *     the value to be found.
-   * @return the current of the first element in [begin, end) which compares
-   *     greater than the specified value. If the range [begin, end) is not
-   *     correctly sorted, the behavior of this function is not defined.
+   *     要查找的值。
+   * @return [begin, end) 中第一个大于指定值的元素的索引。如果范围 [begin, end) 没有
+   *     正确排序，则此函数的行为未定义。
    * @throws IllegalArgumentException
-   *     if {@code begin &lt; 0} or {@code begin &gt; end} or
-   *     {@code end &gt; array.length}.
+   *     如果 {@code begin &lt; 0} 或 {@code begin &gt; end} 或
+   *     {@code end &gt; array.length}。
    */
   public static int upperBound(final double[] array, final int begin,
       final int end, final double value) {
@@ -7120,54 +7003,45 @@ public class ArrayUtils {
   }
 
   /**
-   * Find the current of the first element in the sorted range [begin, end) of a
-   * specified array which compares greater than a specified value.
+   * 查找有序范围 [begin, end) 中第一个大于指定值的元素的索引。
    *
-   * <p>For the function to yield the expected result, the elements in the
-   * range shall already be ordered from the lower to the higher.
+   * <p>为了使函数产生预期结果，范围内的元素应该已经按照从低到高的顺序排序。
    *
-   * <p>Note that if there is an element equal to the specified value in the
-   * range, this function does NOT return the current of such element; instead,
-   * it returns the current of the first smallest element which is strictly
-   * greater than the specified value.
+   * <p>注意，如果范围内有等于指定值的元素，此函数不会返回这样元素的索引；
+   * 相反，它返回第一个严格大于指定值的最小元素的索引。
    *
-   * <p>The function name {@code upperBound} comes from the fact that if there
-   * is a continuous range [iter1, iter2) in [begin, end), such that
+   * <p>函数名称 {@code upperBound} 来源于这样一个事实：如果在 [begin, end) 中存在
+   * 连续范围 [iter1, iter2)，使得
    *
    * <ul>
-   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; and</li>
-   * <li>for every i in [begin, iter1), array[i] &lt; value; and</li>
-   * <li>for every i in [iter1, iter2), array[i] == value; and</li>
-   * <li>for every i in [iter2, last), array[i] &gt; value.</li>
+   * <li>begin &lt;= iter1 &lt; iter2 &lt;= end; 且</li>
+   * <li>对于 [begin, iter1) 中的每个 i，array[i] &lt; value; 且</li>
+   * <li>对于 [iter1, iter2) 中的每个 i，array[i] == value; 且</li>
+   * <li>对于 [iter2, last) 中的每个 i，array[i] &gt; value.</li>
    * </ul>
    *
-   * <p>Then the function {@code upperBound(array, begin, end, value)} will
-   * return {@code iter2}, which is the "upper bound" of the maximum
-   * continuous range equals to the specified value in the sorted range. If no
-   * such continuous range exists, that is, no elements in [begin, end) equals
-   * to the specified value, the function will returns the current of the smallest
-   * element in [begin, end) which is greater than value.
+   * <p>那么函数 {@code upperBound(array, begin, end, value)} 将返回 {@code iter2}，
+   * 它是有序范围中等于指定值的最大连续范围的“上界”。如果不存在这样的连续范围，
+   * 即 [begin, end) 中没有元素等于指定值，则函数将返回 [begin, end) 中大于 value 的
+   * 最小元素的索引。
    *
-   * <p>The function use a binary search algorithm to search the upper bound, which
-   * has a time complexity of {@code O(log n)}.
+   * <p>该函数使用二分查找算法来搜索上界，其时间复杂度为 {@code O(log n)}。
    *
    * @param <T>
-   *     the type of the elements in the array.
+   *     数组中元素的类型。
    * @param array
-   *     a {@code Comparable} objects array, sorted from the lower to the
-   *     higher.
+   *     一个 {@code Comparable} 对象数组，已按从低到高的顺序排序。
    * @param begin
-   *     the begin current.
+   *     开始索引。
    * @param end
-   *     the end current. The range of the array is defined as [begin, end).
+   *     结束索引。数组的范围定义为 [begin, end)。
    * @param value
-   *     the value to be found.
-   * @return the current of the first element in [begin, end) which compares
-   *     greater than the specified value. If the range [begin, end) is not
-   *     correctly sorted, the behavior of this function is not defined.
+   *     要查找的值。
+   * @return [begin, end) 中第一个大于指定值的元素的索引。如果范围 [begin, end) 没有
+   *     正确排序，则此函数的行为未定义。
    * @throws IllegalArgumentException
-   *     if {@code begin &lt; 0} or {@code begin &gt; end} or
-   *     {@code end &gt; array.length}.
+   *     如果 {@code begin &lt; 0} 或 {@code begin &gt; end} 或
+   *     {@code end &gt; array.length}。
    */
   public static <T extends Comparable<T>> int upperBound(final T[] array,
       final int begin, final int end, final T value) {
@@ -7246,15 +7120,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Sums the values of elements in an array.
+   * 对数组中元素的值求和。
    *
    * @param array
-   *     the array of values.
+   *     值的数组。
    * @param start
-   *     the index of value starting the sum.
+   *     开始求和的值的索引。
    * @param end
-   *     the index next to the value ending the sum.
-   * @return the sum of all values in the array.
+   *     结束求和的值的下一个索引。
+   * @return 数组中所有值的总和。
    */
   public static int sum(final short[] array, final int start, final int end) {
     final int theStart = Math.max(start, 0);
@@ -7267,11 +7141,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Sums the values of elements in an array.
+   * 对数组中元素的值求和。
    *
    * @param array
-   *     the array of values.
-   * @return the sum of all values in the array.
+   *     值的数组。
+   * @return 数组中所有值的总和。
    */
   public static int sum(final int[] array) {
     int result = 0;
@@ -7282,15 +7156,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Sums the values of elements in an array.
+   * 对数组中元素的值求和。
    *
    * @param array
-   *     the array of values.
+   *     值的数组。
    * @param start
-   *     the index of value starting the sum.
+   *     开始求和的值的索引。
    * @param end
-   *     the index next to the value ending the sum.
-   * @return the sum of all values in the array.
+   *     结束求和的值的下一个索引。
+   * @return 数组中所有值的总和。
    */
   public static int sum(final int[] array, final int start, final int end) {
     final int theStart = Math.max(start, 0);
@@ -7303,11 +7177,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Sums the values of elements in an array.
+   * 对数组中元素的值求和。
    *
    * @param array
-   *     the array of values.
-   * @return the sum of all values in the array.
+   *     值的数组。
+   * @return 数组中所有值的总和。
    */
   public static long sum(final long[] array) {
     long result = 0;
@@ -7318,15 +7192,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Sums the values of elements in an array.
+   * 对数组中元素的值求和。
    *
    * @param array
-   *     the array of values.
+   *     值的数组。
    * @param start
-   *     the index of value starting the sum.
+   *     开始求和的值的索引。
    * @param end
-   *     the index next to the value ending the sum.
-   * @return the sum of all values in the array.
+   *     结束求和的值的下一个索引。
+   * @return 数组中所有值的总和。
    */
   public static long sum(final long[] array, final int start, final int end) {
     final int theStart = Math.max(start, 0);
@@ -7339,11 +7213,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Sums the values of elements in an array.
+   * 对数组中元素的值求和。
    *
    * @param array
-   *     the array of values.
-   * @return the sum of all values in the array.
+   *     值的数组。
+   * @return 数组中所有值的总和。
    */
   public static float sum(final float[] array) {
     float result = 0;
@@ -7354,15 +7228,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Sums the values of elements in an array.
+   * 对数组中元素的值求和。
    *
    * @param array
-   *     the array of values.
+   *     值的数组。
    * @param start
-   *     the index of value starting the sum.
+   *     开始求和的值的索引。
    * @param end
-   *     the index next to the value ending the sum.
-   * @return the sum of all values in the array.
+   *     结束求和的值的下一个索引。
+   * @return 数组中所有值的总和。
    */
   public static float sum(final float[] array, final int start, final int end) {
     final int theStart = Math.max(start, 0);
@@ -7375,11 +7249,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Sums the values of elements in an array.
+   * 对数组中元素的值求和。
    *
    * @param array
-   *     the array of values.
-   * @return the sum of all values in the array.
+   *     值的数组。
+   * @return 数组中所有值的总和。
    */
   public static double sum(final double[] array) {
     double result = 0;
@@ -7390,15 +7264,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Sums the values of elements in an array.
+   * 对数组中元素的值求和。
    *
    * @param array
-   *     the array of values.
+   *     值的数组。
    * @param start
-   *     the index of value starting the sum.
+   *     开始求和的值的索引。
    * @param end
-   *     the index next to the value ending the sum.
-   * @return the sum of all values in the array.
+   *     结束求和的值的下一个索引。
+   * @return 数组中所有值的总和。
    */
   public static double sum(final double[] array, final int start,
       final int end) {
@@ -7449,11 +7323,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Products the values of elements in an array.
+   * 对数组中元素的值求积。
    *
    * @param array
-   *     the array of values.
-   * @return the production of all values in the array.
+   *     值的数组。
+   * @return 数组中所有值的乘积。
    */
   public static double product(final short[] array) {
     double result = 1;
@@ -7464,15 +7338,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Products the values of elements in an array.
+   * 对数组中元素的值求积。
    *
    * @param array
-   *     the array of values.
+   *     值的数组。
    * @param start
-   *     the index of value starting the sum.
+   *     开始求积的值的索引。
    * @param end
-   *     the index next to the value ending the sum.
-   * @return the production of all values in the array.
+   *     结束求积的值的下一个索引。
+   * @return 数组中所有值的乘积。
    */
   public static double product(final short[] array, final int start,
       final int end) {
@@ -7486,11 +7360,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Products the values of elements in an array.
+   * 对数组中元素的值求积。
    *
    * @param array
-   *     the array of values.
-   * @return the production of all values in the array.
+   *     值的数组。
+   * @return 数组中所有值的乘积。
    */
   public static double product(final int[] array) {
     double result = 1;
@@ -7501,15 +7375,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Products the values of elements in an array.
+   * 对数组中元素的值求积。
    *
    * @param array
-   *     the array of values.
+   *     值的数组。
    * @param start
-   *     the index of value starting the sum.
+   *     开始求积的值的索引。
    * @param end
-   *     the index next to the value ending the sum.
-   * @return the production of all values in the array.
+   *     结束求积的值的下一个索引。
+   * @return 数组中所有值的乘积。
    */
   public static double product(final int[] array, final int start,
       final int end) {
@@ -7523,11 +7397,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Products the values of elements in an array.
+   * 对数组中元素的值求积。
    *
    * @param array
-   *     the array of values.
-   * @return the production of all values in the array.
+   *     值的数组。
+   * @return 数组中所有值的乘积。
    */
   public static double product(final long[] array) {
     double result = 1;
@@ -7538,15 +7412,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Products the values of elements in an array.
+   * 对数组中元素的值求积。
    *
    * @param array
-   *     the array of values.
+   *     值的数组。
    * @param start
-   *     the index of value starting the sum.
+   *     开始求积的值的索引。
    * @param end
-   *     the index next to the value ending the sum.
-   * @return the production of all values in the array.
+   *     结束求积的值的下一个索引。
+   * @return 数组中所有值的乘积。
    */
   public static double product(final long[] array, final int start,
       final int end) {
@@ -7560,11 +7434,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Products the values of elements in an array.
+   * 对数组中元素的值求积。
    *
    * @param array
-   *     the array of values.
-   * @return the production of all values in the array.
+   *     值的数组。
+   * @return 数组中所有值的乘积。
    */
   public static float product(final float[] array) {
     float result = 1;
@@ -7575,15 +7449,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Products the values of elements in an array.
+   * 对数组中元素的值求积。
    *
    * @param array
-   *     the array of values.
+   *     值的数组。
    * @param start
-   *     the index of value starting the sum.
+   *     开始求积的值的索引。
    * @param end
-   *     the index next to the value ending the sum.
-   * @return the production of all values in the array.
+   *     结束求积的值的下一个索引。
+   * @return 数组中所有值的乘积。
    */
   public static float product(final float[] array, final int start,
       final int end) {
@@ -7597,11 +7471,11 @@ public class ArrayUtils {
   }
 
   /**
-   * Products the values of elements in an array.
+   * 对数组中元素的值求积。
    *
    * @param array
-   *     the array of values.
-   * @return the production of all values in the array.
+   *     值的数组。
+   * @return 数组中所有值的乘积。
    */
   public static double product(final double[] array) {
     double result = 1;
@@ -7612,15 +7486,15 @@ public class ArrayUtils {
   }
 
   /**
-   * Products the values of elements in an array.
+   * 对数组中元素的值求积。
    *
    * @param array
-   *     the array of values.
+   *     值的数组。
    * @param start
-   *     the index of value starting the sum.
+   *     开始求积的值的索引。
    * @param end
-   *     the index next to the value ending the sum.
-   * @return the production of all values in the array.
+   *     结束求积的值的下一个索引。
+   * @return 数组中所有值的乘积。
    */
   public static double product(final double[] array, final int start,
       final int end) {

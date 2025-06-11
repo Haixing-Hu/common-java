@@ -22,21 +22,27 @@ import static ltd.qubit.commons.io.InputUtils.readClass;
 import static ltd.qubit.commons.io.OutputUtils.writeClass;
 
 /**
- * The {@link BinarySerializer} for {@link Class} class.
+ * {@link Class} 类的 {@link BinarySerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class ClassBinarySerializer implements BinarySerializer {
 
   public static final ClassBinarySerializer INSTANCE = new ClassBinarySerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Class<?> deserialize(final InputStream in, final boolean allowNull)
       throws IOException {
     return readClass(in, allowNull);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final OutputStream out, @Nullable final Object obj)
       throws IOException {

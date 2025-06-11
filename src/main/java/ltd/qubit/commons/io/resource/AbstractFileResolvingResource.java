@@ -25,20 +25,23 @@ import java.util.jar.JarEntry;
 import ltd.qubit.commons.io.VfsUtils;
 
 /**
- * Abstract base class for resources which resolve URLs into File references,
- * such as {@link UrlResource} or {@link ClassPathResource}.
+ * 将 URL 解析为 File 引用的资源的抽象基类，
+ * 例如 {@link UrlResource} 或 {@link ClassPathResource}。
  * <p>
- * Detects the "file" protocol as well as the JBoss "vfs" protocol in URLs,
- * resolving file system references accordingly.
+ * 检测 URL 中的 "file" 协议以及 JBoss "vfs" 协议，
+ * 相应地解析文件系统引用。
  * <p>
- * This class is a copy of {@code org.springframework.core.io.AbstractFileResolvingResource}
- * with slight modifications. It is used to avoid the dependency of Spring Framework.
+ * 此类是 {@code org.springframework.core.io.AbstractFileResolvingResource} 的副本，
+ * 略有修改。用于避免对 Spring Framework 的依赖。
  *
  * @author Juergen Hoeller
- * @author Haixing Hu
+ * @author 胡海星
  */
 public abstract class AbstractFileResolvingResource extends AbstractResource {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean exists() {
     try {
@@ -83,6 +86,9 @@ public abstract class AbstractFileResolvingResource extends AbstractResource {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isReadable() {
     try {
@@ -92,6 +98,12 @@ public abstract class AbstractFileResolvingResource extends AbstractResource {
     }
   }
 
+  /**
+   * 检查给定URL是否可读。
+   *
+   * @param url 要检查的URL。
+   * @return 如果可读则返回true，否则返回false。
+   */
   boolean checkReadable(final URL url) {
     try {
       if (ResourceUtils.isFileURL(url)) {
@@ -136,6 +148,9 @@ public abstract class AbstractFileResolvingResource extends AbstractResource {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isFile() {
     try {
@@ -150,8 +165,8 @@ public abstract class AbstractFileResolvingResource extends AbstractResource {
   }
 
   /**
-   * This implementation returns a File reference for the underlying class path
-   * resource, provided that it refers to a file in the file system.
+   * 此实现为底层类路径资源返回 File 引用，
+   * 前提是它引用文件系统中的文件。
    *
    * @see ResourceUtils#getFile(java.net.URL, String)
    */
@@ -165,8 +180,7 @@ public abstract class AbstractFileResolvingResource extends AbstractResource {
   }
 
   /**
-   * This implementation determines the underlying File (or jar file, in case of
-   * a resource in a jar/zip).
+   * 此实现确定底层文件（或在 jar/zip 中的资源情况下的 jar 文件）。
    */
   @Override
   protected File getFileForLastModifiedCheck() throws IOException {
@@ -183,11 +197,11 @@ public abstract class AbstractFileResolvingResource extends AbstractResource {
   }
 
   /**
-   * Determine whether the given {@link URI} represents a file in a file
-   * system.
+   * 确定给定的 {@link URI} 是否表示文件系统中的文件。
    *
+   * @param uri 要检查的URI。
+   * @return 如果是文件则返回true，否则返回false。
    * @see #getFile(URI)
-   * @since 5.0
    */
   protected boolean isFile(final URI uri) {
     try {
@@ -201,9 +215,12 @@ public abstract class AbstractFileResolvingResource extends AbstractResource {
   }
 
   /**
-   * This implementation returns a File reference for the given URI-identified
-   * resource, provided that it refers to a file in the file system.
+   * 此实现为给定的 URI 标识的资源返回 File 引用，
+   * 前提是它引用文件系统中的文件。
    *
+   * @param uri 要转换为文件的URI。
+   * @return 对应的文件对象。
+   * @throws IOException 如果发生I/O错误。
    * @see ResourceUtils#getFile(java.net.URI, String)
    */
   protected File getFile(final URI uri) throws IOException {
@@ -214,11 +231,12 @@ public abstract class AbstractFileResolvingResource extends AbstractResource {
   }
 
   /**
-   * This implementation returns a FileChannel for the given URI-identified
-   * resource, provided that it refers to a file in the file system.
+   * 此实现为给定的 URI 标识的资源返回 FileChannel，
+   * 前提是它引用文件系统中的文件。
    *
+   * @return 可读字节通道。
+   * @throws IOException 如果发生I/O错误。
    * @see #getFile()
-   * @since 5.0
    */
   @Override
   public ReadableByteChannel readableChannel() throws IOException {
@@ -231,6 +249,9 @@ public abstract class AbstractFileResolvingResource extends AbstractResource {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public long contentLength() throws IOException {
     final URL url = getURL();
@@ -255,6 +276,9 @@ public abstract class AbstractFileResolvingResource extends AbstractResource {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public long lastModified() throws IOException {
     final URL url = getURL();
@@ -289,18 +313,13 @@ public abstract class AbstractFileResolvingResource extends AbstractResource {
   }
 
   /**
-   * Customize the given {@link URLConnection} before fetching the resource.
-   * <p>Calls
-   * {@link
-   * ResourceUtils#useCachesIfNecessary(URLConnection)}
-   * and
-   * delegates to {@link #customizeConnection(HttpURLConnection)} if possible.
-   * Can be overridden in subclasses.
+   * 在获取资源之前自定义给定的 {@link URLConnection}。
+   * <p>调用 {@link ResourceUtils#useCachesIfNecessary(URLConnection)}
+   * 并在可能的情况下委托给 {@link #customizeConnection(HttpURLConnection)}。
+   * 可以在子类中重写。
    *
-   * @param con
-   *     the URLConnection to customize
-   * @throws IOException
-   *     if thrown from URLConnection methods
+   * @param con 要自定义的 URLConnection。
+   * @throws IOException 如果从 URLConnection 方法抛出。
    */
   protected void customizeConnection(final URLConnection con) throws IOException {
     ResourceUtils.useCachesIfNecessary(con);
@@ -311,28 +330,38 @@ public abstract class AbstractFileResolvingResource extends AbstractResource {
   }
 
   /**
-   * Customize the given {@link HttpURLConnection} before fetching the
-   * resource.
-   * <p>Can be overridden in subclasses for configuring request headers and
-   * timeouts.
+   * 在获取资源之前自定义给定的 {@link HttpURLConnection}。
+   * <p>可以在子类中重写以配置请求头和超时。
    *
-   * @param con
-   *     the HttpURLConnection to customize
-   * @throws IOException
-   *     if thrown from HttpURLConnection methods
+   * @param con 要自定义的 HttpURLConnection。
+   * @throws IOException 如果从 HttpURLConnection 方法抛出。
    */
   protected void customizeConnection(final HttpURLConnection con) throws IOException {
   }
 
   /**
-   * Inner delegate class, avoiding a hard JBoss VFS API dependency at runtime.
+   * 内部委托类，避免在运行时对 JBoss VFS API 的硬依赖。
    */
   private static class VfsResourceDelegate {
 
+    /**
+     * 从URL获取VFS资源。
+     *
+     * @param url 要处理的URL。
+     * @return VFS资源。
+     * @throws IOException 如果发生I/O错误。
+     */
     public static Resource getResource(final URL url) throws IOException {
       return new VfsResource(VfsUtils.getRoot(url));
     }
 
+    /**
+     * 从URI获取VFS资源。
+     *
+     * @param uri 要处理的URI。
+     * @return VFS资源。
+     * @throws IOException 如果发生I/O错误。
+     */
     public static Resource getResource(final URI uri) throws IOException {
       return new VfsResource(VfsUtils.getRoot(uri));
     }

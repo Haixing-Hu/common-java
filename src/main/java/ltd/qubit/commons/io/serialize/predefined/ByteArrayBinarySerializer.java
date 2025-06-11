@@ -22,21 +22,27 @@ import static ltd.qubit.commons.io.InputUtils.readByteArray;
 import static ltd.qubit.commons.io.OutputUtils.writeByteArray;
 
 /**
- * The {@link BinarySerializer} for {@code byte[]} class.
+ * {@code byte[]} 类的 {@link BinarySerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class ByteArrayBinarySerializer implements BinarySerializer {
 
   public static final ByteArrayBinarySerializer INSTANCE = new ByteArrayBinarySerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public byte[] deserialize(final InputStream in, final boolean allowNull)
       throws IOException {
     return readByteArray(in, allowNull, null);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final OutputStream out, @Nullable final Object obj)
       throws IOException {

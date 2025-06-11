@@ -16,13 +16,12 @@ import javax.annotation.concurrent.ThreadSafe;
 import ltd.qubit.commons.math.IntBit;
 
 /**
- * This class provides functions for calculating the 32-bits hash code.
+ * 该类提供用于计算32位哈希码的函数。
  *
- * <p>For example, suppose you need to combine the hash code of three variables:
- * a name, which is a String; a age, which is a int; and a addresses, which is an
- * array of Address objects; and a multi-array, which is a multi-dimensional int
- * array. First, randomly choose two ODD integer number, say, 11 and 12345; then
- * write the following codes:
+ * <p>例如，假设你需要组合三个变量的哈希码：
+ * 一个名称，它是一个String；一个年龄，它是一个int；以及一个地址数组，它是一个
+ * Address对象数组；以及一个多维数组，它是一个多维int数组。首先，随机选择两个奇数，
+ * 比如11和12345；然后编写以下代码：
  *
  * <pre>
  *    String name = ...;
@@ -39,7 +38,7 @@ import ltd.qubit.commons.math.IntBit;
  *    return code;
  * </pre>
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see Hash64
  */
 @ThreadSafe
@@ -47,10 +46,34 @@ public final class Hash {
 
   private Hash() {}
 
+  /**
+   * 将boolean值与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的boolean值。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier, final boolean value) {
     return (code * multiplier) + (value ? 1 : 0);
   }
 
+  /**
+   * 将boolean数组与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的boolean数组，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final boolean[] value) {
     if (value == null) {
@@ -64,10 +87,34 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将char值与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的char值。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier, final char value) {
     return (code * multiplier) + value;
   }
 
+  /**
+   * 将char数组与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的char数组，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final char[] value) {
     if (value == null) {
@@ -81,10 +128,34 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将byte值与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的byte值。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier, final byte value) {
     return (code * multiplier) + value;
   }
 
+  /**
+   * 将byte数组与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的byte数组，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final byte[] value) {
     if (value == null) {
@@ -98,10 +169,34 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将short值与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的short值。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier, final short value) {
     return (code * multiplier) + value;
   }
 
+  /**
+   * 将short数组与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的short数组，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final short[] value) {
     if (value == null) {
@@ -115,10 +210,34 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将int值与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的int值。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier, final int value) {
     return (code * multiplier) + value;
   }
 
+  /**
+   * 将int数组与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的int数组，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final int[] value) {
     if (value == null) {
@@ -132,10 +251,34 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将long值与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的long值。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier, final long value) {
     return (code * multiplier) + (int) (value ^ (value >> IntBit.BITS));
   }
 
+  /**
+   * 将long数组与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的long数组，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final long[] value) {
     if (value == null) {
@@ -149,10 +292,34 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将float值与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的float值。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier, final float value) {
     return (code * multiplier) + Float.floatToIntBits(value);
   }
 
+  /**
+   * 将float数组与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的float数组，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final float[] value) {
     if (value == null) {
@@ -166,11 +333,35 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将double值与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的double值。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier, final double value) {
     final long bits = Double.doubleToLongBits(value);
     return (code * multiplier) + (int) (bits ^ (bits >> IntBit.BITS));
   }
 
+  /**
+   * 将double数组与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的double数组，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final double[] value) {
     if (value == null) {
@@ -185,6 +376,18 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将Boolean对象与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的Boolean对象，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final Boolean value) {
     if (value == null) {
@@ -194,6 +397,18 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将Boolean数组与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的Boolean数组，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final Boolean[] value) {
     if (value == null) {
@@ -207,6 +422,18 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将Character对象与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的Character对象，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final Character value) {
     if (value == null) {
@@ -216,6 +443,18 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将Character数组与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的Character数组，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final Character[] value) {
     if (value == null) {
@@ -229,6 +468,18 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将Byte对象与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的Byte对象，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final Byte value) {
     if (value == null) {
@@ -238,6 +489,18 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将Byte数组与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的Byte数组，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final Byte[] value) {
     if (value == null) {
@@ -251,6 +514,18 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将Short对象与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的Short对象，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final Short value) {
     if (value == null) {
@@ -260,6 +535,18 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将Short数组与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的Short数组，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final Short[] value) {
     if (value == null) {
@@ -273,6 +560,18 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将Integer对象与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的Integer对象，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final Integer value) {
     if (value == null) {
@@ -282,6 +581,18 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将Integer数组与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的Integer数组，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final Integer[] value) {
     if (value == null) {
@@ -295,6 +606,18 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将Long对象与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的Long对象，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final Long value) {
     if (value == null) {
@@ -304,6 +627,18 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将Long数组与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的Long数组，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final Long[] value) {
     if (value == null) {
@@ -317,6 +652,18 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将Float对象与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的Float对象，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final Float value) {
     if (value == null) {
@@ -326,6 +673,18 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将Float数组与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的Float数组，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final Float[] value) {
     if (value == null) {
@@ -339,6 +698,18 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将Double对象与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的Double对象，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final Double value) {
     if (value == null) {
@@ -348,6 +719,18 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将Double数组与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的Double数组，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final Double[] value) {
     if (value == null) {
@@ -361,6 +744,18 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将String对象与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的String对象，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final String value) {
     if (value == null) {
@@ -370,6 +765,18 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将String数组与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的String数组，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final String[] value) {
     if (value == null) {
@@ -383,6 +790,20 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将枚举值与现有哈希码组合。
+   *
+   * @param <E>
+   *     枚举类型。
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的枚举值，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static <E extends Enum<E>> int combine(final int code, final int multiplier,
       @Nullable final E value) {
     if (value == null) {
@@ -392,6 +813,20 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将枚举数组与现有哈希码组合。
+   *
+   * @param <E>
+   *     枚举类型。
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的枚举数组，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static <E extends Enum<E>> int combine(final int code, final int multiplier,
       @Nullable final E[] value) {
     if (value == null) {
@@ -405,6 +840,20 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将Object对象与现有哈希码组合。
+   *
+   * <p>此方法可以正确处理各种类型的对象，包括基本类型数组和多维数组。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的Object对象，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final Object value) {
     if (value == null) {
@@ -440,6 +889,18 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将Object数组与现有哈希码组合。
+   *
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的Object数组，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static int combine(final int code, final int multiplier,
       @Nullable final Object[] value) {
     if (value == null) {
@@ -456,6 +917,20 @@ public final class Hash {
     }
   }
 
+  /**
+   * 将Collection集合与现有哈希码组合。
+   *
+   * @param <T>
+   *     集合元素类型。
+   * @param code
+   *     现有的哈希码。
+   * @param multiplier
+   *     用于组合的乘数。
+   * @param value
+   *     要组合的Collection集合，可以为{@code null}。
+   * @return
+   *     组合后的哈希码。
+   */
   public static <T> int combine(final int code, final int multiplier,
       @Nullable final Collection<T> value) {
     if (value == null) {

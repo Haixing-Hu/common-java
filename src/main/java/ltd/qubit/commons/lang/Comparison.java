@@ -36,44 +36,38 @@ import ltd.qubit.commons.datastructure.list.primitive.LongCollection;
 import ltd.qubit.commons.datastructure.list.primitive.ShortCollection;
 
 /**
- * This class provides functions to compare between objects.
+ * 该类提供比较对象的函数。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public final class Comparison {
 
   /**
-   * Compares two {@code boolean} values for order.
+   * 比较两个 {@code boolean} 值的大小顺序。
    *
-   * <p>We assume that {@code true} &gt; {@code false} for {@code boolean}
-   * values.
+   * <p>我们假设对于 {@code boolean} 值，{@code true} &gt; {@code false}。
    *
    * @param value1
-   *     the first {@code boolean} value.
+   *     第一个 {@code boolean} 值。
    * @param value2
-   *     the second {@code boolean} value.
-   * @return An integer less than, equal to or greater than 0, if the first
-   *     value compares lexicographically less than, equal to, or greater than
-   *     the second value.
+   *     第二个 {@code boolean} 值。
+   * @return 如果第一个值在字典序上小于、等于或大于第二个值，则分别返回小于、等于或大于 0 的整数。
    */
   public static int compare(final boolean value1, final boolean value2) {
     return Boolean.compare(value1, value2);
   }
 
   /**
-   * Compares two {@code boolean} arrays lexically.
+   * 按字典序比较两个 {@code boolean} 数组。
    *
-   * <p>We assume that {@code true} &gt; {@code false} for {@code boolean}
-   * values.
+   * <p>我们假设对于 {@code boolean} 值，{@code true} &gt; {@code false}。
    *
    * @param array1
-   *     the first {@code boolean} array, which could be null.
+   *     第一个 {@code boolean} 数组，可以为 null。
    * @param array2
-   *     the second {@code boolean} array, which could be null.
-   * @return An integer less than, equal to or greater than 0, if the first
-   *     array compares lexicographically less than, equal to, or greater than
-   *     the second array.
+   *     第二个 {@code boolean} 数组，可以为 null。
+   * @return 如果第一个数组在字典序上小于、等于或大于第二个数组，则分别返回小于、等于或大于 0 的整数。
    */
   public static int compare(@Nullable final boolean[] array1,
       @Nullable final boolean[] array2) {
@@ -87,22 +81,19 @@ public final class Comparison {
   }
 
   /**
-   * Compares two {@code boolean} arrays lexically.
+   * 按字典序比较两个 {@code boolean} 数组。
    *
-   * <p>We assume that {@code true} &gt; {@code false} for {@code boolean}
-   * values.
+   * <p>我们假设对于 {@code boolean} 值，{@code true} &gt; {@code false}。
    *
    * @param array1
-   *     the first {@code boolean} array.
+   *     第一个 {@code boolean} 数组。
    * @param n1
-   *     the length of the first {@code boolean} array.
+   *     第一个 {@code boolean} 数组的长度。
    * @param array2
-   *     the second {@code boolean} array.
+   *     第二个 {@code boolean} 数组。
    * @param n2
-   *     the length of the second {@code boolean} array.
-   * @return An integer less than, equal to or greater than 0, if the first
-   *     array compares lexicographically less than, equal to, or greater than
-   *     the second array.
+   *     第二个 {@code boolean} 数组的长度。
+   * @return 如果第一个数组在字典序上小于、等于或大于第二个数组，则分别返回小于、等于或大于 0 的整数。
    */
   public static int compare(final boolean[] array1, final int n1,
       final boolean[] array2, final int n2) {
@@ -118,19 +109,15 @@ public final class Comparison {
   }
 
   /**
-   * Compares two {@link Boolean} objects for order.
+   * 比较两个 {@link Boolean} 对象的大小顺序。
    *
-   * <p>We assume that {@link Boolean#TRUE} &gt; {@link Boolean#FALSE} &gt;
-   * {@code
-   * null} for {@link Boolean} objects.
+   * <p>我们假设对于 {@link Boolean} 对象，{@link Boolean#TRUE} &gt; {@link Boolean#FALSE} &gt; {@code null}。
    *
    * @param value1
-   *     the first {@link Boolean} object, which could be null.
+   *     第一个 {@link Boolean} 对象，可以为 null。
    * @param value2
-   *     the second {@link Boolean} object, which could be null.
-   * @return An integer less than, equal to or greater than 0, if the first
-   *     value compares lexicographically less than, equal to, or greater than
-   *     the second value.
+   *     第二个 {@link Boolean} 对象，可以为 null。
+   * @return 如果第一个值在字典序上小于、等于或大于第二个值，则分别返回小于、等于或大于 0 的整数。
    */
   public static int compare(@Nullable final Boolean value1,
       @Nullable final Boolean value2) {
@@ -144,19 +131,15 @@ public final class Comparison {
   }
 
   /**
-   * Compares two {@link Boolean} arrays lexically.
+   * 按字典序比较两个 {@link Boolean} 数组。
    *
-   * <p>We assume that {@link Boolean#TRUE} &gt; {@link Boolean#FALSE} &gt;
-   * {@code
-   * null} for {@link Boolean} objects.
+   * <p>我们假设对于 {@link Boolean} 对象，{@link Boolean#TRUE} &gt; {@link Boolean#FALSE} &gt; {@code null}。
    *
    * @param array1
-   *     the first {@link Boolean} array, which could be null.
+   *     第一个 {@link Boolean} 数组，可以为 null。
    * @param array2
-   *     the second {@link Boolean} array, which could be null.
-   * @return An integer less than, equal to or greater than 0, if the first
-   *     array compares lexicographically less than, equal to, or greater than
-   *     the second array.
+   *     第二个 {@link Boolean} 数组，可以为 null。
+   * @return 如果第一个数组在字典序上小于、等于或大于第二个数组，则分别返回小于、等于或大于 0 的整数。
    */
   public static int compare(@Nullable final Boolean[] array1,
       @Nullable final Boolean[] array2) {
@@ -170,23 +153,19 @@ public final class Comparison {
   }
 
   /**
-   * Compares two {@link Boolean} arrays lexically.
+   * 按字典序比较两个 {@link Boolean} 数组。
    *
-   * <p>We assume that {@link Boolean#TRUE} &gt; {@link Boolean#FALSE} &gt;
-   * {@code
-   * null} for {@link Boolean} objects.
+   * <p>我们假设对于 {@link Boolean} 对象，{@link Boolean#TRUE} &gt; {@link Boolean#FALSE} &gt; {@code null}。
    *
    * @param array1
-   *     the first {@link Boolean} array.
+   *     第一个 {@link Boolean} 数组。
    * @param n1
-   *     the length of the first {@link Boolean} array.
+   *     第一个 {@link Boolean} 数组的长度。
    * @param array2
-   *     the second {@link Boolean} array.
+   *     第二个 {@link Boolean} 数组。
    * @param n2
-   *     the length of the second {@link Boolean} array.
-   * @return An integer less than, equal to or greater than 0, if the first
-   *     array compares lexicographically less than, equal to, or greater than
-   *     the second array.
+   *     第二个 {@link Boolean} 数组的长度。
+   * @return 如果第一个数组在字典序上小于、等于或大于第二个数组，则分别返回小于、等于或大于 0 的整数。
    */
   public static int compare(final Boolean[] array1, final int n1,
       final Boolean[] array2, final int n2) {
@@ -201,34 +180,30 @@ public final class Comparison {
   }
 
   /**
-   * Compares two {@code char} value lexically.
+   * 比较两个 {@code char} 值的大小顺序。
    *
-   * <p>The function compares two {@code char} value by their numeric values.
+   * <p>该函数比较两个 {@code char} 值的大小顺序。
    *
    * @param value1
-   *     the first {@code char} value.
+   *     第一个 {@code char} 值。
    * @param value2
-   *     the second {@code char} value.
-   * @return An integer less than, equal to or greater than 0, if the first
-   *     value compares lexicographically less than, equal to, or greater than
-   *     the second value.
+   *     第二个 {@code char} 值。
+   * @return 如果第一个值在字典序上小于、等于或大于第二个值，则分别返回小于、等于或大于 0 的整数。
    */
   public static int compare(final char value1, final char value2) {
     return Integer.compare(value1, value2);
   }
 
   /**
-   * Compares two {@code char} arrays lexically.
+   * 按字典序比较两个 {@code char} 数组。
    *
-   * <p>The function compares two {@code char} value by their numeric values.
+   * <p>该函数比较两个 {@code char} 值的大小顺序。
    *
    * @param array1
-   *     the first {@code char} array, which could be null.
+   *     第一个 {@code char} 数组，可以为 null。
    * @param array2
-   *     the second {@code char} array, which could be null.
-   * @return An integer less than, equal to or greater than 0, if the first
-   *     array compares lexicographically less than, equal to, or greater than
-   *     the second array.
+   *     第二个 {@code char} 数组，可以为 null。
+   * @return 如果第一个数组在字典序上小于、等于或大于第二个数组，则分别返回小于、等于或大于 0 的整数。
    */
   public static int compare(@Nullable final char[] array1,
       @Nullable final char[] array2) {
@@ -242,21 +217,19 @@ public final class Comparison {
   }
 
   /**
-   * Compares two {@code char} arrays lexically.
+   * 按字典序比较两个 {@code char} 数组。
    *
-   * <p>The function compares two {@code char} value by their numeric values.
+   * <p>该函数比较两个 {@code char} 值的大小顺序。
    *
    * @param array1
-   *     the first {@code char} array.
+   *     第一个 {@code char} 数组。
    * @param n1
-   *     the length of the first {@code char} array.
+   *     第一个 {@code char} 数组的长度。
    * @param array2
-   *     the second {@code char} array.
+   *     第二个 {@code char} 数组。
    * @param n2
-   *     the length of the second {@code char} array.
-   * @return An integer less than, equal to or greater than 0, if the first
-   *     array compares lexicographically less than, equal to, or greater than
-   *     the second array.
+   *     第二个 {@code char} 数组的长度。
+   * @return 如果第一个数组在字典序上小于、等于或大于第二个数组，则分别返回小于、等于或大于 0 的整数。
    */
   public static int compare(final char[] array1, final int n1,
       final char[] array2, final int n2) {
@@ -272,18 +245,15 @@ public final class Comparison {
   }
 
   /**
-   * Compares two {@link Character} objects for order.
+   * 比较两个 {@link Character} 对象的大小顺序。
    *
-   * <p>We assume that {@code null} is the minimum value for
-   * {@link Character} objects.
+   * <p>我们假设对于 {@code null} 是 {@link Character} 对象的最小值。
    *
    * @param value1
-   *     the first {@link Character} object, which could be null.
+   *     第一个 {@link Character} 对象，可以为 null。
    * @param value2
-   *     the second {@link Character} object, which could be null.
-   * @return An integer less than, equal to or greater than 0, if the first
-   *     value compares lexicographically less than, equal to, or greater than
-   *     the second value.
+   *     第二个 {@link Character} 对象，可以为 null。
+   * @return 如果第一个值在字典序上小于、等于或大于第二个值，则分别返回小于、等于或大于 0 的整数。
    */
   public static int compare(@Nullable final Character value1,
       @Nullable final Character value2) {
@@ -299,18 +269,15 @@ public final class Comparison {
   }
 
   /**
-   * Compares two {@link Character} arrays lexically.
+   * 按字典序比较两个 {@link Character} 数组。
    *
-   * <p>We assume that {@code null} is the minimum value for
-   * {@link Character} objects.
+   * <p>我们假设对于 {@code null} 是 {@link Character} 对象的最小值。
    *
    * @param array1
-   *     the first {@link Character} array, which could be null.
+   *     第一个 {@link Character} 数组，可以为 null。
    * @param array2
-   *     the second {@link Character} array, which could be null.
-   * @return An integer less than, equal to or greater than 0, if the first
-   *     array compares lexicographically less than, equal to, or greater than
-   *     the second array.
+   *     第二个 {@link Character} 数组，可以为 null。
+   * @return 如果第一个数组在字典序上小于、等于或大于第二个数组，则分别返回小于、等于或大于 0 的整数。
    */
   public static int compare(@Nullable final Character[] array1,
       @Nullable final Character[] array2) {
@@ -324,22 +291,19 @@ public final class Comparison {
   }
 
   /**
-   * Compares two {@link Character} arrays lexically.
+   * 按字典序比较两个 {@link Character} 数组。
    *
-   * <p>We assume that {@code null} is the minimum value for
-   * {@link Character} objects.
+   * <p>我们假设对于 {@code null} 是 {@link Character} 对象的最小值。
    *
    * @param array1
-   *     the first {@link Character} array.
+   *     第一个 {@link Character} 数组。
    * @param n1
-   *     the length of the first {@link Character} array.
+   *     第一个 {@link Character} 数组的长度。
    * @param array2
-   *     the second {@link Character} array.
+   *     第二个 {@link Character} 数组。
    * @param n2
-   *     the length of the second {@link Character} array.
-   * @return An integer less than, equal to or greater than 0, if the first
-   *     array compares lexicographically less than, equal to, or greater than
-   *     the second array.
+   *     第二个 {@link Character} 数组的长度。
+   * @return 如果第一个数组在字典序上小于、等于或大于第二个数组，则分别返回小于、等于或大于 0 的整数。
    */
   public static int compare(final Character[] array1, final int n1,
       final Character[] array2, final int n2) {
@@ -354,30 +318,26 @@ public final class Comparison {
   }
 
   /**
-   * Compares two {@code byte} value lexically.
+   * 比较两个 {@code byte} 值的大小顺序。
    *
    * @param value1
-   *     the first {@code byte} value.
+   *     第一个 {@code byte} 值。
    * @param value2
-   *     the second {@code byte} value.
-   * @return An integer less than, equal to or greater than 0, if the first
-   *     value compares lexicographically less than, equal to, or greater than
-   *     the second value.
+   *     第二个 {@code byte} 值。
+   * @return 如果第一个值在字典序上小于、等于或大于第二个值，则分别返回小于、等于或大于 0 的整数。
    */
   public static int compare(final byte value1, final byte value2) {
     return Integer.compare(value1, value2);
   }
 
   /**
-   * Compares two {@code byte} arrays lexically.
+   * 按字典序比较两个 {@code byte} 数组。
    *
    * @param array1
-   *     the first {@code byte} array, which could be null.
+   *     第一个 {@code byte} 数组，可以为 null。
    * @param array2
-   *     the second {@code byte} array, which could be null.
-   * @return An integer less than, equal to or greater than 0, if the first
-   *     array compares lexicographically less than, equal to, or greater than
-   *     the second array.
+   *     第二个 {@code byte} 数组，可以为 null。
+   * @return 如果第一个数组在字典序上小于、等于或大于第二个数组，则分别返回小于、等于或大于 0 的整数。
    */
   public static int compare(@Nullable final byte[] array1,
       @Nullable final byte[] array2) {

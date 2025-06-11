@@ -24,23 +24,21 @@ import ltd.qubit.commons.error.ExceptionUtils;
 import static ltd.qubit.commons.lang.ArrayUtils.EMPTY_OBJECT_ARRAY;
 
 /**
- * Utility for detecting and accessing JBoss VFS in the classpath.
- * <p>
- * As of Spring 4.0, this class supports VFS 3.x on JBoss AS 6+
- * (package {@code org.jboss.vfs}) and is in particular compatible with JBoss AS
- * 7 and WildFly 8+.
- * <p>
- * Thanks go to Marius Bogoevici for the initial implementation.
- * <p>
- * <b>Note:</b> This is an internal class and should not be used outside the
- * framework.
- * <p>
- * This class is a copy of {@code org.springframework.core.io.VfsUtils}
- * with slight modifications. It is used to avoid the dependency of Spring Framework.
+ * 用于在类路径中检测和访问 JBoss VFS 的实用工具。
+ *
+ * <p>从 Spring 4.0 开始，这个类支持 JBoss AS 6+ 上的 VFS 3.x（包名为
+ * {@code org.jboss.vfs}），并且特别与 JBoss AS 7 和 WildFly 8+ 兼容。
+ *
+ * <p>感谢 Marius Bogoevici 的初步实现。
+ *
+ * <p><b>注意：</b>这是一个内部类，不应在框架之外使用。
+ *
+ * <p>这个类是 {@code org.springframework.core.io.VfsUtils} 的一个副本，
+ * 经过了轻微的修改。它用于避免对 Spring Framework 的依赖。
  *
  * @author Costin Leau
  * @author Juergen Hoeller
- * @author Haixing Hu
+ * @author 胡海星
  */
 public abstract class VfsUtils {
 
@@ -96,6 +94,19 @@ public abstract class VfsUtils {
     }
   }
 
+  /**
+   * 调用指定的VFS方法。
+   *
+   * @param method
+   *     要调用的方法。
+   * @param target
+   *     调用方法的对象。
+   * @param args
+   *     方法的参数。
+   * @return 调用方法后的返回值。
+   * @throws IOException
+   *     如果发生I/O错误。
+   */
   public static Object invokeVfsMethod(final Method method,
       @Nullable final Object target, final Object... args) throws IOException {
     try {
@@ -113,6 +124,14 @@ public abstract class VfsUtils {
     throw new IllegalStateException("Invalid code path reached");
   }
 
+  /**
+   * 检查指定的VFS资源是否存在。
+   *
+   * @param vfsResource
+   *     指定的VFS资源。
+   * @return
+   *     如果指定的VFS资源存在，则返回{@code true}；否则返回{@code false}。
+   */
   public static boolean exists(final Object vfsResource) {
     try {
       return (Boolean) invokeVfsMethod(VIRTUAL_FILE_METHOD_EXISTS, vfsResource);
@@ -121,6 +140,14 @@ public abstract class VfsUtils {
     }
   }
 
+  /**
+   * 检查指定的VFS资源是否可读。
+   *
+   * @param vfsResource
+   *     指定的VFS资源。
+   * @return
+   *     如果指定的VFS资源可读，则返回{@code true}；否则返回{@code false}。
+   */
   public static boolean isReadable(final Object vfsResource) {
     try {
       return ((Long) invokeVfsMethod(VIRTUAL_FILE_METHOD_GET_SIZE, vfsResource)) > 0;
@@ -129,26 +156,84 @@ public abstract class VfsUtils {
     }
   }
 
+  /**
+   * 获取指定的VFS资源的大小。
+   *
+   * @param vfsResource
+   *     指定的VFS资源。
+   * @return
+   *     指定的VFS资源的大小。
+   * @throws IOException
+   *     如果发生I/O错误。
+   */
   public static long getSize(final Object vfsResource) throws IOException {
     return (Long) invokeVfsMethod(VIRTUAL_FILE_METHOD_GET_SIZE, vfsResource);
   }
 
+  /**
+   * 获取指定的VFS资源的最后修改时间。
+   *
+   * @param vfsResource
+   *     指定的VFS资源。
+   * @return
+   *     指定的VFS资源的最后修改时间。
+   * @throws IOException
+   *     如果发生I/O错误。
+   */
   public static long getLastModified(final Object vfsResource) throws IOException {
     return (Long) invokeVfsMethod(VIRTUAL_FILE_METHOD_GET_LAST_MODIFIED, vfsResource);
   }
 
+  /**
+   * 获取指定的VFS资源的输入流。
+   *
+   * @param vfsResource
+   *     指定的VFS资源。
+   * @return
+   *     指定的VFS资源的输入流。
+   * @throws IOException
+   *     如果发生I/O错误。
+   */
   public static InputStream getInputStream(final Object vfsResource) throws IOException {
     return (InputStream) invokeVfsMethod(VIRTUAL_FILE_METHOD_GET_INPUT_STREAM, vfsResource);
   }
 
+  /**
+   * 获取指定的VFS资源的URL。
+   *
+   * @param vfsResource
+   *     指定的VFS资源。
+   * @return
+   *     指定的VFS资源的URL。
+   * @throws IOException
+   *     如果发生I/O错误。
+   */
   public static URL getURL(final Object vfsResource) throws IOException {
     return (URL) invokeVfsMethod(VIRTUAL_FILE_METHOD_TO_URL, vfsResource);
   }
 
+  /**
+   * 获取指定的VFS资源的URI。
+   *
+   * @param vfsResource
+   *     指定的VFS资源。
+   * @return
+   *     指定的VFS资源的URI。
+   * @throws IOException
+   *     如果发生I/O错误。
+   */
   public static URI getURI(final Object vfsResource) throws IOException {
     return (URI) invokeVfsMethod(VIRTUAL_FILE_METHOD_TO_URI, vfsResource);
   }
 
+  /**
+   * 获取指定的VFS资源的名称。
+   *
+   * @param vfsResource
+   *     指定的VFS资源。
+   * @return
+   *     指定的VFS资源的名称。
+   */
   public static String getName(final Object vfsResource) {
     try {
       return (String) invokeVfsMethod(VIRTUAL_FILE_METHOD_GET_NAME, vfsResource);
@@ -157,24 +242,76 @@ public abstract class VfsUtils {
     }
   }
 
+  /**
+   * 获取相对于指定URL的VFS资源。
+   *
+   * @param url
+   *     指定的URL。
+   * @return
+   *     相对于指定URL的VFS资源。
+   * @throws IOException
+   *     如果发生I/O错误。
+   */
   public static Object getRelative(final URL url) throws IOException {
     return invokeVfsMethod(VFS_METHOD_GET_ROOT_URL, null, url);
   }
 
+  /**
+   * 获取指定的VFS资源的子资源。
+   *
+   * @param vfsResource
+   *     指定的VFS资源。
+   * @param path
+   *     子资源的路径。
+   * @return
+   *     指定的VFS资源的子资源。
+   * @throws IOException
+   *     如果发生I/O错误。
+   */
   public static Object getChild(final Object vfsResource, final String path) throws IOException {
     return invokeVfsMethod(VIRTUAL_FILE_METHOD_GET_CHILD, vfsResource, path);
   }
 
+  /**
+   * 获取指定的VFS资源对应的物理文件。
+   *
+   * @param vfsResource
+   *     指定的VFS资源。
+   * @return
+   *     指定的VFS资源对应的物理文件。
+   * @throws IOException
+   *     如果发生I/O错误。
+   */
   public static File getFile(final Object vfsResource) throws IOException {
     return (File) invokeVfsMethod(VIRTUAL_FILE_METHOD_GET_PHYSICAL_FILE, vfsResource);
   }
 
+  /**
+   * 获取指定URI的根VFS资源。
+   *
+   * @param url
+   *     指定的URI。
+   * @return
+   *     指定URI的根VFS资源。
+   * @throws IOException
+   *     如果发生I/O错误。
+   */
   public static Object getRoot(final URI url) throws IOException {
     return invokeVfsMethod(VFS_METHOD_GET_ROOT_URI, null, url);
   }
 
   // protected methods used by the support sub-package
 
+  /**
+   * 获取指定URL的根VFS资源。
+   *
+   * @param url
+   *     指定的URL。
+   * @return
+   *     指定URL的根VFS资源。
+   * @throws IOException
+   *     如果发生I/O错误。
+   */
   public static Object getRoot(final URL url) throws IOException {
     return invokeVfsMethod(VFS_METHOD_GET_ROOT_URL, null, url);
   }

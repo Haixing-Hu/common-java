@@ -18,9 +18,9 @@ import org.slf4j.LoggerFactory;
 import ltd.qubit.commons.error.InitializationError;
 
 /**
- * Provides utilities about the logging operations.
+ * 提供有关日志操作的实用工具。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class LogUtils {
 
@@ -45,28 +45,62 @@ public final class LogUtils {
     }
   }
 
+  /**
+   * 获取一个 TRACE 级别的日志输出流。
+   *
+   * @param logger 要使用的日志器
+   * @return 一个 PrintStream，写入时会以 TRACE 级别记录日志行
+   */
   public static PrintStream getTraceStream(final Logger logger) {
     return getLogStream(logger, TRACE);
   }
 
+  /**
+   * 获取一个 DEBUG 级别的日志输出流。
+   *
+   * @param logger 要使用的日志器
+   * @return 一个 PrintStream，写入时会以 DEBUG 级别记录日志行
+   */
   public static PrintStream getDebugStream(final Logger logger) {
     return getLogStream(logger, DEBUG);
   }
 
+  /**
+   * 获取一个 INFO 级别的日志输出流。
+   *
+   * @param logger 要使用的日志器
+   * @return 一个 PrintStream，写入时会以 INFO 级别记录日志行
+   */
   public static PrintStream getInfoStream(final Logger logger) {
     return getLogStream(logger, INFO);
   }
 
+  /**
+   * 获取一个 WARN 级别的日志输出流。
+   *
+   * @param logger 要使用的日志器
+   * @return 一个 PrintStream，写入时会以 WARN 级别记录日志行
+   */
   public static PrintStream getWarnStream(final Logger logger) {
     return getLogStream(logger, WARN);
   }
 
+  /**
+   * 获取一个 ERROR 级别的日志输出流。
+   *
+   * @param logger 要使用的日志器
+   * @return 一个 PrintStream，写入时会以 ERROR 级别记录日志行
+   */
   public static PrintStream getErrorStream(final Logger logger) {
     return getLogStream(logger, ERROR);
   }
 
   /**
-   * Returns a stream that, when written to, adds log lines.
+   * 返回一个流，当写入时会添加日志行。
+   *
+   * @param logger 要使用的日志器
+   * @param method 要调用的日志方法
+   * @return 一个 PrintStream，写入时会记录日志
    */
   private static PrintStream getLogStream(final Logger logger, final Method method) {
     return new PrintStream(new ByteArrayOutputStream() {

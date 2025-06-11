@@ -24,29 +24,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Convenience base class for {@link Resource} implementations, pre-implementing
- * typical behavior.
+ * {@link Resource} 实现的便利基类，预实现典型行为。
  * <p>
- * The "exists" method will check whether a File or InputStream can
- * be opened; "isOpen" will always return false; "getURL" and "getFile" throw an
- * exception; and "toString" will return the description.
+ * "exists" 方法将检查是否可以打开 File 或 InputStream；
+ * "isOpen" 将始终返回 false；
+ * "getURL" 和 "getFile" 抛出异常；
+ * "toString" 将返回描述。
  * <p>
- * This class is a copy of {@code org.springframework.core.io.AbstractResource}
- * with slight modifications. It is used to avoid the dependency of Spring Framework.
+ * 此类是 {@code org.springframework.core.io.AbstractResource} 的副本，
+ * 略有修改。用于避免对 Spring Framework 的依赖。
  *
  * @author Juergen Hoeller
  * @author Sam Brannen
- * @author Haixing Hu
+ * @author 胡海星
  */
 public abstract class AbstractResource implements Resource {
 
   protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   /**
-   * This implementation checks whether a File can be opened, falling back to
-   * whether an InputStream can be opened.
+   * 此实现检查是否可以打开 File，回退到检查是否可以打开 InputStream。
    * <p>
-   * This will cover both directories and content resources.
+   * 这将涵盖目录和内容资源。
    */
   @Override
   public boolean exists() {
@@ -71,8 +70,7 @@ public abstract class AbstractResource implements Resource {
   }
 
   /**
-   * This implementation always returns {@code true} for a resource that
-   * {@link #exists() exists} (revised as of 5.1).
+   * 此实现对于 {@link #exists() 存在的} 资源始终返回 {@code true}（自 5.1 版本修订）。
    */
   @Override
   public boolean isReadable() {
@@ -80,7 +78,7 @@ public abstract class AbstractResource implements Resource {
   }
 
   /**
-   * This implementation always returns {@code false}.
+   * 此实现始终返回 {@code false}。
    */
   @Override
   public boolean isOpen() {
@@ -88,7 +86,7 @@ public abstract class AbstractResource implements Resource {
   }
 
   /**
-   * This implementation always returns {@code false}.
+   * 此实现始终返回 {@code false}。
    */
   @Override
   public boolean isFile() {
@@ -96,8 +94,7 @@ public abstract class AbstractResource implements Resource {
   }
 
   /**
-   * This implementation throws a FileNotFoundException, assuming that the
-   * resource cannot be resolved to a URL.
+   * 此实现抛出 FileNotFoundException，假设资源无法解析为 URL。
    */
   @Override
   public URL getURL() throws IOException {
@@ -106,8 +103,7 @@ public abstract class AbstractResource implements Resource {
   }
 
   /**
-   * This implementation builds a URI based on the URL returned by
-   * {@link #getURL()}.
+   * 此实现基于 {@link #getURL()} 返回的 URL 构建 URI。
    */
   @Override
   public URI getURI() throws IOException {
@@ -120,8 +116,7 @@ public abstract class AbstractResource implements Resource {
   }
 
   /**
-   * This implementation throws a FileNotFoundException, assuming that the
-   * resource cannot be resolved to an absolute file path.
+   * 此实现抛出 FileNotFoundException，假设资源无法解析为绝对文件路径。
    */
   @Override
   public File getFile() throws IOException {
@@ -130,12 +125,10 @@ public abstract class AbstractResource implements Resource {
   }
 
   /**
-   * This implementation returns {@link Channels#newChannel(InputStream)} with
-   * the result of {@link #getInputStream()}.
+   * 此实现使用 {@link #getInputStream()} 的结果返回 {@link Channels#newChannel(InputStream)}。
    * <p>
-   * This is the same as in {@link org.springframework.core.io.Resource}'s
-   * corresponding default method but mirrored here for efficient JVM-level
-   * dispatching in a class hierarchy.
+   * 这与 {@link org.springframework.core.io.Resource} 中相应的默认方法相同，
+   * 但在此处镜像以实现类层次结构中高效的 JVM 级别调度。
    */
   @Override
   public ReadableByteChannel readableChannel() throws IOException {
@@ -143,12 +136,11 @@ public abstract class AbstractResource implements Resource {
   }
 
   /**
-   * This method reads the entire InputStream to determine the content length.
+   * 此方法读取整个 InputStream 以确定内容长度。
    * <p>
-   * For a custom subclass of {@code InputStreamResource}, we strongly recommend
-   * overriding this method with a more optimal implementation, e.g. checking
-   * File length, or possibly simply returning -1 if the stream can only be read
-   * once.
+   * 对于 {@code InputStreamResource} 的自定义子类，我们强烈建议
+   * 使用更优化的实现重写此方法，例如检查文件长度，
+   * 或者如果流只能读取一次，则可能简单地返回 -1。
    *
    * @see #getInputStream()
    */
@@ -174,8 +166,7 @@ public abstract class AbstractResource implements Resource {
   }
 
   /**
-   * This implementation checks the timestamp of the underlying File, if
-   * available.
+   * 此实现检查底层文件的时间戳（如果可用）。
    *
    * @see #getFileForLastModifiedCheck()
    */
@@ -193,24 +184,22 @@ public abstract class AbstractResource implements Resource {
   }
 
   /**
-   * Determine the File to use for timestamp checking.
+   * 确定用于时间戳检查的文件。
    * <p>
-   * The default implementation delegates to {@link #getFile()}.
+   * 默认实现委托给 {@link #getFile()}。
    *
-   * @return the File to use for timestamp checking (never {@code null})
+   * @return 用于时间戳检查的文件（永远不为 {@code null}）
    * @throws FileNotFoundException
-   *     if the resource cannot be resolved as an absolute file path, i.e. is
-   *     not available in a file system
+   *     如果资源无法解析为绝对文件路径，即在文件系统中不可用
    * @throws IOException
-   *     in case of general resolution/reading failures
+   *     如果发生一般解析/读取失败
    */
   protected File getFileForLastModifiedCheck() throws IOException {
     return getFile();
   }
 
   /**
-   * This implementation throws a FileNotFoundException, assuming that relative
-   * resources cannot be created for this resource.
+   * 此实现抛出 FileNotFoundException，假设无法为此资源创建相对资源。
    */
   @Override
   public Resource createRelative(final String relativePath) throws IOException {
@@ -219,8 +208,7 @@ public abstract class AbstractResource implements Resource {
   }
 
   /**
-   * This implementation always returns {@code null}, assuming that this
-   * resource type does not have a filename.
+   * 此实现始终返回 {@code null}，假设此资源类型没有文件名。
    */
   @Override
   @Nullable
@@ -229,7 +217,7 @@ public abstract class AbstractResource implements Resource {
   }
 
   /**
-   * This implementation compares description strings.
+   * 此实现比较描述字符串。
    *
    * @see #getDescription()
    */
@@ -246,7 +234,7 @@ public abstract class AbstractResource implements Resource {
   }
 
   /**
-   * This implementation returns the description's hash code.
+   * 此实现返回描述的哈希码。
    *
    * @see #getDescription()
    */
@@ -256,7 +244,7 @@ public abstract class AbstractResource implements Resource {
   }
 
   /**
-   * This implementation returns the description of this resource.
+   * 此实现返回此资源的描述。
    *
    * @see #getDescription()
    */

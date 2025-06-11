@@ -9,20 +9,19 @@
 package ltd.qubit.commons.lang;
 
 /**
- * This interface impose a same type assignment operations of a class T.
+ * 此接口规定了类T的同类型赋值操作。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface Assignable<T> extends CloneableEx<T> {
 
   /**
-   * Assigns another object to this object.
+   * 将另一个对象赋值给此对象。
    *
-   * <p>The function will clone all fields of the other object into the fields
-   * of this object.
+   * <p>此函数会将另一个对象的所有字段克隆到此对象的字段中。
    *
    * @param other
-   *     the other object, which is of the same class as this object.
+   *     另一个对象，与此对象属于同一个类。
    */
   void assign(T other);
 }

@@ -20,22 +20,19 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * {@link Resource} implementation for {@link Module} resolution,
- * performing {@link #getInputStream()} access via {@link Module#getResourceAsStream}.
+ * 用于 {@link Module} 解析的 {@link Resource} 实现，通过
+ * {@link Module#getResourceAsStream} 执行 {@link #getInputStream()} 访问。
  * <p>
- * Alternatively, consider accessing resources in a module path layout via
- * {@link ClassPathResource} for exported resources, or specifically relative to
- * a {@code Class} via {@link ClassPathResource#ClassPathResource(String, Class)}
- * for local resolution within the containing module of that specific class.
- * In common scenarios, module resources will simply be transparently visible as
- * classpath resources and therefore do not need any special treatment at all.
+ * 或者，考虑通过 {@link ClassPathResource} 访问模块路径布局中的资源以获取导出的
+ * 资源，或特别是相对于 {@code Class} 的资源通过
+ * {@link ClassPathResource#ClassPathResource(String, Class)} 在特定类的包含模块
+ * 内进行本地解析。在常见场景中，模块资源将简单地作为类路径资源透明可见，因此根本
+ * 不需要任何特殊处理。
  * <p>
- * This class is a copy of {@code org.springframework.core.io.ModuleResource}
- * with slight modifications. It is used to avoid the dependency of Spring Framework.
+ * 此类是 {@code org.springframework.core.io.ModuleResource} 的副本，经过少量修改。
+ * 它用于避免对 Spring Framework 的依赖。
  *
- * @author Juergen Hoeller
- * @author Sam Brannen
- * @author Haixing Hu
+ * @author 胡海星
  * @see Module#getResourceAsStream
  * @see ClassPathResource
  */
@@ -46,13 +43,12 @@ public class ModuleResource extends AbstractResource {
   private final String path;
 
   /**
-   * Create a new {@code ModuleResource} for the given {@link Module} and the
-   * given resource path.
+   * 为给定的 {@link Module} 和给定的资源路径创建一个新的 {@code ModuleResource}。
    *
    * @param module
-   *     the runtime module to search within
+   *     要在其中搜索的运行时模块。
    * @param path
-   *     the resource path within the module
+   *     模块内的资源路径。
    */
   public ModuleResource(final Module module, final String path) {
     if (module == null) {
@@ -66,19 +62,26 @@ public class ModuleResource extends AbstractResource {
   }
 
   /**
-   * Return the {@link Module} for this resource.
+   * 返回此资源的 {@link Module}。
+   *
+   * @return 此资源的 {@link Module}。
    */
   public final Module getModule() {
     return this.module;
   }
 
   /**
-   * Return the path for this resource.
+   * 返回此资源的路径。
+   *
+   * @return 此资源的路径。
    */
   public final String getPath() {
     return this.path;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Nonnull
   @Override
   public InputStream getInputStream() throws IOException {
@@ -90,12 +93,18 @@ public class ModuleResource extends AbstractResource {
     return is;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Resource createRelative(final String relativePath) {
     final String pathToUse = ResourceUtils.applyRelativePath(path, relativePath);
     return new ModuleResource(module, pathToUse);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   @Nullable
   public String getFilename() {

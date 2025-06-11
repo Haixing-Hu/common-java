@@ -27,42 +27,37 @@ import ltd.qubit.commons.io.error.SerializationException;
 import ltd.qubit.commons.lang.Argument;
 
 /**
- * Assists with the serialization process and performs additional functionality
- * based on serialization.
+ * 此类用于辅助序列化过程，并执行基于序列化的附加功能。
  *
  * <ul>
- * <li>Deep clone using serialization
- * <li>Serialize managing finally and IOException
- * <li>Deserialize managing finally and IOException
+ * <li>使用序列化深度克隆对象</li>
+ * <li>管理序列化过程中的 finally 和 IOException</li>
+ * <li>管理反序列化过程中的 finally 和 IOException</li>
  * </ul>
  *
- * <p>This class throws exceptions for invalid {@code null} inputs. Each
- * method documents its behavior in more detail.
+ * <p>此类的函数会对无效的{@code null}输入抛出异常。每个方法都更详细地记录了其行为。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class Serializer {
 
   private Serializer() {}
 
   /**
-   * Serializes an {@code Object} to the specified stream.
+   * 将一个{@code Object}序列化到指定的输出流。
    *
-   * <p>The stream will be closed once the object is written. This avoids the
-   * need for a finally clause, and maybe also exception handling, in the
-   * application code.
+   * <p>一旦对象被写入，流将被关闭。这避免了在应用程序代码中需要 finally 子句，也可能避免了异常处理。
    *
-   * <p>The stream passed in is not buffered internally within this method. This
-   * is the responsibility of your application if desired.
+   * <p>传入的流在此方法内部没有被缓冲。如果需要，这是您的应用程序的责任。
    *
    * @param object
-   *     the object to serialize to bytes, may be null
+   *     要序列化为字节的对象，可以为 null。
    * @param output
-   *     the stream to write to, must not be null.
+   *     要写入的流，不能为 null。
    * @throws NullPointerException
-   *     if {@code object} or {@code output} is {@code null}
+   *     如果 {@code object} 或 {@code output} 是 {@code null}。
    * @throws SerializationException
-   *     if the serialization failed.
+   *     如果序列化失败。
    */
   public static void serialize(final Serializable object,
       final OutputStream output) throws SerializationException {
@@ -81,17 +76,16 @@ public final class Serializer {
   }
 
   /**
-   * Serializes an {@code Object} to a file for storage/serialization.
+   * 将一个{@code Object}序列化到一个文件用于存储。
    *
    * @param object
-   *     the object to serialize to bytes
+   *     要序列化为字节的对象。
    * @param file
-   *     the abstract pathname of the file to store the serialization of the
-   *     object.
+   *     存储对象序列化内容的文件的抽象路径名。
    * @throws NullPointerException
-   *     if {@code object} or {@code file} is {@code null}
+   *     如果 {@code object} 或 {@code file} 是 {@code null}。
    * @throws SerializationException
-   *     if the serialization failed.
+   *     如果序列化失败。
    */
   public static void serialize(final Serializable object, final File file)
       throws SerializationException {
@@ -116,15 +110,15 @@ public final class Serializer {
   }
 
   /**
-   * Serializes an {@code Object} to a byte array for storage/serialization.
+   * 将一个{@code Object}序列化到一个字节数组用于存储。
    *
    * @param object
-   *     the object to serialize to bytes
-   * @return a byte array for the converted serializable object.
+   *     要序列化为字节的对象。
+   * @return 转换后的可序列化对象的字节数组。
    * @throws NullPointerException
-   *     if {@code object} is {@code null}.
+   *     如果 {@code object} 是 {@code null}。
    * @throws SerializationException
-   *     if the serialization failed.
+   *     如果序列化失败。
    */
   public static byte[] serialize(final Serializable object)
       throws SerializationException {
@@ -144,22 +138,19 @@ public final class Serializer {
   }
 
   /**
-   * Deserializes an {@code Object} from the specified stream.
+   * 从指定的输入流反序列化一个{@code Object}。
    *
-   * <p>The stream will be closed once the object is written. This avoids the
-   * need for a finally clause, and maybe also exception handling, in the
-   * application code.
+   * <p>一旦对象被读取，流将被关闭。这避免了在应用程序代码中需要 finally 子句，也可能避免了异常处理。
    *
-   * <p>The stream passed in is not buffered internally within this method. This
-   * is the responsibility of your application if desired.
+   * <p>传入的流在此方法内部没有被缓冲。如果需要，这是您的应用程序的责任。
    *
    * @param input
-   *     the serialized object input stream, must not be null
-   * @return the deserialized object.
+   *     序列化对象的输入流，不能为 null。
+   * @return 反序列化后的对象。
    * @throws NullPointerException
-   *     if {@code inputStream} is {@code null}
+   *     如果 {@code inputStream} 是 {@code null}。
    * @throws SerializationException
-   *     if the deserialization failed.
+   *     如果反序列化失败。
    */
   public static Object deserialize(final InputStream input)
       throws SerializationException {
@@ -178,15 +169,15 @@ public final class Serializer {
   }
 
   /**
-   * Deserializes a single {@code Object} from a file.
+   * 从文件中反序列化单个{@code Object}。
    *
    * @param file
-   *     the abstract pathname of a file.
-   * @return the deserialized object
+   *     文件的抽象路径名。
+   * @return 反序列化后的对象。
    * @throws NullPointerException
-   *     if {@code file} is {@code null}.
+   *     如果 {@code file} 是 {@code null}。
    * @throws SerializationException
-   *     if the deserialization failed.
+   *     如果反序列化失败。
    */
   public static Object deserialize(final File file)
       throws SerializationException {
@@ -209,15 +200,15 @@ public final class Serializer {
   }
 
   /**
-   * Deserializes a single {@code Object} from a URL.
+   * 从URL反序列化单个{@code Object}。
    *
    * @param url
-   *     a URL.
-   * @return the deserialized object
+   *     一个 URL。
+   * @return 反序列化后的对象。
    * @throws NullPointerException
-   *     if {@code url} is {@code null}.
+   *     如果 {@code url} 是 {@code null}。
    * @throws SerializationException
-   *     if the deserialization failed.
+   *     如果反序列化失败。
    */
   public static Object deserialize(final URL url)
       throws SerializationException {
@@ -240,15 +231,15 @@ public final class Serializer {
   }
 
   /**
-   * Deserializes a single {@code Object} from an array of bytes.
+   * 从字节数组反序列化单个{@code Object}。
    *
    * @param data
-   *     the serialized object, must not be null
-   * @return the deserialized object
+   *     序列化后的对象，不能为 null。
+   * @return 反序列化后的对象。
    * @throws NullPointerException
-   *     if {@code objectData} is {@code null} or empty.
+   *     如果 {@code data} 是 {@code null} 或为空。
    * @throws SerializationException
-   *     if the deserialization failed.
+   *     如果反序列化失败。
    */
   public static Object deserialize(final byte[] data)
       throws SerializationException {

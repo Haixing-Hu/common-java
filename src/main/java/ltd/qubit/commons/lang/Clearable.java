@@ -9,13 +9,15 @@
 package ltd.qubit.commons.lang;
 
 /**
- * This interface defines the contract that an object could be "cleared" to its
- * initial state or empty state.
+ * 该接口定义了对象可以被"清空"到初始状态或空状态的契约。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface Clearable {
 
+  /**
+   * 将对象清空到初始状态或空状态。
+   */
   void clear();
 
 }

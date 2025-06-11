@@ -9,10 +9,9 @@
 package ltd.qubit.commons.io.error;
 
 /**
- * Thrown to indicate that an error or exception is occurred during the roll
- * back operation.
+ * 抛出此错误以指示在回滚操作期间发生错误或异常。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class RollbackError extends Error {
 
@@ -21,18 +20,41 @@ public class RollbackError extends Error {
   private static final String MESSAGE = "An error occurrs during the roll "
       + "back operation. The data may be lost.";
 
+  /**
+   * 构造一个 {@link RollbackError}。
+   */
   public RollbackError() {
     super(MESSAGE);
   }
 
+  /**
+   * 构造一个 {@link RollbackError}。
+   *
+   * @param message
+   *     详细信息。
+   */
   public RollbackError(final String message) {
     super(message);
   }
 
+  /**
+   * 构造一个 {@link RollbackError}。
+   *
+   * @param cause
+   *     导致此错误的根本原因。
+   */
   public RollbackError(final Throwable cause) {
     super(MESSAGE, cause);
   }
 
+  /**
+   * 构造一个 {@link RollbackError}。
+   *
+   * @param message
+   *     详细信息。
+   * @param cause
+   *     导致此错误的根本原因。
+   */
   public RollbackError(final String message, final Throwable cause) {
     super(message, cause);
   }

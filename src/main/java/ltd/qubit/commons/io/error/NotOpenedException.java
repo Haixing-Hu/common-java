@@ -11,18 +11,27 @@ package ltd.qubit.commons.io.error;
 import java.io.IOException;
 
 /**
- * Thrown to indicate the file or device has note been opened.
+ * 抛出此异常表示文件或设备尚未打开。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class NotOpenedException extends IOException {
 
   private static final long serialVersionUID = - 7810592920579567878L;
 
+  /**
+   * 构造一个 {@link NotOpenedException}。
+   */
   public NotOpenedException() {
     super("The object has not been opened.");
   }
 
+  /**
+   * 构造一个 {@link NotOpenedException}。
+   *
+   * @param message
+   *     详细信息。
+   */
   public NotOpenedException(final String message) {
     super(message);
   }

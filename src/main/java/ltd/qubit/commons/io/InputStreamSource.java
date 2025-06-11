@@ -18,42 +18,37 @@ import ltd.qubit.commons.io.resource.InputStreamResource;
 import ltd.qubit.commons.io.resource.Resource;
 
 /**
- * Simple interface for objects that are sources for an {@link InputStream}.
+ * 作为 {@link InputStream} 源的对象的简单接口。
  * <p>
- * This is the base interface for Spring's more extensive {@link Resource}
- * interface.
+ * 这是 Spring 更广泛的 {@link Resource} 接口的基础接口。
  * <p>
- * For single-use streams, {@link InputStreamResource} can be used for any
- * given {@code InputStream}. Spring's {@link ByteArrayResource} or any
- * file-based {@code Resource} implementation can be used as a concrete
- * instance, allowing one to read the underlying content stream multiple times.
- * This makes this interface useful as an abstract content source for mail
- * attachments, for example.
+ * 对于一次性流，{@link InputStreamResource} 可以用于任何给定的 {@code InputStream}。
+ * Spring 的 {@link ByteArrayResource} 或任何基于文件的 {@code Resource} 实现都可以用作具体实例，
+ * 从而允许多次读取底层内容流。这使得此接口可作为邮件附件等的抽象内容源。
  * <p>
- * This class is a copy of {@code org.springframework.core.io.InputStreamSource}
- * with slight modifications. It is used to avoid the dependency of Spring Framework.
+ * 此类是 {@code org.springframework.core.io.InputStreamSource} 的副本，
+ * 经过了少量修改。它用于避免对 Spring 框架的依赖。
  *
  * @author Juergen Hoeller
- * @author Haixing Hu
+ * @author 胡海星
  * @see InputStream
  */
 public interface InputStreamSource {
 
   /**
-   * Return an {@link InputStream} for the content of an underlying resource.
+   * 返回底层资源内容的 {@link InputStream}。
    * <p>
-   * It is expected that each call creates a <i>fresh</i> stream.
+   * 期望每次调用都创建一个 <i>新的</i> 流。
    * <p>
-   * This requirement is particularly important when you consider an API such as
-   * JavaMail, which needs to be able to read the stream multiple times when
-   * creating mail attachments. For such a use case, it is <i>required</i> that
-   * each {@code getInputStream()} call returns a fresh stream.
+   * 当您考虑像 JavaMail 这样的 API 时，此要求尤其重要，
+   * 在创建邮件附件时，它需要能够多次读取流。对于这样的用例，<i>要求</i>
+   * 每次 {@code getInputStream()} 调用都返回一个新的流。
    *
-   * @return the input stream for the underlying resource (must not be {@code null})
+   * @return 底层资源的输入流（不得为 {@code null}）
    * @throws java.io.FileNotFoundException
-   *     if the underlying resource does not exist
+   *     如果底层资源不存在
    * @throws IOException
-   *     if the content stream could not be opened
+   *     如果无法打开内容流
    * @see Resource#isReadable()
    */
   @Nonnull

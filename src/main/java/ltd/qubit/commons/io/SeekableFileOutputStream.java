@@ -18,9 +18,9 @@ import ltd.qubit.commons.io.error.AlreadyClosedException;
 
 
 /**
- * A {@link SeekableOutputStream} which writes data into a file.
+ * 一个将数据写入文件的 {@link SeekableOutputStream}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @NotThreadSafe
 public class SeekableFileOutputStream extends SeekableOutputStream {

@@ -22,21 +22,27 @@ import static ltd.qubit.commons.io.InputUtils.readCharObject;
 import static ltd.qubit.commons.io.OutputUtils.writeCharObject;
 
 /**
- * The {@link BinarySerializer} for {@link Character} class.
+ * {@link Character} 类的 {@link BinarySerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class CharacterBinarySerializer implements BinarySerializer {
 
   public static final CharacterBinarySerializer INSTANCE = new CharacterBinarySerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Character deserialize(final InputStream in, final boolean allowNull)
       throws IOException {
     return readCharObject(in, allowNull);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final OutputStream out, @Nullable final Object obj)
       throws IOException {

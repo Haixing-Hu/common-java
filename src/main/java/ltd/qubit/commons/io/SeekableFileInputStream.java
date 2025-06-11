@@ -18,9 +18,9 @@ import ltd.qubit.commons.io.error.AlreadyClosedException;
 import ltd.qubit.commons.lang.SystemUtils;
 
 /**
- * A {@link SeekableInputStream} which reads data from a file.
+ * 一个从文件读取数据的 {@link SeekableInputStream}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @NotThreadSafe
 public final class SeekableFileInputStream extends SeekableInputStream {

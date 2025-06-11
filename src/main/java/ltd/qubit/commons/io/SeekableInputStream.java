@@ -11,10 +11,9 @@ package ltd.qubit.commons.io;
 import java.io.InputStream;
 
 /**
- * A {@link SeekableInputStream} object is an {@link InputStream} supporting the
- * operations of {@link Seekable} interface.
+ * {@link SeekableInputStream} 对象是一个支持 {@link Seekable} 接口操作的 {@link InputStream}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public abstract class SeekableInputStream extends InputStream
     implements Seekable {

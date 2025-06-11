@@ -37,37 +37,36 @@ import ltd.qubit.commons.datastructure.list.primitive.ShortCollection;
 import ltd.qubit.commons.datastructure.list.primitive.ShortIterator;
 
 /**
- * This class provides functions to test the equality between objects.
+ * 该类提供用于测试对象之间相等性的函数。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public final class Equality {
 
   /**
-   * Tests the equality of two {@code boolean} values.
+   * 测试两个 {@code boolean} 值的相等性。
    *
-   * <p>This function is presented to make the {@link Equality} class complete
-   * for implementing the {@link Object#equals(Object)} method.
+   * <p>提供此函数是为了使 {@link Equality} 类完整地实现 {@link Object#equals(Object)} 方法。
    *
    * @param value1
-   *     the first value.
+   *     第一个值。
    * @param value2
-   *     the second value.
-   * @return true if the two value are equal or both null; false otherwise.
+   *     第二个值。
+   * @return 如果两个值相等则返回 true；否则返回 false。
    */
   public static boolean equals(final boolean value1, final boolean value2) {
     return value1 == value2;
   }
 
   /**
-   * Tests the equality of two {@code boolean} arrays.
+   * 测试两个 {@code boolean} 数组的相等性。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final boolean[] array1,
       @Nullable final boolean[] array2) {
@@ -83,23 +82,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@code boolean} arrays.
+   * 测试两个 {@code boolean} 数组的段的相等性。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在迭代两个数组时索引越界。
    */
   public static boolean equals(final boolean[] array1, final int startIndex1,
       final boolean[] array2, final int startIndex2, final int length) {
@@ -114,13 +113,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Boolean} objects.
+   * 测试两个 {@link Boolean} 对象的相等性。
    *
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
-   * @return true if the two objects are equal or both null; false otherwise.
+   *     第二个对象，可以为 null。
+   * @return 如果两个对象相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Boolean value1,
       @Nullable final Boolean value2) {
@@ -134,13 +133,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Boolean} arrays.
+   * 测试两个 {@link Boolean} 数组的相等性。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Boolean[] array1,
       @Nullable final Boolean[] array2) {
@@ -156,23 +155,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@link Boolean} arrays.
+   * 测试两个 {@link Boolean} 数组的段的相等性。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在迭代两个数组时索引越界。
    */
   public static boolean equals(final Boolean[] array1, final int startIndex1,
       final Boolean[] array2, final int startIndex2, final int length) {
@@ -187,29 +186,28 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@code char} values.
+   * 测试两个 {@code char} 值的相等性。
    *
-   * <p>This function is presented to make the {@link Equality} class complete
-   * for implementing the {@link Object#equals(Object)} method.
+   * <p>提供此函数是为了使 {@link Equality} 类完整地实现 {@link Object#equals(Object)} 方法。
    *
    * @param value1
-   *     the first value.
+   *     第一个值。
    * @param value2
-   *     the second value.
-   * @return true if the two value are equal or both null; false otherwise.
+   *     第二个值。
+   * @return 如果两个值相等则返回 true；否则返回 false。
    */
   public static boolean equals(final char value1, final char value2) {
     return value1 == value2;
   }
 
   /**
-   * Tests the equality of two {@code char} arrays.
+   * 测试两个 {@code char} 数组的相等性。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final char[] array1,
       @Nullable final char[] array2) {
@@ -225,23 +223,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@code char} arrays.
+   * 测试两个 {@code char} 数组的段的相等性。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在迭代两个数组时索引越界。
    */
   public static boolean equals(final char[] array1, final int startIndex1,
       final char[] array2, final int startIndex2, final int length) {
@@ -256,13 +254,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Character} objects.
+   * 测试两个 {@link Character} 对象的相等性。
    *
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
-   * @return true if the two objects are equal or both null; false otherwise.
+   *     第二个对象，可以为 null。
+   * @return 如果两个对象相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Character value1,
       @Nullable final Character value2) {
@@ -276,13 +274,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Character} arrays.
+   * 测试两个 {@link Character} 数组的相等性。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Character[] array1,
       @Nullable final Character[] array2) {
@@ -298,23 +296,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@link Character} arrays.
+   * 测试两个 {@link Character} 数组的段的相等性。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在迭代两个数组时索引越界。
    */
   public static boolean equals(final Character[] array1, final int startIndex1,
       final Character[] array2, final int startIndex2, final int length) {
@@ -329,29 +327,28 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@code byte} values.
+   * 测试两个 {@code byte} 值的相等性。
    *
-   * <p>This function is presented to make the {@link Equality} class complete
-   * for implementing the {@link Object#equals(Object)} method.
+   * <p>提供此函数是为了使 {@link Equality} 类完整地实现 {@link Object#equals(Object)} 方法。
    *
    * @param value1
-   *     the first value.
+   *     第一个值。
    * @param value2
-   *     the second value.
-   * @return true if the two value are equal or both null; false otherwise.
+   *     第二个值。
+   * @return 如果两个值相等则返回 true；否则返回 false。
    */
   public static boolean equals(final byte value1, final byte value2) {
     return value1 == value2;
   }
 
   /**
-   * Tests the equality of two {@code byte} arrays.
+   * 测试两个 {@code byte} 数组的相等性。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final byte[] array1,
       @Nullable final byte[] array2) {
@@ -367,23 +364,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@code byte} arrays.
+   * 测试两个 {@code byte} 数组的段的相等性。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在迭代两个数组时索引越界。
    */
   public static boolean equals(final byte[] array1, final int startIndex1,
       final byte[] array2, final int startIndex2, final int length) {
@@ -398,13 +395,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Byte} objects.
+   * 测试两个 {@link Byte} 对象的相等性。
    *
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
-   * @return true if the two objects are equal or both null; false otherwise.
+   *     第二个对象，可以为 null。
+   * @return 如果两个对象相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Byte value1,
       @Nullable final Byte value2) {
@@ -418,13 +415,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Byte} arrays.
+   * 测试两个 {@link Byte} 数组的相等性。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Byte[] array1,
       @Nullable final Byte[] array2) {
@@ -440,23 +437,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@link Byte} arrays.
+   * 测试两个 {@link Byte} 数组的段的相等性。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在迭代两个数组时索引越界。
    */
   public static boolean equals(final Byte[] array1, final int startIndex1,
       final Byte[] array2, final int startIndex2, final int length) {
@@ -471,29 +468,28 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@code short} values.
+   * 测试两个 {@code short} 值的相等性。
    *
-   * <p>This function is presented to make the {@link Equality} class complete
-   * for implementing the {@link Object#equals(Object)} method.
+   * <p>提供此函数是为了使 {@link Equality} 类完整地实现 {@link Object#equals(Object)} 方法。
    *
    * @param value1
-   *     the first value.
+   *     第一个值。
    * @param value2
-   *     the second value.
-   * @return true if the two value are equal or both null; false otherwise.
+   *     第二个值。
+   * @return 如果两个值相等则返回 true；否则返回 false。
    */
   public static boolean equals(final short value1, final short value2) {
     return value1 == value2;
   }
 
   /**
-   * Tests the equality of two {@code short} arrays.
+   * 测试两个 {@code short} 数组的相等性。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final short[] array1,
       @Nullable final short[] array2) {
@@ -509,23 +505,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@code short} arrays.
+   * 测试两个 {@code short} 数组的段的相等性。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在迭代两个数组时索引越界。
    */
   public static boolean equals(final short[] array1, final int startIndex1,
       final short[] array2, final int startIndex2, final int length) {
@@ -540,13 +536,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Short} objects.
+   * 测试两个 {@link Short} 对象的相等性。
    *
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
-   * @return true if the two objects are equal or both null; false otherwise.
+   *     第二个对象，可以为 null。
+   * @return 如果两个对象相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Short value1,
       @Nullable final Short value2) {
@@ -560,13 +556,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Short} arrays.
+   * 测试两个 {@link Short} 数组的相等性。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Short[] array1,
       @Nullable final Short[] array2) {
@@ -582,23 +578,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@link Short} arrays.
+   * 测试两个 {@link Short} 数组的段的相等性。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在迭代两个数组时索引越界。
    */
   public static boolean equals(final Short[] array1, final int startIndex1,
       final Short[] array2, final int startIndex2, final int length) {
@@ -613,29 +609,28 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@code int} values.
+   * 测试两个 {@code int} 值的相等性。
    *
-   * <p>This function is presented to make the {@link Equality} class complete
-   * for implementing the {@link Object#equals(Object)} method.
+   * <p>提供此函数是为了使 {@link Equality} 类完整地实现 {@link Object#equals(Object)} 方法。
    *
    * @param value1
-   *     the first value.
+   *     第一个值。
    * @param value2
-   *     the second value.
-   * @return true if the two value are equal or both null; false otherwise.
+   *     第二个值。
+   * @return 如果两个值相等则返回 true；否则返回 false。
    */
   public static boolean equals(final int value1, final int value2) {
     return value1 == value2;
   }
 
   /**
-   * Tests the equality of two {@code int} arrays.
+   * 测试两个 {@code int} 数组的相等性。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final int[] array1,
       @Nullable final int[] array2) {
@@ -651,23 +646,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@code int} arrays.
+   * 测试两个 {@code int} 数组的段的相等性。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在迭代两个数组时索引越界。
    */
   public static boolean equals(final int[] array1, final int startIndex1,
       final int[] array2, final int startIndex2, final int length) {
@@ -682,13 +677,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Integer} objects.
+   * 测试两个 {@link Integer} 对象的相等性。
    *
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
-   * @return true if the two objects are equal or both null; false otherwise.
+   *     第二个对象，可以为 null。
+   * @return 如果两个对象相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Integer value1,
       @Nullable final Integer value2) {
@@ -702,13 +697,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Integer} arrays.
+   * 测试两个 {@link Integer} 数组的相等性。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Integer[] array1,
       @Nullable final Integer[] array2) {
@@ -724,23 +719,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@link Integer} arrays.
+   * 测试两个 {@link Integer} 数组的段的相等性。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在迭代两个数组时索引越界。
    */
   public static boolean equals(final Integer[] array1, final int startIndex1,
       final Integer[] array2, final int startIndex2, final int length) {
@@ -755,29 +750,28 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@code long} values.
+   * 测试两个 {@code long} 值的相等性。
    *
-   * <p>This function is presented to make the {@link Equality} class complete
-   * for implementing the {@link Object#equals(Object)} method.
+   * <p>提供此函数是为了使 {@link Equality} 类完整地实现 {@link Object#equals(Object)} 方法。
    *
    * @param value1
-   *     the first value.
+   *     第一个值。
    * @param value2
-   *     the second value.
-   * @return true if the two value are equal or both null; false otherwise.
+   *     第二个值。
+   * @return 如果两个值相等则返回 true；否则返回 false。
    */
   public static boolean equals(final long value1, final long value2) {
     return value1 == value2;
   }
 
   /**
-   * Tests the equality of two {@code long} arrays.
+   * 测试两个 {@code long} 数组的相等性。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final long[] array1,
       @Nullable final long[] array2) {
@@ -793,23 +787,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@code long} arrays.
+   * 测试两个 {@code long} 数组的段的相等性。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在迭代两个数组时索引越界。
    */
   public static boolean equals(final long[] array1, final int startIndex1,
       final long[] array2, final int startIndex2, final int length) {
@@ -824,13 +818,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Long} objects.
+   * 测试两个 {@link Long} 对象的相等性。
    *
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
-   * @return true if the two objects are equal or both null; false otherwise.
+   *     第二个对象，可以为 null。
+   * @return 如果两个对象相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Long value1,
       @Nullable final Long value2) {
@@ -844,13 +838,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Long} arrays.
+   * 测试两个 {@link Long} 数组的相等性。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Long[] array1,
       @Nullable final Long[] array2) {
@@ -866,23 +860,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@link Long} arrays.
+   * 测试两个 {@link Long} 数组的段的相等性。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在迭代两个数组时索引越界。
    */
   public static boolean equals(final Long[] array1, final int startIndex1,
       final Long[] array2, final int startIndex2, final int length) {
@@ -897,37 +891,32 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@code float} values exactly.
+   * 精确测试两个 {@code float} 值的相等性。
    *
-   * <p>This function compare the float numbers with their bits
-   * representations,
-   * therefore this function should be used to implement the {@link
-   * Object#equals(Object)} function.
+   * <p>此函数使用 float 数字的位表示来比较它们，
+   * 因此此函数应用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param value1
-   *     the first value.
+   *     第一个值。
    * @param value2
-   *     the second value.
-   * @return true if the bits representation of two float values are equal;
-   *     false otherwise.
+   *     第二个值。
+   * @return 如果两个 float 值的位表示相等则返回 true；否则返回 false。
    */
   public static boolean equals(final float value1, final float value2) {
     return Float.floatToIntBits(value1) == Float.floatToIntBits(value2);
   }
 
   /**
-   * Tests the equality of two {@code float} arrays exactly.
+   * 精确测试两个 {@code float} 数组的相等性。
    *
-   * <p>This function compare the float numbers with their bits
-   * representations,
-   * therefore this function should be used to implement the {@link
-   * Object#equals(Object)} function.
+   * <p>此函数使用 float 数字的位表示来比较它们，
+   * 因此此函数应用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal exactly or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组精确相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final float[] array1,
       @Nullable final float[] array2) {
@@ -943,28 +932,26 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@code float} arrays exactly.
+   * 精确测试两个 {@code float} 数组的段的相等性。
    *
-   * <p>This function compare the float numbers with their bits
-   * representations,
-   * therefore this function should be used to implement the {@link
-   * Object#equals(Object)} function.
+   * <p>此函数使用浮点数的位表示来比较它们，
+   * 因此此函数应该用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal exactly; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段精确相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在两个数组的迭代过程中索引越界。
    */
   public static boolean equals(final float[] array1, final int startIndex1,
       final float[] array2, final int startIndex2, final int length) {
@@ -979,19 +966,16 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Float} objects exactly.
+   * 精确测试两个 {@link Float} 对象的相等性。
    *
-   * <p>This function compare the float numbers with their bits
-   * representations,
-   * therefore this function should be used to implement the {@link
-   * Object#equals(Object)} function.
+   * <p>此函数使用浮点数的位表示来比较它们，
+   * 因此此函数应该用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
-   * @return true if the two objects are equal exactly or both null; false
-   *     otherwise.
+   *     第二个对象，可以为 null。
+   * @return 如果两个对象精确相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Float value1,
       @Nullable final Float value2) {
@@ -1007,18 +991,16 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Float} arrays exactly.
+   * 精确测试两个 {@link Float} 数组的相等性。
    *
-   * <p>This function compare the float numbers with their bits
-   * representations,
-   * therefore this function should be used to implement the {@link
-   * Object#equals(Object)} function.
+   * <p>此函数使用浮点数的位表示来比较它们，
+   * 因此此函数应该用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal exactly or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组精确相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Float[] array1,
       @Nullable final Float[] array2) {
@@ -1034,28 +1016,26 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@link Float} arrays exactly.
+   * 精确测试两个 {@link Float} 数组的段的相等性。
    *
-   * <p>This function compare the float numbers with their bits
-   * representations,
-   * therefore this function should be used to implement the {@link
-   * Object#equals(Object)} function.
+   * <p>此函数使用浮点数的位表示来比较它们，
+   * 因此此函数应该用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在两个数组的迭代过程中索引越界。
    */
   public static boolean equals(final Float[] array1, final int startIndex1,
       final Float[] array2, final int startIndex2, final int length) {
@@ -1070,37 +1050,32 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@code double} values exactly.
+   * 精确测试两个 {@code double} 值的相等性。
    *
-   * <p>This function compare the double numbers with their bits
-   * representations,
-   * therefore this function should be used to implement the {@link
-   * Object#equals(Object)} function.
+   * <p>此函数使用双精度浮点数的位表示来比较它们，
+   * 因此此函数应该用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param value1
-   *     the first value.
+   *     第一个值。
    * @param value2
-   *     the second value.
-   * @return true if the bits representation of two double values are equal;
-   *     false otherwise.
+   *     第二个值。
+   * @return 如果两个双精度浮点值的位表示相等则返回 true；否则返回 false。
    */
   public static boolean equals(final double value1, final double value2) {
     return Double.doubleToLongBits(value1) == Double.doubleToLongBits(value2);
   }
 
   /**
-   * Tests the equality of two {@code double} arrays exactly.
+   * 精确测试两个 {@code double} 数组的相等性。
    *
-   * <p>This function compare the double numbers with their bits
-   * representations,
-   * therefore this function should be used to implement the {@link
-   * Object#equals(Object)} function.
+   * <p>此函数使用双精度浮点数的位表示来比较它们，
+   * 因此此函数应该用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal exactly or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组精确相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final double[] array1,
       @Nullable final double[] array2) {
@@ -1116,28 +1091,26 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@code double} arrays exactly.
+   * 精确测试两个 {@code double} 数组的段的相等性。
    *
-   * <p>This function compare the double numbers with their bits
-   * representations,
-   * therefore this function should be used to implement the {@link
-   * Object#equals(Object)} function.
+   * <p>此函数使用双精度浮点数的位表示来比较它们，
+   * 因此此函数应该用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal exactly; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段精确相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在两个数组的迭代过程中索引越界。
    */
   public static boolean equals(final double[] array1, final int startIndex1,
       final double[] array2, final int startIndex2, final int length) {
@@ -1152,19 +1125,16 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Double} objects exactly.
+   * 精确测试两个 {@link Double} 对象的相等性。
    *
-   * <p>This function compare the double numbers with their bits
-   * representations,
-   * therefore this function should be used to implement the {@link
-   * Object#equals(Object)} function.
+   * <p>此函数使用双精度浮点数的位表示来比较它们，
+   * 因此此函数应该用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
-   * @return true if the two objects are equal exactly or both null; false
-   *     otherwise.
+   *     第二个对象，可以为 null。
+   * @return 如果两个对象精确相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Double value1,
       @Nullable final Double value2) {
@@ -1180,18 +1150,16 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Double} arrays exactly.
+   * 精确测试两个 {@link Double} 数组的相等性。
    *
-   * <p>This function compare the double numbers with their bits
-   * representations,
-   * therefore this function should be used to implement the {@link
-   * Object#equals(Object)} function.
+   * <p>此函数使用双精度浮点数的位表示来比较它们，
+   * 因此此函数应该用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal exactly or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组精确相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Double[] array1,
       @Nullable final Double[] array2) {
@@ -1207,28 +1175,26 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@link Double} arrays exactly.
+   * 精确测试两个 {@link Double} 数组的段的相等性。
    *
-   * <p>This function compare the double numbers with their bits
-   * representations,
-   * therefore this function should be used to implement the {@link
-   * Object#equals(Object)} function.
+   * <p>此函数使用双精度浮点数的位表示来比较它们，
+   * 因此此函数应该用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在两个数组的迭代过程中索引越界。
    */
   public static boolean equals(final Double[] array1, final int startIndex1,
       final Double[] array2, final int startIndex2, final int length) {
@@ -1243,13 +1209,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link CharSequence} objects.
+   * 测试两个 {@link CharSequence} 对象的相等性。
    *
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
-   * @return true if the two objects are equal or both null; false otherwise.
+   *     第二个对象，可以为 null。
+   * @return 如果两个对象相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final CharSequence value1,
       @Nullable final CharSequence value2) {
@@ -1263,13 +1229,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Long} arrays.
+   * 测试两个 {@link CharSequence} 数组的相等性。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final CharSequence[] array1,
       @Nullable final CharSequence[] array2) {
@@ -1285,15 +1251,46 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Enum} objects.
+   * 测试两个 {@link CharSequence} 数组的段的相等性。
+   *
+   * @param array1
+   *     第一个数组，不能为 null。
+   * @param startIndex1
+   *     第一个数组中第一个段的起始索引。
+   * @param array2
+   *     第二个数组，不能为 null。
+   * @param startIndex2
+   *     第二个数组中第二个段的起始索引。
+   * @param length
+   *     要比较的两个段的长度。
+   * @return 如果两个段相等则返回 true；否则返回 false。
+   * @throws NullPointerException
+   *     如果任何一个数组为 null。
+   * @throws IndexOutOfBoundsException
+   *     如果在两个数组的迭代过程中索引越界。
+   */
+  public static boolean equals(final CharSequence[] array1, final int startIndex1,
+      final CharSequence[] array2, final int startIndex2, final int length) {
+    for (int i = 0; i < length; ++i) {
+      final CharSequence x = array1[startIndex1 + i];
+      final CharSequence y = array2[startIndex2 + i];
+      if (!equals(x, y)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * 测试两个 {@link Enum} 对象的相等性。
    *
    * @param <E>
-   *     an enumeration type.
+   *     枚举类型。
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
-   * @return true if the two objects are equal or both null; false otherwise.
+   *     第二个对象，可以为 null。
+   * @return 如果两个对象相等或都为 null 则返回 true；否则返回 false。
    */
   public static <E extends Enum<E>> boolean equals(@Nullable final E value1,
       @Nullable final E value2) {
@@ -1301,15 +1298,15 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Enum} arrays.
+   * 测试两个 {@link Enum} 数组的相等性。
    *
    * @param <E>
-   *     an enumeration type.
+   *     枚举类型。
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static <E extends Enum<E>> boolean equals(@Nullable final E[] array1,
       @Nullable final E[] array2) {
@@ -1325,25 +1322,25 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@link Enum} arrays.
+   * 测试两个 {@link Enum} 数组的段的相等性。
    *
    * @param <E>
-   *     an enumeration type.
+   *     枚举类型。
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在两个数组的迭代过程中索引越界。
    */
   public static <E extends Enum<E>> boolean equals(final E[] array1,
       final int startIndex1, final E[] array2, final int startIndex2,
@@ -1359,13 +1356,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link String} objects.
+   * 测试两个 {@link String} 对象的相等性。
    *
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
-   * @return true if the two objects are equal or both null; false otherwise.
+   *     第二个对象，可以为 null。
+   * @return 如果两个对象相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final String value1,
       @Nullable final String value2) {
@@ -1379,13 +1376,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link String} arrays.
+   * 测试两个 {@link String} 数组的相等性。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final String[] array1,
       @Nullable final String[] array2) {
@@ -1401,23 +1398,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@link String} arrays.
+   * 测试两个 {@link String} 数组的段的相等性。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在两个数组的迭代过程中索引越界。
    */
   public static boolean equals(final String[] array1, final int startIndex1,
       final String[] array2, final int startIndex2, final int length) {
@@ -1432,15 +1429,15 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link String} objects.
+   * 测试两个 {@link String} 对象的相等性。
    *
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
+   *     第二个对象，可以为 null。
    * @param ignoreCase
-   *     indicate whether to ignore the case while comparing the strings.
-   * @return true if the two objects are equal or both null; false otherwise.
+   *     指示在比较字符串时是否忽略大小写。
+   * @return 如果两个对象相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final String value1,
       @Nullable final String value2, final boolean ignoreCase) {
@@ -1456,15 +1453,15 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link String} arrays.
+   * 测试两个 {@link String} 数组的相等性。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
+   *     第二个数组，可以为 null。
    * @param ignoreCase
-   *     indicate whether to ignore the case while comparing the strings.
-   * @return true if two arrays are equal or both null; false otherwise.
+   *     指示在比较字符串时是否忽略大小写。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final String[] array1,
       @Nullable final String[] array2, final boolean ignoreCase) {
@@ -1482,25 +1479,25 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@link String} arrays.
+   * 测试两个 {@link String} 数组的段的相等性。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
+   *     要比较的两个段的长度。
    * @param ignoreCase
-   *     indicate whether to ignore the case while comparing the strings.
-   * @return true if two segments are equal; false otherwise.
+   *     指示在比较字符串时是否忽略大小写。
+   * @return 如果两个段相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在两个数组的迭代过程中索引越界。
    */
   public static boolean equals(final String[] array1, final int startIndex1,
       final String[] array2, final int startIndex2, final int length,
@@ -1513,13 +1510,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Class} objects.
+   * 测试两个 {@link Class} 对象的相等性。
    *
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
-   * @return true if the two objects are equal or both null; false otherwise.
+   *     第二个对象，可以为 null。
+   * @return 如果两个对象相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Class<?> value1,
       @Nullable final Class<?> value2) {
@@ -1527,13 +1524,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Class} arrays.
+   * 测试两个 {@link Class} 数组的相等性。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Class<?>[] array1,
       @Nullable final Class<?>[] array2) {
@@ -1549,23 +1546,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@link Class} arrays.
+   * 测试两个 {@link Class} 数组的段的相等性。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在两个数组的迭代过程中索引越界。
    */
   public static boolean equals(final Class<?>[] array1, final int startIndex1,
       final Class<?>[] array2, final int startIndex2, final int length) {
@@ -1580,13 +1577,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Date} objects.
+   * 测试两个 {@link Date} 对象的相等性。
    *
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
-   * @return true if the two objects are equal or both null; false otherwise.
+   *     第二个对象，可以为 null。
+   * @return 如果两个对象相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Date value1,
       @Nullable final Date value2) {
@@ -1600,13 +1597,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Date} arrays.
+   * 测试两个 {@link Date} 数组的相等性。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Date[] array1,
       @Nullable final Date[] array2) {
@@ -1622,23 +1619,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@link Date} arrays.
+   * 测试两个 {@link Date} 数组的段的相等性。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在两个数组的迭代过程中索引越界。
    */
   public static boolean equals(final Date[] array1, final int startIndex1,
       final Date[] array2, final int startIndex2, final int length) {
@@ -1653,13 +1650,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link BigInteger} objects.
+   * 测试两个 {@link BigInteger} 对象的相等性。
    *
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
-   * @return true if the two objects are equal or both null; false otherwise.
+   *     第二个对象，可以为 null。
+   * @return 如果两个对象相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final BigInteger value1,
       @Nullable final BigInteger value2) {
@@ -1673,13 +1670,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link BigInteger} arrays.
+   * 测试两个 {@link BigInteger} 数组的相等性。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final BigInteger[] array1,
       @Nullable final BigInteger[] array2) {
@@ -1695,23 +1692,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@link BigInteger} arrays.
+   * 测试两个 {@link BigInteger} 数组的段的相等性。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在两个数组的迭代过程中索引越界。
    */
   public static boolean equals(final BigInteger[] array1,
       final int startIndex1, final BigInteger[] array2, final int startIndex2,
@@ -1727,25 +1724,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link BigDecimal} objects.
+   * 测试两个 {@link BigDecimal} 对象的相等性。
    *
-   * <p>Note that this function compares the {@link BigDecimal}'s internal
-   * fields,
-   * which is consistent with the {@link BigDecimal#hashCode()} method, but
-   * inconsistent with the {@link BigDecimal#compareTo(BigDecimal)} method.
-   * Therefore, this function must be used to implements the {@link
-   * Object#equals(Object)} method.
+   * <p>注意此函数比较 {@link BigDecimal} 的内部字段，
+   * 这与 {@link BigDecimal#hashCode()} 方法一致，但与
+   * {@link BigDecimal#compareTo(BigDecimal)} 方法不一致。
+   * 因此，此函数必须用于实现 {@link Object#equals(Object)} 方法。
    *
-   * <p>For example,
+   * <p>例如，
    * <pre><code>
    *   Equality.equals(new BigDecimal("3"), new BigDecimal("3.000")) == false
    * </code></pre>
    *
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
-   * @return true if the two objects are equal or both null; false otherwise.
+   *     第二个对象，可以为 null。
+   * @return 如果两个对象相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final BigDecimal value1,
       @Nullable final BigDecimal value2) {
@@ -1759,20 +1754,18 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link BigDecimal} arrays.
+   * 测试两个 {@link BigDecimal} 数组的相等性。
    *
-   * <p>Note that this function compares the {@link BigDecimal}'s internal
-   * fields,
-   * which is consistent with the {@link BigDecimal#hashCode()} method, but
-   * inconsistent with the {@link BigDecimal#compareTo(BigDecimal)} method.
-   * Therefore, this function must be used to implements the {@link
-   * Object#equals(Object)} method.
+   * <p>注意此函数比较 {@link BigDecimal} 的内部字段，
+   * 这与 {@link BigDecimal#hashCode()} 方法一致，但与
+   * {@link BigDecimal#compareTo(BigDecimal)} 方法不一致。
+   * 因此，此函数必须用于实现 {@link Object#equals(Object)} 方法。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final BigDecimal[] array1,
       @Nullable final BigDecimal[] array2) {
@@ -1788,30 +1781,28 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@link BigDecimal} arrays.
+   * 测试两个 {@link BigDecimal} 数组的段的相等性。
    *
-   * <p>Note that this function compares the {@link BigDecimal}'s internal
-   * fields,
-   * which is consistent with the {@link BigDecimal#hashCode()} method, but
-   * inconsistent with the {@link BigDecimal#compareTo(BigDecimal)} method.
-   * Therefore, this function must be used to implements the {@link
-   * Object#equals(Object)} method.
+   * <p>注意此函数比较 {@link BigDecimal} 的内部字段，
+   * 这与 {@link BigDecimal#hashCode()} 方法一致，但与
+   * {@link BigDecimal#compareTo(BigDecimal)} 方法不一致。
+   * 因此，此函数必须用于实现 {@link Object#equals(Object)} 方法。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在两个数组的迭代过程中索引越界。
    */
   public static boolean equals(final BigDecimal[] array1,
       final int startIndex1, final BigDecimal[] array2, final int startIndex2,
@@ -1827,20 +1818,19 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Object}s.
+   * 测试两个 {@link Object} 对象的相等性。
    *
-   * <p>Note that the implementation of this function is non-trivial, since the
-   * multi-dimensional array in Java is treated as an {@link Object}.
+   * <p>注意此函数的实现并非简单，因为 Java 中的多维数组被视为
+   * {@link Object}。
    *
-   * <p>Note also that this function test the equality of two float or double
-   * numbers using their bit representation, therefore this function should be
-   * used to implement the {@link Object#equals(Object)} function.
+   * <p>另外注意此函数使用位表示来测试两个浮点数或双精度浮点数的相等性，
+   * 因此此函数应该用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
-   * @return true if the two objects are equal or both null; false otherwise.
+   *     第二个对象，可以为 null。
+   * @return 如果两个对象相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Object value1,
       @Nullable final Object value2) {
@@ -1963,20 +1953,19 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Object} arrays.
+   * 测试两个 {@link Object} 数组的相等性。
    *
-   * <p>Note that the implementation of this function is non-trivial, since the
-   * multi-dimensional array in Java is treated as an {@link Object}.
+   * <p>注意此函数的实现并非简单，因为 Java 中的多维数组被视为
+   * {@link Object}。
    *
-   * <p>Note also that this function test the equality of two float or double
-   * numbers using their bit representation, therefore this function should be
-   * used to implement the {@link Object#equals(Object)} function.
+   * <p>另外注意此函数使用位表示来测试两个浮点数或双精度浮点数的相等性，
+   * 因此此函数应该用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param array1
-   *     the first array, which may be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which may be null.
-   * @return true if the two arrays are equal or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Object[] array1,
       @Nullable final Object[] array2) {
@@ -1992,30 +1981,29 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@link Object} arrays.
+   * 测试两个 {@link Object} 数组的段的相等性。
    *
-   * <p>Note that the implementation of this function is non-trivial, since the
-   * multi-dimensional array in Java is treated as an {@link Object}.
+   * <p>注意此函数的实现并非简单，因为 Java 中的多维数组被视为
+   * {@link Object}。
    *
-   * <p>Note also that this function test the equality of two float or double
-   * numbers using their bit representation, therefore this function should be
-   * used to implement the {@link Object#equals(Object)} function.
+   * <p>另外注意此函数使用位表示来测试两个浮点数或双精度浮点数的相等性，
+   * 因此此函数应该用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在两个数组的迭代过程中索引越界。
    */
   public static boolean equals(final Object[] array1, final int startIndex1,
       final Object[] array2, final int startIndex2, final int length) {
@@ -2032,14 +2020,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@code boolean} collections.
+   * 测试两个 {@code boolean} 集合的相等性。
    *
    * @param col1
-   *     the first collection, which may be null.
+   *     第一个集合，可以为 null。
    * @param col2
-   *     the second collection, which may be null.
-   * @return true if two collections are equal, or both are null; false
-   *     otherwise.
+   *     第二个集合，可以为 null。
+   * @return 如果两个集合相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final BooleanCollection col1,
       @Nullable final BooleanCollection col2) {
@@ -2065,14 +2052,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@code char} collections.
+   * 测试两个 {@code char} 集合的相等性。
    *
    * @param col1
-   *     the first collection, which may be null.
+   *     第一个集合，可以为 null。
    * @param col2
-   *     the second collection, which may be null.
-   * @return true if two collections are equal, or both are null; false
-   *     otherwise.
+   *     第二个集合，可以为 null。
+   * @return 如果两个集合相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final CharCollection col1,
       @Nullable final CharCollection col2) {
@@ -2098,14 +2084,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@code byte} collections.
+   * 测试两个 {@code byte} 集合的相等性。
    *
    * @param col1
-   *     the first collection, which may be null.
+   *     第一个集合，可以为 null。
    * @param col2
-   *     the second collection, which may be null.
-   * @return true if two collections are equal, or both are null; false
-   *     otherwise.
+   *     第二个集合，可以为 null。
+   * @return 如果两个集合相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final ByteCollection col1,
       @Nullable final ByteCollection col2) {
@@ -2131,14 +2116,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@code short} collections.
+   * 测试两个 {@code short} 集合的相等性。
    *
    * @param col1
-   *     the first collection, which may be null.
+   *     第一个集合，可以为 null。
    * @param col2
-   *     the second collection, which may be null.
-   * @return true if two collections are equal, or both are null; false
-   *     otherwise.
+   *     第二个集合，可以为 null。
+   * @return 如果两个集合相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final ShortCollection col1,
       @Nullable final ShortCollection col2) {
@@ -2164,14 +2148,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@code int} collections.
+   * 测试两个 {@code int} 集合的相等性。
    *
    * @param col1
-   *     the first collection, which may be null.
+   *     第一个集合，可以为 null。
    * @param col2
-   *     the second collection, which may be null.
-   * @return true if two collections are equal, or both are null; false
-   *     otherwise.
+   *     第二个集合，可以为 null。
+   * @return 如果两个集合相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final IntCollection col1,
       @Nullable final IntCollection col2) {
@@ -2197,14 +2180,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@code long} collections.
+   * 测试两个 {@code long} 集合的相等性。
    *
    * @param col1
-   *     the first collection, which may be null.
+   *     第一个集合，可以为 null。
    * @param col2
-   *     the second collection, which may be null.
-   * @return true if two collections are equal, or both are null; false
-   *     otherwise.
+   *     第二个集合，可以为 null。
+   * @return 如果两个集合相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final LongCollection col1,
       @Nullable final LongCollection col2) {
@@ -2230,19 +2212,16 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@code float} collections.
+   * 测试两个 {@code float} 集合的相等性。
    *
-   * <p>This function compare the float numbers with their bits
-   * representations,
-   * therefore this function should be used to implement the {@link
-   * Object#equals(Object)} function.
+   * <p>此函数使用浮点数的位表示来比较它们，
+   * 因此此函数应该用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param col1
-   *     the first collection, which may be null.
+   *     第一个集合，可以为 null。
    * @param col2
-   *     the second collection, which may be null.
-   * @return true if two collections are equal, or both are null; false
-   *     otherwise.
+   *     第二个集合，可以为 null。
+   * @return 如果两个集合相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final FloatCollection col1,
       @Nullable final FloatCollection col2) {
@@ -2268,19 +2247,16 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@code double} collections.
+   * 测试两个 {@code double} 集合的相等性。
    *
-   * <p>This function compare the double numbers with their bits
-   * representations,
-   * therefore this function should be used to implement the {@link
-   * Object#equals(Object)} function.
+   * <p>此函数使用双精度浮点数的位表示来比较它们，
+   * 因此此函数应该用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param col1
-   *     the first collection, which may be null.
+   *     第一个集合，可以为 null。
    * @param col2
-   *     the second collection, which may be null.
-   * @return true if two collections are equal, or both are null; false
-   *     otherwise.
+   *     第二个集合，可以为 null。
+   * @return 如果两个集合相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final DoubleCollection col1,
       @Nullable final DoubleCollection col2) {
@@ -2306,22 +2282,18 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two collections.
+   * 测试两个集合的相等性。
    *
-   * <p>The elements in the collections to be tested may be any objects, or
-   * arrays, or another collection of objects.
+   * <p>要测试的集合中的元素可以是任何对象、数组或其他对象集合。
    *
-   * <p>This function compare the float numbers with their bits
-   * representations,
-   * therefore this function should be used to implement the {@link
-   * Object#equals(Object)} function.
+   * <p>此函数使用位表示来比较浮点数，
+   * 因此此函数应该用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param col1
-   *     the first collection, which may be null.
+   *     第一个集合，可以为 null。
    * @param col2
-   *     the second collection, which may be null.
-   * @return true if two collections are equal, or both are null; false
-   *     otherwise.
+   *     第二个集合，可以为 null。
+   * @return 如果两个集合相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Collection<?> col1,
       @Nullable final Collection<?> col2) {
@@ -2357,16 +2329,15 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two sets.
+   * 测试两个集合的相等性。
    *
-   * <p>The elements in the sets to be tested may be any objects, or
-   * arrays, or another collection of objects.
+   * <p>要测试的集合中的元素可以是任何对象、数组或其他对象集合。
    *
    * @param set1
-   *     the first set, which may be null.
+   *     第一个集合，可以为 null。
    * @param set2
-   *     the second set, which may be null.
-   * @return true if two sets are equal, or both are null; false otherwise.
+   *     第二个集合，可以为 null。
+   * @return 如果两个集合相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Set<?> set1,
       @Nullable final Set<?> set2) {
@@ -2374,16 +2345,15 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two sets.
+   * 测试两个集合的相等性。
    *
-   * <p>The elements in the sets to be tested may be any objects, or
-   * arrays, or another collection of objects.
+   * <p>要测试的集合中的元素可以是任何对象、数组或其他对象集合。
    *
    * @param set1
-   *     the first set, which may be null.
+   *     第一个集合，可以为 null。
    * @param set2
-   *     the second set, which may be null.
-   * @return true if two sets are equal, or both are null; false otherwise.
+   *     第二个集合，可以为 null。
+   * @return 如果两个集合相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean setEquals(@Nullable final Set<?> set1,
       @Nullable final Set<?> set2) {
@@ -2401,16 +2371,15 @@ public final class Equality {
 
 
   /**
-   * Tests the equality of two maps.
+   * 测试两个映射的相等性。
    *
-   * <p>The elements in the maps to be tested may be any objects, or
-   * arrays, or another collection of objects.
+   * <p>要测试的映射中的元素可以是任何对象、数组或其他对象集合。
    *
    * @param map1
-   *     the first map, which may be null.
+   *     第一个映射，可以为 null。
    * @param map2
-   *     the second map, which may be null.
-   * @return true if two maps are equal, or both are null; false otherwise.
+   *     第二个映射，可以为 null。
+   * @return 如果两个映射相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equals(@Nullable final Map<?, ?> map1,
       @Nullable final Map<?, ?> map2) {
@@ -2418,16 +2387,15 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two maps.
+   * 测试两个映射的相等性。
    *
-   * <p>The elements in the maps to be tested may be any objects, or
-   * arrays, or another collection of objects.
+   * <p>要测试的映射中的元素可以是任何对象、数组或其他对象集合。
    *
    * @param map1
-   *     the first map, which may be null.
+   *     第一个映射，可以为 null。
    * @param map2
-   *     the second map, which may be null.
-   * @return true if two maps are equal, or both are null; false otherwise.
+   *     第二个映射，可以为 null。
+   * @return 如果两个映射相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean mapEquals(@Nullable final Map<?, ?> map1,
       @Nullable final Map<?, ?> map2) {
@@ -2452,28 +2420,26 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@code char} value ignoring the case.
+   * 测试两个 {@code char} 值在忽略大小写的情况下的相等性。
    *
    * @param ch1
-   *     the first character.
+   *     第一个字符。
    * @param ch2
-   *     the second character.
-   * @return true if the two characters are equal ignoring the case; false
-   *     otherwise.
+   *     第二个字符。
+   * @return 如果两个字符在忽略大小写的情况下相等则返回 true；否则返回 false。
    */
   public static boolean equalsIgnoreCase(final char ch1, final char ch2) {
     return Character.toLowerCase(ch1) == Character.toLowerCase(ch2);
   }
 
   /**
-   * Tests the equality of two {@code char} arrays ignoring the case.
+   * 测试两个 {@code char} 数组在忽略大小写的情况下的相等性。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal ignoring the case or both null; false
-   *     otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组在忽略大小写的情况下相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equalsIgnoreCase(@Nullable final char[] array1,
       @Nullable final char[] array2) {
@@ -2489,24 +2455,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@code char} arrays ignoring the
-   * case.
+   * 测试两个 {@code char} 数组的段在忽略大小写的情况下的相等性。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal ignoring the case; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段在忽略大小写的情况下相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在迭代两个数组时索引越界。
    */
   public static boolean equalsIgnoreCase(final char[] array1,
       final int startIndex1, final char[] array2, final int startIndex2,
@@ -2522,14 +2487,14 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Character} objects ignoring the case.
+   * 测试两个 {@link Character} 对象在忽略大小写的情况下的相等性。
    *
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
-   * @return true if the two objects are equal ignoring the case or both null;
-   *     false otherwise.
+   *     第二个对象，可以为 null。
+   * @return 如果两个对象在忽略大小写的情况下相等或都为 null 则返回 true；
+   *     否则返回 false。
    */
   public static boolean equalsIgnoreCase(@Nullable final Character value1,
       @Nullable final Character value2) {
@@ -2545,14 +2510,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link Character} arrays ignoring the case.
+   * 测试两个 {@link Character} 数组在忽略大小写的情况下的相等性。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal ignoring the case or both null; false
-   *     otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组在忽略大小写的情况下相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equalsIgnoreCase(@Nullable final Character[] array1,
       @Nullable final Character[] array2) {
@@ -2568,24 +2532,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@link Character} arrays ignoring the
-   * case.
+   * 测试两个 {@link Character} 数组的段在忽略大小写的情况下的相等性。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal ignoring the case; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段在忽略大小写的情况下相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在迭代两个数组时索引越界。
    */
   public static boolean equalsIgnoreCase(final Character[] array1,
       final int startIndex1, final Character[] array2, final int startIndex2,
@@ -2601,14 +2564,14 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link String} objects ignoring the case.
+   * 测试两个 {@link CharSequence} 对象在忽略大小写的情况下的相等性。
    *
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
-   * @return true if the two objects are equal ignoring the case or both null;
-   *     false otherwise.
+   *     第二个对象，可以为 null。
+   * @return 如果两个对象在忽略大小写的情况下相等或都为 null 则返回 true；
+   *     否则返回 false。
    */
   public static boolean equalsIgnoreCase(@Nullable final CharSequence value1,
       @Nullable final CharSequence value2) {
@@ -2626,14 +2589,13 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of two {@link String} arrays ignoring the case.
+   * 测试两个 {@link String} 数组在忽略大小写的情况下的相等性。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal ignoring the case or both null; false
-   *     otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组在忽略大小写的情况下相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean equalsIgnoreCase(@Nullable final String[] array1,
       @Nullable final String[] array2) {
@@ -2649,24 +2611,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of segments of two {@link String} arrays ignoring the
-   * case.
+   * 测试两个 {@link String} 数组的段在忽略大小写的情况下的相等性。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if two segments are equal ignoring the case; false otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段在忽略大小写的情况下相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在迭代两个数组时索引越界。
    */
   public static boolean equalsIgnoreCase(final String[] array1,
       final int startIndex1, final String[] array2, final int startIndex2,
@@ -2682,27 +2643,22 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of the represented values of two {@code float} numbers
-   * with regard to a given epsilon.
+   * 测试两个 {@code float} 数字的表示值在给定 epsilon 范围内的相等性。
    *
-   * <p>That is, if the distance between the two float numbers is less than or
-   * equal to the given epsilon, the two float numbers are considered to be
-   * equal.
+   * <p>也就是说，如果两个 float 数字之间的距离小于或等于给定的 epsilon，
+   * 则认为这两个 float 数字相等。
    *
-   * <p>The implementation of this function is non-trivial, since float numbers
-   * could be NaN.
+   * <p>此函数的实现并不简单，因为 float 数字可能是 NaN。
    *
-   * <p>Note that this function can NOT be used to implement the
-   * {@link Object#equals(Object)} function.
+   * <p>注意，此函数不能用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param value1
-   *     the first value.
+   *     第一个值。
    * @param value2
-   *     the second value.
+   *     第二个值。
    * @param epsilon
-   *     the epsilon used to compare two float numbers.
-   * @return true if the represented values of two float numbers are equal
-   *     approximately with regard to the given epsilon; false otherwise.
+   *     用于比较两个 float 数字的 epsilon。
+   * @return 如果两个 float 数字的表示值在给定 epsilon 范围内近似相等则返回 true；否则返回 false。
    */
   public static boolean valueEquals(final float value1, final float value2,
       final float epsilon) {
@@ -2716,28 +2672,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of the represented values of two {@code float} arrays
-   * with regard to a given epsilon.
+   * 测试两个 {@code float} 数组的表示值在给定 epsilon 范围内的相等性。
    *
-   * <p>That is, if the distance between the two float numbers is less than or
-   * equal to the given epsilon, the two float numbers are considered to be
-   * equal.
+   * <p>也就是说，如果两个 float 数字之间的距离小于或等于给定的 epsilon，
+   * 则认为这两个 float 数字相等。
    *
-   * <p>The implementation of this function is non-trivial, since float numbers
-   * could be NaN.
+   * <p>此函数的实现并不简单，因为 float 数字可能是 NaN。
    *
-   * <p>Note that this function can NOT be used to implement the
-   * {@link Object#equals(Object)} function.
+   * <p>注意，此函数不能用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param array1
-   *     the first array, which may be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which may be null.
+   *     第二个数组，可以为 null。
    * @param epsilon
-   *     the epsilon used to compare two float numbers.
-   * @return true if the represented values of two float arrays are equal
-   *     approximately with regard to the given epsilon, or both null; false
-   *     otherwise.
+   *     用于比较两个 float 数字的 epsilon。
+   * @return 如果两个 float 数组的表示值在给定 epsilon 范围内近似相等，或都为 null 则返回 true；
+   *     否则返回 false。
    */
   public static boolean valueEquals(@Nullable final float[] array1,
       @Nullable final float[] array2, final float epsilon) {
@@ -2753,37 +2704,32 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of the represented values of segments of two {@code
-   * float} arrays with regard to a given epsilon.
+   * 测试两个 {@code float} 数组的段的表示值在给定 epsilon 范围内的相等性。
    *
-   * <p>That is, if the distance between the two float numbers is less than or
-   * equal to the given epsilon, the two float numbers are considered to be
-   * equal.
+   * <p>也就是说，如果两个 float 数字之间的距离小于或等于给定的 epsilon，
+   * 则认为这两个 float 数字相等。
    *
-   * <p>The implementation of this function is non-trivial, since float numbers
-   * could be NaN.
+   * <p>此函数的实现并不简单，因为 float 数字可能是 NaN。
    *
-   * <p>Note that this function can NOT be used to implement the
-   * {@link Object#equals(Object)} function.
+   * <p>注意，此函数不能用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
+   *     要比较的两个段的长度。
    * @param epsilon
-   *     the epsilon used to compare two float numbers.
-   * @return true if the represented values of two segments are equal
-   *     approximately with regard to the given epsilon; false otherwise.
+   *     用于比较两个 float 数字的 epsilon。
+   * @return 如果两个段的表示值在给定 epsilon 范围内近似相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在迭代两个数组时索引越界。
    */
   public static boolean valueEquals(final float[] array1,
       final int startIndex1, final float[] array2, final int startIndex2,
@@ -2799,28 +2745,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of the represented values of two {@link Float} objects
-   * with regard to a given epsilon.
+   * 测试两个 {@link Float} 对象的表示值在给定 epsilon 范围内的相等性。
    *
-   * <p>That is, if the distance between the two float numbers is less than or
-   * equal to the given epsilon, the two float numbers are considered to be
-   * equal.
+   * <p>也就是说，如果两个 float 数字之间的距离小于或等于给定的 epsilon，
+   * 则认为这两个 float 数字相等。
    *
-   * <p>The implementation of this function is non-trivial, since float numbers
-   * could be NaN.
+   * <p>此函数的实现并不简单，因为 float 数字可能是 NaN。
    *
-   * <p>Note that this function can NOT be used to implement the
-   * {@link Object#equals(Object)} function.
+   * <p>注意，此函数不能用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
+   *     第二个对象，可以为 null。
    * @param epsilon
-   *     the epsilon used to compare two float numbers.
-   * @return true if the represented values of two {@link Float} objects are
-   *     equal approximately with regard to the given epsilon, or both null;
-   *     false otherwise.
+   *     用于比较两个 float 数字的 epsilon。
+   * @return 如果两个 {@link Float} 对象的表示值在给定 epsilon 范围内近似相等，或都为 null 则返回 true；
+   *     否则返回 false。
    */
   public static boolean valueEquals(@Nullable final Float value1,
       @Nullable final Float value2, final float epsilon) {
@@ -2836,28 +2777,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of the represented values of two {@link Float} arrays
-   * with regard to a given epsilon.
+   * 测试两个 {@link Float} 数组的表示值在给定 epsilon 范围内的相等性。
    *
-   * <p>That is, if the distance between the two float numbers is less than or
-   * equal to the given epsilon, the two float numbers are considered to be
-   * equal.
+   * <p>也就是说，如果两个 float 数字之间的距离小于或等于给定的 epsilon，
+   * 则认为这两个 float 数字相等。
    *
-   * <p>The implementation of this function is non-trivial, since float numbers
-   * could be NaN.
+   * <p>此函数的实现并不简单，因为 float 数字可能是 NaN。
    *
-   * <p>Note that this function can NOT be used to implement the
-   * {@link Object#equals(Object)} function.
+   * <p>注意，此函数不能用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param array1
-   *     the first array, which may be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which may be null.
+   *     第二个数组，可以为 null。
    * @param epsilon
-   *     the epsilon used to compare two float numbers.
-   * @return true if the represented values of two {@link Float} arrays are
-   *     equal approximately with regard to the given epsilon, or both null;
-   *     false otherwise.
+   *     用于比较两个 float 数字的 epsilon。
+   * @return 如果两个 {@link Float} 数组的表示值在给定 epsilon 范围内近似相等，或都为 null 则返回 true；
+   *     否则返回 false。
    */
   public static boolean valueEquals(@Nullable final Float[] array1,
       @Nullable final Float[] array2, final float epsilon) {
@@ -2873,37 +2809,32 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of the represented values of segments of two {@link
-   * Float} arrays with regard to a given epsilon.
+   * 测试两个 {@link Float} 数组的段的表示值在给定 epsilon 范围内的相等性。
    *
-   * <p>That is, if the distance between the two float numbers is less than or
-   * equal to the given epsilon, the two float numbers are considered to be
-   * equal.
+   * <p>也就是说，如果两个 float 数字之间的距离小于或等于给定的 epsilon，
+   * 则认为这两个 float 数字相等。
    *
-   * <p>The implementation of this function is non-trivial, since float numbers
-   * could be NaN.
+   * <p>此函数的实现并不简单，因为 float 数字可能是 NaN。
    *
-   * <p>Note that this function can NOT be used to implement the
-   * {@link Object#equals(Object)} function.
+   * <p>注意，此函数不能用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
+   *     要比较的两个段的长度。
    * @param epsilon
-   *     the epsilon used to compare two float numbers.
-   * @return true if the represented values of two segments are equal
-   *     approximately with regard to the given epsilon; false otherwise.
+   *     用于比较两个 float 数字的 epsilon。
+   * @return 如果两个段的表示值在给定 epsilon 范围内近似相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在迭代两个数组时索引越界。
    */
   public static boolean valueEquals(final Float[] array1,
       final int startIndex1, final Float[] array2, final int startIndex2,
@@ -2919,28 +2850,22 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of the represented values of two {@code double} numbers
-   * with regard to a given epsilon.
+   * 测试两个 {@code double} 数字的表示值在给定 epsilon 范围内的相等性。
    *
-   * <p>That is, if the distance between the two double numbers is less than or
-   * equal to the given epsilon, the two double numbers are considered to be
-   * equal.
+   * <p>也就是说，如果两个 double 数字之间的距离小于或等于给定的 epsilon，
+   * 则认为这两个 double 数字相等。
    *
-   * <p>The implementation of this function is non-trivial, since double
-   * numbers
-   * could be NaN.
+   * <p>此函数的实现并不简单，因为 double 数字可能是 NaN。
    *
-   * <p>Note that this function can NOT be used to implement the
-   * {@link Object#equals(Object)} function.
+   * <p>注意，此函数不能用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param value1
-   *     the first value.
+   *     第一个值。
    * @param value2
-   *     the second value.
+   *     第二个值。
    * @param epsilon
-   *     the epsilon used to compare two double numbers.
-   * @return true if the represented values of two double numbers are equal
-   *     approximately with regard to the given epsilon; false otherwise.
+   *     用于比较两个 double 数字的 epsilon。
+   * @return 如果两个 double 数字的表示值在给定 epsilon 范围内近似相等则返回 true；否则返回 false。
    */
   public static boolean valueEquals(final double value1, final double value2,
       final double epsilon) {
@@ -2954,29 +2879,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of the represented values of two {@code double} arrays
-   * with regard to a given epsilon.
+   * 测试两个 {@code double} 数组的表示值在给定 epsilon 范围内的相等性。
    *
-   * <p>That is, if the distance between the two double numbers is less than or
-   * equal to the given epsilon, the two double numbers are considered to be
-   * equal.
+   * <p>也就是说，如果两个 double 数字之间的距离小于或等于给定的 epsilon，
+   * 则认为这两个 double 数字相等。
    *
-   * <p>The implementation of this function is non-trivial, since double
-   * numbers
-   * could be NaN.
+   * <p>此函数的实现并不简单，因为 double 数字可能是 NaN。
    *
-   * <p>Note that this function can NOT be used to implement the
-   * {@link Object#equals(Object)} function.
+   * <p>注意，此函数不能用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param array1
-   *     the first array, which may be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which may be null.
+   *     第二个数组，可以为 null。
    * @param epsilon
-   *     the epsilon used to compare two double numbers.
-   * @return true if the represented values of two double arrays are equal
-   *     approximately with regard to the given epsilon, or both null; false
-   *     otherwise.
+   *     用于比较两个 double 数字的 epsilon。
+   * @return 如果两个 double 数组的表示值在给定 epsilon 范围内近似相等，或都为 null 则返回 true；
+   *     否则返回 false。
    */
   public static boolean valueEquals(@Nullable final double[] array1,
       @Nullable final double[] array2, final double epsilon) {
@@ -2992,38 +2911,32 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of the represented values of segments of two {@code
-   * double} arrays with regard to a given epsilon.
+   * 测试两个 {@code double} 数组的段的表示值在给定 epsilon 范围内的相等性。
    *
-   * <p>That is, if the distance between the two double numbers is less than or
-   * equal to the given epsilon, the two double numbers are considered to be
-   * equal.
+   * <p>也就是说，如果两个 double 数字之间的距离小于或等于给定的 epsilon，
+   * 则认为这两个 double 数字相等。
    *
-   * <p>The implementation of this function is non-trivial, since double
-   * numbers
-   * could be NaN.
+   * <p>此函数的实现并不简单，因为 double 数字可能是 NaN。
    *
-   * <p>Note that this function can NOT be used to implement the
-   * {@link Object#equals(Object)} function.
+   * <p>注意，此函数不能用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
+   *     要比较的两个段的长度。
    * @param epsilon
-   *     the epsilon used to compare two double numbers.
-   * @return true if the represented values of two segments are equal
-   *     approximately with regard to the given epsilon; false otherwise.
+   *     用于比较两个 double 数字的 epsilon。
+   * @return 如果两个段的表示值在给定 epsilon 范围内近似相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在迭代两个数组时索引越界。
    */
   public static boolean valueEquals(final double[] array1,
       final int startIndex1, final double[] array2, final int startIndex2,
@@ -3039,29 +2952,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of the represented values of two {@link Double} objects
-   * with regard to a given epsilon.
+   * 测试两个 {@link Double} 对象的表示值在给定 epsilon 范围内的相等性。
    *
-   * <p>That is, if the distance between the two double numbers is less than or
-   * equal to the given epsilon, the two double numbers are considered to be
-   * equal.
+   * <p>也就是说，如果两个 double 数字之间的距离小于或等于给定的 epsilon，
+   * 则认为这两个 double 数字相等。
    *
-   * <p>The implementation of this function is non-trivial, since double
-   * numbers
-   * could be NaN.
+   * <p>此函数的实现并不简单，因为 double 数字可能是 NaN。
    *
-   * <p>Note that this function can NOT be used to implement the
-   * {@link Object#equals(Object)} function.
+   * <p>注意，此函数不能用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
+   *     第二个对象，可以为 null。
    * @param epsilon
-   *     the epsilon used to compare two double numbers.
-   * @return true if the represented values of two {@link Float} objects are
-   *     equal approximately with regard to the given epsilon, or both null;
-   *     false otherwise.
+   *     用于比较两个 double 数字的 epsilon。
+   * @return 如果两个 {@link Double} 对象的表示值在给定 epsilon 范围内近似相等，或都为 null 则返回 true；
+   *     否则返回 false。
    */
   public static boolean valueEquals(@Nullable final Double value1,
       @Nullable final Double value2, final double epsilon) {
@@ -3077,29 +2984,23 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of the represented values of two {@link Double} arrays
-   * with regard to a given epsilon.
+   * 测试两个 {@link Double} 数组的表示值在给定 epsilon 范围内的相等性。
    *
-   * <p>That is, if the distance between the two double numbers is less than or
-   * equal to the given epsilon, the two double numbers are considered to be
-   * equal.
+   * <p>也就是说，如果两个 double 数字之间的距离小于或等于给定的 epsilon，
+   * 则认为这两个 double 数字相等。
    *
-   * <p>The implementation of this function is non-trivial, since double
-   * numbers
-   * could be NaN.
+   * <p>此函数的实现并不简单，因为 double 数字可能是 NaN。
    *
-   * <p>Note that this function can NOT be used to implement the
-   * {@link Object#equals(Object)} function.
+   * <p>注意，此函数不能用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param array1
-   *     the first array, which may be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which may be null.
+   *     第二个数组，可以为 null。
    * @param epsilon
-   *     the epsilon used to compare two double numbers.
-   * @return true if the represented values of two {@link Double} arrays are
-   *     equal approximately with regard to the given epsilon, or both null;
-   *     false otherwise.
+   *     用于比较两个 double 数字的 epsilon。
+   * @return 如果两个 {@link Double} 数组的表示值在给定 epsilon 范围内近似相等，或都为 null 则返回 true；
+   *     否则返回 false。
    */
   public static boolean valueEquals(@Nullable final Double[] array1,
       @Nullable final Double[] array2, final double epsilon) {
@@ -3115,38 +3016,32 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of the represented values of segments of two {@link
-   * Double} arrays with regard to a given epsilon.
+   * 测试两个 {@link Double} 数组的段的表示值在给定 epsilon 范围内的相等性。
    *
-   * <p>That is, if the distance between the two double numbers is less than or
-   * equal to the given epsilon, the two double numbers are considered to be
-   * equal.
+   * <p>也就是说，如果两个 double 数字之间的距离小于或等于给定的 epsilon，
+   * 则认为这两个 double 数字相等。
    *
-   * <p>The implementation of this function is non-trivial, since double
-   * numbers
-   * could be NaN.
+   * <p>此函数的实现并不简单，因为 double 数字可能是 NaN。
    *
-   * <p>Note that this function can NOT be used to implement the
-   * {@link Object#equals(Object)} function.
+   * <p>注意，此函数不能用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
+   *     要比较的两个段的长度。
    * @param epsilon
-   *     the epsilon used to compare two double numbers.
-   * @return true if the represented values of two segments are equal
-   *     approximately with regard to the given epsilon; false otherwise.
+   *     用于比较两个 double 数字的 epsilon。
+   * @return 如果两个段的表示值在给定 epsilon 范围内近似相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在迭代两个数组时索引越界。
    */
   public static boolean valueEquals(final Double[] array1,
       final int startIndex1, final Double[] array2, final int startIndex2,
@@ -3162,20 +3057,18 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of represented values of two {@link BigDecimal}
-   * objects.
+   * 测试两个 {@link BigDecimal} 对象的表示值的相等性。
    *
-   * <p>Note that this function compares the {@link BigDecimal}'s represented
-   * value, which is inconsistent with the {@link BigDecimal#hashCode()} method,
-   * but consistent with the {@link BigDecimal#compareTo(BigDecimal)} method.
-   * Therefore, this function can NOT be used to implements the {@link
-   * Object#equals(Object)} method.
+   * <p>注意此函数比较 {@link BigDecimal} 的表示值，
+   * 这与 {@link BigDecimal#hashCode()} 方法不一致，
+   * 但与 {@link BigDecimal#compareTo(BigDecimal)} 方法一致。
+   * 因此，此函数不能用于实现 {@link Object#equals(Object)} 方法。
    *
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
-   * @return true if the two objects are equal or both null; false otherwise.
+   *     第二个对象，可以为 null。
+   * @return 如果两个对象相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean valueEquals(@Nullable final BigDecimal value1,
       @Nullable final BigDecimal value2) {
@@ -3189,19 +3082,18 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of represented values of two {@link BigDecimal} arrays.
+   * 测试两个 {@link BigDecimal} 数组的表示值的相等性。
    *
-   * <p>Note that this function compares the {@link BigDecimal}'s represented
-   * value, which is inconsistent with the {@link BigDecimal#hashCode()} method,
-   * but consistent with the {@link BigDecimal#compareTo(BigDecimal)} method.
-   * Therefore, this function can NOT be used to implements the {@link
-   * Object#equals(Object)} method.
+   * <p>注意此函数比较 {@link BigDecimal} 的表示值，
+   * 这与 {@link BigDecimal#hashCode()} 方法不一致，
+   * 但与 {@link BigDecimal#compareTo(BigDecimal)} 方法一致。
+   * 因此，此函数不能用于实现 {@link Object#equals(Object)} 方法。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
-   * @return true if two arrays are equal or both null; false otherwise.
+   *     第二个数组，可以为 null。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean valueEquals(@Nullable final BigDecimal[] array1,
       @Nullable final BigDecimal[] array2) {
@@ -3217,31 +3109,28 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of represented values of segments of two {@link
-   * BigDecimal} arrays.
+   * 测试两个 {@link BigDecimal} 数组的段的表示值的相等性。
    *
-   * <p>Note that this function compares the {@link BigDecimal}'s represented
-   * value, which is inconsistent with the {@link BigDecimal#hashCode()} method,
-   * but consistent with the {@link BigDecimal#compareTo(BigDecimal)} method.
-   * Therefore, this function can NOT be used to implements the {@link
-   * Object#equals(Object)} method.
+   * <p>注意此函数比较 {@link BigDecimal} 的表示值，
+   * 这与 {@link BigDecimal#hashCode()} 方法不一致，
+   * 但与 {@link BigDecimal#compareTo(BigDecimal)} 方法一致。
+   * 因此，此函数不能用于实现 {@link Object#equals(Object)} 方法。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
-   * @return true if the represented values of two segments are equal; false
-   *     otherwise.
+   *     要比较的两个段的长度。
+   * @return 如果两个段的表示值相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在迭代两个数组时索引越界。
    */
   public static boolean valueEquals(final BigDecimal[] array1,
       final int startIndex1, final BigDecimal[] array2, final int startIndex2,
@@ -3257,24 +3146,20 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of the represented values of two {@link Object}s.
+   * 测试两个 {@link Object} 对象的表示值的相等性。
    *
-   * <p>The implementation of this function is non-trivial, since the
-   * multi-dimensional array in Java is treated as an {@link Object}.
+   * <p>此函数的实现并非简单，因为 Java 中的多维数组被视为 {@link Object}。
    *
-   * <p>Note that this function test the equality of two float or double
-   * numbers
-   * using their represented values with regard to a given epsilon. Therefore
-   * this function can NOT be used to implement the {@link
-   * Object#equals(Object)} function.
+   * <p>注意此函数使用给定 epsilon 来测试两个 float 或 double 数字的表示值相等性。
+   * 因此此函数不能用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param value1
-   *     the first object, which may be null.
+   *     第一个对象，可以为 null。
    * @param value2
-   *     the second object, which may be null.
+   *     第二个对象，可以为 null。
    * @param epsilon
-   *     the epsilon used to compare two double numbers.
-   * @return true if the two objects are equal or both null; false otherwise.
+   *     用于比较两个 double 数字的 epsilon。
+   * @return 如果两个对象相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean valueEquals(@Nullable final Object value1,
       @Nullable final Object value2, final double epsilon) {
@@ -3398,24 +3283,20 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of represented values of two {@link Object} arrays.
+   * 测试两个 {@link Object} 数组的表示值的相等性。
    *
-   * <p>The implementation of this function is non-trivial, since the
-   * multi-dimensional array in Java is treated as an {@link Object}.
+   * <p>此函数的实现并非简单，因为 Java 中的多维数组被视为 {@link Object}。
    *
-   * <p>Note that this function test the equality of two float or double
-   * numbers
-   * using their represented values with regard to a given epsilon. Therefore
-   * this function can NOT be used to implement the {@link
-   * Object#equals(Object)} function.
+   * <p>注意此函数使用给定 epsilon 来测试两个 float 或 double 数字的表示值相等性。
+   * 因此此函数不能用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param array1
-   *     the first array, which could be null.
+   *     第一个数组，可以为 null。
    * @param array2
-   *     the second array, which could be null.
+   *     第二个数组，可以为 null。
    * @param epsilon
-   *     the precision.
-   * @return true if two arrays are equal or both null; false otherwise.
+   *     精度。
+   * @return 如果两个数组相等或都为 null 则返回 true；否则返回 false。
    */
   public static boolean valueEquals(@Nullable final Object[] array1,
       @Nullable final Object[] array2, final double epsilon) {
@@ -3431,36 +3312,30 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of represented values of segments of two {@link Object}
-   * arrays.
+   * 测试两个 {@link Object} 数组的段的表示值的相等性。
    *
-   * <p>The implementation of this function is non-trivial, since the
-   * multi-dimensional array in Java is treated as an {@link Object}.
+   * <p>此函数的实现并非简单，因为 Java 中的多维数组被视为 {@link Object}。
    *
-   * <p>Note that this function test the equality of two float or double
-   * numbers
-   * using their represented values with regard to a given epsilon. Therefore
-   * this function can NOT be used to implement the {@link
-   * Object#equals(Object)} function.
+   * <p>注意此函数使用给定 epsilon 来测试两个 float 或 double 数字的表示值相等性。
+   * 因此此函数不能用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param array1
-   *     the first array, which can't be null.
+   *     第一个数组，不能为 null。
    * @param startIndex1
-   *     the starting index of the first segment in the first array.
+   *     第一个数组中第一个段的起始索引。
    * @param array2
-   *     the second array, which can't be null.
+   *     第二个数组，不能为 null。
    * @param startIndex2
-   *     the starting index of the second segment in the second array.
+   *     第二个数组中第二个段的起始索引。
    * @param length
-   *     the length of the two segment to be compared.
+   *     要比较的两个段的长度。
    * @param epsilon
-   *     the precision.
-   * @return true if the represented values of two segments are equal; false
-   *     otherwise.
+   *     精度。
+   * @return 如果两个段的表示值相等则返回 true；否则返回 false。
    * @throws NullPointerException
-   *     if any of the arrays is null.
+   *     如果任何一个数组为 null。
    * @throws IndexOutOfBoundsException
-   *     if the index out of bounds during the iteration of two arrays.
+   *     如果在迭代两个数组时索引越界。
    */
   public static boolean valueEquals(final Object[] array1,
       final int startIndex1, final Object[] array2, final int startIndex2,
@@ -3478,24 +3353,20 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of the represented values of two {@code float}
-   * collections with regard to a given epsilon.
+   * 测试两个 {@code float} 集合的表示值在给定 epsilon 范围内的相等性。
    *
-   * <p>That is, if the distance between the two float numbers is less than or
-   * equal to the given epsilon, the two float numbers are considered to be
-   * equal.
+   * <p>也就是说，如果两个 float 数字之间的距离小于或等于给定的 epsilon，
+   * 则认为这两个 float 数字相等。
    *
-   * <p>Note that this function can NOT be used to implement the
-   * {@link Object#equals(Object)} function.
+   * <p>注意，此函数不能用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param col1
-   *     the first collection, which may be null.
+   *     第一个集合，可以为 null。
    * @param col2
-   *     the second collection, which may be null.
+   *     第二个集合，可以为 null。
    * @param epsilon
-   *     the epsilon used to compare two float numbers.
-   * @return true if the represented values of two collections are equal, or
-   *     both are null; false otherwise.
+   *     用于比较两个 float 数字的 epsilon。
+   * @return 如果两个集合的表示值相等，或都为 null 则返回 true；否则返回 false。
    */
   public static boolean valueEquals(@Nullable final FloatCollection col1,
       @Nullable final FloatCollection col2, final float epsilon) {
@@ -3521,24 +3392,20 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of the represented values of two {@code double}
-   * collections with regard to a given epsilon.
+   * 测试两个 {@code double} 集合的表示值在给定 epsilon 范围内的相等性。
    *
-   * <p>That is, if the distance between the two double numbers is less than or
-   * equal to the given epsilon, the two double numbers are considered to be
-   * equal.
+   * <p>也就是说，如果两个 double 数字之间的距离小于或等于给定的 epsilon，
+   * 则认为这两个 double 数字相等。
    *
-   * <p>Note that this function can NOT be used to implement the
-   * {@link Object#equals(Object)} function.
+   * <p>注意，此函数不能用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param col1
-   *     the first collection, which may be null.
+   *     第一个集合，可以为 null。
    * @param col2
-   *     the second collection, which may be null.
+   *     第二个集合，可以为 null。
    * @param epsilon
-   *     the epsilon used to compare two float numbers.
-   * @return true if the represented values of two collections are equal, or
-   *     both are null; false otherwise.
+   *     用于比较两个 double 数字的 epsilon。
+   * @return 如果两个集合的表示值相等，或都为 null 则返回 true；否则返回 false。
    */
   public static boolean valueEquals(@Nullable final DoubleCollection col1,
       @Nullable final DoubleCollection col2, final double epsilon) {
@@ -3564,26 +3431,20 @@ public final class Equality {
   }
 
   /**
-   * Tests the equality of the represented values of two collections.
+   * 测试两个集合的表示值的相等性。
    *
-   * <p>The elements in the collections to be test may be any objects, or
-   * arrays,
-   * or another collection of objects.
+   * <p>要测试的集合中的元素可以是任何对象、数组或其他对象集合。
    *
-   * <p>Note that this function test the equality of two float or double
-   * numbers
-   * using their represented values with regard to a given epsilon. Therefore
-   * this function can NOT be used to implement the {@link
-   * Object#equals(Object)} function.
+   * <p>注意此函数使用给定 epsilon 来测试两个 float 或 double 数字的表示值相等性。
+   * 因此此函数不能用于实现 {@link Object#equals(Object)} 函数。
    *
    * @param col1
-   *     the first collection, which may be null.
+   *     第一个集合，可以为 null。
    * @param col2
-   *     the second collection, which may be null.
+   *     第二个集合，可以为 null。
    * @param epsilon
-   *     the precision.
-   * @return true if the represented values of two collections are equal, or
-   *     both are null; false otherwise.
+   *     精度。
+   * @return 如果两个集合的表示值相等，或都为 null 则返回 true；否则返回 false。
    */
   public static boolean valueEquals(@Nullable final Collection<?> col1,
       @Nullable final Collection<?> col2, final double epsilon) {
@@ -3612,16 +3473,14 @@ public final class Equality {
   }
 
   /**
-   * Tests whether the left hand side object is null or equals to the right
-   * hand side object.
+   * 测试左侧对象是否为 null 或等于右侧对象。
    *
    * @param lhs
-   *     the left hand side object.
+   *     左侧对象。
    * @param rhs
-   *     the right hand side object.
+   *     右侧对象。
    * @return
-   *     {@code true} if the left hand side object is null or equals to the
-   *     right hand side object; {@code false} otherwise.
+   *     如果左侧对象为 null 或等于右侧对象则返回 {@code true}；否则返回 {@code false}。
    */
   public static boolean nullOrEquals(@Nullable final Object lhs,
       @Nullable final Object rhs) {

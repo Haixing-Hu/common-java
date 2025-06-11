@@ -21,22 +21,19 @@ import javax.annotation.Nullable;
 import ltd.qubit.commons.lang.SystemUtils;
 
 /**
- * Default implementation of the {@link ResourceLoader} interface.
+ * {@link ResourceLoader} 接口的默认实现。
  * <p>
- * Used by {@link ResourceEditor}, and serves as base class for
- * {@link org.springframework.context.support.AbstractApplicationContext}. Can
- * also be used standalone.
+ * 由 {@link ResourceEditor} 使用，并作为 
+ * {@link org.springframework.context.support.AbstractApplicationContext} 的基类。
+ * 也可以独立使用。
  * <p>
- * Will return a {@link UrlResource} if the location value is a URL, and a
- * {@link ClassPathResource} if it is a non-URL path or a "classpath:"
- * pseudo-URL.
+ * 如果位置值是 URL，将返回 {@link UrlResource}；如果是非 URL 路径或 "classpath:" 伪 URL，
+ * 将返回 {@link ClassPathResource}。
  * <p>
- * This class is a copy of
- * {@code org.springframework.core.io.DefaultResourceLoader} with slight
- * modifications. It is used to avoid the dependency of Spring Framework.
+ * 此类是 {@code org.springframework.core.io.DefaultResourceLoader} 的副本，
+ * 略有修改。用于避免对 Spring Framework 的依赖。
  *
- * @author Juergen Hoeller
- * @author Haixing Hu
+ * @author 胡海星
  * @see FileSystemResourceLoader
  */
 public class DefaultResourceLoader implements ResourceLoader {
@@ -51,23 +48,20 @@ public class DefaultResourceLoader implements ResourceLoader {
       4);
 
   /**
-   * Create a new DefaultResourceLoader.
+   * 创建新的 DefaultResourceLoader。
    * <p>
-   * ClassLoader access will happen using the thread context class loader at the
-   * time of actual resource access (since 5.3). For more control, pass a
-   * specific ClassLoader to {@link #DefaultResourceLoader(ClassLoader)}.
+   * ClassLoader 访问将在实际资源访问时使用线程上下文类加载器（自 5.3 起）。
+   * 为了更好的控制，请将特定的 ClassLoader 传递给 {@link #DefaultResourceLoader(ClassLoader)}。
    *
    * @see java.lang.Thread#getContextClassLoader()
    */
   public DefaultResourceLoader() {}
 
   /**
-   * Create a new DefaultResourceLoader.
+   * 创建新的 DefaultResourceLoader。
    *
    * @param classLoader
-   *     the ClassLoader to load class path resources with, or {@code null} for
-   *     using the thread context class loader at the time of actual resource
-   *     access
+   *     用于加载类路径资源的 ClassLoader，或 {@code null} 表示在实际资源访问时使用线程上下文类加载器
    */
   public DefaultResourceLoader(@Nullable final ClassLoader classLoader) {
     this.classLoader = classLoader;
@@ -75,22 +69,18 @@ public class DefaultResourceLoader implements ResourceLoader {
 
 
   /**
-   * Specify the ClassLoader to load class path resources with, or {@code null}
-   * for using the thread context class loader at the time of actual resource
-   * access.
+   * 指定用于加载类路径资源的 ClassLoader，或 {@code null} 表示在实际资源访问时使用线程上下文类加载器。
    * <p>
-   * The default is that ClassLoader access will happen using the thread context
-   * class loader at the time of actual resource access (since 5.3).
+   * 默认情况下，ClassLoader 访问将在实际资源访问时使用线程上下文类加载器（自 5.3 起）。
    */
   public void setClassLoader(@Nullable final ClassLoader classLoader) {
     this.classLoader = classLoader;
   }
 
   /**
-   * Return the ClassLoader to load class path resources with.
+   * 返回用于加载类路径资源的 ClassLoader。
    * <p>
-   * Will get passed to ClassPathResource's constructor for all
-   * ClassPathResource objects created by this resource loader.
+   * 将传递给此资源加载器创建的所有 ClassPathResource 对象的 ClassPathResource 构造函数。
    *
    * @see org.springframework.core.io.ClassPathResource
    */
@@ -101,11 +91,9 @@ public class DefaultResourceLoader implements ResourceLoader {
   }
 
   /**
-   * Register the given resolver with this resource loader, allowing for
-   * additional protocols to be handled.
+   * 向此资源加载器注册给定的解析器，允许处理其他协议。
    * <p>
-   * Any such resolver will be invoked ahead of this loader's standard
-   * resolution rules. It may therefore also override any default rules.
+   * 任何此类解析器都将在此加载器的标准解析规则之前被调用。因此它也可能覆盖任何默认规则。
    *
    * @see #getProtocolResolvers()
    * @since 4.3
@@ -118,8 +106,7 @@ public class DefaultResourceLoader implements ResourceLoader {
   }
 
   /**
-   * Return the collection of currently registered protocol resolvers, allowing
-   * for introspection as well as modification.
+   * 返回当前注册的协议解析器集合，允许内省和修改。
    *
    * @see #addProtocolResolver(ProtocolResolver)
    * @since 4.3
@@ -129,13 +116,11 @@ public class DefaultResourceLoader implements ResourceLoader {
   }
 
   /**
-   * Obtain a cache for the given value type, keyed by
-   * {@link org.springframework.core.io.Resource}.
+   * 获取给定值类型的缓存，以 {@link org.springframework.core.io.Resource} 为键。
    *
    * @param valueType
-   *     the value type, e.g. an ASM {@code MetadataReader}
-   * @return the cache {@link Map}, shared at the {@code ResourceLoader} level
-   * @since 5.0
+   *     值类型，例如 ASM {@code MetadataReader}
+   * @return 缓存 {@link Map}，在 {@code ResourceLoader} 级别共享
    */
   @SuppressWarnings("unchecked")
   public <T> Map<Resource, T> getResourceCache(final Class<T> valueType) {
@@ -144,16 +129,18 @@ public class DefaultResourceLoader implements ResourceLoader {
   }
 
   /**
-   * Clear all resource caches in this resource loader.
+   * 清除此资源加载器中的所有资源缓存。
    *
    * @see #getResourceCache
-   * @since 5.0
    */
   public void clearResourceCaches() {
     this.resourceCaches.clear();
   }
 
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Resource getResource(final String location) {
     if (location == null) {
@@ -186,14 +173,13 @@ public class DefaultResourceLoader implements ResourceLoader {
   }
 
   /**
-   * Return a Resource handle for the resource at the given path.
-   * <p>The default implementation supports class path locations. This should
-   * be appropriate for standalone implementations but can be overridden, e.g.
-   * for implementations targeted at a Servlet container.
+   * 返回给定路径处资源的 Resource 句柄。
+   * <p>默认实现支持类路径位置。这应该适用于独立实现，但可以被覆盖，
+   * 例如针对 Servlet 容器的实现。
    *
    * @param path
-   *     the path to the resource
-   * @return the corresponding Resource handle
+   *     资源的路径
+   * @return 相应的 Resource 句柄
    * @see ClassPathResource
    */
   protected Resource getResourceByPath(final String path) {
@@ -201,22 +187,33 @@ public class DefaultResourceLoader implements ResourceLoader {
   }
 
   /**
-   * ClassPathResource that explicitly expresses a context-relative path through
-   * implementing the ContextResource interface.
+   * 通过实现 ContextResource 接口明确表达上下文相对路径的 ClassPathResource。
    */
   protected static class ClassPathContextResource extends ClassPathResource
       implements ContextResource {
 
+    /**
+     * 构造一个新的 ClassPathContextResource。
+     *
+     * @param path 资源路径
+     * @param classLoader 类加载器
+     */
     public ClassPathContextResource(final String path,
         @Nullable final ClassLoader classLoader) {
       super(path, classLoader);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getPathWithinContext() {
       return getPath();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Resource createRelative(final String relativePath) {
       final String pathToUse = ResourceUtils.applyRelativePath(getPath(), relativePath);

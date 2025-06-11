@@ -20,31 +20,26 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * JBoss VFS based {@link Resource} implementation.
+ * 基于 JBoss VFS 的 {@link Resource} 实现。
  * <p>
- * As of Spring 4.0, this class supports VFS 3.x on JBoss AS 6+
- * (package {@code org.jboss.vfs}) and is in particular compatible with JBoss AS
- * 7 and WildFly 8+.
+ * 从 Spring 4.0 开始，这个类支持 JBoss AS 6+ 上的 VFS 3.x
+ * (包名为 {@code org.jboss.vfs})，尤其与 JBoss AS 7 和 WildFly 8+ 兼容。
  * <p>
- * This class is a copy of {@code org.springframework.core.io.VfsResource}
- * with slight modifications. It is used to avoid the dependency of Spring Framework.
+ * 这个类是 {@code org.springframework.core.io.VfsResource} 的一个副本，
+ * 经过了少量修改。它的目的是为了避免对 Spring Framework 的依赖。
  *
- * @author Ales Justin
- * @author Juergen Hoeller
- * @author Costin Leau
- * @author Sam Brannen
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class VfsResource extends AbstractResource {
 
   private final Object resource;
 
   /**
-   * Create a new {@code VfsResource} wrapping the given resource handle.
+   * 创建一个新的 {@code VfsResource} 来包装给定的资源句柄。
    *
    * @param resource
-   *     a {@code org.jboss.vfs.VirtualFile} instance (untyped in order to avoid
-   *     a static dependency on the VFS API)
+   *     一个 {@code org.jboss.vfs.VirtualFile} 实例 (为了避免
+   *     对 VFS API 的静态依赖，这里使用无类型的方式)。
    */
   public VfsResource(final Object resource) {
     if (resource == null) {

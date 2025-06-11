@@ -11,25 +11,24 @@ package ltd.qubit.commons.io;
 import java.io.IOException;
 
 /**
- * The interface for openable objects.
+ * 可打开对象的接口。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface Openable {
 
   /**
-   * Tests whether this object is opened.
+   * 测试此对象是否已打开。
    *
-   * @return true if this object is opened, false otherwise.
+   * @return 如果此对象已打开则返回 true，否则返回 false。
    */
   boolean isOpened();
 
   /**
-   * Opens this object. If this object has been opened, an exception may be
-   * thrown.
+   * 打开此对象。如果此对象已经打开，可能会抛出异常。
    *
    * @throws IOException
-   *           if any I/O error occurred.
+   *           如果发生任何 I/O 错误。
    */
   void open() throws IOException;
 

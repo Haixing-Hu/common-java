@@ -11,6 +11,7 @@ package ltd.qubit.commons.io.resource;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import ltd.qubit.commons.lang.Equality;
@@ -18,22 +19,18 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * {@link Resource} implementation for a given {@link InputStream}.
+ * 给定 {@link InputStream} 的 {@link Resource} 实现。
  * <p>
- * Should only be used if no other specific {@code Resource} implementation
- * is applicable. In particular, prefer
- * {@link org.springframework.core.io.ByteArrayResource} or any of the
- * file-based {@code Resource} implementations where possible.
- *
- * <p>In contrast to other {@code Resource} implementations, this is a
- * descriptor
- * for an <i>already opened</i> resource - therefore returning {@code true} from
- * {@link #isOpen()}. Do not use an {@code InputStreamResource} if you need to
- * keep the resource descriptor somewhere, or if you need to read from a stream
- * multiple times.
+ * 仅在没有其他特定的 {@code Resource} 实现适用时才应使用。特别地，在可能的情况
+ * 下，优先使用 {@link ByteArrayResource} 或任何基于文件的 {@code Resource} 实现。
+ * <p>
+ * 与其他 {@code Resource} 实现相反，这是一个<i>已经打开的</i>资源的描述符，因此
+ * 从 {@link #isOpen()} 返回 {@code true}。如果您需要将资源描述符保存在某处，
+ * 或者需要多次从流中读取，请不要使用 {@code InputStreamResource}。
  *
  * @author Juergen Hoeller
  * @author Sam Brannen
+ * @author 胡海星
  * @see ByteArrayResource
  * @see ClassPathResource
  * @see FileSystemResource
@@ -49,22 +46,22 @@ public class InputStreamResource extends AbstractResource {
   private boolean read = false;
 
   /**
-   * Create a new InputStreamResource.
+   * 创建一个新的 {@code InputStreamResource}。
    *
    * @param inputStream
-   *     the InputStream to use
+   *     要使用的 {@link InputStream}。
    */
   public InputStreamResource(final InputStream inputStream) {
     this(inputStream, "resource loaded through InputStream");
   }
 
   /**
-   * Create a new InputStreamResource.
+   * 创建一个新的 {@code InputStreamResource}。
    *
    * @param inputStream
-   *     the InputStream to use
+   *     要使用的 {@link InputStream}。
    * @param description
-   *     where the InputStream comes from
+   *     {@link InputStream} 的来源描述。
    */
   public InputStreamResource(final InputStream inputStream,
       @Nullable final String description) {
@@ -77,7 +74,7 @@ public class InputStreamResource extends AbstractResource {
 
 
   /**
-   * This implementation always returns {@code true}.
+   * 此实现始终返回 {@code true}。
    */
   @Override
   public boolean exists() {
@@ -85,7 +82,7 @@ public class InputStreamResource extends AbstractResource {
   }
 
   /**
-   * This implementation always returns {@code true}.
+   * 此实现始终返回 {@code true}。
    */
   @Override
   public boolean isOpen() {
@@ -93,9 +90,9 @@ public class InputStreamResource extends AbstractResource {
   }
 
   /**
-   * This implementation throws IllegalStateException if attempting to read the
-   * underlying stream multiple times.
+   * 如果尝试多次读取底层流，此实现将抛出 {@link IllegalStateException}。
    */
+  @Nonnull
   @Override
   public InputStream getInputStream()
       throws IOException, IllegalStateException {
@@ -108,8 +105,7 @@ public class InputStreamResource extends AbstractResource {
   }
 
   /**
-   * This implementation returns a description that includes the passed-in
-   * description, if any.
+   * 此实现返回一个描述，其中包含传入的描述（如果有）。
    */
   @Override
   public String getDescription() {

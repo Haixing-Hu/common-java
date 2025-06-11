@@ -23,21 +23,27 @@ import static ltd.qubit.commons.io.InputUtils.readBigDecimal;
 import static ltd.qubit.commons.io.OutputUtils.writeBigDecimal;
 
 /**
- * The {@link BinarySerializer} for {@link BigDecimal} class.
+ * {@link BigDecimal} 类的 {@link BinarySerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class BigDecimalBinarySerializer implements BinarySerializer {
 
   public static final BigDecimalBinarySerializer INSTANCE = new BigDecimalBinarySerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public BigDecimal deserialize(final InputStream in, final boolean allowNull)
       throws IOException {
     return readBigDecimal(in, allowNull);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final OutputStream out, @Nullable final Object obj)
       throws IOException {

@@ -9,26 +9,23 @@
 package ltd.qubit.commons.io.resource;
 
 /**
- * Extended interface for a resource that is loaded from an enclosing
- * 'context', e.g. from a {@link jakarta.servlet.ServletContext} but also
- * from plain classpath paths or relative file system paths (specified
- * without an explicit prefix, hence applying relative to the local
- * {@link ResourceLoader}'s context).
+ * 从封闭的"上下文"加载的资源的扩展接口，例如从 {@link jakarta.servlet.ServletContext} 
+ * 加载，也可以从普通的类路径或相对文件系统路径加载（指定时没有显式前缀，
+ * 因此相对于本地 {@link ResourceLoader} 的上下文应用）。
  * <p>
- * This class is a copy of {@code org.springframework.core.io.ContextResource}
- * with slight modifications. It is used to avoid the dependency of Spring Framework.
+ * 此类是 {@code org.springframework.core.io.ContextResource} 的副本，
+ * 略有修改。用于避免对 Spring Framework 的依赖。
  *
  * @author Juergen Hoeller
- * @author Haixing Hu
+ * @author 胡海星
  * @see org.springframework.web.context.support.ServletContextResource
  */
 public interface ContextResource extends Resource {
 
   /**
-   * Return the path within the enclosing 'context'.
+   * 返回封闭"上下文"中的路径。
    * <p>
-   * This is typically path relative to a context-specific root directory, e.g.
-   * a ServletContext root or a PortletContext root.
+   * 这通常是相对于特定上下文根目录的路径，例如 ServletContext 根目录或 PortletContext 根目录。
    */
   String getPathWithinContext();
 }

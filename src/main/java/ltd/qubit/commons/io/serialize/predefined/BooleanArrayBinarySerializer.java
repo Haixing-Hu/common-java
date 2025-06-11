@@ -22,21 +22,27 @@ import static ltd.qubit.commons.io.InputUtils.readBooleanArray;
 import static ltd.qubit.commons.io.OutputUtils.writeBooleanArray;
 
 /**
- * The {@link BinarySerializer} for {@code boolean[]} class.
+ * {@code boolean[]} 类的 {@link BinarySerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class BooleanArrayBinarySerializer implements BinarySerializer {
 
   public static final BooleanArrayBinarySerializer INSTANCE = new BooleanArrayBinarySerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean[] deserialize(final InputStream in, final boolean allowNull)
       throws IOException {
     return readBooleanArray(in, allowNull, null);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final OutputStream out, @Nullable final Object obj)
       throws IOException {

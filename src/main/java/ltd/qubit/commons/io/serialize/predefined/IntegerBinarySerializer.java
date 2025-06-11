@@ -22,21 +22,27 @@ import static ltd.qubit.commons.io.InputUtils.readIntObject;
 import static ltd.qubit.commons.io.OutputUtils.writeIntObject;
 
 /**
- * The {@link BinarySerializer} for {@link Integer} class.
+ * {@link Integer} 类的 {@link BinarySerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class IntegerBinarySerializer implements BinarySerializer {
 
   public static final IntegerBinarySerializer INSTANCE = new IntegerBinarySerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Integer deserialize(final InputStream in, final boolean allowNull)
       throws IOException {
     return readIntObject(in, allowNull);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final OutputStream out, @Nullable final Object obj)
       throws IOException {

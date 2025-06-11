@@ -11,30 +11,30 @@ package ltd.qubit.commons.io.resource;
 import javax.annotation.Nullable;
 
 /**
- * A resolution strategy for protocol-specific resource handles.
+ * 特定协议资源句柄的解析策略。
  * <p>
- * Used as an SPI for {@link DefaultResourceLoader}, allowing for
- * custom protocols to be handled without subclassing the loader
- * implementation (or application context implementation).
+ * 用作 {@link DefaultResourceLoader} 的 SPI，允许处理自定义协议，而无需子类化
+ * 加载器实现（或应用程序上下文实现）。
  * <p>
- * This class is a copy of
- * {@code org.springframework.core.io.ProtocolResolver} with slight
- * modifications. It is used to avoid the dependency of Spring Framework.
+ * 此类是 {@code org.springframework.core.io.ProtocolResolver} 的副本，经过少量修改。
+ * 它用于避免对 Spring Framework 的依赖。
  *
- * @author Juergen Hoeller
- * @author Haixing Hu
+ * @author 胡海星
  * @see DefaultResourceLoader#addProtocolResolver
  */
 @FunctionalInterface
 public interface ProtocolResolver {
 
   /**
-   * Resolve the given location against the given resource loader
-   * if this implementation's protocol matches.
-   * @param location the user-specified resource location
-   * @param resourceLoader the associated resource loader
-   * @return a corresponding {@code Resource} handle if the given location
-   * matches this resolver's protocol, or {@code null} otherwise
+   * 如果此实现的协议匹配，则根据给定的资源加载器解析给定的位置。
+   *
+   * @param location
+   *     用户指定的资源位置。
+   * @param resourceLoader
+   *     关联的资源加载器。
+   * @return
+   *     如果给定位置与此解析器的协议匹配，则为相应的 {@code Resource} 句柄，
+   *     否则为 {@code null}。
    */
   @Nullable
   Resource resolve(String location, ResourceLoader resourceLoader);

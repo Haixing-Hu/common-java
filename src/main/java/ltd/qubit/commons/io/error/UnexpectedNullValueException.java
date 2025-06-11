@@ -8,15 +8,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.io.error;
 
+import java.io.Serial;
+
 /**
- * Thrown to indicate an unexpected null value.
+ * 抛出此异常表示出现意外的空值。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class UnexpectedNullValueException extends InvalidFormatException {
 
+  @Serial
   private static final long serialVersionUID = -995883752209016372L;
 
+  /**
+   * 构造一个 {@code UnexpectedNullValueException}.
+   */
   public UnexpectedNullValueException() {
     super("Unexpected null value.");
   }

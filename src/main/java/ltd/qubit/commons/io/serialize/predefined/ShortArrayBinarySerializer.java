@@ -22,21 +22,27 @@ import static ltd.qubit.commons.io.InputUtils.readShortArray;
 import static ltd.qubit.commons.io.OutputUtils.writeShortArray;
 
 /**
- * The {@link BinarySerializer} for {@code short[]} class.
+ * {@code short[]} 的 {@link BinarySerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class ShortArrayBinarySerializer implements BinarySerializer {
 
   public static final ShortArrayBinarySerializer INSTANCE = new ShortArrayBinarySerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public short[] deserialize(final InputStream in, final boolean allowNull)
       throws IOException {
     return readShortArray(in, allowNull, null);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final OutputStream out, @Nullable final Object obj)
       throws IOException {
