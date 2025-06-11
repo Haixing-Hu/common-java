@@ -3509,10 +3509,6 @@ public final class MathEx {
   //
   // ///////////////////////////////////////////////////////////////////////////
 
-  private static final class RandomHolder {
-    static final RandomEx instance = new RandomEx();
-  }
-
   /**
    * 生成[0.0, 1.0)范围内的随机double值。
    *
@@ -3520,7 +3516,7 @@ public final class MathEx {
    *     随机double值
    */
   public static double random() {
-    return RandomHolder.instance.nextDouble();
+    return RandomEx.LAZY.get().nextDouble();
   }
 
   /**
@@ -3534,7 +3530,7 @@ public final class MathEx {
    *     指定范围内的随机double值
    */
   public static double random(final double lowerBound, final double upperBound) {
-    return RandomHolder.instance.nextDouble(lowerBound, upperBound);
+    return RandomEx.LAZY.get().nextDouble(lowerBound, upperBound);
   }
 
   /**
@@ -3544,7 +3540,7 @@ public final class MathEx {
    *     随机byte值
    */
   public static byte randomByte() {
-    return RandomHolder.instance.nextByte();
+    return RandomEx.LAZY.get().nextByte();
   }
 
   /**
@@ -3556,7 +3552,7 @@ public final class MathEx {
    *     指定范围内的随机byte值
    */
   public static byte randomByte(final byte upperBound) {
-    return RandomHolder.instance.nextByte(upperBound);
+    return RandomEx.LAZY.get().nextByte(upperBound);
   }
 
   /**
@@ -3570,7 +3566,7 @@ public final class MathEx {
    *     指定范围内的随机byte值
    */
   public static byte randomByte(final byte lowerBound, final byte upperBound) {
-    return RandomHolder.instance.nextByte(lowerBound, upperBound);
+    return RandomEx.LAZY.get().nextByte(lowerBound, upperBound);
   }
 
   /**
@@ -3580,7 +3576,7 @@ public final class MathEx {
    *     随机short值
    */
   public static short randomShort() {
-    return RandomHolder.instance.nextShort();
+    return RandomEx.LAZY.get().nextShort();
   }
 
   /**
@@ -3592,7 +3588,7 @@ public final class MathEx {
    *     指定范围内的随机short值
    */
   public static short randomShort(final short upperBound) {
-    return RandomHolder.instance.nextShort(upperBound);
+    return RandomEx.LAZY.get().nextShort(upperBound);
   }
 
   /**
@@ -3606,7 +3602,7 @@ public final class MathEx {
    *     指定范围内的随机short值
    */
   public static short randomShort(final short lowerBound, final short upperBound) {
-    return RandomHolder.instance.nextShort(lowerBound, upperBound);
+    return RandomEx.LAZY.get().nextShort(lowerBound, upperBound);
   }
 
   /**
@@ -3616,7 +3612,7 @@ public final class MathEx {
    *     随机{@code int}值
    */
   public static int randomInt() {
-    return RandomHolder.instance.nextInt();
+    return RandomEx.LAZY.get().nextInt();
   }
 
   /**
@@ -3628,7 +3624,7 @@ public final class MathEx {
    *     指定范围内的随机{@code int}值
    */
   public static int randomInt(final int upperBound) {
-    return RandomHolder.instance.nextInt(upperBound);
+    return RandomEx.LAZY.get().nextInt(upperBound);
   }
 
   /**
@@ -3642,7 +3638,7 @@ public final class MathEx {
    *     指定范围内的随机{@code int}值
    */
   public static int randomInt(final int lowerBound, final int upperBound) {
-    return RandomHolder.instance.nextInt(lowerBound, upperBound);
+    return RandomEx.LAZY.get().nextInt(lowerBound, upperBound);
   }
 
   /**
@@ -3652,7 +3648,7 @@ public final class MathEx {
    *     随机{@code long}值
    */
   public static long randomLong() {
-    return RandomHolder.instance.nextLong();
+    return RandomEx.LAZY.get().nextLong();
   }
 
   /**
@@ -3664,7 +3660,7 @@ public final class MathEx {
    *     指定范围内的随机{@code long}值
    */
   public static long randomLong(final long upperBound) {
-    return RandomHolder.instance.nextLong(upperBound);
+    return RandomEx.LAZY.get().nextLong(upperBound);
   }
 
   /**
@@ -3678,6 +3674,6 @@ public final class MathEx {
    *     指定范围内的随机{@code long}值
    */
   public static long randomLong(final long lowerBound, final long upperBound) {
-    return RandomHolder.instance.nextLong(lowerBound, upperBound);
+    return RandomEx.LAZY.get().nextLong(lowerBound, upperBound);
   }
 }
