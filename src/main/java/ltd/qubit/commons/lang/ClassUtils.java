@@ -1327,80 +1327,80 @@ public class ClassUtils {
     return java.security.Permission.class.isAssignableFrom(type);
   }
 
-  private static final Set<Class<?>> IMMUTABLE_JDK_CLASSES = new HashSet<>();
+  private static final Set<ClassKey> IMMUTABLE_JDK_CLASSES = new HashSet<>();
 
   static {
-    IMMUTABLE_JDK_CLASSES.add(Character.class);
-    IMMUTABLE_JDK_CLASSES.add(Boolean.class);
-    IMMUTABLE_JDK_CLASSES.add(Byte.class);
-    IMMUTABLE_JDK_CLASSES.add(Short.class);
-    IMMUTABLE_JDK_CLASSES.add(Integer.class);
-    IMMUTABLE_JDK_CLASSES.add(Long.class);
-    IMMUTABLE_JDK_CLASSES.add(Float.class);
-    IMMUTABLE_JDK_CLASSES.add(Double.class);
-    IMMUTABLE_JDK_CLASSES.add(Void.class);
-    IMMUTABLE_JDK_CLASSES.add(BigInteger.class);
-    IMMUTABLE_JDK_CLASSES.add(BigDecimal.class);
-    IMMUTABLE_JDK_CLASSES.add(String.class);
-    IMMUTABLE_JDK_CLASSES.add(Class.class);
-    IMMUTABLE_JDK_CLASSES.add(StackTraceElement.class);
-    IMMUTABLE_JDK_CLASSES.add(java.net.IDN.class);
-    IMMUTABLE_JDK_CLASSES.add(java.net.Inet4Address.class);
-    IMMUTABLE_JDK_CLASSES.add(java.net.Inet6Address.class);
-    IMMUTABLE_JDK_CLASSES.add(java.net.InetSocketAddress.class);
-    IMMUTABLE_JDK_CLASSES.add(java.net.URL.class);
-    IMMUTABLE_JDK_CLASSES.add(java.net.URI.class);
-    IMMUTABLE_JDK_CLASSES.add(java.security.Permission.class);
-    IMMUTABLE_JDK_CLASSES.add(java.io.File.class);
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(Character.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(Boolean.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(Byte.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(Short.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(Integer.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(Long.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(Float.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(Double.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(Void.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(BigInteger.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(BigDecimal.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(String.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(Class.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(StackTraceElement.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.net.IDN.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.net.Inet4Address.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.net.Inet6Address.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.net.InetSocketAddress.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.net.URL.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.net.URI.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.security.Permission.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.io.File.class));
     // 2024-03-15 starfish: Remove the following AWT related classes since they do not exist in Android environment
-    // IMMUTABLE_JDK_CLASSES.add(java.awt.Font.class);
-    // IMMUTABLE_JDK_CLASSES.add(java.awt.BasicStroke.class);
-    // IMMUTABLE_JDK_CLASSES.add(java.awt.Color.class);
-    // IMMUTABLE_JDK_CLASSES.add(java.awt.GradientPaint.class);
-    // IMMUTABLE_JDK_CLASSES.add(java.awt.LinearGradientPaint.class);
-    // IMMUTABLE_JDK_CLASSES.add(java.awt.RadialGradientPaint.class);
-    // IMMUTABLE_JDK_CLASSES.add(java.awt.Cursor.class);
-    IMMUTABLE_JDK_CLASSES.add(java.util.Locale.class);
-    IMMUTABLE_JDK_CLASSES.add(java.util.UUID.class);
-    IMMUTABLE_JDK_CLASSES.add(java.util.Currency.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.Clock.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.Duration.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.Instant.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.LocalDate.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.LocalDateTime.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.LocalTime.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.MonthDay.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.OffsetDateTime.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.OffsetTime.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.Period.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.Year.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.YearMonth.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.ZonedDateTime.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.ZoneId.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.ZoneOffset.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.chrono.HijrahChronology.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.chrono.HijrahDate.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.chrono.IsoChronology.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.chrono.JapaneseChronology.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.chrono.JapaneseDate.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.chrono.JapaneseEra.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.chrono.MinguoChronology.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.chrono.MinguoDate.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.chrono.ThaiBuddhistChronology.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.chrono.ThaiBuddhistDate.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.format.DateTimeFormatter.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.format.DateTimeFormatterBuilder.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.format.DecimalStyle.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.temporal.IsoFields.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.temporal.JulianFields.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.temporal.TemporalAdjusters.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.temporal.TemporalQueries.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.temporal.ValueRange.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.temporal.WeekFields.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.zone.ZoneOffsetTransition.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.zone.ZoneOffsetTransitionRule.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.zone.ZoneRules.class);
-    IMMUTABLE_JDK_CLASSES.add(java.time.zone.ZoneRulesProvider.class);
+    // IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.awt.Font.class));
+    // IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.awt.BasicStroke.class));
+    // IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.awt.Color.class));
+    // IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.awt.GradientPaint.class));
+    // IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.awt.LinearGradientPaint.class));
+    // IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.awt.RadialGradientPaint.class));
+    // IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.awt.Cursor.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.util.Locale.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.util.UUID.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.util.Currency.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.Clock.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.Duration.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.Instant.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.LocalDate.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.LocalDateTime.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.LocalTime.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.MonthDay.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.OffsetDateTime.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.OffsetTime.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.Period.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.Year.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.YearMonth.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.ZonedDateTime.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.ZoneId.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.ZoneOffset.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.chrono.HijrahChronology.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.chrono.HijrahDate.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.chrono.IsoChronology.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.chrono.JapaneseChronology.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.chrono.JapaneseDate.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.chrono.JapaneseEra.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.chrono.MinguoChronology.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.chrono.MinguoDate.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.chrono.ThaiBuddhistChronology.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.chrono.ThaiBuddhistDate.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.format.DateTimeFormatter.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.format.DateTimeFormatterBuilder.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.format.DecimalStyle.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.temporal.IsoFields.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.temporal.JulianFields.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.temporal.TemporalAdjusters.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.temporal.TemporalQueries.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.temporal.ValueRange.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.temporal.WeekFields.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.zone.ZoneOffsetTransition.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.zone.ZoneOffsetTransitionRule.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.zone.ZoneRules.class));
+    IMMUTABLE_JDK_CLASSES.add(new ClassKey(java.time.zone.ZoneRulesProvider.class));
   }
 
   /**
@@ -1411,7 +1411,7 @@ public class ClassUtils {
    * @return 如果类型是不可变对象的类型则返回 {@code true}，否则返回 {@code false}。
    */
   public static boolean isImmutableType(final Class<?> type) {
-    return IMMUTABLE_JDK_CLASSES.contains(type)
+    return IMMUTABLE_JDK_CLASSES.contains(new ClassKey(type))
         || isEnumType(type)
         || isPermissionType(type)
         || type.isAnnotationPresent(Immutable.class);

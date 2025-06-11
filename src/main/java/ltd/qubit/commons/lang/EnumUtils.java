@@ -265,14 +265,16 @@ public class EnumUtils {
    *     回{@code false}。
    */
   public static boolean isComparable(final Class<?> type) {
-    return COMPARABLE_TYPES.contains(type) || Enum.class.isAssignableFrom(type);
+    return COMPARABLE_TYPES.contains(new ClassKey(type)) || Enum.class.isAssignableFrom(type);
   }
 
   /**
    * 可与枚举类型进行比较的类型集合。
    */
-  private static final Set<Class<?>> COMPARABLE_TYPES =
-      ImmutableSet.of(char.class, Character.class, String.class);
+  private static final Set<ClassKey> COMPARABLE_TYPES =
+      ImmutableSet.of(new ClassKey(char.class),
+        new ClassKey(Character.class),
+        new ClassKey(String.class));
 
   /**
    * 获取指定枚举名称对应的枚举值。

@@ -1412,8 +1412,10 @@ public final class CharUtils {
     //  resume checkstyle: MagicNumberCheck
   }
 
-  private static final Set<Class<?>> COMPARABLE_TYPES =
-      ImmutableSet.of(char.class, Character.class, String.class);
+  private static final Set<ClassKey> COMPARABLE_TYPES =
+      ImmutableSet.of(new ClassKey(char.class),
+          new ClassKey(Character.class),
+          new ClassKey(String.class));
 
   /**
    * 测试指定的类型的值是否可以和{@code char}或{@code Character}类型的值进行比较。
@@ -1425,6 +1427,6 @@ public final class CharUtils {
    *     {@code true}；否则返回{@code false}。
    */
   public static boolean isComparable(final Class<?> type) {
-    return COMPARABLE_TYPES.contains(type) || Enum.class.isAssignableFrom(type);
+    return COMPARABLE_TYPES.contains(new ClassKey(type)) || Enum.class.isAssignableFrom(type);
   }
 }

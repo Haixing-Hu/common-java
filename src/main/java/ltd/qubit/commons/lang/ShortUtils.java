@@ -378,11 +378,23 @@ public class ShortUtils {
     return (value == null ? defaultValue : BigDecimal.valueOf(value));
   }
 
-  private static final Set<Class<?>> COMPARABLE_TYPES =
-      ImmutableSet.of(boolean.class, byte.class, short.class, int.class,
-          long.class, float.class, double.class, Boolean.class, Byte.class,
-          Short.class, Integer.class, Long.class, BigInteger.class,
-          Float.class, Double.class, BigDecimal.class);
+  private static final Set<ClassKey> COMPARABLE_TYPES =
+      ImmutableSet.of(new ClassKey(boolean.class),
+          new ClassKey(byte.class),
+          new ClassKey(short.class),
+          new ClassKey(int.class),
+          new ClassKey(long.class),
+          new ClassKey(float.class),
+          new ClassKey(double.class),
+          new ClassKey(Boolean.class),
+          new ClassKey(Byte.class),
+          new ClassKey(Short.class),
+          new ClassKey(Integer.class),
+          new ClassKey(Long.class),
+          new ClassKey(BigInteger.class),
+          new ClassKey(Float.class),
+          new ClassKey(Double.class),
+          new ClassKey(BigDecimal.class));
 
   /**
    * 测试指定的类型的值是否可以和{@code short}或{@code Short}类型的值进行比较。
@@ -394,6 +406,6 @@ public class ShortUtils {
    *     {@code true}；否则返回{@code false}。
    */
   public static boolean isComparable(final Class<?> type) {
-    return COMPARABLE_TYPES.contains(type);
+    return COMPARABLE_TYPES.contains(new ClassKey(type));
   }
 }

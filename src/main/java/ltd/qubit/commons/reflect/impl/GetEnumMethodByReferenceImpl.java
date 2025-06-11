@@ -95,7 +95,7 @@ public class GetEnumMethodByReferenceImpl {
     // 这样可以避免在 Web 容器热部署环境中因为保留对类加载器的引用而导致的内存泄漏问题。
     // 详细说明请参考 ClassKey 类的 javadoc。
     final Map<ClassKey, Long> index = new IdentityHashMap<>();
-    return type -> {
+    return (type) -> {
       if (type.isAssignableFrom(boolean.class)) {
         // Note: When the record has more than one primitive boolean component,
         //       we need to fall back to an exhaustive component search via exhaustiveComponentSearch(…)
