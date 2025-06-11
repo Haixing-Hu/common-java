@@ -24,6 +24,7 @@ import java.util.Random;
 
 import javax.annotation.concurrent.ThreadSafe;
 
+import ltd.qubit.commons.concurrent.Lazy;
 import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.text.Ascii;
 import ltd.qubit.commons.util.range.CloseRange;
@@ -47,6 +48,11 @@ public class RandomEx extends Random {
 
   public static final CloseRange<Integer> DEFAULT_STRING_LENGTH_RANGE =
       new UnmodifiableCloseRange<>(5, 100);
+
+  /**
+   * 延迟初始化的全局 {@link RandomEx} 对象。
+   */
+  public static final Lazy<RandomEx> LAZY = Lazy.of(RandomEx::new);
 
   public RandomEx() {
   }
