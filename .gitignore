@@ -65,3 +65,8 @@ __pycache__
 .attach_pid*
 .cursor
 .vscode
+
+# 工作文件
+diff.txt
+*.md
+mark_*.sh
