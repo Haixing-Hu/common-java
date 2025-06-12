@@ -25,35 +25,64 @@ import static ltd.qubit.commons.lang.Argument.requireNonNegative;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * Stores the meta-information about a field.
+ * 存储关于字段的元信息。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class FieldInfo implements Comparable<FieldInfo> {
 
+  /**
+   * 拥有者类型的信息。
+   */
   private final TypeInfo ownerInfo;
+
+  /**
+   * 字段。
+   */
   private final Field field;
+
+  /**
+   * 字段在拥有者类中的深度。
+   */
   private final int depth;
+
+  /**
+   * 字段的名称。
+   */
   private final String name;
+
+  /**
+   * 字段的实际类型。
+   */
   private final Class<?> actualType;
 
+  /**
+   * 字段的实际组件类型。
+   */
   @Nullable
   private final Class<?> actualComponentType;
 
+  /**
+   * 字段的实际类型参数。
+   */
   @Nullable
   private final Class<?>[] actualTypeArguments;
+
+  /**
+   * 字段的签名。
+   */
   private final FieldSignature signature;
 
   /**
-   * Constructs a {@link FieldInfo}.
+   * 构造一个 {@link FieldInfo} 实例。
    *
    * @param ownerInfo
-   *          the information about the owner class.
+   *     拥有者类的信息。
    * @param field
-   *          the field.
+   *     字段。
    * @param depth
-   *          the depth of the field in the owner class.
+   *     字段在拥有者类中的深度。
    */
   public FieldInfo(final TypeInfo ownerInfo, final Field field, final int depth) {
     this.ownerInfo = requireNonNull("ownerInfo", ownerInfo);
@@ -79,6 +108,14 @@ public final class FieldInfo implements Comparable<FieldInfo> {
     this.signature = new FieldSignature(this.name, this.actualType);
   }
 
+  /**
+   * 构造一个 {@link FieldInfo} 实例。
+   *
+   * @param info
+   *     已存在的 {@link FieldInfo} 实例。
+   * @param depth
+   *     字段在拥有者类中的深度。
+   */
   public FieldInfo(final FieldInfo info, final int depth) {
     this.ownerInfo = info.ownerInfo;
     this.field = info.field;
@@ -90,36 +127,76 @@ public final class FieldInfo implements Comparable<FieldInfo> {
     this.signature = info.signature;
   }
 
+  /**
+   * 获取拥有者类型的信息。
+   *
+   * @return 拥有者类型的信息。
+   */
   public final TypeInfo getOwnerInfo() {
     return ownerInfo;
   }
 
+  /**
+   * 获取字段。
+   *
+   * @return 字段。
+   */
   public final Field getField() {
     return field;
   }
 
+  /**
+   * 获取字段在拥有者类中的深度。
+   *
+   * @return 字段在拥有者类中的深度。
+   */
   public final int getDepth() {
     return depth;
   }
 
+  /**
+   * 获取字段的名称。
+   *
+   * @return 字段的名称。
+   */
   public final String getName() {
     return name;
   }
 
+  /**
+   * 获取字段的实际类型。
+   *
+   * @return 字段的实际类型。
+   */
   public final Class<?> getActualType() {
     return actualType;
   }
 
+  /**
+   * 获取字段的实际组件类型。
+   *
+   * @return 字段的实际组件类型，如果字段不是数组类型则返回 {@code null}。
+   */
   @Nullable
   public Class<?> getActualComponentType() {
     return actualComponentType;
   }
 
+  /**
+   * 获取字段的实际类型参数。
+   *
+   * @return 字段的实际类型参数，如果字段不是泛型类型则返回 {@code null}。
+   */
   @Nullable
   public Class<?>[] getActualTypeArguments() {
     return actualTypeArguments;
   }
 
+  /**
+   * 获取字段的签名。
+   *
+   * @return 字段的签名。
+   */
   public final FieldSignature getSignature() {
     return signature;
   }

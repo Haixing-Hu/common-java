@@ -10,16 +10,21 @@ package ltd.qubit.commons.reflect;
 
 import java.lang.annotation.Annotation;
 
+/**
+ * 提供注解相关的实用功能。
+ *
+ * @author 胡海星
+ */
 public class AnnotationUtils {
   /**
-   * Gets the value of an attribute of an annotation.
+   * 获取注解中指定属性的值。
    *
    * @param annotation
-   *     the annotation object.
+   *     注解对象。
    * @param name
-   *     the name of the attribute.
+   *     属性名称。
    * @return
-   *     the value of the attribute.
+   *     属性的值。
    */
   @SuppressWarnings("unchecked")
   public static <T> T getAttribute(final Annotation annotation, final String name) {
@@ -31,15 +36,14 @@ public class AnnotationUtils {
   }
 
   /**
-   * Gets the value of an attribute of an annotation.
+   * 获取注解中指定属性的值。
    *
    * @param annotation
-   *     the annotation object.
+   *     注解对象。
    * @param name
-   *     the name of the attribute.
+   *     属性名称。
    * @return
-   *     the value of the attribute, or {@code null} if the attribute does not
-   *     exist.
+   *     属性的值，如果属性不存在则返回 {@code null}。
    */
   @SuppressWarnings("unchecked")
   public static <T> T getAttributeOrNull(final Annotation annotation, final String name) {

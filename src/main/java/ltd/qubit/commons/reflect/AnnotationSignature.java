@@ -16,19 +16,36 @@ import javax.annotation.Nullable;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * The signature of an annotation.
+ * 注解的签名。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 final class AnnotationSignature {
+
+  /**
+   * 字段。
+   */
   public final Field field;
+
+  /**
+   * 注解类型。
+   */
   public final Class<? extends Annotation> type;
 
+  /**
+   * 构造一个注解签名。
+   *
+   * @param field
+   *     字段。
+   * @param type
+   *     注解类型。
+   */
   public AnnotationSignature(final Field field, final Class<? extends Annotation> type) {
     this.field = field;
     this.type = type;
   }
 
+  @Override
   public int hashCode() {
     final int multiplier = 11;
     int code = 2;

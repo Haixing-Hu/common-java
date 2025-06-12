@@ -14,15 +14,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A class provides a function to convert a Windows code page to a Java charset.
+ * 此类提供将Windows代码页转换为Java字符集的功能。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see <a href="http://msdn.microsoft.com/en-us/library/dd317756(VS.85).aspx">
  *   Windows Code Page Identifiers</a>
  */
 public final class WinCodePage {
   private static final Map<Integer, String> CODE_PAGE_MAP;
 
+  /**
+   * 将Windows代码页转换为Java字符集。
+   *
+   * @param codePage Windows代码页标识符
+   * @return 对应的Java字符集，如果代码页不受支持则返回{@code null}
+   */
   public static Charset toCharset(final int codePage) {
     final String name = CODE_PAGE_MAP.get(codePage);
     if (name == null) {

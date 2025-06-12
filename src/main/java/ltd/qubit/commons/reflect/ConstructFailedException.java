@@ -13,23 +13,45 @@ import java.io.Serial;
 import ltd.qubit.commons.text.Joiner;
 
 /**
- * Thrown to indicate the construction failed.
+ * 抛出异常以指示构造失败。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class ConstructFailedException extends ReflectionException {
 
   @Serial
   private static final long serialVersionUID = - 4255851177528512471L;
 
+  /**
+   * 构造一个 {@link ConstructFailedException} 实例。
+   *
+   * @param cls
+   *     指定的类。
+   */
   public ConstructFailedException(final Class<?> cls) {
     super("Failed to construct " + cls.getName());
   }
 
+  /**
+   * 构造一个 {@link ConstructFailedException} 实例。
+   *
+   * @param cls
+   *     指定的类。
+   * @param cause
+   *     导致构造失败的原因。
+   */
   public ConstructFailedException(final Class<?> cls, final Throwable cause) {
     super("Failed to construct " + cls.getName(), cause);
   }
 
+  /**
+   * 构造一个 {@link ConstructFailedException} 实例。
+   *
+   * @param cls
+   *     指定的类。
+   * @param paramTypes
+   *     参数类型。
+   */
   public ConstructFailedException(final Class<?> cls, final Class<?>[] paramTypes) {
     super("Failed to construct "
         + cls.getName()
@@ -38,6 +60,16 @@ public class ConstructFailedException extends ReflectionException {
         + "].");
   }
 
+  /**
+   * 构造一个 {@link ConstructFailedException} 实例。
+   *
+   * @param cls
+   *     指定的类。
+   * @param paramTypes
+   *     参数类型。
+   * @param cause
+   *     导致构造失败的原因。
+   */
   public ConstructFailedException(final Class<?> cls, final Class<?>[] paramTypes,
       final Throwable cause) {
     super("Failed to construct "

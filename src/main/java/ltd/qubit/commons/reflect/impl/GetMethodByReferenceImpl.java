@@ -16,13 +16,16 @@ import ltd.qubit.commons.reflect.Option;
 import ltd.qubit.commons.reflect.ReflectionException;
 
 /**
- * Provides functions that get the method object by a reference to the method.
+ * 提供通过方法引用获取方法对象的功能。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @SuppressWarnings("overloads")
 public class GetMethodByReferenceImpl {
 
+  /**
+   * 方法引用缓存。
+   */
   public static final ClassValue<ReferenceToMethodCache<?>>
       GETTER_METHOD_CACHES = new ClassValue<>() {
         @Override
@@ -31,6 +34,20 @@ public class GetMethodByReferenceImpl {
         }
       };
 
+  /**
+   * 创建指定类的代理对象。
+   *
+   * @param <T>
+   *     类的类型
+   * @param clazz
+   *     要创建代理的类
+   * @param captor
+   *     方法捕获器
+   * @return
+   *     代理对象
+   * @throws ReflectionException
+   *     如果创建代理失败
+   */
   public static <T> T createProxy(final Class<T> clazz,
       final MethodCaptor captor) {
     final Class<? extends T> proxyClass = MethodCaptor.getProxyClass(clazz);
@@ -46,6 +63,20 @@ public class GetMethodByReferenceImpl {
 
   // TODO: support Java 15+ record
 
+  /**
+   * 通过无参数非void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <R>
+   *     返回值类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   */
   public static <T, R> Method findMethod(final Class<T> clazz,
       final NonVoidMethod0<T, R> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -54,6 +85,24 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过一个参数的非void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <R>
+   *     返回值类型
+   * @param <P1>
+   *     第一个参数类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   * @throws IllegalArgumentException
+   *     如果方法有原始类型参数
+   */
   public static <T, R, P1> Method findMethod(final Class<T> clazz,
       final NonVoidMethod1<T, R, P1> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -67,6 +116,20 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过一个boolean参数的非void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <R>
+   *     返回值类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   */
   public static <T, R> Method findMethod(final Class<T> clazz,
       final NonVoidMethod1Boolean<T, R> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -75,6 +138,20 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过一个char参数的非void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <R>
+   *     返回值类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   */
   public static <T, R> Method findMethod(final Class<T> clazz,
       final NonVoidMethod1Char<T, R> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -83,6 +160,20 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过一个byte参数的非void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <R>
+   *     返回值类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   */
   public static <T, R> Method findMethod(final Class<T> clazz,
       final NonVoidMethod1Byte<T, R> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -91,6 +182,20 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过一个short参数的非void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <R>
+   *     返回值类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   */
   public static <T, R> Method findMethod(final Class<T> clazz,
       final NonVoidMethod1Short<T, R> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -99,6 +204,20 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过一个int参数的非void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <R>
+   *     返回值类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   */
   public static <T, R> Method findMethod(final Class<T> clazz,
       final NonVoidMethod1Int<T, R> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -107,6 +226,20 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过一个long参数的非void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <R>
+   *     返回值类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   */
   public static <T, R> Method findMethod(final Class<T> clazz,
       final NonVoidMethod1Long<T, R> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -115,6 +248,20 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过一个float参数的非void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <R>
+   *     返回值类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   */
   public static <T, R> Method findMethod(final Class<T> clazz,
       final NonVoidMethod1Float<T, R> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -123,6 +270,20 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过一个double参数的非void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <R>
+   *     返回值类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   */
   public static <T, R> Method findMethod(final Class<T> clazz,
       final NonVoidMethod1Double<T, R> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -131,6 +292,26 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过两个参数的非void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <R>
+   *     返回值类型
+   * @param <P1>
+   *     第一个参数类型
+   * @param <P2>
+   *     第二个参数类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   * @throws IllegalArgumentException
+   *     如果方法有原始类型参数
+   */
   public static <T, R, P1, P2> Method findMethod(final Class<T> clazz,
       final NonVoidMethod2<T, R, P1, P2> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -144,6 +325,28 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过三个参数的非void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <R>
+   *     返回值类型
+   * @param <P1>
+   *     第一个参数类型
+   * @param <P2>
+   *     第二个参数类型
+   * @param <P3>
+   *     第三个参数类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   * @throws IllegalArgumentException
+   *     如果方法有原始类型参数
+   */
   public static <T, R, P1, P2, P3> Method findMethod(final Class<T> clazz,
       final NonVoidMethod3<T, R, P1, P2, P3> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -157,6 +360,30 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过四个参数的非void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <R>
+   *     返回值类型
+   * @param <P1>
+   *     第一个参数类型
+   * @param <P2>
+   *     第二个参数类型
+   * @param <P3>
+   *     第三个参数类型
+   * @param <P4>
+   *     第四个参数类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   * @throws IllegalArgumentException
+   *     如果方法有原始类型参数
+   */
   public static <T, R, P1, P2, P3, P4> Method findMethod(final Class<T> clazz,
       final NonVoidMethod4<T, R, P1, P2, P3, P4> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -170,6 +397,32 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过五个参数的非void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <R>
+   *     返回值类型
+   * @param <P1>
+   *     第一个参数类型
+   * @param <P2>
+   *     第二个参数类型
+   * @param <P3>
+   *     第三个参数类型
+   * @param <P4>
+   *     第四个参数类型
+   * @param <P5>
+   *     第五个参数类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   * @throws IllegalArgumentException
+   *     如果方法有原始类型参数
+   */
   public static <T, R, P1, P2, P3, P4, P5> Method findMethod(
       final Class<T> clazz,
       final NonVoidMethod5<T, R, P1, P2, P3, P4, P5> ref) {
@@ -184,6 +437,34 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过六个参数的非void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <R>
+   *     返回值类型
+   * @param <P1>
+   *     第一个参数类型
+   * @param <P2>
+   *     第二个参数类型
+   * @param <P3>
+   *     第三个参数类型
+   * @param <P4>
+   *     第四个参数类型
+   * @param <P5>
+   *     第五个参数类型
+   * @param <P6>
+   *     第六个参数类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   * @throws IllegalArgumentException
+   *     如果方法有原始类型参数
+   */
   public static <T, R, P1, P2, P3, P4, P5, P6> Method findMethod(
       final Class<T> clazz,
       final NonVoidMethod6<T, R, P1, P2, P3, P4, P5, P6> ref) {
@@ -198,6 +479,36 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过七个参数的非void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <R>
+   *     返回值类型
+   * @param <P1>
+   *     第一个参数类型
+   * @param <P2>
+   *     第二个参数类型
+   * @param <P3>
+   *     第三个参数类型
+   * @param <P4>
+   *     第四个参数类型
+   * @param <P5>
+   *     第五个参数类型
+   * @param <P6>
+   *     第六个参数类型
+   * @param <P7>
+   *     第七个参数类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   * @throws IllegalArgumentException
+   *     如果方法有原始类型参数
+   */
   public static <T, R, P1, P2, P3, P4, P5, P6, P7> Method findMethod(
       final Class<T> clazz,
       final NonVoidMethod7<T, R, P1, P2, P3, P4, P5, P6, P7> ref) {
@@ -212,6 +523,38 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过八个参数的非void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <R>
+   *     返回值类型
+   * @param <P1>
+   *     第一个参数类型
+   * @param <P2>
+   *     第二个参数类型
+   * @param <P3>
+   *     第三个参数类型
+   * @param <P4>
+   *     第四个参数类型
+   * @param <P5>
+   *     第五个参数类型
+   * @param <P6>
+   *     第六个参数类型
+   * @param <P7>
+   *     第七个参数类型
+   * @param <P8>
+   *     第八个参数类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   * @throws IllegalArgumentException
+   *     如果方法有原始类型参数
+   */
   public static <T, R, P1, P2, P3, P4, P5, P6, P7, P8> Method findMethod(
       final Class<T> clazz,
       final NonVoidMethod8<T, R, P1, P2, P3, P4, P5, P6, P7, P8> ref) {
@@ -226,6 +569,40 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过九个参数的非void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <R>
+   *     返回值类型
+   * @param <P1>
+   *     第一个参数类型
+   * @param <P2>
+   *     第二个参数类型
+   * @param <P3>
+   *     第三个参数类型
+   * @param <P4>
+   *     第四个参数类型
+   * @param <P5>
+   *     第五个参数类型
+   * @param <P6>
+   *     第六个参数类型
+   * @param <P7>
+   *     第七个参数类型
+   * @param <P8>
+   *     第八个参数类型
+   * @param <P9>
+   *     第九个参数类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   * @throws IllegalArgumentException
+   *     如果方法有原始类型参数
+   */
   public static <T, R, P1, P2, P3, P4, P5, P6, P7, P8, P9> Method findMethod(
       final Class<T> clazz,
       final NonVoidMethod9<T, R, P1, P2, P3, P4, P5, P6, P7, P8, P9> ref) {
@@ -240,6 +617,18 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过无参数的void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   */
   public static <T> Method findMethod(final Class<T> clazz,
       final VoidMethod0<T> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -248,6 +637,22 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过一个参数的void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <P1>
+   *     第一个参数类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   * @throws IllegalArgumentException
+   *     如果方法有原始类型参数
+   */
   public static <T, P1> Method findMethod(final Class<T> clazz,
       final VoidMethod1<T, P1> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -260,6 +665,18 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过一个boolean参数的void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   */
   public static <T> Method findMethod(final Class<T> clazz,
       final VoidMethod1Boolean<T> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -268,6 +685,18 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过一个char参数的void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   */
   public static <T> Method findMethod(final Class<T> clazz,
       final VoidMethod1Char<T> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -276,6 +705,18 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过一个byte参数的void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   */
   public static <T> Method findMethod(final Class<T> clazz,
       final VoidMethod1Byte<T> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -284,6 +725,18 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过一个short参数的void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   */
   public static <T> Method findMethod(final Class<T> clazz,
       final VoidMethod1Short<T> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -292,6 +745,18 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过一个int参数的void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   */
   public static <T> Method findMethod(final Class<T> clazz,
       final VoidMethod1Int<T> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -300,6 +765,18 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过一个long参数的void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   */
   public static <T> Method findMethod(final Class<T> clazz,
       final VoidMethod1Long<T> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -308,6 +785,18 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过一个float参数的void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   */
   public static <T> Method findMethod(final Class<T> clazz,
       final VoidMethod1Float<T> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -316,6 +805,18 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过一个double参数的void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   */
   public static <T> Method findMethod(final Class<T> clazz,
       final VoidMethod1Double<T> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -324,6 +825,24 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过两个参数的void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <P1>
+   *     第一个参数类型
+   * @param <P2>
+   *     第二个参数类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   * @throws IllegalArgumentException
+   *     如果方法有原始类型参数
+   */
   public static <T, P1, P2> Method findMethod(final Class<T> clazz,
       final VoidMethod2<T, P1, P2> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -337,6 +856,26 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过三个参数的void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <P1>
+   *     第一个参数类型
+   * @param <P2>
+   *     第二个参数类型
+   * @param <P3>
+   *     第三个参数类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   * @throws IllegalArgumentException
+   *     如果方法有原始类型参数
+   */
   public static <T, P1, P2, P3> Method findMethod(final Class<T> clazz,
       final VoidMethod3<T, P1, P2, P3> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -350,6 +889,28 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过四个参数的void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <P1>
+   *     第一个参数类型
+   * @param <P2>
+   *     第二个参数类型
+   * @param <P3>
+   *     第三个参数类型
+   * @param <P4>
+   *     第四个参数类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   * @throws IllegalArgumentException
+   *     如果方法有原始类型参数
+   */
   public static <T, P1, P2, P3, P4> Method findMethod(final Class<T> clazz,
       final VoidMethod4<T, P1, P2, P3, P4> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -363,6 +924,30 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过五个参数的void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <P1>
+   *     第一个参数类型
+   * @param <P2>
+   *     第二个参数类型
+   * @param <P3>
+   *     第三个参数类型
+   * @param <P4>
+   *     第四个参数类型
+   * @param <P5>
+   *     第五个参数类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   * @throws IllegalArgumentException
+   *     如果方法有原始类型参数
+   */
   public static <T, P1, P2, P3, P4, P5> Method findMethod(final Class<T> clazz,
       final VoidMethod5<T, P1, P2, P3, P4, P5> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -376,6 +961,32 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过六个参数的void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <P1>
+   *     第一个参数类型
+   * @param <P2>
+   *     第二个参数类型
+   * @param <P3>
+   *     第三个参数类型
+   * @param <P4>
+   *     第四个参数类型
+   * @param <P5>
+   *     第五个参数类型
+   * @param <P6>
+   *     第六个参数类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   * @throws IllegalArgumentException
+   *     如果方法有原始类型参数
+   */
   public static <T, P1, P2, P3, P4, P5, P6> Method findMethod(
       final Class<T> clazz, final VoidMethod6<T, P1, P2, P3, P4, P5, P6> ref) {
     final MethodCaptor captor = new MethodCaptor();
@@ -389,6 +1000,34 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过七个参数的void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <P1>
+   *     第一个参数类型
+   * @param <P2>
+   *     第二个参数类型
+   * @param <P3>
+   *     第三个参数类型
+   * @param <P4>
+   *     第四个参数类型
+   * @param <P5>
+   *     第五个参数类型
+   * @param <P6>
+   *     第六个参数类型
+   * @param <P7>
+   *     第七个参数类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   * @throws IllegalArgumentException
+   *     如果方法有原始类型参数
+   */
   public static <T, P1, P2, P3, P4, P5, P6, P7> Method findMethod(
       final Class<T> clazz,
       final VoidMethod7<T, P1, P2, P3, P4, P5, P6, P7> ref) {
@@ -403,6 +1042,36 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过八个参数的void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <P1>
+   *     第一个参数类型
+   * @param <P2>
+   *     第二个参数类型
+   * @param <P3>
+   *     第三个参数类型
+   * @param <P4>
+   *     第四个参数类型
+   * @param <P5>
+   *     第五个参数类型
+   * @param <P6>
+   *     第六个参数类型
+   * @param <P7>
+   *     第七个参数类型
+   * @param <P8>
+   *     第八个参数类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   * @throws IllegalArgumentException
+   *     如果方法有原始类型参数
+   */
   public static <T, P1, P2, P3, P4, P5, P6, P7, P8> Method findMethod(
       final Class<T> clazz,
       final VoidMethod8<T, P1, P2, P3, P4, P5, P6, P7, P8> ref) {
@@ -417,6 +1086,38 @@ public class GetMethodByReferenceImpl {
     return captor.getCapturedMethod();
   }
 
+  /**
+   * 通过九个参数的void方法引用查找方法。
+   *
+   * @param <T>
+   *     类的类型
+   * @param <P1>
+   *     第一个参数类型
+   * @param <P2>
+   *     第二个参数类型
+   * @param <P3>
+   *     第三个参数类型
+   * @param <P4>
+   *     第四个参数类型
+   * @param <P5>
+   *     第五个参数类型
+   * @param <P6>
+   *     第六个参数类型
+   * @param <P7>
+   *     第七个参数类型
+   * @param <P8>
+   *     第八个参数类型
+   * @param <P9>
+   *     第九个参数类型
+   * @param clazz
+   *     包含方法的类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   * @throws IllegalArgumentException
+   *     如果方法有原始类型参数
+   */
   public static <T, P1, P2, P3, P4, P5, P6, P7, P8, P9> Method findMethod(
       final Class<T> clazz,
       final VoidMethod9<T, P1, P2, P3, P4, P5, P6, P7, P8, P9> ref) {

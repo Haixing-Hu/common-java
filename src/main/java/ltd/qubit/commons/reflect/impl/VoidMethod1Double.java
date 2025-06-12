@@ -18,5 +18,13 @@ package ltd.qubit.commons.reflect.impl;
 @FunctionalInterface
 public interface VoidMethod1Double<T> extends MethodReference<T>  {
 
+  /**
+   * 调用此方法。
+   *
+   * @param bean
+   *     方法所属的bean实例。
+   * @param p1
+   *     方法的double参数。
+   */
   void invoke(T bean, Double p1);
 }

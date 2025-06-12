@@ -320,15 +320,45 @@ public class UrlEncodingUtils {
     return result.toString();
   }
 
+  /**
+   * 将路径段列表格式化为路径字符串，使用UTF-8字符集。
+   *
+   * @param segments
+   *     要格式化的路径段数组。
+   * @return
+   *     格式化后的路径字符串。
+   */
   public static String formatSegments(final String... segments) {
     return formatSegments(Arrays.asList(segments), UTF_8);
   }
 
+  /**
+   * 将名值对列表格式化为查询字符串。
+   *
+   * @param parameters
+   *     要格式化的名值对列表。
+   * @param charset
+   *     用于编码的字符集名称，如果为 {@code null} 则使用UTF-8。
+   * @return
+   *     格式化后的查询字符串。
+   */
   public static String format(final List<? extends NameValuePair> parameters,
       @Nullable final String charset) {
     return format(parameters, '&', charset);
   }
 
+  /**
+   * 将名值对列表格式化为查询字符串。
+   *
+   * @param parameters
+   *     要格式化的名值对列表。
+   * @param parameterSeparator
+   *     用于分隔参数的字符。
+   * @param charset
+   *     用于编码的字符集名称，如果为 {@code null} 则使用UTF-8。
+   * @return
+   *     格式化后的查询字符串。
+   */
   public static String format(final List<? extends NameValuePair> parameters,
       final char parameterSeparator, @Nullable final String charset) {
     final Charset actualCharset = (charset != null ? Charset.forName(charset) : UTF_8);
@@ -348,11 +378,33 @@ public class UrlEncodingUtils {
     return result.toString();
   }
 
+  /**
+   * 将名值对集合格式化为查询字符串。
+   *
+   * @param parameters
+   *     要格式化的名值对集合。
+   * @param charset
+   *     用于编码的字符集。
+   * @return
+   *     格式化后的查询字符串。
+   */
   public static String format(final Iterable<? extends NameValuePair> parameters,
       final Charset charset) {
     return format(parameters, '&', charset);
   }
 
+  /**
+   * 将名值对集合格式化为查询字符串。
+   *
+   * @param parameters
+   *     要格式化的名值对集合。
+   * @param parameterSeparator
+   *     用于分隔参数的字符。
+   * @param charset
+   *     用于编码的字符集，如果为 {@code null} 则使用UTF-8。
+   * @return
+   *     格式化后的查询字符串。
+   */
   public static String format(final Iterable<? extends NameValuePair> parameters,
       final char parameterSeparator, @Nullable final Charset charset) {
     Argument.requireNonNull("Parameters", parameters);

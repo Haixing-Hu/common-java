@@ -28,6 +28,11 @@ import ltd.qubit.commons.lang.ClassKey;
 import ltd.qubit.commons.reflect.ConstructorUtils;
 import ltd.qubit.commons.reflect.ReflectionException;
 
+/**
+ * 通过方法引用获取枚举方法的实现类。
+ *
+ * @author 胡海星
+ */
 public class GetEnumMethodByReferenceImpl {
 
   private static final ClassValue<Class<?>> DUMMY_SUBCLASSES =
@@ -43,6 +48,24 @@ public class GetEnumMethodByReferenceImpl {
     }
   }
 
+  /**
+   * 查找枚举方法。
+   *
+   * @param <T>
+   *     枚举类型
+   * @param <R>
+   *     返回值类型
+   * @param clazz
+   *     枚举类
+   * @param ref
+   *     方法引用
+   * @return
+   *     对应的方法对象
+   * @throws IllegalArgumentException
+   *     如果指定的类不是枚举类，或无法找到对应的方法
+   * @throws ReflectionException
+   *     如果反射操作失败
+   */
   public static <T, R> Method findEnumMethod(final Class<T> clazz,
       final NonVoidMethod0<T, R> ref) {
     if (!clazz.isEnum()) {
@@ -68,6 +91,18 @@ public class GetEnumMethodByReferenceImpl {
     }
   }
 
+  /**
+   * 获取枚举类的构造函数。
+   *
+   * @param <T>
+   *     枚举类型
+   * @param clazz
+   *     枚举类
+   * @return
+   *     枚举类的构造函数
+   * @throws NoSuchMethodException
+   *     如果枚举类没有构造函数
+   */
   static <T> Constructor<T> getEnumConstructor(final Class<T> clazz)
       throws NoSuchMethodException {
     final Class<?>[] ctorTypes = getEnumComponents(clazz)
@@ -76,6 +111,14 @@ public class GetEnumMethodByReferenceImpl {
     return clazz.getDeclaredConstructor(ctorTypes);
   }
 
+  /**
+   * 获取枚举类的组件。
+   *
+   * @param clazz
+   *     枚举类
+   * @return
+   *     枚举类的组件
+   */
   static Stream<RecordComponent> getEnumComponents(final Class<?> clazz) {
     if (!clazz.isRecord()) {
       throw new IllegalArgumentException(clazz + " is not a record");
@@ -97,8 +140,7 @@ public class GetEnumMethodByReferenceImpl {
     final Map<ClassKey, Long> index = new IdentityHashMap<>();
     return (type) -> {
       if (type.isAssignableFrom(boolean.class)) {
-        // Note: When the record has more than one primitive boolean component,
-        //       we need to fall back to an exhaustive component search via exhaustiveComponentSearch(…)
+        // 注意：当记录有多个原始布尔组件时，我们需要回退到通过 exhaustiveComponentSearch(...) 进行详尽的组件搜索
         return true;
       } else if (type.isPrimitive()
           || type.isAssignableFrom(String.class)
@@ -151,7 +193,7 @@ public class GetEnumMethodByReferenceImpl {
 
   private static <T> T safeNumberCast(final long currentIndex, final T castedValue,
       final long castedValueAsLong, final Class<?> valueType) {
-    // This is currently not possible to test since a record must not have more than 255 components
+    // 这目前不可能测试，因为记录不能有超过 255 个组件
     if (castedValueAsLong != currentIndex) {
       throw new IllegalArgumentException("Having more than "
           + (currentIndex - 1)

@@ -18,10 +18,9 @@ import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * The {@link CharSequenceCodePointIterator} is used to iterate through the code
- * points of a string.
+ * {@link CharSequenceCodePointIterator}用于遍历字符串的代码点。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class CharSequenceCodePointIterator extends CodePointIterator
     implements CloneableEx<CharSequenceCodePointIterator>, Serializable {
@@ -30,6 +29,9 @@ public final class CharSequenceCodePointIterator extends CodePointIterator
 
   private CharSequence text;
 
+  /**
+   * 构造一个空的字符序列代码点迭代器。
+   */
   public CharSequenceCodePointIterator() {
     this.text = StringUtils.EMPTY;
     this.start = 0;
@@ -37,6 +39,11 @@ public final class CharSequenceCodePointIterator extends CodePointIterator
     setToStart();
   }
 
+  /**
+   * 构造一个字符序列代码点迭代器。
+   *
+   * @param str 要迭代的字符序列，不能为null
+   */
   public CharSequenceCodePointIterator(final CharSequence str) {
     this.text = requireNonNull("str", str);
     this.start = 0;
@@ -44,6 +51,13 @@ public final class CharSequenceCodePointIterator extends CodePointIterator
     setToStart();
   }
 
+  /**
+   * 构造一个字符序列代码点迭代器。
+   *
+   * @param str 要迭代的字符序列，不能为null
+   * @param start 起始索引
+   * @param end 结束索引
+   */
   public CharSequenceCodePointIterator(final CharSequence str, final int start,
       final int end) {
     this.text = requireNonNull("str", str);
@@ -52,10 +66,20 @@ public final class CharSequenceCodePointIterator extends CodePointIterator
     setToStart();
   }
 
+  /**
+   * 获取当前迭代范围内的文本。
+   *
+   * @return 当前迭代范围内的文本
+   */
   public CharSequence getText() {
     return text.subSequence(start, end);
   }
 
+  /**
+   * 重置迭代器以迭代新的字符序列。
+   *
+   * @param str 新的字符序列，不能为null
+   */
   public void reset(final CharSequence str) {
     this.text = requireNonNull("str", str);
     this.start = 0;
@@ -63,6 +87,12 @@ public final class CharSequenceCodePointIterator extends CodePointIterator
     setToStart();
   }
 
+  /**
+   * 重置迭代器以迭代新的字符序列，并设置当前位置。
+   *
+   * @param str 新的字符序列，不能为null
+   * @param index 要设置的索引位置
+   */
   public void reset(final CharSequence str, final int index) {
     requireNonNull("str", str);
     if ((index < 0) || (index > str.length())) {
@@ -74,6 +104,13 @@ public final class CharSequenceCodePointIterator extends CodePointIterator
     setTo(index);
   }
 
+  /**
+   * 重置迭代器以迭代字符序列的指定范围。
+   *
+   * @param str 字符序列，不能为null
+   * @param start 起始索引
+   * @param end 结束索引
+   */
   public void reset(final CharSequence str, final int start, final int end) {
     this.text = requireNonNull("str", str);
     this.start = Math.max(0, start);
@@ -81,6 +118,14 @@ public final class CharSequenceCodePointIterator extends CodePointIterator
     setToStart();
   }
 
+  /**
+   * 重置迭代器以迭代字符序列的指定范围，并设置当前位置。
+   *
+   * @param str 字符序列，不能为null
+   * @param start 起始索引
+   * @param end 结束索引
+   * @param index 要设置的索引位置
+   */
   public void reset(final CharSequence str, final int start, final int end,
       final int index) {
     requireNonNull("str", str);
@@ -95,6 +140,9 @@ public final class CharSequenceCodePointIterator extends CodePointIterator
     setTo(index);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void setToStart() {
     current = Character.codePointAt(text, start);
@@ -106,6 +154,9 @@ public final class CharSequenceCodePointIterator extends CodePointIterator
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void setToEnd() {
     left = end;
@@ -113,6 +164,9 @@ public final class CharSequenceCodePointIterator extends CodePointIterator
     current = -1;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void setToLast() {
     current = Character.codePointBefore(text, end);
@@ -124,6 +178,9 @@ public final class CharSequenceCodePointIterator extends CodePointIterator
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void setTo(final int index) {
     if ((index < start) || (index > end)) {
@@ -153,6 +210,9 @@ public final class CharSequenceCodePointIterator extends CodePointIterator
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void forward() {
     if (right < end) {
@@ -169,6 +229,9 @@ public final class CharSequenceCodePointIterator extends CodePointIterator
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void backward() {
     if (left > start) {
@@ -182,6 +245,9 @@ public final class CharSequenceCodePointIterator extends CodePointIterator
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public CharSequenceCodePointIterator cloneEx() {
     final CharSequenceCodePointIterator cloned = new CharSequenceCodePointIterator();

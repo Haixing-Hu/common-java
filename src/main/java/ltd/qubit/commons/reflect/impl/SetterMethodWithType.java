@@ -12,21 +12,50 @@ import ltd.qubit.commons.lang.Equality;
 import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
+/**
+ * 此类表示带有类型信息的 Setter 方法的引用。
+ *
+ * @param <T>
+ *     方法所属的类的类型。
+ * @param <R>
+ *     方法参数的类型。
+ * @author 胡海星
+ */
 public class SetterMethodWithType<T, R> {
 
   private final Class<R> argumentClass;
 
   private final SetterMethod<T, R> setter;
 
+  /**
+   * 构造一个新的带有类型信息的 Setter 方法引用。
+   *
+   * @param argumentClass
+   *     参数的类类型。
+   * @param setter
+   *     Setter 方法的引用。
+   */
   public SetterMethodWithType(final Class<R> argumentClass, final SetterMethod<T, R> setter) {
     this.argumentClass = argumentClass;
     this.setter = setter;
   }
 
+  /**
+   * 获取方法参数的类类型。
+   *
+   * @return
+   *     方法参数的类类型。
+   */
   public Class<R> getArgumentClass() {
     return argumentClass;
   }
 
+  /**
+   * 获取 Setter 方法的引用。
+   *
+   * @return
+   *     Setter 方法的引用。
+   */
   public SetterMethod<T, R> getSetter() {
     return setter;
   }

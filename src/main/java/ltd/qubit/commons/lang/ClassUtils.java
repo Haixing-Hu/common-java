@@ -47,54 +47,41 @@ import static ltd.qubit.commons.lang.ObjectUtils.defaultIfNull;
  * <p>该类还处理从 {@link Class} 对象到常见类型的转换。
  *
  * @author 胡海星
- * @since 1.0.0
  */
 public class ClassUtils {
 
   /**
-   * The default {@link Class} value used when necessary.
-   *
-   * @since 1.0.0
+   * 必要时使用的默认{@link Class}值。
    */
   public static final Class<?> DEFAULT = null;
 
   /**
-   * The package separator character: {@code '&#x2e;' == {@value}}.
-   *
-   * @since 1.0.0
+   * 包分隔符字符：{@code '&#x2e;' == {@value}}。
    */
   public static final char PACKAGE_SEPARATOR_CHAR = '.';
 
   /**
-   * The package separator String: {@code "&#x2e;"}.
-   *
-   * @since 1.0.0
+   * 包分隔符字符串：{@code "&#x2e;"}。
    */
   public static final String PACKAGE_SEPARATOR = ".";
 
   /**
-   * The inner class separator character: {@code '$' == {@value}}.
-   *
-   * @since 1.0.0
+   * 内部类分隔符字符：{@code '$' == {@value}}。
    */
   public static final char INNER_CLASS_SEPARATOR_CHAR = '$';
 
   /**
-   * The inner class separator String: {@code "$"}.
-   *
-   * @since 1.0.0
+   * 内部类分隔符字符串：{@code "$"}。
    */
   public static final String INNER_CLASS_SEPARATOR = "$";
 
   /**
-   * Maps primitive {@code Class}es to their corresponding wrapper {@code
-   * Class}.
+   * 将基本类型类映射为对应的包装类型。
    *
-   * @since 1.0.0
+   * 使用 ClassKey 作为 Map 的键，而不是直接使用 Class 对象。
+   * 这样可以避免在 Web 容器热部署环境中因为保留对类加载器的引用而导致的内存泄漏问题。
+   * 详细说明请参考 ClassKey 类的 javadoc。
    */
-   // 使用 ClassKey 作为 Map 的键，而不是直接使用 Class 对象。
-   // 这样可以避免在 Web 容器热部署环境中因为保留对类加载器的引用而导致的内存泄漏问题。
-   // 详细说明请参考 ClassKey 类的 javadoc。
   private static final Map<ClassKey, Class<?>> PRIMITIVE_WRAPPER_MAP =
       Map.ofEntries(
           entry(new ClassKey(boolean.class), Boolean.class),
@@ -109,13 +96,12 @@ public class ClassUtils {
       );
 
   /**
-   * Maps wrapper {@code Class}es to their corresponding primitive types.
+   * 将包装类映射为对应的基本类型。
    *
-   * @since 1.0.0
+   * 使用 ClassKey 作为 Map 的键，而不是直接使用 Class 对象。
+   * 这样可以避免在 Web 容器热部署环境中因为保留对类加载器的引用而导致的内存泄漏问题。
+   * 详细说明请参考 ClassKey 类的 javadoc。
    */
-   // 使用 ClassKey 作为 Map 的键，而不是直接使用 Class 对象。
-   // 这样可以避免在 Web 容器热部署环境中因为保留对类加载器的引用而导致的内存泄漏问题。
-   // 详细说明请参考 ClassKey 类的 javadoc。
   private static final Map<ClassKey, Class<?>> WRAPPER_PRIMITIVE_MAP =
       Map.ofEntries(
           entry(new ClassKey(Boolean.class), boolean.class),
@@ -130,10 +116,7 @@ public class ClassUtils {
       );
 
   /**
-   * Maps a primitive class name to its corresponding abbreviation used in array
-   * class names.
-   *
-   * @since 1.0.0
+   * 将基本类型类名映射为在数组类名中使用的对应缩写。
    */
   private static final Map<String, String> ABBREVIATION_MAP =
       Map.ofEntries(
@@ -148,10 +131,7 @@ public class ClassUtils {
       );
 
   /**
-   * Maps an abbreviation used in array class names to corresponding primitive
-   * class name.
-   *
-   * @since 1.0.0
+   * 将数组类名中使用的缩写映射为对应的基本类型类名。
    */
   private static final Map<String, String> REVERSE_ABBREVIATION_MAP =
       invertAsUnmodifiable(ABBREVIATION_MAP);
@@ -184,7 +164,6 @@ public class ClassUtils {
    * @param toClassArray
    *     要尝试赋值到的 Classes 数组，可以为 {@code null}。
    * @return 如果可以赋值则返回 {@code true}。
-   * @since 1.0.0
    */
   public static boolean isAssignable(final Class<?>[] classArray,
       final Class<?>[] toClassArray) {
@@ -224,7 +203,6 @@ public class ClassUtils {
    * @param toClass
    *     要尝试赋值到的 Class，如果为 null 则返回 false。
    * @return 如果可以赋值则返回 {@code true}。
-   * @since 1.0.0
    */
   public static boolean isAssignable(final Class<?> cls,
       final Class<?> toClass) {
@@ -301,7 +279,6 @@ public class ClassUtils {
    * @param cls
    *     要检查的类，可以为 null。
    * @return 如果类是内部类或静态嵌套类则返回 {@code true}，否则或为 {@code null} 时返回 false。
-   * @since 1.0.0
    */
   public static boolean isInnerClass(final Class<?> cls) {
     if (cls == null) {
@@ -321,7 +298,6 @@ public class ClassUtils {
    * @return 对应于类名的 Class 对象的 {@code List}，如果输入为 null 则返回 {@code null}。
    * @throws ClassCastException
    *     如果 classNames 包含非 String 条目。
-   * @since 1.0.0
    */
   public static List<Class<?>> namesToClasses(final List<String> classNames) {
     if (classNames == null) {
@@ -348,7 +324,6 @@ public class ClassUtils {
    * @return 对应于 Class 对象的类名的 {@code List}，如果输入为 null 则返回 {@code null}。
    * @throws ClassCastException
    *     如果 {@code classes} 包含非 {@code Class} 条目。
-   * @since 1.0.0
    */
   public static List<String> classesToNames(final List<Class<?>> classes) {
     if (classes == null) {
@@ -371,7 +346,6 @@ public class ClassUtils {
    * @param cls
    *     要转换的包装类，可以为 null
    * @return 对应的基本类型，如果 cls 为 null 或不是包装类则返回 null
-   * @since 1.0.0
    */
   public static Class<?> wrapperToPrimitive(final Class<?> cls) {
     return (cls == null ? null : WRAPPER_PRIMITIVE_MAP.get(new ClassKey(cls)));
@@ -383,7 +357,6 @@ public class ClassUtils {
    * @param cls
    *     要转换的基本类型，可以为 null
    * @return 对应的包装类，如果 cls 为 null 或不是基本类型则返回 null
-   * @since 1.0.0
    */
   public static Class<?> primitiveToWrapper(final Class<?> cls) {
     Class<?> convertedClass = cls;

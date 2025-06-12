@@ -85,66 +85,59 @@ import static ltd.qubit.commons.text.impl.SearcherImpl.endsWithSubstring;
 import static ltd.qubit.commons.text.impl.SearcherImpl.firstIndexOf;
 
 /**
- * This class provides operations on {@link String} that are {@code null} safe.
+ * 本类提供对 {@link String} 的操作，这些操作都是 {@code null} 安全的。
  *
  * <ul>
- * <li><b>IsEmpty/IsBlank</b> - checks if a string contains text</li>
- * <li><b>Trim/Strip</b> - removes leading and trailing whitespace</li>
- * <li><b>Equals</b> - compares two strings null-safe</li>
- * <li><b>startsWith</b> - check if a string starts with a prefix null-safe</li>
- * <li><b>endsWith</b> - check if a string ends with a suffix null-safe</li>
- * <li><b>IndexOf/LastIndexOf/Contains</b> - null-safe current-of checks
+ * <li><b>IsEmpty/IsBlank</b> - 检查字符串是否包含文本</li>
+ * <li><b>Trim/Strip</b> - 删除首尾空白字符</li>
+ * <li><b>Equals</b> - null安全的字符串比较</li>
+ * <li><b>startsWith</b> - null安全的检查字符串是否以前缀开始</li>
+ * <li><b>endsWith</b> - null安全的检查字符串是否以后缀结束</li>
+ * <li><b>IndexOf/LastIndexOf/Contains</b> - null安全的索引检查
  * <li><b>IndexOfAny/LastIndexOfAny/IndexOfAnyBut/LastIndexOfAnyBut</b> -
- * current-of any of a set of Strings</li>
- * <li><b>ContainsOnly/ContainsNone/ContainsAny</b> - does String contains
- * only/none/any of these characters</li>
- * <li><b>Substring/Left/Right/Mid</b> - null-safe substring extractions</li>
- * <li><b>SubstringBefore/SubstringAfter/SubstringBetween</b> - substring
- * extraction relative to other strings</li>
- * <li><b>Split/Join</b> - splits a string into an array of substrings and vice
- * versa</li>
- * <li><b>Remove/Delete</b> - removes part of a string</li>
- * <li><b>Replace/Overlay</b> - Searches a string and replaces one String with
- * another</li>
- * <li><b>Chomp/Chop</b> - removes the last part of a string</li>
- * <li><b>LeftPad/RightPad/Center/Repeat</b> - pads a string</li>
- * <li><b>UpperCase/LowerCase/SwapCase/Capitalize/Uncapitalize</b> - changes the
- * case of a string</li>
- * <li><b>CountMatches</b> - counts the number of occurrences of one String in
- * another</li>
- * <li><b>IsAlpha/IsNumeric/IsWhitespace/IsAsciiPrintable</b> - checks the
- * characters in a string</li>
- * <li><b>DefaultString</b> - protects against a {@code null} input String</li>
- * <li><b>Reverse/ReverseDelimited</b> - reverses a string</li>
- * <li><b>Abbreviate</b> - abbreviates a string using ellipsis</li>
- * <li><b>Difference</b> - compares Strings and reports on their differences</li>
- * <li><b>LevensteinDistance</b> - the number of changes needed to change one
- * String into another</li>
+ * 搜索字符串集合中任意一个的索引</li>
+ * <li><b>ContainsOnly/ContainsNone/ContainsAny</b> - 检查字符串是否只包含/不包含/包含任意
+ * 这些字符</li>
+ * <li><b>Substring/Left/Right/Mid</b> - null安全的子字符串提取</li>
+ * <li><b>SubstringBefore/SubstringAfter/SubstringBetween</b> - 相对于其他字符串
+ * 的子字符串提取</li>
+ * <li><b>Split/Join</b> - 将字符串分割为子字符串数组，以及反向操作</li>
+ * <li><b>Remove/Delete</b> - 删除字符串的一部分</li>
+ * <li><b>Replace/Overlay</b> - 搜索字符串并用另一个字符串替换</li>
+ * <li><b>Chomp/Chop</b> - 删除字符串的最后部分</li>
+ * <li><b>LeftPad/RightPad/Center/Repeat</b> - 填充字符串</li>
+ * <li><b>UpperCase/LowerCase/SwapCase/Capitalize/Uncapitalize</b> - 改变
+ * 字符串的大小写</li>
+ * <li><b>CountMatches</b> - 计算一个字符串在另一个字符串中出现的次数</li>
+ * <li><b>IsAlpha/IsNumeric/IsWhitespace/IsAsciiPrintable</b> - 检查
+ * 字符串中的字符</li>
+ * <li><b>DefaultString</b> - 防止 {@code null} 输入字符串</li>
+ * <li><b>Reverse/ReverseDelimited</b> - 反转字符串</li>
+ * <li><b>Abbreviate</b> - 使用省略号缩写字符串</li>
+ * <li><b>Difference</b> - 比较字符串并报告其差异</li>
+ * <li><b>LevensteinDistance</b> - 将一个字符串更改为另一个字符串所需的更改次数</li>
  * </ul>
  *
- * <p>The {@code Strings} class defines certain words related to String
- * handling.
+ * <p>{@code Strings} 类定义了与字符串处理相关的某些词汇。
  * <ul>
  * <li>null - {@code null}</li>
- * <li>empty - a zero-length string ({@code ""})</li>
- * <li>space - the space character ({@code ' '}, char 32)</li>
- * <li>whitespace - the characters defined by
- * {@link Character#isWhitespace(char)}</li>
- * <li>trim - the characters &lt;= 32 as in {@link String#trim()}</li>
+ * <li>empty - 零长度字符串 ({@code ""})</li>
+ * <li>space - 空格字符 ({@code ' '}, char 32)</li>
+ * <li>whitespace - 由 {@link Character#isWhitespace(char)} 定义的字符</li>
+ * <li>trim - 字符 &lt;= 32，如 {@link String#trim()} 中的定义</li>
  * </ul>
  *
- * <p>{@code Strings} handles {@code null} input Strings quietly. That is to say
- * that a {@code null} input will return {@code null}. Where a {@code boolean}
- * or {@code int} is being returned details vary by method.
+ * <p>{@code Strings} 安静地处理 {@code null} 输入字符串。也就是说，
+ * {@code null} 输入将返回 {@code null}。当返回 {@code boolean}
+ * 或 {@code int} 时，详细信息因方法而异。
  *
- * <p>A side effect of the {@code null} handling is that a
- * {@code NullPointerException} should be considered a bug in {@code Strings}
- * (except for deprecated methods).
+ * <p>{@code null} 处理的副作用是，{@code NullPointerException} 应该被视为
+ * {@code Strings} 中的错误（除了已弃用的方法）。
  *
- * <p>Methods in this class give sample code to explain their operation. The
- * symbol {@code *} is used to indicate any input including {@code null}.
+ * <p>本类中的方法提供示例代码来解释其操作。符号 {@code *} 用于表示
+ * 包括 {@code null} 在内的任何输入。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @SuppressWarnings("overloads")
 @ThreadSafe
@@ -153,147 +146,147 @@ public class StringUtils {
   private static final Logger LOGGER = LoggerFactory.getLogger(StringUtils.class);
 
   /**
-   * Represents an empty string constant.
+   * 表示空字符串常量。
    */
   public static final String EMPTY = "";
 
   /**
-   * String representation of boolean true value.
+   * 布尔值 true 的字符串表示。
    */
   public static final String TRUE = "true";
 
   /**
-   * String representation of boolean false value.
+   * 布尔值 false 的字符串表示。
    */
   public static final String FALSE = "false";
 
   /**
-   * String representation of affirmative response.
+   * 肯定回应的字符串表示。
    */
   public static final String YES = "yes";
 
   /**
-   * String representation of negative response.
+   * 否定回应的字符串表示。
    */
   public static final String NO = "no";
 
   /**
-   * String representation of enabled state.
+   * 启用状态的字符串表示。
    */
   public static final String ON = "on";
 
   /**
-   * String representation of disabled state.
+   * 禁用状态的字符串表示。
    */
   public static final String OFF = "off";
 
   /**
-   * Represents an ellipsis string constant.
+   * 表示省略号字符串常量。
    */
   public static final String ELLIPSES = "...";
 
   /**
-   * Represents a single space character.
+   * 表示单个空格字符。
    */
   public static final String SPACE = " ";
 
   /**
-   * Represents a tab character.
+   * 表示制表符字符。
    */
   public static final String TAB = "\t";
 
   /**
-   * String representation of minimum byte value (-128).
+   * 最小字节值 (-128) 的字符串表示。
    */
   public static final String BYTE_MIN = "-128";
 
   /**
-   * String representation of absolute value of minimum byte (128).
+   * 最小字节绝对值 (128) 的字符串表示。
    */
   public static final String BYTE_MIN_ABS = "128";
 
   /**
-   * String representation of maximum byte value (127).
+   * 最大字节值 (127) 的字符串表示。
    */
   public static final String BYTE_MAX = "127";
 
   /**
-   * String representation of minimum short value (-32768).
+   * 最小短整型值 (-32768) 的字符串表示。
    */
   public static final String SHORT_MIN = "-32768";
 
   /**
-   * String representation of absolute value of minimum short (32768).
+   * 最小短整型绝对值 (32768) 的字符串表示。
    */
   public static final String SHORT_MIN_ABS = "32768";
 
   /**
-   * String representation of maximum short value (32767).
+   * 最大短整型值 (32767) 的字符串表示。
    */
   public static final String SHORT_MAX = "32767";
 
   /**
-   * String representation of minimum integer value (-2147483648).
+   * 最小整型值 (-2147483648) 的字符串表示。
    */
   public static final String INT_MIN = "-2147483648";
 
   /**
-   * String representation of absolute value of minimum integer (2147483648).
+   * 最小整型绝对值 (2147483648) 的字符串表示。
    */
   public static final String INT_MIN_ABS = "2147483648";
 
   /**
-   * String representation of maximum integer value (2147483647).
+   * 最大整型值 (2147483647) 的字符串表示。
    */
   public static final String INT_MAX = "2147483647";
 
   /**
-   * String representation of minimum long value (-9223372036854775808).
+   * 最小长整型值 (-9223372036854775808) 的字符串表示。
    */
   public static final String LONG_MIN = "-9223372036854775808";
 
   /**
-   * String representation of absolute value of minimum long (9223372036854775808).
+   * 最小长整型绝对值 (9223372036854775808) 的字符串表示。
    */
   public static final String LONG_MIN_ABS = "9223372036854775808";
 
   /**
-   * String representation of maximum long value (9223372036854775807).
+   * 最大长整型值 (9223372036854775807) 的字符串表示。
    */
   public static final String LONG_MAX = "9223372036854775807";
 
   /**
-   * String representation of minimum float value (1.4E-45).
+   * 最小浮点型值 (1.4E-45) 的字符串表示。
    */
   public static final String FLOAT_MIN = "1.4E-45";
 
   /**
-   * String representation of maximum float value (3.4028235E38).
+   * 最大浮点型值 (3.4028235E38) 的字符串表示。
    */
   public static final String FLOAT_MAX = "3.4028235E38";
 
   /**
-   * String representation of minimum double value (4.9E-324).
+   * 最小双精度浮点型值 (4.9E-324) 的字符串表示。
    */
   public static final String DOUBLE_MIN = "4.9E-324";
 
   /**
-   * String representation of maximum double value (1.7976931348623157E308).
+   * 最大双精度浮点型值 (1.7976931348623157E308) 的字符串表示。
    */
   public static final String DOUBLE_MAX = "1.7976931348623157E308";
 
   /**
-   * The maximum size to which the padding constant(s) can expand.
+   * 填充常量可以扩展到的最大大小。
    */
   public static final int PAD_LIMIT = 8192;
 
   /**
-   * The assumption of the length of Object.toString() result.
+   * Object.toString() 结果长度的假设值。
    */
   private static final int TO_STRING_LENGTH_ASSUMPTION = 16;
 
   /**
-   * The assumption of the number of objects in a iterable collection.
+   * 可迭代集合中对象数量的假设值。
    */
   private static final int OBJECT_COUNT_ASSUMPTION = 64;
 
@@ -301,14 +294,14 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether a string is not longer than a length.
+   * 测试字符串是否不超过指定长度。
    *
    * @param str
-   *     The string to be tested, which may be null.
+   *     要测试的字符串，可能为null。
    * @param len
-   *     The length to be test.
-   * @return {@code true} if the string is null or its length is not longer than
-   *     {@code len}; {@code false} otherwise.
+   *     要测试的长度。
+   * @return 如果字符串为null或其长度不超过{@code len}则返回{@code true}；
+   *     否则返回{@code false}。
    */
   public static boolean isNotLongerThan(@Nullable final CharSequence str,
       final int len) {
@@ -316,14 +309,14 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether a string is longer than a length.
+   * 测试字符串是否超过指定长度。
    *
    * @param str
-   *     The string to be tested, which may be null.
+   *     要测试的字符串，可能为null。
    * @param len
-   *     The length to be test.
-   * @return {@code true} if the string is not {@code null} and its length is
-   *     longer than {@code len}; {@code false} otherwise.
+   *     要测试的长度。
+   * @return 如果字符串不为{@code null}且其长度超过{@code len}则返回{@code true}；
+   *     否则返回{@code false}。
    */
   public static boolean isLongerThan(@Nullable final CharSequence str,
       final int len) {
@@ -331,7 +324,7 @@ public class StringUtils {
   }
 
   /**
-   * Checks if a string is empty ("") or null.
+   * 检查字符串是否为空（""）或为null。
    *
    * <pre>
    * StringUtils.isEmpty(null)      = true
@@ -342,16 +335,15 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
-   * @return {@code true} if the string is empty or null; {@code false}
-   *     otherwise.
+   *     要检查的字符串，可能为null
+   * @return 如果字符串为空或为null则返回{@code true}；否则返回{@code false}。
    */
   public static boolean isEmpty(@Nullable final CharSequence str) {
     return (str == null) || (str.length() == 0);
   }
 
   /**
-   * Checks if a string is not empty ("") and not {@code null}.
+   * 检查字符串既不为空（""）也不为{@code null}。
    * <pre>
    * StringUtils.isNotEmpty(null)      = false
    * StringUtils.isNotEmpty("")        = false
@@ -361,17 +353,16 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
-   * @return {@code true} if the string is not empty and not {@code null};
-   *     {@code false} otherwise.
+   *     要检查的字符串，可能为null
+   * @return 如果字符串既不为空也不为{@code null}则返回{@code true}；
+   *     否则返回{@code false}。
    */
   public static boolean isNotEmpty(@Nullable final CharSequence str) {
     return (str != null) && (str.length() > 0);
   }
 
   /**
-   * Checks whether a string contains only non-printable characters or
-   * whitespace, or the string is empty ("") or null.
+   * 检查字符串是否只包含不可打印字符或空白字符，或者字符串为空（""）或为null。
    * <pre>
    * StringUtils.isBlank(null)      = true
    * StringUtils.isBlank("")        = true
@@ -382,15 +373,15 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
-   * @return {@code true} if the string is null, empty or all blanks.
+   *     要检查的字符串，可能为null
+   * @return 如果字符串为null、为空或全为空白字符则返回{@code true}。
    */
   public static boolean isBlank(@Nullable final CharSequence str) {
     return (str == null) || containsOnly(str, BlankCodePointFilter.INSTANCE);
   }
 
   /**
-   * Checks whether a string does NOT contain only blanks.
+   * 检查字符串是否不只包含空白字符。
    * <pre>
    * StringUtils.isNotBlank(null)      = false
    * StringUtils.isNotBlank("")        = false
@@ -401,9 +392,9 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
-   * @return {@code true} if the string is not {@code null}, not empty and not
-   *     contains only blanks; {@code false}otherwise.
+   *     要检查的字符串，可能为null
+   * @return 如果字符串不为{@code null}、不为空且不只包含空白字符则返回{@code true}；
+   *     否则返回{@code false}。
    * @see #isBlank(CharSequence)
    */
   public static boolean isNotBlank(@Nullable final CharSequence str) {
@@ -411,7 +402,7 @@ public class StringUtils {
   }
 
   /**
-   * Checks if a string is empty ("") or null or contains only blanks.
+   * 检查字符串是否为空（""）、为null或只包含空白字符。
    *
    * <pre>
    * StringUtils.isEmptyOrBlank(null)      = true
@@ -422,9 +413,9 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null.
-   * @return {@code true} if the string is empty or null or contains only blanks;
-   *     {@code false} otherwise.
+   *     要检查的字符串，可以为null。
+   * @return 如果字符串为空、为null或只包含空白字符则返回{@code true}；
+   *     否则返回{@code false}。
    */
   public static boolean isEmptyOrBlank(@Nullable final CharSequence str) {
     return (str == null)
@@ -433,7 +424,7 @@ public class StringUtils {
   }
 
   /**
-   * Checks if a string is not empty ("") and not {@code null}.
+   * 检查字符串是否既不为空（""）又不为{@code null}且不只包含空白字符。
    * <pre>
    * StringUtils.isNotEmptyNorBlank(null)      = false
    * StringUtils.isNotEmptyNorBlank("")        = false
@@ -443,9 +434,9 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
-   * @return {@code true} if the string is not empty nor null nor contains only
-   *     blanks; {@code false} otherwise.
+   *     要检查的字符串，可以为null
+   * @return 如果字符串既不为空也不为null且不只包含空白字符则返回{@code true}；
+   *     否则返回{@code false}。
    */
   public static boolean isNotEmptyNorBlank(@Nullable final CharSequence str) {
     return (str != null)
@@ -454,30 +445,28 @@ public class StringUtils {
   }
 
   /**
-   * Checks whether a string contains only whitespace, or the string is empty
-   * ("") or null.
+   * 检查字符串是否只包含空白字符，或者字符串为空（""）或为null。
    * <pre>
-   * StringUtils.isWhitespace(null)      = true
-   * StringUtils.isWhitespace("")        = true
-   * StringUtils.isWhitespace(" ")       = true
-   * StringUtils.isWhitespace("bob")     = false
-   * StringUtils.isWhitespace("  bob  ") = false
-   * StringUtils.isWhitespace("\r\n")    = true
+   * StringUtils.isWhitespace(null)   = true
+   * StringUtils.isWhitespace("")     = true
+   * StringUtils.isWhitespace("  ")   = true
+   * StringUtils.isWhitespace("abc")  = false
+   * StringUtils.isWhitespace("ab2c") = false
+   * StringUtils.isWhitespace("ab-c") = false
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
-   * @return {@code true} if the string is null, empty or all whitespace.
+   *     要检查的字符串，可以为null。
+   * @return 如果只包含空白字符则返回{@code true}；否则返回{@code false}。
    */
   public static boolean isWhitespace(@Nullable final CharSequence str) {
     return (str == null) || containsOnly(str, WhitespaceCodePointFilter.INSTANCE);
   }
 
   /**
-   * Checks if the string contains only unicode letters.
+   * 检查字符串是否只包含Unicode字母。
    *
-   * <p>{@code null} will return {@code false}. An empty String ("") will
-   * return {@code true}.
+   * <p>{@code null}将返回{@code false}。空字符串（""）将返回{@code true}。
    * <pre>
    * StringUtils.isLetter(null)   = false
    * StringUtils.isLetter("")     = true
@@ -488,18 +477,17 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, which may be null.
-   * @return {@code true} if only contains letters, and is non-null.
+   *     要检查的字符串，可以为null。
+   * @return 如果只包含字母且非null则返回{@code true}。
    */
   public static boolean isLetter(@Nullable final CharSequence str) {
     return containsOnly(str, LetterCodePointFilter.INSTANCE);
   }
 
   /**
-   * Checks if the string contains only unicode letters and space (' ').
+   * 检查字符串是否只包含Unicode字母和空格（' '）。
    *
-   * <p>{@code null} will return {@code false} An empty String ("") will return
-   * {@code true}.
+   * <p>{@code null}将返回{@code false}。空字符串（""）将返回{@code true}。
    * <pre>
    * StringUtils.isLetterSpace(null)   = false
    * StringUtils.isLetterSpace("")     = true
@@ -513,18 +501,17 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
-   * @return {@code true} if only contains letters and space, and is non-null
+   *     要检查的字符串，可以为null
+   * @return 如果只包含字母和空格且非null则返回{@code true}
    */
   public static boolean isLetterSpace(@Nullable final CharSequence str) {
     return containsOnly(str, LetterSpaceCodePointFilter.INSTANCE);
   }
 
   /**
-   * Checks if the string contains only unicode letters or digits.
+   * 检查字符串是否只包含Unicode字母或数字。
    *
-   * <p>{@code null} will return {@code false}. An empty String ("") will
-   * return {@code true}.
+   * <p>{@code null}将返回{@code false}。空字符串（""）将返回{@code true}。
    * <pre>
    * StringUtils.isLetterDigit(null)   = false
    * StringUtils.isLetterDigit("")     = true
@@ -536,19 +523,17 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
-   * @return {@code true} if only contains letters or digits, and is non-null
+   *     要检查的字符串，可以为null
+   * @return 如果只包含字母或数字且非null则返回{@code true}
    */
   public static boolean isLetterDigit(@Nullable final CharSequence str) {
     return containsOnly(str, LetterDigitCodePointFilter.INSTANCE);
   }
 
   /**
-   * Checks if the string contains only unicode letters, digits or space (
-   * {@code ' '}).
+   * 检查字符串是否只包含Unicode字母、数字或空格（{@code ' '}）。
    *
-   * <p>{@code null} will return {@code false}. An empty String ("") will
-   * return {@code true}.
+   * <p>{@code null}将返回{@code false}。空字符串（""）将返回{@code true}。
    * <pre>
    * StringUtils.isLetterDigitSpace(null)   = false
    * StringUtils.isLetterDigitSpace("")     = true
@@ -560,19 +545,17 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
-   * @return {@code true} if only contains letters, digits or space, and is
-   *     non-null
+   *     要检查的字符串，可以为null
+   * @return 如果只包含字母、数字或空格且非null则返回{@code true}
    */
   public static boolean isLetterDigitSpace(@Nullable final CharSequence str) {
     return containsOnly(str, LetterDigitSpaceCodePointFilter.INSTANCE);
   }
 
   /**
-   * Checks if the string contains only ASCII characters.
+   * 检查字符串是否只包含ASCII字符。
    *
-   * <p>{@code null} will return {@code false}. An empty String ("") will
-   * return {@code true}.
+   * <p>{@code null}将返回{@code false}。空字符串（""）将返回{@code true}。
    * <pre>
    * StringUtils.isAscii(null)   = false
    * StringUtils.isAscii("")     = true
@@ -584,18 +567,17 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
-   * @return {@code true} if only contains ASCII characters, and is non-null
+   *     要检查的字符串，可以为null
+   * @return 如果只包含ASCII字符且非null则返回{@code true}
    */
   public static boolean isAscii(@Nullable final CharSequence str) {
     return containsOnly(str, AsciiCharFilter.INSTANCE);
   }
 
   /**
-   * Checks if the string contains only ASCII printable characters.
+   * 检查字符串是否只包含ASCII可打印字符。
    *
-   * <p>{@code null} will return {@code false}. An empty String ("") will return
-   * {@code false}.
+   * <p>{@code null}将返回{@code false}。空字符串（""）将返回{@code true}。
    *
    * <pre>
    * StringUtils.isAsciiPrintable(null)     = false
@@ -612,20 +594,17 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
-   * @return {@code true} if every character is in the range 32 through 126. If the
-   *     string is null, returns false.
+   *     要检查的字符串，可以为null
+   * @return 如果每个字符都在32到126的范围内则返回{@code true}。如果字符串为null，则返回false。
    */
   public static boolean isAsciiPrintable(@Nullable final CharSequence str) {
     return containsOnly(str, AsciiPrintableCharFilter.INSTANCE);
   }
 
   /**
-   * Checks if the string contains only unicode digits. A decimal point is not a
-   * unicode digit and returns false.
+   * 检查字符串是否只包含Unicode数字。小数点不是Unicode数字，因此返回false。
    *
-   * <p>{@code null} will return {@code false}. An empty String ("") will
-   * return {@code true}.
+   * <p>{@code null}将返回{@code false}。空字符串（""）将返回{@code true}。
    *
    * <pre>
    * StringUtils.isDigit(null)   = false
@@ -639,20 +618,18 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
-   * @return {@code true} if only contains digits, and is non-null. If the
-   *     string is null, returns false.
+   *     要检查的字符串，可以为null
+   * @return 如果只包含数字且非null则返回{@code true}。如果字符串为null，则返回false。
    */
   public static boolean isDigit(@Nullable final CharSequence str) {
     return containsOnly(str, DigitCodePointFilter.INSTANCE);
   }
 
   /**
-   * Checks if the string contains only unicode digits or space ( {@code ' '}).
-   * A decimal point is not a unicode digit and returns false.
+   * 检查字符串是否只包含Unicode数字或空格（{@code ' '}）。
+   * 小数点不是Unicode数字，因此返回false。
    *
-   * <p>{@code null} will return {@code false}. An empty String ("") will
-   * return {@code true}.
+   * <p>{@code null}将返回{@code false}。空字符串（""）将返回{@code true}。
    *
    * <pre>
    * StringUtils.isDigitSpace(null)   = false
@@ -666,40 +643,47 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
-   * @return {@code true} if only contains digits or space. If the string is
-   *     null, returns false.
+   *     要检查的字符串，可以为null
+   * @return 如果只包含数字或空格则返回{@code true}。如果字符串为null，返回false。
    */
   public static boolean isDigitSpace(@Nullable final CharSequence str) {
     return containsOnly(str, DigitSpaceCodePointFilter.INSTANCE);
   }
 
   /**
-   * Checks whether the string a valid Java number.
+   * 检查字符串是否为有效的Java数字。
    *
-   * <p>Valid numbers include hexadecimal marked with the {@code 0x} qualifier,
-   * scientific notation and numbers marked with a type qualifier (e.g. 123L).
+   * <p>有效的数字包括带有类型限定符的十六进制、科学记数法和普通十进制数字。
+   * 非有效数字包括{@code null}、空字符串、无穷大和NaN值。
    *
-   * <pre><code>
+   * <p>{@code null}将返回{@code false}。空字符串（""）将返回{@code true}。
+   *
+   * <pre>
    * StringUtils.isNumber(null)   = false
    * StringUtils.isNumber("")     = true
    * StringUtils.isNumber("  ")   = false
-   * StringUtils.isNumber("0100")  = true
-   * StringUtils.isNumber("0x00") = true
-   * StringUtils.isNumber("1234") = true
-   * StringUtils.isNumber("1234.123") = true
-   * StringUtils.isNumber("+1234.123") = true
-   * StringUtils.isNumber("-1234.123") = true
-   * StringUtils.isNumber("2e9") = true
-   * StringUtils.isNumber("2e-9") = true
-   * StringUtils.isNumber("-2e-8") = true
-   * StringUtils.isNumber("1a2") = true
-   * </code></pre>
+   * StringUtils.isNumber("123")  = true
+   * StringUtils.isNumber("12 3") = false
+   * StringUtils.isNumber("ab2c") = false
+   * StringUtils.isNumber("12-3") = false
+   * StringUtils.isNumber("12.3") = true
+   * StringUtils.isNumber(".123") = true
+   * StringUtils.isNumber("1.23E3") = true
+   * StringUtils.isNumber("1.23E-3") = true
+   * StringUtils.isNumber("-123") = true
+   * StringUtils.isNumber("+123") = true
+   * StringUtils.isNumber("0x123") = true
+   * StringUtils.isNumber("123f") = true
+   * StringUtils.isNumber("123F") = true
+   * StringUtils.isNumber("123d") = true
+   * StringUtils.isNumber("123D") = true
+   * StringUtils.isNumber("123l") = true
+   * StringUtils.isNumber("123L") = true
+   * </pre>
    *
    * @param str
-   *     the {@code String} to check, may be null.
-   * @return {@code true} if the string is a correctly formatted number. If the
-   *     string is null or empty, returns false.
+   *     要检查的字符串，可以为null
+   * @return 如果字符串是有效的Java数字则返回{@code true}；否则返回{@code false}
    */
   public static boolean isNumber(@Nullable final CharSequence str) {
     if (str == null) {
@@ -801,14 +785,13 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether the specified string is quoted by either single quotation
-   * marks (') or double quotation marks (").
+   * 测试指定的字符串是否被单引号（'）或双引号（"）包围。
    *
    * @param str
-   *     The string to be tested, which could be {@code null}.
-   * @return {@code true} if the string is not {@code null} and is quoted by
-   *     either single quotation marks (') or double quotation marks ("); {@code
-   *     false} otherwise.
+   *     要测试的字符串，可能为{@code null}。
+   * @return
+   *    如果字符串不为{@code null}且被单引号（'）或双引号（"）包围则返回{@code true}；
+   *    否则返回{@code false}。
    */
   public static boolean isQuoted(@Nullable final CharSequence str) {
     if (str == null) {
@@ -828,17 +811,17 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether the specified string is quoted by the specified left and
-   * right quotation marks.
+   * 测试指定的字符串是否被指定的左引号和右引号包围。
    *
    * @param str
-   *     the string to be tested, which could be {@code null}.
+   *     要测试的字符串，可能为{@code null}。
    * @param leftQuote
-   *     the left quotation mark.
+   *     左引号。
    * @param rightQuote
-   *     the right quotation mark.
-   * @return {@code true} if the string is not {@code null} and is quoted by the
-   *     left and right quotation marks; {@code false} otherwise.
+   *     右引号。
+   * @return
+   *     如果字符串不为{@code null}且被左引号和右引号包围则返回{@code true}；
+   *     否则返回{@code false}。
    */
   public static boolean isQuoted(@Nullable final CharSequence str,
       final char leftQuote, final char rightQuote) {
@@ -859,28 +842,25 @@ public class StringUtils {
   }
 
   /**
-   * Compares two Strings, returning {@code true} if they are equal.
+   * 比较两个字符串，如果相等则返回{@code true}。
    *
-   * <p>{@code null}s are handled without exceptions. Two {@code null}
-   * references are considered to be equal. The comparison could be
-   * case-sensitive or case-insensitive, controlled by an argument.
+   * <p>{@code null}值会被正确处理而不抛出异常。两个{@code null}引用被认为是相等的。
+   * 这个方法是区分大小写的。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
-   * StringUtils.equals(null, null, *)       = true
-   * StringUtils.equals(null, "abc", *)      = false
-   * StringUtils.equals("abc", null, *)      = false
-   * StringUtils.equals("abc", "abc", *)     = true
-   * StringUtils.equals("abc", "ABC", true)  = true
-   * StringUtils.equals("abc", "ABC", false) = false
+   * StringUtils.equals(null, null)      = true
+   * StringUtils.equals(null, "abc")     = false
+   * StringUtils.equals("abc", null)     = false
+   * StringUtils.equals("abc", "abc")    = true
+   * StringUtils.equals("abc", "ABC")    = false
    * </pre>
    *
    * @param str1
-   *     the first String, may be null.
+   *     第一个字符串，可以为null。
    * @param str2
-   *     the second String, may be null.
-   * @return {@code true} if the strings are equal, case sensitive, or both
-   *     {@code null}
+   *     第二个字符串，可以为null。
+   * @return 如果字符串相等（区分大小写）或都为{@code null}则返回{@code true}
    * @see String#equals(Object)
    * @see String#equalsIgnoreCase(String)
    */
@@ -890,20 +870,18 @@ public class StringUtils {
   }
 
   /**
-   * Compares two Strings, returning {@code true} if they are equal.
+   * 比较两个字符串，如果相等则返回{@code true}。
    *
-   * <p>{@code null}s are handled without exceptions. Two {@code null}
-   * references are considered to be equal. The comparison could be
-   * case-sensitive or case-insensitive, controlled by an argument.
+   * <p>{@code null}值会被正确处理而不抛出异常。两个{@code null}引用被认为是相等的。
+   * 比较可以是区分大小写或不区分大小写的，由参数控制。
    *
    * @param str1
-   *     the first String, may be null.
+   *     第一个字符串，可以为null。
    * @param str2
-   *     the second String, may be null.
+   *     第二个字符串，可以为null。
    * @param ignoreCase
-   *     indicate whether to compare two strings ignore the case.
-   * @return {@code true} if the strings are equal, case sensitive, or both
-   *     {@code null}
+   *     指示比较两个字符串时是否忽略大小写。
+   * @return 如果字符串相等（区分大小写）或都为{@code null}则返回{@code true}
    * @see String#equals(Object)
    * @see String#equalsIgnoreCase(String)
    */
@@ -917,13 +895,12 @@ public class StringUtils {
   }
 
   /**
-   * Compares two Strings, returning {@code true} if they are equal.
+   * 比较两个字符串，如果相等则返回{@code true}。
    *
-   * <p>{@code null}s are handled without exceptions. Two {@code null}
-   * references are considered to be equal. The comparison could be
-   * case-sensitive or case-insensitive, controlled by an argument.
+   * <p>{@code null}值会被正确处理而不抛出异常。两个{@code null}引用被认为是相等的。
+   * 比较是不区分大小写的。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    * StringUtils.equals(null, null, *)       = true
    * StringUtils.equals(null, "abc", *)      = false
@@ -934,11 +911,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str1
-   *     the first String, may be null.
+   *     第一个字符串，可以为null。
    * @param str2
-   *     the second String, may be null.
-   * @return {@code true} if the strings are equal, case insensitive, or both
-   *     {@code null}
+   *     第二个字符串，可以为null。
+   * @return 如果字符串相等（不区分大小写）或都为{@code null}则返回{@code true}
    * @see String#equals(Object)
    * @see String#equalsIgnoreCase(String)
    */
@@ -947,9 +923,9 @@ public class StringUtils {
   }
 
   /**
-   * Checks whether the character sequence starts with a specified code point.
+   * 检查字符序列是否以指定的代码点开始。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    *   StringUtils.startsWithChar(null, 'h') = false
    *   StringUtils.startsWithChar("", 'h') = false
@@ -960,12 +936,11 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     a character sequence, which may be null.
+   *     字符序列，可以为null。
    * @param ch
-   *     a specified character (Unicode code point).
+   *     指定的字符（Unicode代码点）。
    * @return
-   *     {@code true} if the character sequence starts with the specified code
-   *     point; {@code false} otherwise.
+   *     如果字符序列以指定的代码点开始则返回{@code true}；否则返回{@code false}。
    * @see Searcher#isAtStartOf(CharSequence)
    */
   public static boolean startsWithChar(@Nullable final CharSequence str, final int ch) {
@@ -975,17 +950,15 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether a character sequence is starting with a character accepted
-   * by a {@link CharFilter}.
+   * 测试字符序列是否以被{@link CharFilter}接受的字符开始。
    *
    * @param str
-   *     the character sequence to be tested, which may be null.
+   *     要测试的字符序列，可以为null。
    * @param filter
-   *     the {@link CharFilter} used to test the character, which may be null.
+   *     用于测试字符的{@link CharFilter}，可以为null。
    * @return
-   *     {@code true} if the character sequence is starting with a character
-   *     accepted by a {@link CharFilter}; {@code false} otherwise. If the
-   *     character sequence or filter is null, returns {@code false}.
+   *     如果字符序列以被{@link CharFilter}接受的字符开始则返回{@code true}；否则返回{@code false}。
+   *     如果字符序列或过滤器为null，返回{@code false}。
    * @see Searcher#isAtStartOf(CharSequence)
    */
   public static boolean startsWithChar(@Nullable final CharSequence str,
@@ -996,18 +969,15 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether a character sequence is starting with a code point accepted
-   * by a {@link CharFilter}.
+   * 测试字符序列是否以被{@link CodePointFilter}接受的代码点开始。
    *
    * @param str
-   *     the character sequence to be tested, which may be null.
+   *     要测试的字符序列，可以为null。
    * @param filter
-   *     the {@link CodePointFilter} used to test the code point, which may be
-   *     null.
+   *     用于测试代码点的{@link CodePointFilter}，可以为null。
    * @return
-   *     {@code true} if the character sequence is starting with a code point
-   *     accepted by a {@link CodePointFilter}; {@code false} otherwise. If the
-   *     character sequence or filter is null, returns {@code false}.
+   *     如果字符序列以被{@link CodePointFilter}接受的代码点开始则返回{@code true}；否则返回{@code false}。
+   *     如果字符序列或过滤器为null，返回{@code false}。
    * @see Searcher#isAtStartOf(CharSequence)
    */
   public static boolean startsWithChar(@Nullable final CharSequence str,
@@ -1018,12 +988,12 @@ public class StringUtils {
   }
 
   /**
-   * Check whether a string starts with a specified prefix.
+   * 检查字符串是否以指定的前缀开始。
    *
-   * <p>{@code null}s are handled without exceptions. Two {@code null}
-   * references are considered to be equal. The comparison is case-sensitive.
+   * <p>{@code null}值会被正确处理而不抛出异常。两个{@code null}引用被认为是相等的。
+   * 比较是区分大小写的。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    * StringUtils.startsWith(null, null)          = true
    * StringUtils.startsWith(null, "abc")         = false
@@ -1037,11 +1007,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null.
+   *     要检查的字符串，可以为null。
    * @param prefix
-   *     the prefix to find, may be null.
-   * @return {@code true} if the {@code str} starts with the {@code prefix}, in
-   *     case sensitive mode, or both {@code null}
+   *     要查找的前缀，可以为null。
+   * @return 如果{@code str}以{@code prefix}开始（区分大小写模式）或都为{@code null}则返回{@code true}
    * @see String#startsWith(String)
    * @see Searcher#isAtStartOf(CharSequence)
    */
@@ -1054,13 +1023,12 @@ public class StringUtils {
   }
 
   /**
-   * Check if a string starts with a specified prefix.
+   * 检查字符串是否以指定的前缀开始（不区分大小写）。
    *
-   * <p>{@code null}s are handled without exceptions. Two {@code null}
-   * references are considered to be equal. The comparison could be
-   * case-sensitive or case-insensitive, controlled by an argument.
+   * <p>{@code null}值会被正确处理而不抛出异常。两个{@code null}引用被认为是相等的。
+   * 比较是不区分大小写的。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    * StringUtils.startsWithIgnoreCase(null, null)          = true
    * StringUtils.startsWithIgnoreCase(null, "abc")         = false
@@ -1074,11 +1042,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null.
+   *     要检查的字符串，可以为null
    * @param prefix
-   *     the prefix to find, may be null.
-   * @return {@code true} if the {@code str} starts with the {@code prefix}, in
-   *     case insensitive mode, or both {@code null}
+   *     要查找的前缀，可以为null
+   * @return 如果字符串以前缀开始（不区分大小写模式）或都为{@code null}则返回{@code true}
    * @see String#startsWith(String)
    * @see Searcher#isAtStartOf(CharSequence)
    */
@@ -1091,9 +1058,9 @@ public class StringUtils {
   }
 
   /**
-   * Checks whether the character sequence ends with a specified code point.
+   * 检查字符序列是否以指定的代码点结束。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    *   StringUtils.endsWithChar(null, 'o') = false
    *   StringUtils.endsWithChar("", 'o') = false
@@ -1104,12 +1071,11 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     a character sequence, which may be null.
+   *     字符序列，可以为null。
    * @param ch
-   *     a specified character (Unicode code point).
+   *     指定的字符（Unicode代码点）。
    * @return
-   *     {@code true} if the character sequence ends with the specified code
-   *     point; false otherwise.
+   *     如果字符序列以指定的代码点结束则返回{@code true}；否则返回false。
    * @see Searcher#isAtEndOf(CharSequence)
    */
   public static boolean endsWithChar(@Nullable final CharSequence str, final int ch) {
@@ -1119,17 +1085,15 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether a character sequence is ending with a character accepted
-   * by a {@link CharFilter}.
+   * 测试字符序列是否以被{@link CharFilter}接受的字符结束。
    *
    * @param str
-   *     the character sequence to be tested, which may be null.
+   *     要测试的字符序列，可以为null。
    * @param filter
-   *     the {@link CharFilter} used to test the character, which may be null.
+   *     用于测试字符的{@link CharFilter}，可以为null。
    * @return
-   *     {@code true} if the character sequence is ending with a character
-   *     accepted by a {@link CharFilter}; {@code false} otherwise. If the
-   *     character sequence or filter is null, returns {@code false}.
+   *     如果字符序列以被{@link CharFilter}接受的字符结束则返回{@code true}；否则返回{@code false}。
+   *     如果字符序列或过滤器为null，返回{@code false}。
    * @see Searcher#isAtEndOf(CharSequence)
    */
   public static boolean endsWithChar(@Nullable final CharSequence str,
@@ -1140,18 +1104,15 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether a character sequence is ending with a code point accepted
-   * by a {@link CharFilter}.
+   * 测试字符序列是否以被{@link CodePointFilter}接受的代码点结束。
    *
    * @param str
-   *     the character sequence to be tested, which may be null.
+   *     要测试的字符序列，可以为null。
    * @param filter
-   *     the {@link CodePointFilter} used to test the code point, which may be
-   *     null.
+   *     用于测试代码点的{@link CodePointFilter}，可以为null。
    * @return
-   *     {@code true} if the character sequence is ending with a code point
-   *     accepted by a {@link CodePointFilter}; {@code false} otherwise. If the
-   *     character sequence or filter is null, returns {@code false}.
+   *     如果字符序列以被{@link CodePointFilter}接受的代码点结束则返回{@code true}；否则返回{@code false}。
+   *     如果字符序列或过滤器为null，返回{@code false}。
    * @see Searcher#isAtEndOf(CharSequence)
    */
   public static boolean endsWithChar(@Nullable final CharSequence str,
@@ -1162,14 +1123,12 @@ public class StringUtils {
   }
 
   /**
-   * Check if a string ends with a specified suffix (optionally case
-   * insensitive).
+   * 检查字符串是否以指定的后缀结束（区分大小写）。
    *
-   * <p>{@code null}s are handled without exceptions. Two {@code null}
-   * references are considered to be equal. The comparison could be
-   * case-sensitive or case-insensitive, controlled by an argument.
+   * <p>{@code null}值会被正确处理而不抛出异常。两个{@code null}引用被认为是相等的。
+   * 比较是区分大小写的。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    * StringUtils.endsWith(null, null)          = true
    * StringUtils.endsWith("abcdef", null)      = false
@@ -1183,11 +1142,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可以为null
    * @param suffix
-   *     the suffix to find, may be null
-   * @return {@code true} if the string starts with the prefix, in case
-   *     sensitive mode, or both {@code null}
+   *     要查找的后缀，可以为null
+   * @return 如果字符串以后缀结束（区分大小写模式）或都为{@code null}则返回{@code true}
    * @see String#endsWith(String)
    * @see Searcher#isAtEndOf(CharSequence)
    */
@@ -1200,14 +1158,12 @@ public class StringUtils {
   }
 
   /**
-   * Check if a string ends with a specified suffix (optionally case
-   * insensitive).
+   * 检查字符串是否以指定的后缀结束（不区分大小写）。
    *
-   * <p>{@code null}s are handled without exceptions. Two {@code null}
-   * references are considered to be equal. The comparison could be
-   * case-sensitive or case-insensitive, controlled by an argument.
+   * <p>{@code null}值会被正确处理而不抛出异常。两个{@code null}引用被认为是相等的。
+   * 比较是不区分大小写的。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    * StringUtils.endsWithIgnoreCase(null, null)          = true
    * StringUtils.endsWithIgnoreCase("abcdef", null)      = false
@@ -1222,11 +1178,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可以为null
    * @param suffix
-   *     the suffix to find, may be null
-   * @return {@code true} if the string starts with the prefix, in case
-   *     insensitive mode, or both {@code null}
+   *     要查找的后缀，可以为null
+   * @return 如果字符串以后缀结束（不区分大小写模式）或都为{@code null}则返回{@code true}
    * @see String#endsWith(String)
    * @see Searcher#isAtEndOf(CharSequence)
    */
@@ -1239,15 +1194,14 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether a string is starting or ending with a specified code point.
+   * 测试字符串是否以指定的代码点开始或结束。
    *
    * @param str
-   *     the string to be tested, which may be null.
+   *     要测试的字符串，可以为null。
    * @param ch
-   *     the specified character (Unicode code point).
-   * @return {@code true} if the string is starting or ending with a code point
-   *     satisfying the specified {@link CharFilter}; {@code false} otherwise.
-   *     If the string is null or empty, returns false.
+   *     指定的字符（Unicode代码点）。
+   * @return 如果字符串以指定的代码点开始或结束则返回{@code true}；否则返回{@code false}。
+   *     如果字符串为null或空，返回false。
    * @see Searcher#isAtStartOrEndOf(CharSequence)
    */
   public static boolean startsOrEndsWithChar(@Nullable final CharSequence str,
@@ -1258,17 +1212,14 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether a string is starting or ending with a character satisfying
-   * the specified {@link CharFilter}.
+   * 测试字符串是否以满足指定{@link CharFilter}的字符开始或结束。
    *
    * @param str
-   *     the string to be tested, which may be null.
+   *     要测试的字符串，可以为null。
    * @param filter
-   *     the specified {@link CharFilter}.
-   * @return {@code true} if the string is starting or ending with a character
-   *     satisfying the specified {@link CharFilter}; {@code false} otherwise.
-   *     If the string is null or empty, or if the filter is null, returns
-   *     false.
+   *     指定的{@link CharFilter}。
+   * @return 如果字符串以满足指定{@link CharFilter}的字符开始或结束则返回{@code true}；否则返回{@code false}。
+   *     如果字符串为null或空，或者过滤器为null，返回false。
    * @see Searcher#isAtStartOrEndOf(CharSequence)
    */
   public static boolean startsOrEndsWithChar(@Nullable final CharSequence str,
@@ -1279,17 +1230,14 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether a string is starting or ending with a code point satisfying
-   * the specified {@link CodePointFilter}.
+   * 测试字符串是否以满足指定{@link CodePointFilter}的代码点开始或结束。
    *
    * @param str
-   *     the string to be tested, which may be null.
+   *     要测试的字符串，可以为null。
    * @param filter
-   *     the specified {@link CodePointFilter}.
-   * @return {@code true} if the string is starting or ending with a code point
-   *     satisfying the specified {@link CodePointFilter}; {@code false} otherwise.
-   *     If the string is null or empty, or if the filter is null, returns
-   *     false.
+   *     指定的{@link CodePointFilter}。
+   * @return 如果字符串以满足指定{@link CodePointFilter}的代码点开始或结束则返回{@code true}；否则返回{@code false}。
+   *     如果字符串为null或空，或者过滤器为null，返回false。
    * @see Searcher#isAtStartOrEndOf(CharSequence)
    */
   public static boolean startsOrEndsWithChar(@Nullable final CharSequence str,
@@ -1300,15 +1248,14 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether a string is starting and ending with a specified code point.
+   * 测试字符串是否以指定的代码点开始并结束。
    *
    * @param str
-   *     the string to be tested, which may be null.
+   *     要测试的字符串，可以为null。
    * @param ch
-   *     the specified character (Unicode code point).
-   * @return {@code true} if the string is starting and ending with a code point
-   *     satisfying the specified {@link CharFilter}; {@code false} otherwise.
-   *     If the string is null or empty, returns false.
+   *     指定的字符（Unicode代码点）。
+   * @return 如果字符串以指定的代码点开始并结束则返回{@code true}；否则返回{@code false}。
+   *     如果字符串为null或空，返回false。
    * @see Searcher#isAtStartAndEndOf(CharSequence)
    */
   public static boolean startsAndEndsWithChar(@Nullable final CharSequence str,
@@ -1319,17 +1266,14 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether a string is starting and ending with a character satisfying
-   * the specified {@link CharFilter}.
+   * 测试字符串是否以满足指定{@link CharFilter}的字符开始并结束。
    *
    * @param str
-   *     the string to be tested, which may be null.
+   *     要测试的字符串，可以为null。
    * @param filter
-   *     the specified {@link CharFilter}.
-   * @return {@code true} if the string is starting and ending with a character
-   *     satisfying the specified {@link CharFilter}; {@code false} otherwise.
-   *     If the string is null or empty, or if the filter is null, returns
-   *     false.
+   *     指定的{@link CharFilter}。
+   * @return 如果字符串以满足指定{@link CharFilter}的字符开始并结束则返回{@code true}；否则返回{@code false}。
+   *     如果字符串为null或空，或者过滤器为null，返回false。
    * @see Searcher#isAtStartAndEndOf(CharSequence)
    */
   public static boolean startsAndEndsWithChar(@Nullable final CharSequence str,
@@ -1340,17 +1284,15 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether a string is starting and ending with a code point satisfying
-   * the specified {@link CodePointFilter}.
+   * 测试字符串是否以满足指定{@link CodePointFilter}的代码点开始并结束。
    *
    * @param str
-   *     the string to be tested, which may be null.
+   *     要测试的字符串，可以为null。
    * @param filter
-   *     the specified {@link CodePointFilter}.
-   * @return {@code true} if the string is starting and ending with a code point
-   *     satisfying the specified {@link CodePointFilter}; {@code false} otherwise.
-   *     If the string is null or empty, or if the filter is null, returns
-   *     false.
+   *     指定的{@link CodePointFilter}。
+   * @return
+   *     如果字符串以满足指定{@link CodePointFilter}的代码点开始并结束则返回
+   *     {@code true}；否则返回{@code false}。如果字符串为null或空，或者过滤器为null，返回false。
    * @see Searcher#isAtStartAndEndOf(CharSequence)
    */
   public static boolean startsAndEndsWithChar(@Nullable final CharSequence str,
@@ -1361,10 +1303,9 @@ public class StringUtils {
   }
 
   /**
-   * Compares two strings, and returns the index at which the strings begin to
-   * differ.
+   * 比较两个字符串，返回字符串开始不同的索引位置。
    *
-   * <p>For example,
+   * <p>例如：
    * <pre>
    * StringUtils.indexOfDifference(null, null) = -1
    * StringUtils.indexOfDifference("", "") = -1
@@ -1378,11 +1319,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str1
-   *     the first String, may be null
+   *     第一个字符串，可以为null
    * @param str2
-   *     the second String, may be null
-   * @return the index where str2 and str1 begin to differ; -1 if they are
-   *     equal.
+   *     第二个字符串，可以为null
+   * @return str1和str2开始不同的索引位置；如果相等则返回-1。
    */
   public static int indexOfDifference(@Nullable final CharSequence str1,
       @Nullable final CharSequence str2) {
@@ -1405,10 +1345,9 @@ public class StringUtils {
   }
 
   /**
-   * Compares all strings in an array and returns the index at which the strings
-   * begin to differ.
+   * 比较数组中的所有字符串，返回字符串开始不同的索引位置。
    *
-   * <p>For example,
+   * <p>例如：
    * <pre>
    * StringUtils.indexOfDifference(null) = -1
    * StringUtils.indexOfDifference(new String[] {}) = -1
@@ -1430,9 +1369,8 @@ public class StringUtils {
    * </pre>
    *
    * @param strs
-   *     array of strings, entries may be null
-   * @return the index where the strings begin to differ; -1 if they are all
-   *     equal
+   *     字符串数组，条目可能为null
+   * @return 字符串开始不同的索引位置；如果所有字符串都相等则返回-1
    */
   public static int indexOfDifference(@Nullable final CharSequence... strs) {
     if ((strs == null) || (strs.length <= 1)) {
@@ -1488,29 +1426,27 @@ public class StringUtils {
   }
 
   /**
-   * Compares two Strings, and returns the portion where they differ. (More
-   * precisely, return the remainder of the second String, starting from where
-   * it's different from the first.)
+   * 比较两个字符串，返回它们不同的部分。（更准确地说，返回第二个字符串从与第一个字符串
+   * 不同位置开始的剩余部分。）
    *
-   * <p>For example,
+   * <p>例如：
    * <pre>
-   * StringUtils.difference(null, null) = null
-   * StringUtils.difference("", "") = ""
-   * StringUtils.difference("", "abc") = "abc"
-   * StringUtils.difference("abc", "") = ""
-   * StringUtils.difference("abc", "abc") = ""
-   * StringUtils.difference("ab", "abxyz") = "xyz"
-   * StringUtils.difference("abcde", "abxyz") = "xyz"
-   * StringUtils.difference("abcde", "xyz") = "xyz"
-   * StringUtils.difference("i am a machine", "i am a robot") = "robot"
+   * StringUtils.getDifference(null, null) = null
+   * StringUtils.getDifference("", "") = ""
+   * StringUtils.getDifference("", "abc") = "abc"
+   * StringUtils.getDifference("abc", "") = ""
+   * StringUtils.getDifference("abc", "abc") = ""
+   * StringUtils.getDifference("ab", "abxyz") = "xyz"
+   * StringUtils.getDifference("abcde", "abxyz") = "xyz"
+   * StringUtils.getDifference("abcde", "xyz") = "xyz"
+   * StringUtils.getDifference("i am a machine", "i am a robot") = "robot"
    * </pre>
    *
    * @param str1
-   *     the first String, may be null
+   *     第一个字符串，可以为null
    * @param str2
-   *     the second String, may be null
-   * @return the portion of str2 where it differs from str1; returns the empty
-   *     String if they are equal
+   *     第二个字符串，可以为null
+   * @return str2中与str1不同的部分；如果相等则返回空字符串
    */
   public static String getDifference(@Nullable final CharSequence str1,
       @Nullable final CharSequence str2) {
@@ -1528,10 +1464,9 @@ public class StringUtils {
   }
 
   /**
-   * Compares all Strings in an array and returns the initial sequence of
-   * characters that is common to all of them.
+   * 比较数组中的所有字符串，返回它们都共有的初始字符序列。
    *
-   * <p>For example,
+   * <p>例如：
    * <pre>
    * StringUtils.getCommonPrefix(null) = ""
    * StringUtils.getCommonPrefix(new String[] {}) = ""
@@ -1553,10 +1488,8 @@ public class StringUtils {
    * </pre>
    *
    * @param strs
-   *     array of String objects, entries may be null
-   * @return the initial sequence of characters that are common to all Strings
-   *     in the array; empty String if the array is null, the elements are all
-   *     null or if there is no common prefix.
+   *     字符串对象数组，条目可能为null
+   * @return 数组中所有字符串共有的初始字符序列；如果数组为null、所有元素都为null或没有共同前缀则返回空字符串。
    */
   public static String getCommonPrefix(@Nullable final CharSequence... strs) {
     if ((strs == null) || (strs.length == 0)) {
@@ -1579,21 +1512,17 @@ public class StringUtils {
   }
 
   /**
-   * Find the Levenshtein distance between two Strings.
+   * 计算两个字符串之间的Levenshtein距离。
    *
-   * <p>This is the number of changes needed to change one String into another,
-   * where each change is a single character modification (deletion, insertion
-   * or substitution).
+   * <p>这是将一个字符串转换为另一个字符串所需的更改次数，其中每次更改都是单个字符的修改
+   * （删除、插入或替换）。
    *
-   * <p>The previous implementation of the Levenshtein distance algorithm was
-   * from
+   * <p>之前的Levenshtein距离算法实现来自
    * <a href="http://www.merriampark.com/ld.htm">http://www.merriampark.com/ld.htm</a>
    *
-   * <p>Chas Emerick has written an implementation in Java, which avoids an
-   * OutOfMemoryError which can occur when my Java implementation is used with
-   * very large strings.<br> This implementation of the Levenshtein distance
-   * algorithm is from
-   * <a href="http://www.merriampark.com/ldjava.htm">http://www.merriampark.com/ldjava.htm</a>.
+   * <p>Chas Emerick编写了一个Java实现，避免了在处理非常大的字符串时可能出现的
+   * OutOfMemoryError。<br> 这个Levenshtein距离算法的实现来自
+   * <a href="http://www.merriampark.com/ldjava.htm">http://www.merriampark.com/ldjava.htm</a>。
    * <pre>
    * StringUtils.getLevenshteinDistance(null, *)             = IllegalArgumentException
    * StringUtils.getLevenshteinDistance(*, null)             = IllegalArgumentException
@@ -1609,12 +1538,12 @@ public class StringUtils {
    * </pre>
    *
    * @param str1
-   *     the first String, must not be null
+   *     第一个字符串，不能为null
    * @param str2
-   *     the second String, must not be null
-   * @return result distance
+   *     第二个字符串，不能为null
+   * @return 结果距离
    * @throws IllegalArgumentException
-   *     if either String input {@code null}
+   *     如果任一字符串输入为{@code null}
    */
   public static int getLevenshteinDistance(final CharSequence str1,
       final CharSequence str2) {
@@ -1686,11 +1615,10 @@ public class StringUtils {
   }
 
   /**
-   * Finds the first occurrence of a character within a string.
+   * 在字符串中查找指定字符的第一次出现位置。
    *
-   * <p>A {@code null} or empty ("") string will return {@code -1}. A negative
-   * start position is treated as zero. A start position greater than the string
-   * length returns {@code -1}.
+   * <p>如果字符串为{@code null}或空("")，将返回{@code -1}。负数的起始位置被视为零。
+   * 起始位置大于字符串长度时返回{@code -1}。
    * <pre>
    * StringUtils.indexOfChar(null, *, *)          = -1
    * StringUtils.indexOfChar("", *, *)            = -1
@@ -1701,16 +1629,13 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null.
+   *     要检查的字符串，可能为null
    * @param ch
-   *     the character to find.
+   *     要查找的字符
    * @param startIndex
-   *     the position to start the search from. If it is negative, it has the
-   *     same effect as if it were zero: this entire string may be searched. If
-   *     it is greater than the length of the string, it has the same effect as
-   *     if it were equal to the length of the string: and -1 is returned.
-   * @return the first occurrence of the search character, -1 if no match or
-   *     {@code null} string input
+   *     开始搜索的位置。如果为负数，则效果与零相同：整个字符串都可以被搜索。
+   *     如果大于字符串的长度，则效果与等于字符串长度相同：返回-1。
+   * @return 搜索字符的第一次出现位置，如果没有匹配或字符串输入为{@code null}则返回-1
    * @see Searcher
    */
   public static int indexOfChar(@Nullable final CharSequence str,
@@ -1722,11 +1647,10 @@ public class StringUtils {
   }
 
   /**
-   * Finds the first occurrence of a character within a string.
+   * 在字符串中查找指定字符的第一次出现位置。
    *
-   * <p>A {@code null} or empty ("") string will return {@code -1}. A negative
-   * start position is treated as zero. A start position greater than the string
-   * length returns {@code -1}.
+   * <p>如果字符串为{@code null}或空("")，将返回{@code -1}。负数的起始位置被视为零。
+   * 起始位置大于字符串长度时返回{@code -1}。
    * <pre>
    * StringUtils.indexOfChar(null, *, *)          = -1
    * StringUtils.indexOfChar("", *, *)            = -1
@@ -1737,16 +1661,14 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null.
+   *     要检查的字符串，可能为null。
    * @param ch
-   *     the character to find.
+   *     要查找的字符。
    * @param startIndex
-   *     the position to start the search from. If it is negative, it has the
-   *     same effect as if it were zero.
+   *     开始搜索的位置。如果为负数，则效果与零相同。
    * @param endIndex
-   *     the position to end the search.
-   * @return the first occurrence of the search character, -1 if no match or
-   *     {@code null} string input.
+   *     结束搜索的位置。
+   * @return 搜索字符的第一次出现位置，如果没有匹配或字符串输入为{@code null}则返回-1。
    * @see Searcher
    */
   public static int indexOfChar(@Nullable final CharSequence str,
@@ -1759,24 +1681,19 @@ public class StringUtils {
   }
 
   /**
-   * Search a string to find the first occurrence of any character accepted by
-   * the given filter.
+   * 在字符串中查找第一个满足给定过滤器条件的字符的出现位置。
    *
-   * <p>A {@code null} string or a {@code null} filter will return {@code -1}.
+   * <p>如果字符串为{@code null}或过滤器为{@code null}，将返回{@code -1}。
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可能为null
    * @param filter
-   *     a {@link CharFilter} specifies the condition of character to be
-   *     searched.
+   *     指定要搜索字符条件的{@link CharFilter}。
    * @param startIndex
-   *     the position to start the search from. If it is negative, it has the
-   *     same effect as if it were zero: this entire string may be searched. If
-   *     it is greater than the length of the string, it has the same effect as
-   *     if it were equal to the length of the string: and -1 is returned.
-   * @return the first occurrence of the character accepted by the {@code filter}
-   *     in the string {@code str} starting from the {@code startIndex}; or -1
-   *     if no such character.
+   *     开始搜索的位置。如果为负数，则效果与零相同：整个字符串都可以被搜索。
+   *     如果大于字符串的长度，则效果与等于字符串长度相同：返回-1。
+   * @return 字符串{@code str}中从{@code startIndex}开始满足{@code filter}条件的
+   *     第一个字符的位置；如果没有这样的字符则返回-1。
    * @see Searcher
    */
   public static int indexOfChar(@Nullable final CharSequence str,
@@ -1788,29 +1705,23 @@ public class StringUtils {
   }
 
   /**
-   * Search a string to find the first occurrence of any character accepted by
-   * the given filter.
+   * 在字符串中查找第一个满足给定过滤器条件的字符的出现位置。
    *
-   * <p>A {@code null} string or a {@code null} filter will return {@code -1}.
+   * <p>如果字符串为{@code null}或过滤器为{@code null}，将返回{@code -1}。
    *
    * @param str
-   *     the string to check, may be null.
+   *     要检查的字符串，可能为null。
    * @param filter
-   *     a {@link CodePointFilter} specifies the condition of characters to be
-   *     searched.
+   *     指定要搜索字符条件的{@link CodePointFilter}。
    * @param startIndex
-   *     the position to start the search from. If it is negative, it has the
-   *     same effect as if it were zero.
+   *     开始搜索的位置。如果为负数，则效果与零相同。
    * @param endIndex
-   *     the position to end the search. If it is greater than the length of
-   *     {@code str}, it has the same effect as the length of {@code str}.
+   *     结束搜索的位置。如果大于{@code str}的长度，则效果与{@code str}的长度相同。
    * @return
-   *     the index of the last character accepted by the {@code filter} in the
-   *     string {@code str} starting from the {@code startIndex} and ending
-   *     before the {@code endIndex}; or -1 if no such character. If {@code str}
-   *     is {@code null} or empty, -1 is returned. If {@code [startIndex, endIndex)}
-   *     is not a valid range of the string {@code str}, -1 is returned. If
-   *     {@code filter} is {@code null}, -1 is returned.
+   *     字符串{@code str}中从{@code startIndex}开始到{@code endIndex}之前满足
+   *     {@code filter}条件的最后一个字符的索引；如果没有这样的字符则返回-1。
+   *     如果{@code str}为{@code null}或空，返回-1。如果{@code [startIndex, endIndex)}
+   *     不是字符串{@code str}的有效范围，返回-1。如果{@code filter}为{@code null}，返回-1。
    * @see Searcher
    */
   public static int indexOfChar(@Nullable final CharSequence str,
@@ -1824,11 +1735,10 @@ public class StringUtils {
   }
 
   /**
-   * Finds the first occurrence of a Unicode code point within a string.
+   * 在字符串中查找指定Unicode码点的第一次出现位置。
    *
-   * <p>A {@code null} or empty ("") string will return {@code -1}. A negative
-   * start position is treated as zero. A start position greater than the string
-   * length returns {@code -1}.
+   * <p>如果字符串为{@code null}或空("")，将返回{@code -1}。负数的起始位置被视为零。
+   * 起始位置大于字符串长度时返回{@code -1}。
    * <pre>
    * StringUtils.indexOfChar(null, *, *)          = -1
    * StringUtils.indexOfChar("", *, *)            = -1
@@ -1839,16 +1749,13 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null.
+   *     要检查的字符串，可能为null。
    * @param codePoint
-   *     the Unicode code point to find.
+   *     要查找的Unicode码点。
    * @param startIndex
-   *     the position to start the search from. If it is negative, it has the
-   *     same effect as if it were zero: this entire string may be searched. If
-   *     it is greater than the length of the string, it has the same effect as
-   *     if it were equal to the length of the string: and -1 is returned.
-   * @return the first occurrence of the search Unicode code point, or -1 if no
-   *     match or {@code null} string input
+   *     开始搜索的位置。如果为负数，则效果与零相同：整个字符串都可以被搜索。
+   *     如果大于字符串的长度，则效果与等于字符串长度相同：返回-1。
+   * @return 搜索Unicode码点的第一次出现位置，如果没有匹配或字符串输入为{@code null}则返回-1
    * @see Searcher
    */
   public static int indexOfCodePoint(@Nullable final CharSequence str,
@@ -1860,11 +1767,10 @@ public class StringUtils {
   }
 
   /**
-   * Finds the first occurrence of a Unicode code point within a string.
+   * 在字符串中查找指定Unicode码点的第一次出现位置。
    *
-   * <p>A {@code null} or empty ("") string will return {@code -1}. A negative
-   * start position is treated as zero. A start position greater than the string
-   * length returns {@code -1}.
+   * <p>如果字符串为{@code null}或空("")，将返回{@code -1}。负数的起始位置被视为零。
+   * 起始位置大于字符串长度时返回{@code -1}。
    * <pre>
    * StringUtils.indexOfChar(null, *, *)          = -1
    * StringUtils.indexOfChar("", *, *)            = -1
@@ -1875,16 +1781,14 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null.
+   *     要检查的字符串，可能为null。
    * @param codePoint
-   *     the Unicode code point to find.
+   *     要查找的Unicode码点。
    * @param startIndex
-   *     the position to start the search from. If it is negative, it has the
-   *     same effect as if it were zero.
+   *     开始搜索的位置。如果为负数，则效果与零相同。
    * @param endIndex
-   *     the position to end the search.
-   * @return the first occurrence of the search Unicode code point, or -1 if no
-   *     match or {@code null} string input.
+   *     结束搜索的位置。
+   * @return 搜索Unicode码点的第一次出现位置，如果没有匹配或字符串输入为{@code null}则返回-1。
    * @see Searcher
    */
   public static int indexOfCodePoint(@Nullable final CharSequence str,
@@ -1897,21 +1801,18 @@ public class StringUtils {
   }
 
   /**
-   * Search a string to find the first occurrence of any Unicode code point
-   * accepted by the given filter.
+   * 在字符串中查找第一个满足给定过滤器条件的Unicode码点的出现位置。
    *
-   * <p>A {@code null} string or a {@code null} filter will return {@code -1}.
+   * <p>如果字符串为{@code null}或过滤器为{@code null}，将返回{@code -1}。
    *
    * @param str
-   *     the string to check, may be null.
+   *     要检查的字符串，可能为null。
    * @param filter
-   *     a {@link CodePointFilter} specifies the condition of characters to be
-   *     searched.
+   *     指定要搜索字符条件的{@link CodePointFilter}。
    * @return
-   *     the index of the first Unicode code point accepted by the {@code filter}
-   *     in the string {@code str}; or -1 if no such character. If {@code str}
-   *     is {@code null} or empty, -1 is returned. If {@code filter} is
-   *     {@code null}, -1 is returned.
+   *     字符串{@code str}中满足{@code filter}条件的第一个Unicode码点的索引；
+   *     如果没有这样的字符则返回-1。如果{@code str}为{@code null}或空，返回-1。
+   *     如果{@code filter}为{@code null}，返回-1。
    * @see Searcher
    */
   public static int indexOfCodePoint(@Nullable final CharSequence str,
@@ -1922,26 +1823,21 @@ public class StringUtils {
   }
 
   /**
-   * Search a string to find the first occurrence of any Unicode code point
-   * accepted by the given filter.
+   * 在字符串中查找第一个满足给定过滤器条件的Unicode码点的出现位置。
    *
-   * <p>A {@code null} string or a {@code null} filter will return {@code -1}.
+   * <p>如果字符串为{@code null}或过滤器为{@code null}，将返回{@code -1}。
    *
    * @param str
-   *     the string to check, may be null.
+   *     要检查的字符串，可能为null。
    * @param filter
-   *     a {@link CodePointFilter} specifies the condition of characters to be
-   *     searched.
+   *     指定要搜索字符条件的{@link CodePointFilter}。
    * @param startIndex
-   *     the position to start the search from. If it is negative, it has the
-   *     same effect as if it were zero.
+   *     开始搜索的位置。如果为负数，则效果与零相同。
    * @return
-   *     the index of the first Unicode code point accepted by the {@code filter}
-   *     in the string {@code str} starting from the {@code startIndex}; or -1
-   *     if no such character. If {@code str} is {@code null} or empty, -1 is
-   *     returned. If {@code [startIndex, str.length())} is not a valid range of
-   *     the string {@code str}, -1 is returned. If {@code filter} is
-   *     {@code null}, -1 is returned.
+   *     字符串{@code str}中从{@code startIndex}开始满足{@code filter}条件的
+   *     第一个Unicode码点的索引；如果没有这样的字符则返回-1。
+   *     如果{@code str}为{@code null}或空，返回-1。如果{@code [startIndex, str.length())}
+   *     不是字符串{@code str}的有效范围，返回-1。如果{@code filter}为{@code null}，返回-1。
    * @see Searcher
    */
   public static int indexOfCodePoint(@Nullable final CharSequence str,
@@ -1953,29 +1849,23 @@ public class StringUtils {
   }
 
   /**
-   * Search a string to find the first occurrence of any Unicode code point
-   * accepted by the given filter.
+   * 在字符串中查找第一个满足给定过滤器条件的Unicode码点的出现位置。
    *
-   * <p>A {@code null} string or a {@code null} filter will return {@code -1}.
+   * <p>如果字符串为{@code null}或过滤器为{@code null}，将返回{@code -1}。
    *
    * @param str
-   *     the string to check, may be null.
+   *     要检查的字符串，可能为null。
    * @param filter
-   *     a {@link CodePointFilter} specifies the condition of characters to be
-   *     searched.
+   *     指定要搜索字符条件的{@link CodePointFilter}。
    * @param startIndex
-   *     the position to start the search from. If it is negative, it has the
-   *     same effect as if it were zero.
+   *     开始搜索的位置。如果为负数，则效果与零相同。
    * @param endIndex
-   *     the position to end the search. If it is greater than the length of
-   *     {@code str}, it has the same effect as the length of {@code str}.
+   *     结束搜索的位置。如果大于{@code str}的长度，则效果与{@code str}的长度相同。
    * @return
-   *     the index of the first Unicode code point accepted by the {@code filter}
-   *     in the string {@code str} starting from the {@code startIndex} and ending
-   *     before the {@code endIndex}; or -1 if no such character. If {@code str}
-   *     is {@code null} or empty, -1 is returned. If {@code [startIndex, endIndex)}
-   *     is not a valid range of the string {@code str}, -1 is returned. If
-   *     {@code filter} is {@code null}, -1 is returned.
+   *     字符串{@code str}中从{@code startIndex}开始到{@code endIndex}之前满足
+   *     {@code filter}条件的第一个Unicode码点的索引；如果没有这样的字符则返回-1。
+   *     如果{@code str}为{@code null}或空，返回-1。如果{@code [startIndex, endIndex)}
+   *     不是字符串{@code str}的有效范围，返回-1。如果{@code filter}为{@code null}，返回-1。
    * @see Searcher
    */
   public static int indexOfCodePoint(@Nullable final CharSequence str,
@@ -1990,11 +1880,10 @@ public class StringUtils {
 
 
   /**
-   * Search a string to find the first occurrence of any character in the given
-   * set of characters.
+   * 在字符串中查找给定字符集合中任意字符的第一次出现位置。
    *
-   * <p>A {@code null} string will return {@code -1}. A {@code null} or zero
-   * length search array will return {@code -1}.
+   * <p>如果字符串为{@code null}，将返回{@code -1}。如果搜索数组为{@code null}或长度为零，
+   * 将返回{@code -1}。
    * <pre>
    * StringUtils.indexOfAnyChar(null, *, *)                 = -1
    * StringUtils.indexOfAnyChar("", *, *)                   = -1
@@ -2009,15 +1898,13 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可能为null
    * @param chars
-   *     the chars to search for, may be null
+   *     要搜索的字符，可能为null
    * @param startIndex
-   *     the position to start the search from. If it is negative, it has the
-   *     same effect as if it were zero: this entire string may be searched. If
-   *     it is greater than the length of the string, it has the same effect as
-   *     if it were equal to the length of the string: and -1 is returned.
-   * @return the index of any of the chars, -1 if no match or null input
+   *     开始搜索的位置。如果为负数，则效果与零相同：整个字符串都可以被搜索。
+   *     如果大于字符串的长度，则效果与等于字符串长度相同：返回-1。
+   * @return 任意字符的索引，如果没有匹配或输入为null则返回-1
    * @see Searcher
    */
   public static int indexOfAnyChar(@Nullable final CharSequence str,
@@ -2029,11 +1916,10 @@ public class StringUtils {
   }
 
   /**
-   * Search a string to find the first occurrence of any character in the given
-   * set of characters.
+   * 在字符串中查找给定字符集合中任意字符的第一次出现位置。
    *
-   * <p>A {@code null} string will return {@code -1}. A {@code null} search
-   * string will return {@code -1}.
+   * <p>如果字符串为{@code null}，将返回{@code -1}。如果搜索字符串为{@code null}，
+   * 将返回{@code -1}。
    * <pre>
    * StringUtils.indexOfAnyChar(null, *, *)                 = -1
    * StringUtils.indexOfAnyChar("", *, *)                   = -1
@@ -2048,15 +1934,13 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可能为null
    * @param chars
-   *     the chars to search for, may be null
+   *     要搜索的字符，可能为null
    * @param startIndex
-   *     the position to start the search from. If it is negative, it has the
-   *     same effect as if it were zero: this entire string may be searched. If
-   *     it is greater than the length of the string, it has the same effect as
-   *     if it were equal to the length of the string: and -1 is returned.
-   * @return the index of any of the chars, -1 if no match or null input
+   *     开始搜索的位置。如果为负数，则效果与零相同：整个字符串都可以被搜索。
+   *     如果大于字符串的长度，则效果与等于字符串长度相同：返回-1。
+   * @return 任意字符的索引，如果没有匹配或输入为null则返回-1
    * @see Searcher
    */
   public static int indexOfAnyChar(@Nullable final CharSequence str,
@@ -2068,11 +1952,10 @@ public class StringUtils {
   }
 
   /**
-   * Search a string to find the first occurrence of any character not in the
-   * given set of characters.
+   * 在字符串中查找第一个不在给定字符集合中的字符的出现位置。
    *
-   * <p>A {@code null} string will return {@code -1}. A {@code null} or zero
-   * length search array will return {@code -1}.
+   * <p>如果字符串为{@code null}，将返回{@code -1}。如果搜索数组为{@code null}或长度为零，
+   * 将返回{@code -1}。
    * <pre>
    * StringUtils.indexOfAnyCharBut(null, *, *)                 = -1
    * StringUtils.indexOfAnyCharBut("", *, *)                   = -1
@@ -2088,15 +1971,13 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可能为null
    * @param searchChars
-   *     the chars to search for, may be null
+   *     要搜索的字符，可能为null
    * @param fromIndex
-   *     the position to start the search from. If it is negative, it has the
-   *     same effect as if it were zero: this entire string may be searched. If
-   *     it is greater than the length of the string, it has the same effect as
-   *     if it were equal to the length of the string: and -1 is returned.
-   * @return the index of any of the chars, -1 if no match or null input
+   *     开始搜索的位置。如果为负数，则效果与零相同：整个字符串都可以被搜索。
+   *     如果大于字符串的长度，则效果与等于字符串长度相同：返回-1。
+   * @return 任意字符的索引，如果没有匹配或输入为null则返回-1
    * @see Searcher
    */
   public static int indexOfAnyCharBut(@Nullable final CharSequence str,
@@ -2108,11 +1989,10 @@ public class StringUtils {
   }
 
   /**
-   * Search a string to find the first occurrence of any character not in the
-   * given set of characters.
+   * 在字符串中查找第一个不在给定字符集合中的字符的出现位置。
    *
-   * <p>A {@code null} string will return {@code -1}. A {@code null} search
-   * string will return {@code -1}.
+   * <p>如果字符串为{@code null}，将返回{@code -1}。如果搜索字符串为{@code null}，
+   * 将返回{@code -1}。
    * <pre>
    * StringUtils.indexOfAnyCharBut(null, *, *)            = -1
    * StringUtils.indexOfAnyCharBut("", *, *)              = -1
@@ -2128,15 +2008,13 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可能为null
    * @param searchChars
-   *     the chars to search for, may be null
+   *     要搜索的字符，可能为null
    * @param fromIndex
-   *     the position to start the search from. If it is negative, it has the
-   *     same effect as if it were zero: this entire string may be searched. If
-   *     it is greater than the length of the string, it has the same effect as
-   *     if it were equal to the length of the string: and -1 is returned.
-   * @return the index of any of the chars, -1 if no match or null input
+   *     开始搜索的位置。如果为负数，则效果与零相同：整个字符串都可以被搜索。
+   *     如果大于字符串的长度，则效果与等于字符串长度相同：返回-1。
+   * @return 任意字符的索引，如果没有匹配或输入为null则返回-1
    * @see Searcher
    */
   public static int indexOfAnyCharBut(@Nullable final CharSequence str,
@@ -2148,13 +2026,11 @@ public class StringUtils {
   }
 
   /**
-   * Finds the first occurrence of a substring within a string, handling {@code
-   * null}. This method uses {@link String#indexOf(String, int)}.
+   * 在字符串中查找子字符串的第一次出现位置，处理{@code null}。
+   * 此方法使用{@link String#indexOf(String, int)}。
    *
-   * <p>A {@code null} string will return {@code -1}. A negative start position
-   * is treated as zero. An empty ("") search String always matches. A start
-   * position greater than the string length only matches an empty search
-   * String.
+   * <p>如果字符串为{@code null}，将返回{@code -1}。负数的起始位置被视为零。
+   * 空("")搜索字符串总是匹配。起始位置大于字符串长度时只匹配空搜索字符串。
    * <pre>
    * StringUtils.indexOf(null, *, *, *)          = -1
    * StringUtils.indexOf(*, null, *, *)          = -1
@@ -2174,18 +2050,15 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可能为null
    * @param search
-   *     the string to find, may be null
+   *     要查找的字符串，可能为null
    * @param fromIndex
-   *     the position to start the search from. If it is negative, it has the
-   *     same effect as if it were zero: this entire string may be searched. If
-   *     it is greater than the length of the string, it has the same effect as
-   *     if it were equal to the length of the string: and -1 is returned.
+   *     开始搜索的位置。如果为负数，则效果与零相同：整个字符串都可以被搜索。
+   *     如果大于字符串的长度，则效果与等于字符串长度相同：返回-1。
    * @param ignoreCase
-   *     whether to ignore case while comparing strings.
-   * @return the first occurrence of the search String, -1 if no match or {@code
-   *     null} string input
+   *     比较字符串时是否忽略大小写。
+   * @return 搜索字符串的第一次出现位置，如果没有匹配或{@code null}字符串输入则返回-1
    * @see Searcher
    */
   public static int indexOf(@Nullable final CharSequence str,
@@ -2199,13 +2072,11 @@ public class StringUtils {
   }
 
   /**
-   * Find the first occurrence of any of a set of potential substrings.
+   * 查找一组潜在子字符串中任意一个的第一次出现位置。
    *
-   * <p>A {@code null} string will return {@code -1}. A {@code null} or zero
-   * length search array will return {@code -1}. A {@code null} search array
-   * entry will be ignored, but a search array containing "" will return {@code
-   * 0} if {@code str} is not {@code null}. This method uses {@link
-   * String#indexOf(String)}.
+   * <p>如果字符串为{@code null}，将返回{@code -1}。如果搜索数组为{@code null}或长度为零，
+   * 将返回{@code -1}。{@code null}的搜索数组项将被忽略，但包含""的搜索数组将在
+   * {@code str}不为{@code null}时返回{@code 0}。此方法使用{@link String#indexOf(String)}。
    * <pre>
    * StringUtils.indexOfAny(null, *, *, *)                     = -1
    * StringUtils.indexOfAny(*, null, *, *)                     = -1
@@ -2222,18 +2093,15 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可能为null
    * @param searches
-   *     the strings to search for, may be null
+   *     要搜索的字符串，可能为null
    * @param fromIndex
-   *     the position to start the search from. If it is negative, it has the
-   *     same effect as if it were zero: this entire string may be searched. If
-   *     it is greater than the length of the string, it has the same effect as
-   *     if it were equal to the length of the string: and -1 is returned.
+   *     开始搜索的位置。如果为负数，则效果与零相同：整个字符串都可以被搜索。
+   *     如果大于字符串的长度，则效果与等于字符串长度相同：返回-1。
    * @param ignoreCase
-   *     whether to ignore case while comparing strings.
-   * @return the first occurrence of any of the searchStrs in str, -1 if no
-   *     match
+   *     比较字符串时是否忽略大小写。
+   * @return str中任意searchStrs的第一次出现位置，如果没有匹配则返回-1
    * @see Searcher
    */
   public static int indexOfAny(@Nullable final CharSequence str,
@@ -2247,12 +2115,11 @@ public class StringUtils {
   }
 
   /**
-   * Finds the last current within a string from a start position, handling
-   * {@code null}. This method uses {@link String#lastIndexOf(int, int)}.
+   * 从指定位置开始在字符串中查找字符的最后出现位置，处理{@code null}。
+   * 此方法使用{@link String#lastIndexOf(int, int)}。
    *
-   * <p>A {@code null} or empty ("") String will return {@code -1}. A negative
-   * start position returns {@code -1}. A start position greater than the string
-   * length searches the whole string.
+   * <p>如果字符串为{@code null}或空("")，将返回{@code -1}。负数的起始位置返回{@code -1}。
+   * 起始位置大于字符串长度时搜索整个字符串。
    * <pre>
    * StringUtils.lastIndexOfChar(null, *, *)          = -1
    * StringUtils.lastIndexOfChar("", *,  *)           = -1
@@ -2265,18 +2132,14 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可能为null
    * @param ch
-   *     the character to find
+   *     要查找的字符
    * @param fromIndex
-   *     the position to start the search from (searching backwards). There is
-   *     no restriction on the value of fromIndex. If it is greater than or equal
-   *     to the length of this string, it has the same effect as if it were equal
-   *     to one less than the length of this string: this entire string may be
-   *     searched. If it is negative, it has the same effect as if it were -1:
-   *     -1 is returned.
-   * @return the last current of the search character, -1 if no match or {@code
-   *     null} string input.
+   *     开始搜索的位置（反向搜索）。fromIndex的值没有限制。如果它大于或等于
+   *     此字符串的长度，效果与它等于此字符串长度减一相同：整个字符串都可以被搜索。
+   *     如果为负数，效果与-1相同：返回-1。
+   * @return 搜索字符的最后出现位置，如果没有匹配或{@code null}字符串输入则返回-1
    * @see Searcher
    */
   public static int lastIndexOfChar(@Nullable final CharSequence str,
@@ -2288,19 +2151,16 @@ public class StringUtils {
   }
 
   /**
-   * Search a string to find the first occurrence of any character accepted by
-   * the given filter.
+   * 在字符串中搜索满足给定过滤器条件的字符的最后出现位置。
    *
-   * <p>A {@code null} string will return {@code -1}. A {@code null} filter
-   * will return {@code -1}.
+   * <p>如果字符串为{@code null}，将返回{@code -1}。如果过滤器为{@code null}，
+   * 将返回{@code -1}。
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可能为null
    * @param filter
-   *     a {@link CharFilter} specifies the condition of characters to be
-   *     searched.
-   * @return the first occurrence of the character accepted by the {@code
-   *     filter} in the string {@code str} starting from the {@code startIndex}.
+   *     一个{@link CharFilter}指定要搜索的字符条件。
+   * @return 字符串{@code str}中被{@code filter}接受的字符的最后出现位置。
    * @see Searcher
    */
   public static int lastIndexOfChar(@Nullable final CharSequence str,
@@ -2311,25 +2171,20 @@ public class StringUtils {
   }
 
   /**
-   * Search a string to find the first occurrence of any character accepted by
-   * the given filter.
+   * 在字符串中搜索满足给定过滤器条件的字符的最后出现位置。
    *
-   * <p>A {@code null} string will return {@code -1}. A {@code null} filter
-   * will return {@code -1}.
+   * <p>如果字符串为{@code null}，将返回{@code -1}。如果过滤器为{@code null}，
+   * 将返回{@code -1}。
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可能为null
    * @param filter
-   *     a {@link CharFilter} specifies the condition of characters to be search.
+   *     一个{@link CharFilter}指定要搜索的字符条件。
    * @param fromIndex
-   *     the position to start the search from (searching backwards). There is
-   *     no restriction on the value of fromIndex. If it is greater than or equal
-   *     to the length of this string, it has the same effect as if it were equal
-   *     to one less than the length of this string: this entire string may be
-   *     searched. If it is negative, it has the same effect as if it were -1:
-   *     -1 is returned.
-   * @return the first occurrence of the character accepted by the {@code
-   *     filter} in the string {@code str} starting from the {@code fromIndex}.
+   *     开始搜索的位置（反向搜索）。fromIndex的值没有限制。如果它大于或等于
+   *     此字符串的长度，效果与它等于此字符串长度减一相同：整个字符串都可以被搜索。
+   *     如果为负数，效果与-1相同：返回-1。
+   * @return 字符串{@code str}中从{@code fromIndex}开始被{@code filter}接受的字符的最后出现位置。
    * @see Searcher
    */
   public static int lastIndexOfChar(@Nullable final CharSequence str,
@@ -2341,11 +2196,10 @@ public class StringUtils {
   }
 
   /**
-   * Search a string to find the first occurrence of any character in the given
-   * set of characters.
+   * 在字符串中搜索给定字符集合中任意字符的最后出现位置。
    *
-   * <p>A {@code null} string will return {@code -1}. A {@code null} or zero
-   * length search array will return {@code -1}.
+   * <p>如果字符串为{@code null}，将返回{@code -1}。如果搜索数组为{@code null}或长度为零，
+   * 将返回{@code -1}。
    * <pre>
    * StringUtils.lastIndexOfAnyChar(null, *, *)                 = -1
    * StringUtils.lastIndexOfAnyChar("", *, *)                   = -1
@@ -2360,17 +2214,14 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可能为null
    * @param searchChars
-   *     the chars to search for, may be null
+   *     要搜索的字符，可能为null
    * @param fromIndex
-   *     the position to start the search from (searching backwards). There is
-   *     no restriction on the value of fromIndex. If it is greater than or equal
-   *     to the length of this string, it has the same effect as if it were equal
-   *     to one less than the length of this string: this entire string may be
-   *     searched. If it is negative, it has the same effect as if it were -1:
-   *     -1 is returned.
-   * @return the index of any of the chars, -1 if no match or null input
+   *     开始搜索的位置（反向搜索）。fromIndex的值没有限制。如果它大于或等于
+   *     此字符串的长度，效果与它等于此字符串长度减一相同：整个字符串都可以被搜索。
+   *     如果为负数，效果与-1相同：返回-1。
+   * @return 任意字符的索引，如果没有匹配或输入为null则返回-1
    * @see Searcher
    */
   public static int lastIndexOfAnyChar(@Nullable final CharSequence str,
@@ -2411,7 +2262,7 @@ public class StringUtils {
    *     to one less than the length of this string: this entire string may be
    *     searched. If it is negative, it has the same effect as if it were -1:
    *     -1 is returned.
-   * @return the index of any of the chars, -1 if no match or null input
+   * @return 任意字符的索引，如果没有匹配或输入为null则返回-1
    * @see Searcher
    */
   public static int lastIndexOfAnyChar(@Nullable final CharSequence str,
@@ -2423,11 +2274,10 @@ public class StringUtils {
   }
 
   /**
-   * Search a string to find the first occurrence of any character not in the
-   * given set of characters.
+   * 在字符串中查找第一个不在给定字符集合中的字符的出现位置。
    *
-   * <p>A {@code null} string will return {@code -1}. A {@code null} or zero
-   * length search array will return {@code -1}.
+   * <p>如果字符串为{@code null}，将返回{@code -1}。如果搜索数组为{@code null}或长度为零，
+   * 将返回{@code -1}。
    * <pre>
    * StringUtils.lastIndexOfAnyCharBut(null, *, *)                 = -1
    * StringUtils.lastIndexOfAnyCharBut("", *, *)                   = -1
@@ -2443,17 +2293,14 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可能为null
    * @param searchChars
-   *     the chars to search for, may be null
+   *     要搜索的字符，可能为null
    * @param fromIndex
-   *     the position to start the search from (searching backwards). There is
-   *     no restriction on the value of fromIndex. If it is greater than or equal
-   *     to the length of this string, it has the same effect as if it were equal
-   *     to one less than the length of this string: this entire string may be
-   *     searched. If it is negative, it has the same effect as if it were -1:
-   *     -1 is returned.
-   * @return the index of any of the chars, -1 if no match or null input
+   *     开始搜索的位置（反向搜索）。fromIndex的值没有限制。如果它大于或等于
+   *     此字符串的长度，效果与它等于此字符串长度减一相同：整个字符串都可以被搜索。
+   *     如果为负数，效果与-1相同：返回-1。
+   * @return 任意字符的索引，如果没有匹配或输入为null则返回-1
    * @see Searcher
    */
   public static int lastIndexOfAnyCharBut(@Nullable final CharSequence str,
@@ -2465,11 +2312,10 @@ public class StringUtils {
   }
 
   /**
-   * Search a string to find the first occurrence of any character not in the
-   * given set of characters.
+   * 在字符串中查找第一个不在给定字符集合中的字符的出现位置。
    *
-   * <p>A {@code null} string will return {@code -1}. A {@code null} search
-   * string will return {@code -1}.
+   * <p>如果字符串为{@code null}，将返回{@code -1}。如果搜索字符串为{@code null}，
+   * 将返回{@code -1}。
    * <pre>
    * StringUtils.lastIndexOfAnyCharBut(null, *, *)            = -1
    * StringUtils.lastIndexOfAnyCharBut("", *, *)              = -1
@@ -2485,17 +2331,14 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可能为null
    * @param searchChars
-   *     the chars to search for, may be null
+   *     要搜索的字符，可能为null
    * @param fromIndex
-   *     the position to start the search from (searching backwards). There is
-   *     no restriction on the value of fromIndex. If it is greater than or equal
-   *     to the length of this string, it has the same effect as if it were equal
-   *     to one less than the length of this string: this entire string may be
-   *     searched. If it is negative, it has the same effect as if it were -1:
-   *     -1 is returned.
-   * @return the index of any of the chars, -1 if no match or null input
+   *     开始搜索的位置（反向搜索）。fromIndex的值没有限制。如果它大于或等于
+   *     此字符串的长度，效果与它等于此字符串长度减一相同：整个字符串都可以被搜索。
+   *     如果为负数，效果与-1相同：返回-1。
+   * @return 任意字符的索引，如果没有匹配或输入为null则返回-1
    * @see Searcher
    */
   public static int lastIndexOfAnyCharBut(@Nullable final CharSequence str,
@@ -2507,13 +2350,10 @@ public class StringUtils {
   }
 
   /**
-   * Finds the first occurrence within a string, handling {@code null}. This
-   * method uses {@link String#lastIndexOf(String, int)}.
+   * 在字符串中查找第一次出现位置，处理{@code null}。此方法使用{@link String#lastIndexOf(String, int)}。
    *
-   * <p>A {@code null} string will return {@code -1}. A negative start position
-   * returns {@code -1}. An empty ("") search String always matches unless the
-   * start position is negative. A start position greater than the string length
-   * searches the whole string.
+   * <p>如果字符串为{@code null}，将返回{@code -1}。负数的起始位置返回{@code -1}。
+   * 空字符串("")总是匹配，除非起始位置为负数。起始位置大于字符串长度时搜索整个字符串。
    * <pre>
    * StringUtils.lastIndexOf(null, *, *)          = -1
    * StringUtils.lastIndexOf(*, null, *)          = -1
@@ -2528,20 +2368,16 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可能为null
    * @param search
-   *     the string to find, may be null
+   *     要查找的字符串，可能为null
    * @param fromIndex
-   *     the position to start the search from (searching backwards). There is
-   *     no restriction on the value of fromIndex. If it is greater than or equal
-   *     to the length of this string, it has the same effect as if it were equal
-   *     to one less than the length of this string: this entire string may be
-   *     searched. If it is negative, it has the same effect as if it were -1:
-   *     -1 is returned.
+   *     开始搜索的位置（反向搜索）。fromIndex的值没有限制。如果它大于或等于
+   *     此字符串的长度，效果与它等于此字符串长度减一相同：整个字符串都可以被搜索。
+   *     如果为负数，效果与-1相同：返回-1。
    * @param ignoreCase
-   *     whether to ignore case while comparing strings.
-   * @return the first occurrence of the search String, -1 if no match or {@code
-   *     null} string input
+   *     比较字符串时是否忽略大小写。
+   * @return 搜索字符串的第一次出现位置，如果没有匹配或{@code null}字符串输入则返回-1
    * @see Searcher
    */
   public static int lastIndexOf(@Nullable final CharSequence str,
@@ -2555,12 +2391,11 @@ public class StringUtils {
   }
 
   /**
-   * Find the latest current of any of a set of potential substrings.
+   * 查找一组潜在子字符串中任意一个的最后一次出现位置。
    *
-   * <p>A {@code null} string will return {@code -1}. A {@code null} search
-   * array will return {@code -1}. A {@code null} or zero length search array
-   * entry will be ignored, but a search array containing "" will return the
-   * length of {@code str} if {@code str} is not {@code null}. This method uses
+   * <p>如果字符串为{@code null}，将返回{@code -1}。如果搜索数组为{@code null}，
+   * 将返回{@code -1}。{@code null}或长度为零的搜索数组项将被忽略，但包含""的搜索数组
+   * 将在{@code str}不为{@code null}时返回{@code str}的长度。此方法使用
    * {@link String#indexOf(String)}
    * <pre>
    * StringUtils.lastIndexOfAny(null, *, *)                     = -1
@@ -2576,19 +2411,16 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可能为null
    * @param searches
-   *     the strings to search for, may be null
+   *     要搜索的字符串，可能为null
    * @param fromIndex
-   *     the position to start the search from (searching backwards). There is
-   *     no restriction on the value of fromIndex. If it is greater than or equal
-   *     to the length of this string, it has the same effect as if it were equal
-   *     to one less than the length of this string: this entire string may be
-   *     searched. If it is negative, it has the same effect as if it were -1:
-   *     -1 is returned.
+   *     开始搜索的位置（反向搜索）。fromIndex的值没有限制。如果它大于或等于
+   *     此字符串的长度，效果与它等于此字符串长度减一相同：整个字符串都可以被搜索。
+   *     如果为负数，效果与-1相同：返回-1。
    * @param ignoreCase
-   *     whether to ignore case while comparing strings.
-   * @return the last current of any of the strings, -1 if no match
+   *     比较字符串时是否忽略大小写。
+   * @return 任意字符串的最后一次出现位置，如果没有匹配则返回-1
    * @see Searcher
    */
   public static int lastIndexOfAny(@Nullable final String str,
@@ -2602,14 +2434,14 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether a string contains a character.
+   * 测试字符串是否包含指定字符。
    *
    * @param str
-   *     a string, may be {@code null}.
+   *     字符串，可能为{@code null}。
    * @param ch
-   *     the character.
-   * @return {@code true} if the {@code str} is not {@code null} and contains
-   *     {@code ch}; {@code false} otherwise.
+   *     字符。
+   * @return 如果{@code str}不为{@code null}且包含{@code ch}则返回{@code true}；
+   *     否则返回{@code false}。
    * @see Searcher#isContainedIn(CharSequence)
    */
   public static boolean containsChar(@Nullable final CharSequence str, final char ch) {
@@ -2619,16 +2451,16 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether a string contains a character.
+   * 测试字符串是否包含指定字符。
    *
    * @param str
-   *     a string, may be {@code null}.
+   *     字符串，可能为{@code null}。
    * @param ch
-   *     the character.
+   *     字符。
    * @param startIndex
-   *     the index where to start searching.
-   * @return {@code true} if the {@code str} is not {@code null} and contains
-   *     {@code ch}; {@code false} otherwise.
+   *     开始搜索的索引位置。
+   * @return 如果{@code str}不为{@code null}且包含{@code ch}则返回{@code true}；
+   *     否则返回{@code false}。
    * @see Searcher#isContainedIn(CharSequence)
    */
   public static boolean containsChar(@Nullable final CharSequence str,
@@ -2640,14 +2472,14 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether a string contains the code point of a character.
+   * 测试字符串是否包含指定字符的码点。
    *
    * @param str
-   *     a string, may be {@code null}.
+   *     字符串，可能为{@code null}。
    * @param codePoint
-   *     the code point of a character.
-   * @return {@code true} if the {@code str} is not {@code null} and contains
-   *     {@code codePoint}; {@code false} otherwise.
+   *     字符的码点。
+   * @return 如果{@code str}不为{@code null}且包含{@code codePoint}则返回{@code true}；
+   *     否则返回{@code false}。
    * @see Searcher#isContainedIn(CharSequence)
    */
   public static boolean containsCodePoint(@Nullable final CharSequence str,
@@ -2658,16 +2490,16 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether a string contains the code point of a character.
+   * 测试字符串是否包含指定字符的码点。
    *
    * @param str
-   *     a string, may be {@code null}.
+   *     字符串，可能为{@code null}。
    * @param codePoint
-   *     the code point of a character.
+   *     字符的码点。
    * @param startIndex
-   *     the index where to start searching.
-   * @return {@code true} if the {@code str} is not {@code null} and contains
-   *     {@code codePoint}; {@code false} otherwise.
+   *     开始搜索的索引位置。
+   * @return 如果{@code str}不为{@code null}且包含{@code codePoint}则返回{@code true}；
+   *     否则返回{@code false}。
    * @see Searcher#isContainedIn(CharSequence)
    */
   public static boolean containsCodePoint(@Nullable final CharSequence str,
@@ -2679,16 +2511,14 @@ public class StringUtils {
   }
 
   /**
-   * Checks whether the specified string contains no character other than the
-   * specified character.
+   * 检查指定字符串是否不包含除指定字符之外的任何字符。
    *
    * @param str
-   *     a string, which may be null or empty.
+   *     字符串，可能为null或空。
    * @param ch
-   *     the specified character.
-   * @return {@code true} if the specified string contains no character other
-   *     than the specified character; {@code false} otherwise. If the specified
-   *     string is null or empty, returns false.
+   *     指定的字符。
+   * @return 如果指定字符串不包含除指定字符之外的任何字符，则返回{@code true}；
+   *     否则返回{@code false}。如果指定字符串为null或空，返回false。
    * @see Searcher#forCharsNotEqual(char)
    * @see Searcher#isNotContainedIn(CharSequence)
    */
@@ -2703,16 +2533,14 @@ public class StringUtils {
   }
 
   /**
-   * Checks whether the specified string contains no Unicode code point other
-   * than the specified Unicode code point.
+   * 检查指定字符串是否只包含指定的Unicode代码点。
    *
    * @param str
-   *     a string, which may be null or empty.
+   *     字符串，可能为null或空。
    * @param codePoint
-   *     the specified Unicode code point.
-   * @return {@code true} if the specified string contains no Unicode code point
-   *     other than the specified Unicode code point; {@code false} otherwise.
-   *     If the specified string is null or empty, returns false.
+   *     指定的Unicode代码点。
+   * @return 如果指定字符串只包含指定的Unicode代码点则返回{@code true}；
+   *     否则返回{@code false}。如果指定字符串为null或空，返回false。
    */
   public static boolean containsOnly(@Nullable final CharSequence str,
       final int codePoint) {
@@ -2726,16 +2554,14 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether the specified string contains only the characters satisfying
-   * the specified {@link CharFilter}.
+   * 测试指定字符串是否只包含满足指定{@link CharFilter}的字符。
    *
    * @param str
-   *     the string to be tested, which may be null or empty.
+   *     要测试的字符串，可能为null或空。
    * @param filter
-   *     a specified {@link CharFilter}, which cannot be null.
-   * @return {@code true} if the string contains only the characters satisfying
-   *     the specified {@link CharFilter}; {@code false} otherwise. If the
-   *     string is null, returns false. If the string is empty, returns true.
+   *     指定的{@link CharFilter}，不能为null。
+   * @return 如果字符串只包含满足指定{@link CharFilter}的字符，则返回{@code true}；
+   *     否则返回{@code false}。如果字符串为null，返回false。如果字符串为空，返回true。
    * @see Searcher#forCharsNotSatisfy(CharFilter)
    * @see Searcher#isNotContainedIn(CharSequence)
    */
@@ -2753,16 +2579,14 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether the specified string contains only the code points satisfying
-   * the specified {@link CodePointFilter}.
+   * 测试指定字符串是否只包含满足指定{@link CodePointFilter}的代码点。
    *
    * @param str
-   *     the string to be tested, which may be null or empty.
+   *     要测试的字符串，可能为null或空。
    * @param filter
-   *     a specified {@link CodePointFilter}, which cannot be null.
-   * @return {@code true} if the string contains only the code points satisfying
-   *     the specified {@link CodePointFilter}; {@code false} otherwise. If the
-   *     string is null, returns false. If the string is empty, returns true.
+   *     指定的{@link CodePointFilter}，不能为null。
+   * @return 如果字符串只包含满足指定{@link CodePointFilter}的代码点，则返回{@code true}；
+   *     否则返回{@code false}。如果字符串为null，返回false。如果字符串为空，返回true。
    * @see Searcher#forCharsNotSatisfy(CharFilter)
    * @see Searcher#isNotContainedIn(CharSequence)
    */
@@ -2780,11 +2604,10 @@ public class StringUtils {
   }
 
   /**
-   * Checks if the string contains only certain characters.
+   * 检查字符串是否只包含特定字符。
    *
-   * <p>A {@code null} string will return {@code false}. A {@code null} valid
-   * character array will return {@code false}. An empty String ("") always
-   * returns {@code true}.
+   * <p>如果字符串为{@code null}，将返回{@code false}。如果有效字符数组为{@code null}，
+   * 将返回{@code false}。空字符串("")总是返回{@code true}。
    * <pre>
    * StringUtils.containsOnly(null, *)       = false
    * StringUtils.containsOnly(*, null)       = false
@@ -2796,10 +2619,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可能为null
    * @param validChars
-   *     an array of valid chars, may be null
-   * @return {@code true} if it only contains valid chars and is non-null
+   *     有效字符的数组，可能为null
+   * @return 如果只包含有效字符且非null，则返回{@code true}
    * @see Searcher#forCharsNotIn(char[])}
    * @see Searcher#isNotContainedIn(CharSequence)
    */
@@ -2817,11 +2640,10 @@ public class StringUtils {
   }
 
   /**
-   * Checks if the string contains only certain characters.
+   * 检查字符串是否只包含特定字符。
    *
-   * <p>A {@code null} string will return {@code false}. A {@code null} valid
-   * character String will return {@code false}. An empty String ("") always
-   * returns {@code true}.
+   * <p>如果字符串为{@code null}，将返回{@code false}。如果有效字符字符串为{@code null}，
+   * 将返回{@code false}。空字符串("")总是返回{@code true}。
    * <pre>
    * StringUtils.containsOnly(null, *)       = false
    * StringUtils.containsOnly(*, null)       = false
@@ -2833,10 +2655,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可能为null
    * @param validChars
-   *     a string of valid chars, may be null
-   * @return {@code true} if it only contains valid chars and is non-null
+   *     有效字符的字符串，可能为null
+   * @return 如果只包含有效字符且非null，则返回{@code true}
    * @see Searcher#forCharsNotIn(CharSequence)
    * @see Searcher#isNotContainedIn(CharSequence)
    */
@@ -2854,16 +2676,14 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether the specified string does not contain any character satisfying
-   * the specified {@link CharFilter}.
+   * 测试指定字符串是否不包含任何满足指定{@link CharFilter}的字符。
    *
    * @param str
-   *     the string to be tested, which may be null or empty.
+   *     要测试的字符串，可能为null或空。
    * @param filter
-   *     a specified {@link CharFilter}, which cannot be null.
-   * @return {@code true} if the string does not contain any character satisfying
-   *     the specified {@link CharFilter}; {@code false} otherwise. If the
-   *     string is null, returns true. If the string is empty, returns true.
+   *     指定的{@link CharFilter}，不能为null。
+   * @return 如果字符串不包含任何满足指定{@link CharFilter}的字符，则返回{@code true}；
+   *     否则返回{@code false}。如果字符串为null，返回true。如果字符串为空，返回true。
    * @see Searcher#forCharsSatisfy(CharFilter)
    * @see Searcher#isNotContainedIn(CharSequence)
    */
@@ -2875,16 +2695,14 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether the specified string does not contain any code point satisfying
-   * the specified {@link CodePointFilter}.
+   * 测试指定字符串是否不包含任何满足指定{@link CodePointFilter}的代码点。
    *
    * @param str
-   *     the string to be tested, which may be null or empty.
+   *     要测试的字符串，可能为null或空。
    * @param filter
-   *     a specified {@link CodePointFilter}, which cannot be null.
-   * @return {@code true} if the string does not contain any code point satisfying
-   *     the specified {@link CodePointFilter}; {@code false} otherwise. If the
-   *     string is null, returns true. If the string is empty, returns true.
+   *     指定的{@link CodePointFilter}，不能为null。
+   * @return 如果字符串不包含任何满足指定{@link CodePointFilter}的代码点，则返回{@code true}；
+   *     否则返回{@code false}。如果字符串为null，返回true。如果字符串为空，返回true。
    * @see Searcher#forCodePointsSatisfy(CodePointFilter)
    * @see Searcher#isNotContainedIn(CharSequence)
    */
@@ -2896,16 +2714,15 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether the specified string does not contain the specified code
-   * point.
+   * 测试指定字符串是否不包含指定的代码点。
    *
    * @param str
-   *     the string to be tested, which may be null or empty.
+   *     要测试的字符串，可能为null或空。
    * @param codePoint
-   *     the specified Unicode code point.
-   * @return {@code true} if the string does not contain the specified code
-   *     point; {@code false} otherwise. If the string is null, returns true.
-   *     If the string is empty, returns true.
+   *     指定的Unicode代码点。
+   * @return 如果字符串不包含指定的代码点，则返回{@code true}；
+   *     否则返回{@code false}。如果字符串为null，返回true。
+   *     如果字符串为空，返回true。
    * @see Searcher#forCodePoint(int)
    * @see Searcher#isNotContainedIn(CharSequence)
    */
@@ -2916,11 +2733,10 @@ public class StringUtils {
   }
 
   /**
-   * Checks if the string contains none of the invalid characters.
+   * 检查字符串是否不包含任何无效字符。
    *
-   * <p>A {@code null} string will return {@code true}. A {@code null} invalid
-   * character array will return {@code true}. An empty String ("") will
-   * returns {@code true}. An empty invalid character array will return {@code true}.
+   * <p>如果字符串为{@code null}，将返回{@code true}。如果无效字符数组为{@code null}，
+   * 将返回{@code true}。空字符串("")将返回{@code true}。空的无效字符数组将返回{@code true}。
    * <pre>
    * StringUtils.containsNone(null, *)                = true
    * StringUtils.containsNone(*, null)                = true
@@ -2932,12 +2748,11 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null.
+   *     要检查的字符串，可能为null。
    * @param invalidChars
-   *     an array of invalid characters, may be null or empty.
+   *     无效字符的数组，可能为null或空。
    * @return
-   *     {@code true} if the specified string contains none of the invalid
-   *     characters.
+   *     如果指定字符串不包含任何无效字符，则返回{@code true}。
    * @see Searcher#forCharsIn(char...)
    * @see Searcher#isNotContainedIn(CharSequence)
    */
@@ -2949,11 +2764,10 @@ public class StringUtils {
   }
 
   /**
-   * Checks if the string contains none of the invalid characters.
+   * 检查字符串是否不包含任何无效字符。
    *
-   * <p>A {@code null} string will return {@code true}. A {@code null} invalid
-   * character array will return {@code true}. An empty String ("") will
-   * returns {@code true}. An empty invalid character string will return {@code true}.
+   * <p>如果字符串为{@code null}，将返回{@code true}。如果无效字符数组为{@code null}，
+   * 将返回{@code true}。空字符串("")将返回{@code true}。空的无效字符字符串将返回{@code true}。
    * <pre>
    * StringUtils.containsNone(null, *)                = true
    * StringUtils.containsNone(*, null)                = true
@@ -2965,12 +2779,11 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null.
+   *     要检查的字符串，可能为null。
    * @param invalidChars
-   *     a sequence of valid chars, may be null.
+   *     无效字符的序列，可能为null。
    * @return
-   *     {@code true} if the specified does not contain any of the invalid
-   *     characters.
+   *     如果指定字符串不包含任何无效字符，则返回{@code true}。
    * @see Searcher#forCharsIn(CharSequence)
    * @see Searcher#isNotContainedIn(CharSequence)
    */
@@ -2982,17 +2795,15 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether the specified string contains any character satisfying
-   * the specified {@link CharFilter}.
+   * 测试指定字符串是否包含任何满足指定{@link CharFilter}的字符。
    *
    * @param str
-   *     the string to be tested, which may be null or empty.
+   *     要测试的字符串，可能为null或空。
    * @param filter
-   *     a specified {@link CharFilter}, which cannot be null.
+   *     指定的{@link CharFilter}，不能为null。
    * @return
-   *    {@code true} if the string contains any character satisfying the
-   *    specified {@link CharFilter}; {@code false} otherwise. If the string is
-   *    null or empty, returns {@code false}.
+   *    如果字符串包含任何满足指定{@link CharFilter}的字符，则返回{@code true}；
+   *    否则返回{@code false}。如果字符串为null或空，返回{@code false}。
    * @see Searcher#forCharsSatisfy(CharFilter)
    * @see Searcher#isContainedIn(CharSequence)
    */
@@ -3004,17 +2815,15 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether the specified string contains any code point satisfying
-   * the specified {@link CodePointFilter}.
+   * 测试指定字符串是否包含任何满足指定{@link CodePointFilter}的代码点。
    *
    * @param str
-   *     the string to be tested, which may be null or empty.
+   *     要测试的字符串，可能为null或空。
    * @param filter
-   *     a specified {@link CodePointFilter}, which cannot be null.
+   *     指定的{@link CodePointFilter}，不能为null。
    * @return
-   *    {@code true} if the string contains any code point satisfying
-   *     the specified {@link CodePointFilter}; {@code false} otherwise. If the
-   *     string is null or empty, returns {@code false}.
+   *    如果字符串包含任何满足指定{@link CodePointFilter}的代码点，则返回{@code true}；
+   *     否则返回{@code false}。如果字符串为null或空，返回{@code false}。
    * @see Searcher#forCodePointsSatisfy(CodePointFilter)
    * @see Searcher#isContainedIn(CharSequence)
    */
@@ -3026,16 +2835,15 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether the specified string contains the specified code point.
+   * 测试指定字符串是否包含指定的代码点。
    *
    * @param str
-   *     the string to be tested, which may be null or empty.
+   *     要测试的字符串，可能为null或空。
    * @param codePoint
-   *     the specified code point.
+   *     指定的代码点。
    * @return
-   *    {@code true} if the string contains the specified code point;
-   *    {@code false} otherwise. If the string is null or empty, returns
-   *    {@code false}.
+   *    如果字符串包含指定的代码点，则返回{@code true}；
+   *    否则返回{@code false}。如果字符串为null或空，返回{@code false}。
    * @see Searcher#forCodePoint(int)
    * @see Searcher#isContainedIn(CharSequence)
    */
@@ -3047,12 +2855,10 @@ public class StringUtils {
   }
 
   /**
-   * Checks if the string contains any of the valid characters.
+   * 检查字符串是否包含任何有效字符。
    *
-   * <p>A {@code null} string will return {@code false}. A {@code null} valid
-   * character array will return {@code false}. An empty String ("") will
-   * returns {@code false}. An empty invalid character array will return
-   * {@code false}.
+   * <p>如果字符串为{@code null}，将返回{@code false}。如果有效字符数组为{@code null}，
+   * 将返回{@code false}。空字符串("")将返回{@code false}。空的无效字符数组将返回{@code false}。
    * <pre>
    * StringUtils.containsAny(null, *)                = false
    * StringUtils.containsAny(*, null)                = false
@@ -3064,12 +2870,12 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null.
+   *     要检查的字符串，可能为null。
    * @param validChars
-   *     an array of valid characters, may be null or empty.
+   *     有效字符的数组，可能为null或空。
    * @return
-   *     {@code true} if the specified string contains any valid characters. If
-   *     the string is null or empty, returns {@code false}.
+   *     如果指定字符串包含任何有效字符，则返回{@code true}。
+   *     如果字符串为null或空，返回{@code false}。
    * @see Searcher#forCharsIn(char...)
    * @see Searcher#isContainedIn(CharSequence)
    */
@@ -3081,12 +2887,10 @@ public class StringUtils {
   }
 
   /**
-   * Checks if the string contains any of the valid characters.
+   * 检查字符串是否包含任何有效字符。
    *
-   * <p>A {@code null} string will return {@code false}. A {@code null} valid
-   * character array will return {@code false}. An empty String ("") will
-   * returns {@code false}. An empty invalid character string will return
-   * {@code false}.
+   * <p>如果字符串为{@code null}，将返回{@code false}。如果有效字符数组为{@code null}，
+   * 将返回{@code false}。空字符串("")将返回{@code false}。空的无效字符字符串将返回{@code false}。
    * <pre>
    * StringUtils.containsAny(null, *)                = false
    * StringUtils.containsAny(*, null)                = false
@@ -3098,12 +2902,12 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null.
+   *     要检查的字符串，可能为null。
    * @param validChars
-   *     a sequence of valid chars, may be null.
+   *     有效字符的序列，可能为null。
    * @return
-   *     {@code true} if the specified contains any of the valid characters. If
-   *     the string is null or empty, returns {@code false}.
+   *     如果指定字符串包含任何有效字符，则返回{@code true}。
+   *     如果字符串为null或空，返回{@code false}。
    * @see Searcher#forCharsIn(CharSequence)
    * @see Searcher#isContainedIn(CharSequence)
    */
@@ -3115,20 +2919,18 @@ public class StringUtils {
   }
 
   /**
-   * Gets all the occurrences of a substring in a specified string.
+   * 获取指定字符串中子字符串的所有出现位置。
    *
    * @param str
-   *     the string where to find the substring.
+   *     查找子字符串的字符串。
    * @param substr
-   *     the substring to be found.
+   *     要查找的子字符串。
    * @param ignoreCase
-   *     whether to ignore case while comparing strings.
+   *     比较字符串时是否忽略大小写。
    * @param list
-   *     a optional {@link IntList} where to put the result. If it is null, a
-   *     new {@link IntArrayList} will be created to hold the result and
-   *     returned.
-   * @return a list of integers, which contains all the indexes where the
-   *     substring occurs in the string.
+   *     可选的{@link IntList}用于存放结果。如果为null，
+   *     将创建一个新的{@link IntArrayList}来保存结果并返回。
+   * @return 整数列表，包含子字符串在字符串中出现的所有索引。
    * @see Searcher#getOccurrencesIn(CharSequence)
    */
   public static IntList getOccurrences(@Nullable final CharSequence str,
@@ -3141,13 +2943,13 @@ public class StringUtils {
   }
 
   /**
-   * Counts how many times a character appears in a string.
+   * 计算字符在字符串中出现的次数。
    *
    * @param str
-   *     the string.
+   *     字符串。
    * @param codePoint
-   *     the code point of the character to be count.
-   * @return the number of occurrences of ch in str, 0 if str is null.
+   *     要计数的字符的代码点。
+   * @return 字符ch在字符串str中的出现次数，如果str为null则返回0。
    * @see Searcher#countMatchesIn(CharSequence)
    */
   public static int countMatches(@Nullable final CharSequence str,
@@ -3172,10 +2974,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可能为null
    * @param substr
-   *     the substring to count, may be null
-   * @return the number of occurrences, 0 if either String is {@code null}
+   *     要计数的子字符串，可能为null
+   * @return 出现次数，如果任一字符串为{@code null}则返回0
    * @see Searcher#countMatchesIn(CharSequence)
    */
   public static int countMatches(@Nullable final CharSequence str,
@@ -3187,9 +2989,9 @@ public class StringUtils {
   }
 
   /**
-   * Counts how many times the substring appears in the larger String.
+   * 计算子字符串在较大字符串中出现的次数。
    *
-   * <p>A {@code null} or empty ("") String input returns {@code 0}.
+   * <p>如果输入的字符串为{@code null}或空("")，返回{@code 0}。
    * <pre>
    * StringUtils.countMatches(null, *)       = 0
    * StringUtils.countMatches("", *)         = 0
@@ -3201,12 +3003,12 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可能为null
    * @param substr
-   *     the substring to count, may be null
+   *     要计数的子字符串，可能为null
    * @param ignoreCase
-   *     whether to compare strings ignoring the case.
-   * @return the number of occurrences, 0 if either String is {@code null}
+   *     比较字符串时是否忽略大小写。
+   * @return 出现次数，如果任一字符串为{@code null}则返回0
    * @see Searcher#countMatchesIn(CharSequence)
    */
   public static int countMatches(@Nullable final CharSequence str,
@@ -3218,14 +3020,13 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether a character sequence is strippable from the start.
+   * 测试字符序列是否可以从开头剥离。
    *
    * @param str
-   *     the specified character sequence.
+   *     指定的字符序列。
    * @return
-   *     {@code true} if the character sequence is strippable from the start,
-   *     i.e., the start of the character sequence is a non-graphic character;
-   *     {@code false} otherwise.
+   *     如果字符序列可以从开头剥离，则返回{@code true}，
+   *     即字符序列的开头是非图形字符；否则返回{@code false}。
    * @see CharUtils#isGraph(int)
    * @see Stripper#isStrippable(CharSequence)
    */
@@ -3237,14 +3038,13 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether a character sequence is strippable from the end.
+   * 测试字符序列是否可以从末尾剥离。
    *
    * @param str
-   *     the specified character sequence.
+   *     指定的字符序列。
    * @return
-   *     {@code true} if the character sequence is strippable from the end,
-   *     i.e., the end of the character sequence is a non-graphic character;
-   *     {@code false} otherwise.
+   *     如果字符序列可以从末尾剥离，则返回{@code true}，
+   *     即字符序列的末尾是非图形字符；否则返回{@code false}。
    * @see CharUtils#isGraph(int)
    * @see Stripper#isStrippable(CharSequence)
    */
@@ -3256,14 +3056,13 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether a character sequence is strippable.
+   * 测试字符序列是否可以剥离。
    *
    * @param str
-   *     the specified character sequence.
+   *     指定的字符序列。
    * @return
-   *     {@code true} if the character sequence is strippable, i.e., the start
-   *     or end of the character sequence is a non-graphic character; {@code false}
-   *     otherwise.
+   *     如果字符序列可以剥离，则返回{@code true}，即字符序列的开头
+   *     或末尾是非图形字符；否则返回{@code false}。
    * @see CharUtils#isGraph(int)
    * @see Stripper#isStrippable(CharSequence)
    */
@@ -3275,13 +3074,13 @@ public class StringUtils {
   }
 
   /**
-   * Strips whitespace and non-printable characters from the start of a string.
+   * 从字符串的开头剥离空白字符和不可打印字符。
    *
-   * <p>The function use {@link CharUtils#isGraph(int)} to determinate wheter a
-   * code point is a printable non-whitespace character.
+   * <p>该函数使用{@link CharUtils#isGraph(int)}来确定代码点
+   * 是否为可打印的非空白字符。
    *
-   * <p>A {@code null} input String returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。空字符串("")
+   * 输入返回空字符串。
    * <pre>
    * StringUtils.stripStart(null)       = null
    * StringUtils.stripStart("")         = ""
@@ -3294,8 +3093,8 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to remove characters from, may be null
-   * @return the stripped String, or {@code null} if null String input
+   *     要移除字符的字符串，可能为null
+   * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}
    * @see Stripper#strip(CharSequence)
    */
   public static String stripStart(@Nullable final CharSequence str) {
@@ -3306,13 +3105,13 @@ public class StringUtils {
   }
 
   /**
-   * Strips whitespace and non-printable characters from the start of a string.
+   * 从字符串的开头剥离空白字符和不可打印字符。
    *
-   * <p>The function use {@link CharUtils#isGraph(int)} to determinate wheter a
-   * code point is a printable non-whitespace character.
+   * <p>该函数使用{@link CharUtils#isGraph(int)}来确定代码点
+   * 是否为可打印的非空白字符。
    *
-   * <p>A {@code null} input String returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。空字符串("")
+   * 输入返回空字符串。
    * <pre>
    * StringUtils.stripStart(null)       = null
    * StringUtils.stripStart("")         = ""
@@ -3325,11 +3124,11 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to remove characters from, may be null
+   *     要移除字符的字符串，可能为null
    * @param output
-   *     the output where to append the result string.
+   *     输出结果字符串的目标。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
    */
   public static void stripStart(@Nullable final CharSequence str,
@@ -3341,14 +3140,13 @@ public class StringUtils {
   }
 
   /**
-   * Strips any of a set of characters from the start of a string.
+   * 从字符串的开头剥离指定字符。
    *
-   * <p>A {@code null} input String returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。空字符串("")
+   * 输入返回空字符串。
    *
-   * <p>If the stripChars String is {@code null}, it is treated as an empty
-   * string,
-   * and the original string is returned.
+   * <p>如果剥离字符为{@code null}，它被视为空字符串，
+   * 返回原始字符串。
    * <pre>
    * StringUtils.stripStart(null, *)            = null
    * StringUtils.stripStart("", *)              = ""
@@ -3358,10 +3156,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to remove characters from, may be null
+   *     要移除字符的字符串，可能为null
    * @param stripChar
-   *     the character to remove.
-   * @return the stripped String, or {@code null} if null String input
+   *     要移除的字符。
+   * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}
    * @see Stripper#strip(CharSequence)
    */
   public static String stripStart(@Nullable final CharSequence str,
@@ -3373,14 +3171,13 @@ public class StringUtils {
   }
 
   /**
-   * Strips any of a set of characters from the start of a string.
+   * 从字符串开头剥离指定字符。
    *
-   * <p>A {@code null} input String returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
-   * <p>If the stripChars String is {@code null}, it is treated as an empty
-   * string,
-   * and the original string is returned.
+   * <p>如果stripChar为{@code null}，将被视为空字符串，
+   * 返回原字符串。
    * <pre>
    * StringUtils.stripStart(null, *)            = null
    * StringUtils.stripStart("", *)              = ""
@@ -3390,13 +3187,13 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to remove characters from, may be null
+   *     要移除字符的字符串，可能为null
    * @param stripChar
-   *     the character to remove.
+   *     要移除的字符。
    * @param output
-   *     the output where to append the stripped String.
+   *     用于追加剥离后字符串的输出。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
    */
   public static void stripStart(@Nullable final CharSequence str,
@@ -3408,14 +3205,13 @@ public class StringUtils {
   }
 
   /**
-   * Strips any of a set of characters from the start of a string.
+   * 从字符串开头剥离指定的一组字符。
    *
-   * <p>A {@code null} input String returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
-   * <p>If the stripChars String is {@code null}, it is treated as an empty
-   * string,
-   * and the original string is returned.
+   * <p>如果stripChars字符串为{@code null}，将被视为空字符串，
+   * 返回原字符串。
    * <pre>
    * StringUtils.stripStart(null, *)          = null
    * StringUtils.stripStart("", *)            = ""
@@ -3430,11 +3226,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to remove characters from, may be null
+   *     要移除字符的字符串，可能为null
    * @param stripChars
-   *     the characters to remove, null treated as an empty string, and the
-   *     original string is returned.
-   * @return the stripped String, or {@code null} if null String input
+   *     要移除的字符，null被视为空字符串，返回原字符串。
+   * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}
    * @see Stripper#strip(CharSequence)
    */
   public static String stripStart(@Nullable final CharSequence str,
@@ -3446,14 +3241,13 @@ public class StringUtils {
   }
 
   /**
-   * Strips any of a set of characters from the start of a string.
+   * 从字符串开头剥离指定的一组字符。
    *
-   * <p>A {@code null} input String returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
-   * <p>If the stripChars String is {@code null}, it is treated as an empty
-   * string,
-   * and the original string is returned.
+   * <p>如果stripChars字符串为{@code null}，将被视为空字符串，
+   * 返回原字符串。
    * <pre>
    * StringUtils.stripStart(null, *)          = null
    * StringUtils.stripStart("", *)            = ""
@@ -3468,14 +3262,13 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to remove characters from, may be null
+   *     要移除字符的字符串，可能为null
    * @param stripChars
-   *     the characters to remove, null treated as an empty string, and the
-   *     original string is returned.
+   *     要移除的字符，null被视为空字符串，返回原字符串。
    * @param output
-   *     the output where to append the stripped String.
+   *     用于追加剥离后字符串的输出。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
    */
   public static void stripStart(@Nullable final CharSequence str,
@@ -3488,22 +3281,20 @@ public class StringUtils {
   }
 
   /**
-   * Strips any of the characters accepted by a {@link CharFilter} from the
-   * start of a string.
+   * 从字符串开头剥离被{@link CharFilter}接受的字符。
    *
-   * <p>A {@code null} input string returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
-   * <p>If the filter is {@code null}, the original string is returned.
+   * <p>如果过滤器为{@code null}，返回原字符串。
    *
    * @param str
-   *     the string to remove characters from, may be null
+   *     要移除字符的字符串，可能为null
    * @param filter
-   *     a {@link CharFilter}. The character accepted by this filter is striped
-   *     from the start of {@code str}. If it is null, the original string is
-   *     returned.
+   *     {@link CharFilter}。被此过滤器接受的字符将从{@code str}的开头剥离。
+   *     如果为null，返回原字符串。
    * @return
-   *     the stripped string, or {@code null} if {@code str} is {@code null}.
+   *     剥离后的字符串，如果{@code str}为{@code null}则返回{@code null}。
    * @see Stripper#strip(CharSequence)
    */
   public static String stripStart(@Nullable final CharSequence str,
@@ -3515,24 +3306,22 @@ public class StringUtils {
   }
 
   /**
-   * Strips any of the characters accepted by a {@link CharFilter} from the
-   * start of a string.
+   * 从字符串开头剥离被{@link CharFilter}接受的字符。
    *
-   * <p>A {@code null} input string returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
-   * <p>If the filter is {@code null}, the original string is returned.
+   * <p>如果过滤器为{@code null}，返回原字符串。
    *
    * @param str
-   *     the string to remove characters from, may be null
+   *     要移除字符的字符串，可能为null
    * @param filter
-   *     a {@link CharFilter}. The character accepted by this filter is striped
-   *     from the start of {@code str}. If it is null, the original string is
-   *     returned.
+   *     {@link CharFilter}。被此过滤器接受的字符将从{@code str}的开头剥离。
+   *     如果为null，返回原字符串。
    * @param output
-   *     the output where to append the stripped string.
+   *     用于追加剥离后字符串的输出。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
    */
   public static void stripStart(@Nullable final CharSequence str,
@@ -3545,22 +3334,20 @@ public class StringUtils {
   }
 
   /**
-   * Strips any of the code points accepted by a {@link CodePointFilter} from
-   * the start of a string.
+   * 从字符串开头剥离被{@link CodePointFilter}接受的代码点。
    *
-   * <p>A {@code null} input string returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
-   * <p>If the filter is {@code null}, the original string is returned.
+   * <p>如果过滤器为{@code null}，返回原字符串。
    *
    * @param str
-   *     the string to remove characters from, may be null
+   *     要移除字符的字符串，可能为null
    * @param filter
-   *     a {@link CodePointFilter}. The code point accepted by this filter is
-   *     striped from the start of {@code str}. If it is null, the original
-   *     string is returned.
+   *     {@link CodePointFilter}。被此过滤器接受的代码点将从{@code str}的开头剥离。
+   *     如果为null，返回原字符串。
    * @return
-   *     the stripped string, or {@code null} if {@code str} is {@code null}.
+   *     剥离后的字符串，如果{@code str}为{@code null}则返回{@code null}。
    * @see Stripper#strip(CharSequence)
    */
   public static String stripStart(@Nullable final CharSequence str,
@@ -3583,13 +3370,12 @@ public class StringUtils {
    * @param str
    *     the string to remove characters from, may be null
    * @param filter
-   *     a {@link CodePointFilter}. The code point accepted by this filter is
-   *     striped from the start of {@code str}. If it is null, the original
-   *     string is returned.
+   *     {@link CodePointFilter}。被此过滤器接受的代码点将从{@code str}的开头剥离。
+   *     如果为null，返回原字符串。
    * @param output
-   *     the output where to append the stripped string.
+   *     用于追加剥离后字符串的输出。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
    */
   public static void stripStart(@Nullable final CharSequence str,
@@ -3602,13 +3388,12 @@ public class StringUtils {
   }
 
   /**
-   * Strips whitespace and non-printable characters from the end of a string.
+   * 从字符串末尾剥离空白字符和不可打印字符。
    *
-   * <p>The function use {@link CharUtils#isGraph(int)} to determinate wheter a
-   * code point is a printable non-whitespace character.
+   * <p>此函数使用{@link CharUtils#isGraph(int)}来确定代码点是否为可打印的非空白字符。
    *
-   * <p>A {@code null} input String returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    * <pre>
    * StringUtils.stripEnd(null)           = null
    * StringUtils.stripEnd("")             = ""
@@ -3621,8 +3406,8 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to remove characters from, may be null
-   * @return the stripped String, or {@code null} if null String input
+   *     要移除字符的字符串，可能为null
+   * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}
    * @see Stripper#strip(CharSequence)
    */
   public static String stripEnd(@Nullable final CharSequence str) {
@@ -3633,13 +3418,12 @@ public class StringUtils {
   }
 
   /**
-   * Strips whitespace and non-printable characters from the end of a string.
+   * 从字符串末尾剥离空白字符和不可打印字符。
    *
-   * <p>The function use {@link CharUtils#isGraph(int)} to determinate wheter a
-   * code point is a printable non-whitespace character.
+   * <p>此函数使用{@link CharUtils#isGraph(int)}来确定代码点是否为可打印的非空白字符。
    *
-   * <p>A {@code null} input String returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    * <pre>
    * StringUtils.stripEnd(null)           = null
    * StringUtils.stripEnd("")             = ""
@@ -3652,11 +3436,11 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to remove characters from, may be null
+   *     要移除字符的字符串，可能为null
    * @param output
-   *     the output where to append the result string.
+   *     用于追加结果字符串的输出。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
    */
   public static void stripEnd(@Nullable final CharSequence str,
@@ -3668,14 +3452,13 @@ public class StringUtils {
   }
 
   /**
-   * Strips any of a set of characters from the end of a string.
+   * 从字符串末尾剥离指定字符。
    *
-   * <p>A {@code null} input String returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
-   * <p>If the stripChars String is {@code null}, it is treated as an empty
-   * string,
-   * and the original string is returned.
+   * <p>如果stripChar为{@code null}，将被视为空字符串，
+   * 返回原字符串。
    * <pre>
    * StringUtils.stripEnd(null, *)            = null
    * StringUtils.stripEnd("", *)              = ""
@@ -3684,10 +3467,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to remove characters from, may be null
+   *     要移除字符的字符串，可能为null
    * @param stripChar
-   *     the character to remove.
-   * @return the stripped String, or {@code null} if null String input.
+   *     要移除的字符。
+   * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}。
    * @see Stripper#strip(CharSequence)
    */
   public static String stripEnd(@Nullable final CharSequence str,
@@ -3699,14 +3482,13 @@ public class StringUtils {
   }
 
   /**
-   * Strips any of a set of characters from the end of a string.
+   * 从字符串末尾剥离指定字符。
    *
-   * <p>A {@code null} input String returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
-   * <p>If the stripChars String is {@code null}, it is treated as an empty
-   * string,
-   * and the original string is returned.
+   * <p>如果stripChar为{@code null}，将被视为空字符串，
+   * 返回原字符串。
    * <pre>
    * StringUtils.stripEnd(null, *)            = null
    * StringUtils.stripEnd("", *)              = ""
@@ -3715,13 +3497,13 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to remove characters from, may be null
+   *     要移除字符的字符串，可能为null
    * @param stripChar
-   *     the character to remove.
+   *     要移除的字符。
    * @param output
-   *     the output where to append the stripped string.
+   *     用于追加剥离后字符串的输出。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
    */
   public static void stripEnd(@Nullable final CharSequence str,
@@ -3733,14 +3515,13 @@ public class StringUtils {
   }
 
   /**
-   * Strips any of a set of characters from the end of a string.
+   * 从字符串末尾剥离指定的一组字符。
    *
-   * <p>A {@code null} input String returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
-   * <p>If the stripChars String is {@code null}, it is treated as an empty
-   * string,
-   * and the original string is returned.
+   * <p>如果stripChars字符串为{@code null}，将被视为空字符串，
+   * 返回原字符串。
    * <pre>
    * StringUtils.stripEnd(null, *)          = null
    * StringUtils.stripEnd("", *)            = ""
@@ -3753,11 +3534,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to remove characters from, may be null
+   *     要移除字符的字符串，可能为null
    * @param stripChars
-   *     the characters to remove, null treated as an empty string, and the
-   *     original string is returned.
-   * @return the stripped String, or {@code null} if null String input
+   *     要移除的字符，null被视为空字符串，返回原字符串。
+   * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}
    * @see Stripper#strip(CharSequence)
    */
   public static String stripEnd(@Nullable final CharSequence str,
@@ -3791,12 +3571,11 @@ public class StringUtils {
    * @param str
    *     the string to remove characters from, may be null
    * @param stripChars
-   *     the characters to remove, null treated as an empty string, and the
-   *     original string is returned.
+   *     要移除的字符，null被视为空字符串，返回原字符串。
    * @param output
-   *     the output where to append the stripped String.
+   *     用于追加剥离后字符串的输出。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
    */
   public static void stripEnd(@Nullable final CharSequence str,
@@ -3808,21 +3587,19 @@ public class StringUtils {
   }
 
   /**
-   * Strips any of the characters accepted by a CharFilter from the end of a
-   * String.
+   * 从字符串末尾剥离被CharFilter接受的字符。
    *
-   * <p>A {@code null} input String returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
-   * <p>If the filter is null, the original string is returned.
+   * <p>如果过滤器为null，返回原字符串。
    *
    * @param str
-   *     the string to remove characters from, may be null.
+   *     要移除字符的字符串，可能为null。
    * @param filter
-   *     a CharFilter. The characters accepted by this filter is striped from
-   *     the end of {@code str}. If it is null, the original string is
-   *     returned.
-   * @return the stripped String, or {@code null} if {@code str} is {@code null}
+   *     CharFilter。被此过滤器接受的字符将从{@code str}的末尾剥离。
+   *     如果为null，返回原字符串。
+   * @return 剥离后的字符串，如果{@code str}为{@code null}则返回{@code null}
    * @see Stripper#strip(CharSequence)
    */
   public static String stripEnd(@Nullable final CharSequence str,
@@ -3834,24 +3611,22 @@ public class StringUtils {
   }
 
   /**
-   * Strips any of the characters accepted by a CharFilter from the end of a
-   * String.
+   * 从字符串末尾剥离被CharFilter接受的字符。
    *
-   * <p>A {@code null} input String returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
-   * <p>If the filter is null, the original string is returned.
+   * <p>如果过滤器为null，返回原字符串。
    *
    * @param str
-   *     the string to remove characters from, may be null.
+   *     要移除字符的字符串，可能为null。
    * @param filter
-   *     a CharFilter. The characters accepted by this filter is striped from
-   *     the end of {@code str}. If it is null, the original string is
-   *     returned.
+   *     CharFilter。被此过滤器接受的字符将从{@code str}的末尾剥离。
+   *     如果为null，返回原字符串。
    * @param output
-   *     the output where to append the stripped String.
+   *     用于追加剥离后字符串的输出。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
    */
   public static void stripEnd(@Nullable final CharSequence str,
@@ -3863,21 +3638,19 @@ public class StringUtils {
   }
 
   /**
-   * Strips any of the characters accepted by a CharFilter from the end of a
-   * String.
+   * 从字符串末尾剥离被CodePointFilter接受的代码点。
    *
-   * <p>A {@code null} input String returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
-   * <p>If the filter is null, the original string is returned.
+   * <p>如果过滤器为null，返回原字符串。
    *
    * @param str
-   *     the string to remove characters from, may be null.
+   *     要移除字符的字符串，可能为null。
    * @param filter
-   *     a CharFilter. The characters accepted by this filter is striped from
-   *     the end of {@code str}. If it is null, the original string is
-   *     returned.
-   * @return the stripped String, or {@code null} if {@code str} is {@code null}
+   *     CodePointFilter。被此过滤器接受的代码点将从{@code str}的末尾剥离。
+   *     如果为null，返回原字符串。
+   * @return 剥离后的字符串，如果{@code str}为{@code null}则返回{@code null}
    * @see Stripper#strip(CharSequence)
    */
   public static String stripEnd(@Nullable final CharSequence str,
@@ -3889,24 +3662,22 @@ public class StringUtils {
   }
 
   /**
-   * Strips any of the characters accepted by a CharFilter from the end of a
-   * String.
+   * 从字符串末尾剥离被CodePointFilter接受的代码点。
    *
-   * <p>A {@code null} input String returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
-   * <p>If the filter is null, the original string is returned.
+   * <p>如果过滤器为null，返回原字符串。
    *
    * @param str
-   *     the string to remove characters from, may be null.
+   *     要移除字符的字符串，可能为null。
    * @param filter
-   *     a CharFilter. The characters accepted by this filter is striped from
-   *     the end of {@code str}. If it is null, the original string is
-   *     returned.
+   *     CodePointFilter。被此过滤器接受的代码点将从{@code str}的末尾剥离。
+   *     如果为null，返回原字符串。
    * @param output
-   *     the output where to append the stripped String.
+   *     用于追加剥离后字符串的输出。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
    */
   public static void stripEnd(@Nullable final CharSequence str,
@@ -3919,15 +3690,13 @@ public class StringUtils {
 
 
   /**
-   * Strips whitespace and non-printable characters from the start and end of a
-   * String, and returns {@code null} if the string is stripped to empty.
+   * 从字符串的开头和末尾剥离空白字符和不可打印字符，如果字符串被剥离为空则返回{@code null}。
    *
-   * <p>This is similar to {@link String#trim()} but use
-   * {@link CharUtils#isGraph(int)} to determinate whether a code point is a
-   * printable non-whitespace character.
+   * <p>这类似于{@link String#trim()}，但使用{@link CharUtils#isGraph(int)}
+   * 来确定代码点是否为可打印的非空白字符。
    *
-   * <p>A {@code null} input String returns {@code null}. An empty string ("")
-   * input returns {@code null} too.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 也返回{@code null}。
    *
    * <pre>
    * StringUtils.stripToNull(null)           = null
@@ -3940,9 +3709,8 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to remove characters from, may be null
-   * @return the stripped String, {@code null} if the input string was stripped
-   *     to an empty string.
+   *     要移除字符的字符串，可能为null
+   * @return 剥离后的字符串，如果输入字符串被剥离为空字符串则返回{@code null}。
    * @see Stripper#stripToNull(CharSequence)
    */
   public static String stripToNull(@Nullable final CharSequence str) {
@@ -3953,15 +3721,13 @@ public class StringUtils {
   }
 
   /**
-   * Strips whitespace and non-printable characters from the start and end of a
-   * String, and returns an empty string if the string is stripped to empty.
+   * 从字符串的开头和末尾剥离空白字符和不可打印字符，如果字符串被剥离为空则返回空字符串。
    *
-   * <p>This is similar to {@link String#trim()} but use
-   * {@link CharUtils#isGraph(int)} to determinate whether a code point is a
-   * printable non-whitespace character.
+   * <p>这类似于{@link String#trim()}，但使用{@link CharUtils#isGraph(int)}
+   * 来确定代码点是否为可打印的非空白字符。
    *
-   * <p>A {@code null} input String returns "". An empty string ("") input
-   * returns "" too.
+   * <p>如果输入字符串为{@code null}，返回""。如果输入为空字符串("")，
+   * 也返回""。
    *
    * <pre>
    * StringUtils.stripToEmpty(null)           = ""
@@ -3974,9 +3740,8 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to remove characters from, may be null
-   * @return the stripped String, or an empty string if the input string was
-   *     stripped to an empty string.
+   *     要移除字符的字符串，可能为null
+   * @return 剥离后的字符串，如果输入字符串被剥离为空字符串则返回空字符串。
    * @see Stripper#stripToEmpty(CharSequence)
    */
   public static String stripToEmpty(@Nullable final CharSequence str) {
@@ -3987,15 +3752,13 @@ public class StringUtils {
   }
 
   /**
-   * Strips whitespace and non-printable characters from the start and end of a
-   * String.
+   * 从字符串的开头和末尾剥离空白字符和不可打印字符。
    *
-   * <p>This is similar to {@link String#trim()} but use
-   * {@link CharUtils#isGraph(int)} to determinate whether a code point is a
-   * printable non-whitespace character.
+   * <p>这类似于{@link String#trim()}，但使用{@link CharUtils#isGraph(int)}
+   * 来确定代码点是否为可打印的非空白字符。
    *
-   * <p>A {@code null} input String returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
    * <pre>
    * StringUtils.strip(null)           = null
@@ -4008,8 +3771,8 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to remove characters from, may be null
-   * @return the stripped String, {@code null} if null String input
+   *     要移除字符的字符串，可能为null
+   * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}
    * @see Stripper#strip(CharSequence)
    * @see String#strip()
    */
@@ -4042,11 +3805,11 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to remove characters from, may be null
+   *     要移除字符的字符串，可能为null
    * @param output
-   *     the output where to append the result string.
+   *     用于追加结果字符串的输出。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
    * @see String#strip()
    */
@@ -4059,16 +3822,13 @@ public class StringUtils {
   }
 
   /**
-   * Strips any of a set of characters from the start and end of a string. This
-   * is similar to {@link String#trim()} but allows the characters to be
-   * stripped to be controlled.
+   * 从字符串的开头和末尾剥离指定的一组字符。这类似于{@link String#trim()}，
+   * 但允许控制要剥离的字符。
    *
-   * <p>A {@code null} input String returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
-   * <p>If the strip character string is {@code null} or empty, the original
-   * string
-   * is returned.
+   * <p>如果剥离字符字符串为{@code null}或空，返回原字符串。
    * <pre>
    * StringUtils.strip(null, *)          = null
    * StringUtils.strip("", *)            = ""
@@ -4080,11 +3840,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to remove characters from, which may be null.
+   *     要移除字符的字符串，可能为null。
    * @param stripChars
-   *     the characters to remove; if it is null or empty, the original string
-   *     is returned.
-   * @return the stripped String, {@code null} if null String input
+   *     要移除的字符；如果为null或空，返回原字符串。
+   * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}
    * @see Stripper#strip(CharSequence)
    */
   public static String strip(@Nullable final CharSequence str,
@@ -4096,16 +3855,13 @@ public class StringUtils {
   }
 
   /**
-   * Strips any of a set of characters from the start and end of a string. This
-   * is similar to {@link String#trim()} but allows the characters to be
-   * stripped to be controlled.
+   * 从字符串的开头和末尾剥离指定的一组字符。这类似于{@link String#trim()}，
+   * 但允许控制要剥离的字符。
    *
-   * <p>A {@code null} input String returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
-   * <p>If the strip character string is {@code null} or empty, the original
-   * string
-   * is returned.
+   * <p>如果剥离字符字符串为{@code null}或空，返回原字符串。
    * <pre>
    * StringUtils.strip(null, *)          = null
    * StringUtils.strip("", *)            = ""
@@ -4117,14 +3873,13 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to remove characters from, which may be null.
+   *     要移除字符的字符串，可能为null。
    * @param stripChars
-   *     the characters to remove; if it is null or empty, the original string
-   *     is returned.
+   *     要移除的字符；如果为null或空，返回原字符串。
    * @param output
-   *     the output where to append the result string.
+   *     用于追加结果字符串的输出。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
    */
   public static void strip(@Nullable final CharSequence str,
@@ -4137,21 +3892,19 @@ public class StringUtils {
   }
 
   /**
-   * Strips any of the characters accepted by a CharFilter from both end of a
-   * String.
+   * 从字符串的两端剥离被CharFilter接受的字符。
    *
-   * <p>A {@code null} input string returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
-   * <p>If the filter is {@code null}, the original string is returned.
+   * <p>如果过滤器为{@code null}，返回原字符串。
    *
    * @param str
-   *     the string to remove characters from, which may be null.
+   *     要移除字符的字符串，可能为null。
    * @param filter
-   *     a CharFilter. The characters accepted by this filter is striped from
-   *     both end of {@code str}. If it is null, the original string is
-   *     returned.
-   * @return the stripped String, {@code null} if null String input
+   *     CharFilter。被此过滤器接受的字符将从{@code str}的两端剥离。
+   *     如果为null，返回原字符串。
+   * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}
    * @see Stripper#strip(CharSequence)
    */
   public static String strip(@Nullable final CharSequence str,
@@ -4163,24 +3916,22 @@ public class StringUtils {
   }
 
   /**
-   * Strips any of the characters accepted by a CharFilter from both end of a
-   * String.
+   * 从字符串的两端剥离被CharFilter接受的字符。
    *
-   * <p>A {@code null} input string returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
-   * <p>If the filter is {@code null}, the original string is returned.
+   * <p>如果过滤器为{@code null}，返回原字符串。
    *
    * @param str
-   *     the string to remove characters from, which may be null.
+   *     要移除字符的字符串，可能为null。
    * @param filter
-   *     a CharFilter. The characters accepted by this filter is striped from
-   *     both end of {@code str}. If it is null, the original string is
-   *     returned.
+   *     CharFilter。被此过滤器接受的字符将从{@code str}的两端剥离。
+   *     如果为null，返回原字符串。
    * @param output
-   *     the output where to append the result string.
+   *     用于追加结果字符串的输出。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
    */
   public static void strip(@Nullable final CharSequence str,
@@ -4193,21 +3944,19 @@ public class StringUtils {
   }
 
   /**
-   * Strips any of the characters accepted by a CodePointFilter from both end of a
-   * String.
+   * 从字符串的两端剥离被CodePointFilter接受的代码点。
    *
-   * <p>A {@code null} input string returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
-   * <p>If the filter is {@code null}, the original string is returned.
+   * <p>如果过滤器为{@code null}，返回原字符串。
    *
    * @param str
-   *     the string to remove characters from, which may be null.
+   *     要移除字符的字符串，可能为null。
    * @param filter
-   *     a CodePointFilter. The characters accepted by this filter is striped from
-   *     both end of {@code str}. If it is null, the original string is
-   *     returned.
-   * @return the stripped String, {@code null} if null String input
+   *     CodePointFilter。被此过滤器接受的代码点将从{@code str}的两端剥离。
+   *     如果为null，返回原字符串。
+   * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}
    * @see Stripper#strip(CharSequence)
    */
   public static String strip(@Nullable final CharSequence str,
@@ -4245,7 +3994,7 @@ public class StringUtils {
    *
    * @param str
    *     the string to remove characters from, may be null
-   * @return the stripped String, {@code null} if null String input
+   * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}
    * @see Remover#forCodePointsSatisfy(CodePointFilter)
    * @see Remover#removeFrom(CharSequence)
    */
@@ -4256,9 +4005,9 @@ public class StringUtils {
   }
 
   /**
-   * Remove the last character from a string.
+   * 从字符串中移除最后一个字符。
    *
-   * <p>If the string ends in {@code \r\n}, then remove both of them.
+   * <p>如果字符串以{@code \r\n}结尾，则移除这两个字符。
    * <pre>
    * StringUtils.chop(null)          = null
    * StringUtils.chop("")            = ""
@@ -4274,8 +4023,8 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to chop last character from, may be null
-   * @return String without last character, {@code null} if null String input
+   *     要移除最后一个字符的字符串，可能为null
+   * @return 移除最后一个字符后的字符串，如果输入字符串为null则返回{@code null}
    */
   public static String chop(@Nullable final CharSequence str) {
     if (str == null) {
@@ -4313,9 +4062,8 @@ public class StringUtils {
   }
 
   /**
-   * Removes one newline from end of a string if it's there, otherwise leave it
-   * alone. A newline is &quot;{@code \n}&quot;, &quot;{@code \r} &quot;, or
-   * &quot;{@code \r\n}&quot;.
+   * 如果字符串末尾有换行符则移除一个换行符，否则保持不变。换行符是
+   * &quot;{@code \n}&quot;、&quot;{@code \r}&quot;或&quot;{@code \r\n}&quot;。
    * <pre>
    * StringUtils.chomp(null)          = null
    * StringUtils.chomp("")            = ""
@@ -4331,8 +4079,8 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to chomp a newline from, may be null
-   * @return String without newline, {@code null} if null String input
+   *     要移除换行符的字符串，可能为null
+   * @return 移除换行符后的字符串，如果输入字符串为null则返回{@code null}
    */
   public static String chomp(@Nullable final CharSequence str) {
     if (str == null) {
@@ -4393,13 +4141,11 @@ public class StringUtils {
   }
 
   /**
-   * Removes {@code separator} from the end of {@code str} if it's there,
-   * otherwise leave it alone.
+   * 如果{@code str}末尾有{@code separator}则移除它，否则保持不变。
    *
-   * <p>NOTE: This method changed in version 2.0. It now more closely matches
-   * Perl
-   * chomp. For the previous behavior, use {@link #substringBeforeLast(String,
-   * String)}. This method uses {@link String#endsWith(String)}.
+   * <p>注意：此方法在2.0版本中有所更改。现在更接近Perl的chomp行为。
+   * 如需之前的行为，请使用{@link #substringBeforeLast(String, String)}。
+   * 此方法使用{@link String#endsWith(String)}。
    * <pre>
    * StringUtils.chomp(null, *)         = null
    * StringUtils.chomp("", *)           = ""
@@ -4414,11 +4160,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to chomp from, may be null
+   *     要移除分隔符的字符串，可能为null
    * @param separator
-   *     separator String, may be null
-   * @return String without trailing separator, {@code null} if null String
-   *     input
+   *     分隔符字符串，可能为null
+   * @return 移除尾部分隔符后的字符串，如果输入字符串为null则返回{@code null}
    */
   public static String chomp(@Nullable final CharSequence str,
       @Nullable final CharSequence separator) {
@@ -4504,17 +4249,12 @@ public class StringUtils {
   }
 
   /**
-   * Removes a substring only if it is at the beginning of a source string,
-   * otherwise returns the source string.
+   * 仅当子字符串位于源字符串的开头时才移除它，否则返回源字符串。
    *
-   * <p>The comparison could be case-sensitive or case-insensitive, controlled
-   * by
-   * an argument.
+   * <p>比较可以是大小写敏感或大小写不敏感的，由参数控制。
    *
-   * <p>A {@code null} source string will return {@code null}. An empty ("")
-   * source
-   * string will return the empty string. A {@code null} search string will
-   * return the source string.
+   * <p>{@code null} 源字符串将返回 {@code null}。空字符串 ("") 源字符串将返回空字符串。
+   * {@code null} 搜索字符串将返回源字符串。
    * <pre>
    * StringUtils.removePrefix(null, *, *)      = null
    * StringUtils.removePrefix("", *, *)        = ""
@@ -4528,14 +4268,12 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the source String to search, may be null
+   *     要搜索的源字符串，可能为 null
    * @param prefix
-   *     the prefix string to search for and remove, may be null
+   *     要搜索和移除的前缀字符串，可能为 null
    * @param ignoreCase
-   *     indicates whether the compare should ignore case (case insensitive) or
-   *     not.
-   * @return the substring with the string removed if found, {@code null} if
-   *     null string input
+   *     指示比较是否应忽略大小写（大小写不敏感）
+   * @return 如果找到则返回移除字符串后的子字符串，如果输入为 null 字符串则返回 {@code null}
    * @see Remover#forPrefix(CharSequence)
    * @see Remover#removeFrom(CharSequence)
    */
@@ -4549,14 +4287,12 @@ public class StringUtils {
 
 
   /**
-   * Removes a substring only if it is at the end of a source string, otherwise
-   * returns the source string.
+   * 仅当子字符串位于源字符串的末尾时才移除它，否则返回源字符串。
    *
-   * <p>The comparison is case-sensitive.</p>
+   * <p>比较是大小写敏感的。</p>
    *
-   * <p>A {@code null} source string will return {@code null}. An empty ("")
-   * source string will return the empty string. A {@code null} search string will
-   * return the source string.</p>
+   * <p>{@code null} 源字符串将返回 {@code null}。空字符串 ("") 源字符串将返回空字符串。
+   * {@code null} 搜索字符串将返回源字符串。</p>
    *
    * <pre>
    * StringUtils.removeSuffix(null, *, *)                      = null
@@ -4571,11 +4307,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the source String to search, may be null.
+   *     要搜索的源字符串，可能为 null
    * @param suffix
-   *     the suffix string to search for and remove, may be null.
-   * @return the substring with the string removed if found, {@code null} if
-   *     null String input
+   *     要搜索和移除的后缀字符串，可能为 null
+   * @return 如果找到则返回移除字符串后的子字符串，如果输入为 null 字符串则返回 {@code null}
    * @see Remover#forSuffix(CharSequence)
    * @see Remover#removeFrom(CharSequence)
    */
@@ -4588,15 +4323,12 @@ public class StringUtils {
   }
 
   /**
-   * Removes a substring only if it is at the end of a source string, otherwise
-   * returns the source string.
+   * 仅当子字符串位于源字符串的末尾时才移除它，否则返回源字符串。
    *
-   * <p>The comparison could be case-sensitive or case-insensitive, controlled
-   * by an argument.
+   * <p>比较可以是大小写敏感或大小写不敏感的，由参数控制。
    *
-   * <p>A {@code null} source string will return {@code null}. An empty ("")
-   * source string will return the empty string. A {@code null} search string will
-   * return the source string.</p>
+   * <p>{@code null} 源字符串将返回 {@code null}。空字符串 ("") 源字符串将返回空字符串。
+   * {@code null} 搜索字符串将返回源字符串。</p>
    *
    * <pre>
    * StringUtils.removeSuffix(null, *, *)                      = null
@@ -4611,14 +4343,12 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the source String to search, may be null.
+   *     要搜索的源字符串，可能为 null
    * @param suffix
-   *     the suffix string to search for and remove, may be null.
+   *     要搜索和移除的后缀字符串，可能为 null
    * @param ignoreCase
-   *     indicates whether the compare should ignore case (case insensitive) or
-   *     not.
-   * @return the substring with the string removed if found, {@code null} if
-   *     null String input
+   *     指示比较是否应忽略大小写（大小写不敏感）
+   * @return 如果找到则返回移除字符串后的子字符串，如果输入为 null 字符串则返回 {@code null}
    * @see Remover#forSuffix(CharSequence)
    * @see Remover#removeFrom(CharSequence)
    */
@@ -4649,11 +4379,9 @@ public class StringUtils {
   }
 
   /**
-   * Removes the occurrences of a character from a string.
+   * 从字符串中移除字符的所有出现。
    *
-   * <p>A {@code null} source string will return {@code null}. An empty ("")
-   * source
-   * string will return the empty string.
+   * <p>{@code null} 源字符串将返回 {@code null}。空字符串 ("") 源字符串将返回空字符串。
    * <pre>
    * StringUtils.removeChar(null, *)       = null
    * StringUtils.removeChar("", *)         = ""
@@ -4662,11 +4390,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the source String to search, which may be null.
+   *     要搜索的源字符串，可能为 null
    * @param ch
-   *     the character to search for and remove.
-   * @return the substring with the char removed if found, {@code null} if null
-   *     String input
+   *     要搜索和移除的字符
+   * @return 如果找到则返回移除字符后的子字符串，如果输入为 null 字符串则返回 {@code null}
    * @see Remover#removeFrom(CharSequence)
    */
   public static String removeChar(@Nullable final CharSequence str, final char ch) {
@@ -4677,11 +4404,9 @@ public class StringUtils {
   }
 
   /**
-   * Removes the occurrences of a character from a string.
+   * 从字符串中移除字符的出现。
    *
-   * <p>A {@code null} source string will return {@code null}. An empty ("")
-   * source
-   * string will return the empty string.
+   * <p>{@code null} 源字符串将返回 {@code null}。空字符串 ("") 源字符串将返回空字符串。
    * <pre>
    * StringUtils.removeChar(null, *, *)       = null
    * StringUtils.removeChar("", *, *)         = ""
@@ -4691,13 +4416,12 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the source String to search, which may be null.
+   *     要搜索的源字符串，可能为 null
    * @param ch
-   *     the character to search for and remove.
+   *     要搜索和移除的字符
    * @param max
-   *     the maximum number of characters could be removed; -1 means no limit.
-   * @return the substring with the char removed if found, {@code null} if null
-   *     String input
+   *     可以移除的字符的最大数量；-1 表示无限制
+   * @return 如果找到则返回移除字符后的子字符串，如果输入为 null 字符串则返回 {@code null}
    * @see Remover#removeFrom(CharSequence)
    */
   public static String removeChar(@Nullable final CharSequence str, final char ch,
@@ -4785,12 +4509,11 @@ public class StringUtils {
   }
 
   /**
-   * Removes a substring from a string.
+   * 从字符串中移除子字符串。
    *
-   * <p>A {@code null} string input returns {@code null}. An empty ("") string
-   * input returns an empty string. A {@code null} remove string returns the
-   * input string. A {@code null} output {@link StringBuilder} throws a {@link
-   * NullPointerException}.
+   * <p>{@code null} 字符串输入返回 {@code null}。空字符串 ("") 输入返回空字符串。
+   * {@code null} 移除字符串返回输入字符串。{@code null} 输出 {@link StringBuilder}
+   * 抛出 {@link NullPointerException}。
    *
    * <pre>
    * StringUtils.removeSubstring(null, *, *)        = null
@@ -4803,16 +4526,14 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to remove from, may be null
+   *     要从中移除的字符串，可能为 null
    * @param remove
-   *     the string to remove, may be null
+   *     要移除的字符串，可能为 null
    * @param max
-   *     maximum number of occurrences to remove, or {@code -1} if no limit
+   *     要移除的最大出现次数，或 {@code -1} 表示无限制
    * @param ignoreCase
-   *     indicates whether the compare should ignore case (case insensitive) or
-   *     not.
-   * @return the substring with the string removed if found, {@code null} if
-   *     null String input
+   *     指示比较是否应忽略大小写（大小写不敏感）
+   * @return 如果找到则返回移除字符串后的子字符串，如果输入为 null 字符串则返回 {@code null}
    * @see Remover#removeFrom(CharSequence)
    */
   public static String removeSubstring(@Nullable final CharSequence str,
@@ -4825,11 +4546,9 @@ public class StringUtils {
   }
 
   /**
-   * Replaces all occurrences of a character in a string with another. This is a
-   * null-safe version of {@link String#replace(char, char)}.
+   * 用另一个字符替换字符串中某个字符的所有出现。这是 {@link String#replace(char, char)} 的空安全版本。
    *
-   * <p>A {@code null} string input returns {@code null}. An empty ("") string
-   * input returns an empty string.
+   * <p>{@code null} 字符串输入返回 {@code null}。空字符串 ("") 输入返回空字符串。
    * <pre>
    * StringUtils.replaceChars(null, *, *)        = null
    * StringUtils.replaceChars("", *, *)          = ""
@@ -4838,12 +4557,12 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     String to replace characters in, may be null
+   *     要替换字符的字符串，可能为 null
    * @param search
-   *     the character to search for, may be null
+   *     要搜索的字符，可能为 null
    * @param replacement
-   *     the character to replace, may be null
-   * @return modified String, {@code null} if null string input
+   *     要替换的字符，可能为 null
+   * @return 修改后的字符串，如果输入为 null 字符串则返回 {@code null}
    * @see Replacer#searchForChar(char)
    * @see Replacer#replaceWithChar(char)
    * @see Replacer#applyTo(CharSequence)
@@ -4865,18 +4584,13 @@ public class StringUtils {
   }
 
   /**
-   * Replaces multiple characters in a string in one go. This method can also be
-   * used to delete characters.
+   * 一次性替换字符串中的多个字符。此方法也可用于删除字符。
    *
-   * <p>A {@code null} string input returns {@code null}. An empty ("") string
-   * input returns an empty string. A null or empty set of search characters
-   * returns the input string.
+   * <p>{@code null} 字符串输入返回 {@code null}。空字符串 ("") 输入返回空字符串。
+   * null 或空的搜索字符集返回输入字符串。
    *
-   * <p>The length of the search characters should normally equal the length of
-   * the
-   * replace characters. If the search characters is longer, then the extra
-   * search characters are deleted. If the search characters is shorter, then
-   * the extra replace characters are ignored.
+   * <p>搜索字符的长度通常应等于替换字符的长度。如果搜索字符更长，则额外的搜索字符将被删除。
+   * 如果搜索字符更短，则额外的替换字符将被忽略。
    * <pre>
    * StringUtils.replaceChars(null, *, *)           = null
    * StringUtils.replaceChars("", *, *)             = ""
@@ -4890,12 +4604,12 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to replace characters in, may be null.
+   *     要替换字符的字符串，可能为 null
    * @param searchChars
-   *     a set of characters to search for, may be null.
+   *     要搜索的字符集，可能为 null
    * @param replaceChars
-   *     a set of characters to replace, may be null.
-   * @return the modified string, or {@code null} if null string input.
+   *     要替换的字符集，可能为 null
+   * @return 修改后的字符串，如果输入为 null 字符串则返回 {@code null}
    * @see Replacer#searchForChar(char)
    * @see Replacer#replaceWithChar(char)
    * @see Replacer#applyTo(CharSequence)
@@ -4992,9 +4706,8 @@ public class StringUtils {
   }
 
   /**
-   * Replaces a string with another String inside a larger String, for the first
-   * {@code max} occurrences of the search String. A {@code null} reference
-   * passed to this method is a no-op.
+   * 在较大的字符串中用另一个字符串替换字符串，最多替换搜索字符串的前 {@code max} 次出现。
+   * 传递给此方法的 {@code null} 引用是无操作的。
    * <pre>
    * StringUtils.replace(null, *, *, *)         = null
    * StringUtils.replace("", *, *, *)           = ""
@@ -5010,18 +4723,16 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     text to search and replace in, may be null
+   *     要搜索和替换的文本，可能为 null
    * @param search
-   *     the string to search for, may be null
+   *     要搜索的字符串，可能为 null
    * @param replacement
-   *     the string to replace it with, may be null
+   *     要替换的字符串，可能为 null
    * @param max
-   *     maximum number of occurrences to replace, or {@code -1} if no limit.
+   *     要替换的最大出现次数，或 {@code -1} 表示无限制
    * @param ignoreCase
-   *     indicates whether the compare should ignore case (case insensitive) or
-   *     not.
-   * @return the text with any replacements processed, {@code null} if null
-   *     String input
+   *     指示比较是否应忽略大小写（大小写不敏感）
+   * @return 处理任何替换后的文本，如果输入为 null 字符串则返回 {@code null}
    * @see Replacer#searchForSubstring(CharSequence)
    * @see Replacer#replaceWithString(CharSequence)
    * @see Replacer#applyTo(CharSequence)
@@ -5049,12 +4760,10 @@ public class StringUtils {
   }
 
   /**
-   * Replaces all occurrences of strings within another string.
+   * 替换另一个字符串中所有出现的字符串。
    *
-   * <p>A {@code null} reference passed to this method is a no-op, or if any
-   * "search string" or "string to replace" is null, that replace will be
-   * ignored. This will not repeat. For repeating replaces, call the function
-   * {@link #replaceEachRepeatedly}.
+   * <p>传递给此方法的 {@code null} 引用是无操作的，或者如果任何"搜索字符串"或"要替换的字符串"为 null，
+   * 该替换将被忽略。这不会重复。对于重复替换，请调用函数 {@link #replaceEachRepeatedly}。
    * <pre>
    *  StringUtils.replaceEach(null, *, *)        = null
    *  StringUtils.replaceEach("", *, *)          = ""
@@ -5070,18 +4779,16 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     string to search and replace in, no-op if null.
+   *     要搜索和替换的字符串，如果为 null 则无操作
    * @param searches
-   *     the strings to search for, no-op if null.
+   *     要搜索的字符串，如果为 null 则无操作
    * @param replaces
-   *     the strings to replace them with, no-op if null.
+   *     要替换的字符串，如果为 null 则无操作
    * @param ignoreCase
-   *     whether to ignore case while comparing strings.
-   * @return the text with any replacements processed, {@code null} if null
-   *     string input.
+   *     比较字符串时是否忽略大小写
+   * @return 处理任何替换后的文本，如果输入为 null 字符串则返回 {@code null}
    * @throws IndexOutOfBoundsException
-   *     if the lengths of the arrays are not the same (null is ok, and/or size
-   *     0)
+   *     如果数组的长度不相同（null 是可以的，和/或大小为 0）
    */
   @Nullable
   public static String replaceEach(@Nullable final CharSequence str,
@@ -5128,11 +4835,10 @@ public class StringUtils {
   }
 
   /**
-   * Replaces all occurrences of strings within another string repeatedly.
+   * 重复替换另一个字符串中所有出现的字符串。
    *
-   * <p>A {@code null} reference passed to this method is a no-op, or if any
-   * "search string" or "string to replace" is null, that replace will be
-   * ignored. This will repeat until no further replacement could be taken.
+   * <p>传递给此方法的 {@code null} 引用是无操作的，或者如果任何"搜索字符串"或"要替换的字符串"为 null，
+   * 该替换将被忽略。这将重复直到无法进行进一步替换。
    * <pre>
    *  replaceEach(null, *, *, *) = null
    *  replaceEach("", *, *, *) = ""
@@ -5152,21 +4858,18 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     string to search and replace in, no-op if null
+   *     要搜索和替换的字符串，如果为 null 则无操作
    * @param searches
-   *     the strings to search for, no-op if null
+   *     要搜索的字符串，如果为 null 则无操作
    * @param replaces
-   *     the strings to replace them with, no-op if null
+   *     要替换的字符串，如果为 null 则无操作
    * @param ignoreCase
-   *     whether to ignore case while comparing strings
-   * @return the text with any replacements processed, {@code null} if null
-   *     String input
+   *     比较字符串时是否忽略大小写
+   * @return 处理任何替换后的文本，如果输入为 null 字符串则返回 {@code null}
    * @throws IllegalStateException
-   *     if the search is repeating and there is an endless loop due to outputs
-   *     of one being inputs to another
+   *     如果搜索是重复的并且由于一个的输出是另一个的输入而存在无限循环
    * @throws IndexOutOfBoundsException
-   *     if the lengths of the arrays are not the same (null is ok, and/or size
-   *     0)
+   *     如果数组的长度不相同（null 是可以的，和/或大小为 0）
    */
   public static String replaceEachRepeatedly(@Nullable final String str,
       @Nullable final String[] searches, @Nullable final String[] replaces,
@@ -5244,27 +4947,26 @@ public class StringUtils {
   }
 
   /**
-   * Replaces all occurrences of Strings within another String.
+   * 替换字符串中另一个字符串的所有出现。
    *
-   * <p>A {@code null} reference passed to this method is a no-op, or if any
-   * "search string" or "string to replace" is null, that replace will be
-   * ignored.
+   * <p>传递给此方法的{@code null}引用是无操作的，或者如果任何
+   * "搜索字符串"或"要替换的字符串"为null，该替换将被忽略。
    *
    * @param str
-   *     text to search and replace in; it can't be null nor empty.
+   *     要搜索和替换的文本；不能为null或空。
    * @param searches
-   *     the strings to search for; it can't be null nor empty.
+   *     要搜索的字符串；不能为null或空。
    * @param replaces
-   *     the strings to replace them with; it can't be null nor empty, and it
-   *     must have the same length as the {@code searches} array.
+   *     要替换的字符串；不能为null或空，并且
+   *     必须与{@code searches}数组长度相同。
    * @param ignoreCase
-   *     whether to ignore case while comparing strings.
+   *     比较字符串时是否忽略大小写。
    * @param builder
-   *     the temporary {@link StringBuilder} used by this function.
+   *     此函数使用的临时{@link StringBuilder}。
    * @param noMoreMatches
-   *     the temporary {@code boolean} array used by this function. It must have
-   *     the same length as the {@code searches} array.
-   * @return the text with any replacements processed.
+   *     此函数使用的临时{@code boolean}数组。它必须与
+   *     {@code searches}数组长度相同。
+   * @return 处理任何替换后的文本。
    */
   private static int replaceEachImpl(final CharSequence str, final CharSequence[] searches,
       final CharSequence[] replaces, final boolean ignoreCase,
@@ -5315,12 +5017,10 @@ public class StringUtils {
   }
 
   /**
-   * Gets the leftmost {@code len} characters of a string.
+   * 获取字符串最左边的{@code len}个字符。
    *
-   * <p>If {@code len} characters are not available, or the string is {@code
-   * null},
-   * the string will be returned without an exception. An exception is thrown if
-   * len is negative.
+   * <p>如果{@code len}个字符不可用，或字符串为{@code null}，
+   * 将不抛出异常直接返回字符串。如果len为负数则抛出异常。
    * <pre>
    * StringUtils.left(null, *)    = null
    * StringUtils.left(*, -ve)     = ""
@@ -5331,10 +5031,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to get the leftmost characters from, may be null
+   *     要获取最左边字符的字符串，可能为null
    * @param len
-   *     the length of the required String, must be zero or positive
-   * @return the leftmost characters, {@code null} if null String input
+   *     所需字符串的长度，必须为零或正数
+   * @return 最左边的字符，如果输入字符串为null则返回{@code null}
    */
   public static String left(@Nullable final String str, final int len) {
     if (str == null) {
@@ -5350,12 +5050,10 @@ public class StringUtils {
   }
 
   /**
-   * Gets the rightmost {@code len} characters of a string.
+   * 获取字符串最右边的{@code len}个字符。
    *
-   * <p>If {@code len} characters are not available, or the string is {@code
-   * null},
-   * the string will be returned without an an exception. An exception is thrown
-   * if len is negative.
+   * <p>如果{@code len}个字符不可用，或字符串为{@code null}，
+   * 将不抛出异常直接返回字符串。如果len为负数则抛出异常。
    * <pre>
    * StringUtils.right(null, *)    = null
    * StringUtils.right(*, -ve)     = ""
@@ -5366,10 +5064,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to get the rightmost characters from, may be null
+   *     要获取最右边字符的字符串，可能为null
    * @param len
-   *     the length of the required String, must be zero or positive
-   * @return the rightmost characters, {@code null} if null String input
+   *     所需字符串的长度，必须为零或正数
+   * @return 最右边的字符，如果输入字符串为null则返回{@code null}
    */
   public static String right(@Nullable final String str, final int len) {
     if (str == null) {
@@ -5385,12 +5083,11 @@ public class StringUtils {
   }
 
   /**
-   * Gets {@code len} characters from the middle of a string.
+   * 从字符串中间获取{@code len}个字符。
    *
-   * <p>If {@code len} characters are not available, the remainder of the
-   * String
-   * will be returned without an exception. If the string is {@code null},
-   * {@code null} will be returned. An exception is thrown if len is negative.
+   * <p>如果{@code len}个字符不可用，将不抛出异常直接返回
+   * 字符串的剩余部分。如果字符串为{@code null}，
+   * 将返回{@code null}。如果len为负数则抛出异常。
    * <pre>
    * StringUtils.mid(null, *, *)    = null
    * StringUtils.mid(*, *, -ve)     = ""
@@ -5403,12 +5100,12 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to get the characters from, may be null
+   *     要获取字符的字符串，可能为 null
    * @param pos
-   *     the position to start from, negative treated as zero
+   *     开始位置，负数视为零
    * @param len
-   *     the length of the required String, must be zero or positive
-   * @return the middle characters, {@code null} if null String input
+   *     所需字符串的长度，必须为零或正数
+   * @return 中间字符，如果输入字符串为 null 则返回 {@code null}
    */
   public static String mid(@Nullable final String str, final int pos,
       final int len) {
@@ -5426,15 +5123,11 @@ public class StringUtils {
   }
 
   /**
-   * Gets a substring from the specified String avoiding exceptions.
+   * 从指定字符串获取子字符串，避免异常。
    *
-   * <p>A negative start position can be used to start {@code n} characters
-   * from
-   * the end of the string.
+   * <p>可以使用负的起始位置从字符串末尾开始 {@code n} 个字符。
    *
-   * <p>A {@code null} string will return {@code null}. An empty ("") String
-   * will
-   * return "".
+   * <p>{@code null} 字符串将返回 {@code null}。空字符串 ("") 将返回 ""。
    * <pre>
    * StringUtils.substring(null, *)   = null
    * StringUtils.substring("", *)     = ""
@@ -5446,11 +5139,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to get the substring from, may be null
+   *     要获取子字符串的字符串，可能为 null
    * @param pos
-   *     the position to start from, negative means count back from the end of
-   *     the string by this many characters
-   * @return substring from start position, {@code null} if null String input
+   *     开始位置，负数表示从字符串末尾向后计数此数量的字符
+   * @return 从开始位置的子字符串，如果输入字符串为 null 则返回 {@code null}
    */
   public static String substring(@Nullable final String str, final int pos) {
     if (str == null) {
@@ -5471,19 +5163,16 @@ public class StringUtils {
   }
 
   /**
-   * Gets a substring from the specified String avoiding exceptions.
+   * 从指定字符串获取子字符串，避免异常。
    *
-   * <p>A negative start position can be used to start/end {@code n} characters
-   * from the end of the string.
+   * <p>可以使用负的起始位置从字符串末尾开始/结束{@code n}个字符。
    *
-   * <p>The returned substring starts with the character in the {@code start}
-   * position and ends before the {@code end} position. All position counting is
-   * zero-based -- i.e., to start at the beginning of the string use {@code
-   * start = 0}. Negative start and end positions can be used to specify offsets
-   * relative to the end of the string.
+   * <p>返回的子字符串从{@code start}位置的字符开始，在{@code end}
+   * 位置之前结束。所有位置计数都是从零开始的——即，要从字符串开头开始，
+   * 使用{@code start = 0}。负的开始和结束位置可用于指定
+   * 相对于字符串末尾的偏移量。
    *
-   * <p>If {@code start} is not strictly to the left of {@code end}, "" is
-   * returned.
+   * <p>如果{@code start}不严格位于{@code end}的左边，则返回""。
    * <pre>
    * StringUtils.substring(null, *, *)    = null
    * StringUtils.substring("", * ,  *)    = "";
@@ -5497,15 +5186,12 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to get the substring from, may be null
+   *     要获取子字符串的字符串，可能为null
    * @param startIndex
-   *     the position to start from, negative means count back from the end of
-   *     the string by this many characters
+   *     开始位置，负数表示从字符串末尾向后计数此数量的字符
    * @param endIndex
-   *     the position to end at (exclusive), negative means count back from the
-   *     end of the string by this many characters
-   * @return substring from start position to end positon, {@code null} if null
-   *     String input
+   *     结束位置（不包含），负数表示从字符串末尾向后计数此数量的字符
+   * @return 从开始位置到结束位置的子字符串，如果输入字符串为null则返回{@code null}
    */
   public static String substring(@Nullable final String str, final int startIndex,
       final int endIndex) {
@@ -5539,13 +5225,10 @@ public class StringUtils {
   }
 
   /**
-   * Gets the substring before the first occurrence of a separator. The
-   * separator is not returned.
+   * 获取分隔符第一次出现之前的子字符串。不返回分隔符。
    *
-   * <p>A {@code null} string input will return {@code null}. An empty ("")
-   * string
-   * input will return the empty string. A {@code null} separator will return
-   * the input string.
+   * <p>如果输入字符串为{@code null}，将返回{@code null}。空字符串("")
+   * 输入将返回空字符串。{@code null}分隔符将返回输入字符串。
    * <pre>
    * StringUtils.substringBefore(null, *)      = null
    * StringUtils.substringBefore("", *)        = ""
@@ -5558,11 +5241,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to get a substring from, may be null
+   *     要获取子字符串的字符串，可能为null
    * @param separator
-   *     the string to search for, may be null
-   * @return the substring before the first occurrence of the separator, {@code
-   *     null} if null String input
+   *     要搜索的字符串，可能为null
+   * @return 分隔符第一次出现之前的子字符串，如果输入字符串为null则返回{@code null}
    */
   public static String substringBefore(@Nullable final String str,
       @Nullable final String separator) {
@@ -5580,13 +5262,11 @@ public class StringUtils {
   }
 
   /**
-   * Gets the substring after the first occurrence of a separator. The separator
-   * is not returned.
+   * 获取分隔符第一次出现之后的子字符串。不返回分隔符。
    *
-   * <p>A {@code null} string input will return {@code null}. An empty ("")
-   * string
-   * input will return the empty string. A {@code null} separator will return
-   * the empty string if the input string is not {@code null}.
+   * <p>如果输入字符串为{@code null}，将返回{@code null}。空字符串("")
+   * 输入将返回空字符串。如果输入字符串不为{@code null}，
+   * {@code null}分隔符将返回空字符串。
    * <pre>
    * StringUtils.substringAfter(null, *)      = null
    * StringUtils.substringAfter("", *)        = ""
@@ -5599,11 +5279,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to get a substring from, may be null
+   *     要获取子字符串的字符串，可能为null
    * @param separator
-   *     the string to search for, may be null
-   * @return the substring after the first occurrence of the separator, {@code
-   *     null} if null String input
+   *     要搜索的字符串，可能为null
+   * @return 分隔符第一次出现之后的子字符串，如果输入字符串为null则返回{@code null}
    */
   public static String substringAfter(@Nullable final String str,
       @Nullable final String separator) {
@@ -5621,13 +5300,10 @@ public class StringUtils {
   }
 
   /**
-   * Gets the substring before the last occurrence of a separator. The separator
-   * is not returned.
+   * 获取分隔符最后一次出现之前的子字符串。不返回分隔符。
    *
-   * <p>A {@code null} string input will return {@code null}. An empty ("")
-   * string
-   * input will return the empty string. An empty or {@code null} separator will
-   * return the input string.
+   * <p>如果输入字符串为{@code null}，将返回{@code null}。空字符串("")
+   * 输入将返回空字符串。空的或{@code null}分隔符将返回输入字符串。
    * <pre>
    * StringUtils.substringBeforeLast(null, *)      = null
    * StringUtils.substringBeforeLast("", *)        = ""
@@ -5640,11 +5316,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to get a substring from, may be null
+   *     要获取子字符串的字符串，可能为null
    * @param separator
-   *     the string to search for, may be null
-   * @return the substring before the last occurrence of the separator, {@code
-   *     null} if null String input
+   *     要搜索的字符串，可能为null
+   * @return 分隔符最后一次出现之前的子字符串，如果输入字符串为null则返回{@code null}
    */
   public static String substringBeforeLast(@Nullable final String str,
       @Nullable final String separator) {
@@ -5660,13 +5335,11 @@ public class StringUtils {
   }
 
   /**
-   * Gets the substring after the last occurrence of a separator. The separator
-   * is not returned.
+   * 获取分隔符最后一次出现之后的子字符串。不返回分隔符。
    *
-   * <p>A {@code null} string input will return {@code null}. An empty ("")
-   * string
-   * input will return the empty string. An empty or {@code null} separator will
-   * return the empty string if the input string is not {@code null}.
+   * <p>如果字符串输入为{@code null}，返回{@code null}。空的("")
+   * 字符串输入返回空字符串。如果输入字符串不为{@code null}，
+   * 空的或{@code null}分隔符将返回空字符串。
    * <pre>
    * StringUtils.substringAfterLast(null, *)      = null
    * StringUtils.substringAfterLast("", *)        = ""
@@ -5681,11 +5354,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to get a substring from, may be null
+   *     要从中获取子字符串的字符串，可能为null
    * @param separator
-   *     the string to search for, may be null
-   * @return the substring after the last occurrence of the separator, {@code
-   *     null} if null String input
+   *     要搜索的字符串，可能为null
+   * @return 分隔符最后一次出现之后的子字符串，如果字符串输入为null则返回{@code null}
    */
   public static String substringAfterLast(@Nullable final String str,
       @Nullable final String separator) {
@@ -5703,11 +5375,10 @@ public class StringUtils {
   }
 
   /**
-   * Gets the string that is nested in between two instances of the same
-   * String.
+   * 获取嵌套在同一个字符串的两个实例之间的字符串。
    *
-   * <p>A {@code null} input String returns {@code null}. A {@code null} tag
-   * returns {@code null}.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果标签为{@code null}，
+   * 返回{@code null}。
    * <pre>
    * StringUtils.substringBetween(null, *)            = null
    * StringUtils.substringBetween("", "")             = ""
@@ -5718,10 +5389,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string containing the substring, may be null
+   *     包含子字符串的字符串，可能为null
    * @param tag
-   *     the string before and after the substring, may be null
-   * @return the substring, {@code null} if no match
+   *     子字符串前后的字符串，可能为null
+   * @return 子字符串，如果没有匹配则返回{@code null}
    */
   public static String substringBetween(@Nullable final String str,
       @Nullable final String tag) {
@@ -5729,12 +5400,11 @@ public class StringUtils {
   }
 
   /**
-   * Gets the string that is nested in between two strings. Only the first
-   * match is returned.
+   * 获取嵌套在两个字符串之间的字符串。仅返回第一个匹配。
    *
-   * <p>A {@code null} input String returns {@code null}. A {@code null}
-   * open/close returns {@code null} (no match). An empty ("") open and close
-   * returns an empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果开启/关闭
+   * 字符串为{@code null}，返回{@code null}（没有匹配）。空的("")开启和关闭
+   * 字符串返回空字符串。
    * <pre>
    * StringUtils.substringBetween("[a][b][c]", "[", "]") = ["a","b","c"]
    * StringUtils.substringBetween(null, *, *)            = null
@@ -5744,12 +5414,12 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string containing the substring, may be null
+   *     包含子字符串的字符串，可能为null
    * @param open
-   *     the string before the substring, may be null
+   *     子字符串之前的字符串，可能为null
    * @param close
-   *     the string after the substring, may be null
-   * @return the substring, {@code null} if no match
+   *     子字符串之后的字符串，可能为null
+   * @return 子字符串，如果没有匹配则返回{@code null}
    */
   public static String substringBetween(@Nullable final String str,
       @Nullable final String open, @Nullable final String close) {
@@ -5767,13 +5437,12 @@ public class StringUtils {
   }
 
   /**
-   * Searches a string for substrings delimited by a start and end tag,
-   * returning all matching substrings in an array.
+   * 在字符串中搜索由开始和结束标签分隔的子字符串，
+   * 返回数组中所有匹配的子字符串。
    *
-   * <p>A {@code null} input String returns {@code null}. A {@code null}
-   * open/close
-   * returns {@code null} (no match). An empty ("") open/close returns {@code
-   * null} (no match).
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果开启/关闭
+   * 字符串为{@code null}，返回{@code null}（没有匹配）。空的("")开启/关闭
+   * 字符串返回{@code null}（没有匹配）。
    * <pre>
    * StringUtils.substringsBetween("[a][b][c]", "[", "]") = ["a","b","c"]
    * StringUtils.substringsBetween(null, *, *)            = null
@@ -5783,13 +5452,12 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string containing the substrings, null returns null, empty returns
-   *     empty
+   *     包含子字符串的字符串，null返回null，空的返回空的
    * @param open
-   *     the string identifying the start of the substring, empty returns null
+   *     标识子字符串开始的字符串，空的返回null
    * @param close
-   *     the string identifying the end of the substring, empty returns null
-   * @return a string Buffer of substrings, or {@code null} if no match
+   *     标识子字符串结束的字符串，空的返回null
+   * @return 子字符串的字符串缓冲区，如果没有匹配则返回{@code null}
    */
   public static String[] substringsBetween(@Nullable final String str,
       @Nullable final String open, @Nullable final String close) {
@@ -5825,11 +5493,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供的元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. Null objects or empty
-   * strings within the array are represented by empty strings.
+   * <p>列表前后不添加分隔符。数组中的null对象或空字符串
+   * 用空字符串表示。
    * <pre>
    * StringUtils.join(*, null)                   = null
    * StringUtils.join(*, [])                     = ""
@@ -5838,10 +5505,10 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use
+   *     要使用的分隔符字符
    * @param array
-   *     the array of values to join together, may be null.
-   * @return the joined String, {@code null} if null array input
+   *     要连接在一起的值的数组，可能为null
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static String join(final char separator,
@@ -5852,11 +5519,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供的元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. Null objects or empty
-   * strings within the array are represented by empty strings.
+   * <p>列表前后不添加分隔符。数组中的null对象或空字符串
+   * 用空字符串表示。
    * <pre>
    * StringUtils.join(*, null, *, *)                   = null
    * StringUtils.join(*, [], *, *)                     = ""
@@ -5865,16 +5531,14 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use.
+   *     要使用的分隔符字符
    * @param array
-   *     the array of values to join together, may be null.
+   *     要连接在一起的值的数组，可能为null
    * @param startIndex
-   *     the first occurrence to start joining from. It is an error to pass in
-   *     an end current past the end of the array.
+   *     开始连接的第一个出现索引。传入超过数组末尾的结束位置是错误的
    * @param endIndex
-   *     the index to stop joining from (exclusive). It is an error to pass in
-   *     an end current past the end of the array.
-   * @return the joined String, {@code null} if null array input.
+   *     停止连接的索引（不包含）。传入超过数组末尾的结束位置是错误的
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static String join(final char separator, @Nullable final boolean[] array,
@@ -5885,11 +5549,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供的元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. Null objects or empty
-   * strings within the array are represented by empty strings.
+   * <p>列表前后不添加分隔符。数组中的null对象或空字符串
+   * 用空字符串表示。
    * <pre>
    * StringUtils.join(*, null)                   = null
    * StringUtils.join(*, [])                     = ""
@@ -5898,10 +5561,10 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use
+   *     要使用的分隔符字符
    * @param array
-   *     the array of values to join together, may be null
-   * @return the joined String, {@code null} if null array input
+   *     要连接在一起的值的数组，可能为null
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static String join(final char separator,
@@ -5912,11 +5575,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供的元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. Null objects or empty
-   * strings within the array are represented by empty strings.
+   * <p>列表前后不添加分隔符。数组中的null对象或空字符串
+   * 用空字符串表示。
    * <pre>
    * StringUtils.join(*, null, *, *)              = null
    * StringUtils.join(*, [], *, *)                = ""
@@ -5925,16 +5587,14 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use
+   *     要使用的分隔符字符
    * @param array
-   *     the array of values to join together, may be null
+   *     要连接在一起的值的数组，可能为null
    * @param startIndex
-   *     the first occurrence to start joining from. It is an error to pass in
-   *     an end current past the end of the array.
+   *     开始连接的第一个出现索引。传入超过数组末尾的结束位置是错误的
    * @param endIndex
-   *     the index to stop joining from (exclusive). It is an error to pass in
-   *     an end current past the end of the array.
-   * @return the joined String, {@code null} if null array input
+   *     停止连接的索引（不包含）。传入超过数组末尾的结束位置是错误的
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static String join(final char separator, @Nullable final char[] array,
@@ -5945,11 +5605,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供的元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. Null objects or empty
-   * strings within the array are represented by empty strings.
+   * <p>列表前后不添加分隔符。数组中的null对象或空字符串
+   * 用空字符串表示。
    * <pre>
    * StringUtils.join(*, null)             = null
    * StringUtils.join(*, [])               = ""
@@ -5958,10 +5617,10 @@ public class StringUtils {
    * </pre>
    *
    * @param array
-   *     the array of values to join together, may be null
+   *     要连接在一起的值的数组，可能为null
    * @param separator
-   *     the separator character to use
-   * @return the joined String, {@code null} if null array input
+   *     要使用的分隔符字符
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static String join(final char separator,
@@ -5972,11 +5631,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供的元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. Null objects or empty
-   * strings within the array are represented by empty strings.
+   * <p>列表前后不添加分隔符。数组中的null对象或空字符串
+   * 用空字符串表示。
    * <pre>
    * StringUtils.join(*, null, *, *)         = null
    * StringUtils.join(*, [], *, *)           = ""
@@ -5985,16 +5643,14 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use
+   *     要使用的分隔符字符
    * @param array
-   *     the array of values to join together, may be null
+   *     要连接在一起的值的数组，可能为null
    * @param startIndex
-   *     the first occurrence to start joining from. It is an error to pass in
-   *     an end current past the end of the array.
+   *     开始连接的第一个出现索引。传入超过数组末尾的结束位置是错误的
    * @param endIndex
-   *     the index to stop joining from (exclusive). It is an error to pass in
-   *     an end current past the end of the array.
-   * @return the joined String, {@code null} if null array input
+   *     停止连接的索引（不包含）。传入超过数组末尾的结束位置是错误的
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static String join(final char separator, @Nullable final byte[] array,
@@ -6005,11 +5661,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供的元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. Null objects or empty
-   * strings within the array are represented by empty strings.
+   * <p>列表前后不添加分隔符。数组中的null对象或空字符串
+   * 用空字符串表示。
    * <pre>
    * StringUtils.join(*, null)             = null
    * StringUtils.join(*, [])               = ""
@@ -6018,10 +5673,10 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use
+   *     要使用的分隔符字符
    * @param array
-   *     the array of values to join together, may be null
-   * @return the joined String, {@code null} if null array input
+   *     要连接在一起的值的数组，可能为null
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static String join(final char separator,
@@ -6032,11 +5687,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供的元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. Null objects or empty
-   * strings within the array are represented by empty strings.
+   * <p>列表前后不添加分隔符。数组中的null对象或空字符串
+   * 用空字符串表示。
    * <pre>
    * StringUtils.join(*, null, *, *)         = null
    * StringUtils.join(*, [], *, *)           = ""
@@ -6045,16 +5699,14 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use
+   *     要使用的分隔符字符
    * @param array
-   *     the array of values to join together, may be null
+   *     要连接在一起的值的数组，可能为null
    * @param startIndex
-   *     the first occurrence to start joining from. It is an error to pass in
-   *     an end current past the end of the array.
+   *     开始连接的第一个出现索引。传入超过数组末尾的结束位置是错误的
    * @param endIndex
-   *     the index to stop joining from (exclusive). It is an error to pass in
-   *     an end current past the end of the array.
-   * @return the joined String, {@code null} if null array input
+   *     停止连接的索引（不包含）。传入超过数组末尾的结束位置是错误的
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static String join(final char separator,
@@ -6065,11 +5717,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供的元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. Null objects or empty
-   * strings within the array are represented by empty strings.
+   * <p>列表前后不添加分隔符。数组中的null对象或空字符串
+   * 用空字符串表示。
    * <pre>
    * StringUtils.join(*, null)             = null
    * StringUtils.join(*, [])               = ""
@@ -6078,10 +5729,10 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use
+   *     要使用的分隔符字符
    * @param array
-   *     the array of values to join together, may be null *
-   * @return the joined String, {@code null} if null array input
+   *     要连接在一起的值的数组，可能为null
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static String join(final char separator, @Nullable final int[] array) {
@@ -6091,11 +5742,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供的元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. Null objects or empty
-   * strings within the array are represented by empty strings.
+   * <p>列表前后不添加分隔符。数组中的null对象或空字符串
+   * 用空字符串表示。
    * <pre>
    * StringUtils.join(*, null, *, *)         = null
    * StringUtils.join(*, [], *, *)           = ""
@@ -6104,16 +5754,14 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use
+   *     要使用的分隔符字符
    * @param array
-   *     the array of values to join together, may be null
+   *     要连接在一起的值的数组，可能为null
    * @param startIndex
-   *     the first occurrence to start joining from. It is an error to pass in
-   *     an end current past the end of the array.
+   *     开始连接的第一个出现索引。传入超过数组末尾的结束位置是错误的
    * @param endIndex
-   *     the index to stop joining from (exclusive). It is an error to pass in
-   *     an end current past the end of the array.
-   * @return the joined String, {@code null} if null array input
+   *     停止连接的索引（不包含）。传入超过数组末尾的结束位置是错误的
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static String join(final char separator, @Nullable final int[] array,
@@ -6124,11 +5772,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供的元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. Null objects or empty
-   * strings within the array are represented by empty strings.
+   * <p>列表前后不添加分隔符。数组中的null对象或空字符串
+   * 用空字符串表示。
    * <pre>
    * StringUtils.join(*, null)             = null
    * StringUtils.join(*, [])               = ""
@@ -6137,10 +5784,10 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use
+   *     要使用的分隔符字符
    * @param array
-   *     the array of values to join together, may be null
-   * @return the joined String, {@code null} if null array input
+   *     要连接在一起的值的数组，可能为null
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static String join(final char separator,
@@ -6151,11 +5798,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供的元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. Null objects or empty
-   * strings within the array are represented by empty strings.
+   * <p>列表前后不添加分隔符。数组中的null对象或空字符串
+   * 用空字符串表示。
    * <pre>
    * StringUtils.join(*, null, *, *)         = null
    * StringUtils.join(*, [], *, *)           = ""
@@ -6164,16 +5810,14 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use
+   *     要使用的分隔符字符
    * @param array
-   *     the array of values to join together, may be null
+   *     要连接在一起的值的数组，可能为null
    * @param startIndex
-   *     the first occurrence to start joining from. It is an error to pass in
-   *     an end current past the end of the array.
+   *     开始连接的第一个出现索引。传入超过数组末尾的结束位置是错误的
    * @param endIndex
-   *     the index to stop joining from (exclusive). It is an error to pass in
-   *     an end current past the end of the array.
-   * @return the joined String, {@code null} if null array input
+   *     停止连接的索引（不包含）。传入超过数组末尾的结束位置是错误的
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static String join(final char separator, @Nullable final long[] array,
@@ -6244,11 +5888,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供的元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. Null objects or empty
-   * strings within the array are represented by empty strings.
+   * <p>列表前后不添加分隔符。数组中的null对象或空字符串
+   * 用空字符串表示。
    * <pre>
    * StringUtils.join(*, null)                = null
    * StringUtils.join(*, [])                 = ""
@@ -6257,10 +5900,10 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use
+   *     要使用的分隔符字符
    * @param array
-   *     the array of values to join together, may be null
-   * @return the joined String, {@code null} if null array input
+   *     要连接在一起的值的数组，可能为null
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static String join(final char separator,
@@ -6271,11 +5914,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供的元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. Null objects or empty
-   * strings within the array are represented by empty strings.
+   * <p>列表前后不添加分隔符。数组中的null对象或空字符串
+   * 用空字符串表示。
    * <pre>
    * StringUtils.join(*, null, *, *)         = null
    * StringUtils.join(*, [], *, *)           = ""
@@ -6284,16 +5926,14 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use
+   *     要使用的分隔符字符
    * @param array
-   *     the array of values to join together, may be null
+   *     要连接在一起的值的数组，可能为null
    * @param startIndex
-   *     the first occurrence to start joining from. It is an error to pass in
-   *     an end current past the end of the array.
+   *     开始连接的第一个出现索引。传入超过数组末尾的结束位置是错误的
    * @param endIndex
-   *     the index to stop joining from (exclusive). It is an error to pass in
-   *     an end current past the end of the array.
-   * @return the joined String, {@code null} if null array input
+   *     停止连接的索引（不包含）。传入超过数组末尾的结束位置是错误的
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static String join(final char separator,
@@ -6304,11 +5944,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供的元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. Null objects or empty
-   * strings within the array are represented by empty strings.
+   * <p>列表前后不添加分隔符。数组中的null对象或空字符串
+   * 用空字符串表示。
    * <pre>
    * StringUtils.join(*, null)               = null
    * StringUtils.join(*, [])                 = ""
@@ -6319,12 +5958,12 @@ public class StringUtils {
    * </pre>
    *
    * @param <T>
-   *     the type of elements to be joined.
+   *     要连接的元素类型
    * @param separator
-   *     the separator character to use
+   *     要使用的分隔符字符
    * @param array
-   *     the array of values to join together, may be null
-   * @return the joined String, {@code null} if null array input
+   *     要连接在一起的值的数组，可能为null
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static <T> String join(final char separator,
@@ -6367,21 +6006,20 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided {@code Iterator} into a single String
-   * containing the provided elements.
+   * 将提供的{@code Iterator}元素连接成包含提供的元素的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. Null objects or empty
-   * strings within the iteration are represented by empty strings.
+   * <p>列表前后不添加分隔符。迭代中的null对象或空字符串
+   * 用空字符串表示。
    *
-   * <p>See the examples here: {@link #join(char, Object[])}.
+   * <p>示例请参见：{@link #join(char, Object[])}。
    *
    * @param <T>
-   *     the type of elements to be joined.
+   *     要连接的元素类型
    * @param separator
-   *     the separator character to use
+   *     要使用的分隔符字符
    * @param iterator
-   *     the {@code Iterator} of values to join together, may be null
-   * @return the joined String, {@code null} if null iterator input
+   *     要连接在一起的值的{@code Iterator}，可能为null
+   * @return 连接的字符串，如果迭代器输入为null则返回{@code null}
    * @see Joiner
    */
   public static <T> String join(final char separator,
@@ -6392,21 +6030,20 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided {@code Iterable} into a single String
-   * containing the provided elements.
+   * 将提供的{@code Iterable}元素连接成包含提供的元素的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. Null objects or empty
-   * strings within the iteration are represented by empty strings.
+   * <p>列表前后不添加分隔符。迭代中的null对象或空字符串
+   * 用空字符串表示。
    *
-   * <p>See the examples here: {@link #join(char, Object[])}.
+   * <p>示例请参见：{@link #join(char, Object[])}。
    *
    * @param <T>
-   *     the type of elements to be joined.
+   *     要连接的元素类型
    * @param separator
-   *     the separator character to use
+   *     要使用的分隔符字符
    * @param iterable
-   *     the {@code Iterable} of values to join together, may be null.
-   * @return the joined String, {@code null} if null iterator input
+   *     要连接在一起的值的{@code Iterable}，可能为null
+   * @return 连接的字符串，如果迭代器输入为null则返回{@code null}
    * @see Joiner
    */
   public static <T> String join(final char separator,
@@ -6417,13 +6054,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供的元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. A {@code null} separator
-   * is
-   * the same as an empty String (""). Null objects or empty strings within the
-   * array are represented by empty strings.
+   * <p>列表前后不添加分隔符。{@code null}分隔符与空字符串("")相同。
+   * 数组中的null对象或空字符串用空字符串表示。
    * <pre>
    * StringUtils.join(*, null)                = null
    * StringUtils.join(*, [])                  = ""
@@ -6435,10 +6069,10 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use, null treated as an empty string.
+   *     要使用的分隔符字符，null被视为空字符串
    * @param array
-   *     the array of values to join together, may be null
-   * @return the joined String, {@code null} if null array input
+   *     要连接在一起的值的数组，可能为null
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static String join(@Nullable final String separator,
@@ -7961,7 +7595,7 @@ public class StringUtils {
   }
 
   /**
-   * Repeat a string {@code repeat} times to form a new String.
+   * 重复字符串 {@code repeat} 次以形成新字符串。
    * <pre>
    * StringUtils.repeat(null, 2) = null
    * StringUtils.repeat("", 0)   = ""
@@ -7972,11 +7606,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to repeat, may be null
+   *     要重复的字符串，可能为 null
    * @param repeat
-   *     number of times to repeat str, negative treated as zero
-   * @return a new String consisting of the original String repeated, {@code
-   *     null} if null String input
+   *     重复 str 的次数，负数视为零
+   * @return 由原始字符串重复组成的新字符串，如果输入字符串为 null 则返回 {@code null}
    */
   public static String repeat(@Nullable final String str, final int repeat) {
     if (str == null) {
@@ -8022,26 +7655,25 @@ public class StringUtils {
   }
 
   /**
-   * Returns padding using the specified delimiter repeated to a given length.
+   * 使用指定的分隔符重复到给定长度返回填充。
    * <pre>
    * StringUtils.padding(0, 'e')  = ""
    * StringUtils.padding(3, 'e')  = "eee"
    * StringUtils.padding(-2, 'e') = IndexOutOfBoundsException
    * </pre>
    *
-   * <p>Note: this method doesn't not support padding with <a
+   * <p>注意：此方法不支持使用 <a
    * href="http://www.unicode.org/glossary/#supplementary_character">Unicode
-   * Supplementary Characters</a> as they require a pair of {@code char}s to be
-   * represented. If you are needing to support full I18N of your applications
-   * consider using {@link #repeat(String, int)} instead.
+   * 补充字符</a> 进行填充，因为它们需要一对 {@code char} 来表示。如果您需要支持应用程序的完整 I18N，
+   * 请考虑使用 {@link #repeat(String, int)} 代替。
    *
    * @param repeat
-   *     number of times to repeat delim
+   *     重复分隔符的次数
    * @param padChar
-   *     character to repeat
-   * @return String with repeated character
+   *     要重复的字符
+   * @return 带有重复字符的字符串
    * @throws IndexOutOfBoundsException
-   *     if {@code repeat &lt; 0}
+   *     如果 {@code repeat &lt; 0}
    * @see #repeat(String, int)
    */
   private static String padding(final int repeat, final char padChar)
@@ -8056,9 +7688,9 @@ public class StringUtils {
   }
 
   /**
-   * Right pad a string with a specified character.
+   * 用指定字符右填充字符串。
    *
-   * <p>The String is padded to the size of {@code size}.
+   * <p>字符串被填充到 {@code size} 的大小。
    * <pre>
    * StringUtils.rightPad(null, *, *)     = null
    * StringUtils.rightPad("", 3, 'z')     = "zzz"
@@ -8069,13 +7701,12 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to pad out, may be null
+   *     要填充的字符串，可能为 null
    * @param size
-   *     the size to pad to.
+   *     要填充到的大小
    * @param padChar
-   *     the character to pad with
-   * @return right padded String or original String if no padding is necessary,
-   *     {@code null} if null String input
+   *     用于填充的字符
+   * @return 右填充的字符串，如果不需要填充则返回原始字符串，如果输入字符串为 null 则返回 {@code null}
    */
   public static String rightPad(@Nullable final String str, final int size,
       final char padChar) {
@@ -8093,9 +7724,9 @@ public class StringUtils {
   }
 
   /**
-   * Right pad a string with a specified String.
+   * 用指定字符串右填充字符串。
    *
-   * <p>The String is padded to the size of {@code size}.
+   * <p>字符串被填充到 {@code size} 的大小。
    * <pre>
    * StringUtils.rightPad(null, *, *, *)      = null
    * StringUtils.rightPad("", 3, "z", *)      = "zzz"
@@ -8109,13 +7740,12 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to pad out, may be null
+   *     要填充的字符串，可能为 null
    * @param size
-   *     the size to pad to
+   *     要填充到的大小
    * @param padStr
-   *     the string to pad with, null or empty treated as single space
-   * @return right padded String or original String if no padding is necessary,
-   *     {@code null} if null String input
+   *     用于填充的字符串，null 或空字符串视为单个空格
+   * @return 右填充的字符串，如果不需要填充则返回原始字符串，如果输入字符串为 null 则返回 {@code null}
    */
   public static String rightPad(@Nullable final String str, final int size,
       @Nullable final String padStr) {
@@ -8153,9 +7783,9 @@ public class StringUtils {
   }
 
   /**
-   * Left pad a string with a specified character.
+   * 用指定字符左填充字符串。
    *
-   * <p>Pad to a size of {@code size}.
+   * <p>填充到 {@code size} 的大小。
    * <pre>
    * StringUtils.leftPad(null, *, *)     = null
    * StringUtils.leftPad("", 3, 'z')     = "zzz"
@@ -8190,9 +7820,9 @@ public class StringUtils {
   }
 
   /**
-   * Left pad a string with a specified String.
+   * 用指定字符串左填充字符串。
    *
-   * <p>Pad to a size of {@code size}.
+   * <p>填充到 {@code size} 的大小。
    * <pre>
    * StringUtils.leftPad(null, *, *)      = null
    * StringUtils.leftPad("", 3, "z")      = "zzz"
@@ -8206,13 +7836,12 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to pad out, may be null
+   *     要填充的字符串，可能为 null
    * @param size
-   *     the size to pad to
+   *     要填充到的大小
    * @param padStr
-   *     the string to pad with, null or empty treated as single space
-   * @return left padded String or original String if no padding is necessary,
-   *     {@code null} if null String input
+   *     用于填充的字符串，null 或空字符串视为单个空格
+   * @return 左填充的字符串，如果不需要填充则返回原始字符串，如果输入字符串为 null 则返回 {@code null}
    */
   public static String leftPad(@Nullable final String str, final int size,
       @Nullable final String padStr) {
@@ -8249,12 +7878,10 @@ public class StringUtils {
   }
 
   /**
-   * Centers a string in a larger String of size {@code size}. Uses a supplied
-   * character as the value to pad the string with.
+   * 在大小为 {@code size} 的更大字符串中居中字符串。使用提供的字符作为填充字符串的值。
    *
-   * <p>If the size is less than the string length, the string is returned. A
-   * {@code null} string returns {@code null}. A negative size is treated as
-   * zero.
+   * <p>如果大小小于字符串长度，则返回字符串。{@code null} 字符串返回 {@code null}。
+   * 负大小视为零。
    * <pre>
    * StringUtils.center(null, *, *)     = null
    * StringUtils.center("", 4, ' ')     = "    "
@@ -8266,12 +7893,12 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to center, may be null
+   *     要居中的字符串，可能为 null
    * @param size
-   *     the int size of new String, negative treated as zero
+   *     新字符串的整数大小，负数视为零
    * @param padChar
-   *     the character to pad the new String with
-   * @return centered String, {@code null} if null String input
+   *     用于填充新字符串的字符
+   * @return 居中的字符串，如果输入字符串为 null 则返回 {@code null}
    */
   public static String center(@Nullable final String str, final int size,
       final char padChar) {
@@ -8290,12 +7917,10 @@ public class StringUtils {
   }
 
   /**
-   * Centers a string in a larger String of size {@code size}. Uses a supplied
-   * String as the value to pad the string with.
+   * 在大小为 {@code size} 的更大字符串中居中字符串。使用提供的字符串作为填充字符串的值。
    *
-   * <p>If the size is less than the string length, the string is returned. A
-   * {@code null} string returns {@code null}. A negative size is treated as
-   * zero.
+   * <p>如果大小小于字符串长度，则返回字符串。{@code null} 字符串返回 {@code null}。
+   * 负大小视为零。
    * <pre>
    * StringUtils.center(null, *, *)     = null
    * StringUtils.center("", 4, " ")     = "    "
@@ -8309,14 +7934,14 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to center, may be null
+   *     要居中的字符串，可能为 null
    * @param size
-   *     the int size of new String, negative treated as zero
+   *     新字符串的整数大小，负数视为零
    * @param padding
-   *     the string to pad the new String with, must not be null or empty
-   * @return centered String, {@code null} if null String input
+   *     用于填充新字符串的字符串，不能为 null 或空
+   * @return 居中的字符串，如果输入字符串为 null 则返回 {@code null}
    * @throws IllegalArgumentException
-   *     if padStr is {@code null} or empty
+   *     如果 padStr 为 {@code null} 或空
    */
   public static String center(@Nullable final String str, final int size,
       @Nullable final String padding) {
@@ -8340,20 +7965,20 @@ public class StringUtils {
   }
 
   /**
-   * Converts a string to upper case as per {@link String#toUpperCase()}.
+   * 根据 {@link String#toUpperCase()} 将字符串转换为大写。
    *
-   * <p>A {@code null} input String returns {@code null}.
+   * <p>{@code null} 输入字符串返回 {@code null}。
    * <pre>
    * StringUtils.upperCase(null)  = null
    * StringUtils.upperCase("")    = ""
    * StringUtils.upperCase("aBc") = "ABC"
    * </pre>
    *
-   * <p>FIXME: the implementation is not perfect for all languages.
+   * <p>FIXME: 该实现对所有语言都不完美。
    *
    * @param str
-   *     the string to upper case, may be null
-   * @return the upper cased String, {@code null} if null String input
+   *     要转换为大写的字符串，可能为 null
+   * @return 大写字符串，如果输入字符串为 null 则返回 {@code null}
    */
   public static String toUpperCase(@Nullable final String str) {
     if (str == null) {
@@ -8363,21 +7988,20 @@ public class StringUtils {
   }
 
   /**
-   * Converts a string to lower case as per {@link String#toLowerCase()}.
+   * 根据 {@link String#toLowerCase()} 将字符串转换为小写。
    *
-   * <p>A {@code null} input String returns {@code null}.
+   * <p>{@code null} 输入字符串返回 {@code null}。
    * <pre>
    * StringUtils.lowerCase(null)  = null
    * StringUtils.lowerCase("")    = ""
    * StringUtils.lowerCase("aBc") = "abc"
    * </pre>
    *
-   * <p>FIXME: the implementation is not perfect for all langauges. Need a more
-   * prefect implementation.
+   * <p>FIXME: 该实现对所有语言都不完美。需要更完美的实现。
    *
    * @param str
-   *     the string to lower case, may be null
-   * @return the lower cased String, {@code null} if null String input
+   *     要转换为小写的字符串，可能为 null
+   * @return 小写字符串，如果输入字符串为 null 则返回 {@code null}
    */
   public static String toLowerCase(@Nullable final String str) {
     if (str == null) {
@@ -8422,10 +8046,9 @@ public class StringUtils {
   }
 
   /**
-   * Uncapitalizes a string changing the first letter to title case as per
-   * {@link Character#toLowerCase(char)}. No other letters are changed.
+   * 根据 {@link Character#toLowerCase(char)} 将字符串的首字母转换为小写。其他字母不变。
    *
-   * <p>A {@code null} input String returns {@code null}.
+   * <p>{@code null} 输入字符串返回 {@code null}。
    * <pre>
    * StringUtils.uncapitalize(null)  = null
    * StringUtils.uncapitalize("")    = ""
@@ -8433,11 +8056,11 @@ public class StringUtils {
    * StringUtils.uncapitalize("CAT") = "cAT"
    * </pre>
    *
-   * <p>FIXME: the implementation is not perfect for all languages.
+   * <p>FIXME: 该实现对所有语言都不完美。
    *
    * @param str
-   *     the string to uncapitalize, may be null
-   * @return the uncapitalized String, {@code null} if null String input
+   *     要首字母小写的字符串，可能为 null
+   * @return 首字母小写的字符串，如果输入字符串为 null 则返回 {@code null}
    * @see #capitalize(String)
    */
   public static String uncapitalize(@Nullable final String str) {
@@ -8456,14 +8079,13 @@ public class StringUtils {
   }
 
   /**
-   * Swaps the case of a string changing upper and title case to lower case, and
-   * lower case to upper case.
+   * 交换字符串的大小写，将大写和标题大小写转换为小写，将小写转换为大写。
    * <ul>
-   * <li>Upper case character converts to Lower case</li>
-   * <li>Title case character converts to Lower case</li>
-   * <li>Lower case character converts to Upper case</li>
+   * <li>大写字符转换为小写</li>
+   * <li>标题大小写字符转换为小写</li>
+   * <li>小写字符转换为大写</li>
    * </ul>
-   * A {@code null} input String returns {@code null}.
+   * {@code null} 输入字符串返回 {@code null}。
    * <pre>
    * StringUtils.swapCase(null)                 = null
    * StringUtils.swapCase("")                   = ""
@@ -8471,8 +8093,8 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to swap case, may be null
-   * @return the changed String, {@code null} if null String input
+   *     要交换大小写的字符串，可能为 null
+   * @return 更改后的字符串，如果输入字符串为 null 则返回 {@code null}
    */
   public static String swapCase(@Nullable final String str) {
     final int strLen;
@@ -8496,9 +8118,9 @@ public class StringUtils {
   }
 
   /**
-   * Reverses a string as per {@link StringBuilder#reverse()}.
+   * 根据 {@link StringBuilder#reverse()} 反转字符串。
    *
-   * <p>A {@code null} string returns {@code null}.
+   * <p>{@code null} 字符串返回 {@code null}。
    * <pre>
    * StringUtils.reverse(null)  = null
    * StringUtils.reverse("")    = ""
@@ -8506,8 +8128,8 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to reverse, may be null
-   * @return the reversed String, {@code null} if null String input
+   *     要反转的字符串，可能为 null
+   * @return 反转后的字符串，如果输入字符串为 null 则返回 {@code null}
    */
   public static String reverse(@Nullable final String str) {
     if (str == null) {
@@ -8523,25 +8145,19 @@ public class StringUtils {
   }
 
   /**
-   * Abbreviates a string using ellipses. This will turn "Now is the time for
-   * all good men" into "...is the time for..."
+   * 使用省略号缩写字符串。这将把 "Now is the time for all good men" 转换为 "...is the time for..."
    *
-   * <p>This function allows you to specify a "left edge" offset. Note that
-   * this left edge is not necessarily going to be the leftmost character in the
-   * result, or the first character following the ellipses, but it will appear
-   * somewhere in the result.
+   * <p>此函数允许您指定"左边缘"偏移量。请注意，此左边缘不一定是结果中最左边的字符，
+   * 或省略号后的第一个字符，但它会出现在结果中的某个位置。
    *
-   * <p>Specifically:
+   * <p>具体来说：
    * <ul>
-   * <li>If {@code str} is less than {@code maxWidth} characters long, return
-   * it.</li>
-   * <li>Else abbreviate it to {@code (substring(str, 0, max-3) + "...")}.</li>
-   * <li>If {@code maxWidth} is less than {@code 4}, throw an
-   * {@code IllegalArgumentException}.</li>
-   * <li>In no case will it return a string of length greater than
-   * {@code maxWidth}.</li>
+   * <li>如果 {@code str} 的长度小于 {@code maxWidth} 个字符，则返回它。</li>
+   * <li>否则将其缩写为 {@code (substring(str, 0, max-3) + "...")}。</li>
+   * <li>如果 {@code maxWidth} 小于 {@code 4}，则抛出 {@code IllegalArgumentException}。</li>
+   * <li>在任何情况下都不会返回长度大于 {@code maxWidth} 的字符串。</li>
    * </ul>
-   * In no case will it return a string of length greater than {@code maxWidth}.
+   * 在任何情况下都不会返回长度大于 {@code maxWidth} 的字符串。
    * <pre>
    * StringUtils.abbreviate(null, *, *)                = null
    * StringUtils.abbreviate("", 0, 4)                  = ""
@@ -8558,17 +8174,17 @@ public class StringUtils {
    * StringUtils.abbreviate("abcdefghij", 5, 6)        = IllegalArgumentException
    * </pre>
    *
-   * <p>FIXME: this function is badly designed.
+   * <p>FIXME: 此函数设计得很糟糕。
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可能为 null
    * @param offset
-   *     left edge of source String
+   *     源字符串的左边缘
    * @param maxWidth
-   *     maximum length of result String, must be at least 4
-   * @return abbreviated String, {@code null} if null String input
+   *     结果字符串的最大长度，必须至少为 4
+   * @return 缩写的字符串，如果输入字符串为 null 则返回 {@code null}
    * @throws IllegalArgumentException
-   *     if the width is too small
+   *     如果宽度太小
    */
   public static String abbreviate(@Nullable final String str, final int offset,
       final int maxWidth) {
@@ -8648,16 +8264,13 @@ public class StringUtils {
   }
 
   /**
-   * Truncate the string to get a prefix string of the specified length in the
-   * UTF-8 encoding.
+   * 截断字符串以获取 UTF-8 编码中指定长度的前缀字符串。
    *
    * @param str
-   *     the string to be truncated. If it is {@code null}, returns {@code
-   *     null}.
+   *     要截断的字符串。如果为 {@code null}，则返回 {@code null}。
    * @param length
-   *     the length of bytes in the UTF-8 encoding of the result.
-   * @return a prefix of str, which consists a valid Unicode string and is
-   *     shorter than length when encoded in the UTF-8 encoding.
+   *     结果的 UTF-8 编码中的字节长度。
+   * @return str 的前缀，它由有效的 Unicode 字符串组成，并且在 UTF-8 编码时短于 length。
    */
   public static String truncateUtf8(@Nullable final String str,
       final int length) {
@@ -8704,19 +8317,15 @@ public class StringUtils {
   }
 
   /**
-   * Normalizes the spaces in a string.
+   * 规范化字符串中的空格。
    *
-   * <p>This function will remove duplicated line breaks, and duplicated
-   * spaces,
-   * and spaces at beginning or ending of a line.
+   * <p>此函数将删除重复的换行符和重复的空格，以及行开头或结尾的空格。
    *
    * @param str
-   *     the string to be compact.
+   *     要压缩的字符串。
    * @param lineFolding
-   *     if it is true, the multi-line text will be folded into one line, i.e,
-   *     the line break is replaced by a space; otherwise, the line break is
-   *     kept.
-   * @return the compacted string.
+   *     如果为 true，多行文本将被折叠为一行，即换行符被空格替换；否则，保留换行符。
+   * @return 压缩后的字符串。
    */
   public static String normalizeSpace(final String str,
       final boolean lineFolding) {
@@ -8726,23 +8335,19 @@ public class StringUtils {
   }
 
   /**
-   * Normalizes the spaces in a string.
+   * 规范化字符串中的空格。
    *
-   * <p>This function will remove duplicated line breaks, and duplicated
-   * spaces, and spaces at beginning or ending of a line.
+   * <p>此函数将删除重复的换行符和重复的空格，以及行开头或结尾的空格。
    *
    * @param str
-   *     the string to be compact.
+   *     要压缩的字符串。
    * @param lineFolding
-   *     if it is true, the multi-line text will be folded into one line, i.e,
-   *     the line break is replaced by a space; otherwise, the line break is
-   *     kept.
+   *     如果为 true，多行文本将被折叠为一行，即换行符被空格替换；否则，保留换行符。
    * @param keepTrailingSpace
-   *     true to keep the trailing (last) space character; false to remove the
-   *     trailing space.
+   *     true 表示保留尾随（最后）空格字符；false 表示删除尾随空格。
    * @param builder
-   *     a {@link StringBuilder} where to append the compacted string.
-   * @return the number of characters appended to the builder.
+   *     用于追加压缩字符串的 {@link StringBuilder}。
+   * @return 追加到构建器的字符数。
    */
   public static int normalizeSpace(@Nullable final String str,
       final boolean lineFolding, final boolean keepTrailingSpace,
@@ -8845,20 +8450,18 @@ public class StringUtils {
   }
 
   /**
-   * Quotes a string with the given quotation marks, escaping the characters in
-   * the string if necessary.
+   * 用给定的引号引用字符串，必要时转义字符串中的字符。
    *
    * @param str
-   *     the string to be quoted.
+   *     要引用的字符串。
    * @param escapeChar
-   *     the character used to escape itself and other characters.
+   *     用于转义自身和其他字符的字符。
    * @param leftQuote
-   *     the left quotation mark.
+   *     左引号。
    * @param rightQuote
-   *     the right quotation mark.
+   *     右引号。
    * @param builder
-   *     a string builder where to append the quoted string, with its original
-   *     content escaped.
+   *     用于追加引用字符串的字符串构建器，其原始内容已转义。
    */
   public static void quote(final String str, final char escapeChar,
       final char leftQuote, final char rightQuote,
@@ -8870,12 +8473,11 @@ public class StringUtils {
   }
 
   /**
-   * Quotes a string with the single quotation marks, escaping the characters in
-   * the string if necessary.
+   * 用单引号引用字符串，必要时转义字符串中的字符。
    *
    * @param str
-   *     the string to be quoted.
-   * @return the single-quoted string, with its original content escaped.
+   *     要引用的字符串。
+   * @return 单引号引用的字符串，其原始内容已转义。
    */
   public static String singleQuote(final String str) {
     final StringBuilder builder = new StringBuilder();
@@ -8884,12 +8486,11 @@ public class StringUtils {
   }
 
   /**
-   * Quotes a string with the double quotation marks, escaping the characters in
-   * the string if necessary.
+   * 用双引号引用字符串，必要时转义字符串中的字符。
    *
    * @param str
-   *     the string to be quoted.
-   * @return the double-quoted string, with its original content escaped.
+   *     要引用的字符串。
+   * @return 双引号引用的字符串，其原始内容已转义。
    */
   public static String doubleQuote(final String str) {
     final StringBuilder builder = new StringBuilder();
@@ -8898,18 +8499,17 @@ public class StringUtils {
   }
 
   /**
-   * Unquotes a string with the given quotation marks, **without** unescaping the
-   * characters in the string.
+   * 用给定的引号取消引用字符串，**不**反转义字符串中的字符。
    *
    * @param str
-   *     the string to be unquoted.
+   *     要取消引用的字符串。
    * @param leftQuote
-   *     the left quotation mark.
+   *     左引号。
    * @param rightQuote
-   *     the right quotation mark.
-   * @return the unquoted string, without escaping the characters in the string.
+   *     右引号。
+   * @return 取消引用的字符串，不转义字符串中的字符。
    * @throws IllegalArgumentException
-   *     if the string is not correctly quoted.
+   *     如果字符串没有正确引用。
    */
   public static String unquote(final String str, final char leftQuote,
       final char rightQuote) {
@@ -8922,20 +8522,18 @@ public class StringUtils {
   }
 
   /**
-   * Unquotes a string with the given quotation marks, **without** unescaping the
-   * characters in the string.
+   * 用给定的引号取消引用字符串，**不**反转义字符串中的字符。
    *
    * @param str
-   *     the string to be unquoted.
+   *     要取消引用的字符串。
    * @param leftQuote
-   *     the left quotation mark.
+   *     左引号。
    * @param rightQuote
-   *     the right quotation mark.
+   *     右引号。
    * @param builder
-   *     the string builder used to append the unquoted string, **without** escaping
-   *     the characters in the string.
+   *     用于追加取消引用字符串的字符串构建器，**不**转义字符串中的字符。
    * @throws IllegalArgumentException
-   *     if the string is not correctly quoted.
+   *     如果字符串没有正确引用。
    */
   public static void unquote(final String str, final char leftQuote,
       final char rightQuote, final StringBuilder builder) {
@@ -8947,20 +8545,19 @@ public class StringUtils {
   }
 
   /**
-   * Unquotes a string with the given quotation marks, unescaping the characters
-   * in the string if necessary.
+   * 用给定的引号取消引用字符串，必要时反转义字符串中的字符。
    *
    * @param str
-   *     the string to be unquoted.
+   *     要取消引用的字符串。
    * @param escapeChar
-   *     the character used to escape itself and other characters.
+   *     用于转义自身和其他字符的字符。
    * @param leftQuote
-   *     the left quotation mark.
+   *     左引号。
    * @param rightQuote
-   *     the right quotation mark.
-   * @return the unquoted string, with its original content unescaped.
+   *     右引号。
+   * @return 取消引用的字符串，其原始内容已反转义。
    * @throws IllegalArgumentException
-   *     if the string is not correctly quoted.
+   *     如果字符串没有正确引用。
    */
   public static String unquote(final String str, final char escapeChar,
       final char leftQuote, final char rightQuote) {
@@ -8970,22 +8567,20 @@ public class StringUtils {
   }
 
   /**
-   * Unquotes a string with the given quotation marks, unescaping the characters
-   * in the string if necessary.
+   * 用给定的引号取消引用字符串，必要时反转义字符串中的字符。
    *
    * @param str
-   *     the string to be unquoted.
+   *     要取消引用的字符串。
    * @param escapeChar
-   *     the character used to escape itself and other characters.
+   *     用于转义自身和其他字符的字符。
    * @param leftQuote
-   *     the left quotation mark.
+   *     左引号。
    * @param rightQuote
-   *     the right quotation mark.
+   *     右引号。
    * @param builder
-   *     a string builder where to append the unquoted string, with its original
-   *     content unescaped.
+   *     用于追加取消引用字符串的字符串构建器，其原始内容已反转义。
    * @throws IllegalArgumentException
-   *     if the string is not correctly quoted.
+   *     如果字符串没有正确引用。
    */
   public static void unquote(final String str, final char escapeChar,
       final char leftQuote, final char rightQuote,
@@ -8998,19 +8593,17 @@ public class StringUtils {
   }
 
   /**
-   * Unquotes a string with the given quotation marks, without unescaping the
-   * characters in the string.
+   * 用给定的引号取消引用字符串，不反转义字符串中的字符。
    *
    * @param str
-   *     the string to be unquoted.
+   *     要取消引用的字符串。
    * @param leftQuote
-   *     the left quotation mark.
+   *     左引号。
    * @param rightQuote
-   *     the right quotation mark.
-   * @return the unquoted string, without escaping the characters in the string,
-   *     or {@code null} if the input string is {@code null}.
+   *     右引号。
+   * @return 取消引用的字符串，不转义字符串中的字符，如果输入字符串为 {@code null} 则返回 {@code null}。
    * @throws IllegalArgumentException
-   *     if the string is not correctly quoted.
+   *     如果字符串没有正确引用。
    */
   public static String unquoteIfNecessary(@Nullable final String str,
       final char leftQuote, final char rightQuote) {
@@ -9026,20 +8619,18 @@ public class StringUtils {
   }
 
   /**
-   * Unquotes a string with the given quotation marks, without unescaping the
-   * characters in the string.
+   * 用给定的引号取消引用字符串，不反转义字符串中的字符。
    *
    * @param str
-   *     the string to be unquoted.
+   *     要取消引用的字符串。
    * @param leftQuote
-   *     the left quotation mark.
+   *     左引号。
    * @param rightQuote
-   *     the right quotation mark.
+   *     右引号。
    * @param builder
-   *     the string builder used to append the unquoted string, without escaping
-   *     the characters in the string.
+   *     用于追加取消引用字符串的字符串构建器，不转义字符串中的字符。
    * @throws IllegalArgumentException
-   *     if the string is not correctly quoted.
+   *     如果字符串没有正确引用。
    */
   public static void unquoteIfNecessary(@Nullable final String str,
       final char leftQuote, final char rightQuote, final StringBuilder builder) {
@@ -9089,15 +8680,15 @@ public class StringUtils {
   }
 
   /**
-   * Escapes characters in a string using a specified escaped character.
+   * 使用指定的转义字符对字符串中的字符进行转义。
    *
    * @param str
-   *     the string to be escaped.
+   *     要转义的字符串。
    * @param escapeChar
-   *     the character used to escape itself and other characters.
+   *     用于转义自身和其他字符的字符。
    * @param characters
-   *     the specified characters need to be escaped.
-   * @return the escaped string.
+   *     需要被转义的指定字符。
+   * @return 转义后的字符串。
    */
   public static String escape(final String str, final char escapeChar,
       final char... characters) {
@@ -9114,16 +8705,15 @@ public class StringUtils {
   }
 
   /**
-   * Unescapes characters in a escaped string.
+   * 对转义字符串中的字符进行反转义。
    *
-   * <p>All characters in the escaped string escaped by the specified escape
-   * character will be unescaped.
+   * <p>转义字符串中所有被指定转义字符转义的字符都将被反转义。
    *
    * @param str
-   *     the escaped string to be unescaped.
+   *     要反转义的转义字符串。
    * @param escapeChar
-   *     the character used to escape itself and other characters.
-   * @return the unescaped string.
+   *     用于转义自身和其他字符的字符。
+   * @return 反转义后的字符串。
    */
   public static String unescape(final String str, final char escapeChar) {
     final StringBuilder builder = new StringBuilder(str.length());
@@ -9132,17 +8722,16 @@ public class StringUtils {
   }
 
   /**
-   * Unescapes characters in a escaped string.
+   * 对转义字符串中的字符进行反转义。
    *
-   * <p>All characters in the escaped string escaped by the specified escape
-   * character will be unescaped.
+   * <p>转义字符串中所有被指定转义字符转义的字符都将被反转义。
    *
    * @param str
-   *     the escaped string to be unescaped.
+   *     要反转义的转义字符串。
    * @param escapeChar
-   *     the character used to escape itself and other characters.
+   *     用于转义自身和其他字符的字符。
    * @param builder
-   *     a string builder where to append the unescaped string.
+   *     用于追加反转义字符串的字符串构建器。
    */
   public static void unescape(final String str, final char escapeChar,
       final StringBuilder builder) {
@@ -9162,7 +8751,7 @@ public class StringUtils {
   }
 
   /**
-   * Converts a string to boolean.
+   * 将字符串转换为布尔值。
    *
    * <pre>
    * toBoolean(null)    = false
@@ -9173,15 +8762,15 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to boolean, may be null.
-   * @return the boolean output, {@code false} if null string input.
+   *     要转换为布尔值的字符串，可以为 null。
+   * @return 布尔值输出，如果输入字符串为 null 则返回 {@code false}。
    */
   public static boolean toBoolean(@Nullable final String str) {
     return toBoolean(str, BooleanUtils.DEFAULT);
   }
 
   /**
-   * Converts a string to boolean.
+   * 将字符串转换为布尔值。
    *
    * <pre>
    * toBoolean(null, "true")    = true
@@ -9193,11 +8782,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to boolean, may be null.
+   *     要转换为布尔值的字符串，可以为 null。
    * @param defaultValue
-   *     defaultValue when string is null or not boolean.
-   * @return the boolean output, {@code defaultValue} if input string is null or
-   *     not boolean.
+   *     当字符串为 null 或不是布尔值时的默认值。
+   * @return 布尔值输出，如果输入字符串为 null 或不是布尔值则返回 {@code defaultValue}。
    */
   public static boolean toBoolean(@Nullable final String str,
       final boolean defaultValue) {
@@ -9214,7 +8802,7 @@ public class StringUtils {
   }
 
   /**
-   * Converts a string to Boolean Object.
+   * 将字符串转换为 Boolean 对象。
    *
    * <pre>
    * toBooleanObject(null)    = null
@@ -9224,15 +8812,15 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to boolean, may be null.
-   * @return the boolean output, {@code null} if null string input.
+   *     要转换为布尔值的字符串，可以为 null。
+   * @return Boolean 对象输出，如果输入字符串为 null 则返回 {@code null}。
    */
   public static Boolean toBooleanObject(@Nullable final String str) {
     return toBooleanObject(str, null);
   }
 
   /**
-   * Converts a string to Boolean Object.
+   * 将字符串转换为 Boolean 对象。
    *
    * <pre>
    * toBooleanObject(null, "true")    = true
@@ -9244,10 +8832,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to boolean, may be null.
+   *     要转换为布尔值的字符串，可以为 null。
    * @param defaultValue
-   *     defaultValue when string is null or not boolean.
-   * @return the Boolean output, {@code defaultValue} if null string input.
+   *     当字符串为 null 或不是布尔值时的默认值。
+   * @return Boolean 对象输出，如果输入字符串为 null 则返回 {@code defaultValue}。
    */
   public static Boolean toBooleanObject(@Nullable final String str,
       @Nullable final Boolean defaultValue) {
@@ -9263,10 +8851,26 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 将字符串转换为字符。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @return 如果字符串为 null 或空，则返回默认字符值；否则返回字符串的第一个字符。
+   */
   public static char toChar(@Nullable final String str) {
     return toChar(str, CharUtils.DEFAULT);
   }
 
+  /**
+   * 将字符串转换为字符。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @param defaultValue
+   *     当字符串为 null 或空时的默认值。
+   * @return 如果字符串为 null 或空，则返回 {@code defaultValue}；否则返回字符串的第一个字符。
+   */
   public static char toChar(@Nullable final String str,
       final char defaultValue) {
     if ((str == null) || (str.length() == 0)) {
@@ -9276,10 +8880,26 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 将字符串转换为 Character 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @return 如果字符串为 null 或空，则返回 null；否则返回字符串的第一个字符的 Character 对象。
+   */
   public static Character toCharObject(@Nullable final String str) {
     return toCharObject(str, null);
   }
 
+  /**
+   * 将字符串转换为 Character 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @param defaultValue
+   *     当字符串为 null 或空时的默认值。
+   * @return 如果字符串为 null 或空，则返回 {@code defaultValue}；否则返回字符串的第一个字符的 Character 对象。
+   */
   public static Character toCharObject(@Nullable final String str,
       @Nullable final Character defaultValue) {
     if ((str == null) || (str.length() == 0)) {
@@ -9289,10 +8909,26 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 将字符串转换为字节值。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @return 如果字符串为 null 或无法解析，则返回默认字节值；否则返回解析后的字节值。
+   */
   public static byte toByte(@Nullable final String str) {
     return toByte(str, ByteUtils.DEFAULT);
   }
 
+  /**
+   * 将字符串转换为字节值。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @param defaultValue
+   *     当字符串为 null 或无法解析时的默认值。
+   * @return 如果字符串为 null 或无法解析，则返回 {@code defaultValue}；否则返回解析后的字节值。
+   */
   public static byte toByte(@Nullable final String str,
       final byte defaultValue) {
     if (str == null) {
@@ -9307,10 +8943,26 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 将字符串转换为 Byte 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @return 如果字符串为 null 或无法解析，则返回 null；否则返回解析后的 Byte 对象。
+   */
   public static Byte toByteObject(@Nullable final String str) {
     return toByteObject(str, null);
   }
 
+  /**
+   * 将字符串转换为 Byte 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @param defaultValue
+   *     当字符串为 null 或无法解析时的默认值。
+   * @return 如果字符串为 null 或无法解析，则返回 {@code defaultValue}；否则返回解析后的 Byte 对象。
+   */
   public static Byte toByteObject(@Nullable final String str,
       @Nullable final Byte defaultValue) {
     if (str == null) {
@@ -9325,10 +8977,26 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 将字符串转换为短整型值。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @return 如果字符串为 null 或无法解析，则返回默认短整型值；否则返回解析后的短整型值。
+   */
   public static short toShort(@Nullable final String str) {
     return toShort(str, ShortUtils.DEFAULT);
   }
 
+  /**
+   * 将字符串转换为短整型值。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @param defaultValue
+   *     当字符串为 null 或无法解析时的默认值。
+   * @return 如果字符串为 null 或无法解析，则返回 {@code defaultValue}；否则返回解析后的短整型值。
+   */
   public static short toShort(@Nullable final String str,
       final short defaultValue) {
     if (str == null) {
@@ -9343,10 +9011,26 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 将字符串转换为 Short 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @return 如果字符串为 null 或无法解析，则返回 null；否则返回解析后的 Short 对象。
+   */
   public static Short toShortObject(@Nullable final String str) {
     return toShortObject(str, null);
   }
 
+  /**
+   * 将字符串转换为 Short 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @param defaultValue
+   *     当字符串为 null 或无法解析时的默认值。
+   * @return 如果字符串为 null 或无法解析，则返回 {@code defaultValue}；否则返回解析后的 Short 对象。
+   */
   public static Short toShortObject(@Nullable final String str,
       @Nullable final Short defaultValue) {
     if (str == null) {
@@ -9361,10 +9045,26 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 将字符串转换为整型值。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @return 如果字符串为 null 或无法解析，则返回默认整型值；否则返回解析后的整型值。
+   */
   public static int toInt(@Nullable final String str) {
     return toInt(str, IntUtils.DEFAULT);
   }
 
+  /**
+   * 将字符串转换为整型值。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @param defaultValue
+   *     当字符串为 null 或无法解析时的默认值。
+   * @return 如果字符串为 null 或无法解析，则返回 {@code defaultValue}；否则返回解析后的整型值。
+   */
   public static int toInt(@Nullable final String str, final int defaultValue) {
     if (str == null) {
       return defaultValue;
@@ -9378,10 +9078,26 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 将字符串转换为 Integer 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @return 如果字符串为 null 或无法解析，则返回 null；否则返回解析后的 Integer 对象。
+   */
   public static Integer toIntObject(@Nullable final String str) {
     return toIntObject(str, null);
   }
 
+  /**
+   * 将字符串转换为 Integer 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @param defaultValue
+   *     当字符串为 null 或无法解析时的默认值。
+   * @return 如果字符串为 null 或无法解析，则返回 {@code defaultValue}；否则返回解析后的 Integer 对象。
+   */
   public static Integer toIntObject(@Nullable final String str,
       @Nullable final Integer defaultValue) {
     if (str == null) {
@@ -9396,10 +9112,26 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 将字符串转换为长整型值。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @return 如果字符串为 null 或无法解析，则返回默认长整型值；否则返回解析后的长整型值。
+   */
   public static long toLong(@Nullable final String str) {
     return toLong(str, LongUtils.DEFAULT);
   }
 
+  /**
+   * 将字符串转换为长整型值。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @param defaultValue
+   *     当字符串为 null 或无法解析时的默认值。
+   * @return 如果字符串为 null 或无法解析，则返回 {@code defaultValue}；否则返回解析后的长整型值。
+   */
   public static long toLong(@Nullable final String str,
       final long defaultValue) {
     if (str == null) {
@@ -9414,10 +9146,26 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 将字符串转换为 Long 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @return 如果字符串为 null 或无法解析，则返回 null；否则返回解析后的 Long 对象。
+   */
   public static Long toLongObject(@Nullable final String str) {
     return toLongObject(str, null);
   }
 
+  /**
+   * 将字符串转换为 Long 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @param defaultValue
+   *     当字符串为 null 或无法解析时的默认值。
+   * @return 如果字符串为 null 或无法解析，则返回 {@code defaultValue}；否则返回解析后的 Long 对象。
+   */
   public static Long toLongObject(@Nullable final String str,
       @Nullable final Long defaultValue) {
     if (str == null) {
@@ -9432,10 +9180,26 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 将字符串转换为浮点型值。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @return 如果字符串为 null 或无法解析，则返回默认浮点型值；否则返回解析后的浮点型值。
+   */
   public static float toFloat(@Nullable final String str) {
     return toFloat(str, FloatUtils.DEFAULT);
   }
 
+  /**
+   * 将字符串转换为浮点型值。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @param defaultValue
+   *     当字符串为 null 或无法解析时的默认值。
+   * @return 如果字符串为 null 或无法解析，则返回 {@code defaultValue}；否则返回解析后的浮点型值。
+   */
   public static float toFloat(@Nullable final String str,
       final float defaultValue) {
     if (str == null) {
@@ -9450,10 +9214,26 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 将字符串转换为 Float 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @return 如果字符串为 null 或无法解析，则返回 null；否则返回解析后的 Float 对象。
+   */
   public static Float toFloatObject(@Nullable final String str) {
     return toFloatObject(str, null);
   }
 
+  /**
+   * 将字符串转换为 Float 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @param defaultValue
+   *     当字符串为 null 或无法解析时的默认值。
+   * @return 如果字符串为 null 或无法解析，则返回 {@code defaultValue}；否则返回解析后的 Float 对象。
+   */
   public static Float toFloatObject(@Nullable final String str,
       @Nullable final Float defaultValue) {
     if (str == null) {
@@ -9468,10 +9248,26 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 将字符串转换为双精度浮点型值。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @return 如果字符串为 null 或无法解析，则返回默认双精度浮点型值；否则返回解析后的双精度浮点型值。
+   */
   public static double toDouble(@Nullable final String str) {
     return toDouble(str, DoubleUtils.DEFAULT);
   }
 
+  /**
+   * 将字符串转换为双精度浮点型值。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @param defaultValue
+   *     当字符串为 null 或无法解析时的默认值。
+   * @return 如果字符串为 null 或无法解析，则返回 {@code defaultValue}；否则返回解析后的双精度浮点型值。
+   */
   public static double toDouble(@Nullable final String str,
       final double defaultValue) {
     if (str == null) {
@@ -9486,10 +9282,26 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 将字符串转换为 Double 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @return 如果字符串为 null 或无法解析，则返回 null；否则返回解析后的 Double 对象。
+   */
   public static Double toDoubleObject(@Nullable final String str) {
     return toDoubleObject(str, null);
   }
 
+  /**
+   * 将字符串转换为 Double 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @param defaultValue
+   *     当字符串为 null 或无法解析时的默认值。
+   * @return 如果字符串为 null 或无法解析，则返回 {@code defaultValue}；否则返回解析后的 Double 对象。
+   */
   public static Double toDoubleObject(@Nullable final String str,
       @Nullable final Double defaultValue) {
     if (str == null) {
@@ -9504,10 +9316,26 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 将字符串转换为 Date 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @return 如果字符串为 null 或无法解析，则返回 null；否则返回解析后的 Date 对象。
+   */
   public static Date toDate(@Nullable final String str) {
     return toDate(str, null);
   }
 
+  /**
+   * 将字符串转换为 Date 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @param defaultValue
+   *     当字符串为 null 或无法解析时的默认值。
+   * @return 如果字符串为 null 或无法解析，则返回 {@code defaultValue}；否则返回解析后的 Date 对象。
+   */
   public static Date toDate(@Nullable final String str,
       @Nullable final Date defaultValue) {
     if (str == null) {
@@ -9528,10 +9356,26 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 将字符串转换为 LocalDate 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @return 如果字符串为 null 或无法解析，则返回 null；否则返回解析后的 LocalDate 对象。
+   */
   public static LocalDate toLocalDate(@Nullable final String str) {
     return toLocalDate(str, null);
   }
 
+  /**
+   * 将字符串转换为 LocalDate 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @param defaultValue
+   *     当字符串为 null 或无法解析时的默认值。
+   * @return 如果字符串为 null 或无法解析，则返回 {@code defaultValue}；否则返回解析后的 LocalDate 对象。
+   */
   public static LocalDate toLocalDate(@Nullable final String str,
       @Nullable final LocalDate defaultValue) {
     if (str == null) {
@@ -9546,10 +9390,26 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 将字符串转换为 LocalTime 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @return 如果字符串为 null 或无法解析，则返回 null；否则返回解析后的 LocalTime 对象。
+   */
   public static LocalTime toLocalTime(@Nullable final String str) {
     return toLocalTime(str, null);
   }
 
+  /**
+   * 将字符串转换为 LocalTime 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @param defaultValue
+   *     当字符串为 null 或无法解析时的默认值。
+   * @return 如果字符串为 null 或无法解析，则返回 {@code defaultValue}；否则返回解析后的 LocalTime 对象。
+   */
   public static LocalTime toLocalTime(@Nullable final String str,
       @Nullable final LocalTime defaultValue) {
     if (str == null) {
@@ -9564,10 +9424,26 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 将字符串转换为 LocalDateTime 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @return 如果字符串为 null 或无法解析，则返回 null；否则返回解析后的 LocalDateTime 对象。
+   */
   public static LocalDateTime toLocalDateTime(@Nullable final String str) {
     return toLocalDateTime(str, null);
   }
 
+  /**
+   * 将字符串转换为 LocalDateTime 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @param defaultValue
+   *     当字符串为 null 或无法解析时的默认值。
+   * @return 如果字符串为 null 或无法解析，则返回 {@code defaultValue}；否则返回解析后的 LocalDateTime 对象。
+   */
   public static LocalDateTime toLocalDateTime(@Nullable final String str,
       @Nullable final LocalDateTime defaultValue) {
     if (str == null) {
@@ -9582,10 +9458,26 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 将字符串转换为 Class 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @return 如果字符串为 null 或无法解析，则返回 null；否则返回解析后的 Class 对象。
+   */
   public static Class<?> toClass(@Nullable final String str) {
     return toClass(str, null);
   }
 
+  /**
+   * 将字符串转换为 Class 对象。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @param defaultValue
+   *     当字符串为 null 或无法解析时的默认值。
+   * @return 如果字符串为 null 或无法解析，则返回 {@code defaultValue}；否则返回解析后的 Class 对象。
+   */
   public static Class<?> toClass(@Nullable final String str,
       @Nullable final Class<?> defaultValue) {
     if (str == null) {
@@ -9599,10 +9491,26 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 将字符串转换为字节数组。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @return 如果字符串为 null 或无法解析，则返回 null；否则返回解析后的字节数组。
+   */
   public static byte[] toByteArray(@Nullable final String str) {
     return toByteArray(str, null);
   }
 
+  /**
+   * 将字符串转换为字节数组。
+   *
+   * @param str
+   *     要转换的字符串，可以为 null。
+   * @param defaultValue
+   *     当字符串为 null 或无法解析时的默认值。
+   * @return 如果字符串为 null 或无法解析，则返回 {@code defaultValue}；否则返回解析后的字节数组。
+   */
   public static byte[] toByteArray(@Nullable final String str,
       @Nullable final byte[] defaultValue) {
     if (str == null) {
@@ -9621,30 +9529,26 @@ public class StringUtils {
   }
 
   /**
-   * Converts a string to a {@link BigInteger} value.
+   * 将字符串转换为 {@link BigInteger} 值。
    *
    * @param str
-   *     the string to be converted, may be null.
+   *     要转换的字符串，可以为 null。
    * @return
-   *     the {@link BigInteger} value of the string, or {@code null} if the
-   *     string is null or cannot be converted to a {@link BigInteger}.
+   *     字符串的 {@link BigInteger} 值，如果字符串为 null 或无法转换为 {@link BigInteger} 则返回 {@code null}。
    */
   public static BigInteger toBigInteger(@Nullable final String str) {
     return toBigInteger(str, null);
   }
 
   /**
-   * Converts a string to a {@link BigInteger} value, with a default value if
-   * the string is null or cannot be converted.
+   * 将字符串转换为 {@link BigInteger} 值，如果字符串为 null 或无法转换则使用默认值。
    *
    * @param str
-   *     the string to be converted, may be null.
+   *     要转换的字符串，可以为 null。
    * @param defaultValue
-   *     the default value to be returned if the string is null or cannot be
-   *     converted to a {@link BigInteger}, may be null.
+   *     当字符串为 null 或无法转换为 {@link BigInteger} 时返回的默认值，可以为 null。
    * @return
-   *     the {@link BigInteger} value of the string, or the default value if the
-   *     string is null or cannot be converted to a {@link BigInteger}.
+   *     字符串的 {@link BigInteger} 值，如果字符串为 null 或无法转换为 {@link BigInteger} 则返回默认值。
    */
   public static BigInteger toBigInteger(@Nullable final String str,
       @Nullable final BigInteger defaultValue) {
@@ -9661,30 +9565,26 @@ public class StringUtils {
   }
 
   /**
-   * Converts a string to a {@link BigDecimal} value.
+   * 将字符串转换为 {@link BigDecimal} 值。
    *
    * @param str
-   *     the string to be converted, may be null.
+   *     要转换的字符串，可以为 null。
    * @return
-   *     the {@link BigDecimal} value of the string, or {@code null} if the
-   *     string is null or cannot be converted to a {@link BigDecimal}.
+   *     字符串的 {@link BigDecimal} 值，如果字符串为 null 或无法转换为 {@link BigDecimal} 则返回 {@code null}。
    */
   public static BigDecimal toBigDecimal(@Nullable final String str) {
     return toBigDecimal(str, null);
   }
 
   /**
-   * Converts a string to a {@link BigDecimal} value, with a default value if
-   * the string is null or cannot be converted.
+   * 将字符串转换为 {@link BigDecimal} 值，如果字符串为 null 或无法转换则使用默认值。
    *
    * @param str
-   *     the string to be converted, may be null.
+   *     要转换的字符串，可以为 null。
    * @param defaultValue
-   *     the default value to be returned if the string is null or cannot be
-   *     converted to a {@link BigDecimal}, may be null.
+   *     当字符串为 null 或无法转换为 {@link BigDecimal} 时返回的默认值，可以为 null。
    * @return
-   *     the {@link BigDecimal} value of the string, or the default value if the
-   *     string is null or cannot be converted to a {@link BigDecimal}.
+   *     字符串的 {@link BigDecimal} 值，如果字符串为 null 或无法转换为 {@link BigDecimal} 则返回默认值。
    */
   public static BigDecimal toBigDecimal(@Nullable final String str,
       @Nullable final BigDecimal defaultValue) {
@@ -9701,20 +9601,18 @@ public class StringUtils {
   }
 
   /**
-   * Converts a string to an enum value of the specified enum class.
+   * 将字符串转换为指定枚举类的枚举值。
    *
    * @param <E>
-   *     the type of the enum class.
+   *     枚举类的类型。
    * @param cls
-   *     the enum class.
+   *     枚举类。
    * @param str
-   *     the string to be converted, may be null.
+   *     要转换的字符串，可以为 null。
    * @param defaultValue
-   *     the default value to be returned if the string is null or cannot be
-   *     converted to an enum value, may be null.
+   *     当字符串为 null 或无法转换为枚举值时返回的默认值，可以为 null。
    * @return
-   *     the enum value of the string, or the default value if the string is
-   *     null or cannot be converted to an enum value.
+   *     字符串的枚举值，如果字符串为 null 或无法转换为枚举值则返回默认值。
    */
   public static <E extends Enum<E>> E toEnum(final Class<E> cls,
       @Nullable final String str,
@@ -9728,18 +9626,18 @@ public class StringUtils {
   }
 
   /**
-   * Converts a string to an XML node with the specified tag name and value.
+   * 将字符串转换为具有指定标签名和值的 XML 节点。
    *
    * @param doc
-   *     the XML document.
+   *     XML 文档。
    * @param tagName
-   *     the tag name of the XML node.
+   *     XML 节点的标签名。
    * @param prevSpaceAttr
-   *     the attribute name for the previous space, may be null.
+   *     前置空格的属性名，可以为 null。
    * @param value
-   *     the value of the XML node, may be null.
+   *     XML 节点的值，可以为 null。
    * @return
-   *     the XML node.
+   *     XML 节点。
    */
   public static Element toXmlNode(final Document doc, final String tagName,
       @Nullable final String prevSpaceAttr, @Nullable final String value) {
@@ -9755,29 +9653,28 @@ public class StringUtils {
   }
 
   /**
-   * Normalizes the line breaks in a string.
+   * 规范化字符串中的换行符。
    *
    * @param str
-   *     the string to be normalized, may be null.
+   *     要规范化的字符串，可以为 null。
    * @return
-   *     the normalized string, or the original string if it is null.
+   *     规范化后的字符串，如果为 null 则返回原字符串。
    */
   public static String normalizeLines(final String str) {
     return normalizeLines(str, true, true);
   }
 
   /**
-   * Normalizes the line breaks in a string, with options to trim and ignore
-   * empty lines.
+   * 规范化字符串中的换行符，可选择是否修剪和忽略空行。
    *
    * @param str
-   *     the string to be normalized, may be null.
+   *     要规范化的字符串，可以为 null。
    * @param trim
-   *     whether to trim the lines.
+   *     是否修剪行。
    * @param ignoreEmpty
-   *     whether to ignore empty lines.
+   *     是否忽略空行。
    * @return
-   *     the normalized string, or the original string if it is null.
+   *     规范化后的字符串，如果为 null 则返回原字符串。
    */
   public static String normalizeLines(final String str, final boolean trim,
       final boolean ignoreEmpty) {
@@ -9793,17 +9690,16 @@ public class StringUtils {
   }
 
   /**
-   * Concatenates the lines in a string into a single line, with options to trim
-   * and ignore empty lines.
+   * 将字符串中的行连接成单行，可选择是否修剪和忽略空行。
    *
    * @param str
-   *     the string to be concatenated, may be null.
+   *     要连接的字符串，可以为 null。
    * @param trim
-   *     whether to trim the lines.
+   *     是否修剪行。
    * @param ignoreEmpty
-   *     whether to ignore empty lines.
+   *     是否忽略空行。
    * @return
-   *     the concatenated string, or the original string if it is null.
+   *     连接后的字符串，如果为 null 则返回原字符串。
    */
   public static String concatLines(final String str, final boolean trim,
       final boolean ignoreEmpty) {
@@ -9819,15 +9715,14 @@ public class StringUtils {
   }
 
   /**
-   * Truncates a string before the first occurrence of a specified substring.
+   * 在指定子字符串第一次出现之前截断字符串。
    *
    * @param str
-   *     the string to be truncated, may be null.
+   *     要截断的字符串，可以为 null。
    * @param substr
-   *     the substring to truncate before, may be null.
+   *     在其之前截断的子字符串，可以为 null。
    * @return
-   *     the truncated string, or the original string if the substring is not
-   *     found or if the input string is null.
+   *     截断后的字符串，如果未找到子字符串或输入字符串为 null 则返回原字符串。
    */
   public static String truncateBefore(final String str, final String substr) {
     final int pos = str.indexOf(substr);
@@ -9839,15 +9734,14 @@ public class StringUtils {
   }
 
   /**
-   * Truncates a string after the first occurrence of a specified substring.
+   * 在指定子字符串第一次出现之后截断字符串。
    *
    * @param str
-   *     the string to be truncated, may be null.
+   *     要截断的字符串，可以为 null。
    * @param substr
-   *     the substring to truncate after, may be null.
+   *     在其之后截断的子字符串，可以为 null。
    * @return
-   *     the truncated string, or the original string if the substring is not
-   *     found or if the input string is null.
+   *     截断后的字符串，如果未找到子字符串或输入字符串为 null 则返回原字符串。
    */
   public static String truncateAfter(final String str, final String substr) {
     final int pos = str.indexOf(substr);
@@ -9859,12 +9753,12 @@ public class StringUtils {
   }
 
   /**
-   * Concatenates multiple strings into a single string.
+   * 将多个字符串连接成单个字符串。
    *
    * @param strings
-   *     the strings to be concatenated.
+   *     要连接的字符串。
    * @return
-   *     the concatenated string.
+   *     连接后的字符串。
    */
   public static String concat(final String... strings) {
     final StringBuilder builder = new StringBuilder();
@@ -9875,25 +9769,24 @@ public class StringUtils {
   }
 
   /**
-   * Converts an object to a string representation.
+   * 将对象转换为字符串表示。
    *
    * @param obj
-   *     the object to be converted, may be null.
+   *     要转换的对象，可以为 null。
    * @return
-   *     the string representation of the object, or {@code null} if the object
-   *     is null.
+   *     对象的字符串表示，如果对象为 null 则返回 {@code null}。
    */
   public static String valueOf(@Nullable final Object obj) {
     return (obj == null ? null : obj.toString());
   }
 
   /**
-   * Converts the first character of a string to uppercase.
+   * 将字符串的第一个字符转换为大写。
    *
    * @param str
-   *     the string to be converted, may be null.
+   *     要转换的字符串，可以为 null。
    * @return
-   *     the converted string, or the original string if it is null or empty.
+   *     转换后的字符串，如果为 null 或空则返回原字符串。
    */
   public static String uppercaseFirstChar(final String str) {
     if (str == null || str.length() == 0) {
@@ -9904,12 +9797,12 @@ public class StringUtils {
   }
 
   /**
-   * Converts the first character of a string to lowercase.
+   * 将字符串的第一个字符转换为小写。
    *
    * @param str
-   *     the string to be converted, may be null.
+   *     要转换的字符串，可以为 null。
    * @return
-   *     the converted string, or the original string if it is null or empty.
+   *     转换后的字符串，如果为 null 或空则返回原字符串。
    */
   public static String lowercaseFirstChar(final String str) {
     if (str == null || str.length() == 0) {
@@ -9920,29 +9813,26 @@ public class StringUtils {
   }
 
   /**
-   * Converts a string to a string representation.
+   * 将值转换为字符串表示。
    *
    * @param value
-   *     the value to be converted, may be null.
+   *     要转换的值，可以为 null。
    * @return
-   *     the string representation of the value, or {@code null} if the value is
-   *     {@code null}.
+   *     值的字符串表示，如果值为 {@code null} 则返回 {@code null}。
    */
   public static String toString(@Nullable final Object value) {
     return (value == null ? null : toStringImpl(value));
   }
 
   /**
-   * Converts a value to a string representation, with a default value if the
-   * value is {@code null}.
+   * 将值转换为字符串表示，如果值为 {@code null} 则使用默认值。
    *
    * @param value
-   *     the value to be converted, may be null.
+   *     要转换的值，可以为 null。
    * @param defaultValue
-   *     the default value to be returned if the value is null.
+   *     当值为 null 时返回的默认值。
    * @return
-   *     the string representation of the value, or the default value if the
-   *     value is {@code null}.
+   *     值的字符串表示，如果值为 {@code null} 则返回默认值。
    */
   public static String toString(@Nullable final Object value,
       final String defaultValue) {
@@ -9972,14 +9862,12 @@ public class StringUtils {
   }
 
   /**
-   * Checks whether the specified type of values can be compared with {@code
-   * String} type values.
+   * 检查指定类型的值是否可以与 {@code String} 类型的值进行比较。
    *
    * @param type
-   *     the specified type.
+   *     指定的类型。
    * @return
-   *     {@code true} if the values of the specified type can be compared with
-   *     {@code String} type values; {@code false} otherwise.
+   *     如果指定类型的值可以与 {@code String} 类型的值进行比较则返回 {@code true}；否则返回 {@code false}。
    */
   public static boolean isComparable(final Class<?> type) {
     return (type == String.class)
@@ -9989,13 +9877,12 @@ public class StringUtils {
   }
 
   /**
-   * Lowercase the first character of a string.
+   * 将字符串的第一个字符转换为小写。
    *
    * @param str
-   *     a specified string.
+   *     指定的字符串。
    * @return
-   *     another new string whose first character is lowercased and whose
-   *     remained content is the same as the specified string.
+   *     一个新字符串，其第一个字符为小写，其余内容与指定字符串相同。
    */
   public static String lowerCaseFirstChar(final String str) {
     if (str == null || str.length() == 0) {
@@ -10006,13 +9893,12 @@ public class StringUtils {
   }
 
   /**
-   * Converts an empty string to {@code null} value.
+   * 将空字符串转换为 {@code null} 值。
    *
    * @param str
-   *     the string to be converted, may be null.
+   *     要转换的字符串，可以为 null。
    * @return
-   *     {@code null} if the specified string is null or empty; otherwise returns
-   *     the original string.
+   *     如果指定字符串为 null 或空则返回 {@code null}；否则返回原字符串。
    */
   @Nullable
   public static String emptyToNull(@Nullable final String str) {
@@ -10024,15 +9910,14 @@ public class StringUtils {
   }
 
   /**
-   * Converts a string with the specified default value to {@code null}.
+   * 将与指定默认值相等的字符串转换为 {@code null}。
    *
    * @param defaultValue
-   *     the specified default value.
+   *     指定的默认值。
    * @param str
-   *     the string to be converted, may be null.
+   *     要转换的字符串，可以为 null。
    * @return
-   *     {@code null} if the specified string is null or equals to the
-   *     specified default value; otherwise returns the original string.
+   *     如果字符串与默认值相等则返回 {@code null}；否则返回原字符串。
    */
   @Nullable
   public static String defaultToNull(final String defaultValue, @Nullable final String str) {
@@ -10044,13 +9929,12 @@ public class StringUtils {
   }
 
   /**
-   * Converts null string to empty string.
+   * 将null字符串转换为空字符串。
    *
    * @param str
-   *     the string to be converted, may be null.
+   *     要转换的字符串，可能为null。
    * @return
-   *     an empty string if the specified string is null; otherwise returns the
-   *     original string.
+   *     如果指定的字符串为null则返回空字符串；否则返回原字符串。
    */
   @Nonnull
   public static String nullToEmpty(@Nullable final String str) {
@@ -10058,13 +9942,12 @@ public class StringUtils {
   }
 
   /**
-   * Converts null character sequence to empty string.
+   * 将null字符序列转换为空字符串。
    *
    * @param str
-   *     the character sequence to be converted, may be null.
+   *     要转换的字符序列，可能为null。
    * @return
-   *     an empty string if the specified character sequence is null; otherwise
-   *     returns the original character sequence.
+   *     如果指定的字符序列为null则返回空字符串；否则返回原字符序列。
    */
   @Nonnull
   public static CharSequence nullToEmpty(@Nullable final CharSequence str) {
@@ -10072,14 +9955,13 @@ public class StringUtils {
   }
 
   /**
-   * Splits the specified character sequence into Unicode code points.
+   * 将指定的字符序列拆分为Unicode代码点。
    *
    * @param str
-   *     the specified character sequence, may be null.
+   *     指定的字符序列，可能为null
    * @return
-   *     the list of Unicode code points in the specified character sequence.
-   *     Returns an empty list if the specified character sequence is null or
-   *     empty.
+   *     指定字符序列中Unicode代码点的列表。如果指定的字符序列为null或空，
+   *     则返回空列表
    */
   public static IntList splitCodePoints(@Nullable final CharSequence str) {
     final IntList result = new IntArrayList();
@@ -10097,58 +9979,55 @@ public class StringUtils {
   }
 
   /**
-   * Splits the specified character sequence into Unicode code points.
+   * 将指定的字符序列拆分为Unicode代码点。
    *
    * @param str
-   *     the specified character sequence, may be null.
+   *     指定的字符序列，可能为null
    * @return
-   *     the array of Unicode code points in the specified character sequence.
-   *     Returns an empty array if the specified character sequence is null or
-   *     empty.
+   *     指定字符序列中Unicode代码点的数组。如果指定的字符序列为null或空，
+   *     则返回空数组
    */
   public static int[] splitCodePointsToArray(@Nullable final CharSequence str) {
     return splitCodePoints(str).toArray();
   }
 
   /**
-   * Formats a double value as a percentage string.
+   * 将double值格式化为百分比字符串。
    *
    * @param value
-   *     the double value to be formatted.
+   *     要格式化的double值
    * @return
-   *     the formatted percentage string.
+   *     格式化的百分比字符串
    */
   public static String formatPercent(final double value) {
     return formatPercent(value, 2, Locale.getDefault());
   }
 
   /**
-   * Formats a double value as a percentage string with the specified number of
-   * fraction digits.
+   * 将double值格式化为具有指定小数位数的百分比字符串。
    *
    * @param value
-   *     the double value to be formatted.
+   *     要格式化的double值
    * @param fractionDigits
-   *     the number of fraction digits to be displayed.
+   *     要显示的小数位数
    * @return
-   *     the formatted percentage string.
+   *     格式化的百分比字符串
    */
   public static String formatPercent(final double value, final int fractionDigits) {
     return formatPercent(value, fractionDigits, Locale.getDefault());
   }
 
   /**
-   * Formats a double value as a percentage string with the specified number of
-   * fraction digits and locale.
+   * 将double值格式化为具有指定小数位数和语言环境的百分比字符串。
    *
    * @param value
-   *     the double value to be formatted.
+   *     要格式化的double值
    * @param fractionDigits
-   *     the number of fraction digits to be displayed.
+   *     要显示的小数位数
    * @param locale
-   *     the locale to be used for formatting.
+   *     用于格式化的语言环境
    * @return
-   *     the formatted percentage string.
+   *     格式化的百分比字符串
    */
   public static String formatPercent(final double value, final int fractionDigits,
       final Locale locale) {
@@ -10159,31 +10038,30 @@ public class StringUtils {
   }
 
   /**
-   * Parses a percentage string into a double value.
+   * 将百分比字符串解析为double值。
    *
    * @param str
-   *     the percentage string to be parsed.
+   *     要解析的百分比字符串
    * @return
-   *     the parsed double value.
+   *     解析后的double值
    * @throws ParseException
-   *     if the string cannot be parsed as a percentage.
+   *     如果字符串无法解析为百分比
    */
   public static double parsePercent(@Nullable final String str) throws ParseException {
     return parsePercent(str, 2, Locale.getDefault());
   }
 
   /**
-   * Parses a percentage string into a double value with the specified number of
-   * fraction digits.
+   * 将百分比字符串解析为具有指定小数位数的double值。
    *
    * @param str
-   *     the percentage string to be parsed.
+   *     要解析的百分比字符串
    * @param fractionDigits
-   *     the number of fraction digits expected in the percentage string.
+   *     百分比字符串中期望的小数位数
    * @return
-   *     the parsed double value.
+   *     解析后的double值
    * @throws ParseException
-   *     if the string cannot be parsed as a percentage.
+   *     如果字符串无法解析为百分比
    */
   public static double parsePercent(@Nullable final String str, final int fractionDigits)
       throws ParseException {
@@ -10191,19 +10069,18 @@ public class StringUtils {
   }
 
   /**
-   * Parses a percentage string into a double value with the specified number of
-   * fraction digits and locale.
+   * 将百分比字符串解析为具有指定小数位数和语言环境的double值。
    *
    * @param str
-   *     the percentage string to be parsed.
+   *     要解析的百分比字符串
    * @param fractionDigits
-   *     the number of fraction digits expected in the percentage string.
+   *     百分比字符串中期望的小数位数
    * @param locale
-   *     the locale to be used for parsing.
+   *     用于解析的语言环境
    * @return
-   *     the parsed double value.
+   *     解析后的double值
    * @throws ParseException
-   *     if the string cannot be parsed as a percentage.
+   *     如果字符串无法解析为百分比
    */
   public static double parsePercent(@Nullable final String str, final int fractionDigits,
       final Locale locale) throws ParseException {
@@ -10216,17 +10093,16 @@ public class StringUtils {
   }
 
   /**
-   * Adds a prefix to each line of the input string.
+   * 为输入字符串的每一行添加前缀。
    * <p>
-   * The line break characters include {@code '\n'}, {@code '\r'}, and {@code '\r\n'}.
+   * 换行符包括{@code '\n'}、{@code '\r'}和{@code '\r\n'}。
    *
    * @param input
-   *     the input string, may be null.
+   *     输入字符串，可能为null
    * @param prefix
-   *     the prefix to be added to each line, may be null or empty.
+   *     要添加到每行的前缀，可能为null或空
    * @return
-   *     the string with the specified prefix added to each line, or the original
-   *     string if the input or prefix is null or empty.
+   *     每行都添加了指定前缀的字符串，如果输入或前缀为null或空则返回原字符串
    */
   public static String addPrefixToEachLine(final String input, final String prefix) {
     if (input == null || prefix == null || prefix.isEmpty()) {
@@ -10240,17 +10116,16 @@ public class StringUtils {
   }
 
   /**
-   * Removes a prefix from each line of the input string.
+   * 从输入字符串的每一行中移除前缀。
    * <p>
-   * The line break characters include {@code '\n'}, {@code '\r'}, and {@code '\r\n'}.
+   * 换行符包括{@code '\n'}、{@code '\r'}和{@code '\r\n'}。
    *
    * @param input
-   *     the input string, may be null.
+   *     输入字符串，可能为null
    * @param prefix
-   *     the prefix to be removed from each line, may be null or empty.
+   *     要从每行中移除的前缀，可能为null或空
    * @return
-   *     the string with the specified prefix removed from each line, or the original
-   *     string if the input or prefix is null or empty.
+   *     每行都移除了指定前缀的字符串，如果输入或前缀为null或空则返回原字符串
    */
   public static String removePrefixFromEachLine(final String input, final String prefix) {
     if (input == null || prefix == null || prefix.isEmpty()) {

@@ -15,19 +15,41 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * Represents the signature of a field.
+ * 表示字段的签名。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 final class FieldSignature {
+
+  /**
+   * 字段名称。
+   */
   public final String name;
+
+  /**
+   * 字段类型。
+   */
   public final Class<?> type;
 
+  /**
+   * 构造一个 {@link FieldSignature} 实例。
+   *
+   * @param field
+   *     字段。
+   */
   public FieldSignature(final Field field) {
     this.name = field.getName();
     this.type = field.getType();
   }
 
+  /**
+   * 构造一个 {@link FieldSignature} 实例。
+   *
+   * @param name
+   *     字段名称。
+   * @param type
+   *     字段类型。
+   */
   public FieldSignature(final String name, final Class<?> type) {
     this.name = name;
     this.type = type;

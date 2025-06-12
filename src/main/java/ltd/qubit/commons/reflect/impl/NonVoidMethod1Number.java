@@ -9,7 +9,7 @@
 package ltd.qubit.commons.reflect.impl;
 
 /**
- * 此函数接口表示返回值不是void，且只有1个Byte或byte类型参数的方法的引用。
+ * 此函数接口表示返回值不是void，且只有1个Number类型参数的方法的引用。
  *
  * @param <T>
  *     方法所属的类的类型。
@@ -20,5 +20,12 @@ package ltd.qubit.commons.reflect.impl;
 @FunctionalInterface
 public interface NonVoidMethod1Number<T, R> extends MethodReference<T> {
 
+  /**
+   * 调用指定对象的方法。
+   *
+   * @param bean 要调用方法的对象
+   * @param p1 方法的Number类型参数
+   * @return 方法调用的返回值
+   */
   R invoke(T bean, Number p1);
 }

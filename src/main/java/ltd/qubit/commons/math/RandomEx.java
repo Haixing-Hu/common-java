@@ -33,9 +33,9 @@ import ltd.qubit.commons.util.range.UnmodifiableCloseRange;
 import static ltd.qubit.commons.lang.ArrayUtils.createArrayOfSameElementType;
 
 /**
- * An extended versions of {@link java.util.Random}.
+ * {@link java.util.Random} 的扩展版本。
  *
- * <p>Instances of {@link RandomEx} are thread-safe.</p>
+ * <p>{@link RandomEx} 的实例是线程安全的。</p>
  *
  * @author 胡海星
  */
@@ -44,8 +44,14 @@ public class RandomEx extends Random {
 
   private static final long serialVersionUID = 4648505854602540292L;
 
+  /**
+   * 精度常量，用于浮点数比较。
+   */
   public static final double EPSILON = 0.00000001;
 
+  /**
+   * 默认字符串长度范围。
+   */
   public static final CloseRange<Integer> DEFAULT_STRING_LENGTH_RANGE =
       new UnmodifiableCloseRange<>(5, 100);
 
@@ -54,47 +60,112 @@ public class RandomEx extends Random {
    */
   public static final Lazy<RandomEx> LAZY = Lazy.of(RandomEx::new);
 
+  /**
+   * 创建一个新的 {@link RandomEx} 实例。
+   */
   public RandomEx() {
   }
 
+  /**
+   * 使用指定种子创建一个新的 {@link RandomEx} 实例。
+   *
+   * @param seed
+   *     随机数生成器的种子。
+   */
   public RandomEx(final long seed) {
     super(seed);
   }
 
+  /**
+   * 生成一个随机的 byte 值。
+   *
+   * @return 一个随机的 byte 值。
+   */
   public final byte nextByte() {
     final byte[] bytes = new byte[1];
     nextBytes(bytes);
     return bytes[0];
   }
 
+  /**
+   * 生成一个范围在 [0, upperBound) 内的随机 byte 值。
+   *
+   * @param upperBound
+   *     生成随机数的独占上界。
+   * @return 一个范围在 [0, upperBound) 内的随机 byte 值。
+   */
   public final byte nextByte(final byte upperBound) {
     return (byte) nextInt(upperBound);
   }
 
+  /**
+   * 生成一个范围在 [lowerBound, upperBound) 内的随机 byte 值。
+   *
+   * @param lowerBound
+   *     生成随机数的包含下界。
+   * @param upperBound
+   *     生成随机数的独占上界。
+   * @return 一个范围在 [lowerBound, upperBound) 内的随机 byte 值。
+   */
   public final byte nextByte(final byte lowerBound, final byte upperBound) {
     return (byte) nextInt(lowerBound, upperBound);
   }
 
+  /**
+   * 生成一个指定闭区间范围内的随机 byte 值。
+   *
+   * @param range
+   *     生成随机数的闭区间范围。
+   * @return 一个范围在 [range.min, range.max] 内的随机 byte 值。
+   */
   public final byte nextByte(final CloseRange<Byte> range) {
     final int min = range.getMin();
     final int max = range.getMax();
     return (byte) nextInt(new CloseRange<>(min, max));
   }
 
+  /**
+   * 生成一个随机的 short 值。
+   *
+   * @return 一个随机的 short 值。
+   */
   public final short nextShort() {
     final byte[] bytes = new byte[2];
     nextBytes(bytes);
     return (short) ((bytes[0] << ByteBit.BITS) | (bytes[1]));
   }
 
+  /**
+   * 生成一个范围在 [0, upperBound) 内的随机 short 值。
+   *
+   * @param upperBound
+   *     生成随机数的独占上界。
+   * @return 一个范围在 [0, upperBound) 内的随机 short 值。
+   */
   public final short nextShort(final short upperBound) {
     return (short) nextInt(upperBound);
   }
 
+  /**
+   * 生成一个范围在 [lowerBound, upperBound) 内的随机 short 值。
+   *
+   * @param lowerBound
+   *     生成随机数的包含下界。
+   * @param upperBound
+   *     生成随机数的独占上界。
+   * @return 一个范围在 [lowerBound, upperBound) 内的随机 short 值。
+   */
   public final short nextShort(final short lowerBound, final short upperBound) {
     return (short) nextInt(lowerBound, upperBound);
   }
 
+  /**
+   * 生成一个指定闭区间范围内的随机 short 值。
+   *
+   * @param range
+   *     生成随机数的闭区间范围。
+   * @return 一个范围在 [range.min, range.max] 内的随机 short 值。
+   */
   public final short nextShort(final CloseRange<Short> range) {
     final int min = range.getMin();
     final int max = range.getMax();
@@ -102,13 +173,13 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Generate a random integer between [lowerBound, upperBound).
+   * 生成一个范围在 [lowerBound, upperBound) 内的随机整数。
    *
    * @param lowerBound
-   *     the inclusive lower bound of the generated random number.
+   *     生成随机数的包含下界。
    * @param upperBound
-   *     the exclusive upper bound of the generated random number.
-   * @return a random integer between [lowerBound, upperBound).
+   *     生成随机数的独占上界。
+   * @return 一个范围在 [lowerBound, upperBound) 内的随机整数。
    */
   @Override
   public final int nextInt(final int lowerBound, final int upperBound) {
@@ -123,11 +194,11 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Generate a random integer between a close range.
+   * 生成一个指定闭区间范围内的随机整数。
    *
    * @param range
-   *     the close range of the generated random number.
-   * @return a random integer between [range.min, range.max].
+   *     生成随机数的闭区间范围。
+   * @return 一个范围在 [range.min, range.max] 内的随机整数。
    */
   public final int nextInt(final CloseRange<Integer> range) {
     range.check();
@@ -137,38 +208,36 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Generate a 32-bits unsigned random integer, i.e., a random integer inside
-   * [0, 2^32).
+   * 生成一个 32 位无符号随机整数，即范围在 [0, 2^32) 内的随机整数。
    *
-   * @return a 32-bits unsigned random integer.
+   * @return 一个 32 位无符号随机整数。
    */
   private final long generate32() {
     return (long) this.nextInt() - (long) Integer.MIN_VALUE;
   }
 
   /**
-   * Generate a small random number between [0, bound).
+   * 生成一个范围在 [0, bound) 内的小随机数。
    *
    * @param bound
-   *     the exclusive upper bound of the generated random number, which must be
-   *     smaller than 2^32.
-   * @return a small random number between [0, bound).
+   *     生成随机数的独占上界，必须小于 2^32。
+   * @return 一个范围在 [0, bound) 内的小随机数。
    */
   private final long generateSmall(final long bound) {
-    //  generate a random number between [0, bound), where
+    //  生成一个 [0, bound) 范围内的随机数，其中
     //          0 < bound < 2^32 = b
-    //  set
+    //  设置
     //      top = \floor(b / bound) * bound
-    //  then if the rng generate a random number within the range
+    //  然后如果随机数生成器生成的随机数在范围
     //      [top, b)
-    //  the random number is REJECTED and generate a random number again,
-    //  until get a random number x within the range
+    //  内，则拒绝该随机数并重新生成一个随机数，
+    //  直到得到一个范围内的随机数 x
     //      [0, top)
-    //  then the value
+    //  然后值
     //      x % bound
-    //  is a random number within the range
+    //  就是一个范围内的随机数
     //      [0, bound)
-    //  Note that the calculation must be careful to avoid overflows.
+    //  注意计算必须小心避免溢出。
     final long b = (1L << IntBit.BITS);
     assert (bound < b);
     final long top = (b / bound) * bound;
@@ -181,36 +250,31 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Generate a large random number between [0, bound).
+   * 生成一个范围在 [0, bound) 内的大随机数。
    *
    * @param bound
-   *     the exclusive upper bound of the generated random number, which must be
-   *     greater than 2^32.
-   * @return a large random number between [0, bound).
+   *     生成随机数的独占上界，必须大于 2^32。
+   * @return 一个范围在 [0, bound) 内的大随机数。
    */
   private final long generateLarge(final long bound) {
-    //  Let n = bound - 1, b = 2^32, and let k be a integer such that
+    //  设 n = bound - 1, b = 2^32，并设 k 为一个整数使得
     //      b^{k} <= n < b^{k+1}
-    //  Then each x in the range [0, n] can be represented as an integer in the
-    //  radix of b as following:
+    //  那么范围 [0, n] 内的每个 x 都可以表示为 b 进制的整数，如下所示：
     //      x = x_0 + x_1 * b + x_2 * b^2 + ... + x_{k-1} * b^{k-1} + x_k * b^{k}
-    //  where
+    //  其中
     //      0 <= x_i < b
-    //  for
+    //  对于
     //      i = 0, 1, .., k - 1
-    //  and
+    //  且
     //      0 <= x_k <= r
-    //  where
+    //  其中
     //      r = \floor(n / b^{k})
     //
-    //  To generate a uniform distribution over [0, n] from an uniform random
-    //  number generator over [0, 2^32), one could firstly generate
-    //  k - 1 uniform distributed random numbers x_0, x_1, ..., x_{k-1} over
-    //  the range of [0, 2^32) and a uniform distributed random number
-    //  x_k over the range of [0, r], then compose them using the above formula
-    //  to get a number x; if x is inside the range [0, n], we get a uniform
-    //  distributed random number inside that range; otherwise, repeat the above
-    //  procedure until find a composed number x within [0, n].
+    //  要从均匀随机数生成器 [0, 2^32) 生成 [0, n] 上的均匀分布，可以首先生成
+    //  k - 1 个 [0, 2^32) 范围内的均匀分布随机数 x_0, x_1, ..., x_{k-1}
+    //  和一个 [0, r] 范围内的均匀分布随机数 x_k，然后使用上述公式组合它们
+    //  以获得数字 x；如果 x 在范围 [0, n] 内，我们就得到了该范围内的均匀分布
+    //  随机数；否则，重复上述过程直到找到范围 [0, n] 内的组合数字 x。
     final long b = (1L << IntBit.BITS);
     assert (bound >= b);
     final long n = bound - 1;
@@ -238,12 +302,11 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Generate a random long between [0, bound).
+   * 生成一个范围在 [0, bound) 内的随机长整数。
    *
    * @param bound
-   *     the exclusive upper bound of the generated random number, which must be
-   *     positive.
-   * @return a random long between [0, bound).
+   *     生成随机数的独占上界，必须为正数。
+   * @return 一个范围在 [0, bound) 内的随机长整数。
    */
   @Override
   public final long nextLong(final long bound) {
@@ -261,13 +324,13 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Generate a random long between [lowerBound, upperBound).
+   * 生成一个范围在 [lowerBound, upperBound) 内的随机长整数。
    *
    * @param lowerBound
-   *     the inclusive lower bound of the generated random number.
+   *     生成随机数的包含下界。
    * @param upperBound
-   *     the exclusive upper bound of the generated random number.
-   * @return a random long between [lowerBound, upperBound).
+   *     生成随机数的独占上界。
+   * @return 一个范围在 [lowerBound, upperBound) 内的随机长整数。
    */
   @Override
   public final long nextLong(final long lowerBound, final long upperBound) {
@@ -279,11 +342,11 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Generate a random long between a close range.
+   * 生成一个指定闭区间范围内的随机长整数。
    *
    * @param range
-   *     the close range of the generated random number.
-   * @return a random long between [range.min, range.max].
+   *     生成随机数的闭区间范围。
+   * @return 一个范围在 [range.min, range.max] 内的随机长整数。
    */
   public final long nextLong(final CloseRange<Long> range) {
     range.check();
@@ -294,26 +357,26 @@ public class RandomEx extends Random {
     } else if (min == Long.MIN_VALUE && max == Long.MAX_VALUE) {
       return this.nextLong();
     }
-    // if bound = max - min + 1 <= Long.MAX_VALUE, use the simple algorithm
+    // 如果 bound = max - min + 1 <= Long.MAX_VALUE，使用简单算法
     try {
       final long bound = Math.addExact(Math.subtractExact(max, min), 1L);
       return nextLong(bound) + min;
     } catch (final ArithmeticException e) {
-      // arithmetic overflow, try another algorithm
+      // 算术溢出，尝试另一种算法
     }
-    // otherwise, use a approximate algorithm
-    // FIXME: should use a more precise algorithm
+    // 否则，使用近似算法
+    // FIXME: 应该使用更精确的算法
     return (long) nextDouble(new CloseRange<>((double) min, (double) max));
   }
 
   /**
-   * Return a random double between {@code [lowerBound, upperBound)}.
+   * 返回一个范围在 {@code [lowerBound, upperBound)} 内的随机双精度浮点数。
    *
    * @param lowerBound
-   *     the inclusive lower bound value.
+   *     包含下界值。
    * @param upperBound
-   *     the exclusive upper bound value.
-   * @return a random double in the given range.
+   *     独占上界值。
+   * @return 指定范围内的随机双精度浮点数。
    */
   @Override
   public final double nextDouble(final double lowerBound,
@@ -334,11 +397,11 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Return a random double between {@code [range.min, range.max]}.
+   * 返回一个范围在 {@code [range.min, range.max]} 内的随机双精度浮点数。
    *
    * @param range
-   *     the closed range.
-   * @return a random double in the given range.
+   *     闭区间范围。
+   * @return 指定范围内的随机双精度浮点数。
    */
   public final double nextDouble(final CloseRange<Double> range) {
     range.check();
@@ -354,11 +417,21 @@ public class RandomEx extends Random {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public final float nextFloat(final float lowerBound, final float upperBound) {
     return (float) nextDouble(lowerBound, upperBound);
   }
 
+  /**
+   * 返回一个指定闭区间范围内的随机单精度浮点数。
+   *
+   * @param range
+   *     闭区间范围。
+   * @return 指定范围内的随机单精度浮点数。
+   */
   public final float nextFloat(final CloseRange<Float> range) {
     final double min = range.getMin();
     final double max = range.getMax();
@@ -366,22 +439,22 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Return a random {@link BigDecimal}.
+   * 返回一个随机的 {@link BigDecimal}。
    *
-   * @return a random {@link BigDecimal}.
+   * @return 一个随机的 {@link BigDecimal}。
    */
   public final BigDecimal nextBigDecimal() {
     return BigDecimal.valueOf(nextDouble());
   }
 
   /**
-   * Return a random {@link BigDecimal} between {@code [lowerBound, upperBound)}.
+   * 返回一个范围在 {@code [lowerBound, upperBound)} 内的随机 {@link BigDecimal}。
    *
    * @param lowerBound
-   *     the inclusive lower bound value.
+   *     包含下界值。
    * @param upperBound
-   *     the exclusive upper bound value.
-   * @return a random {@link BigDecimal} in the given range.
+   *     独占上界值。
+   * @return 指定范围内的随机 {@link BigDecimal}。
    */
   public final BigDecimal nextBigDecimal(final double lowerBound,
       final double upperBound) {
@@ -389,21 +462,33 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Return a random {@link BigDecimal} between {@code [range.min, range.max]}.
+   * 返回一个范围在 {@code [range.min, range.max]} 内的随机 {@link BigDecimal}。
    *
    * @param range
-   *     the closed range.
-   * @return a random {@link BigDecimal} in the given range.
+   *     闭区间范围。
+   * @return 指定范围内的随机 {@link BigDecimal}。
    */
   public final BigDecimal nextBigDecimal(final CloseRange<Double> range) {
     return BigDecimal.valueOf(nextDouble(range));
   }
 
+  /**
+   * 生成一个随机的数字字符（0-9）。
+   *
+   * @return 一个随机的数字字符。
+   */
   public final char nextDigitChar() {
     final int index = nextInt(10);
     return (char) ('0' + index);
   }
 
+  /**
+   * 生成指定长度的随机数字字符数组。
+   *
+   * @param size
+   *     字符数组的长度。
+   * @return 指定长度的随机数字字符数组。
+   */
   public final char[] nextDigitChars(final int size) {
     final char[] result = new char[size];
     for (int i = 0; i < size; ++i) {
@@ -412,16 +497,35 @@ public class RandomEx extends Random {
     return result;
   }
 
+  /**
+   * 生成指定长度范围内的随机数字字符数组。
+   *
+   * @param sizeRange
+   *     字符数组长度的范围。
+   * @return 随机长度的数字字符数组。
+   */
   public final char[] nextDigitChars(final CloseRange<Integer> sizeRange) {
     final int size = nextInt(sizeRange);
     return nextDigitChars(size);
   }
 
+  /**
+   * 生成一个随机的小写字母字符（a-z）。
+   *
+   * @return 一个随机的小写字母字符。
+   */
   public final char nextLowercaseLetterChar() {
     final int index = nextInt(26);
     return (char) ('a' + index);
   }
 
+  /**
+   * 生成指定长度的随机小写字母字符数组。
+   *
+   * @param size
+   *     字符数组的长度。
+   * @return 指定长度的随机小写字母字符数组。
+   */
   public final char[] nextLowercaseLetterChars(final int size) {
     final char[] result = new char[size];
     for (int i = 0; i < size; ++i) {
@@ -430,17 +534,36 @@ public class RandomEx extends Random {
     return result;
   }
 
+  /**
+   * 生成指定长度范围内的随机小写字母字符数组。
+   *
+   * @param sizeRange
+   *     字符数组长度的范围。
+   * @return 随机长度的小写字母字符数组。
+   */
   public final char[] nextLowercaseLetterChars(
       final CloseRange<Integer> sizeRange) {
     final int size = nextInt(sizeRange);
     return nextLowercaseLetterChars(size);
   }
 
+  /**
+   * 生成一个随机的大写字母字符（A-Z）。
+   *
+   * @return 一个随机的大写字母字符。
+   */
   public final char nextUppercaseLetterChar() {
     final int index = nextInt(26);
     return (char) ('A' + index);
   }
 
+  /**
+   * 生成指定长度的随机大写字母字符数组。
+   *
+   * @param size
+   *     字符数组的长度。
+   * @return 指定长度的随机大写字母字符数组。
+   */
   public final char[] nextUppercaseLetterChars(final int size) {
     final char[] result = new char[size];
     for (int i = 0; i < size; ++i) {
@@ -449,16 +572,35 @@ public class RandomEx extends Random {
     return result;
   }
 
+  /**
+   * 生成指定长度范围内的随机大写字母字符数组。
+   *
+   * @param sizeRange
+   *     字符数组长度的范围。
+   * @return 随机长度的大写字母字符数组。
+   */
   public final char[] nextUppercaseLetterChars(
       final CloseRange<Integer> sizeRange) {
     final int size = nextInt(sizeRange);
     return nextUppercaseLetterChars(size);
   }
 
+  /**
+   * 生成一个随机的字母字符（a-z, A-Z）。
+   *
+   * @return 一个随机的字母字符。
+   */
   public final char nextLetterChar() {
     return choose(Ascii.LETTER_CHARS);
   }
 
+  /**
+   * 生成指定长度的随机字母字符数组。
+   *
+   * @param size
+   *     字符数组的长度。
+   * @return 指定长度的随机字母字符数组。
+   */
   public final char[] nextLetterChars(final int size) {
     final char[] result = new char[size];
     for (int i = 0; i < size; ++i) {
@@ -467,15 +609,34 @@ public class RandomEx extends Random {
     return result;
   }
 
+  /**
+   * 生成指定长度范围内的随机字母字符数组。
+   *
+   * @param sizeRange
+   *     字符数组长度的范围。
+   * @return 随机长度的字母字符数组。
+   */
   public final char[] nextLetterChars(final CloseRange<Integer> sizeRange) {
     final int size = nextInt(sizeRange);
     return nextLetterChars(size);
   }
 
+  /**
+   * 生成一个随机的字母数字字符（a-z, A-Z, 0-9）。
+   *
+   * @return 一个随机的字母数字字符。
+   */
   public final char nextLetterDigitChar() {
     return choose(Ascii.LETTER_DIGIT_CHARS);
   }
 
+  /**
+   * 生成指定长度的随机字母数字字符数组。
+   *
+   * @param size
+   *     字符数组的长度。
+   * @return 指定长度的随机字母数字字符数组。
+   */
   public final char[] nextLetterDigitChars(final int size) {
     final char[] result = new char[size];
     for (int i = 0; i < size; ++i) {
@@ -484,12 +645,26 @@ public class RandomEx extends Random {
     return result;
   }
 
+  /**
+   * 生成指定长度范围内的随机字母数字字符数组。
+   *
+   * @param sizeRange
+   *     字符数组长度的范围。
+   * @return 随机长度的字母数字字符数组。
+   */
   public final char[] nextLetterDigitChars(
       final CloseRange<Integer> sizeRange) {
     final int size = nextInt(sizeRange);
     return nextLetterDigitChars(size);
   }
 
+  /**
+   * 生成指定长度的随机数字字符串。
+   *
+   * @param length
+   *     字符串的长度。
+   * @return 指定长度的随机数字字符串。
+   */
   public final String nextDigitString(final int length) {
     final StringBuilder builder = new StringBuilder();
     for (int i = 0; i < length; ++i) {
@@ -498,11 +673,25 @@ public class RandomEx extends Random {
     return builder.toString();
   }
 
+  /**
+   * 生成指定长度范围内的随机数字字符串。
+   *
+   * @param lengthRange
+   *     字符串长度的范围。
+   * @return 随机长度的数字字符串。
+   */
   public final String nextDigitString(final CloseRange<Integer> lengthRange) {
     final int length = nextInt(lengthRange);
     return nextDigitString(length);
   }
 
+  /**
+   * 生成指定长度的随机小写字母字符串。
+   *
+   * @param length
+   *     字符串的长度。
+   * @return 指定长度的随机小写字母字符串。
+   */
   public final String nextLowercaseLetterString(final int length) {
     final StringBuilder builder = new StringBuilder();
     for (int i = 0; i < length; ++i) {
@@ -511,12 +700,26 @@ public class RandomEx extends Random {
     return builder.toString();
   }
 
+  /**
+   * 生成指定长度范围内的随机小写字母字符串。
+   *
+   * @param lengthRange
+   *     字符串长度的范围。
+   * @return 随机长度的小写字母字符串。
+   */
   public final String nextLowercaseLetterString(
       final CloseRange<Integer> lengthRange) {
     final int length = nextInt(lengthRange);
     return nextLowercaseLetterString(length);
   }
 
+  /**
+   * 生成指定长度的随机大写字母字符串。
+   *
+   * @param length
+   *     字符串的长度。
+   * @return 指定长度的随机大写字母字符串。
+   */
   public final String nextUppercaseLetterString(final int length) {
     final StringBuilder builder = new StringBuilder();
     for (int i = 0; i < length; ++i) {
@@ -525,12 +728,26 @@ public class RandomEx extends Random {
     return builder.toString();
   }
 
+  /**
+   * 生成指定长度范围内的随机大写字母字符串。
+   *
+   * @param lengthRange
+   *     字符串长度的范围。
+   * @return 随机长度的大写字母字符串。
+   */
   public final String nextUppercaseLetterString(
       final CloseRange<Integer> lengthRange) {
     final int length = nextInt(lengthRange);
     return nextUppercaseLetterString(length);
   }
 
+  /**
+   * 生成指定长度的随机字母字符串。
+   *
+   * @param length
+   *     字符串的长度。
+   * @return 指定长度的随机字母字符串。
+   */
   public final String nextLetterString(final int length) {
     final StringBuilder builder = new StringBuilder();
     for (int i = 0; i < length; ++i) {
@@ -539,11 +756,25 @@ public class RandomEx extends Random {
     return builder.toString();
   }
 
+  /**
+   * 生成指定长度范围内的随机字母字符串。
+   *
+   * @param lengthRange
+   *     字符串长度的范围。
+   * @return 随机长度的字母字符串。
+   */
   public final String nextLetterString(final CloseRange<Integer> lengthRange) {
     final int length = nextInt(lengthRange);
     return nextLetterString(length);
   }
 
+  /**
+   * 生成指定长度的随机字母数字字符串。
+   *
+   * @param length
+   *     字符串的长度。
+   * @return 指定长度的随机字母数字字符串。
+   */
   public final String nextLetterDigitString(final int length) {
     final StringBuilder builder = new StringBuilder();
     for (int i = 0; i < length; ++i) {
@@ -552,17 +783,36 @@ public class RandomEx extends Random {
     return builder.toString();
   }
 
+  /**
+   * 生成指定长度范围内的随机字母数字字符串。
+   *
+   * @param lengthRange
+   *     字符串长度的范围。
+   * @return 随机长度的字母数字字符串。
+   */
   public final String nextLetterDigitString(
       final CloseRange<Integer> lengthRange) {
     final int length = nextInt(lengthRange);
     return nextLetterDigitString(length);
   }
 
+  /**
+   * 生成一个随机的可打印ASCII字符。
+   *
+   * @return 一个随机的可打印ASCII字符。
+   */
   public final char nextPrintableAsciiChar() {
     final int index = this.nextInt(Ascii.PRINTABLE_CHARS.length);
     return Ascii.PRINTABLE_CHARS[index];
   }
 
+  /**
+   * 生成指定长度的随机可打印ASCII字符数组。
+   *
+   * @param size
+   *     字符数组的长度。
+   * @return 指定长度的随机可打印ASCII字符数组。
+   */
   public final char[] nextPrintableAsciiChars(final int size) {
     final char[] result = new char[size];
     for (int i = 0; i < size; ++i) {
@@ -571,6 +821,13 @@ public class RandomEx extends Random {
     return result;
   }
 
+  /**
+   * 生成指定长度的随机可打印ASCII字符串。
+   *
+   * @param length
+   *     字符串的长度。
+   * @return 指定长度的随机可打印ASCII字符串。
+   */
   public final String nextPrintableAsciiString(final int length) {
     final StringBuilder builder = new StringBuilder();
     for (int i = 0; i < length; ++i) {
@@ -579,12 +836,26 @@ public class RandomEx extends Random {
     return builder.toString();
   }
 
+  /**
+   * 生成指定长度范围内的随机可打印ASCII字符串。
+   *
+   * @param lengthRange
+   *     字符串长度的范围。
+   * @return 随机长度的可打印ASCII字符串。
+   */
   public final String nextPrintableAsciiString(
       final CloseRange<Integer> lengthRange) {
     final int length = nextInt(lengthRange);
     return nextPrintableAsciiString(length);
   }
 
+  /**
+   * 生成指定长度的随机字符串。
+   *
+   * @param length
+   *     字符串的长度。
+   * @return 指定长度的随机字符串。
+   */
   public final String nextString(final int length) {
     final StringBuilder builder = new StringBuilder();
     for (int i = 0; i < length; ++i) {
@@ -593,20 +864,46 @@ public class RandomEx extends Random {
     return builder.toString();
   }
 
+  /**
+   * 生成指定长度范围内的随机字符串。
+   *
+   * @param minLength
+   *     字符串的最小长度。
+   * @param maxLength
+   *     字符串的最大长度。
+   * @return 指定长度范围内的随机字符串。
+   */
   public final String nextString(final int minLength, final int maxLength) {
     final int length = nextInt(new CloseRange<>(minLength, maxLength));
     return nextString(length);
   }
 
+  /**
+   * 生成指定长度范围内的随机字符串。
+   *
+   * @param lengthRange
+   *     字符串长度的范围。
+   * @return 随机长度的字符串。
+   */
   public final String nextString(final CloseRange<Integer> lengthRange) {
     final int length = nextInt(lengthRange);
     return nextString(length);
   }
 
+  /**
+   * 生成默认长度范围内的随机字符串。
+   *
+   * @return 默认长度范围内的随机字符串。
+   */
   public final String nextString() {
     return nextString(DEFAULT_STRING_LENGTH_RANGE);
   }
 
+  /**
+   * 生成一个随机的本地时间。
+   *
+   * @return 一个随机的本地时间。
+   */
   public final LocalTime nextLocalTime() {
     final int hour = this.nextInt(24);
     final int minute = this.nextInt(60);
@@ -614,6 +911,13 @@ public class RandomEx extends Random {
     return LocalTime.of(hour, minute, second);
   }
 
+  /**
+   * 生成指定范围内的随机本地时间。
+   *
+   * @param range
+   *     时间范围。
+   * @return 指定范围内的随机本地时间。
+   */
   public final LocalTime nextLocalTime(final CloseRange<LocalTime> range) {
     final long minSecondOfDay = range.getMin()
                                      .getLong(ChronoField.SECOND_OF_DAY);
@@ -623,6 +927,15 @@ public class RandomEx extends Random {
     return LocalTime.ofSecondOfDay(randomSecondOfDay);
   }
 
+  /**
+   * 获取指定年月的天数。
+   *
+   * @param year
+   *     年份。
+   * @param month
+   *     月份。
+   * @return 指定年月的天数。
+   */
   private static int getDaysInMonth(final int year, final int month) {
     // stop checkstyle: MagicNumberCheck
     switch (month) {
@@ -639,6 +952,11 @@ public class RandomEx extends Random {
     // resume checkstyle: MagicNumberCheck
   }
 
+  /**
+   * 生成一个随机的本地日期。
+   *
+   * @return 一个随机的本地日期。
+   */
   public final LocalDate nextLocalDate() {
     final int year = this.nextInt(3000);
     final int month = this.nextInt(12) + 1;
@@ -646,6 +964,13 @@ public class RandomEx extends Random {
     return LocalDate.of(year, month, day);
   }
 
+  /**
+   * 生成指定范围内的随机本地日期。
+   *
+   * @param range
+   *     日期范围。
+   * @return 指定范围内的随机本地日期。
+   */
   public final LocalDate nextLocalDate(final CloseRange<LocalDate> range) {
     final long minEpochDay = range.getMin().getLong(ChronoField.EPOCH_DAY);
     final long maxEpochDay = range.getMax().getLong(ChronoField.EPOCH_DAY);
@@ -653,12 +978,24 @@ public class RandomEx extends Random {
     return LocalDate.ofEpochDay(randomEpochDay);
   }
 
+  /**
+   * 生成一个随机的本地日期时间。
+   *
+   * @return 一个随机的本地日期时间。
+   */
   public final LocalDateTime nextLocalDateTime() {
     final LocalDate date = nextLocalDate();
     final LocalTime time = nextLocalTime();
     return LocalDateTime.of(date, time);
   }
 
+  /**
+   * 生成指定范围内的随机本地日期时间。
+   *
+   * @param range
+   *     日期时间范围。
+   * @return 指定范围内的随机本地日期时间。
+   */
   public final LocalDateTime nextLocalDateTime(
       final CloseRange<LocalDateTime> range) {
     final long minSeconds = range.getMin().toEpochSecond(ZoneOffset.UTC);
@@ -668,11 +1005,23 @@ public class RandomEx extends Random {
     return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
   }
 
+  /**
+   * 生成一个随机的时刻。
+   *
+   * @return 一个随机的时刻。
+   */
   public final Instant nextInstant() {
     final LocalDateTime datetime = nextLocalDateTime();
     return datetime.toInstant(ZoneOffset.UTC);
   }
 
+  /**
+   * 生成指定范围内的随机时刻。
+   *
+   * @param range
+   *     时刻范围。
+   * @return 指定范围内的随机时刻。
+   */
   public final Instant nextInstant(final CloseRange<Instant> range) {
     final long minEpochMillis = range.getMin().toEpochMilli();
     final long maxEpochMillis = range.getMax().toEpochMilli();
@@ -681,6 +1030,15 @@ public class RandomEx extends Random {
     return Instant.ofEpochMilli(randomEpochMillis);
   }
 
+  /**
+   * 生成一个随机的布尔数组。
+   *
+   * @param maxSize
+   *     数组的最大长度。
+   * @param allowEmpty
+   *     是否允许空数组。
+   * @return 一个随机的布尔数组。
+   */
   public final boolean[] nextBooleanArray(final int maxSize, final boolean allowEmpty) {
     if (maxSize <= 0) {
       throw new IllegalArgumentException("The max size must be positive.");
@@ -694,6 +1052,15 @@ public class RandomEx extends Random {
     return result;
   }
 
+  /**
+   * 生成一个随机的字符数组。
+   *
+   * @param maxSize
+   *     数组的最大长度。
+   * @param allowEmpty
+   *     是否允许空数组。
+   * @return 一个随机的字符数组。
+   */
   public final char[] nextCharArray(final int maxSize, final boolean allowEmpty) {
     if (maxSize <= 0) {
       throw new IllegalArgumentException("The max size must be positive.");
@@ -707,6 +1074,15 @@ public class RandomEx extends Random {
     return result;
   }
 
+  /**
+   * 生成一个随机的字节数组。
+   *
+   * @param maxSize
+   *     数组的最大长度。
+   * @param allowEmpty
+   *     是否允许空数组。
+   * @return 一个随机的字节数组。
+   */
   public final byte[] nextByteArray(final int maxSize, final boolean allowEmpty) {
     if (maxSize <= 0) {
       throw new IllegalArgumentException("The max size must be positive.");
@@ -720,6 +1096,15 @@ public class RandomEx extends Random {
     return result;
   }
 
+  /**
+   * 生成一个随机的短整数数组。
+   *
+   * @param maxSize
+   *     数组的最大长度。
+   * @param allowEmpty
+   *     是否允许空数组。
+   * @return 一个随机的短整数数组。
+   */
   public final short[] nextShortArray(final int maxSize, final boolean allowEmpty) {
     if (maxSize <= 0) {
       throw new IllegalArgumentException("The max size must be positive.");
@@ -733,6 +1118,15 @@ public class RandomEx extends Random {
     return result;
   }
 
+  /**
+   * 生成一个随机的整数数组。
+   *
+   * @param maxSize
+   *     数组的最大长度。
+   * @param allowEmpty
+   *     是否允许空数组。
+   * @return 一个随机的整数数组。
+   */
   public final int[] nextIntArray(final int maxSize, final boolean allowEmpty) {
     if (maxSize <= 0) {
       throw new IllegalArgumentException("The max size must be positive.");
@@ -746,6 +1140,15 @@ public class RandomEx extends Random {
     return result;
   }
 
+  /**
+   * 生成一个随机的长整数数组。
+   *
+   * @param maxSize
+   *     数组的最大长度。
+   * @param allowEmpty
+   *     是否允许空数组。
+   * @return 一个随机的长整数数组。
+   */
   public final long[] nextLongArray(final int maxSize, final boolean allowEmpty) {
     if (maxSize <= 0) {
       throw new IllegalArgumentException("The max size must be positive.");
@@ -759,6 +1162,15 @@ public class RandomEx extends Random {
     return result;
   }
 
+  /**
+   * 生成一个随机的单精度浮点数数组。
+   *
+   * @param maxSize
+   *     数组的最大长度。
+   * @param allowEmpty
+   *     是否允许空数组。
+   * @return 一个随机的单精度浮点数数组。
+   */
   public final float[] nextFloatArray(final int maxSize, final boolean allowEmpty) {
     if (maxSize <= 0) {
       throw new IllegalArgumentException("The max size must be positive.");
@@ -772,6 +1184,15 @@ public class RandomEx extends Random {
     return result;
   }
 
+  /**
+   * 生成一个随机的双精度浮点数数组。
+   *
+   * @param maxSize
+   *     数组的最大长度。
+   * @param allowEmpty
+   *     是否允许空数组。
+   * @return 一个随机的双精度浮点数数组。
+   */
   public final double[] nextDoubleArray(final int maxSize, final boolean allowEmpty) {
     if (maxSize <= 0) {
       throw new IllegalArgumentException("The max size must be positive.");
@@ -800,11 +1221,11 @@ public class RandomEx extends Random {
   //  }
 
   /**
-   * Randomly choose an element from an array.
+   * 从数组中随机选择一个元素。
    *
    * @param array
-   *     the array.
-   * @return the randomly chosen element from the array.
+   *     数组。
+   * @return 从数组中随机选择的元素。
    */
   public final boolean choose(final boolean[] array) {
     final int index = this.nextInt(array.length);
@@ -812,11 +1233,11 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Randomly choose an element from an array.
+   * 从数组中随机选择一个元素。
    *
    * @param array
-   *     the array.
-   * @return the randomly chosen element from the array.
+   *     数组。
+   * @return 从数组中随机选择的元素。
    */
   public final char choose(final char[] array) {
     final int index = this.nextInt(array.length);
@@ -824,11 +1245,11 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Randomly choose an element from an array.
+   * 从数组中随机选择一个元素。
    *
    * @param array
-   *     the array.
-   * @return the randomly chosen element from the array.
+   *     数组。
+   * @return 从数组中随机选择的元素。
    */
   public final byte choose(final byte[] array) {
     final int index = this.nextInt(array.length);
@@ -836,11 +1257,11 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Randomly choose an element from an array.
+   * 从数组中随机选择一个元素。
    *
    * @param array
-   *     the array.
-   * @return the randomly chosen element from the array.
+   *     数组。
+   * @return 从数组中随机选择的元素。
    */
   public final short choose(final short[] array) {
     final int index = this.nextInt(array.length);
@@ -848,11 +1269,11 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Randomly choose an element from an array.
+   * 从数组中随机选择一个元素。
    *
    * @param array
-   *     the array.
-   * @return the randomly chosen element from the array.
+   *     数组。
+   * @return 从数组中随机选择的元素。
    */
   public final int choose(final int[] array) {
     final int index = this.nextInt(array.length);
@@ -860,11 +1281,11 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Randomly choose an element from an array.
+   * 从数组中随机选择一个元素。
    *
    * @param array
-   *     the array.
-   * @return the randomly chosen element from the array.
+   *     数组。
+   * @return 从数组中随机选择的元素。
    */
   public final long choose(final long[] array) {
     final int index = this.nextInt(array.length);
@@ -872,11 +1293,11 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Randomly choose an element from an array.
+   * 从数组中随机选择一个元素。
    *
    * @param array
-   *     the array.
-   * @return the randomly chosen element from the array.
+   *     数组。
+   * @return 从数组中随机选择的元素。
    */
   public final float choose(final float[] array) {
     final int index = this.nextInt(array.length);
@@ -884,11 +1305,11 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Randomly choose an element from an array.
+   * 从数组中随机选择一个元素。
    *
    * @param array
-   *     the array.
-   * @return the randomly chosen element from the array.
+   *     数组。
+   * @return 从数组中随机选择的元素。
    */
   public final double choose(final double[] array) {
     final int index = this.nextInt(array.length);
@@ -896,13 +1317,13 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Randomly choose an element from an array.
+   * 从数组中随机选择一个元素。
    *
    * @param array
-   *     the array.
+   *     数组。
    * @param <T>
-   *     the type of elements in the array.
-   * @return the randomly chosen element from the array.
+   *     数组中元素的类型。
+   * @return 从数组中随机选择的元素。
    */
   public final <T> T choose(final T[] array) {
     final int index = this.nextInt(array.length);
@@ -910,13 +1331,13 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Randomly choose an element from a list.
+   * 从列表中随机选择一个元素。
    *
    * @param list
-   *     the list.
+   *     列表。
    * @param <T>
-   *     the type of elements in the list.
-   * @return the randomly chosen element from the list.
+   *     列表中元素的类型。
+   * @return 从列表中随机选择的元素。
    */
   public final <T> T choose(final List<T> list) {
     final int index = this.nextInt(list.size());
@@ -924,13 +1345,13 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Randomly choose an element from a collection.
+   * 从集合中随机选择一个元素。
    *
    * @param collection
-   *     the collection.
+   *     集合。
    * @param <T>
-   *     the type of elements in the collection.
-   * @return the randomly chosen element from the collection.
+   *     集合中元素的类型。
+   * @return 从集合中随机选择的元素。
    */
   public final <T> T choose(final Collection<T> collection) {
     final int index = this.nextInt(collection.size());
@@ -942,13 +1363,13 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Randomly choose the specified number of elements from an array.
+   * 从数组中随机选择指定数量的元素。
    *
    * @param array
-   *     the array.
+   *     数组。
    * @param k
-   *     the specified number of elements to be chosen.
-   * @return the randomly chosen elements from the array.
+   *     要选择的元素数量。
+   * @return 从数组中随机选择的元素。
    */
   public final boolean[] choose(final boolean[] array, final int k) {
     if (k <= 0 || array.length == 0) {
@@ -974,13 +1395,13 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Randomly choose the specified number of elements from an array.
+   * 从数组中随机选择指定数量的元素。
    *
    * @param array
-   *     the array.
+   *     数组。
    * @param k
-   *     the specified number of elements to be chosen.
-   * @return the randomly chosen elements from the array.
+   *     要选择的元素数量。
+   * @return 从数组中随机选择的元素。
    */
   public final char[] choose(final char[] array, final int k) {
     if (k <= 0 || array.length == 0) {
@@ -1006,13 +1427,13 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Randomly choose the specified number of elements from an array.
+   * 从数组中随机选择指定数量的元素。
    *
    * @param array
-   *     the array.
+   *     数组。
    * @param k
-   *     the specified number of elements to be chosen.
-   * @return the randomly chosen elements from the array.
+   *     要选择的元素数量。
+   * @return 从数组中随机选择的元素。
    */
   public final byte[] choose(final byte[] array, final int k) {
     if (k <= 0 || array.length == 0) {
@@ -1038,13 +1459,13 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Randomly choose the specified number of elements from an array.
+   * 从数组中随机选择指定数量的元素。
    *
    * @param array
-   *     the array.
+   *     数组。
    * @param k
-   *     the specified number of elements to be chosen.
-   * @return the randomly chosen elements from the array.
+   *     要选择的元素数量。
+   * @return 从数组中随机选择的元素。
    */
   public final short[] choose(final short[] array, final int k) {
     if (k <= 0 || array.length == 0) {
@@ -1070,13 +1491,13 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Randomly choose the specified number of elements from an array.
+   * 从数组中随机选择指定数量的元素。
    *
    * @param array
-   *     the array.
+   *     数组。
    * @param k
-   *     the specified number of elements to be chosen.
-   * @return the randomly chosen elements from the array.
+   *     要选择的元素数量。
+   * @return 从数组中随机选择的元素。
    */
   public final int[] choose(final int[] array, final int k) {
     if (k <= 0 || array.length == 0) {
@@ -1102,13 +1523,13 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Randomly choose the specified number of elements from an array.
+   * 从数组中随机选择指定数量的元素。
    *
    * @param array
-   *     the array.
+   *     数组。
    * @param k
-   *     the specified number of elements to be chosen.
-   * @return the randomly chosen elements from the array.
+   *     要选择的元素数量。
+   * @return 从数组中随机选择的元素。
    */
   public final long[] choose(final long[] array, final int k) {
     if (k <= 0 || array.length == 0) {
@@ -1134,13 +1555,13 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Randomly choose the specified number of elements from an array.
+   * 从数组中随机选择指定数量的元素。
    *
    * @param array
-   *     the array.
+   *     数组。
    * @param k
-   *     the specified number of elements to be chosen.
-   * @return the randomly chosen elements from the array.
+   *     要选择的元素数量。
+   * @return 从数组中随机选择的元素。
    */
   public final float[] choose(final float[] array, final int k) {
     if (k <= 0 || array.length == 0) {
@@ -1166,13 +1587,13 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Randomly choose the specified number of elements from an array.
+   * 从数组中随机选择指定数量的元素。
    *
    * @param array
-   *     the array.
+   *     数组。
    * @param k
-   *     the specified number of elements to be chosen.
-   * @return the randomly chosen elements from the array.
+   *     要选择的元素数量。
+   * @return 从数组中随机选择的元素。
    */
   public final double[] choose(final double[] array, final int k) {
     if (k <= 0 || array.length == 0) {
@@ -1198,13 +1619,13 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Randomly choose the specified number of elements from an array.
+   * 从数组中随机选择指定数量的元素。
    *
    * @param array
-   *     the specified array.
+   *     指定的数组。
    * @param k
-   *     the specified number of elements to be chosen.
-   * @return the randomly chosen elements from the array.
+   *     要选择的元素数量。
+   * @return 从数组中随机选择的元素。
    */
   @SuppressWarnings("unchecked")
   public final <T> T[] choose(final T[] array, final int k) {
@@ -1231,13 +1652,13 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Randomly choose the specified number of elements from a collection.
+   * 从集合中随机选择指定数量的元素。
    *
    * @param col
-   *     the specified collection.
+   *     指定的集合。
    * @param k
-   *     the specified number of elements to be chosen.
-   * @return the randomly chosen elements from the collection.
+   *     要选择的元素数量。
+   * @return 从集合中随机选择的元素。
    */
   @SuppressWarnings("unchecked")
   public final <T> List<T> choose(final Collection<T> col, final int k) {
@@ -1261,16 +1682,16 @@ public class RandomEx extends Random {
   }
 
   /**
-   * Randomly choose specified number of different values from a given range.
+   * 从给定范围中随机选择指定数量的不同值。
    *
    * @param lowerBound
-   *     the inclusive lower bound of the specified range.
+   *     指定范围的包含下界。
    * @param upperBound
-   *     the exclusive upper bound of the specified range.
+   *     指定范围的独占上界。
    * @param k
-   *     the specified number of values to be chosen.
+   *     要选择的值的数量。
    * @return
-   *     the randomly chosen values.
+   *     随机选择的值。
    */
   public final int[] choose(final int lowerBound, final int upperBound,
       final int k) {

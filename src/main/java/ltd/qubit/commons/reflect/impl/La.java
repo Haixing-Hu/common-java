@@ -12,16 +12,13 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * This is a class similar to java.lang.invoke.SerializedLambda, which is used to
- * capture the information of a lambda expression.
+ * 这是一个类似于 java.lang.invoke.SerializedLambda 的类，用于捕获lambda表达式的信息。
  *
- * <b>NOTE:</b> The length of the full class name of this class MUST be the
- * exactly same as the length of the `java.lang.invoke.SerializedLambda.class`.
+ * <b>注意：</b> 此类的完整类名长度必须与 `java.lang.invoke.SerializedLambda.class` 的长度完全相同。
  *
- * <b>NOTE:</b> The `serialVersionUID` of this class MUST be exactly the same
- * as the `java.lang.invoke.SerializedLambda.class`.
+ * <b>注意：</b> 此类的 `serialVersionUID` 必须与 `java.lang.invoke.SerializedLambda.class` 完全相同。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see <a href="https://gist.github.com/jhorstmann/de367a42a08d8deb8df9">How to get the method name from a java 8 lambda using serialization hacks</a>
  */
 public class La implements Serializable {

@@ -35,31 +35,28 @@ import static ltd.qubit.commons.lang.ArrayUtils.EMPTY_CLASS_ARRAY;
 import static ltd.qubit.commons.lang.ObjectUtils.defaultIfNull;
 
 /**
- * Provides utility reflection methods focused on constructors, modeled after
- * {@link MethodUtils}.
+ * 提供专注于构造函数的实用反射方法，参考了 {@link MethodUtils}。
  *
- * <h2>Known Limitations</h2>
- * <h2>Accessing Public Constructors In A Default Access Superclass</h2>
+ * <h2>已知限制</h2>
+ * <h2>在默认访问权限的超类中访问公共构造函数</h2>
  *
- * <p>There is an issue when invoking public constructors contained in a
- * default access superclass. Reflection locates these constructors fine and
- * correctly assigns them as public. However, an {@code IllegalAccessException}
- * is thrown if the constructors is invoked.
+ * <p>当调用包含在默认访问权限超类中的公共构造函数时存在问题。反射可以正确定位这些构造函数
+ * 并正确地将它们分配为公共的。但是，如果调用构造函数，则会抛出 {@code IllegalAccessException}。
  *
- * <p>{@code ConstructorUtils} contains a workaround for this situation. It
- * will attempt to call {@code setAccessible} on this constructor. If this call
- * succeeds, then the method can be invoked as normal. This call will only
- * succeed when the application has sufficient security privileges. If this call
- * fails then a warning will be logged and the method may fail.
+ * <p>{@code ConstructorUtils} 包含针对这种情况的解决方法。它将尝试在此构造函数上调用
+ * {@code setAccessible}。如果此调用成功，则该方法可以正常调用。此调用只有在应用程序具有
+ * 足够的安全权限时才会成功。如果此调用失败，则将记录警告，方法可能会失败。
  *
- * @author Haixing Hu
- * @since 1.0.0
+ * @author 胡海星
  */
 @ThreadSafe
 public class ConstructorUtils {
 
   private ConstructorUtils() {}
 
+  /**
+   * 缓存类的序列化数据。
+   */
   private static final ClassValue<byte[]> SERIALIZED_DATA_CACHE =
       new ClassValue<>() {
         @Override
@@ -84,6 +81,9 @@ public class ConstructorUtils {
         }
       };
 
+  /**
+   * 缓存类的所有构造函数。
+   */
   private static final ClassValue<List<Constructor<?>>> CONSTRUCTOR_CACHE =
       new ClassValue<>() {
         @Override
@@ -98,21 +98,18 @@ public class ConstructorUtils {
       };
 
   /**
-   * Gets all constructors of a class.
+   * 获取类的所有构造函数。
    *
    * @param <T>
-   *     the type of the objects in the specified class.
+   *     指定类中对象的类型。
    * @param cls
-   *     a class.
+   *     一个类。
    * @param options
-   *     A bitwise combination of reflection options defined in the {@link
-   *     Option} class. The default value could be {@link Option#DEFAULT}.
-   * @return the array of all specified constructors; or an empty array if no
-   *     such constructor.
+   *     在 {@link Option} 类中定义的反射选项的按位组合。默认值可以是 {@link Option#DEFAULT}。
+   * @return 所有指定构造函数的数组；如果没有此类构造函数则返回空数组。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
-
   @SuppressWarnings("unchecked")
   public static <T> Constructor<T>[] getAllConstructors(final Class<T> cls,
       final int options) {
@@ -128,12 +125,11 @@ public class ConstructorUtils {
   }
 
   /**
-   * Creates an instance of a object using the Java serialization.
+   * 使用Java序列化创建对象的实例。
    *
    * @param cls
-   *     The class to instantiate.
-   * @return a new instance of the class.
-   * @since 1.0.0
+   *     要实例化的类。
+   * @return 类的新实例。
    */
   @SuppressWarnings("unchecked")
   private static <T> T newInstanceUsingSerialization(final Class<T> cls) {
@@ -158,32 +154,32 @@ public class ConstructorUtils {
   }
 
   /**
-   * Gets a default constructor of a class.
+   * 获取类的默认构造函数。
    *
    * @param <T>
-   *     the type of the objects in the specified class.
+   *     指定类中对象的类型。
    * @param cls
-   *     The class on which to get the constructor.
+   *     要获取构造函数的类。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static <T> Constructor<T> getConstructor(final Class<T> cls) {
     return getConstructor(cls, Option.DEFAULT, null);
   }
 
   /**
-   * Gets a constructor of a class.
+   * 获取类的构造函数。
    *
    * @param <T>
-   *     the type of the objects in the specified class.
+   *     指定类中对象的类型。
    * @param cls
-   *     The class on which to get the constructor.
+   *     要获取构造函数的类。
    * @param paramType
-   *     The type of the parameter of the constructor.
+   *     构造函数参数的类型。
    * @return
-   *     The specified constructor, or {@code null} if no such constructor.
+   *     指定的构造函数，如果没有此类构造函数则返回 {@code null}。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   @Nullable
   public static <T> Constructor<T> getConstructor(final Class<T> cls,
@@ -192,20 +188,20 @@ public class ConstructorUtils {
   }
 
   /**
-   * Gets a constructor of a class.
+   * 获取类的构造函数。
    *
    * @param <T>
-   *     the type of the objects in the specified class.
+   *     指定类中对象的类型。
    * @param cls
-   *     The class on which to get the constructor.
+   *     要获取构造函数的类。
    * @param paramType1
-   *     The type of the first parameter of the constructor.
+   *     构造函数第一个参数的类型。
    * @param paramType2
-   *     The type of the second parameter of the constructor.
+   *     构造函数第二个参数的类型。
    * @return
-   *     The specified constructor, or {@code null} if no such constructor.
+   *     指定的构造函数，如果没有此类构造函数则返回 {@code null}。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   @Nullable
   public static <T> Constructor<T> getConstructor(final Class<T> cls,
@@ -214,22 +210,20 @@ public class ConstructorUtils {
   }
 
   /**
-   * Gets a constructor of a class that matches the given parameter types.
+   * 获取与给定参数类型匹配的类的构造函数。
    *
    * @param <T>
-   *     the type of the objects in the specified class.
+   *     指定类中对象的类型。
    * @param cls
-   *     The class on which to get the constructor.
+   *     要获取构造函数的类。
    * @param options
-   *     A bitwise combination of reflection options defined in the {@link
-   *     Option} class. The default value could be {@link Option#DEFAULT}.
+   *     在 {@link Option} 类中定义的反射选项的按位组合。默认值可以是 {@link Option#DEFAULT}。
    * @param paramTypes
-   *     The types of the parameters of the constructor to be get, or an empty
-   *     array if the constructor to be get has no parameter.
+   *     要获取的构造函数的参数类型，如果要获取的构造函数没有参数则为空数组。
    * @return
-   *     The specified constructor, or {@code null} if no such constructor.
+   *     指定的构造函数，如果没有此类构造函数则返回 {@code null}。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   @SuppressWarnings("unchecked")
   @Nullable
@@ -258,22 +252,20 @@ public class ConstructorUtils {
   }
 
   /**
-   * Gets a constructor of a class that matches the compatible parameter types.
+   * 获取与兼容参数类型匹配的类的构造函数。
    *
    * @param <T>
-   *     the type of the objects in the specified class.
+   *     指定类中对象的类型。
    * @param cls
-   *     The class on which to get the constructor.
+   *     要获取构造函数的类。
    * @param options
-   *     A bitwise combination of reflection options defined in the {@link
-   *     Option} class. The default value could be {@link Option#DEFAULT}.
+   *     在 {@link Option} 类中定义的反射选项的按位组合。默认值可以是 {@link Option#DEFAULT}。
    * @param paramTypes
-   *     The types of the compatible parameters of the constructor to be get, or
-   *     an empty array if the constructor to be get has no parameter.
+   *     要获取的构造函数的兼容参数的类型，如果要获取的构造函数没有参数则为空数组。
    * @return
-   *     The specified constructor, or {@code null} if no such constructor.
+   *     指定的构造函数，如果没有此类构造函数则返回 {@code null}。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   @SuppressWarnings("unchecked")
   @Nullable
@@ -310,17 +302,15 @@ public class ConstructorUtils {
   }
 
   /**
-   * Creates a new instance of the specified class.
+   * 创建指定类的新实例。
    *
-   * <p>It is in the responsibility of the implementation how such an instance
-   * is created.
+   * <p>如何创建此类实例是实现的责任。
    *
    * @param <T>
-   *     the type of the objects in the specified class.
+   *     指定类中对象的类型。
    * @param cls
-   *     The class to instantiate.
-   * @return a new instance of the class
-   * @since 1.0.0
+   *     要实例化的类。
+   * @return 类的新实例
    */
   public static <T> T newInstance(final Class<T> cls)
       throws ReflectionException {
@@ -328,20 +318,17 @@ public class ConstructorUtils {
   }
 
   /**
-   * Creates a new instance of the specified class.
+   * 创建指定类的新实例。
    *
-   * <p>It is in the responsibility of the implementation how such an instance
-   * is created.
+   * <p>如何创建此类实例是实现的责任。
    *
    * @param <T>
-   *     the type of the objects in the specified class.
+   *     指定类中对象的类型。
    * @param cls
-   *     The class to instantiate.
+   *     要实例化的类。
    * @param options
-   *     A bitwise combination of reflection options defined in the {@link
-   *     Option} class. The default value could be {@link Option#DEFAULT}.
-   * @return a new instance of the class
-   * @since 1.0.0
+   *     在 {@link Option} 类中定义的反射选项的按位组合。默认值可以是 {@link Option#DEFAULT}。
+   * @return 类的新实例
    */
   public static <T> T newInstance(final Class<T> cls, final int options)
       throws ReflectionException {
@@ -365,26 +352,21 @@ public class ConstructorUtils {
   }
 
   /**
-   * Creates a new instance of the specified class inferring the right
-   * constructor from the types of the arguments.
+   * 通过推断参数类型来创建指定类的新实例，从而选择正确的构造函数。
    *
-   * <p>This locates and calls a constructor. The constructor signature must
-   * match the argument types by assignment compatibility.
+   * <p>这会定位并调用构造函数。构造函数签名必须通过赋值兼容性与参数类型匹配。
    *
    * @param <T>
-   *     The type to be constructed
+   *     要构造的类型
    * @param cls
-   *     The class to be constructed.
+   *     要构造的类。
    * @param options
-   *     A bitwise combination of reflection options defined in the {@link
-   *     Option} class. The default value could be {@link Option#DEFAULT}.
+   *     在 {@link Option} 类中定义的反射选项的按位组合。默认值可以是 {@link Option#DEFAULT}。
    * @param arguments
-   *     The array of arguments. If the constructor has no arguments, it could
-   *     be {@code null} or empty.
-   * @return A new instance of {@code cls}, which will never be {@code null}.
+   *     参数数组。如果构造函数没有参数，可以为 {@code null} 或空。
+   * @return {@code cls} 的新实例，永远不会为 {@code null}。
    * @throws ReflectionException
-   *     if any error occurred.
-   * @since 1.0.0
+   *     如果发生任何错误。
    */
   public static <T> T newInstance(final Class<T> cls, final int options,
       @Nullable final Object... arguments) {
@@ -400,30 +382,23 @@ public class ConstructorUtils {
   }
 
   /**
-   * Creates a new instance of the specified class inferring the right
-   * constructor from the specified parameter types.
+   * 通过指定的参数类型推断正确的构造函数来创建指定类的新实例。
    *
-   * <p>This locates and calls a constructor. The constructor signature must
-   * match the parameter types by assignment compatibility.
+   * <p>这会定位并调用构造函数。构造函数签名必须通过赋值兼容性与参数类型匹配。
    *
    * @param <T>
-   *     The type to be constructed
+   *     要构造的类型
    * @param cls
-   *     The class to be constructed.
+   *     要构造的类。
    * @param options
-   *     A bitwise combination of reflection options defined in the {@link
-   *     Option} class. The default value could be {@link Option#DEFAULT}.
+   *     在 {@link Option} 类中定义的反射选项的按位组合。默认值可以是 {@link Option#DEFAULT}。
    * @param paramTypes
-   *     The array of classes of the parameters for the constructor to be
-   *     invoked. If the constructor has no arguments, it could be {@code null}
-   *     or empty.
+   *     要调用的构造函数的参数类的数组。如果构造函数没有参数，可以为 {@code null} 或空。
    * @param arguments
-   *     The array of arguments. If the constructor has no arguments, it could
-   *     be {@code null} or empty.
-   * @return A new instance of {@code cls}, which will never be {@code null}.
+   *     参数数组。如果构造函数没有参数，可以为 {@code null} 或空。
+   * @return {@code cls} 的新实例，永远不会为 {@code null}。
    * @throws ReflectionException
-   *     if any error occurred.
-   * @since 1.0.0
+   *     如果发生任何错误。
    */
   public static <T> T newInstance(final Class<T> cls, final int options,
       @Nullable final Class<?>[] paramTypes, @Nullable final Object[] arguments) {
@@ -446,26 +421,21 @@ public class ConstructorUtils {
   }
 
   /**
-   * Creates a new instance of the specified class choosing the right
-   * constructor from the exact types of the arguments.
+   * 通过参数的精确类型选择正确的构造函数来创建指定类的新实例。
    *
-   * <p>This function locates and calls a constructor. The constructor
-   * signature must exactly match the specified argument types.
+   * <p>此函数定位并调用构造函数。构造函数签名必须与指定的参数类型完全匹配。
    *
    * @param <T>
-   *     The type to be constructed
+   *     要构造的类型
    * @param cls
-   *     The class to be constructed.
+   *     要构造的类。
    * @param options
-   *     A bitwise combination of reflection options defined in the {@link
-   *     Option} class. The default value could be {@link Option#DEFAULT}.
+   *     在 {@link Option} 类中定义的反射选项的按位组合。默认值可以是 {@link Option#DEFAULT}。
    * @param arguments
-   *     The array of arguments. If the constructor has no arguments, it could
-   *     be {@code null} or empty.
-   * @return A new instance of {@code cls}, which will never be {@code null}.
+   *     参数数组。如果构造函数没有参数，可以为 {@code null} 或空。
+   * @return {@code cls} 的新实例，永远不会为 {@code null}。
    * @throws ReflectionException
-   *     if any error occurred.
-   * @since 1.0.0
+   *     如果发生任何错误。
    */
   public static <T> T newInstanceExactly(final Class<T> cls, final int options,
       @Nullable final Object... arguments) {
@@ -481,30 +451,23 @@ public class ConstructorUtils {
   }
 
   /**
-   * Creates a new instance of the specified class choosing the right
-   * constructor from the given parameter types.
+   * 通过给定的参数类型选择正确的构造函数来创建指定类的新实例。
    *
-   * <p>This function locates and calls a constructor. The constructor
-   * signature must exactly match the specified parameter types.
+   * <p>此函数定位并调用构造函数。构造函数签名必须与指定的参数类型完全匹配。
    *
    * @param <T>
-   *     The type to be constructed
+   *     要构造的类型
    * @param cls
-   *     The class to be constructed.
+   *     要构造的类。
    * @param options
-   *     A bitwise combination of reflection options defined in the {@link
-   *     Option} class. The default value could be {@link Option#DEFAULT}.
+   *     在 {@link Option} 类中定义的反射选项的按位组合。默认值可以是 {@link Option#DEFAULT}。
    * @param paramTypes
-   *     The array of classes of the parameters for the constructor to be
-   *     invoked. If the constructor has no arguments, it could be {@code null}
-   *     or empty.
+   *     要调用的构造函数的参数类的数组。如果构造函数没有参数，可以为 {@code null} 或空。
    * @param arguments
-   *     The array of arguments. If the constructor has no arguments, it could
-   *     be {@code null} or empty.
-   * @return A new instance of {@code cls}, which will never be {@code null}.
+   *     参数数组。如果构造函数没有参数，可以为 {@code null} 或空。
+   * @return {@code cls} 的新实例，永远不会为 {@code null}。
    * @throws ReflectionException
-   *     if any error occurred.
-   * @since 1.0.0
+   *     如果发生任何错误。
    */
   public static <T> T newInstanceExactly(final Class<T> cls, final int options,
       @Nullable final Class<?>[] paramTypes, @Nullable final Object[] arguments) {
@@ -527,18 +490,15 @@ public class ConstructorUtils {
   }
 
   /**
-   * Creates a new instance of the specified class WITHOUT calling its
-   * constructor.
+   * 创建指定类的新实例而不调用其构造函数。
    *
-   * <p>The implementation use the {@code objenesis} to bypass the security
-   * checks of different JVMs.</p>
+   * <p>实现使用 {@code objenesis} 来绕过不同JVM的安全检查。</p>
    *
    * @param <T>
-   *     the type of the objects in the specified class.
+   *     指定类中对象的类型。
    * @param cls
-   *     The class to instantiate.
-   * @return a new instance of the class.
-   * @since 4.1.0
+   *     要实例化的类。
+   * @return 类的新实例。
    */
   public static <T> T newInstanceWithoutConstructor(final Class<T> cls) {
     try {
@@ -549,17 +509,16 @@ public class ConstructorUtils {
   }
 
   /**
-   * Creates a new instance of the specified class with its constructor.
+   * 使用其构造函数创建指定类的新实例。
    *
    * @param <T>
-   *     the type of the objects in the specified class.
+   *     指定类中对象的类型。
    * @param ctor
-   *     The constructor to be invoked.
+   *     要调用的构造函数。
    * @param arguments
-   *     The array of arguments. If the constructor has no arguments, it could
-   *     be {@code null} or empty.
+   *     参数数组。如果构造函数没有参数，可以为 {@code null} 或空。
    * @return
-   *     A new instance of the class.
+   *     类的新实例。
    */
   public static <T> T newInstance(final Constructor<T> ctor, final Object ... arguments) {
     try {

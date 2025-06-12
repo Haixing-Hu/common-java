@@ -13,9 +13,9 @@ import javax.annotation.concurrent.NotThreadSafe;
 import ltd.qubit.commons.util.expand.ExpansionPolicy;
 
 /**
- * A tree based trie for Unicode strings.
+ * 基于树的Unicode字符串字典树。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @NotThreadSafe
 public class Trie {
@@ -157,38 +157,81 @@ public class Trie {
     }
   }
 
+  /**
+   * 根节点。
+   */
   private final Node root;
+
+  /**
+   * 字典树中字符串的总出现次数。
+   */
   private int size;
+
+  /**
+   * 是否不区分大小写。
+   */
   private final boolean caseInsensitive;
 
+  /**
+   * 构造一个大小写敏感的字典树。
+   */
   public Trie() {
     root = new Node('\0', 0);
     size = 0;
     caseInsensitive = false;
   }
 
+  /**
+   * 构造一个字典树。
+   *
+   * @param caseInsensitive
+   *    是否不区分大小写
+   */
   public Trie(final boolean caseInsensitive) {
     root = new Node('\0', 0);
     size = 0;
     this.caseInsensitive = caseInsensitive;
   }
 
+  /**
+   * 检查此字典树是否不区分大小写。
+   *
+   * @return 如果此字典树不区分大小写则返回{@code true}，否则返回{@code false}
+   */
   public boolean isCaseInsensitive() {
     return caseInsensitive;
   }
 
+  /**
+   * 获取此字典树中字符串的总出现次数。
+   *
+   * @return 此字典树中字符串的总出现次数
+   */
   public int size() {
     return size;
   }
 
+  /**
+   * 检查此字典树是否为空。
+   *
+   * @return 如果此字典树为空则返回{@code true}，否则返回{@code false}
+   */
   public boolean isEmpty() {
     return (size == 0);
   }
 
+  /**
+   * 获取此字典树中节点的总数量。
+   *
+   * @return 此字典树中节点的总数量
+   */
   public int nodeCount() {
     return root.nodeCount();
   }
 
+  /**
+   * 清空此字典树。
+   */
   public void clear() {
     root.occurence = 0;
     root.childrenCount = 0;
@@ -196,11 +239,23 @@ public class Trie {
     size = 0;
   }
 
+  /**
+   * 检查此字典树是否包含指定的字符串。
+   *
+   * @param str 要检查的字符串
+   * @return 如果此字典树包含指定的字符串则返回{@code true}，否则返回{@code false}
+   */
   public boolean contains(final String str) {
     final Node node = getNode(str);
     return ((node != null) && (node.occurence > 0));
   }
 
+  /**
+   * 检查此字典树是否包含指定前缀的字符串。
+   *
+   * @param prefix 要检查的前缀
+   * @return 如果此字典树包含指定前缀的字符串则返回{@code true}，否则返回{@code false}
+   */
   public boolean containsPrefix(final String prefix) {
     final Node node = getNode(prefix);
     return (node != null);
@@ -222,6 +277,12 @@ public class Trie {
     return node;
   }
 
+  /**
+   * 检查此字典树是否包含指定字符串的前缀。
+   *
+   * @param str 要检查的字符串
+   * @return 如果此字典树包含指定字符串的前缀则返回{@code true}，否则返回{@code false}
+   */
   public boolean containsPrefixOf(final String str) {
     final int len = str.length();
     Node node = root;
@@ -241,6 +302,12 @@ public class Trie {
     return false;
   }
 
+  /**
+   * 获取指定字符串在此字典树中的出现次数。
+   *
+   * @param str 要查询的字符串
+   * @return 指定字符串在此字典树中的出现次数
+   */
   public int count(final String str) {
     final Node node = getNode(str);
     if (node == null) {
@@ -250,6 +317,11 @@ public class Trie {
     }
   }
 
+  /**
+   * 向此字典树中添加指定的字符串。
+   *
+   * @param str 要添加的字符串
+   */
   public void add(final String str) {
     final Node node = getOrAddNode(str);
     assert (node != null);
@@ -257,6 +329,13 @@ public class Trie {
     ++size;
   }
 
+  /**
+   * 向此字典树中添加指定的字符串，并指定出现次数。
+   *
+   * @param str 要添加的字符串
+   * @param occurence 出现次数，必须为非负数
+   * @throws IllegalArgumentException 如果出现次数为负数
+   */
   public void add(final String str, final int occurence) {
     if (occurence < 0) {
       throw new IllegalArgumentException();
@@ -282,6 +361,12 @@ public class Trie {
     return node;
   }
 
+  /**
+   * 从此字典树中移除指定字符串的一次出现。
+   *
+   * @param str 要移除的字符串
+   * @return 如果成功移除则返回{@code true}，否则返回{@code false}
+   */
   public boolean remove(final String str) {
     if (size == 0) {
       return false;
@@ -299,6 +384,14 @@ public class Trie {
     }
   }
 
+  /**
+   * 从此字典树中移除指定字符串的指定次数出现。
+   *
+   * @param str 要移除的字符串
+   * @param occurrence 要移除的出现次数，必须为非负数
+   * @return 实际移除的出现次数
+   * @throws IllegalArgumentException 如果出现次数为负数
+   */
   public int remove(final String str, final int occurrence) {
     if (occurrence < 0) {
       throw new IllegalArgumentException();
@@ -319,6 +412,12 @@ public class Trie {
     return occ;
   }
 
+  /**
+   * 从此字典树中移除指定字符串的所有出现。
+   *
+   * @param str 要移除的字符串
+   * @return 实际移除的出现次数
+   */
   public int removeAll(final String str) {
     if (size == 0) {
       return 0;
@@ -333,6 +432,9 @@ public class Trie {
     return occurence;
   }
 
+  /**
+   * 压缩此字典树，移除不包含任何字符串的节点。
+   */
   public void compact() {
     root.compact();
   }

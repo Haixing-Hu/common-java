@@ -18,26 +18,82 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Defines the constants of the common charsets.
+ * 定义通用字符集的常量。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public final class CharsetUtils {
 
+  /**
+   * 字符集名称：ASCII
+   */
   public static final String NAME_ASCII         = "ASCII";
+
+  /**
+   * 字符集名称：ISO-8859-1
+   */
   public static final String NAME_ISO_8859_1    = "ISO-8859-1";
+
+  /**
+   * 字符集名称：LATIN-1
+   */
+  @Deprecated
   public static final String NAME_LATIN_1       = NAME_ISO_8859_1;
+
+  /**
+   * 字符集名称：UTF-8
+   */
   public static final String NAME_UTF_8         = "UTF-8";
+
+  /**
+   * 字符集名称：UTF-16LE
+   */
   public static final String NAME_UTF_16LE      = "UTF-16LE";
+
+  /**
+   * 字符集名称：UTF-16BE
+   */
   public static final String NAME_UTF_16BE      = "UTF-16BE";
+
+  /**
+   * 字符集名称：UTF-16
+   */
   public static final String NAME_UTF_16        = "UTF-16";
+
+  /**
+   * 字符集名称：UTF-32LE
+   */
   public static final String NAME_UTF_32LE      = "UTF-32LE";
+
+  /**
+   * 字符集名称：UTF-32BE
+   */
   public static final String NAME_UTF_32BE      = "UTF-32BE";
+
+  /**
+   * 字符集名称：UTF-32
+   */
   public static final String NAME_UTF_32        = "UTF-32";
+
+  /**
+   * 字符集名称：GB2312
+   */
   public static final String NAME_GB2312        = "GB2312";
+
+  /**
+   * 字符集名称：GBK
+   */
   public static final String NAME_GBK           = "GBK";
+
+  /**
+   * 字符集名称：GB18030
+   */
   public static final String NAME_GB18030       = "GB18030";
+
+  /**
+   * 字符集名称：BIG5
+   */
   public static final String NAME_BIG5          = "BIG5";
 
   /**
@@ -82,13 +138,35 @@ public final class CharsetUtils {
   @Deprecated
   public static final Charset UTF_16            = StandardCharsets.UTF_16;
 
+  /**
+   * 字符集：GB2312
+   */
   public static final Charset GB2312            = Charset.forName(NAME_GB2312);
+
+  /**
+   * 字符集：GBK
+   */
   public static final Charset GBK               = Charset.forName(NAME_GBK);
+
+  /**
+   * 字符集：GB18030
+   */
   public static final Charset GB18030           = Charset.forName(NAME_GB18030);
+
+  /**
+   * 字符集：BIG5
+   */
   public static final Charset BIG5              = Charset.forName(NAME_BIG5);
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CharsetUtils.class);
 
+  /**
+   * 根据字符集名称创建字符集对象，如果失败则返回默认字符集。
+   *
+   * @param charsetName 字符集名称，可以为null
+   * @param defaultCharset 默认字符集，可以为null
+   * @return 字符集对象，如果charsetName为null或无效，则返回defaultCharset
+   */
   public static Charset forName(@Nullable final String charsetName,
       @Nullable final Charset defaultCharset) {
     Charset charset;

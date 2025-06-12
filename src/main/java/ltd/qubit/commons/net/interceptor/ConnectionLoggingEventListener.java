@@ -40,6 +40,9 @@ public class ConnectionLoggingEventListener extends EventListener {
     this.logger = logger;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void connectStart(@Nonnull final Call call,
       @Nonnull final InetSocketAddress inetSocketAddress,
@@ -49,6 +52,9 @@ public class ConnectionLoggingEventListener extends EventListener {
     super.connectStart(call, inetSocketAddress, proxy);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void connectEnd(@Nonnull final Call call,
       @Nonnull final InetSocketAddress inetSocketAddress,
@@ -58,6 +64,9 @@ public class ConnectionLoggingEventListener extends EventListener {
     super.connectEnd(call, inetSocketAddress, proxy, protocol);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void connectFailed(@Nonnull final Call call,
       @Nonnull final InetSocketAddress inetSocketAddress,

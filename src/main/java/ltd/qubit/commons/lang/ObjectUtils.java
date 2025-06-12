@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -267,6 +268,7 @@ public final class ObjectUtils {
    */
   public static class Null implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 661457446116895424L;
 
     Null() {}
@@ -276,6 +278,7 @@ public final class ObjectUtils {
      *
      * @return 单例值
      */
+    @Serial
     private Object readResolve() {
       return NULL;
     }

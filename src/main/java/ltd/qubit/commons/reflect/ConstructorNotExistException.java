@@ -13,15 +13,23 @@ import java.io.Serial;
 import ltd.qubit.commons.text.Joiner;
 
 /**
- * Thrown to indicate the specified constructor does not exist.
+ * 抛出异常以指示指定的构造函数不存在。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class ConstructorNotExistException extends ReflectionException {
 
   @Serial
   private static final long serialVersionUID = - 4255851177528512471L;
 
+  /**
+   * 构造一个 {@link ConstructorNotExistException} 实例。
+   *
+   * @param cls
+   *     指定的类。
+   * @param options
+   *     选项。
+   */
   public ConstructorNotExistException(final Class<?> cls, final int options) {
     super("There is no "
         + Option.toString(options)
@@ -29,6 +37,16 @@ public class ConstructorNotExistException extends ReflectionException {
         + cls.getName());
   }
 
+  /**
+   * 构造一个 {@link ConstructorNotExistException} 实例。
+   *
+   * @param cls
+   *     指定的类。
+   * @param options
+   *     选项。
+   * @param paramTypes
+   *     参数类型。
+   */
   public ConstructorNotExistException(final Class<?> cls, final int options,
       final Class<?>[] paramTypes) {
     super("There is no "

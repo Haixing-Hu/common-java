@@ -13,9 +13,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 /**
- * Defines the options used in reflection operations.
+ * 定义在反射操作中使用的选项。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class Option {
 

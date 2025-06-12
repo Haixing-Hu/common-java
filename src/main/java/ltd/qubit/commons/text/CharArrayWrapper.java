@@ -17,9 +17,9 @@ import static ltd.qubit.commons.lang.Argument.requireNonNegative;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * A simple wrapper class which wraps a character array to a {@link CharSequence}.
+ * 一个简单的包装类，将字符数组包装成{@link CharSequence}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class CharArrayWrapper implements CharSequence, Comparable<CharArrayWrapper>  {
 
@@ -27,17 +27,30 @@ public class CharArrayWrapper implements CharSequence, Comparable<CharArrayWrapp
   private final int start;
   private final int end;
 
+  /**
+   * 构造一个字符数组包装器。
+   *
+   * @param array 字符数组，不能为null
+   * @param start 起始索引（包含）
+   * @param end 结束索引（不包含）
+   */
   public CharArrayWrapper(final char[] array, final int start, final int end) {
     this.array = requireNonNull("array", array);
     this.start = requireNonNegative("start", start);
     this.end = requireInCloseRange("end", end, start, array.length);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int length() {
     return end - start;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public char charAt(final int i) {
     final int index = i + start;
@@ -47,6 +60,9 @@ public class CharArrayWrapper implements CharSequence, Comparable<CharArrayWrapp
     return array[index];
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public CharSequence subSequence(final int start, final int end) {
     if (start > end) {
@@ -65,6 +81,9 @@ public class CharArrayWrapper implements CharSequence, Comparable<CharArrayWrapp
     return new CharArrayWrapper(array, startIndex, endIndex);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public boolean equals(final Object o) {
     if (this == o) {
       return true;
@@ -85,6 +104,9 @@ public class CharArrayWrapper implements CharSequence, Comparable<CharArrayWrapp
     return true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public int hashCode() {
     final int multiplier = 7;
     int result = 3;
@@ -94,10 +116,16 @@ public class CharArrayWrapper implements CharSequence, Comparable<CharArrayWrapp
     return result;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public String toString() {
     return new String(array, start, end - start);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int compareTo(@NotNull final CharArrayWrapper other) {
     final int n1 = this.length();

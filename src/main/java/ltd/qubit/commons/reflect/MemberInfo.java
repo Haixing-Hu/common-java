@@ -13,29 +13,29 @@ import java.lang.reflect.Member;
 import ltd.qubit.commons.lang.Argument;
 
 /**
- * Stores the information of member.
+ * 存储成员的信息。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class MemberInfo implements Comparable<MemberInfo> {
 
   /**
-   * The member.
+   * 成员。
    */
   public final Member member;
 
   /**
-   * The depth of the member in the specified class.
+   * 成员在指定类中的深度。
    */
   public final int depth;
 
   /**
-   * Constructs a {@link MemberInfo}.
+   * 构造一个 {@link MemberInfo}。
    *
    * @param member
-   *          a member.
+   *          一个成员。
    * @param depth
-   *          the depth of the member in the specified class.
+   *          成员在指定类中的深度。
    */
   public MemberInfo(final Member member, final int depth) {
     this.member = Argument.requireNonNull("member", member);
@@ -43,15 +43,14 @@ public final class MemberInfo implements Comparable<MemberInfo> {
   }
 
   /**
-   * Compares this {@link MemberInfo} with the other one.
+   * 将此 {@link MemberInfo} 与另一个进行比较。
    * <p>
-   * The function will firstly compare the depth of two {@link MemberInfo}, and
-   * the one with shallower depth will be smaller; if the depths of two
-   * {@link MemberInfo} are the same, the function then lexicographically
-   * compare the names of the members of two {@link MemberInfo}.
+   * 此函数首先比较两个 {@link MemberInfo} 的深度，深度较浅的会被认为更小；
+   * 如果两个 {@link MemberInfo} 的深度相同，则函数会按字典序比较两个
+   * {@link MemberInfo} 的成员名称。
    *
    * @param other
-   *          the other {@link MemberInfo} object.
+   *          另一个 {@link MemberInfo} 对象。
    */
   @Override
   public int compareTo(final MemberInfo other) {

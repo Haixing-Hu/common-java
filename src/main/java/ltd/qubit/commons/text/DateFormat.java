@@ -19,27 +19,25 @@ import static ltd.qubit.commons.lang.Argument.requireIndexInCloseRange;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * The {@link DateFormat} is used to parse and format {@link Date} values.
+ * {@link DateFormat}用于解析和格式化{@link Date}值。
  * <p>
- * This class is similar to the {@link SimpleDateFormat} class, except
- * that it provides more convenient parsing and formatting functions.
+ * 这个类类似于{@link SimpleDateFormat}类，但它提供了更方便的解析和格式化函数。
  * </p>
  * <p>
- * The implementation of this class copies from the source code of the
- * {@link SimpleDateFormat} class.
+ * 这个类的实现复制自{@link SimpleDateFormat}类的源代码。
  * </p>
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class DateFormat {
 
   /**
-   * The default date format pattern.
+   * 默认日期格式模式。
    */
   public static final String DEFAULT_PATTERN = DateUtils.DEFAULT_DATETIME_PATTERN;
 
   /**
-   * The default locale of dates.
+   * 日期的默认区域设置。
    */
   public static final Locale DEFAULT_LOCALE = Locale.US;
 
@@ -50,18 +48,37 @@ public final class DateFormat {
   private final ParsingPosition position;
   private boolean skipBlanks;
 
+  /**
+   * 使用默认模式和区域设置构造DateFormat。
+   */
   public DateFormat() {
     this(DEFAULT_PATTERN, DEFAULT_LOCALE);
   }
 
+  /**
+   * 使用指定区域设置构造DateFormat。
+   *
+   * @param locale 区域设置
+   */
   public DateFormat(final Locale locale) {
     this(DEFAULT_PATTERN, locale);
   }
 
+  /**
+   * 使用指定模式构造DateFormat。
+   *
+   * @param pattern 日期格式模式
+   */
   public DateFormat(final String pattern) {
     this(pattern, DEFAULT_LOCALE);
   }
 
+  /**
+   * 使用指定模式和时区构造DateFormat。
+   *
+   * @param pattern 日期格式模式
+   * @param timeZone 时区
+   */
   public DateFormat(final String pattern, final TimeZone timeZone) {
     this.pattern = requireNonNull("pattern", pattern);
     format = new SimpleDateFormat(pattern);
@@ -70,6 +87,12 @@ public final class DateFormat {
     skipBlanks = DEFAULT_SKIP_BLANKS;
   }
 
+  /**
+   * 使用指定模式和区域设置构造DateFormat。
+   *
+   * @param pattern 日期格式模式
+   * @param locale 区域设置
+   */
   public DateFormat(final String pattern, final Locale locale) {
     this.pattern = requireNonNull("pattern", pattern);
     format = new SimpleDateFormat(pattern, requireNonNull("locale", locale));
@@ -77,6 +100,13 @@ public final class DateFormat {
     skipBlanks = DEFAULT_SKIP_BLANKS;
   }
 
+  /**
+   * 使用指定模式、区域设置和时区构造DateFormat。
+   *
+   * @param pattern 日期格式模式
+   * @param locale 区域设置
+   * @param timeZone 时区
+   */
   public DateFormat(final String pattern, final Locale locale, final TimeZone timeZone) {
     this.pattern = requireNonNull("pattern", pattern);
     format = new SimpleDateFormat(pattern, requireNonNull("locale", locale));
@@ -85,10 +115,20 @@ public final class DateFormat {
     skipBlanks = DEFAULT_SKIP_BLANKS;
   }
 
+  /**
+   * 获取日期格式模式。
+   *
+   * @return 日期格式模式
+   */
   public String getPattern() {
     return pattern;
   }
 
+  /**
+   * 设置日期格式模式。
+   *
+   * @param pattern 新的日期格式模式
+   */
   public void setPattern(final String pattern) {
     requireNonNull("pattern", pattern);
     if (! this.pattern.equals(pattern)) {
@@ -96,28 +136,46 @@ public final class DateFormat {
     }
   }
 
+  /**
+   * 获取时区。
+   *
+   * @return 时区
+   */
   public TimeZone getTimeZone() {
     return format.getTimeZone();
   }
 
+  /**
+   * 设置时区。
+   *
+   * @param timeZone 新的时区
+   */
   public void setTimeZone(final TimeZone timeZone) {
     format.setTimeZone(requireNonNull("timeZone", timeZone));
   }
 
+  /**
+   * 获取是否跳过空白字符。
+   *
+   * @return 如果跳过空白字符则返回true，否则返回false
+   */
   public boolean isSkipBlanks() {
     return skipBlanks;
   }
 
+  /**
+   * 设置是否跳过空白字符。
+   *
+   * @param skipBlanks 是否跳过空白字符
+   */
   public void setSkipBlanks(final boolean skipBlanks) {
     this.skipBlanks = skipBlanks;
   }
 
   /**
-   * Returns the beginning date of the 100-year period 2-digit years are
-   * interpreted as being within.
+   * 返回解释2位数年份所在的100年期间的开始日期。
    *
-   * @return the start of the 100-year period into which two digit years are
-   *         parsed
+   * @return 解析2位数年份的100年期间的开始时间
    * @see #set2DigitYearStart
    */
   public Date get2DigitYearStart() {
@@ -125,82 +183,107 @@ public final class DateFormat {
   }
 
   /**
-   * Sets the 100-year period 2-digit years will be interpreted as being in to
-   * begin on the date the user specifies.
+   * 设置2位数年份将被解释为所在的100年期间的开始日期。
    *
    * @param startDate
-   *          During parsing, two digit years will be placed in the range
-   *          {@code startDate} to {@code startDate + 100 years}.
+   *          在解析期间，2位数年份将被放置在{@code startDate}到{@code startDate + 100年}的范围内。
    * @see #get2DigitYearStart
    */
   public void set2DigitYearStart(final Date startDate) {
     format.set2DigitYearStart(startDate);
   }
 
+  /**
+   * 获取解析位置对象。
+   *
+   * @return 解析位置对象
+   */
   public ParsingPosition getParsePosition() {
     return position;
   }
 
+  /**
+   * 检查解析是否成功。
+   *
+   * @return 如果解析成功则返回true，否则返回false
+   */
   public boolean success() {
     return position.success();
   }
 
+  /**
+   * 检查解析是否失败。
+   *
+   * @return 如果解析失败则返回true，否则返回false
+   */
   public boolean fail() {
     return position.fail();
   }
 
+  /**
+   * 获取解析索引。
+   *
+   * @return 解析索引
+   */
   public int getParseIndex() {
     return position.getIndex();
   }
 
+  /**
+   * 获取错误索引。
+   *
+   * @return 错误索引
+   */
   public int getErrorIndex() {
     return position.getErrorIndex();
   }
 
+  /**
+   * 获取错误代码。
+   *
+   * @return 错误代码
+   */
   public int getErrorCode() {
     return position.getErrorCode();
   }
 
   /**
-   * Parses a {@link Date} value.
+   * 解析{@link Date}值。
    *
    * @param str
-   *          the text segment to be parsed. The parsing starts from the
-   *          character at the index {@code 0} and stops at the character
-   *          before the index {@code str.length()}.
-   * @return the parsed value.
+   *          要解析的文本段。解析从索引{@code 0}处的字符开始，
+   *          到索引{@code str.length()}之前的字符停止。
+   * @return 解析的值。
    */
   public Date parse(final String str) {
     return parse(str, 0, str.length());
   }
 
   /**
-   * Parses a {@link Date} value.
+   * 解析{@link Date}值。
    *
    * @param str
-   *          the text segment to be parsed. The parsing starts from the
-   *          character at the index {@code startIndex} and stops at the
-   *          character before the index {@code str.length()}.
+   *          要解析的文本段。解析从索引{@code startIndex}处的字符开始，
+   *          到索引{@code str.length()}之前的字符停止。
    * @param startIndex
-   *          the index where to start parsing.
-   * @return the parsed value.
+   *          开始解析的索引。
+   * @return 解析的值。
    */
   public Date parse(final String str, final int startIndex) {
     return parse(str, startIndex, str.length());
   }
 
   /**
-   * Parses a {@link Date} value.
+   * 解析{@link Date}值。
    *
    * @param str
-   *          the text segment to be parsed. The parsing starts from the
-   *          character at the index {@code startIndex} and stops at the
-   *          character before the index {@code endIndex}.
+   *          要解析的文本段。解析从索引{@code startIndex}处的字符开始，
+   *          到索引{@code endIndex}之前的字符停止。
    * @param startIndex
-   *          the index where to start parsing.
+   *          开始解析的索引。
    * @param endIndex
-   *          the index where to end parsing.
-   * @return the parsed value.
+   *          结束解析的索引。
+   * @return 解析的值。
    */
   public Date parse(final String str, final int startIndex,
       final int endIndex) {
@@ -224,11 +307,11 @@ public final class DateFormat {
   }
 
   /**
-   * Formats a {@link Date} value.
+   * 格式化{@link Date}值。
    *
    * @param value
-   *          the value to be formated.
-   * @return the formatted result.
+   *          要格式化的值。
+   * @return 格式化结果。
    */
   public String format(final Date value) {
     requireNonNull("value", value);
@@ -236,13 +319,13 @@ public final class DateFormat {
   }
 
   /**
-   * Formats a {@link Date} value.
+   * 格式化{@link Date}值。
    *
    * @param value
-   *          the value to be formated.
+   *          要格式化的值。
    * @param output
-   *          the {@link StringBuilder} where to append the formatted result.
-   * @return the output {@link StringBuilder}.
+   *          用于追加格式化结果的{@link StringBuilder}。
+   * @return 输出的{@link StringBuilder}。
    */
   public StringBuilder format(final Date value, final StringBuilder output) {
     requireNonNull("value", value);

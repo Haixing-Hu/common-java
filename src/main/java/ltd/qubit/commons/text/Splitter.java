@@ -47,53 +47,140 @@ import static ltd.qubit.commons.text.impl.SplitterImpl.splitEachCodePoint;
 import static ltd.qubit.commons.text.impl.SplitterImpl.splitLines;
 
 /**
- * A class used to split strings.
+ * 用于分割字符串的类。
  *
- * <p>Usage examples:</p>
+ * <p>此类提供了灵活的字符串分割功能，支持按字符、Unicode 代码点、子字符串、字符类型、
+ * 换行符等多种方式分割字符串，并可配置是否剥离空白、忽略空字符串、忽略大小写等选项。</p>
+ *
+ * <p>使用示例：</p>
  * <pre><code>
+ * // 按单个字符分割
+ * List&lt;String&gt; result = new Splitter().byChar(',').split("a,b,c");
+ * // 结果: ["a", "b", "c"]
  *
- * final List&lt;String&gt; r1 = new Splitter()
- *    .byChar(',')
- *    .strip(true)
- *    .ignoreEmpty(false)
- *    .split(str);
- * final List&lt;String&gt; r2 = new Splitter()
- *    .byCharsIn([',', '.', ' '])
- *    .strip(false)
- *    .ignoreEmpty(true)
- *    .split(str);
- * final List&lt;String&gt; r3 = new Splitter()
- *    .byCharsIn(",.; ")
- *    .strip(true)
- *    .ignoreEmpty(true)
- *    .split(str);
- * final List&lt;String&gt; r3 = new Splitter()
- *    .onCodePointIn(",:&#92;uD83D&#92;uDD6E.") // &#92;uD83D&#92;uDD6E is 🕮
- *    .strip(true)
- *    .ignoreEmpty(true)
- *    .split(str);
- * final List&lt;String&gt; r4 = new Splitter()
- *    .onCodePointSatisfy(filter)
- *    .strip(true)
- *    .ignoreEmpty(true)
- *    .split(str);
- * final List&lt;String&gt; r5 = new Splitter()
- *    .onSubstring("xyz")
- *    .strip(true)
- *    .ignoreEmpty(true)
- *    .ignoreCase(true)
- *    .split(str);
- * final List&lt;String&gt; r6 = new Splitter()
- *    .onLineBreaks()
- *    .ignoreEmpty(true)
- *    .split(str);
- * final List&lt;String&gt; r7 = new Splitter()
- *    .byCharTypes()
- *    .camelCase(true)
- *    .split(str);
+ * // 按字符数组分割，剥离空白并忽略空字符串
+ * List&lt;String&gt; result = new Splitter()
+ *     .byCharsIn(',', ';', ' ')
+ *     .strip(true)
+ *     .ignoreEmpty(true)
+ *     .split("a, b ; c   ; ; d");
+ * // 结果: ["a", "b", "c", "d"]
+ *
+ * // 按字符序列分割
+ * List&lt;String&gt; result = new Splitter().byCharsIn(",.;").split("a,b.c;d");
+ * // 结果: ["a", "b", "c", "d"]
+ *
+ * // 按条件分割（如按数字分割）
+ * List&lt;String&gt; result = new Splitter()
+ *     .byCharsSatisfy(Character::isDigit)
+ *     .split("abc123def456ghi");
+ * // 结果: ["abc", "", "", "def", "", "", "ghi"]
+ *
+ * // 按 Unicode 代码点分割（表情符号）
+ * List&lt;String&gt; result = new Splitter()
+ *     .byCodePoint(0x1F600) // 😀
+ *     .split("Hello😀World😀Test");
+ * // 结果: ["Hello", "World", "Test"]
+ *
+ * // 按子字符串分割
+ * List&lt;String&gt; result = new Splitter()
+ *     .bySubstring("and")
+ *     .split("cats and dogs and birds");
+ * // 结果: ["cats ", " dogs ", " birds"]
+ *
+ * // 按子字符串分割（忽略大小写）
+ * List&lt;String&gt; result = new Splitter()
+ *     .bySubstring("AND")
+ *     .ignoreCase(true)
+ *     .split("cats and dogs AND birds");
+ * // 结果: ["cats ", " dogs ", " birds"]
+ *
+ * // 按空白字符分割
+ * List&lt;String&gt; result = new Splitter().byWhitespaces().split("a  b\tc\nd");
+ * // 结果: ["a", "b", "c", "d"]
+ *
+ * // 按空白字符分割（包括不可打印字符）
+ * List&lt;String&gt; result = new Splitter().byBlanks().split("a\u007Fb\u007F c");
+ * // 结果: ["a", "b", "c"]
+ *
+ * // 按字符类型分割
+ * List&lt;String&gt; result = new Splitter().byCharTypes().split("abc123def");
+ * // 结果: ["abc", "123", "def"]
+ *
+ * // 按字符类型分割（驼峰命名法）
+ * List&lt;String&gt; result = new Splitter()
+ *     .byCharTypes()
+ *     .camelCase(true)
+ *     .split("fooBarBaz");
+ * // 结果: ["foo", "Bar", "Baz"]
+ *
+ * // 按换行符分割
+ * List&lt;String&gt; result = new Splitter().toLines().split("line1\nline2\r\nline3");
+ * // 结果: ["line1", "line2", "line3"]
+ *
+ * // 分割为单个字符
+ * List&lt;String&gt; result = new Splitter().toChars().split("abc");
+ * // 结果: ["a", "b", "c"]
+ *
+ * // 分割为 Unicode 代码点
+ * List&lt;String&gt; result = new Splitter().toCodePoints().split("a😀b");
+ * // 结果: ["a", "😀", "b"]
+ *
+ * // 复杂示例：CSV 解析
+ * List&lt;String&gt; result = new Splitter()
+ *     .byChar(',')
+ *     .strip(true)           // 剥离每个字段的空白
+ *     .ignoreEmpty(false)    // 保留空字段
+ *     .split("name, age, , city");
+ * // 结果: ["name", "age", "", "city"]
+ *
+ * // 复杂示例：路径分割
+ * List&lt;String&gt; result = new Splitter()
+ *     .byCharsIn('/', '\\')  // 支持不同操作系统的路径分隔符
+ *     .ignoreEmpty(true)     // 忽略连续分隔符产生的空字符串
+ *     .split("/home//user/documents/");
+ * // 结果: ["home", "user", "documents"]
+ *
+ * // 复杂示例：标签解析
+ * List&lt;String&gt; result = new Splitter()
+ *     .byCharsIn(',', ';', '|')
+ *     .strip(true)
+ *     .ignoreEmpty(true)
+ *     .split("tag1, tag2; tag3 | tag4 ;;; tag5");
+ * // 结果: ["tag1", "tag2", "tag3", "tag4", "tag5"]
+ *
+ * // 使用现有列表追加结果
+ * List&lt;String&gt; existingList = new ArrayList&lt;&gt;();
+ * existingList.add("prefix");
+ * List&lt;String&gt; result = new Splitter()
+ *     .byChar(',')
+ *     .split("a,b,c", existingList);
+ * // 结果: ["prefix", "a", "b", "c"]
+ *
+ * // 处理 null 输入
+ * List&lt;String&gt; result = new Splitter().byChar(',').split(null);
+ * // 结果: []
+ *
+ * // 处理空字符串
+ * List&lt;String&gt; result = new Splitter().byChar(',').split("");
+ * // 结果: [""]
+ *
+ * List&lt;String&gt; result = new Splitter()
+ *     .byChar(',')
+ *     .ignoreEmpty(true)
+ *     .split("");
+ * // 结果: []
+ *
+ * // 链式配置示例
+ * List&lt;String&gt; result = new Splitter()
+ *     .byCharsIn(" \t\n")    // 按空白字符分割
+ *     .strip(true)           // 剥离结果
+ *     .ignoreEmpty(true)     // 忽略空字符串
+ *     .split("  hello   world  \n  test  ");
+ * // 结果: ["hello", "world", "test"]
  * </code></pre>
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class Splitter {
 
@@ -138,10 +225,9 @@ public class Splitter {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by the
-   * specified character.
+   * 将提供的字符串分割为子字符串列表，以指定字符作为分隔符。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    * new Splitter().byChar(*).split(null)       = {}
    * new Splitter().byChar(*).split("")         = {""}
@@ -157,9 +243,9 @@ public class Splitter {
    * </pre>
    *
    * @param separator
-   *     the specified separator character.
+   *     指定的分隔符字符。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter byChar(final char separator) {
     this.clearStrategies();
@@ -168,14 +254,12 @@ public class Splitter {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by all
-   * characters except the specified one.
+   * 将提供的字符串分割为子字符串列表，以除指定字符外的所有字符作为分隔符。
    *
    * @param separator
-   *     the specified character. All characters except this one will be used
-   *     as the separator.
+   *     指定字符。除此字符外的所有字符都将用作分隔符。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter byCharNotEqual(final char separator) {
     this.clearStrategies();
@@ -184,10 +268,9 @@ public class Splitter {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by the
-   * character in the specified array.
+   * 将提供的字符串分割为子字符串列表，以指定数组中的字符作为分隔符。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    * new Splitter().byChar(*).split(null)       = {}
    * new Splitter().byChar(*).split("")         = {""}
@@ -201,10 +284,9 @@ public class Splitter {
    * </pre>
    *
    * @param chars
-   *     the array of separator characters. A {@code null} value or empty array
-   *     indicates that no character will be used as the separator.
+   *     分隔符字符数组。{@code null} 值或空数组表示不使用任何字符作为分隔符。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter byCharsIn(@Nullable final char[] chars) {
     this.clearStrategies();
@@ -217,10 +299,9 @@ public class Splitter {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by
-   * characters in the specified sequence.
+   * 将提供的字符串分割为子字符串列表，以指定序列中的字符作为分隔符。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    *
    *
@@ -236,10 +317,9 @@ public class Splitter {
    * </pre>
    *
    * @param chars
-   *     the sequence of separator characters. A {@code null} value or empty
-   *     sequence indicates that no character will be used as the separator.
+   *     分隔符字符序列。{@code null} 值或空序列表示不使用任何字符作为分隔符。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter byCharsIn(@Nullable final CharSequence chars) {
     this.clearStrategies();
@@ -252,10 +332,9 @@ public class Splitter {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by
-   * characters not in the specified array.
+   * 将提供的字符串分割为子字符串列表，以不在指定数组中的字符作为分隔符。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    * new Splitter().byChar(*).split(null)       = {}
    * new Splitter().byChar(*).split("")         = {""}
@@ -269,11 +348,10 @@ public class Splitter {
    * </pre>
    *
    * @param chars
-   *     the specified array of characters. The string will be split by
-   *     characters not in this array. A {@code null} value or empty array
-   *     indicates that any character will be used as the separator.
+   *     指定的字符数组。字符串将以不在此数组中的字符进行分割。
+   *     {@code null} 值或空数组表示任何字符都将用作分隔符。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter byCharsNotIn(@Nullable final char[] chars) {
     this.clearStrategies();
@@ -286,13 +364,10 @@ public class Splitter {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by
-   * characters not in the specified sequence.
+   * 将提供的字符串分割为子字符串列表，以不在指定序列中的字符作为分隔符。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
-   *
-   *
    * new Splitter().byChar(*).split(null)       = {}
    * new Splitter().byChar(*).split("")         = {""}
    * new Splitter().byChar(*).ignoreEmpty(true).split("") = {}
@@ -305,11 +380,10 @@ public class Splitter {
    * </pre>
    *
    * @param chars
-   *     the specified sequence of characters. The string will be split by
-   *     characters not in this sequence. A {@code null} value or empty sequence
-   *     indicates that any character will be used as the separator.
+   *     指定的字符序列。字符串将以不在此序列中的字符进行分割。
+   *     {@code null} 值或空序列表示任何字符都将用作分隔符。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter byCharsNotIn(@Nullable final CharSequence chars) {
     this.clearStrategies();
@@ -322,15 +396,12 @@ public class Splitter {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by
-   * characters satisfying the specified filter.
+   * 将提供的字符串分割为子字符串列表，以满足指定过滤器的字符作为分隔符。
    *
    * @param filter
-   *     the specified filter accepting the characters used as separators. A
-   *     {@code null} value indicates that no character will be used as
-   *     the separator.
+   *     指定的过滤器，接受用作分隔符的字符。{@code null} 值表示不使用任何字符作为分隔符。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter byCharsSatisfy(final CharFilter filter) {
     this.clearStrategies();
@@ -343,15 +414,12 @@ public class Splitter {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by
-   * characters that does not satisfy the specified filter.
+   * 将提供的字符串分割为子字符串列表，以不满足指定过滤器的字符作为分隔符。
    *
    * @param filter
-   *     the specified filter rejecting the characters used as separators. A
-   *     {@code null} value indicates that any character will be used as
-   *     the separator.
+   *     指定的过滤器，拒绝用作分隔符的字符。{@code null} 值表示任何字符都将用作分隔符。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter byCharsNotSatisfy(final CharFilter filter) {
     this.clearStrategies();
@@ -364,10 +432,9 @@ public class Splitter {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by the
-   * specified Unicode code point.
+   * 将提供的字符串分割为子字符串列表，以指定的 Unicode 代码点作为分隔符。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre><code>
    * new Splitter().byChar(*).split(null)       = {}
    * new Splitter().byChar(*).split("")         = {""}
@@ -380,9 +447,7 @@ public class Splitter {
    * new Splitter().byChar(".,:").ignoreEmpty(false).split("a  b c")  = {"a", "", "b", "c", "d"}
    * </code></pre>
    *
-   * <p>Note that if the specified character sequence contains an Unicode
-   * character outside the BMP, the splitter will split the string according
-   * to the Unicode code point instead of the code unit. For example:</p>
+   * <p>注意，如果指定的字符序列包含BMP外的Unicode字符，分割器将根据Unicode代码点而不是代码单元来分割字符串。例如：</p>
    * <pre><code>
    * final String separators = ",:&#92;uD83D&#92;uDD6E.";
    * final Splitter splitter = new Splitter().onCodePointIn(separators);
@@ -394,9 +459,9 @@ public class Splitter {
    * </code></pre>
    *
    * @param codePoint
-   *     the specified Unicode code point used as the separator.
+   *     用作分隔符的指定 Unicode 代码点。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter byCodePoint(final int codePoint) {
     this.clearStrategies();
@@ -405,10 +470,9 @@ public class Splitter {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by the
-   * specified Unicode code point.
+   * 将提供的字符串分割为子字符串列表，以指定的 Unicode 代码点作为分隔符。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre><code>
    * new Splitter().byChar(*).split(null)       = {}
    * new Splitter().byChar(*).split("")         = {""}
@@ -421,9 +485,7 @@ public class Splitter {
    * new Splitter().byChar(".,:").ignoreEmpty(false).split("a  b c")  = {"a", "", "b", "c", "d"}
    * </code></pre>
    *
-   * <p>Note that if the specified character sequence contains an Unicode
-   * character outside the BMP, the splitter will split the string according
-   * to the Unicode code point instead of the code unit. For example:</p>
+   * <p>注意，如果指定的字符序列包含BMP外的Unicode字符，分割器将根据Unicode代码点而不是代码单元来分割字符串。例如：</p>
    * <pre><code>
    * final String separators = ",:&#92;uD83D&#92;uDD6E.";
    * final Splitter splitter = new Splitter().onCodePointIn(separators);
@@ -435,11 +497,9 @@ public class Splitter {
    * </code></pre>
    *
    * @param codePoint
-   *     the character sequence containing the Unicode character used as the
-   *     separator. A {@code null} or empty value indicates that no Unicode code
-   *     point will be used as the separator.
+   *     包含用作分隔符的 Unicode 字符的字符序列。{@code null} 值或空值表示不使用任何 Unicode 代码点作为分隔符。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter byCodePoint(@Nullable final CharSequence codePoint) {
     this.clearStrategies();
@@ -452,14 +512,12 @@ public class Splitter {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by all
-   * Unicode code points except the specified one.
+   * 将提供的字符串分割为子字符串列表，以除指定代码点外的所有 Unicode 代码点作为分隔符。
    *
    * @param codePoint
-   *     the specified Unicode code point. All Unicode code point except this
-   *     one will be used as the separator.
+   *     指定的 Unicode 代码点。除此代码点外的所有 Unicode 代码点都将用作分隔符。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter byCodePointNotEqual(final int codePoint) {
     this.clearStrategies();
@@ -468,16 +526,13 @@ public class Splitter {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by all
-   * Unicode code points except the specified one.
+   * 将提供的字符串分割为子字符串列表，以除指定代码点外的所有 Unicode 代码点作为分隔符。
    *
    * @param codePoint
-   *     the character sequence containing the specified Unicode code point.
-   *     All Unicode code point except the specified one will be used as the
-   *     separator. A {@code null} or empty value indicates that all Unicode
-   *     code points will be used as the separator.
+   *     包含指定 Unicode 代码点的字符序列。除指定代码点外的所有 Unicode 代码点都将用作分隔符。
+   *     {@code null} 值或空值表示所有 Unicode 代码点都将用作分隔符。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter byCodePointNotEqual(@Nullable final CharSequence codePoint) {
     this.clearStrategies();
@@ -490,15 +545,12 @@ public class Splitter {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by the
-   * Unicode code point in the specified array.
+   * 将提供的字符串分割为子字符串列表，以指定数组中的 Unicode 代码点作为分隔符。
    *
    * @param codePoints
-   *     the specified array containing the Unicode code points used as
-   *     separators. A {@code null} or empty value indicates that no Unicode
-   *     code point will be used as the separator.
+   *     包含用作分隔符的 Unicode 代码点的指定数组。{@code null} 值或空值表示不使用任何 Unicode 代码点作为分隔符。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter byCodePointsIn(@Nullable final int[] codePoints) {
     this.clearStrategies();
@@ -511,10 +563,9 @@ public class Splitter {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by the
-   * Unicode code points in the specified character sequence.
+   * 将提供的字符串分割为子字符串列表，以指定字符序列中的 Unicode 代码点作为分隔符。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre><code>
    * new Splitter().byChar(*).split(null)       = {}
    * new Splitter().byChar(*).split("")         = {""}
@@ -527,9 +578,7 @@ public class Splitter {
    * new Splitter().byChar(".,:").ignoreEmpty(false).split("a  b c")  = {"a", "", "b", "c", "d"}
    * </code></pre>
    *
-   * <p>Note that if the specified character sequence contains an Unicode
-   * character outside the BMP, the splitter will split the string according
-   * to the Unicode code point instead of the code unit. For example:</p>
+   * <p>注意，如果指定的字符序列包含BMP外的Unicode字符，分割器将根据Unicode代码点而不是代码单元来分割字符串。例如：</p>
    * <pre><code>
    * final String separators = ",:&#92;uD83D&#92;uDD6E.";
    * final Splitter splitter = new Splitter().onCodePointIn(separators);
@@ -541,11 +590,9 @@ public class Splitter {
    * </code></pre>
    *
    * @param codePoints
-   *     the specified character sequence containing the Unicode code points
-   *     used as separators. A {@code null} or empty value indicates that no
-   *     Unicode code point will be used as the separator.
+   *     包含用作分隔符的 Unicode 代码点的指定字符序列。{@code null} 值或空值表示不使用任何 Unicode 代码点作为分隔符。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter byCodePointsIn(@Nullable final CharSequence codePoints) {
     this.clearStrategies();
@@ -558,15 +605,13 @@ public class Splitter {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by
-   * Unicode code points not in the specified array.
+   * 将提供的字符串分割为子字符串列表，以不在指定数组中的 Unicode 代码点作为分隔符。
    *
    * @param codePoints
-   *     the specified Unicode code points array. The string will be split by
-   *     Unicode code points not in this array. A {@code null} or empty value
-   *     indicates that all Unicode code points will be used as separators.
+   *     指定的 Unicode 代码点数组。字符串将以不在此数组中的 Unicode 代码点进行分割。
+   *     {@code null} 值或空值表示所有 Unicode 代码点都将用作分隔符。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter byCodePointsNotIn(@Nullable final int[] codePoints) {
     this.clearStrategies();
@@ -579,15 +624,13 @@ public class Splitter {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by
-   * Unicode code points not in the specified sequence.
+   * 将提供的字符串分割为子字符串列表，以不在指定序列中的 Unicode 代码点作为分隔符。
    *
    * @param codePoints
-   *     the specified Unicode code points sequence. The string will be split by
-   *     Unicode code points not in this sequence. A {@code null} or empty value
-   *     indicates that all Unicode code points will be used as separators.
+   *     指定的 Unicode 代码点序列。字符串将以不在此序列中的 Unicode 代码点进行分割。
+   *     {@code null} 值或空值表示所有 Unicode 代码点都将用作分隔符。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter byCodePointsNotIn(@Nullable final CharSequence codePoints) {
     this.clearStrategies();
@@ -600,15 +643,12 @@ public class Splitter {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by
-   * Unicode code points satisfying the specified filter.
+   * 将提供的字符串分割为子字符串列表，以满足指定过滤器的 Unicode 代码点作为分隔符。
    *
    * @param filter
-   *     the specified filter accepting the Unicode code points used as
-   *     separators. A {@code null} value indicates that no Unicode code point
-   *     will be used as the separator.
+   *     指定的过滤器，接受用作分隔符的 Unicode 代码点。{@code null} 值表示不使用任何 Unicode 代码点作为分隔符。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter byCodePointsSatisfy(@Nullable final CodePointFilter filter) {
     this.clearStrategies();
@@ -621,15 +661,12 @@ public class Splitter {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by
-   * Unicode code points that not satisfies the specified filter.
+   * 将提供的字符串分割为子字符串列表，以不满足指定过滤器的 Unicode 代码点作为分隔符。
    *
    * @param filter
-   *     the specified filter rejecting the Unicode code points used as
-   *     separators. A {@code null} value indicates that all Unicode code
-   *     points will be used as separators.
+   *     指定的过滤器，拒绝用作分隔符的 Unicode 代码点。{@code null} 值表示所有 Unicode 代码点都将用作分隔符。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter byCodePointsNotSatisfy(@Nullable final CodePointFilter filter) {
     this.clearStrategies();
@@ -642,15 +679,12 @@ public class Splitter {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by the
-   * specified substring.
+   * 将提供的字符串分割为子字符串列表，以指定的子字符串作为分隔符。
    *
    * @param separator
-   *     the specified substring used as the separator. A {@code null} or empty
-   *     value will cause the source string to be split such that each Unicode
-   *     code point become a single substring.
+   *     用作分隔符的指定子字符串。{@code null} 值或空值会导致源字符串被分割，使每个 Unicode 代码点成为单个子字符串。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter bySubstring(@Nullable final CharSequence separator) {
     this.clearStrategies();
@@ -659,10 +693,9 @@ public class Splitter {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by
-   * whitespace characters.
+   * 将提供的字符串分割为子字符串列表，以空白字符作为分隔符。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre><code>
    * new Splitter().byWhitespaces().split(null)       = null
    * new Splitter().byWhitespaces().split("")         = null
@@ -671,13 +704,13 @@ public class Splitter {
    * new Splitter().byWhitespaces().split(" abc ")    = {"abc"}
    * new Splitter().byWhitespaces().split("&#92;f a&#92;tbc ")   = {"a", "bc"}
    * new Splitter().byWhitespaces().split("&#92;f abc ")     = {"abc"}
-   * // the following examples showed the difference between byWhitespaces() and byBlanks()
+   * // 以下示例显示了 byWhitespaces() 和 byBlanks() 之间的区别
    * new Splitter().byWhitespaces().split("a&#92;u007Fb&#92;u007F .c") = {"a&#92;u007Fb&#92;u007F", ".c"}
    * new Splitter().byWhitespaces().strip(true).split("a&#92;u007Fb&#92;u007F .c") = {"a&#92;u007Fb", ".c"}
    * </code></pre>
    *
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    * @see Character#isWhitespace(int)
    */
   public Splitter byWhitespaces() {
@@ -687,10 +720,9 @@ public class Splitter {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by blank
-   * characters.
+   * 将提供的字符串分割为子字符串列表，以空白字符作为分隔符。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre><code>
    * new Splitter().byBlanks().split(null)       = null
    * new Splitter().byBlanks().split("")         = null
@@ -699,13 +731,13 @@ public class Splitter {
    * new Splitter().byBlanks().split(" abc ")    = {"abc"}
    * new Splitter().byBlanks().split("&#92;f a&#92;tbc ")   = {"a", "bc"}
    * new Splitter().byBlanks().split("&#92;f abc ")     = {"abc"}
-   * // the following examples showed the difference between byWhitespaces() and byBlanks()
+   * // 以下示例显示了 byWhitespaces() 和 byBlanks() 之间的区别
    * new Splitter().byBlanks().split("a&#92;u007Fb&#92;u007F .c") = {"a", "b", ".c"}
    * new Splitter().byBlanks().strip(true).split("a&#92;u007Fb&#92;u007F .c") = {"a", "b", ".c"}
    * </code></pre>
    *
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    * @see CharUtils#isBlank(int)
    */
   public Splitter byBlanks() {
@@ -715,19 +747,15 @@ public class Splitter {
   }
 
   /**
-   * Splits a string by Character type as returned by
-   * {@code java.lang.Character.getType(char)}.
+   * 根据 {@code java.lang.Character.getType(char)} 返回的字符类型分割字符串。
    *
-   * <p>Groups of contiguous characters of the same type are returned as
-   * complete tokens, with the following exception:
+   * <p>相同类型的连续字符组作为完整的标记返回，但有以下例外：
    *
-   * <p>If {@code camelCase} is set to {@code true}, the character of type
-   * {@code Character.UPPERCASE_LETTER}, if any, immediately preceding a token
-   * of type {@code Character.LOWERCASE_LETTER} will belong to the following
-   * token rather than to the preceding, if any, {@code Character.UPPERCASE_LETTER}
-   * token.
+   * <p>如果 {@code camelCase} 设置为 {@code true}，任何紧邻 {@code Character.LOWERCASE_LETTER} 类型标记前的
+   * {@code Character.UPPERCASE_LETTER} 类型字符（如果有）将属于后续标记，而不是属于前面的
+   * {@code Character.UPPERCASE_LETTER} 标记（如果有）。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    * new Splitter().byCharTypes().split(null)                 = {}
    * new Splitter().byCharTypes().split("")                   = {""}
@@ -746,7 +774,7 @@ public class Splitter {
    * </pre>
    *
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    * @see #camelCase(boolean)
    */
   public Splitter byCharTypes() {
@@ -756,13 +784,12 @@ public class Splitter {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by line
-   * breaks.
+   * 将提供的字符串分割为子字符串列表，以换行符作为分隔符。
    *
-   * <p>The line break may be "\r", "\r\n", or "\n".</p>
+   * <p>换行符可能是 "\r"、"\r\n" 或 "\n"。</p>
    *
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter toLines() {
     this.clearStrategies();
@@ -771,10 +798,10 @@ public class Splitter {
   }
 
   /**
-   * Splits each character in a string into substrings.
+   * 将字符串中的每个字符分割为子字符串。
    *
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter toChars() {
     this.clearStrategies();
@@ -783,10 +810,10 @@ public class Splitter {
   }
 
   /**
-   * Splits each Unicode code points in a string into substrings.
+   * 将字符串中的每个 Unicode 代码点分割为子字符串。
    *
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter toCodePoints() {
     this.clearStrategies();
@@ -795,14 +822,14 @@ public class Splitter {
   }
 
   /**
-   * Sets whether to strip the split substrings.
+   * 设置是否剥离分割后的子字符串。
    *
-   * <p>The default value of this option is set to {@code false}.</p>
+   * <p>此选项的默认值设置为 {@code false}。</p>
    *
    * @param strip
-   *     whether to strip the split substrings.
+   *     是否剥离分割后的子字符串。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter strip(final boolean strip) {
     this.strip = strip;
@@ -810,14 +837,14 @@ public class Splitter {
   }
 
   /**
-   * Sets whether to ignore the empty substrings in the split result list.
+   * 设置是否在分割结果列表中忽略空子字符串。
    *
-   * <p>The default value of this option is set to {@code false}.</p>
+   * <p>此选项的默认值设置为 {@code false}。</p>
    *
    * @param ignoreEmpty
-   *     whether to ignore the empty substrings in the split result list.
+   *     是否在分割结果列表中忽略空子字符串。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter ignoreEmpty(final boolean ignoreEmpty) {
     this.ignoreEmpty = ignoreEmpty;
@@ -825,14 +852,14 @@ public class Splitter {
   }
 
   /**
-   * Sets whether to ignore the case while comparing the substrings.
+   * 设置在比较子字符串时是否忽略大小写。
    *
-   * <p>The default value of this option is set to {@code false}.</p>
+   * <p>此选项的默认值设置为 {@code false}。</p>
    *
    * @param ignoreCase
-   *     whether to ignore the case while comparing the substrings.
+   *     在比较子字符串时是否忽略大小写。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    */
   public Splitter ignoreCase(final boolean ignoreCase) {
     this.ignoreCase = ignoreCase;
@@ -840,16 +867,14 @@ public class Splitter {
   }
 
   /**
-   * Sets whether to use the camel-case strategy while splitting the string by
-   * character types.
+   * 设置在按字符类型分割字符串时是否使用驼峰命名法策略。
    *
-   * <p>The default value of this option is set to {@code false}.</p>
+   * <p>此选项的默认值设置为 {@code false}。</p>
    *
    * @param camelCase
-   *     whether to use the camel-case strategy while splitting the string by
-   *     character types.
+   *     在按字符类型分割字符串时是否使用驼峰命名法策略。
    * @return
-   *     the reference to this {@link Splitter} object.
+   *     此 {@link Splitter} 对象的引用。
    * @see #byCharTypes()
    */
   public Splitter camelCase(final boolean camelCase) {
@@ -858,15 +883,12 @@ public class Splitter {
   }
 
   /**
-   * Split the specified string into substrings, according to the previous
-   * settings of this {@link Splitter} object.
+   * 根据此 {@link Splitter} 对象的先前设置，将指定的字符串分割为子字符串。
    *
    * @param str
-   *     the specified string to be split. If it is {@code null}, returns an
-   *     empty list.
+   *     要分割的指定字符串。如果为 {@code null}，返回空列表。
    * @return
-   *     the list of split substrings, which cannot be {@code null}, but it may
-   *     be an empty list.
+   *     分割后的子字符串列表，不能为 {@code null}，但可能是空列表。
    */
   @NotNull
   public List<String> split(@Nullable final CharSequence str) {
@@ -874,19 +896,15 @@ public class Splitter {
   }
 
   /**
-   * Split the specified string into substrings, according to the previous
-   * settings of this {@link Splitter} object.
+   * 根据此 {@link Splitter} 对象的先前设置，将指定的字符串分割为子字符串。
    *
    * @param str
-   *     the specified string to be split. If it is {@code null}, returns an
-   *     empty list.
+   *     要分割的指定字符串。如果为 {@code null}，返回空列表。
    * @param result
-   *     the optional list where to <b>append</b> the splitting result. <b>Note
-   *     that the old content of this list will not be cleared.</b> If it is
-   *     {@code null}, a new list is created and returned.
+   *     可选的列表，用于<b>追加</b>分割结果。<b>注意，此列表的旧内容不会被清除。</b>
+   *     如果为 {@code null}，将创建并返回新列表。
    * @return
-   *     the list of split substrings, which cannot be {@code null}, but it may
-   *     be an empty list.
+   *     分割后的子字符串列表，不能为 {@code null}，但可能是空列表。
    */
   @NotNull
   public List<String> split(@Nullable final CharSequence str,

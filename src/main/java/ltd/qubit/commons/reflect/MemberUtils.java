@@ -14,20 +14,22 @@ import java.lang.reflect.Modifier;
 import ltd.qubit.commons.lang.ClassUtils;
 
 /**
- * Contains common code for working with Methods/Constructors, extracted and
- * refactored from {@code MethodUtils} when it was imported from Commons
- * BeanUtils.
+ * 包含处理方法/构造器的通用代码，从 Commons BeanUtils 导入时
+ * 从 {@code MethodUtils} 中提取和重构而来。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 abstract class MemberUtils {
 
+  /**
+   * 非包访问的修饰符。
+   */
   private static final int NON_PACKAGE_ACCESS = Modifier.PUBLIC
                                               | Modifier.PROTECTED
                                               | Modifier.PRIVATE;
 
   /**
-   * Array of primitive number types ordered by "promotability".
+   * 按"可提升性"排序的基本数字类型数组。
    */
   private static final Class<?>[] ORDERED_PRIMITIVE_TYPES = {
       Byte.TYPE,
@@ -40,22 +42,22 @@ abstract class MemberUtils {
   };
 
   /**
-   * Returns whether a given set of modifiers implies package access.
+   * 返回给定的修饰符集合是否表示包访问。
    *
    * @param modifiers
-   *     to test
-   * @return true unless package/protected/private modifier detected
+   *     要测试的修饰符
+   * @return 除非检测到包/受保护/私有修饰符，否则返回true
    */
   static boolean isPackage(final int modifiers) {
     return (modifiers & NON_PACKAGE_ACCESS) == 0;
   }
 
   /**
-   * Returns whether a Member is accessible.
+   * 返回成员是否可访问。
    *
    * @param m
-   *     Member to check
-   * @return true if {@code m} is accessible
+   *     要检查的成员
+   * @return 如果 {@code m} 可访问则返回true
    */
   static boolean isAccessible(final Member m) {
     return (m != null)
@@ -64,19 +66,16 @@ abstract class MemberUtils {
   }
 
   /**
-   * Compares the relative fitness of two sets of parameter types in terms of
-   * matching a third set of runtime parameter types, such that a list ordered
-   * by the results of the comparison would return the best match first
-   * (least).
+   * 比较两组参数类型在匹配第三组运行时参数类型方面的相对适合度，
+   * 这样通过比较结果排序的列表将返回最佳匹配（最小值）。
    *
    * @param left
-   *     the "left" parameter set
+   *     "左侧"参数集合
    * @param right
-   *     the "right" parameter set
+   *     "右侧"参数集合
    * @param actual
-   *     the runtime parameter types to match against {@code left}/ {@code
-   *     right}
-   * @return int consistent with {@code compare} semantics
+   *     要与 {@code left}/{@code right} 匹配的运行时参数类型
+   * @return 与 {@code compare} 语义一致的int值
    */
   static int compareParameterTypes(final Class<?>[] left,
       final Class<?>[] right, final Class<?>[] actual) {
@@ -92,14 +91,13 @@ abstract class MemberUtils {
   }
 
   /**
-   * Returns the sum of the object transformation cost for each class in the
-   * source argument list.
+   * 返回源参数列表中每个类的对象转换成本的总和。
    *
    * @param srcArgs
-   *     The source arguments
+   *     源参数
    * @param destArgs
-   *     The destination arguments
-   * @return The total transformation cost
+   *     目标参数
+   * @return 总转换成本
    */
   private static float getTotalTransformationCost(final Class<?>[] srcArgs,
       final Class<?>[] destArgs) {
@@ -115,15 +113,13 @@ abstract class MemberUtils {
   }
 
   /**
-   * Gets the number of steps required needed to turn the source class into the
-   * destination class. This represents the number of steps in the object
-   * hierarchy graph.
+   * 获取将源类转换为目标类所需的步骤数。这表示对象层次结构图中的步骤数。
    *
    * @param srcClass
-   *     The source class
+   *     源类
    * @param destClass
-   *     The destination class
-   * @return The cost of transforming an object
+   *     目标类
+   * @return 转换对象的成本
    */
   private static float getObjectTransformationCost(final Class<?> srcClass,
       final Class<?> destClass) {
@@ -157,14 +153,13 @@ abstract class MemberUtils {
   }
 
   /**
-   * Gets the number of steps required to promote a primitive number to another
-   * type.
+   * 获取将基本数字提升为另一种类型所需的步骤数。
    *
    * @param srcClass
-   *     the (primitive) source class
+   *     （基本类型）源类
    * @param destClass
-   *     the (primitive) destination class
-   * @return The cost of promoting the primitive
+   *     （基本类型）目标类
+   * @return 提升基本类型的成本
    */
   private static float getPrimitivePromotionCost(final Class<?> srcClass,
       final Class<?> destClass) {

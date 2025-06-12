@@ -15,10 +15,9 @@ import javax.annotation.concurrent.ThreadSafe;
 import static ltd.qubit.commons.text.NumberFormatOptions.DEFAULT_MAX_DIGITS;
 
 /**
- * A class for encoding and decoding C-style string literal.
+ * 用于编码和解码C风格字符串字面量的类。
  *
- * <p>As defined by the ISO C++ Standard 2003, the C-style string literal has the
- * following grammar:
+ * <p>根据ISO C++ Standard 2003的定义，C风格字符串字面量具有以下语法：
  *
  * <pre class="code">
  *  string-literal:
@@ -64,22 +63,15 @@ import static ltd.qubit.commons.text.NumberFormatOptions.DEFAULT_MAX_DIGITS;
  *
  * </pre>
  *
- * <p>Note that "\\u" should be a single '\' before 'u', but Java treats that as a
- * Unicode prefix, so we use "\\u".
+ * <p>注意"\\u"应该是'u'前的单个'\'，但Java将其视为Unicode前缀，所以我们使用"\\u"。
  *
- * <p>The character designated by the universal-character-name \UNNNNNNNN is that
- * character whose character short name in ISO/IEC 10646 is NNNNNNNN; the
- * character designated by the universal-character-name \\uNNNN is that
- * character whose character short name in ISO/IEC 10646 is 0000NNNN. If the
- * hexadecimal value for a universal character name is less than 0x20 or in the
- * range 0x7F-0x9F (inclusive), or if the universal character name designates a
- * character in the basic source character set, then the program is illformed.
- * (Standard 2.2.2)
+ * <p>由通用字符名称\UNNNNNNNN指定的字符是ISO/IEC 10646中字符简短名称为NNNNNNNN的字符；
+ * 由通用字符名称\\uNNNN指定的字符是ISO/IEC 10646中字符简短名称为0000NNNN的字符。
+ * 如果通用字符名称的十六进制值小于0x20或在0x7F-0x9F范围内（包含），
+ * 或者如果通用字符名称指定了基本源字符集中的字符，则程序是非法的。（标准2.2.2）
  *
- * <p>The basic source character set consists of 96 characters: the space
- * character, the control characters representing horizontal tab, vertical tab,
- * form feed, and new-line, plus the following 91 graphical characters:
- * (Standard 2.2.1)
+ * <p>基本源字符集包含96个字符：空格字符、表示水平制表符、垂直制表符、
+ * 换页符和换行符的控制字符，以及以下91个图形字符：（标准2.2.1）
  *
  * <pre class="code">
  *      a b c d e f g h i j k l m n o p q r s t u v w x y z
@@ -88,11 +80,10 @@ import static ltd.qubit.commons.text.NumberFormatOptions.DEFAULT_MAX_DIGITS;
  *      _ { } [ ] # ( ) &lt; &gt; % : ; . ? * + - / ^ &amp; | ~ ! = , \ " '
  * </pre>
  *
- * <p>Note that the '$', '@' and '`' are NOT required by the C++ standard to be
- * in the source character set, but in fact they are used widely. So this
- * function will also treat them as valid characters.
+ * <p>注意'$'、'@'和'`'不是C++标准要求的源字符集，但实际上它们被广泛使用。
+ * 所以这个函数也会将它们视为有效字符。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public class CStringLiteral {
@@ -146,73 +137,62 @@ public class CStringLiteral {
   private static final int MAX_OCTAL_DIGITS              = 3;
 
   /**
-   * Given a C-style string literal (without quoted), decode it into a byte
-   * array.
+   * 给定一个C风格字符串字面量（不带引号），将其解码为字节数组。
    *
-   * <p>This function reads a C-style string literal, and decodes it to a byte
-   * array. The string literal is in the unquoted form (i.e., without leading
-   * and trailing double quote), and does not contain any character whose code
-   * point is greater than 0xFF.
+   * <p>此函数读取一个C风格字符串字面量，并将其解码为字节数组。
+   * 字符串字面量是不带引号的形式（即没有前导和尾随双引号），
+   * 并且不包含任何代码点大于0xFF的字符。
    *
    * @param str
-   *     a character sequence contains a C-style string literal. It can't be
-   *     null, and must has a non-zero length. Note also that this string should
-   *     not contain any character greater than 0xFF.
-   * @return the byte array of the decoded result.
-   * @throws ParsingException
-   *     if the given C-style string literal is ill-formed.
+   *     包含C风格字符串字面量的字符序列。不能为null，且必须具有非零长度。
+   *     注意此字符串不应包含任何大于0xFF的字符。
+   * @return 解码结果的字节数组。
+   * @throws TextParseException
+   *     如果给定的C风格字符串字面量格式错误。
    */
   public static byte[] decode(final CharSequence str)
-      throws ParseException {
+      throws TextParseException {
     return decode(str, 0, str.length());
   }
 
   /**
-   * Given a C-style string literal (without quoted), decode it into a byte
-   * array.
+   * 给定一个C风格字符串字面量（不带引号），将其解码为字节数组。
    *
-   * <p>This function reads a C-style string literal, and decodes it to a byte
-   * array. The string literal is in the unquoted form (i.e., without leading
-   * and trailing double quote), and does not contain any character whose code
-   * point is greater than 0xFF.
+   * <p>此函数读取一个C风格字符串字面量，并将其解码为字节数组。
+   * 字符串字面量是不带引号的形式（即没有前导和尾随双引号），
+   * 并且不包含任何代码点大于0xFF的字符。
    *
    * @param str
-   *     a character sequence contains a C-style string literal. It can't be
-   *     null, and must has a non-zero length. Note also that this string should
-   *     not contain any character greater than 0xFF.
+   *     包含C风格字符串字面量的字符序列。不能为null，且必须具有非零长度。
+   *     注意此字符串不应包含任何大于0xFF的字符。
    * @param startIndex
-   *     the index where to start parsing. The parsing will stop at the end of
-   *     str.
-   * @return the byte array of the decoded result.
-   * @throws ParsingException
-   *     if the given C-style string literal is ill-formed.
+   *     开始解析的索引。解析将在str的末尾停止。
+   * @return 解码结果的字节数组。
+   * @throws TextParseException
+   *     如果给定的C风格字符串字面量格式错误。
    */
   public static byte[] decode(final CharSequence str, final int startIndex)
-      throws ParseException {
+      throws TextParseException {
     return decode(str, startIndex, str.length());
   }
 
   /**
-   * Given a C-style string literal (without quoted), decode it into a byte
-   * array.
+   * 给定一个C风格字符串字面量（不带引号），将其解码为字节数组。
    *
-   * <p>This function reads a C-style string literal, and decodes it to a byte
-   * array. The string literal is in the unquoted form (i.e., without leading
-   * and trailing double quote), and does not contain any character whose code
-   * point is greater than 0xFF.
+   * <p>此函数读取一个C风格字符串字面量，并将其解码为字节数组。
+   * 字符串字面量是不带引号的形式（即没有前导和尾随双引号），
+   * 并且不包含任何代码点大于0xFF的字符。
    *
    * @param str
-   *     a character sequence contains a C-style string literal. It can't be
-   *     null, and must has a non-zero length. Note also that this string should
-   *     not contain any character greater than 0xFF.
+   *     包含C风格字符串字面量的字符序列。不能为null，且必须具有非零长度。
+   *     注意此字符串不应包含任何大于0xFF的字符。
    * @param startIndex
-   *     the index where to start parsing.
+   *     开始解析的索引。
    * @param endIndex
-   *     the index where to stop parsing, i.e., parsing the text within the
-   *     range [startIndex, endIndex).
-   * @return the byte array of the decoded result.
+   *     停止解析的索引，即解析范围[startIndex, endIndex)内的文本。
+   * @return 解码结果的字节数组。
    * @throws TextParseException
-   *     if the given C-style string literal is ill-formed.
+   *     如果给定的C风格字符串字面量格式错误。
    */
   public static byte[] decode(final CharSequence str, final int startIndex,
       final int endIndex) throws TextParseException {
@@ -336,19 +316,15 @@ public class CStringLiteral {
   }
 
   /**
-   * Given a byte array of the raw data of an ASCII string, encode it to a
-   * C-style string literal (without quoted).
+   * 给定ASCII字符串的原始数据字节数组，将其编码为C风格字符串字面量（不带引号）。
    *
-   * <p>This function reads a byte array of the raw data of an ASCII string,
-   * and
-   * encodes it into a C-style string literal. The string literal is in the
-   * unquoted form (i.e., without leading and trailing double quote), and does
-   * not contain any character whose code point is greater than 0xFF.
+   * <p>此函数读取ASCII字符串的原始数据字节数组，并将其编码为C风格字符串字面量。
+   * 字符串字面量是不带引号的形式（即没有前导和尾随双引号），
+   * 并且不包含任何代码点大于0xFF的字符。
    *
    * @param rawData
-   *     the byte array of the raw data of an ASCII string, which cannot be
-   *     {@code null}.
-   * @return the C-style string literal encoded from the byte array.
+   *     ASCII字符串的原始数据字节数组，不能为{@code null}。
+   * @return 从字节数组编码的C风格字符串字面量。
    */
   public static String encode(final byte[] rawData) {
     final StringBuilder builder = new StringBuilder();
@@ -357,20 +333,16 @@ public class CStringLiteral {
   }
 
   /**
-   * Given a byte array of the raw data of an ASCII string, encode it to a
-   * C-style string literal (without quoted).
+   * 给定ASCII字符串的原始数据字节数组，将其编码为C风格字符串字面量（不带引号）。
    *
-   * <p>This function reads a byte array of the raw data of an ASCII string,
-   * and
-   * encodes it into a C-style string literal. The string literal is in the
-   * unquoted form (i.e., without leading and trailing double quote), and does
-   * not contain any character whose code point is greater than 0xFF.
+   * <p>此函数读取ASCII字符串的原始数据字节数组，并将其编码为C风格字符串字面量。
+   * 字符串字面量是不带引号的形式（即没有前导和尾随双引号），
+   * 并且不包含任何代码点大于0xFF的字符。
    *
    * @param rawData
-   *     the byte array of the raw data of an ASCII string, which cannot be
-   *     {@code null}.
+   *     ASCII字符串的原始数据字节数组，不能为{@code null}。
    * @param builder
-   *     used to append the C-style string literal encoded from the byte array.
+   *     用于追加从字节数组编码的C风格字符串字面量。
    */
   public static void encode(final byte[] rawData, final StringBuilder builder) {
     final NumberFormat nf = new NumberFormat();

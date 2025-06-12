@@ -26,15 +26,18 @@ import static ltd.qubit.commons.io.InputUtils.readNullMark;
 import static ltd.qubit.commons.io.InputUtils.readObject;
 
 /**
- * The {@link BinarySerializer} for the {@link UrlPattern} class.
+ * {@link UrlPattern} 类的 {@link BinarySerializer} 实现。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class UrlPatternBinarySerializer implements BinarySerializer {
 
   public static final UrlPatternBinarySerializer INSTANCE = new UrlPatternBinarySerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public UrlPattern deserialize(final InputStream in, final boolean allowNull)
       throws IOException {
@@ -51,6 +54,9 @@ public final class UrlPatternBinarySerializer implements BinarySerializer {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final OutputStream out, @Nullable final Object obj)
       throws IOException {

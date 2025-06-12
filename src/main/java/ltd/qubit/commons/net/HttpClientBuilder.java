@@ -133,209 +133,320 @@ public class HttpClientBuilder implements HttpClientOptions {
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isUseProxy() {
     return options.isUseProxy();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HttpClientBuilder setUseProxy(final boolean useProxy) {
     options.setUseProxy(useProxy);
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String getProxyType() {
     return options.getProxyType();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HttpClientBuilder setProxyType(final String proxyType) {
     options.setProxyType(proxyType);
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HttpClientBuilder setProxyType(final Proxy.Type proxyType) {
     options.setProxyType(proxyType);
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   @Nullable
   public String getProxyHost() {
     return options.getProxyHost();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HttpClientBuilder setProxyHost(@Nullable final String proxyHost) {
     options.setProxyHost(proxyHost);
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int getProxyPort() {
     return options.getProxyPort();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HttpClientBuilder setProxyPort(final int proxyPort) {
     options.setProxyPort(proxyPort);
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   @Nullable
   public String getProxyUsername() {
     return options.getProxyUsername();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HttpClientBuilder setProxyUsername(@Nullable final String proxyUsername) {
     options.setProxyUsername(proxyUsername);
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   @Nullable
   public String getProxyPassword() {
     return options.getProxyPassword();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HttpClientBuilder setProxyPassword(@Nullable final String proxyPassword) {
     options.setProxyPassword(proxyPassword);
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int getConnectionTimeout() {
     return options.getConnectionTimeout();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HttpClientBuilder setConnectionTimeout(final int connectionTimeout) {
     options.setConnectionTimeout(connectionTimeout);
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int getReadTimeout() {
     return options.getReadTimeout();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HttpClientBuilder setReadTimeout(final int readTimeout) {
     options.setReadTimeout(readTimeout);
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int getWriteTimeout() {
     return options.getWriteTimeout();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HttpClientBuilder setWriteTimeout(final int writeTimeout) {
     options.setWriteTimeout(writeTimeout);
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isUseHttpLogging() {
     return options.isUseHttpLogging();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HttpClientBuilder setUseHttpLogging(final boolean useHttpLogging) {
     options.setUseHttpLogging(useHttpLogging);
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isLogHttpRequestHeader() {
     return options.isLogHttpRequestHeader();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HttpClientBuilder setLogHttpRequestHeader(final boolean logHttpRequestHeader) {
     options.setLogHttpRequestHeader(logHttpRequestHeader);
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isLogHttpRequestBody() {
     return options.isLogHttpRequestBody();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HttpClientBuilder setLogHttpRequestBody(final boolean logHttpRequestBody) {
     options.setLogHttpRequestBody(logHttpRequestBody);
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isLogHttpResponseHeader() {
     return options.isLogHttpResponseHeader();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HttpClientBuilder setLogHttpResponseHeader(final boolean logHttpResponseHeader) {
     options.setLogHttpResponseHeader(logHttpResponseHeader);
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isLogHttpResponseBody() {
     return options.isLogHttpResponseBody();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HttpClientBuilder setLogHttpResponseBody(final boolean logHttpResponseBody) {
     options.setLogHttpResponseBody(logHttpResponseBody);
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public List<String> getSensitiveHttpHeaders() {
     return options.getSensitiveHttpHeaders();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HttpClientBuilder setSensitiveHttpHeaders(final List<String> headers) {
     options.setSensitiveHttpHeaders(headers);
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HttpClientBuilder addSensitiveHttpHeader(final String headerName) {
     options.addSensitiveHttpHeader(headerName);
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HttpClientBuilder addSensitiveHttpHeaders(final String... headerNames) {
     options.addSensitiveHttpHeaders(headerNames);
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HttpClientBuilder addSensitiveHttpHeaders(final Collection<String> headerNames) {
     options.addSensitiveHttpHeaders(headerNames);
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HttpClientBuilder clearSensitiveHttpHeaders() {
     options.clearSensitiveHttpHeaders();
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isIpV4Only() {
     return options.isIpV4Only();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HttpClientBuilder setIpV4Only(final boolean ipV4Only) {
     options.setIpV4Only(ipV4Only);
@@ -408,6 +519,12 @@ public class HttpClientBuilder implements HttpClientOptions {
     return this;
   }
 
+  /**
+   * 获取代理对象。
+   *
+   * @return 代理对象。
+   * @throws IllegalArgumentException 如果代理主机或端口未指定。
+   */
   protected Proxy getProxy() {
     final String typeName = getProxyType();
     final Proxy.Type proxyType = Proxy.Type.valueOf(typeName.toUpperCase());

@@ -2035,25 +2035,22 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts the first element in a collection of values of the specified type
-   * into a {@code int} value.
+   * 将指定类型的对象集合中的第一个元素转换为{@code int}值。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects of the specified type, which can't be null.
-   * @return a {@code int} value converted from the first object in the
-   *     collection.
+   *     指定类型的对象集合，不能为null。如果类型是基本类型，
+   *     必须是相应的基本类型集合；否则必须是相应的泛型集合。
+   * @return 集合中第一个对象转换后的{@code int}值。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     object to be converted.
+   *     如果{@link Type}对象与要转换对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果不支持该{@link Type}对象。
    * @throws TypeConvertException
-   *     if the object can not be converted into a {@code boolean} value.
+   *     如果对象不能转换为{@code int}值。
    * @throws NoSuchElementException
-   *     if the collection is empty.
+   *     如果集合为空。
    */
   @SuppressWarnings("unchecked")
   public static int firstInCollectionAsInt(final Type type,
@@ -2133,25 +2130,22 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts the first element in a collection of values of the specified type
-   * into a {@code long} value.
+   * 将指定类型的对象集合中的第一个元素转换为{@code long}值。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects of the specified type, which can't be null.
-   * @return a {@code long} value converted from the first object in the
-   *     collection.
+   *     指定类型的对象集合，不能为null。如果类型是基本类型，
+   *     必须是相应的基本类型集合；否则必须是相应的泛型集合。
+   * @return 集合中第一个对象转换后的{@code long}值。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     object to be converted.
+   *     如果{@link Type}对象与要转换对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果不支持该{@link Type}对象。
    * @throws TypeConvertException
-   *     if the object can not be converted into a {@code boolean} value.
+   *     如果对象不能转换为{@code long}值。
    * @throws NoSuchElementException
-   *     if the collection is empty.
+   *     如果集合为空。
    */
   @SuppressWarnings("unchecked")
   public static long firstInCollectionAsLong(final Type type,
@@ -2231,25 +2225,22 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts the first element in a collection of values of the specified type
-   * into a {@code float} value.
+   * 将指定类型的对象集合中的第一个元素转换为{@code float}值。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects of the specified type, which can't be null.
-   * @return a {@code float} value converted from the first object in the
-   *     collection.
+   *     指定类型的对象集合，不能为null。如果类型是基本类型，
+   *     必须是相应的基本类型集合；否则必须是相应的泛型集合。
+   * @return 集合中第一个对象转换后的{@code float}值。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     object to be converted.
+   *     如果{@link Type}对象与要转换对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果不支持该{@link Type}对象。
    * @throws TypeConvertException
-   *     if the object can not be converted into a {@code boolean} value.
+   *     如果对象不能转换为{@code float}值。
    * @throws NoSuchElementException
-   *     if the collection is empty.
+   *     如果集合为空。
    */
   @SuppressWarnings("unchecked")
   public static float firstInCollectionAsFloat(final Type type,
@@ -2329,25 +2320,22 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts the first element in a collection of values of the specified type
-   * into a {@code double} value.
+   * 将指定类型的对象集合中的第一个元素转换为{@code double}值。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects of the specified type, which can't be null.
-   * @return a {@code double} value converted from the first object in the
-   *     collection.
+   *     指定类型的对象集合，不能为null。如果类型是基本类型，
+   *     必须是相应的基本类型集合；否则必须是相应的泛型集合。
+   * @return 集合中第一个对象转换后的{@code double}值。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     object to be converted.
+   *     如果{@link Type}对象与要转换对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果不支持该{@link Type}对象。
    * @throws TypeConvertException
-   *     if the object can not be converted into a {@code boolean} value.
+   *     如果对象不能转换为{@code double}值。
    * @throws NoSuchElementException
-   *     if the collection is empty.
+   *     如果集合为空。
    */
   @SuppressWarnings("unchecked")
   public static double firstInCollectionAsDouble(final Type type,
@@ -2427,25 +2415,22 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts the first element in a collection of values of the specified type
-   * into a {@code String} value.
+   * 将指定类型的对象集合中的第一个元素转换为{@code String}值。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects of the specified type, which can't be null.
-   * @return a {@code String} value converted from the first object in the
-   *     collection.
+   *     指定类型的对象集合，不能为null。如果类型是基本类型，
+   *     必须是相应的基本类型集合；否则必须是相应的泛型集合。
+   * @return 集合中第一个对象转换后的{@code String}值。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     object to be converted.
+   *     如果{@link Type}对象与要转换对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果不支持该{@link Type}对象。
    * @throws TypeConvertException
-   *     if the object can not be converted into a {@code boolean} value.
+   *     如果对象不能转换为{@code String}值。
    * @throws NoSuchElementException
-   *     if the collection is empty.
+   *     如果集合为空。
    */
   @SuppressWarnings("unchecked")
   public static String firstInCollectionAsString(final Type type,
@@ -2525,25 +2510,22 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts the first element in a collection of values of the specified type
-   * into a {@code LocalDate} value.
+   * 将指定类型的对象集合中的第一个元素转换为{@code LocalDate}值。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects of the specified type, which can't be null.
-   * @return a {@code Date} value converted from the first object in the
-   *     collection.
+   *     指定类型的对象集合，不能为null。如果类型是基本类型，
+   *     必须是相应的基本类型集合；否则必须是相应的泛型集合。
+   * @return 集合中第一个对象转换后的{@code LocalDate}值。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     object to be converted.
+   *     如果{@link Type}对象与要转换对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果不支持该{@link Type}对象。
    * @throws TypeConvertException
-   *     if the object can not be converted into a {@code LocalDate} value.
+   *     如果对象不能转换为{@code LocalDate}值。
    * @throws NoSuchElementException
-   *     if the collection is empty.
+   *     如果集合为空。
    */
   @SuppressWarnings("unchecked")
   public static LocalDate firstInCollectionAsDate(final Type type,
@@ -2569,25 +2551,22 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts the first element in a collection of values of the specified type
-   * into a {@code LocalTime} value.
+   * 将指定类型的对象集合中的第一个元素转换为{@code LocalTime}值。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects of the specified type, which can't be null.
-   * @return a {@code Date} value converted from the first object in the
-   *     collection.
+   *     指定类型的对象集合，不能为null。如果类型是基本类型，
+   *     必须是相应的基本类型集合；否则必须是相应的泛型集合。
+   * @return 集合中第一个对象转换后的{@code LocalTime}值。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     object to be converted.
+   *     如果{@link Type}对象与要转换对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果不支持该{@link Type}对象。
    * @throws TypeConvertException
-   *     if the object can not be converted into a {@code LocalTime} value.
+   *     如果对象不能转换为{@code LocalTime}值。
    * @throws NoSuchElementException
-   *     if the collection is empty.
+   *     如果集合为空。
    */
   @SuppressWarnings("unchecked")
   public static LocalTime firstInCollectionAsTime(final Type type,
@@ -2613,25 +2592,22 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts the first element in a collection of values of the specified type
-   * into a {@code LocalDateTime} value.
+   * 将指定类型的对象集合中的第一个元素转换为{@code LocalDateTime}值。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects of the specified type, which can't be null.
-   * @return a {@code Date} value converted from the first object in the
-   *     collection.
+   *     指定类型的对象集合，不能为null。如果类型是基本类型，
+   *     必须是相应的基本类型集合；否则必须是相应的泛型集合。
+   * @return 集合中第一个对象转换后的{@code LocalDateTime}值。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     object to be converted.
+   *     如果{@link Type}对象与要转换对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果不支持该{@link Type}对象。
    * @throws TypeConvertException
-   *     if the object can not be converted into a {@code LocalDateTime} value.
+   *     如果对象不能转换为{@code LocalDateTime}值。
    * @throws NoSuchElementException
-   *     if the collection is empty.
+   *     如果集合为空。
    */
   @SuppressWarnings("unchecked")
   public static LocalDateTime firstInCollectionAsDateTime(final Type type,
@@ -2657,25 +2633,22 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts the first element in a collection of values of the specified type
-   * into a {@code byte[]} value.
+   * 将指定类型的对象集合中的第一个元素转换为{@code byte[]}值。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects of the specified type, which can't be null.
-   * @return a {@code byte[]} value converted from the first object in the
-   *     collection.
+   *     指定类型的对象集合，不能为null。如果类型是基本类型，
+   *     必须是相应的基本类型集合；否则必须是相应的泛型集合。
+   * @return 集合中第一个对象转换后的{@code byte[]}值。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     object to be converted.
+   *     如果{@link Type}对象与要转换对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果不支持该{@link Type}对象。
    * @throws TypeConvertException
-   *     if the object can not be converted into a {@code boolean} value.
+   *     如果对象不能转换为{@code byte[]}值。
    * @throws NoSuchElementException
-   *     if the collection is empty.
+   *     如果集合为空。
    */
   @SuppressWarnings("unchecked")
   public static byte[] firstInCollectionAsByteArray(final Type type,
@@ -2755,25 +2728,22 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts the first element in a collection of values of the specified type
-   * into a {@code Class} value.
+   * 将指定类型的对象集合中的第一个元素转换为{@code Class}值。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects of the specified type, which can't be null.
-   * @return a {@code Class} value converted from the first object in the
-   *     collection.
+   *     指定类型的对象集合，不能为null。如果类型是基本类型，
+   *     必须是相应的基本类型集合；否则必须是相应的泛型集合。
+   * @return 集合中第一个对象转换后的{@code Class}值。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     object to be converted.
+   *     如果{@link Type}对象与要转换对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果不支持该{@link Type}对象。
    * @throws TypeConvertException
-   *     if the object can not be converted into a {@code boolean} value.
+   *     如果对象不能转换为{@code Class}值。
    * @throws NoSuchElementException
-   *     if the collection is empty.
+   *     如果集合为空。
    */
   @SuppressWarnings("unchecked")
   public static Class<?> firstInCollectionAsClass(final Type type,
@@ -2856,25 +2826,22 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts the first element in a collection of values of the specified type
-   * into a {@code BigInteger} value.
+   * 将指定类型的对象集合中的第一个元素转换为{@code BigInteger}值。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects of the specified type, which can't be null.
-   * @return a {@code BigInteger} value converted from the first object in the
-   *     collection.
+   *     指定类型的对象集合，不能为null。如果类型是基本类型，
+   *     必须是相应的基本类型集合；否则必须是相应的泛型集合。
+   * @return 集合中第一个对象转换后的{@code BigInteger}值。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     object to be converted.
+   *     如果{@link Type}对象与要转换对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果不支持该{@link Type}对象。
    * @throws TypeConvertException
-   *     if the object can not be converted into a {@code boolean} value.
+   *     如果对象不能转换为{@code BigInteger}值。
    * @throws NoSuchElementException
-   *     if the collection is empty.
+   *     如果集合为空。
    */
   @SuppressWarnings("unchecked")
   public static BigInteger firstInCollectionAsBigInteger(final Type type,
@@ -2954,25 +2921,22 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts the first element in a collection of values of the specified type
-   * into a {@code BigDecimal} value.
+   * 将指定类型的对象集合中的第一个元素转换为{@code BigDecimal}值。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects of the specified type, which can't be null.
-   * @return a {@code BigDecimal} value converted from the first object in the
-   *     collection.
+   *     指定类型的对象集合，不能为null。如果类型是基本类型，
+   *     必须是相应的基本类型集合；否则必须是相应的泛型集合。
+   * @return 集合中第一个对象转换后的{@code BigDecimal}值。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     object to be converted.
+   *     如果{@link Type}对象与要转换对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果不支持该{@link Type}对象。
    * @throws TypeConvertException
-   *     if the object can not be converted into a {@code boolean} value.
+   *     如果对象不能转换为{@code BigDecimal}值。
    * @throws NoSuchElementException
-   *     if the collection is empty.
+   *     如果集合为空。
    */
   @SuppressWarnings("unchecked")
   public static BigDecimal firstInCollectionAsBigDecimal(final Type type,
@@ -3260,28 +3224,21 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts a collection of objects of the specified type to a {@code char}
-   * array.
+   * 将指定类型的对象集合转换为{@code char}数组。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects to be converted; if it is null or empty, a
-   *     empty array will be returned. If the type is primitive type, the
-   *     collection must be a primitive collection; otherwise, it must be a
-   *     generic collection.
-   * @return a {@code char} array corresponds to the collection of objects to be
-   *     converted.
+   *     要转换的对象集合；如果为null或为空，将返回一个空数组。
+   *     如果类型是基本类型，集合必须是相应的基本类型集合；
+   *     否则必须是相应的泛型集合。
+   * @return 对应于要转换对象集合的{@code char}数组。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects in the collection to be converted.
+   *     如果{@link Type}对象与要转换集合中对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     Character.class, Class.class if the {@link Type} object is not
-   *     supported.
+   *     如果{@link Type}对象不被支持。
    * @throws TypeConvertException
-   *     if the objects in the collection can not be converted into {@code char}
-   *     values.
+   *     如果集合中的对象无法转换为{@code char}值。
    */
   @SuppressWarnings("unchecked")
   public static char[] collectionAsChars(final Type type,
@@ -3477,27 +3434,21 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts a collection of objects of the specified type to a {@code byte}
-   * array.
+   * 将指定类型的对象集合转换为{@code byte}数组。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects to be converted; if it is null or empty, a
-   *     empty array will be returned. If the type is primitive type, the
-   *     collection must be a primitive collection; otherwise, it must be a
-   *     generic collection.
-   * @return a {@code byte} array corresponds to the collection of objects to be
-   *     converted.
+   *     要转换的对象集合；如果为null或为空，将返回一个空数组。
+   *     如果类型是基本类型，集合必须是相应的基本类型集合；
+   *     否则必须是相应的泛型集合。
+   * @return 对应于要转换对象集合的{@code byte}数组。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects in the collection to be converted.
+   *     如果{@link Type}对象与要转换集合中对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果{@link Type}对象不被支持。
    * @throws TypeConvertException
-   *     if the objects in the collection can not be converted into {@code byte}
-   *     values.
+   *     如果集合中的对象无法转换为{@code byte}值。
    */
   @SuppressWarnings("unchecked")
   public static byte[] collectionAsBytes(final Type type,
@@ -3693,27 +3644,21 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts a collection of objects of the specified type to a {@code short}
-   * array.
+   * 将指定类型的对象集合转换为{@code short}数组。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects to be converted; if it is null or empty, a
-   *     empty array will be returned. If the type is primitive type, the
-   *     collection must be a primitive collection; otherwise, it must be a
-   *     generic collection.
-   * @return a {@code short} array corresponds to the collection of objects to
-   *     be converted.
+   *     要转换的对象集合；如果为null或为空，将返回一个空数组。
+   *     如果类型是基本类型，集合必须是相应的基本类型集合；
+   *     否则必须是相应的泛型集合。
+   * @return 对应于要转换对象集合的{@code short}数组。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects in the collection to be converted.
+   *     如果{@link Type}对象与要转换集合中对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果{@link Type}对象不被支持。
    * @throws TypeConvertException
-   *     if the objects in the collection can not be converted into {@code
-   *     short} values.
+   *     如果集合中的对象无法转换为{@code short}值。
    */
   @SuppressWarnings("unchecked")
   public static short[] collectionAsShorts(final Type type,
@@ -3909,27 +3854,21 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts a collection of objects of the specified type to a {@code int}
-   * array.
+   * 将指定类型的对象集合转换为{@code int}数组。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects to be converted; if it is null or empty, a
-   *     empty array will be returned. If the type is primitive type, the
-   *     collection must be a primitive collection; otherwise, it must be a
-   *     generic collection.
-   * @return a {@code int} array corresponds to the collection of objects to be
-   *     converted.
+   *     要转换的对象集合；如果为null或为空，将返回一个空数组。
+   *     如果类型是基本类型，集合必须是相应的基本类型集合；
+   *     否则必须是相应的泛型集合。
+   * @return 对应于要转换对象集合的{@code int}数组。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects in the collection to be converted.
+   *     如果{@link Type}对象与要转换集合中对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果{@link Type}对象不被支持。
    * @throws TypeConvertException
-   *     if the objects in the collection can not be converted into {@code int}
-   *     values.
+   *     如果集合中的对象无法转换为{@code int}值。
    */
   @SuppressWarnings("unchecked")
   public static int[] collectionAsInts(final Type type, @Nullable final Object col)
@@ -4124,27 +4063,21 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts a collection of objects of the specified type to a {@code long}
-   * array.
+   * 将指定类型的对象集合转换为{@code long}数组。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects to be converted; if it is null or empty, a
-   *     empty array will be returned. If the type is primitive type, the
-   *     collection must be a primitive collection; otherwise, it must be a
-   *     generic collection.
-   * @return a {@code long} array corresponds to the collection of objects to be
-   *     converted.
+   *     要转换的对象集合；如果为null或为空，将返回一个空数组。
+   *     如果类型是基本类型，集合必须是相应的基本类型集合；
+   *     否则必须是相应的泛型集合。
+   * @return 对应于要转换对象集合的{@code long}数组。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects in the collection to be converted.
+   *     如果{@link Type}对象与要转换集合中对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果{@link Type}对象不被支持。
    * @throws TypeConvertException
-   *     if the objects in the collection can not be converted into {@code long}
-   *     values.
+   *     如果集合中的对象无法转换为{@code long}值。
    */
   @SuppressWarnings("unchecked")
   public static long[] collectionAsLongs(final Type type,
@@ -4340,27 +4273,21 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts a collection of objects of the specified type to a {@code float}
-   * array.
+   * 将指定类型的对象集合转换为{@code float}数组。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects to be converted; if it is null or empty, a
-   *     empty array will be returned. If the type is primitive type, the
-   *     collection must be a primitive collection; otherwise, it must be a
-   *     generic collection.
-   * @return a {@code float} array corresponds to the collection of objects to
-   *     be converted.
+   *     要转换的对象集合；如果为null或为空，将返回一个空数组。
+   *     如果类型是基本类型，集合必须是相应的基本类型集合；
+   *     否则必须是相应的泛型集合。
+   * @return 对应于要转换对象集合的{@code float}数组。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects in the collection to be converted.
+   *     如果{@link Type}对象与要转换集合中对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果{@link Type}对象不被支持。
    * @throws TypeConvertException
-   *     if the objects in the collection can not be converted into {@code
-   *     float} values.
+   *     如果集合中的对象无法转换为{@code float}值。
    */
   @SuppressWarnings("unchecked")
   public static float[] collectionAsFloats(final Type type,
@@ -4556,27 +4483,21 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts a collection of objects of the specified type to a {@code double}
-   * array.
+   * 将指定类型的对象集合转换为{@code double}数组。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects to be converted; if it is null or empty, a
-   *     empty array will be returned. If the type is primitive type, the
-   *     collection must be a primitive collection; otherwise, it must be a
-   *     generic collection.
-   * @return a {@code double} array corresponds to the collection of objects to
-   *     be converted.
+   *     要转换的对象集合；如果为null或为空，将返回一个空数组。
+   *     如果类型是基本类型，集合必须是相应的基本类型集合；
+   *     否则必须是相应的泛型集合。
+   * @return 对应于要转换对象集合的{@code double}数组。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects in the collection to be converted.
+   *     如果{@link Type}对象与要转换集合中对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果{@link Type}对象不被支持。
    * @throws TypeConvertException
-   *     if the objects in the collection can not be converted into {@code
-   *     double} values.
+   *     如果集合中的对象无法转换为{@code double}值。
    */
   @SuppressWarnings("unchecked")
   public static double[] collectionAsDoubles(final Type type,
@@ -4772,24 +4693,19 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts a collection of objects of the specified type to a {@link String}
-   * array.
+   * 将指定类型的对象集合转换为{@link String}数组。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects to be converted; if it is null or empty, a
-   *     empty array will be returned. If the type is primitive type, the
-   *     collection must be a primitive collection; otherwise, it must be a
-   *     generic collection.
-   * @return a {@link String} array corresponds to the collection of objects to
-   *     be converted.
+   *     要转换的对象集合；如果为null或为空，将返回一个空数组。
+   *     如果类型是基本类型，集合必须是相应的基本类型集合；
+   *     否则必须是相应的泛型集合。
+   * @return 对应于要转换对象集合的{@link String}数组。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects in the collection to be converted.
+   *     如果{@link Type}对象与要转换集合中对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果{@link Type}对象不被支持。
    */
   @SuppressWarnings("unchecked")
   public static String[] collectionAsStrings(final Type type,
@@ -4998,29 +4914,23 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts a collection of objects of the specified type to a {@link LocalDate}
-   * array.
+   * 将指定类型的对象集合转换为{@link LocalDate}数组。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects to be converted; if it is null or empty, a
-   *     empty array will be returned. If the type is primitive type, the
-   *     collection must be a primitive collection; otherwise, it must be a
-   *     generic collection.
-   * @return a {@link LocalDate} array corresponds to the collection of objects to be
-   *     converted. Note that if the specified object is a collection of {@link
-   *     LocalDate} objects, each object in the returned {@link LocalDate} array is a
-   *     cloned copy of the original corresponding value.
+   *     要转换的对象集合；如果为null或为空，将返回一个空数组。
+   *     如果类型是基本类型，集合必须是相应的基本类型集合；
+   *     否则必须是相应的泛型集合。
+   * @return 对应于要转换对象集合的{@link LocalDate}数组。请注意，如果指定的对象是
+   *     {@link LocalDate}对象的集合，返回的{@link LocalDate}数组中的每个对象都是
+   *     原始对应值的克隆副本。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects in the collection to be converted.
+   *     如果{@link Type}对象与要转换集合中对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果{@link Type}对象不被支持。
    * @throws TypeConvertException
-   *     if the objects in the collection can not be converted into {@link LocalDate}
-   *     objects.
+   *     如果集合中的对象无法转换为{@link LocalDate}对象。
    */
   @SuppressWarnings("unchecked")
   public static LocalDate[] collectionAsDates(final Type type,
@@ -5071,29 +4981,23 @@ public final class TypeUtils {
 
 
   /**
-   * Converts a collection of objects of the specified type to a {@link LocalTime}
-   * array.
+   * 将指定类型的对象集合转换为{@link LocalTime}数组。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects to be converted; if it is null or empty, a
-   *     empty array will be returned. If the type is primitive type, the
-   *     collection must be a primitive collection; otherwise, it must be a
-   *     generic collection.
-   * @return a {@link LocalTime} array corresponds to the collection of objects to be
-   *     converted. Note that if the specified object is a collection of {@link
-   *     LocalTime} objects, each object in the returned {@link LocalTime} array is a
-   *     cloned copy of the original corresponding value.
+   *     要转换的对象集合；如果为null或为空，将返回一个空数组。
+   *     如果类型是基本类型，集合必须是相应的基本类型集合；
+   *     否则必须是相应的泛型集合。
+   * @return 对应于要转换对象集合的{@link LocalTime}数组。请注意，如果指定的对象是
+   *     {@link LocalTime}对象的集合，返回的{@link LocalTime}数组中的每个对象都是
+   *     原始对应值的克隆副本。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects in the collection to be converted.
+   *     如果{@link Type}对象与要转换集合中对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果{@link Type}对象不被支持。
    * @throws TypeConvertException
-   *     if the objects in the collection can not be converted into {@link LocalTime}
-   *     objects.
+   *     如果集合中的对象无法转换为{@link LocalTime}对象。
    */
   @SuppressWarnings("unchecked")
   public static LocalTime[] collectionAsTimes(final Type type,
@@ -5143,29 +5047,23 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts a collection of objects of the specified type to a {@link LocalDateTime}
-   * array.
+   * 将指定类型的对象集合转换为{@link LocalDateTime}数组。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects to be converted; if it is null or empty, a
-   *     empty array will be returned. If the type is primitive type, the
-   *     collection must be a primitive collection; otherwise, it must be a
-   *     generic collection.
-   * @return a {@link LocalDateTime} array corresponds to the collection of objects to be
-   *     converted. Note that if the specified object is a collection of {@link
-   *     LocalDateTime} objects, each object in the returned {@link LocalDateTime} array is a
-   *     cloned copy of the original corresponding value.
+   *     要转换的对象集合；如果为null或为空，将返回一个空数组。
+   *     如果类型是基本类型，集合必须是相应的基本类型集合；
+   *     否则必须是相应的泛型集合。
+   * @return 对应于要转换对象集合的{@link LocalDateTime}数组。请注意，如果指定的对象是
+   *     {@link LocalDateTime}对象的集合，返回的{@link LocalDateTime}数组中的每个对象都是
+   *     原始对应值的克隆副本。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects in the collection to be converted.
+   *     如果{@link Type}对象与要转换集合中对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果{@link Type}对象不被支持。
    * @throws TypeConvertException
-   *     if the objects in the collection can not be converted into {@link LocalDateTime}
-   *     objects.
+   *     如果集合中的对象无法转换为{@link LocalDateTime}对象。
    */
   @SuppressWarnings("unchecked")
   public static LocalDateTime[] collectionAsDateTimes(final Type type,
@@ -5215,29 +5113,23 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts a collection of objects of the specified type to a {@code byte[]}
-   * array.
+   * 将指定类型的对象集合转换为{@code byte[]}数组。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects to be converted; if it is null or empty, a
-   *     empty array will be returned. If the type is primitive type, the
-   *     collection must be a primitive collection; otherwise, it must be a
-   *     generic collection.
-   * @return a {@code byte[]} array corresponds to the collection of objects to
-   *     be converted. Note that if the specified object is of the {@code
-   *     Collection<byte[]>} type, each element in the returned {@code byte[][]}
-   *     array is a cloned copy of the original corresponding value.
+   *     要转换的对象集合；如果为null或为空，将返回一个空数组。
+   *     如果类型是基本类型，集合必须是相应的基本类型集合；
+   *     否则必须是相应的泛型集合。
+   * @return 对应于要转换对象集合的{@code byte[]}数组。请注意，如果指定的对象是
+   *     {@code Collection<byte[]>}类型，返回的{@code byte[][]}
+   *     数组中的每个元素都是原始对应值的克隆副本。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects in the collection to be converted.
+   *     如果{@link Type}对象与要转换集合中对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果{@link Type}对象不被支持。
    * @throws TypeConvertException
-   *     if the objects in the collection can not be converted into {@code
-   *     byte[]} values.
+   *     如果集合中的对象无法转换为{@code byte[]}值。
    */
   @SuppressWarnings("unchecked")
   public static byte[][] collectionAsByteArrays(final Type type,
@@ -5440,27 +5332,21 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts a collection of objects of the specified type to a {@link Class}
-   * array.
+   * 将指定类型的对象集合转换为{@link Class}数组。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects to be converted; if it is null or empty, a
-   *     empty array will be returned. If the type is primitive type, the
-   *     collection must be a primitive collection; otherwise, it must be a
-   *     generic collection.
-   * @return a {@link Date} array corresponds to the collection of objects to be
-   *     converted.
+   *     要转换的对象集合；如果为null或为空，将返回一个空数组。
+   *     如果类型是基本类型，集合必须是相应的基本类型集合；
+   *     否则必须是相应的泛型集合。
+   * @return 对应于要转换对象集合的{@link Class}数组。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects in the collection to be converted.
+   *     如果{@link Type}对象与要转换集合中对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果{@link Type}对象不被支持。
    * @throws TypeConvertException
-   *     if the objects in the collection can not be converted into {@link
-   *     Class} objects.
+   *     如果集合中的对象无法转换为{@link Class}对象。
    */
   @SuppressWarnings("unchecked")
   public static Class<?>[] collectionAsClasses(final Type type,
@@ -5669,27 +5555,21 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts a collection of objects of the specified type to a {@link
-   * BigInteger} array.
+   * 将指定类型的对象集合转换为{@link BigInteger}数组。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects to be converted; if it is null or empty, a
-   *     empty array will be returned. If the type is primitive type, the
-   *     collection must be a primitive collection; otherwise, it must be a
-   *     generic collection.
-   * @return a {@link BigInteger} array corresponds to the collection of objects
-   *     to be converted.
+   *     要转换的对象集合；如果为null或为空，将返回一个空数组。
+   *     如果类型是基本类型，集合必须是相应的基本类型集合；
+   *     否则必须是相应的泛型集合。
+   * @return 对应于要转换对象集合的{@link BigInteger}数组。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects in the collection to be converted.
+   *     如果{@link Type}对象与要转换集合中对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果{@link Type}对象不被支持。
    * @throws TypeConvertException
-   *     if the objects in the collection can not be converted into {@link
-   *     BigInteger} objects.
+   *     如果集合中的对象无法转换为{@link BigInteger}对象。
    */
   @SuppressWarnings("unchecked")
   public static BigInteger[] collectionAsBigIntegers(final Type type,
@@ -5887,27 +5767,21 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts a collection of objects of the specified type to a {@link
-   * BigDecimal} array.
+   * 将指定类型的对象集合转换为{@link BigDecimal}数组。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象的类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects to be converted; if it is null or empty, a
-   *     empty array will be returned. If the type is primitive type, the
-   *     collection must be a primitive collection; otherwise, it must be a
-   *     generic collection.
-   * @return a {@link BigDecimal} array corresponds to the collection of objects
-   *     to be converted.
+   *     要转换的对象集合；如果为null或为空，将返回一个空数组。
+   *     如果类型是基本类型，集合必须是相应的基本类型集合；
+   *     否则必须是相应的泛型集合。
+   * @return 对应于要转换对象集合的{@link BigDecimal}数组。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects in the collection to be converted.
+   *     如果{@link Type}对象与要转换集合中对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果{@link Type}对象不被支持。
    * @throws TypeConvertException
-   *     if the objects in the collection can not be converted into {@link
-   *     BigDecimal} objects.
+   *     如果集合中的对象无法转换为{@link BigDecimal}对象。
    */
   @SuppressWarnings("unchecked")
   public static BigDecimal[] collectionAsBigDecimals(final Type type,
@@ -6105,26 +5979,20 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts an array of objects of the specified type to a {@code boolean}
-   * array.
+   * 将指定类型对象的数组转换为{@code boolean}数组。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象类型对应的{@link Type}对象。
    * @param array
-   *     the array of objects to be converted; if it is null or empty, a empty
-   *     array will be returned. If the type is primitive type, the array must
-   *     be the array of that primitive type.
-   * @return a {@code boolean} array corresponds to the collection of objects to
-   *     be converted.
+   *     要被转换的对象数组；如果为null或空，将返回空数组。
+   *     如果类型是基本类型，则数组必须是该基本类型的数组。
+   * @return 对应转换后的{@code boolean}数组。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects in the collection to be converted.
+   *     如果{@link Type}对象与要转换数组中对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果不支持该{@link Type}对象。
    * @throws TypeConvertException
-   *     if the objects in the collection can not be converted into {@code
-   *     boolean} values.
+   *     如果数组中的对象不能转换为{@code boolean}值。
    */
   @SuppressWarnings("unchecked")
   public static boolean[] arrayAsBooleans(final Type type,
@@ -6295,27 +6163,20 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts an array of objects of the specified type to a {@code char}
-   * array.
+   * 将指定类型对象的数组转换为{@code char}数组。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象类型对应的{@link Type}对象。
    * @param array
-   *     the array of objects to be converted; if it is null or empty, a empty
-   *     array will be returned. If the type is primitive type, the array must
-   *     be the array of that primitive type.
-   * @return a {@code char} array corresponds to the collection of objects to be
-   *     converted.
+   *     要被转换的对象数组；如果为null或空，将返回空数组。
+   *     如果类型是基本类型，则数组必须是该基本类型的数组。
+   * @return 对应转换后的{@code char}数组。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects in the collection to be converted.
+   *     如果{@link Type}对象与要转换数组中对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     Character.class, Class.class if the {@link Type} object is not
-   *     supported.
+   *     如果不支持该{@link Type}对象。
    * @throws TypeConvertException
-   *     if the objects in the collection can not be converted into {@code char}
-   *     values.
+   *     如果数组中的对象不能转换为{@code char}值。
    */
   @SuppressWarnings("unchecked")
   public static char[] arrayAsChars(final Type type, @Nullable final Object array)
@@ -6485,25 +6346,20 @@ public final class TypeUtils {
   }
 
   /**
-   * Converts a array of objects of the specified type to a {@code byte} array.
+   * 将指定类型对象的数组转换为{@code byte}数组。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     要转换对象类型对应的{@link Type}对象。
    * @param array
-   *     the array of objects to be converted; if it is null or empty, a empty
-   *     array will be returned. If the type is primitive type, the array must
-   *     be the array of that primitive type.
-   * @return a {@code byte} array corresponds to the collection of objects to be
-   *     converted.
+   *     要被转换的对象数组；如果为null或空，将返回空数组。
+   *     如果类型是基本类型，则数组必须是该基本类型的数组。
+   * @return 对应转换后的{@code byte}数组。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects in the collection to be converted.
+   *     如果{@link Type}对象与要转换数组中对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果不支持该{@link Type}对象。
    * @throws TypeConvertException
-   *     if the objects in the collection can not be converted into {@code byte}
-   *     values.
+   *     如果数组中的对象不能转换为{@code byte}值。
    */
   @SuppressWarnings("unchecked")
   public static byte[] arrayAsBytes(final Type type,
@@ -8753,24 +8609,21 @@ public final class TypeUtils {
   }
 
   /**
-   * Add a specified object to a specified collection.
+   * 将指定的对象添加到指定的集合中。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     与要转换的对象类型对应的{@link Type}对象。
    * @param col
-   *     the collection where the object to be added to. If the type is a
-   *     primitive type, it must be the corresponding primitive collection;
-   *     otherwise, it must be the corresponding generic collection.
+   *     要添加对象的集合。如果类型是基本类型，
+   *     则必须是对应的基本类型集合；否则必须是对应的泛型集合。
    * @param value
-   *     the object to be added to the collection. It could be null.
+   *     要添加到集合的对象。可以为null。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects in the collection to be converted.
+   *     如果{@link Type}对象与要转换的集合中对象的类型不对应。
    * @throws NullPointerException
-   *     if the collection is null.
+   *     如果集合为null。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果不支持该{@link Type}对象。
    */
   @SuppressWarnings("unchecked")
   public static void addObject(final Type type,
@@ -8854,26 +8707,23 @@ public final class TypeUtils {
   }
 
   /**
-   * Add an array of values to a specified collection.
+   * 将指定的数组值添加到指定的集合中。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     与要转换的对象类型对应的{@link Type}对象。
    * @param col
-   *     the collection where the object to be added to. If the type is a
-   *     primitive type, it must be the corresponding primitive collection;
-   *     otherwise, it must be the corresponding generic collection.
+   *     要添加对象的集合。如果类型是基本类型，
+   *     则必须是对应的基本类型集合；否则必须是对应的泛型集合。
    * @param values
-   *     the array of values to be added to the collection. It could be null or
-   *     empty. If the type is a primitive type, it must be the corresponding
-   *     primitive array; otherwise, it must be the corresponding object array.
+   *     要添加到集合的值数组。可以为null或空。
+   *     如果类型是基本类型，则必须是对应的基本类型数组；
+   *     否则必须是对应的对象数组。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects in the collection to be converted.
+   *     如果{@link Type}对象与要转换的集合中对象的类型不对应。
    * @throws NullPointerException
-   *     if the collection is null.
+   *     如果集合为null。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果不支持该{@link Type}对象。
    */
   @SuppressWarnings("unchecked")
   public static void addArray(final Type type,
@@ -8993,29 +8843,24 @@ public final class TypeUtils {
   }
 
   /**
-   * Add a collection of values to a specified collection.
+   * 将指定的值集合添加到指定的集合中。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     converted.
+   *     与要转换的对象类型对应的{@link Type}对象。
    * @param col
-   *     the collection where the object to be added to. If the type is a
-   *     primitive type, it must be the corresponding primitive collection;
-   *     otherwise, it must be the corresponding generic collection.
+   *     要添加对象的集合。如果类型是基本类型，
+   *     则必须是对应的基本类型集合；否则必须是对应的泛型集合。
    * @param values
-   *     the collection of objects to be added to the collection. If the type is
-   *     a primitive type, it must be the corresponding primitive collection;
-   *     otherwise, it must be the corresponding generic collection.
+   *     要添加到集合的对象集合。如果类型是基本类型，
+   *     则必须是对应的基本类型集合；否则必须是对应的泛型集合。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects in the collection to be converted.
+   *     如果{@link Type}对象与要转换的集合中对象的类型不对应。
    * @throws NullPointerException
-   *     if the collection is null.
+   *     如果集合为null。
    * @throws IllegalArgumentException
-   *     if the specified collection and the collection of values to be add is
-   *     the same collection.
+   *     如果指定的集合和要添加的值集合是同一个集合。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果不支持该{@link Type}对象。
    */
   @SuppressWarnings("unchecked")
   public static void addCollection(final Type type,
@@ -9159,21 +9004,19 @@ public final class TypeUtils {
   }
 
   /**
-   * Reads an object of a specified from a {@link InputStream}.
+   * 从{@link InputStream}中读取指定类型的对象。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     read.
+   *     与要读取对象类型对应的{@link Type}对象。
    * @param in
-   *     a data input.
-   * @return the object read from the data input.
+   *     数据输入流。
+   * @return 从数据输入流中读取的对象。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何I/O错误。
    * @throws ClassNotFoundException
-   *     if the type of the object is a class, and it can not be loaded by the
-   *     current class loader.
+   *     如果对象的类型是类，且无法被当前类加载器加载。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果不支持该{@link Type}对象。
    */
   @SuppressWarnings("unchecked")
   public static Object readObject(final Type type, final InputStream in)
@@ -9229,23 +9072,21 @@ public final class TypeUtils {
   }
 
   /**
-   * Reads a list of objects of a specified from a {@link InputStream}.
+   * 从{@link InputStream}中读取指定类型的对象列表。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     read.
+   *     与要读取的对象类型对应的{@link Type}对象。
    * @param n
-   *     the number of objects to be read.
+   *     要读取的对象数量。
    * @param in
-   *     a data input.
-   * @return the list of objects read from the data input. If the type is a
-   *     primitive type, the returned list is the corresponding primitive list;
-   *     otherwise, the returned list is the corresponding generic list. If
-   *     {@code n} is zero, the returned list is an empty list.
+   *     数据输入流。
+   * @return 从数据输入流中读取的对象列表。如果类型是基本类型，
+   *     返回的列表是对应的基本类型列表；否则返回对应的泛型列表。
+   *     如果{@code n}为零，返回空列表。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何I/O错误。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果不支持该{@link Type}对象。
    */
   @SuppressWarnings("unchecked")
   public static Object readList(final Type type, final int n, final InputStream in)
@@ -9369,22 +9210,20 @@ public final class TypeUtils {
   }
 
   /**
-   * Writes an object of a specified to a {@link OutputStream}.
+   * 将指定类型的对象写入{@link OutputStream}。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     write.
+   *     与要写入的对象类型对应的{@link Type}对象。
    * @param value
-   *     the object to be write.
+   *     要写入的对象。
    * @param out
-   *     a data output.
+   *     数据输出流。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何I/O错误。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     object to be write.
+   *     如果{@link Type}对象与要写入的对象类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果不支持该{@link Type}对象。
    */
   @SuppressWarnings("unchecked")
   public static void writeObject(final Type type, final Object value,
@@ -9439,26 +9278,23 @@ public final class TypeUtils {
   }
 
   /**
-   * Writes a collection of objects of a specified to a {@link OutputStream}.
+   * 将指定类型的对象集合写入{@link OutputStream}。
    *
-   * <p>Note that the size of the collection will NEVER be written.
+   * <p>注意，集合的大小永远不会被写入。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the object to be
-   *     write.
+   *     与要写入的对象类型对应的{@link Type}对象。
    * @param col
-   *     the collection of objects to be write. If the type is a primitive type,
-   *     it must be the corresponding primitive collection; otherwise, it must
-   *     be the corresponding generic collection.
+   *     要写入的对象集合。如果类型是基本类型，必须是对应的基本类型集合；
+   *     否则必须是对应的泛型集合。
    * @param out
-   *     a data output.
+   *     数据输出流。
    * @throws IOException
-   *     if any I/O error occurs.
+   *     如果发生任何I/O错误。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     object to be write.
+   *     如果{@link Type}对象与要写入的对象类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object is not supported.
+   *     如果不支持该{@link Type}对象。
    */
   @SuppressWarnings("unchecked")
   public static void writeCollection(final Type type, final Object col,
@@ -9584,6 +9420,19 @@ public final class TypeUtils {
     }
   }
 
+  /**
+   * 从XML节点中解析指定类型的对象。
+   *
+   * @param type
+   *     与要解析的对象类型对应的{@link Type}对象。
+   * @param node
+   *     XML元素节点。
+   * @param prevSpaceAttr
+   *     前一个空白属性。
+   * @return 从XML节点解析出的对象。
+   * @throws XmlException
+   *     如果XML解析发生错误。
+   */
   @SuppressWarnings("unchecked")
   public static Object fromXmlNode(final Type type, final Element node,
       @Nullable final String prevSpaceAttr) throws XmlException {
@@ -9643,6 +9492,19 @@ public final class TypeUtils {
     }
   }
 
+  /**
+   * 从XML节点列表中解析指定类型的对象集合。
+   *
+   * @param type
+   *     与要解析的对象类型对应的{@link Type}对象。
+   * @param nodes
+   *     XML元素节点列表。
+   * @param prevSpaceAttr
+   *     前一个空白属性。
+   * @return 从XML节点列表解析出的对象集合。
+   * @throws XmlException
+   *     如果XML解析发生错误。
+   */
   @SuppressWarnings("unchecked")
   public static Object fromXmlNodes(final Type type,
       @Nullable final List<Element> nodes,
@@ -9681,6 +9543,21 @@ public final class TypeUtils {
     }
   }
 
+  /**
+   * 将指定类型的对象转换为XML节点。
+   *
+   * @param type
+   *     与要转换的对象类型对应的{@link Type}对象。
+   * @param obj
+   *     要转换的对象。
+   * @param doc
+   *     XML文档。
+   * @param tagName
+   *     标签名称。
+   * @param prevSpaceAttr
+   *     前一个空白属性。
+   * @return 转换后的XML元素节点。
+   */
   @SuppressWarnings("unchecked")
   public static Element toXmlNode(final Type type, @Nullable final Object obj,
       final Document doc, final String tagName,
@@ -9811,6 +9688,25 @@ public final class TypeUtils {
     }
   }
 
+  /**
+   * 将指定类型的对象集合转换为XML节点列表。
+   *
+   * @param type
+   *     与要转换的对象类型对应的{@link Type}对象。
+   * @param col
+   *     要转换的对象集合。
+   * @param doc
+   *     XML文档。
+   * @param parent
+   *     父元素节点。
+   * @param containerName
+   *     容器名称。
+   * @param tagName
+   *     标签名称。
+   * @param prevSpaceAttr
+   *     前一个空白属性。
+   * @return 转换后的XML元素节点列表。
+   */
   @SuppressWarnings("unchecked")
   public static List<Element> toXmlNodes(final Type type, final Object col,
       final Document doc, final Element parent,
@@ -10009,24 +9905,21 @@ public final class TypeUtils {
   }
 
   /**
-   * Compares two objects of the same type lexically.
+   * 按字典序比较两个相同类型的对象。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the two objects.
+   *     与两个对象类型对应的{@link Type}对象。
    * @param lhs
-   *     the left hand side of object. It could be null.
+   *     左侧对象。可以为null。
    * @param rhs
-   *     the right hand side of object. It could be null.
-   * @return 0 if the two objects equal to each other; -1 if the left hand
-   *     object compares lexically less than the right hand side object; +1 if
-   *     the left hand object compares lexically greater than the right hand
-   *     side object. Note that null considered to be less than any non-null
-   *     values.
+   *     右侧对象。可以为null。
+   * @return 如果两个对象相等则返回0；如果左侧对象按字典序小于右侧对象则返回-1；
+   *     如果左侧对象按字典序大于右侧对象则返回+1。
+   *     注意null被认为小于任何非null值。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the two
-   *     objects.
+   *     如果{@link Type}对象与两个对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object does not supported.
+   *     如果不支持该{@link Type}对象。
    */
   @SuppressWarnings("unchecked")
   public static int compareObject(final Type type, @Nullable final Object lhs,
@@ -10072,32 +9965,23 @@ public final class TypeUtils {
   }
 
   /**
-   * Compares two collection of values of the same type lexically.
+   * 按字典序比较两个相同类型的值集合。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the objects in the
-   *     lists.
+   *     与集合中对象类型对应的{@link Type}对象。
    * @param lhs
-   *     the left hand side of collection of values. It could be null. If the
-   *     type is a primitive type, it must be the corresponding primitive
-   *     collection; otherwise, it must be the corresponding generic
-   *     collection.
+   *     左侧值集合。可以为null。如果类型是基本类型，必须是对应的基本类型集合；
+   *     否则必须是对应的泛型集合。
    * @param rhs
-   *     the right hand side of collection of values. It could be null.If the
-   *     type is a primitive type, it must be the corresponding primitive
-   *     collection; otherwise, it must be the corresponding generic
-   *     collection.
-   * @return 0 if the two collections of values equal to each other; -1 if the
-   *     left hand side collection of values compares lexically less than the
-   *     right hand side collection of values; +1 if the left hand side
-   *     collection of values compares lexically greater than the right hand
-   *     side collection of values. Note that null considered to be less than
-   *     any non-null values.
+   *     右侧值集合。可以为null。如果类型是基本类型，必须是对应的基本类型集合；
+   *     否则必须是对应的泛型集合。
+   * @return 如果两个值集合相等则返回0；如果左侧值集合按字典序小于右侧值集合则返回-1；
+   *     如果左侧值集合按字典序大于右侧值集合则返回+1。
+   *     注意null被认为小于任何非null值。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects of the lists.
+   *     如果{@link Type}对象与集合中对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object does not supported.
+   *     如果不支持该{@link Type}对象。
    */
   @SuppressWarnings("unchecked")
   public static int compareCollections(final Type type,
@@ -10180,29 +10064,23 @@ public final class TypeUtils {
   }
 
   /**
-   * Compares two arrays of values of the same type lexically.
+   * 按字典序比较两个相同类型的值数组。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the objects in the
-   *     lists.
+   *     与数组中对象类型对应的{@link Type}对象。
    * @param lhs
-   *     the left hand side of array of values. It could be null. If the type is
-   *     a primitive type, it must be the corresponding primitive array;
-   *     otherwise, it must be the corresponding object array.
+   *     左侧值数组。可以为null。如果类型是基本类型，必须是对应的基本类型数组；
+   *     否则必须是对应的对象数组。
    * @param rhs
-   *     the right hand side of array of values. It could be null.If the type is
-   *     a primitive type, it must be the corresponding primitive array;
-   *     otherwise, it must be the corresponding object array.
-   * @return 0 if the two arrays of values equal to each other; -1 if the left
-   *     hand side array of values compares lexically less than the right hand
-   *     side array of values; +1 if the left hand side array of values compares
-   *     lexically greater than the right hand side array of values. Note that
-   *     null considered to be less than any non-null values.
+   *     右侧值数组。可以为null。如果类型是基本类型，必须是对应的基本类型数组；
+   *     否则必须是对应的对象数组。
+   * @return 如果两个值数组相等则返回0；如果左侧值数组按字典序小于右侧值数组则返回-1；
+   *     如果左侧值数组按字典序大于右侧值数组则返回+1。
+   *     注意null被认为小于任何非null值。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects of the lists.
+   *     如果{@link Type}对象与数组中对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object does not supported.
+   *     如果不支持该{@link Type}对象。
    */
   @SuppressWarnings("unchecked")
   public static int compareArrays(final Type type,
@@ -10285,21 +10163,19 @@ public final class TypeUtils {
   }
 
   /**
-   * Tests the equality of two objects of the same type.
+   * 测试两个相同类型对象是否相等。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the two objects.
+   *     与两个对象类型对应的{@link Type}对象。
    * @param lhs
-   *     the left hand side of object. It could be null.
+   *     左侧对象。可以为null。
    * @param rhs
-   *     the right hand side of object. It could be null.
-   * @return true if the two objects equal to each other; false otherwise. Note
-   *     that null only equals to null.
+   *     右侧对象。可以为null。
+   * @return 如果两个对象相等则返回true；否则返回false。注意null只等于null。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the two
-   *     objects.
+   *     如果{@link Type}对象与两个对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object does not supported.
+   *     如果不支持该{@link Type}对象。
    */
   @SuppressWarnings("unchecked")
   public static boolean equalsObject(final Type type, @Nullable final Object lhs,
@@ -10346,28 +10222,21 @@ public final class TypeUtils {
   }
 
   /**
-   * Tests the equality of two collection of values of the same type.
+   * 测试两个相同类型值集合是否相等。
    *
    * @param type
-   *     the {@link Type} object corresponding to the type of the list of
-   *     objects.
+   *     与对象集合类型对应的{@link Type}对象。
    * @param lhs
-   *     the left hand side of collection of values. It could be null. If the
-   *     type is a primitive type, it must be the corresponding primitive
-   *     collection; otherwise, it must be the corresponding generic
-   *     collection.
+   *     左侧值集合。可以为null。如果类型是基本类型，必须是对应的基本类型集合；
+   *     否则必须是对应的泛型集合。
    * @param rhs
-   *     the right hand side of collection of values. It could be null.If the
-   *     type is a primitive type, it must be the corresponding primitive
-   *     collection; otherwise, it must be the corresponding generic
-   *     collection.
-   * @return true if the two collections equal to each other; false otherwise.
-   *     Note that null only equals to null.
+   *     右侧值集合。可以为null。如果类型是基本类型，必须是对应的基本类型集合；
+   *     否则必须是对应的泛型集合。
+   * @return 如果两个集合相等则返回true；否则返回false。注意null只等于null。
    * @throws ClassCastException
-   *     if the {@link Type} object does not correspond to the type of the
-   *     objects of the lists.
+   *     如果{@link Type}对象与集合中对象的类型不对应。
    * @throws UnsupportedDataTypeException
-   *     if the {@link Type} object does not supported.
+   *     如果不支持该{@link Type}对象。
    */
   @SuppressWarnings("unchecked")
   public static boolean equalsCollections(final Type type,

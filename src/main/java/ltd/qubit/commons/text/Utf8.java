@@ -12,87 +12,111 @@ import ltd.qubit.commons.math.ByteBit;
 import ltd.qubit.commons.math.IntBit;
 
 /**
- * Provides the UTF-8 coding scheme utilities.
+ * 提供UTF-8编码方案的实用工具。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class Utf8 {
   // stop checkstyle: MagicNumberCheck
 
   /**
-   * The maximum number of code units in order to encode a single Unicode code
-   * point.
+   * 编码单个Unicode码点所需的最大代码单元数量。
    */
   public static final int MAX_CODE_UNIT_COUNT = 4;
 
-  // http://en.wikipedia.org/wiki/UTF-8
-  //
-  // All leading UTF-8 code units has the following form
-  //
-  // 11000010-11011111 C2-DF 194-223 Start of 2-byte sequence
-  // 11100000-11101111 E0-EF 224-239 Start of 3-byte sequence
-  // 11110000-11110100 F0-F4 240-244 Start of 4-byte sequence
-  private static final int MIN_LEADING = 0xC2;
-
-  private static final int MAX_LEADING = 0xF4;
-
-  // http://en.wikipedia.org/wiki/UTF-8
-  //
-  // All trailing UTF-8 code units has the form of
-  //
-  // 10xxxxxx
-  //
-  // i.e., the most significant 2 bits are 1 and 0.
-  private static final int TRAILING_MASK = 0xC0;
-
-  private static final int TRAILING_PATTERN = 0x80;
-
-  // let k be the current of the first 0 of ch from the most significant bit
-  // (the most significant bit has the current of 7), then
-  //
-  // - if k = 7, ch is a single code unit, and the number of trailing UTF-8
-  // code units is 0.
-  // - if k = 6, ch is NOT a valid leading UTF-8 code unit.
-  // - if k = 5, 4, or 3, the number of trailing UTF-8 code units is 6 - k.
-  // - otherwise, ch is NOT a valid leading UTF-8 code unit.
-  //
-  private static final int TRAILING_COUNT_MINUEND = 6;
-
-  // The maximum value of Unicode code point which could be encoded in one
-  // UTF-8 code unit.
-  private static final int MAX_ONE_CODE_UNIT = 0x7F;
-
-  // The maximum value of Unicode code point which could be encoded in two
-  // UTF-8 code units.
-  private static final int MAX_TWO_CODE_UNIT = 0x7FF;
-
-  // The maximum value of Unicode code point which could be encoded in three
-  // UTF-8 code unit.
-  private static final int MAX_THREE_CODE_UNIT = 0xFFFF;
-
-  // The maximum value of Unicode code point which could be encoded in four
-  // UTF-8 code unit.
-  // private static final int MAX_FOUR_CODE_UNIT = 0x10FFFF;
-
-  // The mask and pattern used to test whether a Unicode code point is a
-  // surrogate. That is, if ch is a Unicode code point, ch is a surrogate iff
-  // (ch & SurrogateMask) == SurrogatePattern.
-  private static final int SURROGATE_MASK = 0xFFFFF800;
-
-  // private static final int SURROGATE_PATTERN = 0x0000D800;
+  /**
+   * 最小前导UTF-8代码单元。
+   *
+   * <p>所有前导UTF-8代码单元都具有以下形式：
+   * <pre>
+   *   11000010-11011111 C2-DF 194-223 开始2字节序列
+   *   11100000-11101111 E0-EF 224-239 开始3字节序列
+   *   11110000-11110100 F0-F4 240-244 开始4字节序列
+   * </pre>
+   *
+   * <p>因此，最小前导UTF-8代码单元为0xC2。
+   *
+   * @see <a href="http://en.wikipedia.org/wiki/UTF-8">UTF-8</a>
+   */
+  public static final int MIN_LEADING = 0xC2;
 
   /**
-   * Determines whether the specified UTF-8 code unit is a single code unit
-   * encoding a valid code point.
+   * 最大前导UTF-8代码单元。
+   */
+  public static final int MAX_LEADING = 0xF4;
+
+  /**
+   * 尾随UTF-8代码单元的掩码。
    *
-   * <p>A valid Unicode code point could be encoded as 1 to 4 UTF-8 code unit,
-   * and a UTF-8 code unit is a single code unit encoding a Unicode code point
-   * iff its value is less than 0x80.
+   * <p>所有尾随UTF-8代码单元都具有以下形式：
+   * <pre>
+   *   10xxxxxx
+   * </pre>
    *
-   * @param ch
-   *     a UTF-8 code unit.
-   * @return true if the specified UTF-8 code unit is a single code unit
-   *     encoding a valid Unicode code point; false otherwise.
+   * <p>因此，尾随UTF-8代码单元的掩码为0xC0。
+   *
+   * @see <a href="http://en.wikipedia.org/wiki/UTF-8">UTF-8</a>
+   */
+  public static final int TRAILING_MASK = 0xC0;
+
+  /**
+   * 尾随UTF-8代码单元的模式。
+   */
+  public static final int TRAILING_PATTERN = 0x80;
+
+  /**
+   * 尾随UTF-8代码单元数量减数。
+   *
+   * <p>尾随UTF-8代码单元数量减数为6，即尾随UTF-8代码单元数量为6 - k。因此，尾随UTF-8代码单元数量减数为6。
+   *
+   * 令k为从最高有效位开始第一个0的当前值（最高有效位有当前值7），则：
+   * <ul>
+   *   <li>如果k = 7，ch是一个单个代码单元，尾随UTF-8代码单元数量为0。</li>
+   *   <li>如果k = 6，ch不是一个有效的UTF-8前导代码单元。</li>
+   *   <li>如果k = 5, 4, 或3，尾随UTF-8代码单元数量为6 - k。</li>
+   *   <li>否则，ch不是一个有效的UTF-8前导代码单元。</li>
+   * </ul>
+   *
+   * @see <a href="http://en.wikipedia.org/wiki/UTF-8">UTF-8</a>
+   */
+  public static final int TRAILING_COUNT_MINUEND = 6;
+
+  /**
+   * 最大单个UTF-8代码单元。
+   */
+  public static final int MAX_ONE_CODE_UNIT = 0x7F;
+
+  /**
+   * 最大两个UTF-8代码单元。
+   */
+  public static final int MAX_TWO_CODE_UNIT = 0x7FF;
+
+  /**
+   * 最大三个UTF-8代码单元。
+   */
+  public static final int MAX_THREE_CODE_UNIT = 0xFFFF;
+
+  /**
+   * 最大四个UTF-8代码单元。
+   */
+  public static final int MAX_FOUR_CODE_UNIT = 0x10FFFF;
+
+  /**
+   * 代理码点的掩码。
+   * <p>
+   * 如果ch是Unicode码点，则ch是代理码点当且仅当
+   * {@code (ch & SurrogateMask) == SurrogatePattern}。
+   */
+  public static final int SURROGATE_MASK = 0xFFFFF800;
+
+  /**
+   * 判断指定的UTF-8代码单元是否为编码有效码点的单个代码单元。
+   *
+   * <p>有效的Unicode码点可以编码为1到4个UTF-8代码单元，当且仅当UTF-8代码单元的值小于0x80时，
+   * 它是编码Unicode码点的单个代码单元。
+   *
+   * @param ch UTF-8代码单元
+   * @return 如果指定的UTF-8代码单元是编码有效Unicode码点的单个代码单元则返回{@code true}；否则返回{@code false}
    */
   public static boolean isSingle(final byte ch) {
     final int codePoint = (ch & 0xFF);
@@ -100,35 +124,26 @@ public final class Utf8 {
   }
 
   /**
-   * Determines whether the specified UTF-8 code unit is a single code unit
-   * encoding a valid code point.
+   * 判断指定的UTF-8代码单元是否为编码有效码点的单个代码单元。
    *
-   * <p>A valid Unicode code point could be encoded as 1 to 4 UTF-8 code unit,
-   * and a UTF-8 code unit is a single code unit encoding a Unicode code point
-   * iff its value is less than 0x80.
+   * <p>有效的Unicode码点可以编码为1到4个UTF-8代码单元，当且仅当UTF-8代码单元的值小于0x80时，
+   * 它是编码Unicode码点的单个代码单元。
    *
-   * @param ch
-   *     a UTF-8 code unit as an unsigned integer.
-   * @return true if the specified UTF-8 code unit is a single code unit
-   *     encoding a valid Unicode code point; false otherwise.
+   * @param ch 作为无符号整数的UTF-8代码单元
+   * @return 如果指定的UTF-8代码单元是编码有效Unicode码点的单个代码单元则返回{@code true}；否则返回{@code false}
    */
   public static boolean isSingle(final int ch) {
     return ch <= MAX_ONE_CODE_UNIT;
   }
 
   /**
-   * Determines whether the specified UTF-8 code unit is a leading code unit of
-   * a valid Unicode code point.
+   * 判断指定的UTF-8代码单元是否为有效Unicode码点的前导代码单元。
    *
-   * <p>A valid Unicode code point could be encoded as 1 to 4 UTF-8 code unit,
-   * and a UTF-8 code unit is a leading code unit of a Unicode code point iff its
-   * bits are prefixed by 110, 1110, or 11110 (i.e., it is in the binary form of
-   * 110xxxxx, 1110xxxx, or 11110xxx).
+   * <p>有效的Unicode码点可以编码为1到4个UTF-8代码单元，当且仅当UTF-8代码单元的位以110、1110或11110为前缀时
+   * （即它的二进制形式为110xxxxx、1110xxxx或11110xxx），它是Unicode码点的前导代码单元。
    *
-   * @param ch
-   *     a UTF-8 code unit.
-   * @return true if the specified UTF-8 code unit is a leading code unit of a
-   *     valid Unicode code point; false otherwise.
+   * @param ch UTF-8代码单元
+   * @return 如果指定的UTF-8代码单元是有效Unicode码点的前导代码单元则返回{@code true}；否则返回{@code false}
    */
   public static boolean isLeading(final byte ch) {
     // http://en.wikipedia.org/wiki/UTF-8
@@ -142,18 +157,13 @@ public final class Utf8 {
   }
 
   /**
-   * Determines whether the specified UTF-8 code unit is a leading code unit of
-   * a valid Unicode code point.
+   * 判断指定的UTF-8代码单元是否为有效Unicode码点的前导代码单元。
    *
-   * <p>A valid Unicode code point could be encoded as 1 to 4 UTF-8 code unit,
-   * and a UTF-8 code unit is a leading code unit of a Unicode code point iff its
-   * bits are prefixed by 110, 1110, or 11110 (i.e., it is in the binary form of
-   * 110xxxxx, 1110xxxx, or 11110xxx).
+   * <p>有效的Unicode码点可以编码为1到4个UTF-8代码单元，当且仅当UTF-8代码单元的位以110、1110或11110为前缀时
+   * （即它的二进制形式为110xxxxx、1110xxxx或11110xxx），它是Unicode码点的前导代码单元。
    *
-   * @param ch
-   *     a UTF-8 code unit as an unsigned integer.
-   * @return true if the specified UTF-8 code unit is a leading code unit of a
-   *     valid Unicode code point; false otherwise.
+   * @param ch 作为无符号整数的UTF-8代码单元
+   * @return 如果指定的UTF-8代码单元是有效Unicode码点的前导代码单元则返回{@code true}；否则返回{@code false}
    */
   public static boolean isLeading(final int ch) {
     // http://en.wikipedia.org/wiki/UTF-8
@@ -166,18 +176,13 @@ public final class Utf8 {
   }
 
   /**
-   * Determines whether the specified UTF-8 code unit is a trailing code unit of
-   * a valid Unicode code point.
+   * 判断指定的UTF-8代码单元是否为有效Unicode码点的尾随代码单元。
    *
-   * <p>A valid Unicode code point could be encoded as 1 to 4 UTF-8 code unit,
-   * and a UTF-8 code unit is a trailing code unit of a Unicode code point iff its
-   * bits are prefixed by 10 (i.e., it is in the binary form of 10xxxxxx, or
-   * equivalently, it is between [0x80, 0xBF]).
+   * <p>有效的Unicode码点可以编码为1到4个UTF-8代码单元，当且仅当UTF-8代码单元的位以10为前缀时
+   * （即它的二进制形式为10xxxxxx，或等价地，它在[0x80, 0xBF]之间），它是Unicode码点的尾随代码单元。
    *
-   * @param ch
-   *     a UTF-8 code unit.
-   * @return true if the specified UTF-8 code unit is a trailing code unit of a
-   *     valid Unicode code point; false otherwise.
+   * @param ch UTF-8代码单元
+   * @return 如果指定的UTF-8代码单元是有效Unicode码点的尾随代码单元则返回{@code true}；否则返回{@code false}
    */
   public static boolean isTrailing(final byte ch) {
     // http://en.wikipedia.org/wiki/UTF-8
@@ -193,18 +198,13 @@ public final class Utf8 {
   }
 
   /**
-   * Determines whether the specified UTF-8 code unit is a trailing code unit of
-   * a valid Unicode code point.
+   * 判断指定的UTF-8代码单元是否为有效Unicode码点的尾随代码单元。
    *
-   * <p>A valid Unicode code point could be encoded as 1 to 4 UTF-8 code unit,
-   * and a UTF-8 code unit is a trailing code unit of a Unicode code point iff its
-   * bits are prefixed by 10 (i.e., it is in the binary form of 10xxxxxx, or
-   * equivalently, it is between [0x80, 0xBF]).
+   * <p>有效的Unicode码点可以编码为1到4个UTF-8代码单元，当且仅当UTF-8代码单元的位以10为前缀时
+   * （即它的二进制形式为10xxxxxx，或等价地，它在[0x80, 0xBF]之间），它是Unicode码点的尾随代码单元。
    *
-   * @param ch
-   *     a UTF-8 code unit as an unsigned integer.
-   * @return true if the specified UTF-8 code unit is a trailing code unit of a
-   *     valid Unicode code point; false otherwise.
+   * @param ch 作为无符号整数的UTF-8代码单元
+   * @return 如果指定的UTF-8代码单元是有效Unicode码点的尾随代码单元则返回{@code true}；否则返回{@code false}
    */
   public static boolean isTrailing(final int ch) {
     // http://en.wikipedia.org/wiki/UTF-8
@@ -219,15 +219,10 @@ public final class Utf8 {
   }
 
   /**
-   * Counts the number of trailing UTF-8 code units need to compose a valid
-   * Unicode code point according to the leading code unit.
+   * 根据前导代码单元计算组成有效Unicode码点所需的尾随UTF-8代码单元的数量。
    *
-   * @param ch
-   *     a UTF-8 code unit, which must be a leading code unit of a valid code
-   *     point.
-   * @return The number of trailing code units (does NOT include the leading
-   *     code unit itself) need to compose a valid Unicode code point according
-   *     to the leading code unit.
+   * @param ch UTF-8代码单元，必须是有效码点的前导代码单元
+   * @return 组成有效Unicode码点所需的尾随代码单元数量（不包括前导代码单元本身）
    */
   public static int getTrailingCount(final byte ch) {
     // let k be the current of the first 0 of ch from the most significant bit
@@ -245,15 +240,10 @@ public final class Utf8 {
   }
 
   /**
-   * Counts the number of trailing UTF-8 code units need to compose a valid
-   * Unicode code point according to the leading code unit.
+   * 根据前导代码单元计算组成有效Unicode码点所需的尾随UTF-8代码单元的数量。
    *
-   * @param ch
-   *     a UTF-8 code unit as an unsigned integer, which must be a leading code
-   *     unit of a valid code point.
-   * @return The number of trailing code units (does NOT include the leading
-   *     code unit itself) need to compose a valid Unicode code point according
-   *     to the leading code unit.
+   * @param ch 作为无符号整数的UTF-8代码单元，必须是有效码点的前导代码单元
+   * @return 组成有效Unicode码点所需的尾随代码单元数量（不包括前导代码单元本身）
    */
   public static int getTrailingCount(final int ch) {
     // let k be the current of the first 0 of ch from the most significant bit
@@ -271,14 +261,10 @@ public final class Utf8 {
   }
 
   /**
-   * Gets the number of UTF-8 code units need to encode the specified Unicode
-   * code point.
+   * 获取编码指定Unicode码点所需的UTF-8代码单元数量。
    *
-   * @param codePoint
-   *     a code point, which must be a valid Unicode code point and must NOT be
-   *     a surrogate code point.
-   * @return The number of UTF-8 code units need to encode the specified Unicode
-   *     code point, which is in the range of [1, MaxCount].
+   * @param codePoint 码点，必须是有效的Unicode码点且不能是代理码点
+   * @return 编码指定Unicode码点所需的UTF-8代码单元数量，范围在[1, MaxCount]内
    */
   public static int getCodeUnitCount(final int codePoint) {
     // the codePoint must be a valid Unicode code point and not a surrogate.
@@ -296,34 +282,27 @@ public final class Utf8 {
   }
 
   /**
-   * Adjust a random-access offset in a UTF-8 code unit sequence to the start
-   * position of the current code point.
+   * 将UTF-8代码单元序列中的随机访问偏移量调整到当前码点的起始位置。
    *
-   * <p>More precisely, if the offset points to a trailing code unit, then the
-   * offset is moved backward to the corresponding leading code unit; otherwise,
-   * it is not modified.
+   * <p>更准确地说，如果偏移量指向尾随代码单元，则将偏移量向后移动到相应的前导代码单元；
+   * 否则，不进行修改。
    *
    * @param pos
-   *     the index parsing position; after calling this function, it will be set
-   *     to the new position.
+   *     索引解析位置；调用此函数后，将设置为新位置。
    * @param buffer
-   *     an array of bytes.
+   *     字节数组。
    * @param startIndex
-   *     the start current of the byte array.
-   * @return the amount of decreasing of the argument current, or 0 if the
-   *     argument current does not modified. After successfully calling this
-   *     function, the position of the buffer will be decreased to the amount of
-   *     value returned by this function. If the current position of the buffer
-   *     points an illegal code unit sequence, or an incomplete code unit
-   *     sequence, the function returns a negative integer indicating the error:
-   *     {@link ErrorCode#MALFORMED_UNICODE} indicates an illegal code unit
-   *     sequence; {@link ErrorCode#INCOMPLETE_UNICODE} indicates an incomplete
-   *     code unit sequence, and the position of the buffer does not changed.
+   *     字节数组的开始索引。
+   * @return 参数位置的减少量，如果参数位置未修改则返回0。成功调用此函数后，
+   *     缓冲区的位置将减少此函数返回的值。如果缓冲区的当前位置指向非法代码单元序列
+   *     或不完整的代码单元序列，函数将返回表示错误的负整数：
+   *     {@link ErrorCode#MALFORMED_UNICODE}表示非法代码单元序列；
+   *     {@link ErrorCode#INCOMPLETE_UNICODE}表示不完整的代码单元序列，
+   *     缓冲区的位置不会改变。
    * @throws IndexOutOfBoundsException
-   *     if startIndex &lt; 0 or current.value &lt; startIndex. If current.value
-   *     == startIndex, the function will check whether the byte at the
-   *     startIndex is a trailing byte, if it is, an INCOMPLETE_UNICODE will be
-   *     returned; otherwise, a 0 will be returned.
+   *     如果startIndex &lt; 0或current.value &lt; startIndex。如果current.value
+   *     == startIndex，函数将检查startIndex处的字节是否为尾随字节，如果是，
+   *     将返回INCOMPLETE_UNICODE；否则返回0。
    */
   public static int setToStart(final ParsingPosition pos, final byte[] buffer,
       final int startIndex) {
@@ -363,33 +342,25 @@ public final class Utf8 {
   }
 
   /**
-   * Adjust a random-access offset in a UTF-8 code unit sequence to the position
-   * of the end of current code point.
+   * 将UTF-8代码单元序列中的随机访问偏移量调整到当前码点的结束位置。
    *
-   * <p>More precisely, if the offset points to a trailing code unit of a code
-   * point, then the offset is increased to behind the whole code unit sequence
-   * of the code point; otherwise, it is not modified.
+   * <p>更准确地说，如果偏移量指向码点的尾随代码单元，则将偏移量增加到
+   * 该码点的整个代码单元序列之后；否则，不进行修改。
    *
    * @param pos
-   *     the index parsing position; after calling this function, it will be set
-   *     to the new position.
+   *     索引解析位置；调用此函数后，将设置为新位置。
    * @param buffer
-   *     an array of bytes.
+   *     字节数组。
    * @param endIndex
-   *     the end current of the byte array.
-   * @return the amount of increasing of the argument current, or 0 if the
-   *     argument current does not modified. After successfully calling this
-   *     function, the position of the buffer will be increased to the amount of
-   *     value returned by this function. If the current position of the buffer
-   *     points to an illegal code unit sequence, or an incomplete code unit
-   *     sequence, the function returns a negative integer indicating the error:
-   *     {@link ErrorCode#MALFORMED_UNICODE} indicates an illegal code unit
-   *     sequence; {@link ErrorCode#INCOMPLETE_UNICODE} indicates an incomplete
-   *     code unit sequence.
+   *     字节数组的结束索引。
+   * @return 参数位置的增加量，如果参数位置未修改则返回0。成功调用此函数后，
+   *     缓冲区的位置将增加此函数返回的值。如果缓冲区的当前位置指向非法代码单元序列
+   *     或不完整的代码单元序列，函数将返回表示错误的负整数：
+   *     {@link ErrorCode#MALFORMED_UNICODE}表示非法代码单元序列；
+   *     {@link ErrorCode#INCOMPLETE_UNICODE}表示不完整的代码单元序列。
    * @throws IndexOutOfBoundsException
-   *     if endIndex &gt; buffer.length or current.value &gt; endIndex. Note
-   *     that if current.value == endIndex, the function does nothing and
-   *     returns 0.
+   *     如果endIndex &gt; buffer.length或current.value &gt; endIndex。
+   *     注意，如果current.value == endIndex，函数不执行任何操作并返回0。
    */
   public static int setToTerminal(final ParsingPosition pos, final byte[] buffer,
       final int endIndex) {
@@ -424,38 +395,29 @@ public final class Utf8 {
   }
 
   /**
-   * Advance the offset of a UTF-8 code unit sequence from one code point
-   * boundary to the next one.
+   * 将UTF-8代码单元序列的偏移量从一个码点边界推进到下一个码点边界。
    *
-   * <p>The offset must point to a code unit starting a valid code point (i.e.,
-   * it's either points to a single code unit, or points to a leading code
-   * unit), and the function advance the offset to the starting of the next code
-   * unit, returns the number of code unit it skipped. If the offset does not
-   * points to a code unit starting a valid code point, or it points to a
-   * illegal code unit sequence, the function does nothing but returns a
-   * negative integer indicating the error.
+   * <p>偏移量必须指向有效码点开始的代码单元（即，它要么指向单个代码单元，
+   * 要么指向前导代码单元），该函数将偏移量推进到下一个代码单元的开始位置，
+   * 返回跳过的代码单元数量。如果偏移量没有指向有效码点开始的代码单元，
+   * 或者它指向非法代码单元序列，函数不执行任何操作并返回表示错误的负整数。
    *
    * @param pos
-   *     the index parsing position; after calling this function, it will be set
-   *     to the new position.
+   *     索引解析位置；调用此函数后，将设置为新位置。
    * @param buffer
-   *     an array of bytes.
+   *     字节数组。
    * @param endIndex
-   *     the end current of the byte array.
-   * @return if the function successfully skip a code point from the code unit
-   *     sequence at the specified offset, returns the number of code units
-   *     consisting the skipped code point, and forward the position of the
-   *     buffer to the new position; otherwise, if the specified offset does not
-   *     point to a leading code unit of a valid code point, do nothing and
-   *     returns a negative integer indicating the error: {@link
-   *     ErrorCode#MALFORMED_UNICODE} indicates the specified offset does not
-   *     point to the starting of a legal code unit sequence consisting a valid
-   *     code point; {@link ErrorCode#INCOMPLETE_UNICODE} indicates the input
-   *     code unit sequence is not complete to form a valid code point.
+   *     字节数组的结束索引。
+   * @return 如果函数成功从指定偏移量的代码单元序列中跳过一个码点，
+   *     返回组成被跳过码点的代码单元数量，并将缓冲区位置向前移动到新位置；
+   *     否则，如果指定偏移量没有指向有效码点的前导代码单元，不执行任何操作
+   *     并返回表示错误的负整数：{@link ErrorCode#MALFORMED_UNICODE}
+   *     表示指定偏移量没有指向组成有效码点的合法代码单元序列的开始；
+   *     {@link ErrorCode#INCOMPLETE_UNICODE}表示输入代码单元序列
+   *     不完整，无法形成有效码点。
    * @throws IndexOutOfBoundsException
-   *     if endIndex &gt; buffer.length or current.value &gt; endIndex. Note
-   *     that if current.value == endIndex, the function does nothing and
-   *     returns 0.
+   *     如果endIndex &gt; buffer.length或current.value &gt; endIndex。
+   *     注意，如果current.value == endIndex，函数不执行任何操作并返回0。
    */
   public static int forward(final ParsingPosition pos, final byte[] buffer,
       final int endIndex) {
@@ -495,39 +457,30 @@ public final class Utf8 {
   }
 
   /**
-   * Decreases the offset of a UTF-8 code unit sequence from one code point
-   * boundary to the previous one.
+   * 将UTF-8代码单元序列的偏移量从一个码点边界递减到前一个码点边界。
    *
-   * <p>The offset must point to a position next to the code unit ending a
-   * valid code point (i.e., it's either points to a single code unit, or points
-   * to a leading code unit, or points to the position right after the last code
-   * unit of the whole code unit sequence), and the function decreases the
-   * offset to the starting of the previous code unit, returns the number of
-   * code unit it passed. If the offset does not points to a position next to
-   * the code unit ending a valid code point, or if the previous code unit
-   * sequence is illegal, the function does nothing but returns a negative
-   * integer indicating the error.
+   * <p>偏移量必须指向有效码点结束后的下一个位置（即，它要么指向单个代码单元，
+   * 要么指向前导代码单元，要么指向整个代码单元序列最后一个代码单元之后的位置），
+   * 该函数将偏移量递减到前一个代码单元的开始位置，返回经过的代码单元数量。
+   * 如果偏移量没有指向有效码点结束后的下一个位置，或者前一个代码单元序列是非法的，
+   * 函数不执行任何操作并返回表示错误的负整数。
    *
    * @param pos
-   *     the index parsing position; after calling this function, it will be set
-   *     to the new position.
+   *     索引解析位置；调用此函数后，将设置为新位置。
    * @param buffer
-   *     an array of bytes.
+   *     字节数组。
    * @param startIndex
-   *     the start current of the byte array.
-   * @return if the function successfully passed the previous code point from
-   *     the code unit sequence at the specified offset, returns the number of
-   *     code units consisting the passed code point, and backward the position
-   *     of the buffer to the new position; otherwise, if the specified offset
-   *     does not point to a leading code unit of a valid code point, do nothing
-   *     and returns a negative integer indicating the error: {@link
-   *     ErrorCode#MALFORMED_UNICODE} indicates the specified offset does not
-   *     point to the next position of the code unit ending a valid code point;
-   *     {@link ErrorCode#INCOMPLETE_UNICODE} indicates the input code unit
-   *     sequence is not complete to form a valid code point.
+   *     字节数组的开始索引。
+   * @return 如果函数成功从指定偏移量的代码单元序列中越过前一个码点，
+   *     返回组成被越过码点的代码单元数量，并将缓冲区位置向后移动到新位置；
+   *     否则，如果指定偏移量没有指向有效码点的前导代码单元，不执行任何操作
+   *     并返回表示错误的负整数：{@link ErrorCode#MALFORMED_UNICODE}
+   *     表示指定偏移量没有指向有效码点结束的代码单元的下一个位置；
+   *     {@link ErrorCode#INCOMPLETE_UNICODE}表示输入代码单元序列
+   *     不完整，无法形成有效码点。
    * @throws IndexOutOfBoundsException
-   *     if startIndex &lt; 0 or current.value &lt; startIndex. Note that if
-   *     current.value == startIndex, the function does nothing and returns 0.
+   *     如果startIndex &lt; 0或current.value &lt; startIndex。
+   *     注意，如果current.value == startIndex，函数不执行任何操作并返回0。
    */
   public static int backward(final ParsingPosition pos, final byte[] buffer,
       final int startIndex) {
@@ -578,36 +531,28 @@ public final class Utf8 {
   }
 
   /**
-   * Get a code point from a UTF-8 code unit sequence at a code point boundary
-   * offset.
+   * 从UTF-8代码单元序列的码点边界偏移量处获取一个码点。
    *
-   * <p>The offset must point to a code unit starting a valid code point (i.e.,
-   * either a single code unit, or the leading code unit of a valid code point).
-   * The function read all the code points consisting that code point, and
-   * returns the number of code units have been read. If the offset does not
-   * point to a starting code unit of a valid code point, or points to an
-   * illegal code unit sequence, the function returns a negative integer
-   * indicating the error.
+   * <p>偏移量必须指向有效码点开始的代码单元（即，要么是单个代码单元，
+   * 要么是有效码点的前导代码单元）。该函数读取组成该码点的所有代码单元，
+   * 并返回已读取的代码单元数量。如果偏移量没有指向有效码点的起始代码单元，
+   * 或者指向非法代码单元序列，函数将返回表示错误的负整数。
    *
    * @param pos
-   *     the index parsing position; after calling this function, it will be set
-   *     to the new position.
+   *     索引解析位置；调用此函数后，将设置为新位置。
    * @param buffer
-   *     an array of bytes.
+   *     字节数组。
    * @param endIndex
-   *     the end current of the byte array.
-   * @return if the function successfully get a code point from the code unit
-   *     sequence at the specified offset, returns the value of the code point
-   *     (which is non-negative); otherwise, returns a negative integer
-   *     indicating the error: {@link ErrorCode#MALFORMED_UNICODE} indicates the
-   *     specified offset does not point to the starting of a legal code unit
-   *     sequence consisting a valid code point; {@link ErrorCode#INCOMPLETE_UNICODE}
-   *     indicates the input code unit sequence is not complete to form a valid
-   *     code point.
+   *     字节数组的结束索引。
+   * @return 如果函数成功从指定偏移量的代码单元序列中获取一个码点，
+   *     返回该码点的值（非负值）；否则，返回表示错误的负整数：
+   *     {@link ErrorCode#MALFORMED_UNICODE}表示指定偏移量没有指向
+   *     组成有效码点的合法代码单元序列的开始；
+   *     {@link ErrorCode#INCOMPLETE_UNICODE}表示输入代码单元序列
+   *     不完整，无法形成有效码点。
    * @throws IndexOutOfBoundsException
-   *     if endIndex &gt; buffer.length or current.value &gt; endIndex. Note
-   *     that if current.value == endIndex, the function does nothing and
-   *     returns 0.
+   *     如果endIndex &gt; buffer.length或current.value &gt; endIndex。
+   *     注意，如果current.value == endIndex，函数不执行任何操作并返回0。
    */
   public static int getNext(final ParsingPosition pos, final byte[] buffer,
       final int endIndex) {
@@ -741,38 +686,29 @@ public final class Utf8 {
   }
 
   /**
-   * Move the offset of a UTF-8 code unit sequence from one code point boundary
-   * to the previous one and get the code point between them.
+   * 将UTF-8代码单元序列的偏移量从一个码点边界移动到前一个码点边界并获取它们之间的码点。
    *
-   * <p>The input offset must points to a position next to the ending code unit
-   * of
-   * a valid code point (which is either a starting code unit of the next code
-   * point, or the end of the whole code unit sequence). The function will move
-   * the offset to the starting code unit of the previous code point, and reads
-   * that code point, then returns the number of code units consisting that code
-   * point (which is also the amount of decreasing of the offset). If the offset
-   * does not point to a position next to the ending code unit of a valid code
-   * point, or if the previous code unit sequence in illegal, the function
-   * returns a negative integer indicating the error.
+   * <p>输入偏移量必须指向有效码点结束代码单元的下一个位置（这要么是下一个码点的
+   * 起始代码单元，要么是整个代码单元序列的结尾）。该函数将把偏移量移动到前一个码点的
+   * 起始代码单元，读取该码点，然后返回组成该码点的代码单元数量（这也是偏移量的减少量）。
+   * 如果偏移量没有指向有效码点结束代码单元的下一个位置，或者前一个代码单元序列是非法的，
+   * 函数将返回表示错误的负整数。
    *
    * @param pos
-   *     the index parsing position; after calling this function, it will be set
-   *     to the new position.
+   *     索引解析位置；调用此函数后，将设置为新位置。
    * @param buffer
-   *     an array of bytes.
+   *     字节数组。
    * @param startIndex
-   *     the start current of the byte array.
-   * @return if the function successfully get a code point from the code unit
-   *     sequence at the specified index, returns the value of the code point
-   *     (which is non-negative); otherwise, returns a negative integer
-   *     indicating the error: {@link ErrorCode#MALFORMED_UNICODE} indicates the
-   *     specified offset does not point to the next position of the ending of a
-   *     legal code unit sequence consisting a valid code point; {@link
-   *     ErrorCode#INCOMPLETE_UNICODE} indicates the input code unit sequence is
-   *     not complete to form a valid Unicode code point.
+   *     字节数组的开始索引。
+   * @return 如果函数成功从指定索引的代码单元序列中获取一个码点，
+   *     返回该码点的值（非负值）；否则，返回表示错误的负整数：
+   *     {@link ErrorCode#MALFORMED_UNICODE}表示指定偏移量没有指向
+   *     组成有效码点的合法代码单元序列结尾的下一个位置；
+   *     {@link ErrorCode#INCOMPLETE_UNICODE}表示输入代码单元序列
+   *     不完整，无法形成有效的Unicode码点。
    * @throws IndexOutOfBoundsException
-   *     if startIndex &lt; 0 or current.value &lt; startIndex. Note that if
-   *     current.value == startIndex, the function does nothing and returns 0.
+   *     如果startIndex &lt; 0或current.value &lt; startIndex。
+   *     注意，如果current.value == startIndex，函数不执行任何操作并返回0。
    */
   public static int getPrevious(final ParsingPosition pos, final byte[] buffer,
       final int startIndex) {
@@ -805,30 +741,27 @@ public final class Utf8 {
   }
 
   /**
-   * Puts a code point to a UTF-8 code unit buffer, writes 1 to 4 code units.
+   * 将一个码点放入UTF-8代码单元缓冲区，写入1到4个代码单元。
    *
-   * <p>The current points to the position where to put the code point and is
-   * advanced by 1 to 4 after putting the code point. If the code point is not
-   * valid or the buffer space is not sufficient, the function returns 0.
+   * <p>当前位置指向放置码点的位置，在放置码点后会推进1到4个位置。
+   * 如果码点无效或缓冲区空间不足，函数返回0。
    *
    * @param codePoint
-   *     the code point to be put.
+   *     要放置的码点。
    * @param index
-   *     the index in the buffer where to put the code point. It must be within
-   *     [0, buffer.length).
+   *     缓冲区中放置码点的索引。必须在[0, buffer.length)范围内。
    * @param buffer
-   *     a UTF-8 code unit buffer.
+   *     UTF-8代码单元缓冲区。
    * @param endIndex
-   *     the end current of the byte array.
-   * @return if the code point is successfully put into the buffer, returns the
-   *     number of code units put into the buffer; otherwise, returns a negative
-   *     integer indicating the error: {@link ErrorCode#MALFORMED_UNICODE}
-   *     indicates the specified code point is not a valid Unicode code point,
-   *     or is a surrogate; {@link ErrorCode#BUFFER_OVERFLOW} indicates the code
-   *     unit buffer has no sufficient space to hold the result.
+   *     字节数组的结束索引。
+   * @return 如果码点成功放入缓冲区，返回放入缓冲区的代码单元数量；
+   *     否则，返回表示错误的负整数：{@link ErrorCode#MALFORMED_UNICODE}
+   *     表示指定码点不是有效的Unicode码点或者是代理码点；
+   *     {@link ErrorCode#BUFFER_OVERFLOW}表示代码单元缓冲区没有足够的空间
+   *     来保存结果。
    * @throws IndexOutOfBoundsException
-   *     if endIndex &gt; buffer.length or current &gt; endIndex. Note that if
-   *     current == endIndex, the function will returns BUFFER_OVERFLOW.
+   *     如果endIndex &gt; buffer.length或current &gt; endIndex。
+   *     注意，如果current == endIndex，函数将返回BUFFER_OVERFLOW。
    */
   public static int put(final int codePoint, final int index,
       final byte[] buffer, final int endIndex) {

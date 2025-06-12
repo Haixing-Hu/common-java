@@ -44,9 +44,9 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.lang.ArrayUtils.nullIfEmpty;
 
 /**
- * The model of a bean property.
+ * Bean属性的模型。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public class Property {

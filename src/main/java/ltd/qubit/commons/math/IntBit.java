@@ -19,12 +19,34 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public final class IntBit {
 
+  /**
+   * {@code int} 类型的位数。
+   */
   public static final int BITS = 32;
+
+  /**
+   * {@code int} 类型一半的位数。
+   */
   public static final int HALF_BITS = 16;
+
+  /**
+   * 低半位的掩码。
+   */
   public static final int HALF_BITS_MASK = 0x0000FFFF;
+
+  /**
+   * 全部位的掩码。
+   */
   public static final long FULL_BITS_MASK = 0xFFFFFFFFL;
+
+  /**
+   * 最高位（符号位）的掩码。
+   */
   public static final int MSB_MASK = 0x80000000;
 
+  /**
+   * 用于获取指定位数范围的掩码数组。索引 i 对应的值是一个掩码，其低 i 位为 1，其余位为 0。
+   */
   public static final int[] RANGE_MASK = {
       0x00000000, 0x00000001, 0x00000003, 0x00000007, 0x0000000F,
       0x0000001F, 0x0000003F, 0x0000007F, 0x000000FF, 0x000001FF,
@@ -35,6 +57,9 @@ public final class IntBit {
       0x3FFFFFFF, 0x7FFFFFFF, 0xFFFFFFFF
   };
 
+  /**
+   * 用于获取单个位的掩码数组。索引 i 对应的值是一个掩码，只有第 i 位为 1，其余位为 0。
+   */
   public static final int[] BIT_MASK = {
       0x00000001, 0x00000002, 0x00000004, 0x00000008, 0x00000010,
       0x00000020, 0x00000040, 0x00000080, 0x00000100, 0x00000200,
@@ -46,33 +71,29 @@ public final class IntBit {
   };
 
   /**
-   * Returns the value of x as if x is an unsigned int.
+   * 将 x 的值当作无符号 int 返回。
    *
-   * <p>Note that this function is sometimes useful since there is no unsigned
-   * type in Java.
+   * <p>注意：此函数有时候很有用，因为 Java 中没有无符号类型。
    *
    * @param x
-   *     A int value which should be treated as an unsigned int.
-   * @return The value of x as if x is an unsigned int. More precisely, if x is
-   *     non-negative, returns the value of x; otherwise, returns the value of
-   *     (256 + x).
+   *     一个 int 值，应被视为无符号 int。
+   * @return x 作为无符号 int 的值。更准确地说，如果 x 非负，返回 x 的值；否则，
+   *     返回 (256 + x) 的值。
    */
   public static long asUnsigned(final int x) {
     return ((long) x & FULL_BITS_MASK);
   }
 
   /**
-   * Returns the lowest n bits of x.
+   * 返回 x 的最低 n 位。
    *
    * @param x
-   *     The value.
+   *     值。
    * @param n
-   *     The amount of lowest bits to be returned. It must be in the range of
-   *     [0, BITS].
-   * @return A value of type {@code int} whose lowest n bits are the same of the
-   *     lowest n bits of x, and other bits are 0. If n == 0, the function
-   *     returns 0. If n == BITS, the function returns x. If n &lt; 0 or n &gt;
-   *     BITS, the behaviour is undefined.
+   *     要返回的最低位数。必须在 [0, BITS] 范围内。
+   * @return 一个 {@code int} 类型的值，其最低 n 位与 x 的最低 n 位相同，其他位为 0。
+   *     如果 n == 0，函数返回 0。如果 n == BITS，函数返回 x。如果 n &lt; 0 或
+   *     n &gt; BITS，行为未定义。
    */
   public static int low(final int x, final int n) {
     assert ((0 <= n) && (n <= BITS));
@@ -80,17 +101,15 @@ public final class IntBit {
   }
 
   /**
-   * Returns the highest n bits of x.
+   * 返回 x 的最高 n 位。
    *
    * @param x
-   *     The value.
+   *     值。
    * @param n
-   *     The amount of lowest bits to be returned. It must be in the range of
-   *     [0, BITS].
-   * @return A value of type {@code int} whose highest n bits are the same of
-   *     the highest n bits of x, and other bits are 0. If n == 0, the function
-   *     returns 0. If n == BITS, the function returns x. If n &lt; 0 or n &gt;
-   *     BITS, the behaviour is undefined.
+   *     要返回的最低位数。必须在 [0, BITS] 范围内。
+   * @return 一个 {@code int} 类型的值，其最高 n 位与 x 的最高 n 位相同，其他位为 0。
+   *     如果 n == 0，函数返回 0。如果 n == BITS，函数返回 x。如果 n &lt; 0 或
+   *     n &gt; BITS，行为未定义。
    */
   public static int high(final int x, final int n) {
     assert ((0 <= n) && (n <= BITS));
@@ -98,44 +117,39 @@ public final class IntBit {
   }
 
   /**
-   * Returns the lower half bits of x.
+   * 返回 x 的低半位。
    *
    * @param x
-   *     The value.
-   * @return A value of type {@code int} whose lower half bits are the same of
-   *     the lower half bits of x, and other bits are 0. In fact, this function
-   *     returns low(x, HALF_BITS).
+   *     值。
+   * @return 一个 {@code int} 类型的值，其低半位与 x 的低半位相同，其他位为 0。
+   *     实际上，此函数返回 low(x, HALF_BITS)。
    */
   public static int lowHalf(final int x) {
     return (x & HALF_BITS_MASK);
   }
 
   /**
-   * Returns the higher half bits of x.
+   * 返回 x 的高半位。
    *
    * @param x
-   *     The value.
-   * @return A value of type {@code int} whose higher half bits are the same of
-   *     the higher half bits of x, and other bits are 0. In fact, this function
-   *     returns high(x, HALF_BITS).
+   *     值。
+   * @return 一个 {@code int} 类型的值，其高半位与 x 的高半位相同，其他位为 0。
+   *     实际上，此函数返回 high(x, HALF_BITS)。
    */
   public static int highHalf(final int x) {
     return (x >>> HALF_BITS);
   }
 
   /**
-   * Swaps the lowest n bits and highest (BITS - n) bits of x. That is, swap the
-   * bit range [0, n) and [n, BITS).
+   * 交换 x 的最低 n 位和最高 (BITS - n) 位。即交换位范围 [0, n) 和 [n, BITS)。
    *
    * @param x
-   *     The value to be swaped.
+   *     要交换的值。
    * @param n
-   *     The amount of lowest bits which would be swapped with the rest high
-   *     bits. It must be in the range of [0, BITS].
-   * @return A new value whose highest n bits are x's lowest n bits, and whose
-   *     lowest (BITS - n) bits are x's highest (BITS - n) bits. If n == 0 or n
-   *     == BITS, the function returns x. If n &lt; 0 or n &gt; BITS, the
-   *     behaviour of the function is undefined.
+   *     将与其余高位交换的最低位数。必须在 [0, BITS] 范围内。
+   * @return 一个新值，其最高 n 位是 x 的最低 n 位，其最低 (BITS - n) 位是 x 的
+   *     最高 (BITS - n) 位。如果 n == 0 或 n == BITS，函数返回 x。如果 n &lt; 0
+   *     或 n &gt; BITS，函数的行为未定义。
    */
   public static int rotate(final int x, final int n) {
     assert ((0 <= n) && (n <= BITS));
@@ -146,13 +160,11 @@ public final class IntBit {
   }
 
   /**
-   * Swaps the lowest half bits and highest half bits of x. That is, swap the
-   * bit range [0, HALF_BITS) and [HALF_BITS, BITS).
+   * 交换 x 的最低半位和最高半位。即交换位范围 [0, HALF_BITS) 和 [HALF_BITS, BITS)。
    *
    * @param x
-   *     The value to be swaped.
-   * @return A new value whose highest half bits are x's lowest half bits, and
-   *     whose lowest half bits are x's highest half bits.
+   *     要交换的值。
+   * @return 一个新值，其最高半位是 x 的最低半位，其最低半位是 x 的最高半位。
    */
   public static int rotateHalf(final int x) {
     final int xl = (x & HALF_BITS_MASK);
@@ -161,24 +173,19 @@ public final class IntBit {
   }
 
   /**
-   * Swaps the bit i and the bit j of x, return the new value.
+   * 交换 x 的第 i 位和第 j 位，返回新值。
    *
-   * <p>For example, assume IntType is unsigned char, x is 00101111 in binary,
-   * i
-   * = 1, j = 4, swap(x, i, j) will swap the bit 1 of x with the bit 4 of x, and
-   * gets 00111101.
+   * <p>例如，假设 IntType 是 unsigned char，x 的二进制是 00101111，
+   * i = 1，j = 4，swap(x, i, j) 将交换 x 的第 1 位和第 4 位，得到 00111101。
    *
    * @param x
-   *     The original value.
+   *     原始值。
    * @param i
-   *     The position of the first bit to be swapped. It must be in the range of
-   *     [0, BITS).
+   *     要交换的第一个位的位置。必须在 [0, BITS) 范围内。
    * @param j
-   *     The position of the second bit to be swapped. It must be in the range
-   *     of [0, BITS).
-   * @return A new value whose bit i is the bit j of x, and whose bit j is the
-   *     bit i of x, and the rest bits are the same as x. If i == j, the
-   *     function returns x.
+   *     要交换的第二个位的位置。必须在 [0, BITS) 范围内。
+   * @return 一个新值，其第 i 位是 x 的第 j 位，第 j 位是 x 的第 i 位，其余位与 x 相同。
+   *     如果 i == j，函数返回 x。
    */
   public static int swap(final int x, final int i, final int j) {
     assert ((0 <= i) && (i < BITS) && (0 <= j) && (j < BITS));
@@ -189,42 +196,35 @@ public final class IntBit {
   }
 
   /**
-   * Swaps the bit range [i, i+n) and the bit range [j, j+n) of x, return the
-   * new value.
+   * 交换 x 的位范围 [i, i+n) 和位范围 [j, j+n)，返回新值。
    *
-   * <p>For example, assume int is unsigned char, x is 00101111 in binary, i =
-   * 1, j = 5, n = 3, swapRange(x, i, j, n) will swap the 1,2,3 bit of x with
-   * the 5,6,7 bit of x, or in other words, swap the first parenthesis and the
-   * second parenthesis in the following representation:
+   * <p>例如，假设 int 是 unsigned char，x 的二进制是 00101111，i = 1，j = 5，n = 3，
+   * swapRange(x, i, j, n) 将交换 x 的第 1,2,3 位和第 5,6,7 位，或者换句话说，
+   * 交换以下表示中的第一个括号和第二个括号：
    *
    * <pre>
    * (001)0(111)1
    * </pre>
-   * and gets
+   * 得到
    * <pre>
    * (111)0(001)1
    * </pre>
-   * that is the binary 11100011.
+   * 即二进制 11100011。
    *
    * @param x
-   *     The original value.
+   *     原始值。
    * @param i
-   *     The start position of the first bit to be swapped. It must be in the
-   *     range of [0, BITS).
+   *     第一个要交换位的起始位置。必须在 [0, BITS) 范围内。
    * @param j
-   *     The start position of the second bit to be swapped. It must be in the
-   *     range of [0, BITS).
+   *     第二个要交换位的起始位置。必须在 [0, BITS) 范围内。
    * @param n
-   *     The length of the consecutive bits to be swapped.
-   * @return A new value whose bits in the range [i, i+n) are those bits in the
-   *     range [j, j+n) of x, and whose bits in the range [j, j+n) are those
-   *     bits in the range [i, i+n) of x, and the rest bits are the same as x.
-   *     If n == 0, the function returns x. If i + n &gt; BITS or j + n &gt;
-   *     BITS, that is, the range [i, i+n) or [j, j+n) override the range [0,
-   *     BITS), the behavior of the function if undefined. If i == j, the
-   *     function returns x. If i &lt; j and i + n &gt; j, or if j &lt; i and j
-   *     + n &gt; i, that is, the two range [i, i+n) and [j, j+n) overlaps, the
-   *     behavior of the function is undefined.
+   *     要交换的连续位数。
+   * @return 一个新值，其位范围 [i, i+n) 是 x 的位范围 [j, j+n)，位范围 [j, j+n) 是
+   *     x 的位范围 [i, i+n)，其余位与 x 相同。如果 n == 0，函数返回 x。如果
+   *     i + n &gt; BITS 或 j + n &gt; BITS，即范围 [i, i+n) 或 [j, j+n) 超出
+   *     范围 [0, BITS)，函数的行为未定义。如果 i == j，函数返回 x。如果 i &lt; j
+   *     且 i + n &gt; j，或者 j &lt; i 且 j + n &gt; i，即两个范围 [i, i+n) 和
+   *     [j, j+n) 重叠，函数的行为未定义。
    */
   public static int swapRange(final int x, final int i, final int j,
       final int n) {
@@ -237,15 +237,14 @@ public final class IntBit {
   }
 
   /**
-   * Reverses the bits in the x, that is, the bit at position i in the result is
-   * the bit at position (BITS - 1 - i) in the x.
+   * 反转 x 中的位，即结果中位置 i 的位是 x 中位置 (BITS - 1 - i) 的位。
    *
-   * <p>For example, int is a binary unsigned char of 01111011 (note that the
-   * leading 0 are reserved). reverse(x) gets 11011110.
+   * <p>例如，int 是二进制 unsigned char 01111011（注意保留前导 0）。
+   * reverse(x) 得到 11011110。
    *
    * @param x
-   *     The value to be reversed.
-   * @return A new value by reversing the bits of x.
+   *     要反转的值。
+   * @return 通过反转 x 的位得到的新值。
    */
   public static int reverse(final int x) {
     int d = x;
@@ -268,24 +267,22 @@ public final class IntBit {
   }
 
   /**
-   * Merges the bits from two values according to a mask.
+   * 根据掩码合并两个值的位。
    *
-   * <p>For each bit position i in the result value, if bit i of mask is 0, the
-   * bit i of result is the same as the bit i of x; if bit i of mask is 1, the
-   * bit i of result is the same as the bit i of y.
+   * <p>对于结果值中的每个位位置 i，如果掩码的第 i 位是 0，结果的第 i 位与 x 的第 i 位相同；
+   * 如果掩码的第 i 位是 1，结果的第 i 位与 y 的第 i 位相同。
    *
-   * <p>For example, let x = 10101010, y = 11001100, mask = 01110010, merge(x,
-   * y, mask) will get a result of 11001000 (all numbers are in the binary
-   * form).
+   * <p>例如，设 x = 10101010，y = 11001100，mask = 01110010，merge(x, y, mask)
+   * 将得到结果 11001000（所有数字都是二进制形式）。
    *
    * @param x
-   *     The first operand
+   *     第一个操作数
    * @param y
-   *     The second operand.
+   *     第二个操作数。
    * @param mask
-   *     The mask used to select bit from x and y. If the bit i in the mask is
-   *     0, select the i-th bit from x; otherwise, select the i-th bit from y.
-   * @return The merge of x and y according to the mask.
+   *     用于从 x 和 y 选择位的掩码。如果掩码中的第 i 位是 0，从 x 选择第 i 位；
+   *     否则，从 y 选择第 i 位。
+   * @return 根据掩码合并 x 和 y 的结果。
    */
   public static int merge(final int x, final int y, final int mask) {
     // Use a trick from http://graphics.stanford.edu/~seander/bithacks.html
@@ -293,25 +290,24 @@ public final class IntBit {
   }
 
   /**
-   * Sets all the bits of x to 1. In fact, this function set the x to be ~T(0).
+   * 将 x 的所有位设置为 1。实际上，此函数将 x 设置为 ~T(0)。
    *
    * @param x
-   *     The value to be modified.
-   * @return The result of operation.
+   *     要修改的值。
+   * @return 操作的结果。
    */
   public static int set(final int x) {
     return (int) FULL_BITS_MASK;
   }
 
   /**
-   * Sets the bit i of x to 1.
+   * 将 x 的第 i 位设置为 1。
    *
    * @param x
-   *     The value to be modified.
+   *     要修改的值。
    * @param i
-   *     The bit of x to be set. It must be in the range of [0, BITS).
-   * @return The result of operation. If i &lt; 0 or i &ge; BITS, the behavior
-   *     of the function is undefined.
+   *     要设置的 x 的位。必须在 [0, BITS) 范围内。
+   * @return 操作的结果。如果 i &lt; 0 或 i &ge; BITS，函数的行为未定义。
    */
   public static int set(final int x, final int i) {
     assert ((0 <= i) && (i < BITS));
@@ -319,28 +315,26 @@ public final class IntBit {
   }
 
   /**
-   * Sets the most significant bit of x to 1.
+   * 将 x 的最高有效位设置为 1。
    *
-   * <p>Note that the most significant bit of a signed integral type variable
-   * is its sign bit.
+   * <p>注意：有符号整数类型变量的最高有效位是其符号位。
    *
    * @param x
-   *     The value to be modified.
-   * @return The result of operation.
+   *     要修改的值。
+   * @return 操作的结果。
    */
   public static int setMsb(final int x) {
     return (x | MSB_MASK);
   }
 
   /**
-   * Sets the lowest n bits of x to 1.
+   * 将 x 的最低 n 位设置为 1。
    *
    * @param x
-   *     The value to be modified.
+   *     要修改的值。
    * @param n
-   *     The amount of lowest bits to be set. It must be in the range of [0,
-   *     BITS].
-   * @return The result of operation.
+   *     要设置的最低位数。必须在 [0, BITS] 范围内。
+   * @return 操作的结果。
    */
   public static int setLow(final int x, final int n) {
     assert ((0 <= n) && (n < BITS));
@@ -348,14 +342,13 @@ public final class IntBit {
   }
 
   /**
-   * Sets the highest n bits of x to 1.
+   * 将 x 的最高 n 位设置为 1。
    *
    * @param x
-   *     The value to be modified.
+   *     要修改的值。
    * @param n
-   *     The amount of highest bits to be set. It must be in the range of [0,
-   *     BITS].
-   * @return The result of operation.
+   *     要设置的最高位数。必须在 [0, BITS] 范围内。
+   * @return 操作的结果。
    */
   public static int setHigh(final int x, final int n) {
     assert ((0 <= n) && (n < BITS));
@@ -363,25 +356,24 @@ public final class IntBit {
   }
 
   /**
-   * Sets all the bits of x to 0. In fact, this function set the x to T(0).
+   * 将 x 的所有位设置为 0。实际上，此函数将 x 设置为 T(0)。
    *
    * @param x
-   *     The value to be modified.
-   * @return The result of operation.
+   *     要修改的值。
+   * @return 操作的结果。
    */
   public static int unset(final int x) {
     return 0;
   }
 
   /**
-   * Sets the bit i of x to 0.
+   * 将 x 的第 i 位设置为 0。
    *
    * @param x
-   *     The value to be modified.
+   *     要修改的值。
    * @param i
-   *     The bit of x to be reset. It must be in the range of [0, BITS).
-   * @return The result of operation. If i &lt; 0 or i &ge; BITS, the behaviour
-   *     of the function is undefined.
+   *     要重置的 x 的位。必须在 [0, BITS) 范围内。
+   * @return 操作的结果。如果 i &lt; 0 或 i &ge; BITS，函数的行为未定义。
    */
   public static int unset(final int x, final int i) {
     assert ((0 <= i) && (i < BITS));
@@ -389,28 +381,26 @@ public final class IntBit {
   }
 
   /**
-   * Resets the most significant bit of x to 1.
+   * 将 x 的最高有效位重置为 0。
    *
-   * <p>Note that the most significant bit of a signed integral type variable
-   * is its sign bit.
+   * <p>注意：有符号整数类型变量的最高有效位是其符号位。
    *
    * @param x
-   *     The value to be modified.
-   * @return The result of operation.
+   *     要修改的值。
+   * @return 操作的结果。
    */
   public static int unsetMsb(final int x) {
     return (x & (~MSB_MASK));
   }
 
   /**
-   * Sets the lowest n bits of x to 0.
+   * 将 x 的最低 n 位设置为 0。
    *
    * @param x
-   *     The value to be modified.
+   *     要修改的值。
    * @param n
-   *     The amount of lowest bits to be set. It must be in the range of [0,
-   *     BITS].
-   * @return The result of operation.
+   *     要设置的最低位数。必须在 [0, BITS] 范围内。
+   * @return 操作的结果。
    */
   public static int unsetLow(final int x, final int n) {
     assert ((0 <= n) && (n < BITS));
@@ -418,14 +408,13 @@ public final class IntBit {
   }
 
   /**
-   * Sets the highest n bits of x to 0.
+   * 将 x 的最高 n 位设置为 0。
    *
    * @param x
-   *     The value to be modified.
+   *     要修改的值。
    * @param n
-   *     The amount of highest bits to be set. It must be in the range of [0,
-   *     BITS].
-   * @return The result of operation.
+   *     要设置的最高位数。必须在 [0, BITS] 范围内。
+   * @return 操作的结果。
    */
   public static int unsetHigh(final int x, final int n) {
     assert ((0 <= n) && (n < BITS));
@@ -433,25 +422,24 @@ public final class IntBit {
   }
 
   /**
-   * Inverts all the bits of x, i.e., change 1s for 0s, and 0s for 1s.
+   * 反转 x 的所有位，即将 1 变为 0，将 0 变为 1。
    *
    * @param x
-   *     The value to be modified.
-   * @return The result of operation.
+   *     要修改的值。
+   * @return 操作的结果。
    */
   public static int invert(final int x) {
     return (~x);
   }
 
   /**
-   * Inverts the specified bit of x, i.e., change 1 for 0, and 0 for 1.
+   * 反转 x 的指定位，即将 1 变为 0，将 0 变为 1。
    *
    * @param x
-   *     The value to be modified.
+   *     要修改的值。
    * @param i
-   *     The bit of x to be flipped. It must be in the range of [0, BITS).
-   * @return The result of operation. If i &lt; 0 or i &ge; BITS, the behaviour
-   *     of the function is undefined.
+   *     要翻转的 x 的位。必须在 [0, BITS) 范围内。
+   * @return 操作的结果。如果 i &lt; 0 或 i &ge; BITS，函数的行为未定义。
    */
   public static int invert(final int x, final int i) {
     assert ((0 <= i) && (i < BITS));
@@ -459,28 +447,27 @@ public final class IntBit {
   }
 
   /**
-   * Inverts the most significant bit of x to 1.
+   * 反转 x 的最高有效位。
    *
-   * <p>Note that the most significant bit of a signed integral type variable
-   * is its sign bit.
+   * <p>注意：有符号整数类型变量的最高有效位是其符号位。
    *
    * @param x
-   *     The value to be modified.
-   * @return The result of operation.
+   *     要修改的值。
+   * @return 操作的结果。
    */
   public static int invertMsb(final int x) {
     return (x ^ MSB_MASK);
   }
 
   /**
-   * Tests the bit i of x.
+   * 测试 x 的第 i 位。
    *
    * @param x
-   *     The value.
+   *     值。
    * @param i
-   *     The bit of x to be test. It must be in the range of [0, BITS).
-   * @return true if the bit i of x is 1, false otherwise. If i &lt; 0 or i &ge;
-   *     BITS, the behaviour of the function is undefined.
+   *     要测试的 x 的位。必须在 [0, BITS) 范围内。
+   * @return 如果 x 的第 i 位是 1，返回 true，否则返回 false。如果 i &lt; 0 或 i &ge;
+   *     BITS，函数的行为未定义。
    */
   public static boolean test(final int x, final int i) {
     assert ((0 <= i) && (i < BITS));
@@ -488,25 +475,24 @@ public final class IntBit {
   }
 
   /**
-   * Tests the most significant bit of x.
+   * 测试 x 的最高有效位。
    *
-   * <p>Note that the most significant bit of a signed integral type variable
-   * is its sign bit.
+   * <p>注意：有符号整数类型变量的最高有效位是其符号位。
    *
    * @param x
-   *     The operand.
-   * @return true if the most significant bit of x is 1, false otherwise.
+   *     操作数。
+   * @return 如果 x 的最高有效位是 1，返回 true，否则返回 false。
    */
   public static boolean testMsb(final int x) {
     return ((x & MSB_MASK) != 0);
   }
 
   /**
-   * Counts the amount of bits set in the value of x.
+   * 计算 x 值中设置的位数。
    *
    * @param x
-   *     The value whose bits are to be counted.
-   * @return The amount of bits set in the x.
+   *     要计算位数的值。
+   * @return x 中设置的位数。
    */
   public static int count(final int x) {
     int d = x;
@@ -522,50 +508,47 @@ public final class IntBit {
   }
 
   /**
-   * Tests whether all bits of x are set to 1.
+   * 测试 x 的所有位是否都设置为 1。
    *
    * @param x
-   *     The value to be test.
-   * @return true if all bits of x are set to 1, false otherwise.
+   *     要测试的值。
+   * @return 如果 x 的所有位都设置为 1，返回 true，否则返回 false。
    */
   public static boolean hasAll(final int x) {
     return (x == (int) FULL_BITS_MASK);
   }
 
   /**
-   * Tests whether there is any bit of x which is set to 1.
+   * 测试 x 是否有任何位设置为 1。
    *
    * @param x
-   *     The value to be test.
-   * @return true if there is at least one bit of x which is set to 1, false
-   *     otherwise.
+   *     要测试的值。
+   * @return 如果 x 至少有一个位设置为 1，返回 true，否则返回 false。
    */
   public static boolean hasAny(final int x) {
     return (x != 0);
   }
 
   /**
-   * Tests whether none of the bit of x is set to 1, i.e., all bits of x are set
-   * to 0.
+   * 测试 x 的所有位是否都没有设置为 1，即 x 的所有位都设置为 0。
    *
    * @param x
-   *     The value to be test.
-   * @return true if none of the bit of x is set to 1, false otherwise.
+   *     要测试的值。
+   * @return 如果 x 的所有位都没有设置为 1，返回 true，否则返回 false。
    */
   public static boolean hasNone(final int x) {
     return (x == 0);
   }
 
   /**
-   * Finds the lowest set bit (of value 1) in x.
+   * 查找 x 中最低的设置位（值为 1）。
    *
-   * <p>For example, x is an unsigned char of binary value 00101010,
-   * findFirstSet(x) will return 1.
+   * <p>例如，x 是一个二进制值为 00101010 的无符号字符，
+   * findFirstSet(x) 将返回 1。
    *
    * @param x
-   *     The value whose first set bit is to be found.
-   * @return The lowest position of the bit in x which is set to 1. If all bits
-   *     in x are 0s, returns BITS.
+   *     要查找第一个设置位的值。
+   * @return x 中设置为 1 的最低位的位置。如果 x 中的所有位都是 0，返回 BITS。
    */
   public static int findFirstSet(final int x) {
     final int x0 = (x & HALF_BITS_MASK);
@@ -577,20 +560,17 @@ public final class IntBit {
   }
 
   /**
-   * Finds the lowest set bit (of value 1) in x starting from the bit n, i.e.,
-   * in the bit range [n, BITS).
+   * 从第 n 位开始查找 x 中最低的设置位（值为 1），即在位范围 [n, BITS) 中查找。
    *
-   * <p>For example, x is an unsigned char of binary value 00101010,
-   * findFirstSet(x, 2) will return 3.
+   * <p>例如，x 是一个二进制值为 00101010 的无符号字符，
+   * findFirstSet(x, 2) 将返回 3。
    *
    * @param x
-   *     The value whose first set bit is to be found.
+   *     要查找第一个设置位的值。
    * @param n
-   *     The searching starting from this bit, that is, searching in the bit
-   *     range [n, BITS) of x.
-   * @return The lowest position of the bit in x which is set to 1. If no such
-   *     position is found, returns -1. If n &ge; BITS, the behavour of the
-   *     function is undefined.
+   *     从此位开始搜索，即在 x 的位范围 [n, BITS) 中搜索。
+   * @return x 中设置为 1 的最低位的位置。如果找不到这样的位置，返回 -1。如果 n &ge; BITS，
+   *     函数的行为未定义。
    */
   public static int findFirstSet(final int x, final int n) {
     assert ((0 <= n) && (n < BITS));
@@ -601,17 +581,16 @@ public final class IntBit {
   }
 
   /**
-   * Finds the lowest unset bit (of value 0) in x.
+   * 查找 x 中最低的未设置位（值为 0）。
    *
-   * <p>For example, x is an unsigned char of binary value 00101011,
-   * findFirstUnset(x) will return 2.
+   * <p>例如，x 是一个二进制值为 00101011 的无符号字符，
+   * findFirstUnset(x) 将返回 2。
    *
-   * <p>This function is equivalent to invert(x); return findFirstSet(x);
+   * <p>此函数等效于 invert(x); return findFirstSet(x);
    *
    * @param x
-   *     The value whose first set bit is to be found.
-   * @return The lowest position of the bit in x which is set to 0. If all bits
-   *     in x are 1s, returns -1.
+   *     要查找第一个设置位的值。
+   * @return x 中设置为 0 的最低位的位置。如果 x 中的所有位都是 1，返回 -1。
    */
   public static int findFirstUnset(final int x) {
     // inverse x.
@@ -619,22 +598,19 @@ public final class IntBit {
   }
 
   /**
-   * Finds the lowest nset bit (of value 0) in x starting from the bit n, i.e,
-   * in the bit range [n, BITS).
+   * 从第 n 位开始查找 x 中最低的未设置位（值为 0），即在位范围 [n, BITS) 中查找。
    *
-   * <p>For example, x is an unsigned char of binary value 00111011,
-   * findFirstUnset(x, 3) will return 6.
+   * <p>例如，x 是一个二进制值为 00111011 的无符号字符，
+   * findFirstUnset(x, 3) 将返回 6。
    *
-   * <p>This function is equivalent to invert(x); return findFirstSet( x, n );
+   * <p>此函数等效于 invert(x); return findFirstSet( x, n );
    *
    * @param x
-   *     The value whose first set bit is to be found.
+   *     要查找第一个设置位的值。
    * @param n
-   *     The searching starting from this bit, that is, searching in the bit
-   *     range [n, BITS) of x.
-   * @return The lowest position of the bit in x which is set to 0. If no such
-   *     position is found, returns -1. If n &ge; BITS, the behavour of the
-   *     function is undefined.
+   *     从此位开始搜索，即在 x 的位范围 [n, BITS) 中搜索。
+   * @return x 中设置为 0 的最低位的位置。如果找不到这样的位置，返回 -1。如果 n &ge; BITS，
+   *     函数的行为未定义。
    */
   public static int findFirstUnset(final int x, final int n) {
     assert ((0 <= n) && (n < BITS));
@@ -644,17 +620,16 @@ public final class IntBit {
   }
 
   /**
-   * Finds the highest set bit (of value 1) in x.
+   * 查找 x 中最高的设置位（值为 1）。
    *
-   * <p>For example, x is an unsigned char of binary value 00101101,
-   * findLastSet(x) will return 5.
+   * <p>例如，x 是一个二进制值为 00101101 的无符号字符，
+   * findLastSet(x) 将返回 5。
    *
-   * <p>In fact, the value of the result is equal to the log_2(x).
+   * <p>实际上，结果的值等于 log_2(x)。
    *
    * @param x
-   *     The value whose first set bit is to be found.
-   * @return The highest position of the bit in x which is set to 1. If all bits
-   *     in x are 0s, returns -1.
+   *     要查找第一个设置位的值。
+   * @return x 中设置为 1 的最高位的位置。如果 x 中的所有位都是 0，返回 -1。
    */
   public static int findLastSet(final int x) {
     if (x == 0) {
@@ -670,21 +645,18 @@ public final class IntBit {
   }
 
   /**
-   * Finds the highest set bit (of value 1) in x starting from the bit 0 and
-   * ending at the bit n (exclude), i.e., in the bit range [0, n).
+   * 从第 0 位开始到第 n 位结束（不包括）查找 x 中最高的设置位（值为 1），即在位范围 [0, n) 中查找。
    *
-   * <p>For example, x is an unsigned char of binary value 00101101,
-   * findLastSet(x, 5) will return 3.
+   * <p>例如，x 是一个二进制值为 00101101 的无符号字符，
+   * findLastSet(x, 5) 将返回 3。
    *
    * @param x
-   *     The value whose first set bit is to be found.
+   *     要查找第一个设置位的值。
    * @param n
-   *     The searching ending at this bit, that is, searching in the bit range
-   *     [0, n) of x.
-   * @return The highest position in the bit range [0, n) of x which is set to
-   *     1. If no such position is found, returns BITS. If n == 0, returns -1.
-   *     If n == BITS, returns findLastSet(x). if n &gt; BITS, the beheavour is
-   *     undefined.
+   *     在此位结束搜索，即在 x 的位范围 [0, n) 中搜索。
+   * @return x 的位范围 [0, n) 中设置为 1 的最高位置。如果找不到这样的位置，返回 BITS。
+   *     如果 n == 0，返回 -1。如果 n == BITS，返回 findLastSet(x)。如果 n &gt; BITS，
+   *     行为未定义。
    */
   public static int findLastSet(final int x, final int n) {
     assert ((0 <= n) && (n < BITS));
@@ -694,17 +666,16 @@ public final class IntBit {
   }
 
   /**
-   * Finds the highest unset bit (of value 0) in x.
+   * 查找 x 中最高的未设置位（值为 0）。
    *
-   * <p>For example, x is an unsigned char of binary value 11101011,
-   * findLastUnset(x) will return 4.
+   * <p>例如，x 是一个二进制值为 11101011 的无符号字符，
+   * findLastUnset(x) 将返回 4。
    *
-   * <p>This function is equivalent to invert(x); return findLastSet(x);
+   * <p>此函数等效于 invert(x); return findLastSet(x);
    *
    * @param x
-   *     The value whose first set bit is to be found.
-   * @return The highest position of the bit in x which is set to 0. If all bits
-   *     in x are 1s, return -1.
+   *     要查找第一个设置位的值。
+   * @return x 中设置为 0 的最高位的位置。如果 x 中的所有位都是 1，返回 -1。
    */
   public static int findLastUnset(final int x) {
     final int x0 = ((~x) & (int) FULL_BITS_MASK);
@@ -712,22 +683,19 @@ public final class IntBit {
   }
 
   /**
-   * Finds the highest unset bit (of value 0) in x starting from the bit 0 and
-   * ending at the bit n, i.e, in the bit range [0, n).
+   * 从第 0 位开始到第 n 位结束查找 x 中最高的未设置位（值为 0），即在位范围 [0, n) 中查找。
    *
-   * <p>For example, x is a unsigned char of binary value 10111011,
-   * findLastUnset(x, 6) will return 2.
+   * <p>例如，x 是一个二进制值为 10111011 的无符号字符，
+   * findLastUnset(x, 6) 将返回 2。
    *
-   * <p>This function is equivalent to invert(x); return findLastSet(x, n);
+   * <p>此函数等效于 invert(x); return findLastSet(x, n);
    *
    * @param x
-   *     The value whose first set bit is to be found.
+   *     要查找第一个设置位的值。
    * @param n
-   *     The searching ending at this bit, that is, searching in the bit range
-   *     [0, n) of x.
-   * @return The lowest position in the bit range [0, n) of x which is set to 0.
-   *     If no such position is found, returns -1. If n == 0, returns -1. If n
-   *     &gt; BITS, the behavour of the function is undefined.
+   *     在此位结束搜索，即在 x 的位范围 [0, n) 中搜索。
+   * @return x 的位范围 [0, n) 中设置为 0 的最低位置。如果找不到这样的位置，返回 -1。
+   *     如果 n == 0，返回 -1。如果 n &gt; BITS，函数的行为未定义。
    */
   public static int findLastUnset(final int x, final int n) {
     assert ((0 <= n) && (n < BITS));
@@ -737,61 +705,53 @@ public final class IntBit {
   }
 
   /**
-   * Tests whether x is a subset of y, i.e., whether for every bit set in x, the
-   * corresponding bit in y is also set.
+   * 测试 x 是否是 y 的子集，即对于 x 中设置的每个位，y 中对应的位是否也被设置。
    *
-   * <p>Note that if x == y, x is a subset of y, but it is not a "proper"
-   * subset
-   * of y.
+   * <p>注意：如果 x == y，x 是 y 的子集，但它不是 y 的"真"子集。
    *
    * @param x
-   *     The value to be test.
+   *     要测试的值。
    * @param y
-   *     The other value to be test.
-   * @return true if x is a subset of y; false otherwise.
+   *     要测试的另一个值。
+   * @return 如果 x 是 y 的子集，返回 true；否则返回 false。
    */
   public static boolean isSubsetOf(final int x, final int y) {
     return ((x | y) == y);
   }
 
   /**
-   * Tests whether x is a proper subset of y, i.e., whether for every bit set in
-   * x, the corresponding bit in y is also set, and there is at least on bit set
-   * in y but the corresponding bit is not set in x (or simply, x is not equal
-   * to y).
+   * 测试 x 是否是 y 的真子集，即对于 x 中设置的每个位，y 中对应的位也被设置，并且 y
+   * 中至少有一个位被设置但 x 中对应的位没有被设置（或者简单地说，x 不等于 y）。
    *
    * @param x
-   *     The value to be test.
+   *     要测试的值。
    * @param y
-   *     The other value to be test.
-   * @return true if x is a proper subset of y; false otherwise.
+   *     要测试的另一个值。
+   * @return 如果 x 是 y 的真子集，返回 true；否则返回 false。
    */
   public static boolean isProperSubsetOf(final int x, final int y) {
     return ((x | y) == y) && (x != y);
   }
 
   /**
-   * Lexically compares the bits.
+   * 按字典序比较位。
    *
-   * <p>Returns an integer less than, equal to or greater than 0, if the bits
-   * of
-   * x starting from position 0 to position BITS - 1 compares lexicographically
-   * less than, equal to, or greater than the bits of y starting from position 0
-   * to position BITS - 1.
+   * <p>如果 x 从位置 0 到位置 BITS - 1 的位按字典序小于、等于或大于 y 从位置 0 到位置 BITS - 1 的位，
+   * 则返回小于、等于或大于 0 的整数。
    *
-   * <p>For example,
+   * <p>例如，
    * <ul>
-   * <li><code>3 = 0b00000011</code>, <code>5 = 0b00000101</code>, and therefore
-   * <code>compare(3, 5) &lt; 0</code>. </li>
-   * <li><code>3 = 0b00000011</code>, <code>-1 = 0b11111111</code>, and therefore
-   * <code>compare(3, -1) &lt; 0</code>. </li>
+   * <li><code>3 = 0b00000011</code>, <code>5 = 0b00000101</code>, 因此
+   * <code>compare(3, 5) &lt; 0</code>。</li>
+   * <li><code>3 = 0b00000011</code>, <code>-1 = 0b11111111</code>, 因此
+   * <code>compare(3, -1) &lt; 0</code>。</li>
    * </ul>
    *
    * @param x
-   *     The first operand of comparision.
+   *     比较的第一个操作数。
    * @param y
-   *     The second operand of comparision.
-   * @return The result of lexically comparision, as described above.
+   *     比较的第二个操作数。
+   * @return 字典序比较的结果，如上所述。
    */
   public static int compare(final int x, final int y) {
     final long lx = ((long) x) & FULL_BITS_MASK;
@@ -800,29 +760,24 @@ public final class IntBit {
   }
 
   /**
-   * Determinate whether the unsigned representation of an integer is a power of
-   * 2. That is, whether the bits of the integer has only one 1 and all rest
-   * bits are 0s.
+   * 判断整数的无符号表示是否是 2 的幂。即，整数的位是否只有一个 1，其余所有位都是 0。
    *
-   * <p>Note that 0 is considered a power of 2, i.e., isPowerOfTwo(0) will
-   * returns true.
+   * <p>注意：0 被认为是 2 的幂，即 isPowerOfTwo(0) 将返回 true。
    *
    * @param x
-   *     The operand to be tested. Note that x is treated as a unsigned
-   *     integer.
-   * @return ture if x is a power of 2.
+   *     要测试的操作数。注意 x 被视为无符号整数。
+   * @return 如果 x 是 2 的幂，返回 true。
    */
   public static boolean isPowerOfTwo(final int x) {
     return (x & (x - 1)) == 0;
   }
 
   /**
-   * Returns the floor of log_2(x). In other words, return the largest n such
-   * that 2^n &le; x &lt; 2^{n+1}.
+   * 返回 log_2(x) 的向下取整。换句话说，返回最大的 n，使得 2^n &le; x &lt; 2^{n+1}。
    *
    * @param x
-   *     The operand. Note that x is treated as a unsigned integer.
-   * @return The floor of log_2(x). If x is 0, returns -1.
+   *     操作数。注意 x 被视为无符号整数。
+   * @return log_2(x) 的向下取整。如果 x 是 0，返回 -1。
    */
   public static int getLog2Floor(final int x) {
     assert (x != 0);
@@ -830,12 +785,11 @@ public final class IntBit {
   }
 
   /**
-   * Returns the ceiling of log_2(x). In other words, return the smallest n such
-   * that 2^{n-1} &lt; x &le; 2^{n}.
+   * 返回 log_2(x) 的向上取整。换句话说，返回最小的 n，使得 2^{n-1} &lt; x &le; 2^{n}。
    *
    * @param x
-   *     The operand. Note that x is treated as a unsigned integer.
-   * @return The ceiling of log_2(x). If x is 0, returns -1.
+   *     操作数。注意 x 被视为无符号整数。
+   * @return log_2(x) 的向上取整。如果 x 是 0，返回 -1。
    */
   public static int getLog2Ceiling(final int x) {
     assert (x != 0);
@@ -844,26 +798,22 @@ public final class IntBit {
   }
 
   /**
-   * Returns the number of digits in the binary representation of a specified
-   * unsigned integer.
+   * 返回指定无符号整数的二进制表示中的位数。
    *
    * @param x
-   *     The operand. Note that x is treated as a unsigned integer.
-   * @return The number of digits in the binary representation of x. If x is 0,
-   *     the function returns 1.
+   *     操作数。注意 x 被视为无符号整数。
+   * @return x 的二进制表示中的位数。如果 x 是 0，函数返回 1。
    */
   public static int getDigits2(final int x) {
     return (x == 0 ? 1 : findLastSet(x) + 1);
   }
 
   /**
-   * Returns the number of digits in the octal representation of a specified
-   * unsigned integer.
+   * 返回指定无符号整数的八进制表示中的位数。
    *
    * @param x
-   *     The operand. Note that x is treated as a unsigned integer.
-   * @return The number of digits in the octal representation of x. If x is 0,
-   *     the function returns 1.
+   *     操作数。注意 x 被视为无符号整数。
+   * @return x 的八进制表示中的位数。如果 x 是 0，函数返回 1。
    */
   public static int getDigits8(final int x) {
     // stop checkstyle: MagicNumberCheck
@@ -873,13 +823,11 @@ public final class IntBit {
   }
 
   /**
-   * Returns the number of digits in the decimal representation of a specified
-   * unsigned integer.
+   * 返回指定无符号整数的十进制表示中的位数。
    *
    * @param x
-   *     The operand. Note that x is treated as a unsigned integer.
-   * @return The number of digits in the decimal representation of x. If x is 0,
-   *     the function returns 1.
+   *     操作数。注意 x 被视为无符号整数。
+   * @return x 的十进制表示中的位数。如果 x 是 0，函数返回 1。
    */
   public static int getDigits10(final int x) {
     // The fraction 643/2136 approximates log10(2) to 7 significant digits.
@@ -890,13 +838,11 @@ public final class IntBit {
   }
 
   /**
-   * Returns the number of digits in the hexadecimal representation of a
-   * specified unsigned integer.
+   * 返回指定无符号整数的十六进制表示中的位数。
    *
    * @param x
-   *     The operand. Note that x is treated as a unsigned integer.
-   * @return The number of digits in the hexadecimal representation of x. If x
-   *     is 0, the function returns 1.
+   *     操作数。注意 x 被视为无符号整数。
+   * @return x 的十六进制表示中的位数。如果 x 是 0，函数返回 1。
    */
   public static int getDigits16(final int x) {
     // stop checkstyle: MagicNumberCheck

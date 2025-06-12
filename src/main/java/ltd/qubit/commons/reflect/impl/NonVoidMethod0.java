@@ -20,5 +20,11 @@ package ltd.qubit.commons.reflect.impl;
 @FunctionalInterface
 public interface NonVoidMethod0<T, R> extends MethodReference<T> {
 
+  /**
+   * 调用指定对象的方法。
+   *
+   * @param bean 要调用方法的对象
+   * @return 方法调用的返回值
+   */
   R invoke(T bean);
 }

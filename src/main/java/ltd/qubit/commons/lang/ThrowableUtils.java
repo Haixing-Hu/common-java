@@ -8,15 +8,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.lang;
 
+/**
+ * 此类提供了处理异常对象的实用工具方法。
+ *
+ * @author 胡海星
+ */
 public class ThrowableUtils {
 
   /**
-   * Gets the root cause of a throwable object.
+   * 获取异常对象的根本原因。
    *
    * @param original
-   *     the specified throwable object.
+   *     指定的异常对象。
    * @return
-   *     the root cause of the throwable object.
+   *     该异常对象的根本原因。
    */
   public static Throwable getRootCause(final Throwable original) {
     if (original == null) {
@@ -30,12 +35,12 @@ public class ThrowableUtils {
   }
 
   /**
-   * Gets the message of the root cause of a throwable object.
+   * 获取异常对象根本原因的消息。
    *
    * @param original
-   *     the specified throwable object.
+   *     指定的异常对象。
    * @return
-   *     the message of the root cause of the throwable object.
+   *     该异常对象根本原因的消息。
    */
   public static String getRootCauseMessage(final Throwable original) {
     if (original == null) {

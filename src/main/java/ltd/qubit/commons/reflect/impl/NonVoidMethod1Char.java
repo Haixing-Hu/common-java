@@ -20,5 +20,12 @@ package ltd.qubit.commons.reflect.impl;
 @FunctionalInterface
 public interface NonVoidMethod1Char<T, R> extends MethodReference<T> {
 
+  /**
+   * 调用指定对象的方法。
+   *
+   * @param bean 要调用方法的对象
+   * @param p1 方法的Character类型参数
+   * @return 方法调用的返回值
+   */
   R invoke(T bean, Character p1);
 }

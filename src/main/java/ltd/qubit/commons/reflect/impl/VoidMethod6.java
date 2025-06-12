@@ -9,7 +9,7 @@
 package ltd.qubit.commons.reflect.impl;
 
 /**
- * 此函数接口表示返回值是void，且只有2个参数的方法的引用。
+ * 此函数接口表示返回值是void，且只有6个参数的方法的引用。
  *
  * @param <T>
  *     方法所属的类的类型。
@@ -30,5 +30,23 @@ package ltd.qubit.commons.reflect.impl;
 @FunctionalInterface
 public interface VoidMethod6<T, P1, P2, P3, P4, P5, P6> extends MethodReference<T>  {
 
+  /**
+   * 调用此方法。
+   *
+   * @param bean
+   *     方法所属的bean实例。
+   * @param p1
+   *     方法的第一个参数。
+   * @param p2
+   *     方法的第二个参数。
+   * @param p3
+   *     方法的第三个参数。
+   * @param p4
+   *     方法的第四个参数。
+   * @param p5
+   *     方法的第五个参数。
+   * @param p6
+   *     方法的第六个参数。
+   */
   void invoke(T bean, P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6);
 }

@@ -18,5 +18,11 @@ package ltd.qubit.commons.reflect.impl;
 @FunctionalInterface
 public interface VoidMethod0<T> extends MethodReference<T> {
 
+  /**
+   * 调用此方法。
+   *
+   * @param bean
+   *     方法所属的bean实例。
+   */
   void invoke(T bean);
 }

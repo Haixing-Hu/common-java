@@ -14,15 +14,29 @@ import java.lang.reflect.Method;
 import ltd.qubit.commons.text.Joiner;
 
 /**
- * Thrown to indicate the invoking of a method failed.
+ * 此异常表示调用方法失败。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class InvokingMethodFailedException extends ReflectionException {
 
   @Serial
   private static final long serialVersionUID = 7457691421536998975L;
 
+  /**
+   * 构造一个 {@link InvokingMethodFailedException}。
+   *
+   * @param cls
+   *     类
+   * @param options
+   *     选项
+   * @param name
+   *     方法名称
+   * @param paramTypes
+   *     参数类型
+   * @param cause
+   *     原因
+   */
   public InvokingMethodFailedException(final Class<?> cls, final int options,
       final String name, final Class<?>[] paramTypes, final Throwable cause) {
     super("Invoking the "
@@ -36,6 +50,18 @@ public class InvokingMethodFailedException extends ReflectionException {
         + "] failed.", cause);
   }
 
+  /**
+   * 构造一个 {@link InvokingMethodFailedException}。
+   *
+   * @param object
+   *     对象
+   * @param method
+   *     方法
+   * @param arguments
+   *     参数
+   * @param cause
+   *     原因
+   */
   public InvokingMethodFailedException(final Object object, final Method method,
       final Object[] arguments, final Throwable cause) {
     super("Invoking the method '"

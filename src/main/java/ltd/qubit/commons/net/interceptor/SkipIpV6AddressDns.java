@@ -32,6 +32,9 @@ public class SkipIpV6AddressDns implements Dns {
    */
   public static final SkipIpV6AddressDns INSTANCE = new SkipIpV6AddressDns();
 
+  /**
+   * {@inheritDoc}
+   */
   @Nonnull
   @Override
   public List<InetAddress> lookup(@NotNull final String hostname) throws UnknownHostException {

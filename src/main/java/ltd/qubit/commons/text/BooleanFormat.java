@@ -15,17 +15,35 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * The {@link NumberFormat} is used to parse and format boolean values.
+ * {@link BooleanFormat} 用于解析和格式化布尔值。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class BooleanFormat implements CloneableEx<BooleanFormat> {
 
+  /**
+   * 格式化符号。
+   */
   private BooleanFormatSymbols symbols;
+
+  /**
+   * 格式化选项。
+   */
   private BooleanFormatOptions options;
+
+  /**
+   * 解析位置信息。
+   */
   private final transient ParsingPosition position;
+
+  /**
+   * 用于构建字符串的缓冲区。
+   */
   private final transient StringBuilder builder;
 
+  /**
+   * 构造一个新的 {@link BooleanFormat} 对象。
+   */
   public BooleanFormat() {
     symbols = new BooleanFormatSymbols();
     options = new BooleanFormatOptions();
@@ -33,92 +51,144 @@ public final class BooleanFormat implements CloneableEx<BooleanFormat> {
     builder = new StringBuilder();
   }
 
+  /**
+   * 重置此对象为默认值。
+   */
   public void reset() {
     symbols.reset();
     options.reset();
     position.reset();
   }
 
+  /**
+   * 获取格式化符号。
+   *
+   * @return 格式化符号。
+   */
   public BooleanFormatSymbols getSymbols() {
     return symbols;
   }
 
+  /**
+   * 设置格式化符号。
+   *
+   * @param symbols
+   *          格式化符号，不能为 {@code null}。
+   */
   public void setSymbols(final BooleanFormatSymbols symbols) {
     this.symbols = Argument.requireNonNull("symbols", symbols);
   }
 
+  /**
+   * 获取格式化选项。
+   *
+   * @return 格式化选项。
+   */
   public BooleanFormatOptions getOptions() {
     return options;
   }
 
+  /**
+   * 设置格式化选项。
+   *
+   * @param options
+   *          格式化选项，不能为 {@code null}。
+   */
   public void setOptions(final BooleanFormatOptions options) {
     this.options = Argument.requireNonNull("options", options);
   }
 
+  /**
+   * 获取解析位置信息。
+   *
+   * @return 解析位置信息。
+   */
   public ParsingPosition getParsePosition() {
     return position;
   }
 
+  /**
+   * 获取解析索引。
+   *
+   * @return 解析索引。
+   */
   public int getParseIndex() {
     return position.getIndex();
   }
 
+  /**
+   * 获取错误索引。
+   *
+   * @return 错误索引。
+   */
   public int getErrorIndex() {
     return position.getErrorIndex();
   }
 
+  /**
+   * 获取错误代码。
+   *
+   * @return 错误代码。
+   */
   public int getErrorCode() {
     return position.getErrorCode();
   }
 
+  /**
+   * 检查解析是否成功。
+   *
+   * @return 如果解析成功则返回 {@code true}，否则返回 {@code false}。
+   */
   public boolean success() {
     return position.success();
   }
 
+  /**
+   * 检查解析是否失败。
+   *
+   * @return 如果解析失败则返回 {@code true}，否则返回 {@code false}。
+   */
   public boolean fail() {
     return position.fail();
   }
 
   /**
-   * Parses a {@code boolean} value.
+   * 解析一个 {@code boolean} 值。
    *
    * @param str
-   *          the text segment to be parsed. The parsing starts from the
-   *          character at the index {@code 0} and stops at the character
-   *          before the index {@code str.length()}.
-   * @return the parsed value.
+   *          要解析的文本段。解析从索引 {@code 0} 处的字符开始，
+   *          到索引 {@code str.length()} 之前的字符结束。
+   * @return 解析的值。
    */
   public boolean parse(final CharSequence str) {
     return parse(str, 0, str.length());
   }
 
   /**
-   * Parses a {@code boolean} value.
+   * 解析一个 {@code boolean} 值。
    *
    * @param str
-   *          the text segment to be parsed. The parsing starts from the
-   *          character at the index {@code startIndex} and stops at the
-   *          character before the index {@code str.length()}.
+   *          要解析的文本段。解析从索引 {@code startIndex} 处的字符开始，
+   *          到索引 {@code str.length()} 之前的字符结束。
    * @param startIndex
-   *          the index where to start parsing.
-   * @return the parsed value.
+   *          开始解析的索引。
+   * @return 解析的值。
    */
   public boolean parse(final CharSequence str, final int startIndex) {
     return parse(str, startIndex, str.length());
   }
 
   /**
-   * Parses a {@code boolean} value.
+   * 解析一个 {@code boolean} 值。
    *
    * @param str
-   *          the text segment to be parsed. The parsing starts from the
-   *          character at the index {@code startIndex} and stops at the
-   *          character before the index {@code endIndex}.
+   *          要解析的文本段。解析从索引 {@code startIndex} 处的字符开始，
+   *          到索引 {@code endIndex} 之前的字符结束。
    * @param startIndex
-   *          the index where to start parsing.
+   *          开始解析的索引。
    * @param endIndex
-   *          the index where to end parsing.
-   * @return the parsed value.
+   *          结束解析的索引。
+   * @return 解析的值。
    */
   public boolean parse(final CharSequence str, final int startIndex,
       final int endIndex) {
@@ -166,11 +236,11 @@ public final class BooleanFormat implements CloneableEx<BooleanFormat> {
   }
 
   /**
-   * Formats a {@code boolean} value.
+   * 格式化一个 {@code boolean} 值。
    *
    * @param value
-   *          the value to be formated.
-   * @return the formatted result.
+   *          要格式化的值。
+   * @return 格式化的结果。
    */
   public String format(final boolean value) {
     builder.setLength(0);
@@ -179,13 +249,13 @@ public final class BooleanFormat implements CloneableEx<BooleanFormat> {
   }
 
   /**
-   * Formats a {@code boolean} value.
+   * 格式化一个 {@code boolean} 值。
    *
    * @param value
-   *          the value to be formated.
+   *          要格式化的值。
    * @param output
-   *          the {@link StringBuilder} where to append the formatted result.
-   * @return the output {@link StringBuilder}.
+   *          用于附加格式化结果的 {@link StringBuilder}。
+   * @return 输出的 {@link StringBuilder}。
    */
   public StringBuilder format(final boolean value, final StringBuilder output) {
     if (options.isBoolAlpha()) {

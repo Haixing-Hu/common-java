@@ -11,20 +11,20 @@ package ltd.qubit.commons.reflect;
 import java.lang.annotation.Annotation;
 
 /**
- * The functional interface to check the existence of an annotation.
+ * 用于检查注解是否存在的函数式接口。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @FunctionalInterface
 public interface AnnotationTester {
 
   /**
-   * Tests whether the specified annotation exists.
+   * 测试指定的注解是否存在。
    *
    * @param annotationClass
-   *     the class of the specified annotation.
+   *     指定注解的类。
    * @return
-   *     {@code true} if the specified annotation exists; {@code false} otherwise.
+   *     如果指定的注解存在则返回 {@code true}；否则返回 {@code false}。
    */
   boolean exist(Class<? extends Annotation> annotationClass);
 }

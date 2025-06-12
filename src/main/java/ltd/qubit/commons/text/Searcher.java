@@ -55,9 +55,55 @@ import static ltd.qubit.commons.text.impl.SearcherImpl.startsWithCodePoint;
 import static ltd.qubit.commons.text.impl.SearcherImpl.startsWithSubstring;
 
 /**
- * A class used to search in strings.
+ * 用于在字符串中搜索的类。
  *
- * @author Haixing Hu
+ * <p>此类提供了灵活的字符串搜索功能，支持搜索字符、Unicode 代码点、子字符串等，
+ * 并提供多种搜索选项如忽略大小写、指定搜索范围等。</p>
+ *
+ * <p>使用示例：</p>
+ * <pre><code>
+ * // 搜索单个字符
+ * int index = new Searcher().forChar('a').findFirstIndexIn("hello world");
+ * boolean contains = new Searcher().forChar('o').isContainedIn("hello");
+ * int count = new Searcher().forChar('l').countMatchesIn("hello");
+ *
+ * // 搜索字符数组中的任意字符
+ * int index = new Searcher().forCharsIn('a', 'e', 'i', 'o', 'u')
+ *                          .findFirstIndexIn("hello world");
+ *
+ * // 搜索子字符串
+ * int index = new Searcher().forSubstring("world").findFirstIndexIn("hello world");
+ * boolean startsWith = new Searcher().forSubstring("hello").isAtStartOf("hello world");
+ * boolean endsWith = new Searcher().forSubstring("world").isAtEndOf("hello world");
+ *
+ * // 搜索多个子字符串中的任意一个
+ * int index = new Searcher().forSubstringsIn("cat", "dog", "bird")
+ *                          .findFirstIndexIn("I have a cat");
+ *
+ * // 忽略大小写搜索
+ * int index = new Searcher().forSubstring("WORLD")
+ *                          .ignoreCase(true)
+ *                          .findFirstIndexIn("hello world");
+ *
+ * // 指定搜索范围
+ * int index = new Searcher().forChar('l')
+ *                          .startFrom(3)
+ *                          .endBefore(8)
+ *                          .findFirstIndexIn("hello world");
+ *
+ * // 获取所有匹配位置
+ * int[] occurrences = new Searcher().forChar('l').getOccurrencesIn("hello world");
+ *
+ * // 使用字符过滤器搜索
+ * int index = new Searcher().forCharsSatisfy(Character::isDigit)
+ *                          .findFirstIndexIn("abc123def");
+ *
+ * // 搜索 Unicode 代码点
+ * int index = new Searcher().forCodePoint(0x1F600) // 😀 表情符号
+ *                          .findFirstIndexIn("Hello 😀 World");
+ * </code></pre>
+ *
+ * @author 胡海星
  */
 public class Searcher {
 
@@ -88,12 +134,12 @@ public class Searcher {
   }
 
   /**
-   * Searches for the specified character.
+   * 搜索指定的字符。
    *
    * @param ch
-   *     the character to find.
+   *     要查找的字符。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher forChar(final char ch) {
     this.clearStrategies();
@@ -103,13 +149,12 @@ public class Searcher {
   }
 
   /**
-   * Searches for any character not equal to the specified character.
+   * 搜索任何不等于指定字符的字符。
    *
    * @param ch
-   *     the specified character. All characters except this one in the source
-   *     string will be searched.
+   *     指定字符。源字符串中除此字符以外的所有字符都将被搜索。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher forCharsNotEqual(final char ch) {
     this.clearStrategies();
@@ -119,13 +164,12 @@ public class Searcher {
   }
 
   /**
-   * Searches for any character of an array.
+   * 搜索数组中的任何字符。
    *
    * @param chars
-   *     the array of characters to be searched. A {@code null} or empty array
-   *     indicates that no character will be searched.
+   *     要搜索的字符数组。{@code null} 值或空数组表示不搜索任何字符。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher forCharsIn(@Nullable final char... chars) {
     this.clearStrategies();
@@ -139,13 +183,12 @@ public class Searcher {
   }
 
   /**
-   * Searches for any character of a sequence.
+   * 搜索序列中的任何字符。
    *
    * @param chars
-   *     the sequence of characters to be searched. A {@code null} or empty
-   *     sequence indicates that no character will be searched.
+   *     要搜索的字符序列。{@code null} 值或空序列表示不搜索任何字符。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher forCharsIn(@Nullable final CharSequence chars) {
     this.clearStrategies();
@@ -159,14 +202,12 @@ public class Searcher {
   }
 
   /**
-   * Searches for any character not in an array.
+   * 搜索不在数组中的任何字符。
    *
    * @param chars
-   *     an array of characters. All characters not in this array will be
-   *     searched. A {@code null} or empty array indicates that all characters
-   *     in the source string will be searched.
+   *     字符数组。不在此数组中的所有字符都将被搜索。{@code null} 值或空数组表示搜索源字符串中的所有字符。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher forCharsNotIn(@Nullable final char... chars) {
     this.clearStrategies();
@@ -180,14 +221,12 @@ public class Searcher {
   }
 
   /**
-   * Searches for any character not in a sequence.
+   * 搜索不在序列中的任何字符。
    *
    * @param chars
-   *     a sequence of characters. All characters not in this sequence will be
-   *     searched. A {@code null} value or empty sequence indicates that all
-   *     characters in the source string will be searched.
+   *     字符序列。不在此序列中的所有字符都将被搜索。{@code null} 值或空序列表示搜索源字符串中的所有字符。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher forCharsNotIn(@Nullable final CharSequence chars) {
     this.clearStrategies();
@@ -201,13 +240,12 @@ public class Searcher {
   }
 
   /**
-   * Searches for any character satisfying the specified filter.
+   * 搜索满足指定过滤器的任何字符。
    *
    * @param filter
-   *     the filter accepting characters to be searched. A {@code null} value
-   *     indicates that no character will be searched.
+   *     接受要搜索字符的过滤器。{@code null} 值表示不搜索任何字符。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher forCharsSatisfy(@Nullable final CharFilter filter) {
     this.clearStrategies();
@@ -221,13 +259,12 @@ public class Searcher {
   }
 
   /**
-   * Searches for any character not satisfying the specified filter.
+   * 搜索不满足指定过滤器的任何字符。
    *
    * @param filter
-   *     the filter rejecting characters to be searched. A {@code null} value
-   *     indicates that all characters in the source string will be searched.
+   *     拒绝要搜索字符的过滤器。{@code null} 值表示搜索源字符串中的所有字符。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher forCharsNotSatisfy(@Nullable final CharFilter filter) {
     this.clearStrategies();
@@ -241,12 +278,12 @@ public class Searcher {
   }
 
   /**
-   * Searches for the specified Unicode code point.
+   * 搜索指定的 Unicode 代码点。
    *
    * @param codePoint
-   *     the code point of the Unicode character to search.
+   *     要搜索的 Unicode 字符的代码点。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher forCodePoint(final int codePoint) {
     this.clearStrategies();
@@ -256,14 +293,12 @@ public class Searcher {
   }
 
   /**
-   * Searches for the specified Unicode code point.
+   * 搜索指定的 Unicode 代码点。
    *
    * @param codePoint
-   *     a character sequence containing the Unicode character to be searched.
-   *     A {@code null} or empty value indicates that no Unicode code point will
-   *     be searched.
+   *     包含要搜索的 Unicode 字符的字符序列。{@code null} 值或空值表示不搜索任何 Unicode 代码点。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher forCodePoint(@Nullable final CharSequence codePoint) {
     this.clearStrategies();
@@ -277,13 +312,12 @@ public class Searcher {
   }
 
   /**
-   * Searches for any Unicode code point not equal to the specified code point.
+   * 搜索任何不等于指定代码点的 Unicode 代码点。
    *
    * @param codePoint
-   *     the code point of a specified Unicode character. All Unicode characters
-   *     except this one in the source string will be searched.
+   *     指定 Unicode 字符的代码点。源字符串中除此字符以外的所有 Unicode 字符都将被搜索。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher forCodePointsNotEqual(final int codePoint) {
     this.clearStrategies();
@@ -293,15 +327,13 @@ public class Searcher {
   }
 
   /**
-   * Searches for any Unicode code point not equal to the specified code point.
+   * 搜索任何不等于指定代码点的 Unicode 代码点。
    *
    * @param codePoint
-   *     a character sequence containing the specified Unicode character. All
-   *     Unicode code points except the one in the start of this sequence will
-   *     be searched. A {@code null} value indicates that all Unicode characters
-   *     in the source string will be searched.
+   *     包含指定 Unicode 字符的字符序列。除此序列开头的代码点外，所有 Unicode 代码点都将被搜索。
+   *     {@code null} 值表示搜索源字符串中的所有 Unicode 字符。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher forCodePointsNotEqual(@Nullable final CharSequence codePoint) {
     this.clearStrategies();
@@ -315,14 +347,12 @@ public class Searcher {
   }
 
   /**
-   * Searches for any Unicode code point occur within an array.
+   * 搜索数组中出现的任何 Unicode 代码点。
    *
    * @param codePoints
-   *     the array of code points of the Unicode characters to be searched. A
-   *     {@code null} or empty array indicates that no Unicode character will be
-   *     searched.
+   *     要搜索的 Unicode 字符的代码点数组。{@code null} 值或空数组表示不搜索任何 Unicode 字符。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher forCodePointsIn(@Nullable final int... codePoints) {
     this.clearStrategies();
@@ -336,14 +366,12 @@ public class Searcher {
   }
 
   /**
-   * Searches for any Unicode code point occur within a sequence.
+   * 搜索序列中出现的任何 Unicode 代码点。
    *
    * @param codePoints
-   *     the sequence of code points of Unicode characters to be searched. A
-   *     {@code null} or empty sequence indicates that no Unicode code point
-   *     will be searched.
+   *     要搜索的 Unicode 字符的代码点序列。{@code null} 值或空序列表示不搜索任何 Unicode 代码点。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher forCodePointsIn(@Nullable final CharSequence codePoints) {
     this.clearStrategies();
@@ -357,15 +385,13 @@ public class Searcher {
   }
 
   /**
-   * Searches for any Unicode code point not in the specified array.
+   * 搜索不在指定数组中的任何 Unicode 代码点。
    *
    * @param codePoints
-   *     an array of Unicode code points. All Unicode characters whose code
-   *     point not in this array will be searched. A {@code null} or empty array
-   *     indicates that all Unicode code points in the source string will be
-   *     searched.
+   *     Unicode 代码点数组。代码点不在此数组中的所有 Unicode 字符都将被搜索。
+   *     {@code null} 值或空数组表示搜索源字符串中的所有 Unicode 代码点。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher forCodePointsNotIn(@Nullable final int... codePoints) {
     this.clearStrategies();
@@ -379,14 +405,13 @@ public class Searcher {
   }
 
   /**
-   * Searches for any Unicode code point not in the specified sequence.
+   * 搜索不在指定序列中的任何 Unicode 代码点。
    *
    * @param codePoints
-   *     a sequence of code points of Unicode characters. All code points not in
-   *     this sequence will be searched. A {@code null} or empty value indicates
-   *     that all Unicode code points will be searched.
+   *     Unicode 字符的代码点序列。不在此序列中的所有代码点都将被搜索。
+   *     {@code null} 值或空值表示搜索所有 Unicode 代码点。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher forCodePointsNotIn(@Nullable final CharSequence codePoints) {
     this.clearStrategies();
@@ -400,13 +425,12 @@ public class Searcher {
   }
 
   /**
-   * Search for any Unicode code point accepted by the specified filter.
+   * 搜索任何被指定过滤器接受的 Unicode 代码点。
    *
    * @param filter
-   *     the filter accepting Unicode code points to be searched. A {@code null}
-   *     value indicates that no Unicode code point will be searched.
+   *     接受要搜索的 Unicode 代码点的过滤器。{@code null} 值表示不搜索任何 Unicode 代码点。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher forCodePointsSatisfy(@Nullable final CodePointFilter filter) {
     this.clearStrategies();
@@ -420,13 +444,12 @@ public class Searcher {
   }
 
   /**
-   * Search for any Unicode code point rejected by the specified filter.
+   * 搜索任何被指定过滤器拒绝的 Unicode 代码点。
    *
    * @param filter
-   *     the filter rejecting Unicode code points to be searched. A {@code null}
-   *     value indicates that all Unicode code points will be searched.
+   *     拒绝要搜索的 Unicode 代码点的过滤器。{@code null} 值表示搜索所有 Unicode 代码点。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher forCodePointsNotSatisfy(@Nullable final CodePointFilter filter) {
     this.clearStrategies();
@@ -440,13 +463,12 @@ public class Searcher {
   }
 
   /**
-   * Search for the specified substring.
+   * 搜索指定的子字符串。
    *
    * @param substring
-   *     the substring to be searched. A {@code null} or empty value indicates
-   *     that no substring will be searched.
+   *     要搜索的子字符串。{@code null} 值或空值表示不搜索任何子字符串。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher forSubstring(@Nullable final CharSequence substring) {
     this.clearStrategies();
@@ -456,13 +478,12 @@ public class Searcher {
   }
 
   /**
-   * Search for any substring in a set of potential substrings.
+   * 搜索一组潜在子字符串中的任何子字符串。
    *
    * @param substrings
-   *     the array of substrings to search. A {@code null} or empty value indicates
-   *     that no substring will be searched.
+   *     要搜索的子字符串数组。{@code null} 值或空值表示不搜索任何子字符串。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher forSubstringsIn(@Nullable final CharSequence... substrings) {
     this.clearStrategies();
@@ -472,12 +493,12 @@ public class Searcher {
   }
 
   /**
-   * Sets the starting index of the source string where to start searching.
+   * 设置源字符串开始搜索的起始索引。
    *
    * @param startIndex
-   *     the starting index of the source string where to start searching.
+   *     源字符串开始搜索的起始索引。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher startFrom(final int startIndex) {
     this.startIndex = startIndex;
@@ -485,12 +506,12 @@ public class Searcher {
   }
 
   /**
-   * Sets the ending index of the source string where to stop searching.
+   * 设置源字符串停止搜索的结束索引。
    *
    * @param endIndex
-   *     the ending index of the source string where to stop searching.
+   *     源字符串停止搜索的结束索引。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher endBefore(final int endIndex) {
     this.endIndex = endIndex;
@@ -498,12 +519,12 @@ public class Searcher {
   }
 
   /**
-   * Sets whether to ignore the case while searching for substrings.
+   * 设置在搜索子字符串时是否忽略大小写。
    *
    * @param ignoreCase
-   *     whether to ignore the case while searching for substrings.
+   *     在搜索子字符串时是否忽略大小写。
    * @return
-   *     the reference to this {@link Searcher} object.
+   *     此 {@link Searcher} 对象的引用。
    */
   public Searcher ignoreCase(final boolean ignoreCase) {
     this.ignoreCase = ignoreCase;
@@ -511,15 +532,12 @@ public class Searcher {
   }
 
   /**
-   * Finds the first index of the specified target (which may be a character,
-   * a Unicode code point, or a substring) in the specified source string.
+   * 在指定的源字符串中查找指定目标（可能是字符、Unicode 代码点或子字符串）的第一个索引。
    *
    * @param str
-   *     the specified source string where to search for the target. If it is
-   *     null or empty, returns -1.
+   *     要在其中搜索目标的指定源字符串。如果为 null 或空，返回 -1。
    * @return
-   *     the first index of the specified target in the specified source string.
-   *     Or -1 if no such target found.
+   *     指定目标在指定源字符串中的第一个索引。如果未找到此类目标，返回 -1。
    */
   public int findFirstIndexIn(@Nullable final CharSequence str) {
     final int strLen;
@@ -555,6 +573,14 @@ public class Searcher {
     return (result < end ? result : -1);
   }
 
+  /**
+   * 在指定的源字符串中查找指定目标（可能是字符、Unicode 代码点或子字符串）的最后一个索引。
+   *
+   * @param str
+   *     要在其中搜索目标的指定源字符串。如果为 null 或空，返回 -1。
+   * @return
+   *     指定目标在指定源字符串中的最后一个索引。如果未找到此类目标，返回 -1。
+   */
   public int findLastIndexIn(@Nullable final CharSequence str) {
     final int strLen;
     if ((str == null)
@@ -590,48 +616,36 @@ public class Searcher {
   }
 
   /**
-   * Tests whether the specified target (which may be a character, a Unicode
-   * code point, or a substring) is contained in the specified source string.
+   * 测试指定目标（可能是字符、Unicode 代码点或子字符串）是否包含在指定的源字符串中。
    *
    * @param str
-   *     the specified source string where to search for the target. If it is
-   *     null or empty, returns false.
+   *     要在其中搜索目标的指定源字符串。如果为 null 或空，返回 false。
    * @return
-   *     whether the specified target (which may be a character, a Unicode code
-   *     point, or a substring) is contained in the specified source string.
+   *     指定目标（可能是字符、Unicode 代码点或子字符串）是否包含在指定的源字符串中。
    */
   public boolean isContainedIn(@Nullable final CharSequence str) {
     return findFirstIndexIn(str) >= 0;
   }
 
   /**
-   * Tests whether the specified target (which may be a character, a Unicode
-   * code point, or a substring) is <b>NOT</b> contained in the specified source
-   * string.
+   * 测试指定目标（可能是字符、Unicode 代码点或子字符串）是否**不**包含在指定的源字符串中。
    *
    * @param str
-   *     the specified source string where to search for the target. If it is
-   *     null or empty, returns false.
+   *     要在其中搜索目标的指定源字符串。如果为 null 或空，返回 false。
    * @return
-   *     whether the specified target (which may be a character, a Unicode code
-   *     point, or a substring) is <b>NOT</b> contained in the specified source
-   *     string.
+   *     指定目标（可能是字符、Unicode 代码点或子字符串）是否**不**包含在指定的源字符串中。
    */
   public boolean isNotContainedIn(@Nullable final CharSequence str) {
     return findFirstIndexIn(str) < 0;
   }
 
   /**
-   * Counts the number of matches of the specified target (which may be a
-   * character, a Unicode code point, or a substring) in the specified source
-   * string.
+   * 计算指定目标（可能是字符、Unicode 代码点或子字符串）在指定源字符串中的匹配数量。
    *
    * @param str
-   *     the specified source string where to search for the target. If it is
-   *     null or empty, returns 0.
+   *     要在其中搜索目标的指定源字符串。如果为 null 或空，返回 0。
    * @return
-   *     the number of matches of the specified target in the specified source
-   *     string.
+   *     指定目标在指定源字符串中的匹配数量。
    */
   public int countMatchesIn(@Nullable final CharSequence str) {
     final int strLen;
@@ -662,16 +676,12 @@ public class Searcher {
   }
 
   /**
-   * Gets the index of all occurrences of the specified target (which may be a
-   * character, a Unicode code point, or a substring) in the specified source
-   * string.
+   * 获取指定目标（可能是字符、Unicode 代码点或子字符串）在指定源字符串中所有出现位置的索引。
    *
    * @param str
-   *     the specified source string where to search for the target. If it is
-   *     null or empty, returns an empty array.
+   *     要在其中搜索目标的指定源字符串。如果为 null 或空，返回空数组。
    * @return
-   *     the index of all occurrences of the specified target in the specified
-   *     source string.
+   *     指定目标在指定源字符串中所有出现位置的索引。
    */
   public int[] getOccurrencesIn(@Nullable final CharSequence str) {
     final int strLen;
@@ -708,24 +718,16 @@ public class Searcher {
   }
 
   /**
-   * Gets the index of all occurrences of the specified target (which may be a
-   * character, a Unicode code point, or a substring) in the specified source
-   * string.
+   * 获取指定目标（可能是字符、Unicode 代码点或子字符串）在指定源字符串中所有出现位置的索引。
    *
    * @param str
-   *     the specified source string where to search for the target. If it is
-   *     {@code null} or empty, nothing is appended to the returned list.
+   *     要在其中搜索目标的指定源字符串。如果为 {@code null} 或空，不会向返回列表追加任何内容。
    * @param output
-   *     the optional {@link IntList} where to append the result. If it is
-   *     {@code null}, a new {@link IntList} is created to store the result
-   *     and is returned.
+   *     用于追加结果的可选 {@link IntList}。如果为 {@code null}，将创建新的 {@link IntList} 来存储结果并返回。
    * @return
-   *     the list of indexes of all occurrences of the specified target in the
-   *     specified source string. If the argument {@code output} is not
-   *     {@code null}, the function use the {@code output} to append the list
-   *     of indexes and returns the {@code output}; otherwise, a new
-   *     {@link IntList} is created to store the list of indexes and is
-   *     returned.
+   *     指定目标在指定源字符串中所有出现位置的索引列表。如果参数 {@code output} 不为 {@code null}，
+   *     函数使用 {@code output} 来追加索引列表并返回 {@code output}；否则，创建新的 {@link IntList}
+   *     来存储索引列表并返回。
    */
   public IntList getOccurrencesIn(@Nullable final CharSequence str,
       @Nullable final IntList output) {
@@ -763,14 +765,12 @@ public class Searcher {
   }
 
   /**
-   * Tests whether the specified string starts with the specified target (which
-   * may be a character, a Unicode code point, or a substring).
+   * 测试指定字符串是否以指定目标（可能是字符、Unicode 代码点或子字符串）开头。
    *
    * @param str
-   *     the specified source string where to search for the target. If it is
-   *     null or empty, returns false.
+   *     要在其中搜索目标的指定源字符串。如果为 null 或空，返回 false。
    * @return
-   *     whether the specified string starts with the specified target.
+   *     指定字符串是否以指定目标开头。
    */
   public boolean isAtStartOf(@Nullable final CharSequence str) {
     if (str == null) {
@@ -813,14 +813,12 @@ public class Searcher {
   }
 
   /**
-   * Tests whether the specified string ends with the specified target (which
-   * may be a character, a Unicode code point, or a substring).
+   * 测试指定字符串是否以指定目标（可能是字符、Unicode 代码点或子字符串）结尾。
    *
    * @param str
-   *     the specified source string where to search for the target. If it is
-   *     null or empty, returns false.
+   *     要在其中搜索目标的指定源字符串。如果为 null 或空，返回 false。
    * @return
-   *     whether the specified string ends with the specified target.
+   *     指定字符串是否以指定目标结尾。
    */
   public boolean isAtEndOf(@Nullable final CharSequence str) {
     if (str == null) {
@@ -863,15 +861,12 @@ public class Searcher {
   }
 
   /**
-   * Tests whether the specified string starts with, or ends with the specified
-   * target (which may be a character, a Unicode code point, or a substring).
+   * 测试指定字符串是否以指定目标（可能是字符、Unicode 代码点或子字符串）开头或结尾。
    *
    * @param str
-   *     the specified source string where to search for the target. If it is
-   *     null or empty, returns false.
+   *     要在其中搜索目标的指定源字符串。如果为 null 或空，返回 false。
    * @return
-   *     whether the specified string starts with, or ends with the specified
-   *     target.
+   *     指定字符串是否以指定目标开头或结尾。
    */
   public boolean isAtStartOrEndOf(@Nullable final CharSequence str) {
     if (str == null) {
@@ -918,16 +913,12 @@ public class Searcher {
   }
 
   /**
-   * Tests whether the specified string starts with, <b>AND</b> ends with the
-   * specified target (which may be a character, a Unicode code point, or a
-   * substring).
+   * 测试指定字符串是否<b>既</b>以指定目标（可能是字符、Unicode 代码点或子字符串）开头<b>又</b>以该目标结尾。
    *
    * @param str
-   *     the specified source string where to search for the target. If it is
-   *     null or empty, returns false.
+   *     要在其中搜索目标的指定源字符串。如果为 null 或空，返回 false。
    * @return
-   *     whether the specified target <b>AND</b> starts with, or ends with the
-   *     specified target.
+   *     指定字符串是否<b>既</b>以指定目标开头<b>又</b>以该目标结尾。
    */
   public boolean isAtStartAndEndOf(@Nullable final CharSequence str) {
     if (str == null) {

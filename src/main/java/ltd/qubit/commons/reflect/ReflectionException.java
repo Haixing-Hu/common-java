@@ -11,9 +11,9 @@ package ltd.qubit.commons.reflect;
 import java.io.Serial;
 
 /**
- * Thrown to indicate an exception occurs during a reflection operation.
+ * 此异常表示在反射操作期间发生异常。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class ReflectionException extends RuntimeException {
 
@@ -23,18 +23,41 @@ public class ReflectionException extends RuntimeException {
   private static final String DEFAULT_MESSAGE =
       "An exception occurs during the reflection operation: ";
 
+  /**
+   * 构造一个 {@link ReflectionException}。
+   */
   public ReflectionException() {
     super(DEFAULT_MESSAGE);
   }
 
+  /**
+   * 构造一个 {@link ReflectionException}。
+   *
+   * @param message
+   *     消息
+   */
   public ReflectionException(final String message) {
     super(message);
   }
 
+  /**
+   * 构造一个 {@link ReflectionException}。
+   *
+   * @param cause
+   *     原因
+   */
   public ReflectionException(final Throwable cause) {
     super(DEFAULT_MESSAGE + cause.getMessage(), cause);
   }
 
+  /**
+   * 构造一个 {@link ReflectionException}。
+   *
+   * @param message
+   *     消息
+   * @param cause
+   *     原因
+   */
   public ReflectionException(final String message, final Throwable cause) {
     super(message, cause);
   }

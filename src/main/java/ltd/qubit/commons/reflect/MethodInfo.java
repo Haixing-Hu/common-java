@@ -19,20 +19,57 @@ import static ltd.qubit.commons.lang.Argument.requireNonNegative;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * Stores the information about a method.
+ * 存储有关方法的信息。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class MethodInfo implements Comparable<MethodInfo> {
 
+  /**
+   * 该方法所属的类型信息。
+   */
   private final TypeInfo ownerInfo;
+
+  /**
+   * 该方法对象。
+   */
   private final Method method;
+
+  /**
+   * 该方法在类层次结构中的深度。
+   */
   private final int depth;
+
+  /**
+   * 该方法的名称。
+   */
   private final String name;
+
+  /**
+   * 该方法的实际参数类型数组。
+   */
   private final Class<?>[] actualParameterType;
+
+  /**
+   * 该方法的实际返回类型。
+   */
   private final Class<?> actualReturnType;
+
+  /**
+   * 该方法的签名。
+   */
   private final MethodSignature signature;
 
+  /**
+   * 构造一个新的方法信息对象。
+   *
+   * @param ownerInfo
+   *     拥有者类型信息
+   * @param method
+   *     方法对象
+   * @param depth
+   *     方法在类层次结构中的深度
+   */
   public MethodInfo(final TypeInfo ownerInfo, final Method method, final int depth) {
     this.ownerInfo = requireNonNull("ownerInfo", ownerInfo);
     this.method = requireNonNull("method", method);
@@ -45,6 +82,14 @@ public final class MethodInfo implements Comparable<MethodInfo> {
     this.signature = new MethodSignature(this.name, this.actualParameterType);
   }
 
+  /**
+   * 从另一个方法信息对象构造一个新的方法信息对象，但使用不同的深度。
+   *
+   * @param methodInfo
+   *     另一个方法信息对象
+   * @param depth
+   *     新的深度
+   */
   public MethodInfo(final MethodInfo methodInfo, final int depth) {
     requireNonNull("methodInfo", methodInfo);
     this.ownerInfo = methodInfo.ownerInfo;
@@ -56,30 +101,65 @@ public final class MethodInfo implements Comparable<MethodInfo> {
     this.signature = methodInfo.signature;
   }
 
+  /**
+   * 获取拥有者类型信息。
+   *
+   * @return 拥有者类型信息
+   */
   public final TypeInfo getOwnerInfo() {
     return ownerInfo;
   }
 
+  /**
+   * 获取方法对象。
+   *
+   * @return 方法对象
+   */
   public final Method getMethod() {
     return method;
   }
 
+  /**
+   * 获取方法在类层次结构中的深度。
+   *
+   * @return 深度
+   */
   public final int getDepth() {
     return depth;
   }
 
+  /**
+   * 获取方法名称。
+   *
+   * @return 方法名称
+   */
   public final String getName() {
     return name;
   }
 
+  /**
+   * 获取实际参数类型数组。
+   *
+   * @return 实际参数类型数组
+   */
   public final Class<?>[] getActualParameterType() {
     return actualParameterType;
   }
 
+  /**
+   * 获取实际返回类型。
+   *
+   * @return 实际返回类型
+   */
   public final Class<?> getActualReturnType() {
     return actualReturnType;
   }
 
+  /**
+   * 获取方法签名。
+   *
+   * @return 方法签名
+   */
   public final MethodSignature getSignature() {
     return signature;
   }

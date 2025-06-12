@@ -24,15 +24,14 @@ import ltd.qubit.commons.util.filter.character.InRangeCharFilter;
 import static java.util.Objects.requireNonNull;
 
 /**
- * Utility class for converting between various ASCII case formats. Behavior is
- * undefined for non-ASCII input.
+ * 用于在各种ASCII大小写格式之间转换的实用类。对于非ASCII输入，行为是未定义的。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public enum CaseFormat {
 
   /**
-   * Hyphenated variable naming convention, e.g., "lower-hyphen".
+   * 连字符变量命名约定，例如"lower-hyphen"。
    */
   LOWER_HYPHEN(new AcceptSpecifiedCharFilter('-'), "-") {
     @Override
@@ -58,7 +57,7 @@ public enum CaseFormat {
   },
 
   /**
-   * C++ variable naming convention, e.g., "lower_underscore".
+   * C++变量命名约定，例如"lower_underscore"。
    */
   LOWER_UNDERSCORE(new AcceptSpecifiedCharFilter('_'), "_") {
     @Override
@@ -84,7 +83,7 @@ public enum CaseFormat {
   },
 
   /**
-   * Java variable naming convention, e.g., "lowerCamel".
+   * Java变量命名约定，例如"lowerCamel"。
    */
   LOWER_CAMEL(new InRangeCharFilter('A', 'Z'), "") {
     @Override
@@ -116,7 +115,7 @@ public enum CaseFormat {
   //  },
 
   /**
-   * Java and C++ class naming convention, e.g., "UpperCamel".
+   * Java和C++类命名约定，例如"UpperCamel"。
    */
   UPPER_CAMEL(new InRangeCharFilter('A', 'Z'), "") {
     @Override
@@ -131,7 +130,7 @@ public enum CaseFormat {
   },
 
   /**
-   * Java and C++ constant naming convention, e.g., "UPPER_UNDERSCORE".
+   * Java和C++常量命名约定，例如"UPPER_UNDERSCORE"。
    */
   UPPER_UNDERSCORE(new AcceptSpecifiedCharFilter('_'), "_") {
     @Override
@@ -156,32 +155,48 @@ public enum CaseFormat {
     }
   };
 
+  /**
+   * 单词边界过滤器。
+   */
   private final CharFilter wordBoundary;
+
+  /**
+   * 单词分隔符。
+   */
   private final String wordSeparator;
 
+  /**
+   * 构造函数。
+   *
+   * @param wordBoundary 单词边界过滤器
+   * @param wordSeparator 单词分隔符
+   */
   CaseFormat(final CharFilter wordBoundary, final String wordSeparator) {
     this.wordBoundary = wordBoundary;
     this.wordSeparator = wordSeparator;
   }
 
+  /**
+   * 获取单词分隔符。
+   *
+   * @return 单词分隔符字符串
+   */
   public final String getWordSeparator() {
     return wordSeparator;
   }
 
   /**
-   * Converts the specified {@code String str} from this format to the specified
-   * {@code format}.
+   * 将指定的{@code String str}从此格式转换为指定的{@code format}。
    *
-   * <p>A "best effort" approach is taken; if {@code str} does not conform to
-   * the assumed format, then the behavior of this method is undefined but we
-   * make a reasonable effort at converting anyway.
+   * <p>采用"尽力而为"的方法；如果{@code str}不符合假定的格式，
+   * 则此方法的行为是未定义的，但我们会合理地尝试进行转换。
    *
    * @param format
-   *     the specified format to be converted to.
+   *     要转换到的指定格式。
    * @param str
-   *     the specified string to be converted.
+   *     要转换的指定字符串。
    * @return
-   *     the conversion result.
+   *     转换结果。
    */
   public final String to(final CaseFormat format, @Nullable final String str) {
     requireNonNull(format);
@@ -193,7 +208,7 @@ public enum CaseFormat {
   }
 
   /**
-   * Enum values can override for performance reasons.
+   * 枚举值可以为了性能原因重写此方法。
    */
   String convert(final CaseFormat format, final String str) {
     // include some extra space for separators
@@ -223,12 +238,30 @@ public enum CaseFormat {
     }
   }
 
+  /**
+   * 规范化单词的格式。
+   *
+   * @param word 要规范化的单词
+   * @return 规范化后的单词
+   */
   abstract String normalizeWord(String word);
 
+  /**
+   * 规范化第一个单词的格式。
+   *
+   * @param word 要规范化的第一个单词
+   * @return 规范化后的第一个单词
+   */
   String normalizeFirstWord(final String word) {
     return normalizeWord(word);
   }
 
+  /**
+   * 将第一个字符转换为大写，其余字符转换为小写。
+   *
+   * @param word 要转换的单词
+   * @return 转换后的单词
+   */
   private static String firstCharOnlyToUpper(final String word) {
     if (word.isEmpty()) {
       return word;
@@ -237,5 +270,10 @@ public enum CaseFormat {
     }
   }
 
+  /**
+   * 转换为Jackson属性命名策略。
+   *
+   * @return 对应的Jackson属性命名策略
+   */
   public abstract PropertyNamingStrategies.NamingBase toPropertyNamingStrategy();
 }

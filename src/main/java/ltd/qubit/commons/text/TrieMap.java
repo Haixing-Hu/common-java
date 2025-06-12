@@ -15,9 +15,10 @@ import ltd.qubit.commons.lang.Argument;
 import ltd.qubit.commons.util.expand.ExpansionPolicy;
 
 /**
- * The {@link TrieMap} implements a {@link Map} using a trie.
+ * {@link TrieMap} 使用字典树实现了 {@link Map}。
  *
- * @author Haixing Hu
+ * @param <VALUE> 映射的值类型
+ * @author 胡海星
  */
 public final class TrieMap<VALUE> {
 
@@ -159,38 +160,80 @@ public final class TrieMap<VALUE> {
     }
   }
 
+  /**
+   * 根节点。
+   */
   private final Node root;
+
+  /**
+   * 字典树映射中键值对的总数量。
+   */
   private int size;
+
+  /**
+   * 是否不区分大小写。
+   */
   private final boolean caseInsensitive;
 
+  /**
+   * 构造一个大小写敏感的字典树映射。
+   */
   public TrieMap() {
     root = new Node('\0', null);
     size = 0;
     caseInsensitive = false;
   }
 
+  /**
+   * 构造一个字典树映射。
+   *
+   * @param caseInsensitive 是否不区分大小写
+   */
   public TrieMap(final boolean caseInsensitive) {
     root = new Node('\0', null);
     size = 0;
     this.caseInsensitive = caseInsensitive;
   }
 
+  /**
+   * 检查此字典树映射是否不区分大小写。
+   *
+   * @return 如果此字典树映射不区分大小写则返回{@code true}，否则返回{@code false}
+   */
   public boolean isCaseInsensitive() {
     return caseInsensitive;
   }
 
+  /**
+   * 获取此字典树映射中键值对的数量。
+   *
+   * @return 此字典树映射中键值对的数量
+   */
   public int size() {
     return size;
   }
 
+  /**
+   * 检查此字典树映射是否为空。
+   *
+   * @return 如果此字典树映射为空则返回{@code true}，否则返回{@code false}
+   */
   public boolean isEmpty() {
     return size == 0;
   }
 
+  /**
+   * 获取此字典树映射中节点的总数量。
+   *
+   * @return 此字典树映射中节点的总数量
+   */
   public int nodeCount() {
     return root.nodeCount();
   }
 
+  /**
+   * 清空此字典树映射。
+   */
   public void clear() {
     root.value = null;
     root.childrenCount = 0;
@@ -214,6 +257,12 @@ public final class TrieMap<VALUE> {
     return node;
   }
 
+  /**
+   * 获取与指定键关联的值。
+   *
+   * @param str 要查找的键
+   * @return 与指定键关联的值，如果不存在则返回{@code null}
+   */
   public VALUE get(final String str) {
     final Node node = getNode(str);
     if (node == null) {
@@ -223,6 +272,12 @@ public final class TrieMap<VALUE> {
     }
   }
 
+  /**
+   * 检查此字典树映射是否包含指定的键。
+   *
+   * @param str 要检查的键
+   * @return 如果此字典树映射包含指定的键则返回{@code true}，否则返回{@code false}
+   */
   public boolean contains(final String str) {
     final Node node = getNode(str);
     if (node == null) {
@@ -232,6 +287,12 @@ public final class TrieMap<VALUE> {
     }
   }
 
+  /**
+   * 检查此字典树映射是否包含指定前缀的键。
+   *
+   * @param prefix 要检查的前缀
+   * @return 如果此字典树映射包含指定前缀的键则返回{@code true}，否则返回{@code false}
+   */
   public boolean containsPrefix(final String prefix) {
     final Node node = getNode(prefix);
     return (node != null);
@@ -259,12 +320,24 @@ public final class TrieMap<VALUE> {
     return target;
   }
 
+  /**
+   * 获取指定字符串的前缀在此字典树映射中对应的值。
+   *
+   * @param str 要查找前缀的字符串
+   * @return 指定字符串的前缀在此字典树映射中对应的值
+   */
   public VALUE getPrefixOf(final String str) {
     final Node node = getNodeByPrefixOf(str);
     assert (node != null);
     return node.value;
   }
 
+  /**
+   * 检查此字典树映射是否包含指定字符串的前缀。
+   *
+   * @param str 要检查的字符串
+   * @return 如果此字典树映射包含指定字符串的前缀则返回{@code true}，否则返回{@code false}
+   */
   public boolean containsPrefixOf(final String str) {
     final Node node = getNodeByPrefixOf(str);
     assert (node != null);
@@ -284,6 +357,14 @@ public final class TrieMap<VALUE> {
     return node;
   }
 
+  /**
+   * 将指定的键值对添加到此字典树映射中。
+   *
+   * @param str 要添加的键
+   * @param value 要添加的值
+   * @return 与指定键关联的先前值，如果不存在则返回{@code null}
+   * @throws NullPointerException 如果键或值为{@code null}
+   */
   public VALUE put(final String str, final VALUE value) {
     Argument.requireNonNull("str", str);
     Argument.requireNonNull("value", value);
@@ -300,6 +381,13 @@ public final class TrieMap<VALUE> {
     }
   }
 
+  /**
+   * 从此字典树映射中移除指定的键。
+   *
+   * @param str 要移除的键
+   * @return 如果成功移除则返回{@code true}，否则返回{@code false}
+   * @throws NullPointerException 如果键为{@code null}
+   */
   public boolean remove(final String str) {
     Argument.requireNonNull("str", str);
     if (size == 0) {
@@ -315,6 +403,9 @@ public final class TrieMap<VALUE> {
     }
   }
 
+  /**
+   * 压缩此字典树映射，移除不包含任何值的节点。
+   */
   public void compact() {
     root.compact();
   }

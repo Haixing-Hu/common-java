@@ -44,14 +44,12 @@ import static ltd.qubit.commons.reflect.PropertyUtils.IS_PREFIX;
 import static ltd.qubit.commons.reflect.PropertyUtils.SET_PREFIX;
 
 /**
- * Provides utilities for working with fields by reflection.
+ * 提供通过反射处理字段的实用功能。
  *
- * <p>The ability is provided to break the scoping restrictions coded by the
- * programmer. This can allow fields to be changed that shouldn't be. This
- * facility should be used with care.
+ * <p>提供了打破程序员编码的作用域限制的能力。这可以允许更改不应该更改的字段。
+ * 应谨慎使用此功能。
  *
- * @author Haixing Hu
- * @since 1.0.0
+ * @author 胡海星
  */
 @SuppressWarnings("overloads")
 @ThreadSafe
@@ -115,14 +113,14 @@ public class FieldUtils {
   }
 
   /**
-   * Gets all fields of a class.
+   * 获取类的所有字段。
    *
    * @param cls
-   *     The class on which to get the fields.
+   *     要获取字段的类。
    * @return
-   *     the list of all specified fields; or an empty list if no such field.
+   *     所有指定字段的列表；如果没有此类字段则返回空列表。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static List<Field> getAllFields(final Class<?> cls)
       throws ReflectionException {
@@ -130,17 +128,16 @@ public class FieldUtils {
   }
 
   /**
-   * Gets all fields of a class.
+   * 获取类的所有字段。
    *
    * @param cls
-   *     The class on which to get the fields.
+   *     要获取字段的类。
    * @param options
-   *     A bitwise combination of reflection options defined in the {@link
-   *     Option} class. The default value could be {@link Option#DEFAULT}.
+   *     在 {@link Option} 类中定义的反射选项的按位组合。默认值可以是 {@link Option#DEFAULT}。
    * @return
-   *     the list of all specified fields; or an empty list if no such field.
+   *     所有指定字段的列表；如果没有此类字段则返回空列表。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static List<Field> getAllFields(final Class<?> cls, final int options)
       throws ReflectionException {
@@ -155,14 +152,13 @@ public class FieldUtils {
   }
 
   /**
-   * Gets all field names of a class.
+   * 获取类的所有字段名称。
    *
    * @param cls
-   *     The class on which to get the fields.
-   * @return the list of all specified field names; or an empty list if no such
-   *     field.
+   *     要获取字段的类。
+   * @return 所有指定字段名称的列表；如果没有此类字段则返回空列表。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static List<String> getAllFieldNames(final Class<?> cls)
       throws ReflectionException {
@@ -170,17 +166,15 @@ public class FieldUtils {
   }
 
   /**
-   * Gets all field names of a class.
+   * 获取类的所有字段名称。
    *
    * @param cls
-   *     The class on which to get the fields.
+   *     要获取字段的类。
    * @param options
-   *     A bitwise combination of reflection options defined in the {@link
-   *     Option} class. The default value could be {@link Option#DEFAULT}.
-   * @return the list of all specified field names; or an empty list if no such
-   *     field.
+   *     在 {@link Option} 类中定义的反射选项的按位组合。默认值可以是 {@link Option#DEFAULT}。
+   * @return 所有指定字段名称的列表；如果没有此类字段则返回空列表。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static List<String> getAllFieldNames(final Class<?> cls,
       final int options) throws ReflectionException {
@@ -195,23 +189,20 @@ public class FieldUtils {
   }
 
   /**
-   * Gets the meta-information of the field with a specified name on a class.
+   * 获取类上指定名称字段的元信息。
    *
-   * <p>NOTE: if the {@code options} argument contains {@link Option#ANCESTOR}
-   * , and there is more than one field with the specified name declared in the
-   * specified class or its ancestor class or its ancestor interfaces, the
-   * function will try to return the field with the shallower depth; if there
-   * are more than one field has the specified name in the same depth, the
-   * function will throw an {@link AmbiguousMemberException}.
+   * <p>注意：如果 {@code options} 参数包含 {@link Option#ANCESTOR}，
+   * 并且在指定类或其祖先类或祖先接口中声明了多个具有指定名称的字段，
+   * 该函数将尝试返回深度较浅的字段；如果在相同深度中有多个具有指定名称的字段，
+   * 该函数将抛出 {@link AmbiguousMemberException}。
    *
    * @param cls
-   *     The class on which to get the field.
+   *     要获取字段的类。
    * @param name
-   *     The name of the field to be got.
-   * @return the meta-information of the specified field, or {@code null} if
-   *     no such field.
+   *     要获取的字段的名称。
+   * @return 指定字段的元信息，如果没有此类字段则返回 {@code null}。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   @Nullable
   public static FieldInfo getFieldInfo(final Class<?> cls, final String name)
@@ -220,26 +211,22 @@ public class FieldUtils {
   }
 
   /**
-   * Gets the meta-information of the field with a specified name on a class.
+   * 获取类上指定名称字段的元信息。
    *
-   * <p>NOTE: if the {@code options} argument contains {@link Option#ANCESTOR}
-   * , and there is more than one field with the specified name declared in the
-   * specified class or its ancestor class or its ancestor interfaces, the
-   * function will try to return the field with the shallower depth; if there
-   * are more than one field has the specified name in the same depth, the
-   * function will throw an {@link AmbiguousMemberException}.
+   * <p>注意：如果 {@code options} 参数包含 {@link Option#ANCESTOR}，
+   * 并且在指定类或其祖先类或祖先接口中声明了多个具有指定名称的字段，
+   * 该函数将尝试返回深度较浅的字段；如果在相同深度中有多个具有指定名称的字段，
+   * 该函数将抛出 {@link AmbiguousMemberException}。
    *
    * @param cls
-   *     The class on which to get the field.
+   *     要获取字段的类。
    * @param options
-   *     A bitwise combination of reflection options defined in the {@link
-   *     Option} class. The default value could be {@link Option#DEFAULT}.
+   *     在 {@link Option} 类中定义的反射选项的按位组合。默认值可以是 {@link Option#DEFAULT}。
    * @param name
-   *     The name of the field to be got.
-   * @return the meta-information of the specified field, or {@code null} if
-   *     no such field.
+   *     要获取的字段的名称。
+   * @return 指定字段的元信息，如果没有此类字段则返回 {@code null}。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   @Nullable
   public static FieldInfo getFieldInfo(final Class<?> cls, final int options,
@@ -369,25 +356,22 @@ public class FieldUtils {
   }
 
   /**
-   * Gets a field with a specified name on a class.
+   * 获取类上指定名称的字段。
    *
-   * <p>NOTE: if the {@code options} argument contains {@link Option#ANCESTOR}
-   * , and there is more than one field with the specified name declared in the
-   * specified class or its ancestor class or its ancestor interfaces, the
-   * function will try to return the field with the shallower depth; if there
-   * are more than one field has the specified name in the same depth, the
-   * function will throw an {@link AmbiguousMemberException}.
+   * <p>注意：如果 {@code options} 参数包含 {@link Option#ANCESTOR}，
+   * 并且在指定类或其祖先类或祖先接口中声明了多个具有指定名称的字段，
+   * 该函数将尝试返回深度较浅的字段；如果在相同深度中有多个具有指定名称的字段，
+   * 该函数将抛出 {@link AmbiguousMemberException}。
    *
    * @param cls
-   *     The class on which to get the field.
+   *     要获取字段的类。
    * @param options
-   *     A bitwise combination of reflection options defined in the {@link
-   *     Option} class. The default value could be {@link Option#DEFAULT}.
+   *     在 {@link Option} 类中定义的反射选项的按位组合。默认值可以是 {@link Option#DEFAULT}。
    * @param name
-   *     The name of the field to be got.
-   * @return the specified field, or {@code null} if no such field.
+   *     要获取的字段的名称。
+   * @return 指定的字段，如果没有此类字段则返回 {@code null}。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   @Nullable
   public static Field getField(final Class<?> cls, final int options,
@@ -397,22 +381,20 @@ public class FieldUtils {
   }
 
   /**
-   * Gets a field with a specified name on a class.
+   * 获取类上指定名称的字段。
    *
-   * <p>NOTE: if the {@code options} argument contains {@link Option#ANCESTOR}
-   * , and there is more than one field with the specified name declared in the
-   * specified class or its ancestor class or its ancestor interfaces, the
-   * function will try to return the field with the shallower depth; if there
-   * are more than one field has the specified name in the same depth, the
-   * function will throw an {@link AmbiguousMemberException}.
+   * <p>注意：如果 {@code options} 参数包含 {@link Option#ANCESTOR}，
+   * 并且在指定类或其祖先类或祖先接口中声明了多个具有指定名称的字段，
+   * 该函数将尝试返回深度较浅的字段；如果在相同深度中有多个具有指定名称的字段，
+   * 该函数将抛出 {@link AmbiguousMemberException}。
    *
    * @param cls
-   *     The class on which to get the field.
+   *     要获取字段的类。
    * @param name
-   *     The name of the field to be got.
-   * @return the specified field, or {@code null} if no such field.
+   *     要获取的字段的名称。
+   * @return 指定的字段，如果没有此类字段则返回 {@code null}。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   @Nullable
   public static Field getField(final Class<?> cls, final String name)
@@ -650,17 +632,15 @@ public class FieldUtils {
   }
 
   /**
-   * Gets the value of a field on the specified object.
+   * 获取指定对象上字段的值。
    * <p>
-   * The value is automatically wrapped in an object if it has a primitive
-   * type.
+   * 如果字段具有原始类型，则值会自动包装为对象。
    *
    * @param getter
-   *     The getter of the field to be read.
+   *     要读取的字段的getter方法。
    * @param object
-   *     The object, which could be {@code null}.
-   * @return the value of the specified field of the specified object, or
-   *     {@code null} if the object is null.
+   *     对象，可以为 {@code null}。
+   * @return 指定对象的指定字段的值，如果对象为null则返回 {@code null}。
    */
   public static <T, R> R getFieldValue(final GetterMethod<T, R> getter,
       @Nullable final T object) {
@@ -672,31 +652,26 @@ public class FieldUtils {
   }
 
   /**
-   * Gets the value of a field on the specified object.
+   * 获取指定对象上字段的值。
    *
-   * <p>The value is automatically wrapped in an object if it has a primitive
-   * type.
+   * <p>如果字段具有原始类型，则值会自动包装为对象。
    *
-   * <p>NOTE: if the {@code options} argument contains {@link Option#ANCESTOR}
-   * , and there is more than one field with the specified name declared in the
-   * specified class or its ancestor class or its ancestor interfaces, the
-   * function will try to read the field with the shallower depth; if there are
-   * more than one field has the specified name in the same depth, the function
-   * will throw an {@link AmbiguousMemberException}.
+   * <p>注意：如果 {@code options} 参数包含 {@link Option#ANCESTOR}，
+   * 并且在指定类或其祖先类或祖先接口中声明了多个具有指定名称的字段，
+   * 该函数将尝试读取深度较浅的字段；如果在相同深度中有多个具有指定名称的字段，
+   * 该函数将抛出 {@link AmbiguousMemberException}。
    *
    * @param cls
-   *     The class on which to get the field value.
+   *     要获取字段值的类。
    * @param options
-   *     A bitwise combination of reflection options defined in the {@link
-   *     Option} class. The default value could be {@link Option#DEFAULT}.
+   *     在 {@link Option} 类中定义的反射选项的按位组合。默认值可以是 {@link Option#DEFAULT}。
    * @param name
-   *     The name of a field.
+   *     字段的名称。
    * @param object
-   *     The object of the specified class. If the field whose value is to be
-   *     get is a static field, this argument may be {@code null}.
-   * @return the value of the specified field.
+   *     指定类的对象。如果要获取值的字段是静态字段，此参数可以为 {@code null}。
+   * @return 指定字段的值。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static Object readField(final Class<?> cls, final int options,
       final String name, @Nullable final Object object)
@@ -709,27 +684,24 @@ public class FieldUtils {
   }
 
   /**
-   * Gets the value of a bean field on the specified object.
+   * 获取指定对象上Bean字段的值。
    *
-   * <p>The value is automatically wrapped in an object if it has a primitive
-   * type.
+   * <p>如果字段具有原始类型，则值会自动包装为对象。
    *
-   * <p>NOTE: if the {@code options} argument contains {@link Option#ANCESTOR}
-   * , and there is more than one field with the specified name declared in the
-   * specified class or its ancestor class or its ancestor interfaces, the
-   * function will try to read the field with the shallower depth; if there are
-   * more than one field has the specified name in the same depth, the function
-   * will throw an {@link AmbiguousMemberException}.
+   * <p>注意：如果 {@code options} 参数包含 {@link Option#ANCESTOR}，
+   * 并且在指定类或其祖先类或祖先接口中声明了多个具有指定名称的字段，
+   * 该函数将尝试读取深度较浅的字段；如果在相同深度中有多个具有指定名称的字段，
+   * 该函数将抛出 {@link AmbiguousMemberException}。
    *
    * @param cls
-   *     The class on which to get the field value.
+   *     要获取字段值的类。
    * @param name
-   *     The name of a bean field.
+   *     Bean字段的名称。
    * @param object
-   *     The object of the specified class.
-   * @return the value of the specified field.
+   *     指定类的对象。
+   * @return 指定字段的值。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static Object readField(final Class<?> cls,final String name,
       final Object object) throws ReflectionException {
@@ -737,50 +709,44 @@ public class FieldUtils {
   }
 
   /**
-   * Gets the value of a field on the specified object.
+   * 获取指定对象上字段的值。
    *
-   * <p>The value is automatically wrapped in an object if it has a primitive
-   * type.
+   * <p>如果字段具有原始类型，则值会自动包装为对象。
    *
    * @param field
-   *     The field object of the field to be read.
+   *     要读取的字段对象。
    * @param object
-   *     The object of the specified class. If the field whose value is to be
-   *     get is a static field, this argument may be {@code null}.
-   * @return the value of the specified field.
+   *     指定类的对象。如果要获取值的字段是静态字段，此参数可以为 {@code null}。
+   * @return 指定字段的值。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static Object readField(final Field field, @Nullable final Object object) {
     return withAccessibleObject(field, (f) -> f.get(object), true);
   }
 
   /**
-   * Sets a field of the specified object to the specified new value.
+   * 将指定对象的字段设置为指定的新值。
    *
-   * <p>The new value is automatically unwrapped if the underlying field has a
-   * primitive type.
+   * <p>如果底层字段具有原始类型，则新值会自动解包。
    *
-   * <p>NOTE: if the {@code options} argument contains {@link Option#ANCESTOR}
-   * , and there is more than one field with the specified name declared in the
-   * specified class or its ancestor class or its ancestor interfaces, the
-   * function will try to write the field with the shallower depth; if there are
-   * more than one field has the specified name in the same depth, the function
-   * will throw an {@link AmbiguousMemberException}.
+   * <p>注意：如果 {@code options} 参数包含 {@link Option#ANCESTOR}，
+   * 并且在指定类或其祖先类或祖先接口中声明了多个具有指定名称的字段，
+   * 该函数将尝试写入深度较浅的字段；如果在相同深度中有多个具有指定名称的字段，
+   * 该函数将抛出 {@link AmbiguousMemberException}。
    *
    * @param cls
-   *     The class on which to set the field value.
+   *     要设置字段值的类。
    * @param options
-   *     A bitwise combination of reflection options defined in the {@link
-   *     Option} class. The default value could be {@link Option#DEFAULT}.
+   *     在 {@link Option} 类中定义的反射选项的按位组合。默认值可以是 {@link Option#DEFAULT}。
    * @param name
-   *     The name of a field.
+   *     字段的名称。
    * @param object
-   *     The object of the specified class.
+   *     指定类的对象。
    * @param value
-   *     The value to be set.
+   *     要设置的值。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static void writeField(final Class<?> cls, final int options,
       final String name, final Object object, @Nullable final Object value)
@@ -794,28 +760,25 @@ public class FieldUtils {
   }
 
   /**
-   * Sets a bean field of the specified object to the specified new value.
+   * 将指定对象的Bean字段设置为指定的新值。
    *
-   * <p>The new value is automatically unwrapped if the underlying field has a
-   * primitive type.
+   * <p>如果底层字段具有原始类型，则新值会自动解包。
    *
-   * <p>NOTE: if the {@code options} argument contains {@link Option#ANCESTOR}
-   * , and there is more than one field with the specified name declared in the
-   * specified class or its ancestor class or its ancestor interfaces, the
-   * function will try to write the field with the shallower depth; if there are
-   * more than one field has the specified name in the same depth, the function
-   * will throw an {@link AmbiguousMemberException}.
+   * <p>注意：如果 {@code options} 参数包含 {@link Option#ANCESTOR}，
+   * 并且在指定类或其祖先类或祖先接口中声明了多个具有指定名称的字段，
+   * 该函数将尝试写入深度较浅的字段；如果在相同深度中有多个具有指定名称的字段，
+   * 该函数将抛出 {@link AmbiguousMemberException}。
    *
    * @param cls
-   *     The class on which to set the field value.
+   *     要设置字段值的类。
    * @param name
-   *     The name of a bean field.
+   *     Bean字段的名称。
    * @param object
-   *     The object of the specified class.
+   *     指定类的对象。
    * @param value
-   *     The value to be set.
+   *     要设置的值。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static void writeField(final Class<?> cls, final String name,
       final Object object, @Nullable final Object value)
@@ -824,19 +787,18 @@ public class FieldUtils {
   }
 
   /**
-   * Sets a field of the specified object to the specified new value.
+   * 将指定对象的字段设置为指定的新值。
    *
-   * <p>The new value is automatically unwrapped if the underlying field has a
-   * primitive type.
+   * <p>如果底层字段具有原始类型，则新值会自动解包。
    *
    * @param field
-   *     The field to be written.
+   *     要写入的字段。
    * @param object
-   *     The object instance.
+   *     对象实例。
    * @param value
-   *     The value to be set.
+   *     要设置的值。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static void writeField(final Field field, final Object object,
       @Nullable final Object value) {
@@ -850,11 +812,11 @@ public class FieldUtils {
       WRITE_METHOD_CACHE = new ConcurrentHashMap<>();
 
   /**
-   * Get the read method for given field.
+   * 获取给定字段的读取方法。
    *
    * @param field
-   *     the field to get the read method for.
-   * @return the read method or {@code null} if field has no read method.
+   *     要获取读取方法的字段。
+   * @return 读取方法，如果字段没有读取方法则返回 {@code null}。
    */
   public static Method getReadMethod(final Field field) {
     final Optional<Method> result = READ_METHOD_CACHE.computeIfAbsent(field,
@@ -864,13 +826,13 @@ public class FieldUtils {
   }
 
   /**
-   * Get the read method for given field.
+   * 获取给定字段的读取方法。
    *
    * @param ownerClass
-   *     the class owns the field.
+   *     拥有字段的类。
    * @param fieldName
-   *     the name of the field to get the read method for.
-   * @return the read method or {@code null} if field has no read method.
+   *     要获取读取方法的字段名称。
+   * @return 读取方法，如果字段没有读取方法则返回 {@code null}。
    */
   public static Method getReadMethod(final Class<?> ownerClass,
       final String fieldName) {
@@ -893,11 +855,11 @@ public class FieldUtils {
   }
 
   /**
-   * Get the write method for given field.
+   * 获取给定字段的写入方法。
    *
    * @param field
-   *     field to get the read method for.
-   * @return the write method or {@code null} if field has no read method.
+   *     要获取写入方法的字段。
+   * @return 写入方法，如果字段没有写入方法则返回 {@code null}。
    */
   public static Method getWriteMethod(final Field field) {
     final Optional<Method> result = WRITE_METHOD_CACHE.computeIfAbsent(field,
@@ -908,15 +870,15 @@ public class FieldUtils {
   }
 
   /**
-   * Get the write method for the specified field.
+   * 获取指定字段的写入方法。
    *
    * @param ownerClass
-   *     the class owns the field.
+   *     拥有字段的类。
    * @param fieldName
-   *     the name of the specified field.
+   *     指定字段的名称。
    * @param fieldClass
-   *     the class of the specified field.
-   * @return the write method or {@code null} if field has no read method.
+   *     指定字段的类。
+   * @return 写入方法，如果字段没有写入方法则返回 {@code null}。
    */
   public static Method getWriteMethod(final Class<?> ownerClass,
       final String fieldName,
@@ -928,15 +890,13 @@ public class FieldUtils {
   }
 
   /**
-   * Checks if field or corresponding read method is annotated with given
-   * annotationType.
+   * 检查字段或对应的读取方法是否标注了给定的注解类型。
    *
    * @param field
-   *     Field to check
+   *     要检查的字段
    * @param annotationType
-   *     Annotation you're looking for.
-   * @return true if field or read method it annotated with given annotationType
-   *     or false.
+   *     要查找的注解类型。
+   * @return 如果字段或读取方法标注了给定注解类型则返回true，否则返回false。
    */
   public static boolean isAnnotationPresent(final Field field,
       final Class<? extends Annotation> annotationType) {
@@ -947,17 +907,15 @@ public class FieldUtils {
       ANNOTATION_CACHE = new ConcurrentHashMap<>();
 
   /**
-   * Looks for given annotationType on the specified field or the read method for
-   * the field.
+   * 在指定字段或字段的读取方法上查找给定的注解类型。
    *
    * @param field
-   *     the specified field.
+   *     指定的字段。
    * @param annotationType
-   *     Type of annotation you're looking for.
+   *     要查找的注解类型。
    * @param <T>
-   *     the actual type of annotation
-   * @return given annotation if field or read method has this annotation or
-   *     null.
+   *     注解的实际类型
+   * @return 如果字段或读取方法具有此注解则返回给定注解，否则返回null。
    */
   @SuppressWarnings("unchecked")
   @Nullable
@@ -984,14 +942,12 @@ public class FieldUtils {
   }
 
   /**
-   * Gets all annotations of the specified field or the read method for the
-   * field.
+   * 获取指定字段或字段的读取方法的所有注解。
    *
    * @param field
-   *     the specified field.
+   *     指定的字段。
    * @return
-   *     the list of all annotations of the specified field or the read method
-   *     for the field.
+   *     指定字段或字段的读取方法的所有注解列表。
    */
   public static List<Annotation> getAllAnnotations(final Field field) {
     final List<Annotation> result = new ArrayList<>();
@@ -1004,48 +960,47 @@ public class FieldUtils {
   }
 
   /**
-   * Check if a field is static.
+   * 检查字段是否为静态的。
    *
    * @param field
-   *     the field to check
-   * @return true if the field is static, false otherwise
+   *     要检查的字段
+   * @return 如果字段是静态的则返回true，否则返回false
    */
   public static boolean isStatic(final Field field) {
     return Modifier.isStatic(field.getModifiers());
   }
 
   /**
-   * Check if a field is final.
+   * 检查字段是否为final的。
    *
    * @param field
-   *     the field to check
-   * @return true if the field is final, false otherwise
+   *     要检查的字段
+   * @return 如果字段是final的则返回true，否则返回false
    */
   public static boolean isFinal(final Field field) {
     return Modifier.isFinal(field.getModifiers());
   }
 
   /**
-   * Check if a field is transient.
+   * 检查字段是否为transient的。
    *
    * @param field
-   *     the field to check
-   * @return true if the field is transient, false otherwise
+   *     要检查的字段
+   * @return 如果字段是transient的则返回true，否则返回false
    */
   public static boolean isTransient(final Field field) {
     return Modifier.isTransient(field.getModifiers());
   }
 
   /**
-   * Tests whether the specified class has the specified field.
+   * 测试指定类是否具有指定字段。
    *
    * @param cls
-   *     the specified class.
+   *     指定的类。
    * @param fieldName
-   *     the specified field name.
+   *     指定的字段名称。
    * @return
-   *     {@code true} if the specified class has the specified field;
-   *     {@code false} otherwise.
+   *     如果指定类具有指定字段则返回 {@code true}；否则返回 {@code false}。
    */
   public static boolean hasField(final Class<?> cls, final String fieldName) {
     if (isEmpty(fieldName)) {
@@ -1061,18 +1016,16 @@ public class FieldUtils {
   }
 
   /**
-   * Tests whether the specified class has the specified field.
+   * 测试指定类是否具有指定字段。
    *
    * @param cls
-   *     the specified class.
+   *     指定的类。
    * @param options
-   *     A bitwise combination of reflection options defined in the {@link
-   *     Option} class. The default value could be {@link Option#DEFAULT}.
+   *     在 {@link Option} 类中定义的反射选项的按位组合。默认值可以是 {@link Option#DEFAULT}。
    * @param fieldName
-   *     the specified field name.
+   *     指定的字段名称。
    * @return
-   *     {@code true} if the specified class has the specified field;
-   *     {@code false} otherwise.
+   *     如果指定类具有指定字段则返回 {@code true}；否则返回 {@code false}。
    */
   public static boolean hasField(final Class<?> cls, final int options,
       final String fieldName) {
@@ -1090,19 +1043,16 @@ public class FieldUtils {
   }
 
   /**
-   * Gets the actual type of a specified field.
+   * 获取指定字段的实际类型。
    *
-   * <p>If the type of the field is declared as a generic class, this function
-   * will try to  infer the actual type of the field if possible.</p>
+   * <p>如果字段的类型声明为泛型类，此函数将尝试在可能的情况下推断字段的实际类型。</p>
    *
    * @param ownerClass
-   *     the class object of the owner object of the specified field.
+   *     指定字段拥有者对象的类对象。
    * @param field
-   *     the specified field object.
+   *     指定的字段对象。
    * @return
-   *     the class object of the actual type of the specified field. If the type
-   *     of the field is declared as a generic class, this function will try to
-   *     infer the actual type of the field if possible.
+   *     指定字段实际类型的类对象。如果字段的类型声明为泛型类，此函数将尝试在可能的情况下推断字段的实际类型。
    * @see <a href="https://www.artima.com/weblogs/viewpost.jsp?thread=208860">Reflecting generics</a>
    * @see <a href="https://stackoverflow.com/questions/3437897/how-do-i-get-a-class-instance-of-generic-type-t/5684761#5684761">How do I get a class instance of generic type T?</a>
    */
@@ -1120,15 +1070,14 @@ public class FieldUtils {
   }
 
   /**
-   * Resolve the generic type variable occurs in a owner class.
+   * 解析在拥有者类中出现的泛型类型变量。
    *
    * @param ownerClass
-   *     the owner class where the type variable occurs.
+   *     类型变量出现的拥有者类。
    * @param typeVar
-   *     the type variable to be resolved.
+   *     要解析的类型变量。
    * @return
-   *     the actual class of the type variable, or the type variable itself
-   *     if it cannot be resolved.
+   *     类型变量的实际类，如果无法解析则返回类型变量本身。
    */
   private static Type resolveActualType(final Class<?> ownerClass,
       final TypeVariable<?> typeVar) {
@@ -1165,18 +1114,16 @@ public class FieldUtils {
   }
 
   /**
-   * Gets the actual type arguments of a parameterized type field.
+   * 获取参数化类型字段的实际类型参数。
    *
    * @param ownerClass
-   *     the owner class of the field.
+   *     字段的拥有者类。
    * @param field
-   *     the field object.
+   *     字段对象。
    * @return
-   *     the array of actual type arguments of the parameterized type field.
-   *     If the specified field is not of a parameterized type, returns an empty
-   *     array. If any type argument of the parameterized type field cannot be
-   *     resolved to a concrete class, the corresponding element in the returned
-   *     array is {@code null}.
+   *     参数化类型字段的实际类型参数数组。
+   *     如果指定字段不是参数化类型，则返回空数组。如果参数化类型字段的任何类型参数
+   *     无法解析为具体类，则返回数组中的相应元素为 {@code null}。
    */
   public static Class<?>[] getActualTypeArguments(final Class<?> ownerClass, final Field field) {
     if (!(field.getGenericType() instanceof final ParameterizedType parameterizedType)) {

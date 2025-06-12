@@ -368,16 +368,28 @@ public class HttpLoggingInterceptor implements Interceptor {
 
   /**
    * 判断请求或响应的头部是否使用了未知的编码方式（非identity和gzip）。
+   *
+   * @param headers
+   *     请求或响应的头部。
+   * @return
+   *     如果使用了未知的编码方式，则返回true；否则返回false。
    */
   private boolean bodyHasUnknownEncoding(final Headers headers) {
     final String contentEncoding = headers.get("Content-Encoding");
-    if (contentEncoding == null) return false;
+    if (contentEncoding == null) {
+      return false;
+    }
     return !contentEncoding.equalsIgnoreCase("identity")
         && !contentEncoding.equalsIgnoreCase("gzip");
   }
 
   /**
    * 简单判断响应是否有响应体。对于HEAD请求以及某些响应码通常没有响应体。
+   *
+   * @param response
+   *     HTTP响应。
+   * @return
+   *     如果响应有响应体，则返回true；否则返回false。
    */
   private boolean hasBody(final Response response) {
     // HEAD 请求没有响应体

@@ -9,10 +9,9 @@
 package ltd.qubit.commons.text;
 
 /**
- * A {@link CodePointIterator} is an iterator which iterates through the code
- * points of a string.
+ * {@link CodePointIterator}是一个迭代器，用于遍历字符串的代码点。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public abstract class CodePointIterator {
 
@@ -39,132 +38,122 @@ public abstract class CodePointIterator {
   }
 
   /**
-   * Gets the start current of the range of the string to be iterated.
+   * 获取要迭代的字符串范围的起始索引。
    *
-   * @return the start current of the range of the string to be iterated.
+   * @return 要迭代的字符串范围的起始索引。
    */
   public final int start() {
     return start;
   }
 
   /**
-   * Gets the end current of the range of the string to be iterated.
+   * 获取要迭代的字符串范围的结束索引。
    *
-   * @return the end current of the range of the string to be iterated.
+   * @return 要迭代的字符串范围的结束索引。
    */
   public final int end() {
     return end;
   }
 
   /**
-   * Gets the current of the left boundary of the current code point.
+   * 获取当前代码点左边界的索引。
    *
-   * @return the current of the left boundary of the current code point.
+   * @return 当前代码点左边界的索引。
    */
   public final int left() {
     return left;
   }
 
   /**
-   * Gets the current of the right boundary of the current code point.
+   * 获取当前代码点右边界的索引。
    *
-   * @return the current of the right boundary of the current code point.
+   * @return 当前代码点右边界的索引。
    */
   public final int right() {
     return right;
   }
 
   /**
-   * Tests whether the iterator is at the start of iteration region.
+   * 测试迭代器是否在迭代区域的起始位置。
    *
-   * @return true if the iterator is at the start of iteration region; false
-   *         otherwise.
+   * @return 如果迭代器在迭代区域的起始位置则返回true；否则返回false。
    */
   public final boolean atStart() {
     return left <= start;
   }
 
   /**
-   * Tests whether the iterator is at the end of iteration region.
+   * 测试迭代器是否在迭代区域的结束位置。
    *
-   * @return true if the iterator is at the end of iteration region; false
-   *         otherwise.
+   * @return 如果迭代器在迭代区域的结束位置则返回true；否则返回false。
    */
   public final boolean atEnd() {
     return left >= end;
   }
 
   /**
-   * Tests whether the iterator is at the last code point of iteration region.
+   * 测试迭代器是否在迭代区域的最后一个代码点位置。
    *
-   * @return true if the iterator is at the last code point of iteration region;
-   *         false otherwise.
+   * @return 如果迭代器在迭代区域的最后一个代码点位置则返回true；否则返回false。
    */
   public final boolean atLast() {
     return (left < end) && (right >= end);
   }
 
   /**
-   * Tests whether the iterator is at the last code point or at the end of
-   * iteration region.
+   * 测试迭代器是否在最后一个代码点位置或迭代区域的结束位置。
    *
-   * @return true if the iterator is at the last code point or at the end of
-   *         iteration region; false otherwise.
+   * @return 如果迭代器在最后一个代码点位置或迭代区域的结束位置则返回true；否则返回false。
    */
   public final boolean atLastOrEnd() {
     return right >= end;
   }
 
   /**
-   * Gets the current code point.
+   * 获取当前代码点。
    *
-   * @return the current code point.
+   * @return 当前代码点。
    */
   public final int current() {
     return current;
   }
 
   /**
-   * Sets the iterator to the start position.
+   * 将迭代器设置到起始位置。
    */
   public abstract void setToStart();
 
   /**
-   * Sets the iterator to the end position.
+   * 将迭代器设置到结束位置。
    */
   public abstract void setToEnd();
 
   /**
-   * Sets the iterator to the position of the last code point.
+   * 将迭代器设置到最后一个代码点的位置。
    */
   public abstract void setToLast();
 
   /**
-   * Sets the iterator to the code point at the specified index.
+   * 将迭代器设置到指定索引处的代码点。
    *
-   * <p>That is, after calling this function, the iterator will points to the
-   * code point with the range [x, y) such that x &le; current &lt; y.
+   * <p>也就是说，调用此函数后，迭代器将指向范围为[x, y)的代码点，使得x ≤ current < y。
    *
-   * @param index
-   *      the specified index.
-   * @throws IndexOutOfBoundsException
-   *           if the current is out of the range of start and end current.
+   * @param index 指定的索引。
+   * @throws IndexOutOfBoundsException 如果索引超出起始和结束索引的范围。
    */
   public abstract void setTo(int index);
 
   /**
-   * Moves the iterator to the next code point.
+   * 将迭代器移动到下一个代码点。
    *
-   * <p>If the iterator is already at the end position, calling of this function
-   * has no effect.
+   * <p>如果迭代器已经在结束位置，调用此函数无效果。
    */
   public abstract void forward();
 
   /**
-   * Moves the iterator to the previous code point.
+   * 将迭代器移动到上一个代码点。
    *
-   * <p>If the iterator is already at the start position, calling of this
-   * function has no effect.
+   * <p>如果迭代器已经在起始位置，调用此函数无效果。
    */
   public abstract void backward();
 

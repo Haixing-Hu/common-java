@@ -13,117 +13,261 @@ import javax.annotation.concurrent.ThreadSafe;
 import static ltd.qubit.commons.text.NumberFormat.DECIMAL_RADIX;
 
 /**
- * Provides functions about ASCII characters and ASCII strings.
+ * 提供关于ASCII字符和ASCII字符串的函数。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public final class Ascii {
 
   /**
-   * The maximum value of a valid ASCII code point.
+   * 一个有效的ASCII码点的最大值。
    */
   public static final int MAX                           = 0x7F;
 
   /**
-   * The maximum number of characters of the ASCII folding of a character.
+   * 一个字符的ASCII折叠的最大字符数。
    */
   public static final int MAX_FOLDING                   = 4;
 
+  /**
+   * ASCII空字符（NUL）。
+   */
   public static final char NULL                         = 0x00;
 
+  /**
+   * ASCII标题开始字符（SOH）。
+   */
   public static final char START_OF_HEADER              = 0x01;
 
+  /**
+   * ASCII正文开始字符（STX）。
+   */
   public static final char START_OF_TEXT                = 0x02;
 
+  /**
+   * ASCII正文结束字符（ETX）。
+   */
   public static final char END_OF_TEXT                  = 0x03;
 
+  /**
+   * ASCII传输开始字符（EOT）。
+   */
   public static final char START_OF_TRANSMISSION        = 0x04;
 
+  /**
+   * ASCII询问字符（ENQ）。
+   */
   public static final char ENQUIRY                      = 0x05;
 
+  /**
+   * ASCII确认字符（ACK）。
+   */
   public static final char ACKNOWLEDGMENT               = 0x06;
 
+  /**
+   * ASCII响铃字符（BEL）。
+   */
   public static final char BELL                         = 0x07;
 
+  /**
+   * ASCII退格字符（BS）。
+   */
   public static final char BACKSPACE                    = 0x08;
 
+  /**
+   * ASCII水平制表符（HT）。
+   */
   public static final char HORIZONTAL_TAB               = 0x09;
 
+  /**
+   * ASCII换行符（LF）。
+   */
   public static final char LINE_FEED                    = 0x0A;
 
+  /**
+   * ASCII垂直制表符（VT）。
+   */
   public static final char VERTICAL_TAB                 = 0x0B;
 
+  /**
+   * ASCII换页符（FF）。
+   */
   public static final char FORM_FEED                    = 0x0C;
 
+  /**
+   * ASCII回车符（CR）。
+   */
   public static final char CARRIAGE_RETURN              = 0x0D;
 
+  /**
+   * ASCII移出字符（SO）。
+   */
   public static final char SHIFT_OUT                    = 0x0E;
 
+  /**
+   * ASCII移入字符（SI）。
+   */
   public static final char SHIFT_IN                     = 0x0F;
 
+  /**
+   * ASCII数据链路转义字符（DLE）。
+   */
   public static final char DATA_LINK_ESCAPE             = 0x10;
 
+  /**
+   * ASCII设备控制1字符（DC1）。
+   */
   public static final char DEVICE_CONTROL_1             = 0x11;
 
+  /**
+   * ASCII设备控制2字符（DC2）。
+   */
   public static final char DEVICE_CONTROL_2             = 0x12;
 
+  /**
+   * ASCII设备控制3字符（DC3）。
+   */
   public static final char DEVICE_CONTROL_3             = 0x13;
 
+  /**
+   * ASCII设备控制4字符（DC4）。
+   */
   public static final char DEVICE_CONTROL_4             = 0x14;
 
+  /**
+   * ASCII否定确认字符（NAK）。
+   */
   public static final char NEGATIVE_ACKNOWLEDGEMENT     = 0x15;
 
+  /**
+   * ASCII同步空闲字符（SYN）。
+   */
   public static final char SYNCHRONOUS_IDLE             = 0x16;
 
+  /**
+   * ASCII传输块结束字符（ETB）。
+   */
   public static final char END_OF_TRANS_BLOCK           = 0x17;
 
+  /**
+   * ASCII取消字符（CAN）。
+   */
   public static final char CANCEL                       = 0x18;
 
+  /**
+   * ASCII介质结束字符（EM）。
+   */
   public static final char END_OF_MEDIUM                = 0x19;
 
+  /**
+   * ASCII替换字符（SUB）。
+   */
   public static final char SUBSTITUTE                   = 0x1A;
 
+  /**
+   * ASCII转义字符（ESC）。
+   */
   public static final char ESCAPE                       = 0x1B;
 
+  /**
+   * ASCII文件分隔符（FS）。
+   */
   public static final char FILE_SEPARATOR               = 0x1C;
 
+  /**
+   * ASCII组分隔符（GS）。
+   */
   public static final char GROUP_SEPARATOR              = 0x1D;
 
+  /**
+   * ASCII记录分隔符（RS）。
+   */
   public static final char RECORD_SEPARATOR             = 0x1E;
 
+  /**
+   * ASCII单元分隔符（US）。
+   */
   public static final char UNIT_SEPARATOR               = 0x1F;
 
+  /**
+   * ASCII删除字符（DEL）。
+   */
   public static final char DELETE                       = 0x7F;
 
+  /**
+   * ASCII空格字符。
+   */
   public static final char SPACE                        = ' ';
 
+  /**
+   * ASCII感叹号字符。
+   */
   public static final char EXCLAMATION                  = '!';
 
+  /**
+   * ASCII双引号字符。
+   */
   public static final char DOUBLE_QUOTE                 = '"';
 
+  /**
+   * ASCII井号字符。
+   */
   public static final char SHARP                        = '#';
 
+  /**
+   * ASCII美元符号字符。
+   */
   public static final char DOLLAR                       = '$';
 
+  /**
+   * ASCII百分号字符。
+   */
   public static final char PERCENT                      = '%';
 
+  /**
+   * ASCII和号字符。
+   */
   public static final char AMPERSAND                    = '&';
 
+  /**
+   * ASCII制表符字符。
+   */
   public static final char TAB                          = '\t';
 
+  /**
+   * ASCII反斜杠字符。
+   */
   public static final char BACKSLASH                    = '\\';
 
+  /**
+   * ASCII单引号字符。
+   */
   public static final char SINGLE_QUOTE                 = '\'';
 
+  /**
+   * ASCII逗号字符。
+   */
   public static final char COMMA                        = ',';
 
+  /**
+   * ASCII句号字符。
+   */
   public static final char PERIOD                       = '.';
 
+  /**
+   * 最小的ASCII可打印字符。
+   */
   public static final char MIN_PRINTABLE                = 0x20;
 
+  /**
+   * 最大的ASCII可打印字符。
+   */
   public static final char MAX_PRINTABLE                = 0x7E;
 
+  /**
+   * 所有ASCII可打印字符的数组。
+   */
   public static final char[] PRINTABLE_CHARS = {
       0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27,
       0x28, 0x29, 0x2A, 0x2B, 0x2C, 0x2D, 0x2E, 0x2F,
@@ -139,6 +283,9 @@ public final class Ascii {
       0x78, 0x79, 0x7A, 0x7B, 0x7C, 0x7D, 0x7E,
   };
 
+  /**
+   * 所有ASCII字母字符的数组。
+   */
   public static final char[] LETTER_CHARS = {
       'A', 'B', 'C', 'D', 'E', 'F', 'G',
       'H', 'I', 'J', 'K', 'L', 'M', 'N',
@@ -150,6 +297,9 @@ public final class Ascii {
       'v', 'w', 'x', 'y', 'z',
   };
 
+  /**
+   * 所有ASCII字母和数字字符的数组。
+   */
   public static final char[] LETTER_DIGIT_CHARS = {
       '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
       'A', 'B', 'C', 'D', 'E', 'F', 'G',
@@ -162,20 +312,55 @@ public final class Ascii {
       'v', 'w', 'x', 'y', 'z',
   };
 
+  /**
+   * ASCII大小写转换的字符差值。
+   */
   private static final int CASE_DIFFERENCE = 0x20;
 
+  /**
+   * 判断指定字节是否是ASCII字符。
+   *
+   * @param ch
+   *     指定的字节。
+   * @return
+   *     如果指定字节是ASCII字符，则返回{@code true}；否则返回{@code false}。
+   */
   public static boolean isAscii(final byte ch) {
     return (ch >= 0);
   }
 
+  /**
+   * 判断指定字符是否是ASCII字符。
+   *
+   * @param ch
+   *     指定的字符。
+   * @return
+   *     如果指定字符是ASCII字符，则返回{@code true}；否则返回{@code false}。
+   */
   public static boolean isAscii(final char ch) {
     return (ch <= MAX);
   }
 
+  /**
+   * 判断指定码点是否是ASCII字符。
+   *
+   * @param ch
+   *     指定的码点。
+   * @return
+   *     如果指定码点是ASCII字符，则返回{@code true}；否则返回{@code false}。
+   */
   public static boolean isAscii(final int ch) {
     return (ch >= 0) && (ch <= MAX);
   }
 
+  /**
+   * 判断指定码点是否是ASCII空白字符。
+   *
+   * @param ch
+   *     指定的码点。
+   * @return
+   *     如果指定码点是ASCII空白字符，则返回{@code true}；否则返回{@code false}。
+   */
   public static boolean isWhitespace(final int ch) {
     return ((ch == '\t')        // 0x09
         || (ch == '\n')       // 0x0A
@@ -184,37 +369,103 @@ public final class Ascii {
         || (ch == ' '));      // 0x20
   }
 
+  /**
+   * 判断指定码点是否是ASCII字母。
+   *
+   * @param ch
+   *     指定的码点。
+   * @return
+   *     如果指定码点是ASCII字母，则返回{@code true}；否则返回{@code false}。
+   */
   public static boolean isLetter(final int ch) {
     return ((ch >= 'A') && (ch <= 'Z'))
           || ((ch >= 'a') && (ch <= 'z'));
   }
 
+  /**
+   * 判断指定码点是否是ASCII大写字母。
+   *
+   * @param ch
+   *     指定的码点。
+   * @return
+   *     如果指定码点是ASCII大写字母，则返回{@code true}；否则返回{@code false}。
+   */
   public static boolean isUpperCaseLetter(final int ch) {
     return (ch >= 'A') && (ch <= 'Z');
   }
 
+  /**
+   * 判断指定码点是否是ASCII小写字母。
+   *
+   * @param ch
+   *     指定的码点。
+   * @return
+   *     如果指定码点是ASCII小写字母，则返回{@code true}；否则返回{@code false}。
+   */
   public static boolean isLowerCaseLetter(final int ch) {
     return (ch >= 'a') && (ch <= 'z');
   }
 
+  /**
+   * 判断指定码点是否是ASCII数字。
+   *
+   * @param ch
+   *     指定的码点。
+   * @return
+   *     如果指定码点是ASCII数字，则返回{@code true}；否则返回{@code false}。
+   */
   public static boolean isDigit(final int ch) {
     return (ch >= '0') && (ch <= '9');
   }
 
+  /**
+   * 判断指定码点是否是ASCII字母或数字。
+   *
+   * @param ch
+   *     指定的码点。
+   * @return
+   *     如果指定码点是ASCII字母或数字，则返回{@code true}；否则返回{@code false}。
+   */
   public static boolean isLetterOrDigit(final int ch) {
     return ((ch >= 'A') && (ch <= 'Z'))
         || ((ch >= 'a') && (ch <= 'z'))
         || ((ch >= '0') && (ch <= '9'));
   }
 
+  /**
+   * 判断指定码点是否是ASCII可打印字符。
+   *
+   * @param ch
+   *     指定的码点。
+   * @return
+   *     如果指定码点是ASCII可打印字符，则返回{@code true}；否则返回{@code false}。
+   */
   public static boolean isPrintable(final int ch) {
     return (ch >= MIN_PRINTABLE) && (ch <= MAX_PRINTABLE);
   }
 
+  /**
+   * 判断指定码点是否是ASCII控制字符。
+   *
+   * @param ch
+   *     指定的码点。
+   * @return
+   *     如果指定码点是ASCII控制字符，则返回{@code true}；否则返回{@code false}。
+   */
   public static boolean isControl(final int ch) {
     return (ch == DELETE) || ((ch >= NULL) && (ch < SPACE));
   }
 
+  /**
+   * 忽略大小写比较两个ASCII码点是否相等。
+   *
+   * @param ch1
+   *     第一个ASCII码点。
+   * @param ch2
+   *     第二个ASCII码点。
+   * @return
+   *     如果两个ASCII码点在忽略大小写的情况下相等，则返回{@code true}；否则返回{@code false}。
+   */
   public static boolean equalsIgnoreCase(final int ch1, final int ch2) {
     if (ch1 == ch2) {
       return true;
@@ -235,6 +486,14 @@ public final class Ascii {
     }
   }
 
+  /**
+   * 将指定的ASCII字节转换为大写。
+   *
+   * @param ch
+   *     指定的ASCII字节。
+   * @return
+   *     转换后的大写ASCII字节。
+   */
   public static byte toUpperCase(final byte ch) {
     if ((ch >= 'a') && (ch <= 'z')) {
       return (byte) (ch - CASE_DIFFERENCE);
@@ -243,6 +502,14 @@ public final class Ascii {
     }
   }
 
+  /**
+   * 将指定的ASCII字符转换为大写。
+   *
+   * @param ch
+   *     指定的ASCII字符。
+   * @return
+   *     转换后的大写ASCII字符。
+   */
   public static char toUpperCase(final char ch) {
     if ((ch >= 'a') && (ch <= 'z')) {
       return (char) (ch - CASE_DIFFERENCE);
@@ -251,6 +518,14 @@ public final class Ascii {
     }
   }
 
+  /**
+   * 将指定的ASCII码点转换为大写。
+   *
+   * @param ch
+   *     指定的ASCII码点。
+   * @return
+   *     转换后的大写ASCII码点。
+   */
   public static int toUpperCase(final int ch) {
     if ((ch >= 'a') && (ch <= 'z')) {
       return (ch - CASE_DIFFERENCE);
@@ -259,6 +534,14 @@ public final class Ascii {
     }
   }
 
+  /**
+   * 将指定的ASCII字符串转换为大写。
+   *
+   * @param str
+   *     指定的ASCII字符串。
+   * @return
+   *     转换后的大写ASCII字符串。
+   */
   public static String toUpperCase(final String str) {
     final StringBuilder builder = new StringBuilder(str.length());
     for (int i = 0; i < str.length(); ++i) {
@@ -268,6 +551,14 @@ public final class Ascii {
     return builder.toString();
   }
 
+  /**
+   * 将指定的ASCII字节转换为小写。
+   *
+   * @param ch
+   *     指定的ASCII字节。
+   * @return
+   *     转换后的小写ASCII字节。
+   */
   public static byte toLowerCase(final byte ch) {
     if ((ch >= 'A') && (ch <= 'Z')) {
       return (byte) (ch + CASE_DIFFERENCE);
@@ -276,6 +567,14 @@ public final class Ascii {
     }
   }
 
+  /**
+   * 将指定的ASCII字符转换为小写。
+   *
+   * @param ch
+   *     指定的ASCII字符。
+   * @return
+   *     转换后的小写ASCII字符。
+   */
   public static char toLowerCase(final char ch) {
     if ((ch >= 'A') && (ch <= 'Z')) {
       return (char) (ch + CASE_DIFFERENCE);
@@ -284,6 +583,14 @@ public final class Ascii {
     }
   }
 
+  /**
+   * 将指定的ASCII码点转换为小写。
+   *
+   * @param ch
+   *     指定的ASCII码点。
+   * @return
+   *     转换后的小写ASCII码点。
+   */
   public static int toLowerCase(final int ch) {
     if ((ch >= 'A') && (ch <= 'Z')) {
       return (ch + CASE_DIFFERENCE);
@@ -292,6 +599,14 @@ public final class Ascii {
     }
   }
 
+  /**
+   * 将指定的ASCII字符串转换为小写。
+   *
+   * @param str
+   *     指定的ASCII字符串。
+   * @return
+   *     转换后的小写ASCII字符串。
+   */
   public static String toLowerCase(final String str) {
     final StringBuilder builder = new StringBuilder(str.length());
     for (int i = 0; i < str.length(); ++i) {
@@ -301,6 +616,14 @@ public final class Ascii {
     return builder.toString();
   }
 
+  /**
+   * 将指定的ASCII码点转换为对应的数字。
+   *
+   * @param ch
+   *     指定的ASCII码点，必须是'0'-'9'之一。
+   * @return
+   *     对应的数字；如果输入不是ASCII数字，则返回-1。
+   */
   public static int toDigit(final int ch) {
     if ((ch >= '0') && (ch <= '9')) {
       return ch - '0';
@@ -309,6 +632,14 @@ public final class Ascii {
     }
   }
 
+  /**
+   * 将指定的ASCII码点转换为对应的十六进制数字。
+   *
+   * @param ch
+   *     指定的ASCII码点，必须是'0'-'9', 'a'-'f', 'A'-'F'之一。
+   * @return
+   *     对应的十六进制数字；如果输入不是ASCII十六进制数字，则返回-1。
+   */
   public static int toHexDigit(final int ch) {
     if ((ch >= '0') && (ch <= '9')) {
       return ch - '0';
@@ -322,62 +653,57 @@ public final class Ascii {
   }
 
   /**
-   * Converts characters above ASCII to their ASCII equivalents. For example,
-   * accents are removed from accented characters.
+   * 将超出ASCII范围的字符转换为其等效的ASCII字符。例如，从带重音的字符中删除重音。
    *
-   * <p>This function converts alphabetic, numeric, and symbolic Unicode
-   * characters which are not in the first 127 ASCII characters (the "Basic
-   * Latin" Unicode block) into their ASCII equivalents, if one exists.
+   * <p>此函数将不在前127个ASCII字符（"基本拉丁"Unicode块）中的字母、数字和符号Unicode
+   * 字符转换为其等效的ASCII字符（如果存在）。
    *
-   * <p>Characters from the following Unicode blocks are converted; however,
-   * onlythose characters with reasonable ASCII alternatives are converted:
+   * <p>将转换以下Unicode块中的字符；但是，仅转换那些具有合理ASCII替代项的字符：
    *
    * <ul>
-   * <li><a href="http://www.unicode.org/charts/PDF/U0080.pdf">C1 Controls and
-   * Latin-1 Supplement</a></li>
-   * <li><a href="http://www.unicode.org/charts/PDF/U0100.pdf">Latin
-   * Extended-A</a></li>
-   * <li><a href="http://www.unicode.org/charts/PDF/U0180.pdf">Latin
-   * Extended-B</a></li>
-   * <li><a href="http://www.unicode.org/charts/PDF/U1E00.pdf">Latin Extended
-   * Additional</a></li>
-   * <li><a href="http://www.unicode.org/charts/PDF/U2C60.pdf">Latin
-   * Extended-C</a></li>
-   * <li><a href="http://www.unicode.org/charts/PDF/UA720.pdf">Latin
-   * Extended-D</a></li>
+   * <li><a href="http://www.unicode.org/charts/PDF/U0080.pdf">C1控制符和
+   * 拉丁-1补充</a></li>
+   * <li><a href="http://www.unicode.org/charts/PDF/U0100.pdf">拉丁
+   * 扩展-A</a></li>
+   * <li><a href="http://www.unicode.org/charts/PDF/U0180.pdf">拉丁
+   * 扩展-B</a></li>
+   * <li><a href="http://www.unicode.org/charts/PDF/U1E00.pdf">拉丁
+   * 扩展附加</a></li>
+   * <li><a href="http://www.unicode.org/charts/PDF/U2C60.pdf">拉丁
+   * 扩展-C</a></li>
+   * <li><a href="http://www.unicode.org/charts/PDF/UA720.pdf">拉丁
+   * 扩展-D</a></li>
    * <li><a href="http://www.unicode.org/charts/PDF/U0250.pdf">IPA
-   * Extensions</a></li>
-   * <li><a href="http://www.unicode.org/charts/PDF/U1D00.pdf">Phonetic
-   * Extensions</a></li>
-   * <li><a href="http://www.unicode.org/charts/PDF/U1D80.pdf">Phonetic
-   * Extensions Supplement</a></li>
-   * <li><a href="http://www.unicode.org/charts/PDF/U2000.pdf">General
-   * Punctuation</a></li>
-   * <li><a href="http://www.unicode.org/charts/PDF/U2070.pdf">Superscripts and
-   * Subscripts</a></li>
-   * <li><a href="http://www.unicode.org/charts/PDF/U2460.pdf">Enclosed
-   * Alphanumerics</a></li>
-   * <li><a href="http://www.unicode.org/charts/PDF/U2700.pdf">Dingbats</a></li>
-   * <li><a href="http://www.unicode.org/charts/PDF/U2E00.pdf">Supplemental
-   * Punctuation</a></li>
-   * <li><a href="http://www.unicode.org/charts/PDF/UFB00.pdf">Alphabetic
-   * Presentation Forms</a></li>
-   * <li><a href="http://www.unicode.org/charts/PDF/UFF00.pdf">Halfwidth and
-   * Fullwidth Forms</a></li>
+   * 扩展</a></li>
+   * <li><a href="http://www.unicode.org/charts/PDF/U1D00.pdf">音标
+   * 扩展</a></li>
+   * <li><a href="http://www.unicode.org/charts/PDF/U1D80.pdf">音标
+   * 扩展补充</a></li>
+   * <li><a href="http://www.unicode.org/charts/PDF/U2000.pdf">通用
+   * 标点</a></li>
+   * <li><a href="http://www.unicode.org/charts/PDF/U2070.pdf">上标和
+   * 下标</a></li>
+   * <li><a href="http://www.unicode.org/charts/PDF/U2460.pdf">带圈
+   * 字母数字</a></li>
+   * <li><a href="http://www.unicode.org/charts/PDF/U2700.pdf">装饰
+   * 符号</a></li>
+   * <li><a href="http://www.unicode.org/charts/PDF/U2E00.pdf">补充
+   * 标点</a></li>
+   * <li><a href="http://www.unicode.org/charts/PDF/UFB00.pdf">字母
+   * 表达形式</a></li>
+   * <li><a href="http://www.unicode.org/charts/PDF/UFF00.pdf">半角及
+   * 全角形式</a></li>
    * </ul>
    *
    * @param ch
-   *     the character to be converted.
+   *     要转换的字符。
    * @param result
-   *     the character buffer where to store the result.
+   *     用于存储结果的字符缓冲区。
    * @param offset
-   *     the offset where to start writing the folded result. Note that the
-   *     available space in the result buffer MUST be at least MAX_FOLDING
-   *     (4), i.e., result.length - offset &ge; MAX_FOLDING
-   * @return the number of the characters in the ASCII equivalent of the input
-   *     character, i.e., the number of characters written to the result
-   *     buffer.
-   * @see <a href="http://en.wikipedia.org/wiki/Latin_characters_in_Unicode">Latin characters in Unicode</a>
+   *     开始写入折叠结果的偏移量。请注意，结果缓冲区中的可用空间必须至少为
+   *     MAX_FOLDING (4)，即 {@code result.length - offset >= MAX_FOLDING}
+   * @return 输入字符的ASCII等效字符中的字符数，即写入结果缓冲区的字符数。
+   * @see <a href="http://en.wikipedia.org/wiki/Latin_characters_in_Unicode">Unicode中的拉丁字符</a>
    */
   public static int fold(final char ch, final char[] result, final int offset) {
     // TODO: use a binary search to improve the efficiency.

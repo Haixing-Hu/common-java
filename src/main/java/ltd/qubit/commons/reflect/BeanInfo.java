@@ -31,9 +31,9 @@ import static ltd.qubit.commons.reflect.MethodUtils.getAllMethods;
 import static ltd.qubit.commons.reflect.PropertyUtils.getPropertyNameFromGetter;
 
 /**
- * Stores the information about a type of beans.
+ * 存储关于Bean类型的信息。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class BeanInfo {
 
@@ -67,12 +67,12 @@ public class BeanInfo {
   };
 
   /**
-   * Factory methods for creating a {@link BeanInfo}.
+   * 创建 {@link BeanInfo} 的工厂方法。
    *
    * @param type
-   *     the type of the beans.
+   *     Bean的类型。
    * @return
-   *     the object storing the information of the beans.
+   *     存储Bean信息的对象。
    */
   public static BeanInfo of(final Class<?> type) {
     return CACHE.get(type);
@@ -137,55 +137,54 @@ public class BeanInfo {
   }
 
   /**
-   * Gets the name of bean class, i.e., the simple name of the class of the beans.
+   * 获取Bean类的名称，即Bean类的简单名称。
    *
    * @return
-   *     the name of bean class, i.e., the simple name of the class of the beans.
+   *     Bean类的名称，即Bean类的简单名称。
    */
   public String getName() {
     return type.getSimpleName();
   }
 
   /**
-   * Gets the type of the beans, i.e., the class object of the beans.
+   * 获取Bean的类型，即Bean的类对象。
    *
    * @return
-   *     the type of the beans, i.e., the class object of the beans.
+   *     Bean的类型，即Bean的类对象。
    */
   public Class<?> getType() {
     return type;
   }
 
   /**
-   * Tests whether the bean class has a property with the specified name.
+   * 测试Bean类是否具有指定名称的属性。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @return
-   *     {@code true} if the bean class has a property with the specified name;
-   *     {@code false} otherwise.
+   *     如果Bean类具有指定名称的属性则返回 {@code true}；否则返回 {@code false}。
    */
   public boolean hasProperty(final String name) {
     return propertyMap.containsKey(name);
   }
 
   /**
-   * Gets the list of properties of the beans.
+   * 获取Bean的属性列表。
    *
    * @return
-   *     the list of properties of the beans.
+   *     Bean的属性列表。
    */
   public List<Property> getProperties() {
     return new ArrayList<>(properties);
   }
 
   /**
-   * Gets the list of properties of the beans with the specified names.
+   * 获取具有指定名称的Bean属性列表。
    *
    * @param names
-   *     the names of the properties.
+   *     属性的名称。
    * @return
-   *     the list of properties of the beans with the specified names.
+   *     具有指定名称的Bean属性列表。
    */
   public List<Property> getProperties(final String... names) {
     final List<Property> result = new ArrayList<>();
@@ -198,12 +197,12 @@ public class BeanInfo {
   }
 
   /**
-   * Gets the list of properties of the beans that satisfy the specified condition.
+   * 获取满足指定条件的Bean属性列表。
    *
    * @param cond
-   *     the condition to be satisfied.
+   *     要满足的条件。
    * @return
-   *     the list of properties of the beans that satisfy the specified condition.
+   *     满足指定条件的Bean属性列表。
    */
   public List<Property> getProperties(final Predicate<Property> cond) {
     final List<Property> result = new ArrayList<>();
@@ -216,13 +215,12 @@ public class BeanInfo {
   }
 
   /**
-   * Gets the property of the beans with the specified name.
+   * 获取具有指定名称的Bean属性。
    *
    * @param name
-   *     the name of the property.
+   *     属性的名称。
    * @return
-   *     the property of the beans with the specified name, or {@code null} if
-   *     the bean class does not have a property with the specified name.
+   *     具有指定名称的Bean属性，如果Bean类没有指定名称的属性则返回 {@code null}。
    */
   @Nullable
   public Property getProperty(final String name) {
@@ -230,18 +228,16 @@ public class BeanInfo {
   }
 
   /**
-   * Gets the property of the beans with the specified getter method.
+   * 获取具有指定getter方法的Bean属性。
    *
    * @param <T>
-   *     the type of the beans.
+   *     Bean的类型。
    * @param <R>
-   *     the type of the property.
+   *     属性的类型。
    * @param getter
-   *     the getter method of the property.
+   *     属性的getter方法。
    * @return
-   *     the property of the beans with the specified getter method, or
-   *     {@code null} if the bean class does not have a property with the
-   *     specified getter method.
+   *     具有指定getter方法的Bean属性，如果Bean类没有指定getter方法的属性则返回 {@code null}。
    */
   @Nullable
   public <T, R> Property getProperty(final GetterMethod<T, R> getter) {
@@ -256,10 +252,10 @@ public class BeanInfo {
   }
 
   /**
-   * Gets the list of properties of the beans that are reference properties.
+   * 获取Bean中作为引用属性的属性列表。
    *
    * @return
-   *     the list of properties of the beans that are reference properties.
+   *     Bean中作为引用属性的属性列表。
    */
   public List<Property> getReferenceProperties() {
     return properties.stream()
@@ -268,10 +264,10 @@ public class BeanInfo {
   }
 
   /**
-   * Gets the list of properties of the beans that are non-computed properties.
+   * 获取Bean中作为非计算属性的属性列表。
    *
    * @return
-   *     the list of properties of the beans that are non-computed properties.
+   *     Bean中作为非计算属性的属性列表。
    */
   public List<Property> getNonComputedProperties() {
     return properties.stream()
@@ -280,11 +276,10 @@ public class BeanInfo {
   }
 
   /**
-   * Gets the list of properties of the beans that are unique properties.
+   * 获取Bean中作为唯一属性的属性列表。
    *
    * @return
-   *     the list of properties of the beans that are unique properties. Note
-   *     that the ID property is <b>INCLUDED</b> in the result.
+   *     Bean中作为唯一属性的属性列表。注意ID属性<b>包含</b>在结果中。
    */
   public List<Property> getUniqueProperties() {
     return properties.stream()
@@ -293,11 +288,10 @@ public class BeanInfo {
   }
 
   /**
-   * Gets the property of the beans that is ID property.
+   * 获取Bean的ID属性。
    *
    * @return
-   *     the property of the beans that is ID property, or {@code null} if the
-   *     bean class does not have an ID property.
+   *     Bean的ID属性，如果Bean类没有ID属性则返回 {@code null}。
    */
   @Nullable
   public Property getIdProperty() {
@@ -305,34 +299,32 @@ public class BeanInfo {
   }
 
   /**
-   * Tests whether the bean class has an ID property.
+   * 测试Bean类是否具有ID属性。
    *
    * @return
-   *     {@code true} if the bean class has an ID property; {@code false}
-   *     otherwise.
+   *     如果Bean类具有ID属性则返回 {@code true}；否则返回 {@code false}。
    */
   public boolean hasIdProperty() {
     return idProperty != null;
   }
 
   /**
-   * Tests whether the bean class has an auto-generated ID property.
+   * 测试Bean类是否具有自动生成的ID属性。
    *
    * @return
-   *    {@code true} if the bean class has an auto-generated ID property;
-   *    {@code false} otherwise.
+   *    如果Bean类具有自动生成的ID属性则返回 {@code true}；否则返回 {@code false}。
    */
   public boolean hasAutoGeneratedIdProperty() {
     return (idProperty != null) && idProperty.isAutoGeneratedId();
   }
 
   /**
-   * Gets the list of properties that a specified unique property is respect to.
+   * 获取指定唯一属性所关联的属性列表。
    *
    * @param uniqueProperty
-   *     the specified unique property of the bean class.
+   *     Bean类的指定唯一属性。
    * @return
-   *     the list of properties that the specified unique property is respect to.
+   *     指定唯一属性所关联的属性列表。
    */
   public List<Property> getRespectToProperties(final Property uniqueProperty) {
     final String[] respectTo = uniqueProperty.getUniqueRespectTo();
@@ -353,14 +345,14 @@ public class BeanInfo {
   }
 
   /**
-   * Gets the ID of the specified model.
+   * 获取指定模型的ID。
    *
    * @param model
-   *     the specified model, i.e., an instance of the bean class.
+   *     指定的模型，即Bean类的实例。
    * @return
-   *     the ID of the specified model.
+   *     指定模型的ID。
    * @throws IllegalArgumentException
-   *     if the bean class does not have an ID property.
+   *     如果Bean类没有ID属性。
    */
   public Object getId(final Object model) {
     if (idProperty == null) {
@@ -371,14 +363,14 @@ public class BeanInfo {
   }
 
   /**
-   * Sets the ID of the specified model.
+   * 设置指定模型的ID。
    *
    * @param model
-   *     the specified model, i.e., an instance of the bean class.
+   *     指定的模型，即Bean类的实例。
    * @param value
-   *     the new value of the ID.
+   *     ID的新值。
    * @throws IllegalArgumentException
-   *     if the bean class does not have an ID property.
+   *     如果Bean类没有ID属性。
    */
   public void setId(final Object model, @Nullable final Object value) {
     if (idProperty == null) {
@@ -389,17 +381,16 @@ public class BeanInfo {
   }
 
   /**
-   * Gets the value of the specified property of the specified model.
+   * 获取指定模型的指定属性值。
    *
    * @param model
-   *     the specified model, i.e., an instance of the bean class.
+   *     指定的模型，即Bean类的实例。
    * @param propertyName
-   *     the name of the property.
+   *     属性的名称。
    * @return
-   *     the value of the specified property of the specified model, which may
-   *     be {@code null}.
+   *     指定模型的指定属性值，可能为 {@code null}。
    * @throws IllegalArgumentException
-   *     if the bean class does not have a property with the specified name.
+   *     如果Bean类没有指定名称的属性。
    */
   @Nullable
   public Object get(final Object model, final String propertyName) {
@@ -414,17 +405,16 @@ public class BeanInfo {
   }
 
   /**
-   * Gets the value of the specified property of the specified model.
+   * 获取指定模型的指定属性值。
    *
    * @param model
-   *     the specified model, i.e., an instance of the bean class.
+   *     指定的模型，即Bean类的实例。
    * @param property
-   *     the specified property.
+   *     指定的属性。
    * @return
-   *     the value of the specified property of the specified model, which may
-   *     be {@code null}.
+   *     指定模型的指定属性值，可能为 {@code null}。
    * @throws IllegalArgumentException
-   *     if the bean class does not have the specified property.
+   *     如果Bean类没有指定的属性。
    */
   public Object get(final Object model, final Property property) {
     if (property.getOwnerClass() != type) {
@@ -435,16 +425,16 @@ public class BeanInfo {
   }
 
   /**
-   * Sets the value of the specified property of the specified model.
+   * 设置指定模型的指定属性值。
    *
    * @param model
-   *     the specified model, i.e., an instance of the bean class.
+   *     指定的模型，即Bean类的实例。
    * @param propertyName
-   *     the name of the property.
+   *     属性的名称。
    * @param propertyValue
-   *     the new value of the property, which may be {@code null}.
+   *     属性的新值，可能为 {@code null}。
    * @throws IllegalArgumentException
-   *     if the bean class does not have a property with the specified name.
+   *     如果Bean类没有指定名称的属性。
    */
   public void set(final Object model, final String propertyName,
       @Nullable final Object propertyValue) {
@@ -459,16 +449,16 @@ public class BeanInfo {
   }
 
   /**
-   * Sets the value of the specified property of the specified model.
+   * 设置指定模型的指定属性值。
    *
    * @param model
-   *     the specified model, i.e., an instance of the bean class.
+   *     指定的模型，即Bean类的实例。
    * @param property
-   *     the specified property.
+   *     指定的属性。
    * @param propertyValue
-   *     the new value of the property, which may be {@code null}.
+   *     属性的新值，可能为 {@code null}。
    * @throws IllegalArgumentException
-   *     if the bean class does not have the specified property.
+   *     如果Bean类没有指定的属性。
    */
   public void set(final Object model, final Property property,
       final Object propertyValue) {
@@ -507,10 +497,11 @@ public class BeanInfo {
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this).append("type", type)
-                                    .append("properties", properties)
-                                    .append("propertyMap", propertyMap)
-                                    .append("idProperty", idProperty)
-                                    .toString();
+    return new ToStringBuilder(this)
+      .append("type", type)
+      .append("properties", properties)
+      .append("propertyMap", propertyMap)
+      .append("idProperty", idProperty)
+      .toString();
   }
 }

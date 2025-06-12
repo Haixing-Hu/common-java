@@ -42,9 +42,111 @@ import static ltd.qubit.commons.text.impl.RemoverImpl.removeSubstring;
 import static ltd.qubit.commons.text.impl.RemoverImpl.removeSuffix;
 
 /**
- * A class used for remove contents from strings.
+ * 用于从字符串中移除内容的类。
  *
- * @author Haixing Hu
+ * <p>此类提供了灵活的字符串内容移除功能，支持移除指定的字符、Unicode 代码点、
+ * 子字符串、前缀、后缀或满足特定条件的字符，并可配置移除范围、大小写敏感性和数量限制。</p>
+ *
+ * <p>使用示例：</p>
+ * <pre><code>
+ * // 移除指定字符
+ * String result = new Remover().forChar('*').removeFrom("a*b*c*d");
+ * // 结果: "abcd"
+ *
+ * // 移除字符数组中的任意字符
+ * String result = new Remover().forCharsIn('*', '#', '@').removeFrom("a*b#c@d");
+ * // 结果: "abcd"
+ *
+ * // 移除不在指定字符集中的字符（保留指定字符）
+ * String result = new Remover().forCharsNotIn('a', 'b', 'c').removeFrom("a1b2c3");
+ * // 结果: "abc"
+ *
+ * // 移除满足条件的字符（如数字）
+ * String result = new Remover().forCharsSatisfy(Character::isDigit)
+ *                              .removeFrom("abc123def456");
+ * // 结果: "abcdef"
+ *
+ * // 移除 Unicode 代码点（表情符号）
+ * String result = new Remover().forCodePoint(0x1F600) // 😀
+ *                              .removeFrom("Hello😀World😀");
+ * // 结果: "HelloWorld"
+ *
+ * // 移除子字符串
+ * String result = new Remover().forSubstring("test").removeFrom("This is a test string test");
+ * // 结果: "This is a  string "
+ *
+ * // 移除前缀
+ * String result = new Remover().forPrefix("Hello ").removeFrom("Hello World");
+ * // 结果: "World"
+ *
+ * // 移除后缀
+ * String result = new Remover().forSuffix(".txt").removeFrom("document.txt");
+ * // 结果: "document"
+ *
+ * // 同时移除前缀和后缀
+ * String result = new Remover().forPrefix("(").forSuffix(")").removeFrom("(content)");
+ * // 结果: "content"
+ *
+ * // 忽略大小写移除
+ * String result = new Remover().forSubstring("HELLO")
+ *                              .ignoreCase(true)
+ *                              .removeFrom("hello world Hello");
+ * // 结果: " world "
+ *
+ * // 限制移除数量
+ * String result = new Remover().forChar('a')
+ *                              .limit(2)
+ *                              .removeFrom("banana");
+ * // 结果: "bana"
+ *
+ * // 指定移除范围
+ * String result = new Remover().forChar('a')
+ *                              .startFrom(2)
+ *                              .endBefore(5)
+ *                              .removeFrom("banana");
+ * // 结果: "banna"
+ *
+ * // 移除指定范围内的子字符串
+ * String result = new Remover().forSubstring("test")
+ *                              .startFrom(5)
+ *                              .endBefore(20)
+ *                              .removeFrom("This test is a test case");
+ * // 结果: "This test is a  case"
+ *
+ * // 使用 StringBuilder 输出（避免创建中间字符串）
+ * StringBuilder sb = new StringBuilder();
+ * int removed = new Remover().forChar('*').removeFrom("a*b*c*", sb);
+ * // sb 内容: "abc", removed: 3
+ *
+ * // 复杂示例：移除非字母字符，保留空格
+ * String result = new Remover().forCharsNotSatisfy(ch -> Character.isLetter(ch) || ch == ' ')
+ *                              .removeFrom("Hello, World! 123");
+ * // 结果: "Hello World "
+ *
+ * // 移除多个 Unicode 代码点
+ * String result = new Remover().forCodePointsIn(0x1F600, 0x1F601, 0x1F602)
+ *                              .removeFrom("😀Hello😁World😂");
+ * // 结果: "HelloWorld"
+ *
+ * // 链式操作示例
+ * String result = new Remover()
+ *     .forChar(' ')           // 移除空格
+ *     .startFrom(1)           // 从索引1开始
+ *     .endBefore(10)          // 到索引10结束
+ *     .limit(3)               // 最多移除3个
+ *     .removeFrom(" a b c d e f ");
+ * // 结果: " abcdef "
+ *
+ * // 处理 null 输入
+ * String result = new Remover().forChar('a').removeFrom(null);
+ * // 结果: null
+ *
+ * // 移除字符序列中的字符
+ * String result = new Remover().forCharsIn("aeiou").removeFrom("Hello World");
+ * // 结果: "Hll Wrld"
+ * </code></pre>
+ *
+ * @author 胡海星
  */
 public class Remover {
 
@@ -69,12 +171,12 @@ public class Remover {
   }
 
   /**
-   * Removes a specified character.
+   * 移除指定的字符。
    *
    * @param ch
-   *     the specified character to be removed.
+   *     要移除的指定字符。
    * @return
-   *     the reference to this {@link Remover} object.
+   *     此 {@link Remover} 对象的引用。
    */
   public Remover forChar(final char ch) {
     this.clearStrategies();
@@ -83,13 +185,12 @@ public class Remover {
   }
 
   /**
-   * Removes all characters not equal to the specified character.
+   * 移除所有不等于指定字符的字符。
    *
    * @param ch
-   *     the specified character. All characters except this one in the source
-   *     string will be removed.
+   *     指定的字符。源字符串中除此字符以外的所有字符都将被移除。
    * @return
-   *     the reference to this {@link Remover} object.
+   *     此 {@link Remover} 对象的引用。
    */
   public Remover forCharsNotEqual(final char ch) {
     this.clearStrategies();
@@ -98,13 +199,12 @@ public class Remover {
   }
 
   /**
-   * Removes all characters in the specified array.
+   * 移除指定数组中的所有字符。
    *
    * @param chars
-   *     the array of characters to be removed. A {@code null} or empty array
-   *     indicates that no character will be removed.
+   *     要移除的字符数组。{@code null} 值或空数组表示不移除任何字符。
    * @return
-   *     the reference to this {@link Remover} object.
+   *     此 {@link Remover} 对象的引用。
    */
   public Remover forCharsIn(@Nullable final char... chars) {
     this.clearStrategies();
@@ -117,13 +217,12 @@ public class Remover {
   }
 
   /**
-   * Removes all characters in the specified sequence.
+   * 移除指定序列中的所有字符。
    *
    * @param chars
-   *     the sequence of characters to be removed. A {@code null} or empty
-   *     sequence indicates that no character will be removed.
+   *     要移除的字符序列。{@code null} 值或空序列表示不移除任何字符。
    * @return
-   *     the reference to this {@link Remover} object.
+   *     此 {@link Remover} 对象的引用。
    */
   public Remover forCharsIn(@Nullable final CharSequence chars) {
     this.clearStrategies();
@@ -136,14 +235,12 @@ public class Remover {
   }
 
   /**
-   * Removes all characters not in the specified array.
+   * 移除所有不在指定数组中的字符。
    *
    * @param chars
-   *     an array of characters. All characters not in this array will be
-   *     removed. A {@code null} or empty array indicates that all characters
-   *     in the source string will be removed.
+   *     字符数组。不在此数组中的所有字符都将被移除。{@code null} 值或空数组表示移除源字符串中的所有字符。
    * @return
-   *     the reference to this {@link Remover} object.
+   *     此 {@link Remover} 对象的引用。
    */
   public Remover forCharsNotIn(@Nullable final char... chars) {
     this.clearStrategies();
@@ -156,14 +253,12 @@ public class Remover {
   }
 
   /**
-   * Removes all characters not in the specified sequence.
+   * 移除所有不在指定序列中的字符。
    *
    * @param chars
-   *     a sequence of characters. All characters not in this sequence will be
-   *     removed. A {@code null} value or empty sequence indicates that all
-   *     characters in the source string will be removed.
+   *     字符序列。不在此序列中的所有字符都将被移除。{@code null} 值或空序列表示移除源字符串中的所有字符。
    * @return
-   *     the reference to this {@link Remover} object.
+   *     此 {@link Remover} 对象的引用。
    */
   public Remover forCharsNotIn(@Nullable final CharSequence chars) {
     this.clearStrategies();
@@ -176,13 +271,12 @@ public class Remover {
   }
 
   /**
-   * Removes all characters satisfying the specified filter.
+   * 移除所有满足指定过滤器的字符。
    *
    * @param filter
-   *     the filter accepting characters to be removed. A {@code null} value
-   *     indicates that no character will be removed.
+   *     接受要移除字符的过滤器。{@code null} 值表示不移除任何字符。
    * @return
-   *     the reference to this {@link Remover} object.
+   *     此 {@link Remover} 对象的引用。
    */
   public Remover forCharsSatisfy(@Nullable final CharFilter filter) {
     this.clearStrategies();
@@ -195,13 +289,12 @@ public class Remover {
   }
 
   /**
-   * Removes all characters not satisfying the specified filter.
+   * 移除所有不满足指定过滤器的字符。
    *
    * @param filter
-   *     the filter rejecting characters to be removed. A {@code null} value
-   *     indicates that all characters in the source string will be removed.
+   *     拒绝要移除字符的过滤器。{@code null} 值表示移除源字符串中的所有字符。
    * @return
-   *     the reference to this {@link Remover} object.
+   *     此 {@link Remover} 对象的引用。
    */
   public Remover forCharsNotSatisfy(@Nullable final CharFilter filter) {
     this.clearStrategies();
@@ -214,12 +307,12 @@ public class Remover {
   }
 
   /**
-   * Removes a specified Unicode character.
+   * 移除指定的 Unicode 字符。
    *
    * @param codePoint
-   *     the code point of the Unicode character to be removed.
+   *     要移除的 Unicode 字符的代码点。
    * @return
-   *     the reference to this {@link Remover} object.
+   *     此 {@link Remover} 对象的引用。
    */
   public Remover forCodePoint(final int codePoint) {
     this.clearStrategies();
@@ -228,14 +321,12 @@ public class Remover {
   }
 
   /**
-   * Removes a specified Unicode character.
+   * 移除指定的 Unicode 字符。
    *
    * @param codePoint
-   *     a character sequence containing the Unicode character to be removed.
-   *     A {@code null} or empty value indicates that no Unicode code point will
-   *     be removed.
+   *     包含要移除的 Unicode 字符的字符序列。{@code null} 值或空值表示不移除任何 Unicode 代码点。
    * @return
-   *     the reference to this {@link Remover} object.
+   *     此 {@link Remover} 对象的引用。
    */
   public Remover forCodePoint(@Nullable final CharSequence codePoint) {
     this.clearStrategies();
@@ -248,13 +339,12 @@ public class Remover {
   }
 
   /**
-   * Replaces all Unicode characters not equal to the specified one.
+   * 移除所有不等于指定代码点的 Unicode 字符。
    *
    * @param codePoint
-   *     the code point of a specified Unicode character. All Unicode characters
-   *     except this one in the source string will be removed.
+   *     指定 Unicode 字符的代码点。源字符串中除此字符以外的所有 Unicode 字符都将被移除。
    * @return
-   *     the reference to this {@link Replacer} object.
+   *     此 {@link Remover} 对象的引用。
    */
   public Remover forCodePointNotEqual(final int codePoint) {
     this.clearStrategies();
@@ -263,15 +353,13 @@ public class Remover {
   }
 
   /**
-   * Replaces all Unicode characters not equal to the specified one.
+   * 移除所有不等于指定代码点的 Unicode 字符。
    *
    * @param codePoint
-   *     a character sequence containing the specified Unicode character. All
-   *     Unicode code points except the one in the start of this sequence will
-   *     be removed. A {@code null} value indicates that all Unicode characters
-   *     in the source string will be removed.
+   *     包含指定 Unicode 字符的字符序列。除此序列开头的代码点以外的所有 Unicode 代码点都将被移除。
+   *     {@code null} 值表示移除源字符串中的所有 Unicode 字符。
    * @return
-   *     the reference to this {@link Replacer} object.
+   *     此 {@link Remover} 对象的引用。
    */
   public Remover forCodePointNotEqual(@Nullable final CharSequence codePoint) {
     this.clearStrategies();
@@ -284,14 +372,12 @@ public class Remover {
   }
 
   /**
-   * Removes all Unicode characters whose code points in the specified array.
+   * 移除所有代码点在指定数组中的 Unicode 字符。
    *
    * @param codePoints
-   *     the array of code points of the Unicode characters to be removed. A
-   *     {@code null} or empty array indicates that no Unicode character will be
-   *     removed.
+   *     要移除的 Unicode 字符的代码点数组。{@code null} 值或空数组表示不移除任何 Unicode 字符。
    * @return
-   *     the reference to this {@link Remover} object.
+   *     此 {@link Remover} 对象的引用。
    */
   public Remover forCodePointsIn(@Nullable final int... codePoints) {
     this.clearStrategies();
@@ -304,14 +390,12 @@ public class Remover {
   }
 
   /**
-   * Removes all Unicode characters whose code points in the specified sequence.
+   * 移除所有代码点在指定序列中的 Unicode 字符。
    *
    * @param codePoints
-   *     the sequence of code points of Unicode characters to be removed. A
-   *     {@code null} or empty sequence indicates that no Unicode code point
-   *     will be removed.
+   *     要移除的 Unicode 字符的代码点序列。{@code null} 值或空序列表示不移除任何 Unicode 代码点。
    * @return
-   *     the reference to this {@link Remover} object.
+   *     此 {@link Remover} 对象的引用。
    */
   public Remover forCodePointsIn(@Nullable final CharSequence codePoints) {
     this.clearStrategies();
@@ -324,16 +408,13 @@ public class Remover {
   }
 
   /**
-   * Removes all Unicode characters whose code points not in the specified
-   * array.
+   * 移除所有代码点不在指定数组中的 Unicode 字符。
    *
    * @param codePoints
-   *     an array of Unicode code points. All Unicode characters whose code
-   *     point not in this array will be removed. A {@code null} or empty array
-   *     indicates that all Unicode code points in the source string will be
-   *     removed.
+   *     Unicode 代码点数组。代码点不在此数组中的所有 Unicode 字符都将被移除。
+   *     {@code null} 值或空数组表示移除源字符串中的所有 Unicode 代码点。
    * @return
-   *     the reference to this {@link Remover} object.
+   *     此 {@link Remover} 对象的引用。
    */
   public Remover forCodePointsNotIn(@Nullable final int... codePoints) {
     this.clearStrategies();
@@ -346,14 +427,13 @@ public class Remover {
   }
 
   /**
-   * Removes all Unicode code points not in a sequence from a string.
+   * 从字符串中移除所有不在序列中的 Unicode 代码点。
    *
    * @param codePoints
-   *     a sequence of code points of Unicode characters. All code points not in
-   *     this sequence will be removed. A {@code null} or empty value indicates
-   *     that all Unicode code points will be removed.
+   *     Unicode 字符的代码点序列。不在此序列中的所有代码点都将被移除。
+   *     {@code null} 值或空值表示移除所有 Unicode 代码点。
    * @return
-   *     the reference to this {@link Remover} object.
+   *     此 {@link Remover} 对象的引用。
    */
   public Remover forCodePointsNotIn(@Nullable final CharSequence codePoints) {
     this.clearStrategies();
@@ -366,14 +446,12 @@ public class Remover {
   }
 
   /**
-   * Removes all Unicode code points accepted by the specified filter from a
-   * string.
+   * 从字符串中移除所有被指定过滤器接受的 Unicode 代码点。
    *
    * @param filter
-   *     the filter accepting Unicode code points to be removed. A {@code null}
-   *     value indicates that no Unicode code point will be removed.
+   *     接受要移除的 Unicode 代码点的过滤器。{@code null} 值表示不移除任何 Unicode 代码点。
    * @return
-   *     the reference to this {@link Remover} object.
+   *     此 {@link Remover} 对象的引用。
    */
   public Remover forCodePointsSatisfy(@Nullable final CodePointFilter filter) {
     this.clearStrategies();
@@ -386,14 +464,12 @@ public class Remover {
   }
 
   /**
-   * Removes all Unicode code points rejected by the specified filter from a
-   * string.
+   * 从字符串中移除所有被指定过滤器拒绝的 Unicode 代码点。
    *
    * @param filter
-   *     the filter rejecting Unicode code points to be removed. A {@code null}
-   *     value indicates that all Unicode code points will be removed.
+   *     拒绝要移除的 Unicode 代码点的过滤器。{@code null} 值表示移除所有 Unicode 代码点。
    * @return
-   *     the reference to this {@link Remover} object.
+   *     此 {@link Remover} 对象的引用。
    */
   public Remover forCodePointsNotSatisfy(@Nullable final CodePointFilter filter) {
     this.clearStrategies();
@@ -406,13 +482,12 @@ public class Remover {
   }
 
   /**
-   * Removes the specified substring.
+   * 移除指定的子字符串。
    *
    * @param substring
-   *     the substring to be removed. A {@code null} or empty value indicates
-   *     that no substring will be removed.
+   *     要移除的子字符串。{@code null} 值或空值表示不移除任何子字符串。
    * @return
-   *     the reference to this {@link Remover} object.
+   *     此 {@link Remover} 对象的引用。
    */
   public Remover forSubstring(@Nullable final CharSequence substring) {
     this.clearStrategies();
@@ -421,13 +496,12 @@ public class Remover {
   }
 
   /**
-   * Removes the specified prefix.
+   * 移除指定的前缀。
    *
    * @param prefix
-   *     the prefix to be removed. A {@code null} or empty value indicates that
-   *     no prefix will be removed.
+   *     要移除的前缀。{@code null} 值或空值表示不移除任何前缀。
    * @return
-   *     the reference to this {@link Remover} object.
+   *     此 {@link Remover} 对象的引用。
    */
   public Remover forPrefix(@Nullable final CharSequence prefix) {
     // keep the old suffix, since we could remove both prefix and suffix
@@ -439,13 +513,12 @@ public class Remover {
   }
 
   /**
-   * Removes the specified suffix.
+   * 移除指定的后缀。
    *
    * @param suffix
-   *     the suffix to be removed. A {@code null} or empty value indicates that
-   *     no suffix will be removed.
+   *     要移除的后缀。{@code null} 值或空值表示不移除任何后缀。
    * @return
-   *     the reference to this {@link Remover} object.
+   *     此 {@link Remover} 对象的引用。
    */
   public Remover forSuffix(@Nullable final CharSequence suffix) {
     // keep the old prefix, since we could remove both prefix and suffix
@@ -456,26 +529,66 @@ public class Remover {
     return this;
   }
 
+  /**
+   * 设置开始移除的起始索引。
+   *
+   * @param startIndex
+   *     开始移除的起始索引（包含）。
+   * @return
+   *     此 {@link Remover} 对象的引用。
+   */
   public Remover startFrom(final int startIndex) {
     this.startIndex = startIndex;
     return this;
   }
 
+  /**
+   * 设置结束移除的终止索引。
+   *
+   * @param endIndex
+   *     结束移除的终止索引（不包含）。
+   * @return
+   *     此 {@link Remover} 对象的引用。
+   */
   public Remover endBefore(final int endIndex) {
     this.endIndex = endIndex;
     return this;
   }
 
+  /**
+   * 设置是否忽略大小写。
+   *
+   * @param ignoreCase
+   *     是否在比较时忽略大小写。
+   * @return
+   *     此 {@link Remover} 对象的引用。
+   */
   public Remover ignoreCase(final boolean ignoreCase) {
     this.ignoreCase = ignoreCase;
     return this;
   }
 
+  /**
+   * 设置移除目标的最大数量限制。
+   *
+   * @param limit
+   *     要移除的目标的最大数量。负值表示无限制。
+   * @return
+   *     此 {@link Remover} 对象的引用。
+   */
   public Remover limit(final int limit) {
     this.limit = (limit < 0 ? Integer.MAX_VALUE : limit);
     return this;
   }
 
+  /**
+   * 从指定的字符序列中移除目标内容。
+   *
+   * @param str
+   *     指定的源字符序列。
+   * @return
+   *     移除结果。如果 {@code str} 为 {@code null}，则返回 {@code null}。
+   */
   public String removeFrom(@Nullable final CharSequence str) {
     if (str == null) {
       return null;
@@ -516,6 +629,16 @@ public class Remover {
     return builder.toString();
   }
 
+  /**
+   * 从指定的字符序列中移除目标内容。
+   *
+   * @param str
+   *     指定的源字符序列。如果为 {@code null}，此函数无效果并返回 0。
+   * @param output
+   *     用于追加移除结果的 {@link StringBuilder}。
+   * @return
+   *     已移除的目标数量。如果 {@code str} 为 {@code null}，此函数无效果并返回 0。
+   */
   public int removeFrom(@Nullable final CharSequence str, final StringBuilder output) {
     try {
       return removeFrom(str, (Appendable) output);
@@ -524,6 +647,18 @@ public class Remover {
     }
   }
 
+  /**
+   * 从指定的字符序列中移除目标内容。
+   *
+   * @param str
+   *     指定的源字符序列。如果为 {@code null}，此函数无效果并返回 0。
+   * @param output
+   *     用于追加移除结果的 {@link Appendable}。
+   * @return
+   *     已移除的目标数量。如果 {@code str} 为 {@code null}，此函数无效果并返回 0。
+   * @throws IOException
+   *     如果发生任何 I/O 错误。
+   */
   public int removeFrom(@Nullable final CharSequence str, final Appendable output)
       throws IOException {
     if (str == null) {

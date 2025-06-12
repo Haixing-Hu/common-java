@@ -11,13 +11,12 @@ package ltd.qubit.commons.text;
 import java.text.ParseException;
 
 /**
- * Thrown to indicate a error occurs during parsing the text.
+ * 抛出此异常以指示在解析文本时发生错误。
  *
- * <p>This class extends {@link ParsingException}, except it provides more
- * detailed information about the parsing and it will automatically build the
- * error message from those information.
+ * <p>此类扩展了{@link ParsingException}，除了提供有关解析的更多详细信息外，
+ * 它还将自动从这些信息构建错误消息。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class TextParseException extends ParseException {
 

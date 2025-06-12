@@ -48,18 +48,18 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code boolean} values.
+   * 返回三个{@code boolean}值中的最小值。
    *
-   * <p>Assume {@code true &gt; false} for {@code boolean} values.
+   * <p>对于{@code boolean}值，假设{@code true &gt; false}。
    *
    * @param value1
-   *     a {@code boolean} value;
+   *     一个{@code boolean}值；
    * @param value2
-   *     a {@code boolean} value;
+   *     一个{@code boolean}值；
    * @param value3
-   *     a {@code boolean} value;
-   * @return the minimum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the smallest position.
+   *     一个{@code boolean}值；
+   * @return {@code value1}、{@code value2}和{@code value3}的最小值。
+   *     在相等的情况下，返回位置最小的那个。
    */
   public static boolean min(
       final boolean value1, final boolean value2, final boolean value3) {
@@ -71,16 +71,15 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code boolean} array.
+   * 返回{@code boolean}数组中的最小值。
    *
-   * <p>Assume {@code true &gt; false} for {@code boolean} values.
+   * <p>对于{@code boolean}值，假设{@code true &gt; false}。
    *
    * @param array
-   *     a {@code boolean} array, must not be {@code null} nor empty.
-   * @return the minimum value in the array. In case of ties, returns the one
-   *     with the smallest position.
+   *     一个{@code boolean}数组，不能为{@code null}或空。
+   * @return 数组中的最小值。在相等的情况下，返回位置最小的那个。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static boolean min(final boolean... array) {
     if ((array == null) || (array.length == 0)) {
@@ -95,18 +94,16 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code Boolean} objects.
+   * 返回两个{@code Boolean}对象中的最小值。
    *
-   * <p>Assume {@code Boolean.TRUE &gt; Boolean.FALSE &gt; null} for {@code
-   * Boolean} objects.
+   * <p>对于{@code Boolean}对象，假设{@code Boolean.TRUE &gt; Boolean.FALSE &gt; null}。
    *
    * @param value1
-   *     a {@code Boolean} object, could be {@code null}.
+   *     一个{@code Boolean}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Boolean} object, could be {@code null}.
-   * @return the minimum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the smallest position. Note that the returned
-   *     value is either {@code null} or a reference to one of the arguments.
+   *     一个{@code Boolean}对象，可以为{@code null}。
+   * @return {@code value1}和{@code value2}的最小值。在相等的情况下，
+   *     返回位置最小的那个。注意返回值要么是{@code null}，要么是参数之一的引用。
    */
   public static Boolean min(final Boolean value1, final Boolean value2) {
     if ((value1 == null) || (value2 == null)) {
@@ -117,31 +114,28 @@ public final class Selection {
       if (v1 == v2) {
         return value1;
       } else if (v1) {
-        // recall that v1 != v2, therefore v1 == true && v2 == false.
+        // 由于v1 != v2，因此v1 == true && v2 == false
         return value2;
       } else {
-        // recall that v1 != v2, therefore v1 == false && v2 == true.
+        // 由于v1 != v2，因此v1 == false && v2 == true
         return value1;
       }
     }
   }
 
   /**
-   * 返回三个 {@code Boolean} objects.
+   * 返回三个{@code Boolean}对象中的最小值。
    *
-   * <p>Assume {@code Boolean.TRUE &gt; Boolean.FALSE &gt; null} for {@code
-   * Boolean} objects.
+   * <p>对于{@code Boolean}对象，假设{@code Boolean.TRUE &gt; Boolean.FALSE &gt; null}。
    *
    * @param value1
-   *     a {@code Boolean} object, could be {@code null}.
+   *     一个{@code Boolean}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Boolean} object, could be {@code null}.
+   *     一个{@code Boolean}对象，可以为{@code null}。
    * @param value3
-   *     a {@code Boolean} object, could be {@code null}.
-   * @return the minimum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the smallest position. Note that
-   *     the returned value is either {@code null} or a reference to one of the
-   *     arguments.
+   *     一个{@code Boolean}对象，可以为{@code null}。
+   * @return {@code value1}、{@code value2}和{@code value3}的最小值。
+   *     在相等的情况下，返回位置最小的那个。注意返回值要么是{@code null}，要么是参数之一的引用。
    */
   public static Boolean min(
       final Boolean value1, final Boolean value2, final Boolean value3) {
@@ -151,32 +145,30 @@ public final class Selection {
       if (!value1.booleanValue()) {
         return value1;
       }
-      // now value1 == true
+      // 现在value1 == true
       if (!value2.booleanValue()) {
         return value2;
       }
-      // now value1 == value2 == true
+      // 现在value1 == value2 == true
       if (!value3.booleanValue()) {
         return value3;
       }
-      // now value1 == value2 == value3 == true
+      // 现在value1 == value2 == value3 == true
       return value1;
     }
   }
 
   /**
-   * 返回 {@code Boolean} array.
+   * 返回{@code Boolean}数组中的最小值。
    *
-   * <p>Assume that {@code Boolean.TRUE &gt; Boolean.FALSE &gt; null} for {@code
-   * Boolean} objects.
+   * <p>对于{@code Boolean}对象，假设{@code Boolean.TRUE &gt; Boolean.FALSE &gt; null}。
    *
    * @param array
-   *     a {@code Boolean} array, must not be {@code null} nor empty.
-   * @return the minimum object in the array. In case of ties, returns the one
-   *     with the smallest position. Note that the returned value is either
-   *     {@code null} or a reference to one of elements in the {@code array} .
+   *     一个{@code Boolean}数组，不能为{@code null}或空。
+   * @return 数组中的最小对象。在相等的情况下，返回位置最小的那个。注意返回值要么是
+   *     {@code null}，要么是{@code array}中某个元素的引用。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static Boolean min(final Boolean... array) {
     if ((array == null) || (array.length == 0)) {
@@ -201,14 +193,14 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code char} values.
+   * 返回两个{@code char}值中的最小值。
    *
    * @param value1
-   *     a {@code char} value;
+   *     一个{@code char}值；
    * @param value2
-   *     a {@code char} value;
-   * @return the minimum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the smallest position.
+   *     一个{@code char}值；
+   * @return {@code value1}和{@code value2}的最小值。在相等的情况下，
+   *     返回位置最小的那个。
    */
   public static char min(final char value1, final char value2) {
     return (value1 <= value2 ? value1 : value2);
@@ -242,14 +234,13 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code char} array.
+   * 返回{@code char}数组中的最小值。
    *
    * @param array
-   *     a {@code char} array, must not be {@code null} nor empty.
-   * @return the minimum value in the array. In case of ties, returns the one
-   *     with the smallest position.
+   *     一个{@code char}数组，不能为{@code null}或空。
+   * @return 数组中的最小值。在相等的情况下，返回位置最小的那个。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static char min(final char... array) {
     if ((array == null) || (array.length == 0)) {
@@ -266,17 +257,16 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code Character} objects.
+   * 返回两个{@code Character}对象中的最小值。
    *
-   * <p>Assume that null is the minimum value of {@code Character} objects.
+   * <p>对于{@code Character}对象，假设null是最小值。
    *
    * @param value1
-   *     a {@code Character} object, could be {@code null}.
+   *     一个{@code Character}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Character} object, could be {@code null}.
-   * @return the minimum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the smallest position. Note that the returned
-   *     value is either {@code null} or a reference to one of the arguments.
+   *     一个{@code Character}对象，可以为{@code null}。
+   * @return {@code value1}和{@code value2}的最小值。在相等的情况下，
+   *     返回位置最小的那个。注意返回值要么是{@code null}，要么是参数之一的引用。
    */
   public static Character min(final Character value1, final Character value2) {
     if ((value1 == null) || (value2 == null)) {
@@ -289,20 +279,18 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code Character} objects.
+   * 返回三个{@code Character}对象中的最小值。
    *
-   * <p>Assume that null is the minimum value of {@code Character} objects.
+   * <p>对于{@code Character}对象，假设null是最小值。
    *
    * @param value1
-   *     a {@code Character} object, could be {@code null}.
+   *     一个{@code Character}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Character} object, could be {@code null}.
+   *     一个{@code Character}对象，可以为{@code null}。
    * @param value3
-   *     a {@code Character} object, could be {@code null}.
-   * @return the minimum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the smallest position. Note that
-   *     the returned value is either {@code null} or a reference to one of the
-   *     arguments.
+   *     一个{@code Character}对象，可以为{@code null}。
+   * @return {@code value1}、{@code value2}和{@code value3}的最小值。
+   *     在相等的情况下，返回位置最小的那个。注意返回值要么是{@code null}，要么是参数之一的引用。
    */
   public static Character min(final Character value1, final Character value2,
       final Character value3) {
@@ -326,17 +314,16 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code Character} array.
+   * 返回{@code Character}数组中的最小值。
    *
-   * <p>Assume that null is the minimum value of {@code Character} objects.
+   * <p>对于{@code Character}对象，假设null是最小值。
    *
    * @param array
-   *     a {@code Character} array, must not be {@code null} nor empty.
-   * @return the minimum object in the array. In case of ties, returns the one
-   *     with the smallest position. Note that the returned value is either
-   *     {@code null} or a reference to one of elements in the {@code array}.
+   *     一个{@code Character}数组，不能为{@code null}或空。
+   * @return 数组中的最小对象。在相等的情况下，返回位置最小的那个。注意返回值要么是
+   *     {@code null}，要么是{@code array}中某个元素的引用。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static Character min(final Character... array) {
     if ((array == null) || (array.length == 0)) {
@@ -362,30 +349,30 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code byte} values.
+   * 返回两个{@code byte}值中的最小值。
    *
    * @param value1
-   *     a {@code byte} value;
+   *     一个{@code byte}值；
    * @param value2
-   *     a {@code byte} value;
-   * @return the minimum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the smallest position.
+   *     一个{@code byte}值；
+   * @return {@code value1}和{@code value2}的最小值。在相等的情况下，
+   *     返回位置最小的那个。
    */
   public static byte min(final byte value1, final byte value2) {
     return (value1 <= value2 ? value1 : value2);
   }
 
   /**
-   * 返回三个 {@code byte} values.
+   * 返回三个{@code byte}值中的最小值。
    *
    * @param value1
-   *     a {@code byte} value;
+   *     一个{@code byte}值；
    * @param value2
-   *     a {@code byte} value;
+   *     一个{@code byte}值；
    * @param value3
-   *     a {@code byte} value;
-   * @return the minimum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the smallest position.
+   *     一个{@code byte}值；
+   * @return {@code value1}、{@code value2}和{@code value3}的最小值。
+   *     在相等的情况下，返回位置最小的那个。
    */
   public static byte min(final byte value1, final byte value2,
       final byte value3) {
@@ -403,14 +390,13 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code byte} array.
+   * 返回{@code byte}数组中的最小值。
    *
    * @param array
-   *     a {@code byte} array, must not be {@code null} nor empty.
-   * @return the minimum value in the array. In case of ties, returns the one
-   *     with the smallest position.
+   *     一个{@code byte}数组，不能为{@code null}或空。
+   * @return 数组中的最小值。在相等的情况下，返回位置最小的那个。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static byte min(final byte... array) {
     if ((array == null) || (array.length == 0)) {
@@ -427,17 +413,16 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code Byte} objects.
+   * 返回两个{@code Byte}对象中的最小值。
    *
-   * <p>Assume that null is the minimum value of {@code Byte} objects.
+   * <p>对于{@code Byte}对象，假设null是最小值。
    *
    * @param value1
-   *     a {@code Byte} object, could be {@code null}.
+   *     一个{@code Byte}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Byte} object, could be {@code null}.
-   * @return the minimum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the smallest position. Note that the returned
-   *     value is either {@code null} or a reference to one of the arguments.
+   *     一个{@code Byte}对象，可以为{@code null}。
+   * @return {@code value1}和{@code value2}的最小值。在相等的情况下，
+   *     返回位置最小的那个。注意返回值要么是{@code null}，要么是参数之一的引用。
    */
   public static Byte min(final Byte value1, final Byte value2) {
     if ((value1 == null) || (value2 == null)) {
@@ -450,20 +435,18 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code Byte} objects.
+   * 返回三个{@code Byte}对象中的最小值。
    *
-   * <p>Assume that null is the minimum value of {@code Byte} objects.
+   * <p>对于{@code Byte}对象，假设null是最小值。
    *
    * @param value1
-   *     a {@code Byte} object, could be {@code null}.
+   *     一个{@code Byte}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Byte} object, could be {@code null}.
+   *     一个{@code Byte}对象，可以为{@code null}。
    * @param value3
-   *     a {@code Byte} object;
-   * @return the minimum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the smallest position. Note that
-   *     the returned value is either {@code null} or a reference to one of the
-   *     arguments.
+   *     一个{@code Byte}对象，可以为{@code null}。
+   * @return {@code value1}、{@code value2}和{@code value3}的最小值。
+   *     在相等的情况下，返回位置最小的那个。注意返回值要么是{@code null}，要么是参数之一的引用。
    */
   public static Byte min(final Byte value1, final Byte value2,
       final Byte value3) {
@@ -487,17 +470,16 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code Byte} array.
+   * 返回{@code Byte}数组中的最小值。
    *
-   * <p>Assume that null is the minimum value of {@code Byte} objects.
+   * <p>对于{@code Byte}对象，假设null是最小值。
    *
    * @param array
-   *     a {@code Byte} array, must not be {@code null} nor empty.
-   * @return the minimum object in the array. In case of ties, returns the one
-   *     with the smallest position. Note that the returned value is either
-   *     {@code null} or a reference to one of elements in the {@code array}.
+   *     一个{@code Byte}数组，不能为{@code null}或空。
+   * @return 数组中的最小对象。在相等的情况下，返回位置最小的那个。注意返回值要么是
+   *     {@code null}，要么是{@code array}中某个元素的引用。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static Byte min(final Byte... array) {
     if ((array == null) || (array.length == 0)) {
@@ -523,30 +505,30 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code short} values.
+   * 返回两个{@code short}值中的最小值。
    *
    * @param value1
-   *     a {@code short} value;
+   *     一个{@code short}值；
    * @param value2
-   *     a {@code short} value;
-   * @return the minimum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the smallest position.
+   *     一个{@code short}值；
+   * @return {@code value1}和{@code value2}的最小值。在相等的情况下，
+   *     返回位置最小的那个。
    */
   public static short min(final short value1, final short value2) {
     return (value1 <= value2 ? value1 : value2);
   }
 
   /**
-   * 返回三个 {@code short} values.
+   * 返回三个{@code short}值中的最小值。
    *
    * @param value1
-   *     a {@code short} value;
+   *     一个{@code short}值；
    * @param value2
-   *     a {@code short} value;
+   *     一个{@code short}值；
    * @param value3
-   *     a {@code short} value;
-   * @return the minimum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the smallest position.
+   *     一个{@code short}值；
+   * @return {@code value1}、{@code value2}和{@code value3}的最小值。
+   *     在相等的情况下，返回位置最小的那个。
    */
   public static short min(final short value1, final short value2,
       final short value3) {
@@ -564,14 +546,13 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code short} array.
+   * 返回{@code short}数组中的最小值。
    *
    * @param array
-   *     a {@code short} array, must not be {@code null} nor empty.
-   * @return the minimum value in the array. In case of ties, returns the one
-   *     with the smallest position.
+   *     一个{@code short}数组，不能为{@code null}或空。
+   * @return 数组中的最小值。在相等的情况下，返回位置最小的那个。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static short min(final short... array) {
     if ((array == null) || (array.length == 0)) {
@@ -588,17 +569,16 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code Short} objects.
+   * 返回两个{@code Short}对象中的最小值。
    *
-   * <p>Assume that null is the minimum value of {@code Short} objects.
+   * <p>对于{@code Short}对象，假设null是最小值。
    *
    * @param value1
-   *     a {@code Short} object, could be {@code null}.
+   *     一个{@code Short}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Short} object, could be {@code null}.
-   * @return the minimum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the smallest position. Note that the returned
-   *     value is either {@code null} or a reference to one of the arguments.
+   *     一个{@code Short}对象，可以为{@code null}。
+   * @return {@code value1}和{@code value2}的最小值。在相等的情况下，
+   *     返回位置最小的那个。注意返回值要么是{@code null}，要么是参数之一的引用。
    */
   public static Short min(final Short value1, final Short value2) {
     if ((value1 == null) || (value2 == null)) {
@@ -611,20 +591,18 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code Short} objects.
+   * 返回三个{@code Short}对象中的最小值。
    *
-   * <p>Assume that null is the minimum value of {@code Short} objects.
+   * <p>对于{@code Short}对象，假设null是最小值。
    *
    * @param value1
-   *     a {@code Short} object, could be {@code null}.
+   *     一个{@code Short}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Short} object, could be {@code null}.
+   *     一个{@code Short}对象，可以为{@code null}。
    * @param value3
-   *     a {@code Short} object, could be {@code null}.
-   * @return the minimum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the smallest position. Note that
-   *     the returned value is either {@code null} or a reference to one of the
-   *     arguments.
+   *     一个{@code Short}对象，可以为{@code null}。
+   * @return {@code value1}、{@code value2}和{@code value3}的最小值。
+   *     在相等的情况下，返回位置最小的那个。注意返回值要么是{@code null}，要么是参数之一的引用。
    */
   public static Short min(final Short value1, final Short value2,
       final Short value3) {
@@ -648,17 +626,16 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code Short} array.
+   * 返回{@code Short}数组中的最小值。
    *
-   * <p>Assume that null is the minimum value of {@code Short} objects.
+   * <p>对于{@code Short}对象，假设null是最小值。
    *
    * @param array
-   *     a {@code Short} array, must not be {@code null} nor empty.
-   * @return the minimum object in the array. In case of ties, returns the one
-   *     with the smallest position. Note that the returned value is either
-   *     {@code null} or a reference to one of elements in the {@code array}.
+   *     一个{@code Short}数组，不能为{@code null}或空。
+   * @return 数组中的最小对象。在相等的情况下，返回位置最小的那个。注意返回值要么是
+   *     {@code null}，要么是{@code array}中某个元素的引用。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static Short min(final Short... array) {
     if ((array == null) || (array.length == 0)) {
@@ -684,30 +661,30 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code int} values.
+   * 返回两个{@code int}值中的最小值。
    *
    * @param value1
-   *     a {@code int} value;
+   *     一个{@code int}值；
    * @param value2
-   *     a {@code int} value;
-   * @return the minimum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the smallest position.
+   *     一个{@code int}值；
+   * @return {@code value1}和{@code value2}的最小值。在相等的情况下，
+   *     返回位置最小的那个。
    */
   public static int min(final int value1, final int value2) {
     return (value1 <= value2 ? value1 : value2);
   }
 
   /**
-   * 返回三个 {@code int} values.
+   * 返回三个{@code int}值中的最小值。
    *
    * @param value1
-   *     a {@code int} value;
+   *     一个{@code int}值；
    * @param value2
-   *     a {@code int} value;
+   *     一个{@code int}值；
    * @param value3
-   *     a {@code int} value;
-   * @return the minimum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the smallest position.
+   *     一个{@code int}值；
+   * @return {@code value1}、{@code value2}和{@code value3}的最小值。
+   *     在相等的情况下，返回位置最小的那个。
    */
   public static int min(final int value1, final int value2, final int value3) {
     if (value1 <= value2) {
@@ -724,14 +701,13 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code int} array.
+   * 返回{@code int}数组中的最小值。
    *
    * @param array
-   *     a {@code int} array, must not be {@code null} nor empty.
-   * @return the minimum value in the array. In case of ties, returns the one
-   *     with the smallest position.
+   *     一个{@code int}数组，不能为{@code null}或空。
+   * @return 数组中的最小值。在相等的情况下，返回位置最小的那个。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static int min(final int... array) {
     if ((array == null) || (array.length == 0)) {
@@ -748,17 +724,16 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code Integer} objects.
+   * 返回两个{@code Integer}对象中的最小值。
    *
-   * <p>Assume that null is the minimum value of {@code Integer} objects.
+   * <p>对于{@code Integer}对象，假设null是最小值。
    *
    * @param value1
-   *     a {@code Integer} object, could be {@code null}.
+   *     一个{@code Integer}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Integer} object, could be {@code null}.
-   * @return the minimum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the smallest position. Note that the returned
-   *     value is either {@code null} or a reference to one of the arguments.
+   *     一个{@code Integer}对象，可以为{@code null}。
+   * @return {@code value1}和{@code value2}的最小值。在相等的情况下，
+   *     返回位置最小的那个。注意返回值要么是{@code null}，要么是参数之一的引用。
    */
   public static Integer min(final Integer value1, final Integer value2) {
     if ((value1 == null) || (value2 == null)) {
@@ -771,20 +746,18 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code Integer} objects.
+   * 返回三个{@code Integer}对象中的最小值。
    *
-   * <P>Assume that null is the minimum value of {@code Integer} objects.
+   * <p>对于{@code Integer}对象，假设null是最小值。
    *
    * @param value1
-   *     a {@code Integer} object, could be {@code null}.
+   *     一个{@code Integer}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Integer} object, could be {@code null}.
+   *     一个{@code Integer}对象，可以为{@code null}。
    * @param value3
-   *     a {@code Integer} object, could be {@code null}.
-   * @return the minimum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the smallest position. Note that
-   *     the returned value is either {@code null} or a reference to one of the
-   *     arguments.
+   *     一个{@code Integer}对象，可以为{@code null}。
+   * @return {@code value1}、{@code value2}和{@code value3}的最小值。
+   *     在相等的情况下，返回位置最小的那个。注意返回值要么是{@code null}，要么是参数之一的引用。
    */
   public static Integer min(
       final Integer value1, final Integer value2, final Integer value3) {
@@ -808,17 +781,16 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code Integer} array.
+   * 返回{@code Integer}数组中的最小值。
    *
-   * <P>Assume that null is the minimum value of {@code Integer} objects.
+   * <p>对于{@code Integer}对象，假设null是最小值。
    *
    * @param array
-   *     a {@code Integer} array, must not be {@code null} nor empty.
-   * @return the minimum object in the array. In case of ties, returns the one
-   *     with the smallest position. Note that the returned value is either
-   *     {@code null} or a reference to one of elements in the {@code array}.
+   *     一个{@code Integer}数组，不能为{@code null}或空。
+   * @return 数组中的最小对象。在相等的情况下，返回位置最小的那个。注意返回值要么是
+   *     {@code null}，要么是{@code array}中某个元素的引用。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static Integer min(final Integer... array) {
     if ((array == null) || (array.length == 0)) {
@@ -844,30 +816,30 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code long} values.
+   * 返回两个{@code long}值中的最小值。
    *
    * @param value1
-   *     a {@code long} value;
+   *     一个{@code long}值；
    * @param value2
-   *     a {@code long} value;
-   * @return the minimum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the smallest position.
+   *     一个{@code long}值；
+   * @return {@code value1}和{@code value2}的最小值。在相等的情况下，
+   *     返回位置最小的那个。
    */
   public static long min(final long value1, final long value2) {
     return (value1 <= value2 ? value1 : value2);
   }
 
   /**
-   * 返回三个 {@code long} values.
+   * 返回三个{@code long}值中的最小值。
    *
    * @param value1
-   *     a {@code long} value;
+   *     一个{@code long}值；
    * @param value2
-   *     a {@code long} value;
+   *     一个{@code long}值；
    * @param value3
-   *     a {@code long} value;
-   * @return the minimum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the smallest position.
+   *     一个{@code long}值；
+   * @return {@code value1}、{@code value2}和{@code value3}的最小值。
+   *     在相等的情况下，返回位置最小的那个。
    */
   public static long min(final long value1, final long value2,
       final long value3) {
@@ -885,14 +857,13 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code long} array.
+   * 返回{@code long}数组中的最小值。
    *
    * @param array
-   *     a {@code long} array, must not be {@code null} nor empty.
-   * @return the minimum value in the array. In case of ties, returns the one
-   *     with the smallest position.
+   *     一个{@code long}数组，不能为{@code null}或空。
+   * @return 数组中的最小值。在相等的情况下，返回位置最小的那个。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static long min(final long... array) {
     if ((array == null) || (array.length == 0)) {
@@ -909,17 +880,16 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code Long} objects.
+   * 返回两个{@code Long}对象中的最小值。
    *
-   * <P>Assume that null is the minimum value of {@code Long} objects.
+   * <p>对于{@code Long}对象，假设null是最小值。
    *
    * @param value1
-   *     a {@code Long} object, could be {@code null}.
+   *     一个{@code Long}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Long} object, could be {@code null}.
-   * @return the minimum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the smallest position. Note that the returned
-   *     value is either {@code null} or a reference to one of the arguments.
+   *     一个{@code Long}对象，可以为{@code null}。
+   * @return {@code value1}和{@code value2}的最小值。在相等的情况下，
+   *     返回位置最小的那个。注意返回值要么是{@code null}，要么是参数之一的引用。
    */
   public static Long min(final Long value1, final Long value2) {
     if ((value1 == null) || (value2 == null)) {
@@ -932,20 +902,18 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code Long} objects.
+   * 返回三个{@code Long}对象中的最小值。
    *
-   * <P>Assume that null is the minimum value of {@code Long} objects.
+   * <p>对于{@code Long}对象，假设null是最小值。
    *
    * @param value1
-   *     a {@code Long} object, could be {@code null}.
+   *     一个{@code Long}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Long} object, could be {@code null}.
+   *     一个{@code Long}对象，可以为{@code null}。
    * @param value3
-   *     a {@code Long} object, could be {@code null}.
-   * @return the minimum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the smallest position. Note that
-   *     the returned value is either {@code null} or a reference to one of the
-   *     arguments.
+   *     一个{@code Long}对象，可以为{@code null}。
+   * @return {@code value1}、{@code value2}和{@code value3}的最小值。
+   *     在相等的情况下，返回位置最小的那个。注意返回值要么是{@code null}，要么是参数之一的引用。
    */
   public static Long min(final Long value1, final Long value2,
       final Long value3) {
@@ -969,17 +937,16 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code Long} array.
+   * 返回{@code Long}数组中的最小值。
    *
-   * <P>Assume that null is the minimum value of {@code Long} objects.
+   * <p>对于{@code Long}对象，假设null是最小值。
    *
    * @param array
-   *     a {@code Long} array, must not be {@code null} nor empty.
-   * @return the minimum object in the array. In case of ties, returns the one
-   *     with the smallest position. Note that the returned value is either
-   *     {@code null} or a reference to one of elements in the {@code array}.
+   *     一个{@code Long}数组，不能为{@code null}或空。
+   * @return 数组中的最小对象。在相等的情况下，返回位置最小的那个。注意返回值要么是
+   *     {@code null}，要么是{@code array}中某个元素的引用。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static Long min(final Long... array) {
     if ((array == null) || (array.length == 0)) {
@@ -1005,14 +972,14 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code float} values.
+   * 返回两个{@code float}值中的最小值。
    *
    * @param value1
-   *     a {@code float} value;
+   *     一个{@code float}值；
    * @param value2
-   *     a {@code float} value;
-   * @return the minimum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the smallest position.
+   *     一个{@code float}值；
+   * @return {@code value1}和{@code value2}的最小值。在相等的情况下，
+   *     返回位置最小的那个。
    */
   public static float min(final float value1, final float value2) {
     if (Comparison.compare(value1, value2) <= 0) {
@@ -1023,16 +990,16 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code float} values.
+   * 返回三个{@code float}值中的最小值。
    *
    * @param value1
-   *     a {@code float} value;
+   *     一个{@code float}值；
    * @param value2
-   *     a {@code float} value;
+   *     一个{@code float}值；
    * @param value3
-   *     a {@code float} value;
-   * @return the minimum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the smallest position.
+   *     一个{@code float}值；
+   * @return {@code value1}、{@code value2}和{@code value3}的最小值。
+   *     在相等的情况下，返回位置最小的那个。
    */
   public static float min(final float value1, final float value2,
       final float value3) {
@@ -1050,14 +1017,13 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code float} array.
+   * 返回{@code float}数组中的最小值。
    *
    * @param array
-   *     a {@code float} array, must not be {@code null} nor empty.
-   * @return the minimum value in the array. In case of ties, returns the one
-   *     with the smallest position.
+   *     一个{@code float}数组，不能为{@code null}或空。
+   * @return 数组中的最小值。在相等的情况下，返回位置最小的那个。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static float min(final float... array) {
     if ((array == null) || (array.length == 0)) {
@@ -1074,17 +1040,16 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code Float} objects.
+   * 返回两个{@code Float}对象中的最小值。
    *
-   * <P>Assume that null is the minimum value of {@code Float} objects.
+   * <p>对于{@code Float}对象，假设null是最小值。
    *
    * @param value1
-   *     a {@code Float} object, could be {@code null}.
+   *     一个{@code Float}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Float} object, could be {@code null}.
-   * @return the minimum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the smallest position. Note that the returned
-   *     value is either {@code null} or a reference to one of the arguments.
+   *     一个{@code Float}对象，可以为{@code null}。
+   * @return {@code value1}和{@code value2}的最小值。在相等的情况下，
+   *     返回位置最小的那个。注意返回值要么是{@code null}，要么是参数之一的引用。
    */
   public static Float min(final Float value1, final Float value2) {
     if ((value1 == null) || (value2 == null)) {
@@ -1100,20 +1065,18 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code Float} objects.
+   * 返回三个{@code Float}对象中的最小值。
    *
-   * <P>Assume that null is the minimum value of {@code Float} objects.
+   * <p>对于{@code Float}对象，假设null是最小值。
    *
    * @param value1
-   *     a {@code Float} object, could be {@code null}.
+   *     一个{@code Float}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Float} object, could be {@code null}.
+   *     一个{@code Float}对象，可以为{@code null}。
    * @param value3
-   *     a {@code Float} object, could be {@code null}.
-   * @return the minimum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the smallest position. Note that
-   *     the returned value is either {@code null} or a reference to one of the
-   *     arguments.
+   *     一个{@code Float}对象，可以为{@code null}。
+   * @return {@code value1}、{@code value2}和{@code value3}的最小值。
+   *     在相等的情况下，返回位置最小的那个。注意返回值要么是{@code null}，要么是参数之一的引用。
    */
   public static Float min(final Float value1, final Float value2,
       final Float value3) {
@@ -1137,17 +1100,16 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code Float} array.
+   * 返回{@code Float}数组中的最小值。
    *
-   * <P>Assume that null is the minimum value of {@code Float} objects.
+   * <p>对于{@code Float}对象，假设null是最小值。
    *
    * @param array
-   *     a {@code Float} array, must not be {@code null} nor empty.
-   * @return the minimum object in the array. In case of ties, returns the one
-   *     with the smallest position. Note that the returned value is either
-   *     {@code null} or a reference to one of elements in the {@code array}.
+   *     一个{@code Float}数组，不能为{@code null}或空。
+   * @return 数组中的最小对象。在相等的情况下，返回位置最小的那个。注意返回值要么是
+   *     {@code null}，要么是{@code array}中某个元素的引用。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static Float min(final Float... array) {
     if ((array == null) || (array.length == 0)) {
@@ -1173,14 +1135,14 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code double} values.
+   * 返回两个{@code double}值中的最小值。
    *
    * @param value1
-   *     a {@code double} value;
+   *     一个{@code double}值；
    * @param value2
-   *     a {@code double} value;
-   * @return the minimum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the smallest position.
+   *     一个{@code double}值；
+   * @return {@code value1}和{@code value2}的最小值。在相等的情况下，
+   *     返回位置最小的那个。
    */
   public static double min(final double value1, final double value2) {
     if (Comparison.compare(value1, value2) <= 0) {
@@ -1191,16 +1153,16 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code double} values.
+   * 返回三个{@code double}值中的最小值。
    *
    * @param value1
-   *     a {@code double} value;
+   *     一个{@code double}值；
    * @param value2
-   *     a {@code double} value;
+   *     一个{@code double}值；
    * @param value3
-   *     a {@code double} value;
-   * @return the minimum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the smallest position.
+   *     一个{@code double}值；
+   * @return {@code value1}、{@code value2}和{@code value3}的最小值。
+   *     在相等的情况下，返回位置最小的那个。
    */
   public static double min(
       final double value1, final double value2, final double value3) {
@@ -1218,14 +1180,13 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code double} array.
+   * 返回{@code double}数组中的最小值。
    *
    * @param array
-   *     a {@code double} array, must not be {@code null} nor empty.
-   * @return the minimum value in the array. In case of ties, returns the one
-   *     with the smallest position.
+   *     一个{@code double}数组，不能为{@code null}或空。
+   * @return 数组中的最小值。在相等的情况下，返回位置最小的那个。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static double min(final double... array) {
     if ((array == null) || (array.length == 0)) {
@@ -1242,17 +1203,16 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code Double} objects.
+   * 返回两个{@code Double}对象中的最小值。
    *
-   * <P>Assume that null is the minimum value of {@code Double} objects.
+   * <p>对于{@code Double}对象，假设null是最小值。
    *
    * @param value1
-   *     a {@code Double} object, could be {@code null}.
+   *     一个{@code Double}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Double} object, could be {@code null}.
-   * @return the minimum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the smallest position. Note that the returned
-   *     value is either {@code null} or a reference to one of the arguments.
+   *     一个{@code Double}对象，可以为{@code null}。
+   * @return {@code value1}和{@code value2}的最小值。在相等的情况下，
+   *     返回位置最小的那个。注意返回值要么是{@code null}，要么是参数之一的引用。
    */
   public static Double min(final Double value1, final Double value2) {
     if ((value1 == null) || (value2 == null)) {
@@ -1268,20 +1228,18 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code Double} objects.
+   * 返回三个{@code Double}对象中的最小值。
    *
-   * <P>Assume that null is the minimum value of {@code Double} objects.
+   * <p>对于{@code Double}对象，假设null是最小值。
    *
    * @param value1
-   *     a {@code Double} object, could be {@code null}.
+   *     一个{@code Double}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Double} object, could be {@code null}.
+   *     一个{@code Double}对象，可以为{@code null}。
    * @param value3
-   *     a {@code Double} object, could be {@code null}.
-   * @return the minimum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the smallest position. Note that
-   *     the returned value is either {@code null} or a reference to one of the
-   *     arguments.
+   *     一个{@code Double}对象，可以为{@code null}。
+   * @return {@code value1}、{@code value2}和{@code value3}的最小值。
+   *     在相等的情况下，返回位置最小的那个。注意返回值要么是{@code null}，要么是参数之一的引用。
    */
   public static Double min(
       final Double value1, final Double value2, final Double value3) {
@@ -1305,17 +1263,16 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code Double} array.
+   * 返回{@code Double}数组中的最小值。
    *
-   * <P>Assume that null is the minimum value of {@code Double} objects.
+   * <p>对于{@code Double}对象，假设null是最小值。
    *
    * @param array
-   *     a {@code Double} array, must not be {@code null} nor empty.
-   * @return the minimum object in the array. In case of ties, returns the one
-   *     with the smallest position. Note that the returned value is either
-   *     {@code null} or a reference to one of elements in the {@code array}.
+   *     一个{@code Double}数组，不能为{@code null}或空。
+   * @return 数组中的最小对象。在相等的情况下，返回位置最小的那个。注意返回值要么是
+   *     {@code null}，要么是{@code array}中某个元素的引用。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static Double min(final Double... array) {
     if ((array == null) || (array.length == 0)) {
@@ -1341,16 +1298,16 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code String} objects.
+   * 返回两个{@code String}对象中的最小值。
    *
-   * <P>Assume that {@code null} is the minimum value of {@code String} objects.
+   * <p>对于{@code String}对象，假设{@code null}是最小值。
    *
    * @param value1
-   *     a {@code String} object, could be {@code null}.
+   *     一个{@code String}对象，可以为{@code null}。
    * @param value2
-   *     a {@code String} object, could be {@code null}.
-   * @return the minimum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the smallest position.
+   *     一个{@code String}对象，可以为{@code null}。
+   * @return {@code value1}和{@code value2}的最小值。在相等的情况下，
+   *     返回位置最小的那个。
    */
   public static String min(final String value1, final String value2) {
     if ((value1 == null) || (value2 == null)) {
@@ -1363,18 +1320,18 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code String} objects.
+   * 返回三个{@code String}对象中的最小值。
    *
-   * <P>Assume that {@code null} is the minimum value of {@code String} objects.
+   * <p>对于{@code String}对象，假设{@code null}是最小值。
    *
    * @param value1
-   *     a {@code String} object, could be {@code null}.
+   *     一个{@code String}对象，可以为{@code null}。
    * @param value2
-   *     a {@code String} object, could be {@code null}.
+   *     一个{@code String}对象，可以为{@code null}。
    * @param value3
-   *     a {@code String} object, could be {@code null}.
-   * @return the minimum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the smallest position.
+   *     一个{@code String}对象，可以为{@code null}。
+   * @return {@code value1}、{@code value2}和{@code value3}的最小值。
+   *     在相等的情况下，返回位置最小的那个。
    */
   public static String min(
       final String value1, final String value2, final String value3) {
@@ -1395,17 +1352,16 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code String} array.
+   * 返回{@code String}数组中的最小值。
    *
-   * <P>Assume that null is the minimum value of {@code String} objects.
+   * <p>对于{@code String}对象，假设null是最小值。
    *
    * @param array
-   *     a {@code String} array, must not be {@code null} nor empty.
-   * @return the minimum object in the array. In case of ties, returns the one
-   *     with the smallest position. Note that the returned value is either
-   *     {@code null} or a reference to one of elements in the {@code array}.
+   *     一个{@code String}数组，不能为{@code null}或空。
+   * @return 数组中的最小对象。在相等的情况下，返回位置最小的那个。注意返回值要么是
+   *     {@code null}，要么是{@code array}中某个元素的引用。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static String min(final String... array) {
     if ((array == null) || (array.length == 0)) {
@@ -1426,19 +1382,18 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code Comparable} objects.
+   * 返回两个{@code Comparable}对象中的最小值。
    *
-   * <P>Assume that {@code null} is the minimum value.
+   * <p>假设{@code null}是最小值。
    *
    * @param <T>
-   *     any object type. Note that it could be type of arrays or
-   *     multi-dimensional arrays.
+   *     任意对象类型。注意它可以是数组类型或多维数组类型。
    * @param value1
-   *     an object of class {@code T}, could be {@code null}.
+   *     一个类{@code T}的对象，可以为{@code null}。
    * @param value2
-   *     an object of class {@code T}, could be {@code null}.
-   * @return the minimum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the smallest position.
+   *     一个类{@code T}的对象，可以为{@code null}。
+   * @return {@code value1}和{@code value2}的最小值。在相等的情况下，
+   *     返回位置最小的那个。
    */
   public static <T> T min(final T value1, final T value2) {
     if (Comparison.compare(value1, value2) <= 0) {
@@ -1449,21 +1404,20 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code Comparable} objects.
+   * 返回三个{@code Comparable}对象中的最小值。
    *
-   * <P>Assume that {@code null} is the minimum value.
+   * <p>假设{@code null}是最小值。
    *
    * @param <T>
-   *     any object type. Note that it could be type of arrays or
-   *     multi-dimensional arrays.
+   *     任意对象类型。注意它可以是数组类型或多维数组类型。
    * @param value1
-   *     a object of class {@code T}, could be {@code null}.
+   *     一个类{@code T}的对象，可以为{@code null}。
    * @param value2
-   *     a object of class {@code T}, could be {@code null}.
+   *     一个类{@code T}的对象，可以为{@code null}。
    * @param value3
-   *     a object of class {@code T}, could be {@code null}.
-   * @return the minimum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the smallest position.
+   *     一个类{@code T}的对象，可以为{@code null}。
+   * @return {@code value1}、{@code value2}和{@code value3}的最小值。
+   *     在相等的情况下，返回位置最小的那个。
    */
   public static <T> T min(final T value1, final T value2, final T value3) {
     if (Comparison.compare(value1, value2) <= 0) {
@@ -1480,20 +1434,18 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code Comparable} array.
+   * 返回{@code Comparable}数组中的最小值。
    *
-   * <P>Assume that null is the minimum value .
+   * <p>假设null是最小值。
    *
    * @param <T>
-   *     any object type. Note that it could be type of arrays or
-   *     multi-dimensional arrays.
+   *     任意对象类型。注意它可以是数组类型或多维数组类型。
    * @param array
-   *     a array of class {@code T}, must not be {@code null} nor empty.
-   * @return the minimum object in the array. In case of ties, returns the one
-   *     with the smallest position. Note that the returned value is either
-   *     {@code null} or a reference to one of elements in the {@code array}.
+   *     一个类{@code T}的数组，不能为{@code null}或空。
+   * @return 数组中的最小对象。在相等的情况下，返回位置最小的那个。注意返回值要么是
+   *     {@code null}，要么是{@code array}中某个元素的引用。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   @SafeVarargs
   public static <T> T min(final T... array) {
@@ -1515,23 +1467,18 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code Comparable} {@code Iterable}
-   * object.
+   * 返回{@code Comparable} {@code Iterable}对象中的最小值。
    *
-   * <P>Assume that null is the minimum value.
+   * <p>假设null是最小值。
    *
    * @param <T>
-   *     any object type. Note that it could be type of arrays or
-   *     multi-dimensional arrays.
+   *     任意对象类型。注意它可以是数组类型或多维数组类型。
    * @param iterable
-   *     an {@code Iterable} of values of class {@code T}, must not be {@code
-   *     null} nor empty.
-   * @return the minimum object in the list.In case of ties, returns the one
-   *     with the smallest position. Note that the returned value is either
-   *     {@code null} or a reference to one of elements in the {@code
-   *     iterable}.
+   *     一个类{@code T}值的{@code Iterable}，不能为{@code null}或空。
+   * @return 列表中的最小对象。在相等的情况下，返回位置最小的那个。注意返回值要么是
+   *     {@code null}，要么是{@code iterable}中某个元素的引用。
    * @throws NullArgumentException
-   *     if {@code iterable} is {@code null} or empty.
+   *     如果{@code iterable}为{@code null}或空。
    */
   public static <T> T min(final Iterable<T> iterable) {
     if (iterable == null) {
@@ -1557,16 +1504,16 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code boolean} values.
+   * 返回两个{@code boolean}值中的最大值。
    *
-   * <P>Assume {@code true &gt; false} for {@code boolean} values.
+   * <p>对于{@code boolean}值，假设{@code true &gt; false}。
    *
    * @param value1
-   *     a {@code boolean} value;
+   *     一个{@code boolean}值；
    * @param value2
-   *     a {@code boolean} value;
-   * @return the maximum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the largest position.
+   *     一个{@code boolean}值；
+   * @return {@code value1}和{@code value2}的最大值。在相等的情况下，
+   *     返回位置最大的那个。
    */
   public static boolean max(final boolean value1, final boolean value2) {
     if (value2) {
@@ -1577,18 +1524,18 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code boolean} values.
+   * 返回三个{@code boolean}值中的最大值。
    *
-   * <P>Assume {@code true &gt; false} for {@code boolean} values.
+   * <p>对于{@code boolean}值，假设{@code true &gt; false}。
    *
    * @param value1
-   *     a {@code boolean} value;
+   *     一个{@code boolean}值；
    * @param value2
-   *     a {@code boolean} value;
+   *     一个{@code boolean}值；
    * @param value3
-   *     a {@code boolean} value;
-   * @return the maximum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the largest position.
+   *     一个{@code boolean}值；
+   * @return {@code value1}、{@code value2}和{@code value3}的最大值。
+   *     在相等的情况下，返回位置最大的那个。
    */
   public static boolean max(
       final boolean value1, final boolean value2, final boolean value3) {
@@ -1600,16 +1547,15 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code boolean} array.
+   * 返回{@code boolean}数组中的最大值。
    *
-   * <P>Assume {@code true &gt; false} for {@code boolean} values.
+   * <p>对于{@code boolean}值，假设{@code true &gt; false}。
    *
    * @param array
-   *     a {@code boolean} array, must not be {@code null} nor empty.
-   * @return the maximum value in the array. In case of ties, returns the one
-   *     with the largest position.
+   *     一个{@code boolean}数组，不能为{@code null}或空。
+   * @return 数组中的最大值。在相等的情况下，返回位置最大的那个。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static boolean max(final boolean... array) {
     if ((array == null) || (array.length == 0)) {
@@ -1624,18 +1570,16 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code Boolean} objects.
+   * 返回两个{@code Boolean}对象中的最大值。
    *
-   * <P>Assume {@code Boolean.TRUE &gt;Boolean.FALSE &gt; null} for {@code Boolean}
-   * objects.
+   * <p>对于{@code Boolean}对象，假设{@code Boolean.TRUE &gt; Boolean.FALSE &gt; null}。
    *
    * @param value1
-   *     a {@code Boolean} object, could be {@code null}.
+   *     一个{@code Boolean}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Boolean} object, could be {@code null}.
-   * @return the maximum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the largest position. Note that the returned value
-   *     is either {@code null} or a reference to one of the arguments.
+   *     一个{@code Boolean}对象，可以为{@code null}。
+   * @return {@code value1}和{@code value2}的最大值。在相等的情况下，
+   *     返回位置最大的那个。注意返回值要么是{@code null}，要么是参数中的一个引用。
    */
   public static Boolean max(final Boolean value1, final Boolean value2) {
     if (value1 == null) {
@@ -1654,35 +1598,33 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code Boolean} objects.
+   * 返回三个{@code Boolean}对象中的最大值。
    *
-   * <P>Assume {@code Boolean.TRUE &gt; Boolean.FALSE &gt; null} for {@code
-   * Boolean} objects.
+   * <p>对于{@code Boolean}对象，假设{@code Boolean.TRUE &gt; Boolean.FALSE &gt; null}。
    *
    * @param value1
-   *     a {@code Boolean} object, could be {@code null}.
+   *     一个{@code Boolean}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Boolean} object, could be {@code null}.
+   *     一个{@code Boolean}对象，可以为{@code null}。
    * @param value3
-   *     a {@code Boolean} object, could be {@code null}.
-   * @return the maximum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the largest position. Note that
-   *     the returned value is either {@code null} or a reference to one of the
-   *     arguments.
+   *     一个{@code Boolean}对象，可以为{@code null}。
+   * @return {@code value1}、{@code value2}和{@code value3}的最大值。
+   *     在相等的情况下，返回位置最大的那个。注意返回值要么是{@code null}，
+   *     要么是参数中的一个引用。
    */
   public static Boolean max(
       final Boolean value1, final Boolean value2, final Boolean value3) {
     if (value1 == null) {
-      // returns the maximum of value2 and value3
+      // 返回value2和value3的最大值
       return max(value2, value3);
     } else if (value2 == null) {
-      // returns the maximum of value1 and value3
+      // 返回value1和value3的最大值
       return max(value1, value3);
     } else if (value3 == null) {
-      // returns the maximum of value1 and value2
+      // 返回value1和value2的最大值
       return max(value1, value2);
     } else {
-      // returns the maximum of non-null value1, value2 and value3
+      // 返回非null的value1、value2和value3的最大值
       if (value3.booleanValue()) {
         return value3;
       }
@@ -1698,37 +1640,35 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code Boolean} array.
+   * 返回{@code Boolean}数组中的最大值。
    *
-   * <P>Assume that {@code Boolean.TRUE &gt; Boolean.FALSE &gt; null} for {@code
-   * Boolean} objects.
+   * <p>对于{@code Boolean}对象，假设{@code Boolean.TRUE &gt; Boolean.FALSE &gt; null}。
    *
    * @param array
-   *     a {@code Boolean} array, must not be {@code null} nor empty.
-   * @return the maximum object in the array. In case of ties, returns the one
-   *     with the largest position. Note that the returned value is either
-   *     {@code null} or a reference to one of elements in the {@code array}.
+   *     一个{@code Boolean}数组，不能为{@code null}或空。
+   * @return 数组中的最大对象。在相等的情况下，返回位置最大的那个。
+   *     注意返回值要么是{@code null}，要么是{@code array}中某个元素的引用。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static Boolean max(final Boolean... array) {
     if ((array == null) || (array.length == 0)) {
       throw new NullArgumentException();
     }
-    // find the last non-null element in array
+    // 在数组中找到最后一个非null元素
     int i = array.length - 1;
     while ((i >= 0) && (array[i] == null)) {
       --i;
     }
     if (i < 0) {
-      // all elements in array are null
+      // 数组中的所有元素都是null
       return null;
     }
     final Boolean max = array[i];
     if (max.booleanValue()) {
       return max;
     }
-    // now max.booleanValue() == false
+    // 现在max.booleanValue() == false
     for (--i; i >= 0; --i) {
       final Boolean element = array[i];
       if ((element != null) && element.booleanValue()) {
@@ -1739,30 +1679,30 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code char} values.
+   * 返回两个{@code char}值中的最大值。
    *
    * @param value1
-   *     a {@code char} value;
+   *     一个{@code char}值；
    * @param value2
-   *     a {@code char} value;
-   * @return the maximum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the largest position.
+   *     一个{@code char}值；
+   * @return {@code value1}和{@code value2}的最大值。在相等的情况下，
+   *     返回位置最大的那个。
    */
   public static char max(final char value1, final char value2) {
     return (value1 <= value2 ? value2 : value1);
   }
 
   /**
-   * 返回三个 {@code char} values.
+   * 返回三个{@code char}值中的最大值。
    *
    * @param value1
-   *     a {@code char} value;
+   *     一个{@code char}值；
    * @param value2
-   *     a {@code char} value;
+   *     一个{@code char}值；
    * @param value3
-   *     a {@code char} value;
-   * @return the maximum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the largest position.
+   *     一个{@code char}值；
+   * @return {@code value1}、{@code value2}和{@code value3}的最大值。
+   *     在相等的情况下，返回位置最大的那个。
    */
   public static char max(final char value1, final char value2,
       final char value3) {
@@ -1780,14 +1720,13 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code char} array.
+   * 返回{@code char}数组中的最大值。
    *
    * @param array
-   *     a {@code char} array, must not be {@code null} nor empty.
-   * @return the maximum value in the array. In case of ties, returns the one
-   *     with the largest position.
+   *     一个{@code char}数组，不能为{@code null}或空。
+   * @return 数组中的最大值。在相等的情况下，返回位置最大的那个。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static char max(final char... array) {
     if ((array == null) || (array.length == 0)) {
@@ -1805,17 +1744,16 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code Character} objects.
+   * 返回两个{@code Character}对象中的最大值。
    *
-   * <P>Assume that null is the minimum value of {@code Character} objects.
+   * <p>对于{@code Character}对象，假设null是最大值。
    *
    * @param value1
-   *     a {@code Character} object, could be {@code null}.
+   *     一个{@code Character}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Character} object, could be {@code null}.
-   * @return the maximum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the largest position. Note that the returned value
-   *     is either {@code null} or a reference to one of the arguments.
+   *     一个{@code Character}对象，可以为{@code null}。
+   * @return {@code value1}和{@code value2}的最大值。在相等的情况下，
+   *     返回位置最大的那个。注意返回值要么是{@code null}，要么是参数中的一个引用。
    */
   public static Character max(final Character value1, final Character value2) {
     if (value1 == null) {
@@ -1830,20 +1768,19 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code Character} objects.
+   * 返回三个{@code Character}对象中的最大值。
    *
-   * <P>Assume that null is the minimum value of {@code Character} objects.
+   * <p>对于{@code Character}对象，假设null是最大值。
    *
    * @param value1
-   *     a {@code Character} object, could be {@code null}.
+   *     一个{@code Character}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Character} object, could be {@code null}.
+   *     一个{@code Character}对象，可以为{@code null}。
    * @param value3
-   *     a {@code Character} object, could be {@code null}.
-   * @return the maximum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the largest position. Note that
-   *     the returned value is either {@code null} or a reference to one of the
-   *     arguments.
+   *     一个{@code Character}对象，可以为{@code null}。
+   * @return {@code value1}、{@code value2}和{@code value3}的最大值。
+   *     在相等的情况下，返回位置最大的那个。注意返回值要么是{@code null}，
+   *     要么是参数中的一个引用。
    */
   public static Character max(final Character value1, final Character value2,
       final Character value3) {
@@ -1872,34 +1809,33 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code Character} array.
+   * 返回{@code Character}数组中的最大值。
    *
-   * <P>Assume that null is the minimum value of {@code Character} objects.
+   * <p>对于{@code Character}对象，假设null是最大值。
    *
    * @param array
-   *     a {@code Character} array, must not be {@code null} nor empty.
-   * @return the maximum object in the array. In case of ties, returns the one
-   *     with the largest position. Note that the returned value is either
-   *     {@code null} or a reference to one of elements in the {@code array}.
+   *     一个{@code Character}数组，不能为{@code null}或空。
+   * @return 数组中的最大对象。在相等的情况下，返回位置最大的那个。
+   *     注意返回值要么是{@code null}，要么是{@code array}中某个元素的引用。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static Character max(final Character... array) {
     if ((array == null) || (array.length == 0)) {
       throw new NullArgumentException();
     }
-    // find the last non-null element
+    // 找到最后一个非null元素
     int i = array.length - 1;
     while ((i >= 0) && (array[i] == null)) {
       --i;
     }
     if (i < 0) {
-      // all elements in array are null
+      // 数组中的所有元素都是null
       return null;
     }
     Character max = array[i];
     char maxValue = max.charValue();
-    // test the rest elements
+    // 测试其余元素
     for (--i; i >= 0; --i) {
       final Character element = array[i];
       if (element != null) {
@@ -1914,30 +1850,30 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code byte} values.
+   * 返回两个{@code byte}值中的最大值。
    *
    * @param value1
-   *     a {@code byte} value;
+   *     一个{@code byte}值；
    * @param value2
-   *     a {@code byte} value;
-   * @return the maximum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the largest position.
+   *     一个{@code byte}值；
+   * @return {@code value1}和{@code value2}的最大值。在相等的情况下，
+   *     返回位置最大的那个。
    */
   public static byte max(final byte value1, final byte value2) {
     return (value1 <= value2 ? value2 : value1);
   }
 
   /**
-   * 返回三个 {@code byte} values.
+   * 返回三个{@code byte}值中的最大值。
    *
    * @param value1
-   *     a {@code byte} value;
+   *     一个{@code byte}值；
    * @param value2
-   *     a {@code byte} value;
+   *     一个{@code byte}值；
    * @param value3
-   *     a {@code byte} value;
-   * @return the maximum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the largest position.
+   *     一个{@code byte}值；
+   * @return {@code value1}、{@code value2}和{@code value3}的最大值。
+   *     在相等的情况下，返回位置最大的那个。
    */
   public static byte max(final byte value1, final byte value2,
       final byte value3) {
@@ -1955,14 +1891,13 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code byte} array.
+   * 返回{@code byte}数组中的最大值。
    *
    * @param array
-   *     a {@code byte} array, must not be {@code null} nor empty.
-   * @return the maximum value in the array. In case of ties, returns the one
-   *     with the largest position.
+   *     一个{@code byte}数组，不能为{@code null}或空。
+   * @return 数组中的最大值。在相等的情况下，返回位置最大的那个。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static byte max(final byte... array) {
     if ((array == null) || (array.length == 0)) {
@@ -1980,17 +1915,16 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code Byte} objects.
+   * 返回两个{@code Byte}对象中的最大值。
    *
-   * <P>Assume that null is the maximum value of {@code Byte} objects.
+   * <p>对于{@code Byte}对象，假设null是最大值。
    *
    * @param value1
-   *     a {@code Byte} object, could be {@code null}.
+   *     一个{@code Byte}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Byte} object, could be {@code null}.
-   * @return the maximum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the largest position. Note that the returned value
-   *     is either {@code null} or a reference to one of the arguments.
+   *     一个{@code Byte}对象，可以为{@code null}。
+   * @return {@code value1}和{@code value2}的最大值。在相等的情况下，
+   *     返回位置最大的那个。注意返回值要么是{@code null}，要么是参数中的一个引用。
    */
   public static Byte max(final Byte value1, final Byte value2) {
     if (value1 == null) {
@@ -2005,20 +1939,19 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code Byte} objects.
+   * 返回三个{@code Byte}对象中的最大值。
    *
-   * <P>Assume that null is the maximum value of {@code Byte} objects.
+   * <p>对于{@code Byte}对象，假设null是最大值。
    *
    * @param value1
-   *     a {@code Byte} object, could be {@code null}.
+   *     一个{@code Byte}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Byte} object, could be {@code null}.
+   *     一个{@code Byte}对象，可以为{@code null}。
    * @param value3
-   *     a {@code Byte} object;
-   * @return the maximum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the largest position. Note that
-   *     the returned value is either {@code null} or a reference to one of the
-   *     arguments.
+   *     一个{@code Byte}对象，可以为{@code null}。
+   * @return {@code value1}、{@code value2}和{@code value3}的最大值。
+   *     在相等的情况下，返回位置最大的那个。注意返回值要么是{@code null}，
+   *     要么是参数中的一个引用。
    */
   public static Byte max(final Byte value1, final Byte value2,
       final Byte value3) {
@@ -2047,34 +1980,33 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code Byte} array.
+   * 返回{@code Byte}数组中的最大值。
    *
-   * <P>Assume that null is the maximum value of {@code Byte} objects.
+   * <p>对于{@code Byte}对象，假设null是最大值。
    *
    * @param array
-   *     a {@code Byte} array, must not be {@code null} nor empty.
-   * @return the maximum object in the array. In case of ties, returns the one
-   *     with the largest position. Note that the returned value is either
-   *     {@code null} or a reference to one of elements in the {@code array}.
+   *     一个{@code Byte}数组，不能为{@code null}或空。
+   * @return 数组中的最大对象。在相等的情况下，返回位置最大的那个。
+   *     注意返回值要么是{@code null}，要么是{@code array}中某个元素的引用。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static Byte max(final Byte... array) {
     if ((array == null) || (array.length == 0)) {
       throw new NullArgumentException();
     }
-    // find the last non-null element
+    // 找到最后一个非null元素
     int i = array.length - 1;
     while ((i >= 0) && (array[i] == null)) {
       --i;
     }
     if (i < 0) {
-      // all elements in array are null
+      // 数组中的所有元素都是null
       return null;
     }
     Byte max = array[i];
     byte maxValue = max.byteValue();
-    // test the rest elements
+    // 测试其余元素
     for (--i; i >= 0; --i) {
       final Byte element = array[i];
       if (element != null) {
@@ -2089,30 +2021,30 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code short} values.
+   * 返回两个{@code short}值中的最大值。
    *
    * @param value1
-   *     a {@code short} value;
+   *     一个{@code short}值；
    * @param value2
-   *     a {@code short} value;
-   * @return the maximum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the largest position.
+   *     一个{@code short}值；
+   * @return {@code value1}和{@code value2}的最大值。在相等的情况下，
+   *     返回位置最大的那个。
    */
   public static short max(final short value1, final short value2) {
     return (value1 <= value2 ? value2 : value1);
   }
 
   /**
-   * 返回三个 {@code short} values.
+   * 返回三个{@code short}值中的最大值。
    *
    * @param value1
-   *     a {@code short} value;
+   *     一个{@code short}值；
    * @param value2
-   *     a {@code short} value;
+   *     一个{@code short}值；
    * @param value3
-   *     a {@code short} value;
-   * @return the maximum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the largest position.
+   *     一个{@code short}值；
+   * @return {@code value1}、{@code value2}和{@code value3}的最大值。
+   *     在相等的情况下，返回位置最大的那个。
    */
   public static short max(final short value1, final short value2,
       final short value3) {
@@ -2130,14 +2062,13 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code short} array.
+   * 返回{@code short}数组中的最大值。
    *
    * @param array
-   *     a {@code short} array, must not be {@code null} nor empty.
-   * @return the maximum value in the array. In case of ties, returns the one
-   *     with the largest position.
+   *     一个{@code short}数组，不能为{@code null}或空。
+   * @return 数组中的最大值。在相等的情况下，返回位置最大的那个。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static short max(final short... array) {
     if ((array == null) || (array.length == 0)) {
@@ -2155,17 +2086,16 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code Short} objects.
+   * 返回两个{@code Short}对象中的最大值。
    *
-   * <P>Assume that null is the maximum value of {@code Short} objects.
+   * <p>对于{@code Short}对象，假设null是最大值。
    *
    * @param value1
-   *     a {@code Short} object, could be {@code null}.
+   *     一个{@code Short}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Short} object, could be {@code null}.
-   * @return the maximum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the largest position. Note that the returned value
-   *     is either {@code null} or a reference to one of the arguments.
+   *     一个{@code Short}对象，可以为{@code null}。
+   * @return {@code value1}和{@code value2}的最大值。在相等的情况下，
+   *     返回位置最大的那个。注意返回值要么是{@code null}，要么是参数中的一个引用。
    */
   public static Short max(final Short value1, final Short value2) {
     if (value1 == null) {
@@ -2180,20 +2110,19 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code Short} objects.
+   * 返回三个{@code Short}对象中的最大值。
    *
-   * <P>Assume that null is the maximum value of {@code Short} objects.
+   * <p>对于{@code Short}对象，假设null是最大值。
    *
    * @param value1
-   *     a {@code Short} object, could be {@code null}.
+   *     一个{@code Short}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Short} object, could be {@code null}.
+   *     一个{@code Short}对象，可以为{@code null}。
    * @param value3
-   *     a {@code Short} object, could be {@code null}.
-   * @return the maximum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the largest position. Note that
-   *     the returned value is either {@code null} or a reference to one of the
-   *     arguments.
+   *     一个{@code Short}对象，可以为{@code null}。
+   * @return {@code value1}、{@code value2}和{@code value3}的最大值。
+   *     在相等的情况下，返回位置最大的那个。注意返回值要么是{@code null}，
+   *     要么是参数中的一个引用。
    */
   public static Short max(final Short value1, final Short value2,
       final Short value3) {
@@ -2222,34 +2151,33 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code Short} array.
+   * 返回{@code Short}数组中的最大值。
    *
-   * <P>Assume that null is the maximum value of {@code Short} objects.
+   * <p>对于{@code Short}对象，假设null是最大值。
    *
    * @param array
-   *     a {@code Short} array, must not be {@code null} nor empty.
-   * @return the maximum object in the array. In case of ties, returns the one
-   *     with the largest position. Note that the returned value is either
-   *     {@code null} or a reference to one of elements in the {@code array}.
+   *     一个{@code Short}数组，不能为{@code null}或空。
+   * @return 数组中的最大对象。在相等的情况下，返回位置最大的那个。
+   *     注意返回值要么是{@code null}，要么是{@code array}中某个元素的引用。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static Short max(final Short... array) {
     if ((array == null) || (array.length == 0)) {
       throw new NullArgumentException();
     }
-    // find the last non-null element
+    // 找到最后一个非null元素
     int i = array.length - 1;
     while ((i >= 0) && (array[i] == null)) {
       --i;
     }
     if (i < 0) {
-      // all elements in array are null
+      // 数组中的所有元素都是null
       return null;
     }
     Short max = array[i];
     short maxValue = max.shortValue();
-    // test the rest elements
+    // 测试其余元素
     for (--i; i >= 0; --i) {
       final Short element = array[i];
       if (element != null) {
@@ -2264,30 +2192,30 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code int} values.
+   * 返回两个{@code int}值中的最大值。
    *
    * @param value1
-   *     a {@code int} value;
+   *     一个{@code int}值；
    * @param value2
-   *     a {@code int} value;
-   * @return the maximum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the largest position.
+   *     一个{@code int}值；
+   * @return {@code value1}和{@code value2}的最大值。在相等的情况下，
+   *     返回位置最大的那个。
    */
   public static int max(final int value1, final int value2) {
     return (value1 <= value2 ? value2 : value1);
   }
 
   /**
-   * 返回三个 {@code int} values.
+   * 返回三个{@code int}值中的最大值。
    *
    * @param value1
-   *     a {@code int} value;
+   *     一个{@code int}值；
    * @param value2
-   *     a {@code int} value;
+   *     一个{@code int}值；
    * @param value3
-   *     a {@code int} value;
-   * @return the maximum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the largest position.
+   *     一个{@code int}值；
+   * @return {@code value1}、{@code value2}和{@code value3}的最大值。
+   *     在相等的情况下，返回位置最大的那个。
    */
   public static int max(final int value1, final int value2, final int value3) {
     if (value3 >= value2) {
@@ -2304,14 +2232,13 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code int} array.
+   * 返回{@code int}数组中的最大值。
    *
    * @param array
-   *     a {@code int} array, must not be {@code null} nor empty.
-   * @return the maximum value in the array. In case of ties, returns the one
-   *     with the largest position.
+   *     一个{@code int}数组，不能为{@code null}或空。
+   * @return 数组中的最大值。在相等的情况下，返回位置最大的那个。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static int max(final int... array) {
     if ((array == null) || (array.length == 0)) {
@@ -2329,17 +2256,16 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code Integer} objects.
+   * 返回两个{@code Integer}对象中的最大值。
    *
-   * <P>Assume that null is the maximum value of {@code Integer} objects.
+   * <p>对于{@code Integer}对象，假设null是最大值。
    *
    * @param value1
-   *     a {@code Integer} object, could be {@code null}.
+   *     一个{@code Integer}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Integer} object, could be {@code null}.
-   * @return the maximum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the largest position. Note that the returned value
-   *     is either {@code null} or a reference to one of the arguments.
+   *     一个{@code Integer}对象，可以为{@code null}。
+   * @return {@code value1}和{@code value2}的最大值。在相等的情况下，
+   *     返回位置最大的那个。注意返回值要么是{@code null}，要么是参数中的一个引用。
    */
   public static Integer max(final Integer value1, final Integer value2) {
     if (value1 == null) {
@@ -2354,20 +2280,19 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code Integer} objects.
+   * 返回三个{@code Integer}对象中的最大值。
    *
-   * <P>Assume that null is the maximum value of {@code Integer} objects.
+   * <p>对于{@code Integer}对象，假设null是最大值。
    *
    * @param value1
-   *     a {@code Integer} object, could be {@code null}.
+   *     一个{@code Integer}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Integer} object, could be {@code null}.
+   *     一个{@code Integer}对象，可以为{@code null}。
    * @param value3
-   *     a {@code Integer} object, could be {@code null}.
-   * @return the maximum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the largest position. Note that
-   *     the returned value is either {@code null} or a reference to one of the
-   *     arguments.
+   *     一个{@code Integer}对象，可以为{@code null}。
+   * @return {@code value1}、{@code value2}和{@code value3}的最大值。
+   *     在相等的情况下，返回位置最大的那个。注意返回值要么是{@code null}，
+   *     要么是参数中的一个引用。
    */
   public static Integer max(
       final Integer value1, final Integer value2, final Integer value3) {
@@ -2396,34 +2321,33 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code Integer} array.
+   * 返回{@code Integer}数组中的最大值。
    *
-   * <P>Assume that null is the maximum value of {@code Integer} objects.
+   * <p>对于{@code Integer}对象，假设null是最大值。
    *
    * @param array
-   *     a {@code Integer} array, must not be {@code null} nor empty.
-   * @return the maximum object in the array. In case of ties, returns the one
-   *     with the largest position. Note that the returned value is either
-   *     {@code null} or a reference to one of elements in the {@code array}.
+   *     一个{@code Integer}数组，不能为{@code null}或空。
+   * @return 数组中的最大对象。在相等的情况下，返回位置最大的那个。
+   *     注意返回值要么是{@code null}，要么是{@code array}中某个元素的引用。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static Integer max(final Integer... array) {
     if ((array == null) || (array.length == 0)) {
       throw new NullArgumentException();
     }
-    // find the last non-null element
+    // 找到最后一个非null元素
     int i = array.length - 1;
     while ((i >= 0) && (array[i] == null)) {
       --i;
     }
     if (i < 0) {
-      // all elements in array are null
+      // 数组中的所有元素都是null
       return null;
     }
     Integer max = array[i];
     int maxValue = max.intValue();
-    // test the rest elements
+    // 测试其余元素
     for (--i; i >= 0; --i) {
       final Integer element = array[i];
       if (element != null) {
@@ -2438,30 +2362,30 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code long} values.
+   * 返回两个{@code long}值中的最大值。
    *
    * @param value1
-   *     a {@code long} value;
+   *     一个{@code long}值；
    * @param value2
-   *     a {@code long} value;
-   * @return the maximum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the largest position.
+   *     一个{@code long}值；
+   * @return {@code value1}和{@code value2}的最大值。在相等的情况下，
+   *     返回位置最大的那个。
    */
   public static long max(final long value1, final long value2) {
     return (value1 <= value2 ? value2 : value1);
   }
 
   /**
-   * 返回三个 {@code long} values.
+   * 返回三个{@code long}值中的最大值。
    *
    * @param value1
-   *     a {@code long} value;
+   *     一个{@code long}值；
    * @param value2
-   *     a {@code long} value;
+   *     一个{@code long}值；
    * @param value3
-   *     a {@code long} value;
-   * @return the maximum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the largest position.
+   *     一个{@code long}值；
+   * @return {@code value1}、{@code value2}和{@code value3}的最大值。
+   *     在相等的情况下，返回位置最大的那个。
    */
   public static long max(final long value1, final long value2,
       final long value3) {
@@ -2479,14 +2403,13 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code long} array.
+   * 返回{@code long}数组中的最大值。
    *
    * @param array
-   *     a {@code long} array, must not be {@code null} nor empty.
-   * @return the maximum value in the array. In case of ties, returns the one
-   *     with the largest position.
+   *     一个{@code long}数组，不能为{@code null}或空。
+   * @return 数组中的最大值。在相等的情况下，返回位置最大的那个。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static long max(final long... array) {
     if ((array == null) || (array.length == 0)) {
@@ -2504,17 +2427,16 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code Long} objects.
+   * 返回两个{@code Long}对象中的最大值。
    *
-   * <P>Assume that null is the maximum value of {@code Long} objects.
+   * <p>对于{@code Long}对象，假设null是最大值。
    *
    * @param value1
-   *     a {@code Long} object, could be {@code null}.
+   *     一个{@code Long}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Long} object, could be {@code null}.
-   * @return the maximum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the largest position. Note that the returned value
-   *     is either {@code null} or a reference to one of the arguments.
+   *     一个{@code Long}对象，可以为{@code null}。
+   * @return {@code value1}和{@code value2}的最大值。在相等的情况下，
+   *     返回位置最大的那个。注意返回值要么是{@code null}，要么是参数中的一个引用。
    */
   public static Long max(final Long value1, final Long value2) {
     if (value1 == null) {
@@ -2529,20 +2451,19 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code Long} objects.
+   * 返回三个{@code Long}对象中的最大值。
    *
-   * <P>Assume that null is the maximum value of {@code Long} objects.
+   * <p>对于{@code Long}对象，假设null是最大值。
    *
    * @param value1
-   *     a {@code Long} object, could be {@code null}.
+   *     一个{@code Long}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Long} object, could be {@code null}.
+   *     一个{@code Long}对象，可以为{@code null}。
    * @param value3
-   *     a {@code Long} object, could be {@code null}.
-   * @return the maximum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the largest position. Note that
-   *     the returned value is either {@code null} or a reference to one of the
-   *     arguments.
+   *     一个{@code Long}对象，可以为{@code null}。
+   * @return {@code value1}、{@code value2}和{@code value3}的最大值。
+   *     在相等的情况下，返回位置最大的那个。注意返回值要么是{@code null}，
+   *     要么是参数中的一个引用。
    */
   public static Long max(final Long value1, final Long value2,
       final Long value3) {
@@ -2571,34 +2492,33 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code Long} array.
+   * 返回{@code Long}数组中的最大值。
    *
-   * <P>Assume that null is the maximum value of {@code Long} objects.
+   * <p>对于{@code Long}对象，假设null是最大值。
    *
    * @param array
-   *     a {@code Long} array, must not be {@code null} nor empty.
-   * @return the maximum object in the array. In case of ties, returns the one
-   *     with the largest position. Note that the returned value is either
-   *     {@code null} or a reference to one of elements in the {@code array}.
+   *     一个{@code Long}数组，不能为{@code null}或空。
+   * @return 数组中的最大对象。在相等的情况下，返回位置最大的那个。
+   *     注意返回值要么是{@code null}，要么是{@code array}中某个元素的引用。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static Long max(final Long... array) {
     if ((array == null) || (array.length == 0)) {
       throw new NullArgumentException();
     }
-    // find the last non-null element
+    // 找到最后一个非null元素
     int i = array.length - 1;
     while ((i >= 0) && (array[i] == null)) {
       --i;
     }
     if (i < 0) {
-      // all elements in array are null
+      // 数组中的所有元素都是null
       return null;
     }
     Long max = array[i];
     long maxValue = max.longValue();
-    // test the rest elements
+    // 测试其余元素
     for (--i; i >= 0; --i) {
       final Long element = array[i];
       if (element != null) {
@@ -2613,14 +2533,14 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code float} values.
+   * 返回两个{@code float}值中的最大值。
    *
    * @param value1
-   *     a {@code float} value;
+   *     一个{@code float}值；
    * @param value2
-   *     a {@code float} value;
-   * @return the maximum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the largest position.
+   *     一个{@code float}值；
+   * @return {@code value1}和{@code value2}的最大值。在相等的情况下，
+   *     返回位置最大的那个。
    */
   public static float max(final float value1, final float value2) {
     if (Comparison.compare(value1, value2) <= 0) {
@@ -2631,16 +2551,16 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code float} values.
+   * 返回三个{@code float}值中的最大值。
    *
    * @param value1
-   *     a {@code float} value;
+   *     一个{@code float}值；
    * @param value2
-   *     a {@code float} value;
+   *     一个{@code float}值；
    * @param value3
-   *     a {@code float} value;
-   * @return the maximum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the largest position.
+   *     一个{@code float}值；
+   * @return {@code value1}、{@code value2}和{@code value3}的最大值。
+   *     在相等的情况下，返回位置最大的那个。
    */
   public static float max(final float value1, final float value2,
       final float value3) {
@@ -2658,14 +2578,13 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code float} array.
+   * 返回{@code float}数组中的最大值。
    *
    * @param array
-   *     a {@code float} array, must not be {@code null} nor empty.
-   * @return the maximum value in the array. In case of ties, returns the one
-   *     with the largest position.
+   *     一个{@code float}数组，不能为{@code null}或空。
+   * @return 数组中的最大值。在相等的情况下，返回位置最大的那个。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static float max(final float... array) {
     if ((array == null) || (array.length == 0)) {
@@ -2683,17 +2602,16 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code Float} objects.
+   * 返回两个{@code Float}对象中的最大值。
    *
-   * <P>Assume that null is the maximum value of {@code Float} objects.
+   * <p>对于{@code Float}对象，假设null是最大值。
    *
    * @param value1
-   *     a {@code Float} object, could be {@code null}.
+   *     一个{@code Float}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Float} object, could be {@code null}.
-   * @return the maximum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the largest position. Note that the returned value
-   *     is either {@code null} or a reference to one of the arguments.
+   *     一个{@code Float}对象，可以为{@code null}。
+   * @return {@code value1}和{@code value2}的最大值。在相等的情况下，
+   *     返回位置最大的那个。注意返回值要么是{@code null}，要么是参数中的一个引用。
    */
   public static Float max(final Float value1, final Float value2) {
     if (value1 == null) {
@@ -2708,20 +2626,19 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code Float} objects.
+   * 返回三个{@code Float}对象中的最大值。
    *
-   * <P>Assume that null is the maximum value of {@code Float} objects.
+   * <p>对于{@code Float}对象，假设null是最大值。
    *
    * @param value1
-   *     a {@code Float} object, could be {@code null}.
+   *     一个{@code Float}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Float} object, could be {@code null}.
+   *     一个{@code Float}对象，可以为{@code null}。
    * @param value3
-   *     a {@code Float} object, could be {@code null}.
-   * @return the maximum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the largest position. Note that
-   *     the returned value is either {@code null} or a reference to one of the
-   *     arguments.
+   *     一个{@code Float}对象，可以为{@code null}。
+   * @return {@code value1}、{@code value2}和{@code value3}的最大值。
+   *     在相等的情况下，返回位置最大的那个。注意返回值要么是{@code null}，
+   *     要么是参数中的一个引用。
    */
   public static Float max(final Float value1, final Float value2,
       final Float value3) {
@@ -2750,34 +2667,33 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code Float} array.
+   * 返回{@code Float}数组中的最大值。
    *
-   * <P>Assume that null is the maximum value of {@code Float} objects.
+   * <p>对于{@code Float}对象，假设null是最大值。
    *
    * @param array
-   *     a {@code Float} array, must not be {@code null} nor empty.
-   * @return the maximum object in the array. In case of ties, returns the one
-   *     with the largest position. Note that the returned value is either
-   *     {@code null} or a reference to one of elements in the {@code array}.
+   *     一个{@code Float}数组，不能为{@code null}或空。
+   * @return 数组中的最大对象。在相等的情况下，返回位置最大的那个。
+   *     注意返回值要么是{@code null}，要么是{@code array}中某个元素的引用。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static Float max(final Float... array) {
     if ((array == null) || (array.length == 0)) {
       throw new NullArgumentException();
     }
-    // find the last non-null element
+    // 找到最后一个非null元素
     int i = array.length - 1;
     while ((i >= 0) && (array[i] == null)) {
       --i;
     }
     if (i < 0) {
-      // all elements in array are null
+      // 数组中的所有元素都是null
       return null;
     }
     Float max = array[i];
     float maxValue = max.floatValue();
-    // test the rest elements
+    // 测试其余元素
     for (--i; i >= 0; --i) {
       final Float element = array[i];
       if (element != null) {
@@ -2792,14 +2708,14 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code double} values.
+   * 返回两个{@code double}值中的最大值。
    *
    * @param value1
-   *     a {@code double} value;
+   *     一个{@code double}值；
    * @param value2
-   *     a {@code double} value;
-   * @return the maximum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the largest position.
+   *     一个{@code double}值；
+   * @return {@code value1}和{@code value2}的最大值。在相等的情况下，
+   *     返回位置最大的那个。
    */
   public static double max(final double value1, final double value2) {
     if (Comparison.compare(value1, value2) <= 0) {
@@ -2810,16 +2726,16 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code double} values.
+   * 返回三个{@code double}值中的最大值。
    *
    * @param value1
-   *     a {@code double} value;
+   *     一个{@code double}值；
    * @param value2
-   *     a {@code double} value;
+   *     一个{@code double}值；
    * @param value3
-   *     a {@code double} value;
-   * @return the maximum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the largest position.
+   *     一个{@code double}值；
+   * @return {@code value1}、{@code value2}和{@code value3}的最大值。
+   *     在相等的情况下，返回位置最大的那个。
    */
   public static double max(
       final double value1, final double value2, final double value3) {
@@ -2837,14 +2753,13 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code double} array.
+   * 返回{@code double}数组中的最大值。
    *
    * @param array
-   *     a {@code double} array, must not be {@code null} nor empty.
-   * @return the maximum value in the array. In case of ties, returns the one
-   *     with the largest position.
+   *     一个{@code double}数组，不能为{@code null}或空。
+   * @return 数组中的最大值。在相等的情况下，返回位置最大的那个。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static double max(final double... array) {
     if ((array == null) || (array.length == 0)) {
@@ -2862,17 +2777,16 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code Double} objects.
+   * 返回两个{@code Double}对象中的最大值。
    *
-   * <P>Assume that null is the maximum value of {@code Double} objects.
+   * <p>对于{@code Double}对象，假设null是最大值。
    *
    * @param value1
-   *     a {@code Double} object, could be {@code null}.
+   *     一个{@code Double}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Double} object, could be {@code null}.
-   * @return the maximum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the largest position. Note that the returned value
-   *     is either {@code null} or a reference to one of the arguments.
+   *     一个{@code Double}对象，可以为{@code null}。
+   * @return {@code value1}和{@code value2}的最大值。在相等的情况下，
+   *     返回位置最大的那个。注意返回值要么是{@code null}，要么是参数中的一个引用。
    */
   public static Double max(final Double value1, final Double value2) {
     if (value1 == null) {
@@ -2887,20 +2801,19 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code Double} objects.
+   * 返回三个{@code Double}对象中的最大值。
    *
-   * <P>Assume that null is the maximum value of {@code Double} objects.
+   * <p>对于{@code Double}对象，假设null是最大值。
    *
    * @param value1
-   *     a {@code Double} object, could be {@code null}.
+   *     一个{@code Double}对象，可以为{@code null}。
    * @param value2
-   *     a {@code Double} object, could be {@code null}.
+   *     一个{@code Double}对象，可以为{@code null}。
    * @param value3
-   *     a {@code Double} object, could be {@code null}.
-   * @return the maximum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the largest position. Note that
-   *     the returned value is either {@code null} or a reference to one of the
-   *     arguments.
+   *     一个{@code Double}对象，可以为{@code null}。
+   * @return {@code value1}、{@code value2}和{@code value3}的最大值。
+   *     在相等的情况下，返回位置最大的那个。注意返回值要么是{@code null}，
+   *     要么是参数中的一个引用。
    */
   public static Double max(
       final Double value1, final Double value2, final Double value3) {
@@ -2929,34 +2842,33 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code Double} array.
+   * 返回{@code Double}数组中的最大值。
    *
-   * <P>Assume that null is the maximum value of {@code Double} objects.
+   * <p>对于{@code Double}对象，假设null是最大值。
    *
    * @param array
-   *     a {@code Double} array, must not be {@code null} nor empty.
-   * @return the maximum object in the array. In case of ties, returns the one
-   *     with the largest position. Note that the returned value is either
-   *     {@code null} or a reference to one of elements in the {@code array}.
+   *     一个{@code Double}数组，不能为{@code null}或空。
+   * @return 数组中的最大对象。在相等的情况下，返回位置最大的那个。
+   *     注意返回值要么是{@code null}，要么是{@code array}中某个元素的引用。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static Double max(final Double... array) {
     if ((array == null) || (array.length == 0)) {
       throw new NullArgumentException();
     }
-    // find the last non-null element
+    // 找到最后一个非null元素
     int i = array.length - 1;
     while ((i >= 0) && (array[i] == null)) {
       --i;
     }
     if (i < 0) {
-      // all elements in array are null
+      // 数组中的所有元素都是null
       return null;
     }
     Double max = array[i];
     double maxValue = max.doubleValue();
-    // test the rest elements
+    // 测试其余元素
     for (--i; i >= 0; --i) {
       final Double element = array[i];
       if (element != null) {
@@ -2971,16 +2883,16 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code String} objects.
+   * 返回两个{@code String}对象中的最大值。
    *
-   * <P>Assume that {@code null} is the maximum value of {@code String} objects.
+   * <p>对于{@code String}对象，假设{@code null}是最大值。
    *
    * @param value1
-   *     a {@code String} object, could be {@code null}.
+   *     一个{@code String}对象，可以为{@code null}。
    * @param value2
-   *     a {@code String} object, could be {@code null}.
-   * @return the maximum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the largest position.
+   *     一个{@code String}对象，可以为{@code null}。
+   * @return {@code value1}和{@code value2}的最大值。在相等的情况下，
+   *     返回位置最大的那个。
    */
   public static String max(final String value1, final String value2) {
     if (value1 == null) {
@@ -2995,18 +2907,18 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code String} objects.
+   * 返回三个{@code String}对象中的最大值。
    *
-   * <P>Assume that {@code null} is the maximum value of {@code String} objects.
+   * <p>对于{@code String}对象，假设{@code null}是最大值。
    *
    * @param value1
-   *     a {@code String} object, could be {@code null}.
+   *     一个{@code String}对象，可以为{@code null}。
    * @param value2
-   *     a {@code String} object, could be {@code null}.
+   *     一个{@code String}对象，可以为{@code null}。
    * @param value3
-   *     a {@code String} object, could be {@code null}.
-   * @return the maximum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the largest position.
+   *     一个{@code String}对象，可以为{@code null}。
+   * @return {@code value1}、{@code value2}和{@code value3}的最大值。
+   *     在相等的情况下，返回位置最大的那个。
    */
   public static String max(
       final String value1, final String value2, final String value3) {
@@ -3032,33 +2944,32 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code String} array.
+   * 返回{@code String}数组中的最大值。
    *
-   * <P>Assume that null is the maximum value of {@code String} objects.
+   * <p>对于{@code String}对象，假设null是最大值。
    *
    * @param array
-   *     a {@code String} array, must not be {@code null} nor empty.
-   * @return the maximum object in the array. In case of ties, returns the one
-   *     with the largest position. Note that the returned value is either
-   *     {@code null} or a reference to one of elements in the {@code array}.
+   *     一个{@code String}数组，不能为{@code null}或空。
+   * @return 数组中的最大对象。在相等的情况下，返回位置最大的那个。
+   *     注意返回值要么是{@code null}，要么是{@code array}中某个元素的引用。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   public static String max(final String... array) {
     if ((array == null) || (array.length == 0)) {
       throw new NullArgumentException();
     }
-    // find the last non-null element
+    // 找到最后一个非null元素
     int i = array.length - 1;
     while ((i >= 0) && (array[i] == null)) {
       --i;
     }
     if (i < 0) {
-      // all elements in array are null
+      // 数组中的所有元素都是null
       return null;
     }
     String max = array[i];
-    // test the rest elements
+    // 测试其余元素
     for (--i; i >= 0; --i) {
       final String element = array[i];
       if (element != null) {
@@ -3071,19 +2982,18 @@ public final class Selection {
   }
 
   /**
-   * 返回两个 {@code Comparable} objects.
+   * 返回两个{@code Comparable}对象中的最大值。
    *
-   * <P>Assume that {@code null} is the maximum value.
+   * <p>假设{@code null}是最大值。
    *
    * @param <T>
-   *     any object type. Note that it could be type of arrays or
-   *     multi-dimensional arrays.
+   *     任意对象类型。注意它可以是数组类型或多维数组类型。
    * @param value1
-   *     an object of class {@code T}, could be {@code null}.
+   *     一个类{@code T}的对象，可以为{@code null}。
    * @param value2
-   *     an object of class {@code T}, could be {@code null}.
-   * @return the maximum of {@code value1} and {@code value2}. In case of ties,
-   *     returns the one with the largest position.
+   *     一个类{@code T}的对象，可以为{@code null}。
+   * @return {@code value1}和{@code value2}的最大值。在相等的情况下，
+   *     返回位置最大的那个。
    */
   public static <T> T max(final T value1, final T value2) {
     if (Comparison.compare(value1, value2) <= 0) {
@@ -3094,21 +3004,20 @@ public final class Selection {
   }
 
   /**
-   * 返回三个 {@code Comparable} objects.
+   * 返回三个{@code Comparable}对象中的最大值。
    *
-   * <P>Assume that {@code null} is the maximum value.
+   * <p>假设{@code null}是最大值。
    *
    * @param <T>
-   *     any object type. Note that it could be type of arrays or
-   *     multi-dimensional arrays.
+   *     任意对象类型。注意它可以是数组类型或多维数组类型。
    * @param value1
-   *     a object of class {@code T}, could be {@code null}.
+   *     一个类{@code T}的对象，可以为{@code null}。
    * @param value2
-   *     a object of class {@code T}, could be {@code null}.
+   *     一个类{@code T}的对象，可以为{@code null}。
    * @param value3
-   *     a object of class {@code T}, could be {@code null}.
-   * @return the maximum of {@code value1}, {@code value2} and {@code value3}.
-   *     In case of ties, returns the one with the largest position.
+   *     一个类{@code T}的对象，可以为{@code null}。
+   * @return {@code value1}、{@code value2}和{@code value3}的最大值。
+   *     在相等的情况下，返回位置最大的那个。
    */
   public static <T> T max(final T value1, final T value2, final T value3) {
     if (Comparison.compare(value3, value2) >= 0) {
@@ -3125,37 +3034,35 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code Comparable} array.
+   * 返回{@code Comparable}数组中的最大值。
    *
-   * <P>Assume that null is the maximum value .
+   * <p>假设null是最大值。
    *
    * @param <T>
-   *     any object type. Note that it could be type of arrays or
-   *     multi-dimensional arrays.
+   *     任意对象类型。注意它可以是数组类型或多维数组类型。
    * @param array
-   *     a array of class {@code T}, must not be {@code null} nor empty.
-   * @return the maximum object in the array. In case of ties, returns the one
-   *     with the largest position. Note that the returned value is either
-   *     {@code null} or a reference to one of elements in the {@code array}.
+   *     一个类{@code T}的数组，不能为{@code null}或空。
+   * @return 数组中的最大对象。在相等的情况下，返回位置最大的那个。注意返回值要么是
+   *     {@code null}，要么是{@code array}中某个元素的引用。
    * @throws NullArgumentException
-   *     if {@code array} is {@code null} or empty.
+   *     如果{@code array}为{@code null}或空。
    */
   @SafeVarargs
   public static <T> T max(final T... array) {
     if ((array == null) || (array.length == 0)) {
       throw new NullArgumentException();
     }
-    // find the last non-null element
+    // 找到最后一个非null元素
     int i = array.length - 1;
     while ((i >= 0) && (array[i] == null)) {
       --i;
     }
     if (i < 0) {
-      // all elements in array are null
+      // 数组中的所有元素都是null
       return null;
     }
     T max = array[i];
-    // test the rest elements
+    // 测试其余元素
     for (--i; i >= 0; --i) {
       final T element = array[i];
       if (element != null) {
@@ -3168,23 +3075,18 @@ public final class Selection {
   }
 
   /**
-   * 返回 {@code Comparable} {@code Iterable}
-   * object.
+   * 返回{@code Comparable} {@code Iterable}对象中的最大值。
    *
-   * <P>Assume that null is the maximum value.
+   * <p>假设null是最大值。
    *
    * @param <T>
-   *     any object type. Note that it could be type of arrays or
-   *     multi-dimensional arrays.
+   *     任意对象类型。注意它可以是数组类型或多维数组类型。
    * @param iterable
-   *     an {@code Iterable} of values of class {@code T}, must not be {@code
-   *     null} nor empty.
-   * @return the maximum object in the list.In case of ties, returns the one
-   *     with the largest position. Note that the returned value is either
-   *     {@code null} or a reference to one of elements in the {@code
-   *     iterable}.
+   *     一个类{@code T}值的{@code Iterable}，不能为{@code null}或空。
+   * @return 列表中的最大对象。在相等的情况下，返回位置最大的那个。注意返回值要么是
+   *     {@code null}，要么是{@code iterable}中某个元素的引用。
    * @throws NullArgumentException
-   *     if {@code iterable} is {@code null} or empty.
+   *     如果{@code iterable}为{@code null}或空。
    */
   public static <T> T max(final Iterable<T> iterable) {
     if (iterable == null) {
@@ -3194,13 +3096,13 @@ public final class Selection {
     if (!iter.hasNext()) {
       throw new NullArgumentException();
     }
-    // find the first non-null element
+    // 找到第一个非null元素
     T max = iter.next();
     while ((max == null) && iter.hasNext()) {
       max = iter.next();
     }
     if (max == null) {
-      // all elements in the iterable are null
+      // iterable中的所有元素都是null
       return null;
     }
     while (iter.hasNext()) {

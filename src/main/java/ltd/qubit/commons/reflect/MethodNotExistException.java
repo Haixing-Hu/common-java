@@ -13,15 +13,27 @@ import java.io.Serial;
 import ltd.qubit.commons.text.Joiner;
 
 /**
- * Thrown to indicate the specified method does not exist.
+ * 此异常表示指定的方法不存在。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class MethodNotExistException extends ReflectionException {
 
   @Serial
   private static final long serialVersionUID = 7457691421536998975L;
 
+  /**
+   * 构造一个 {@link MethodNotExistException}。
+   *
+   * @param cls
+   *     类
+   * @param options
+   *     选项
+   * @param name
+   *     方法名称
+   * @param paramTypes
+   *     参数类型
+   */
   public MethodNotExistException(final Class<?> cls, final int options,
       final String name, final Class<?>[] paramTypes) {
     super("There is no "

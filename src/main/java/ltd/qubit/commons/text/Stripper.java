@@ -43,25 +43,85 @@ import static ltd.qubit.commons.text.impl.SearcherImpl.startsWithChar;
 import static ltd.qubit.commons.text.impl.SearcherImpl.startsWithCodePoint;
 
 /**
- * A class used for stripping strings.
+ * 用于剥离字符串中指定字符的类。
  *
- * <p>Usage examples:</p>
- * <pre>{@code
- *  result = new Stripper().ofBlank().strip(str);
- *  result = new Stripper().ofBlank().startFrom(start).endBefore(end).strip(str);
- *  result = new Stripper().ofBlank().fromStart().strip(str);
- *  result = new Stripper().ofBlank().fromBothSide().strip(str);
- *  result = new Stripper().ofChar(' ').strip(str);
- *  result = new Stripper().ofCharsNotEqual('x').strip(str);
- *  result = new Stripper().ofCharsIn([' ', '#']).strip(str);
- *  result = new Stripper().ofCharsNotIn(['0', '1']).strip(str);
- *  result = new Stripper().ofCharsSatisfy(filter).strip(str);
- *  result = new Stripper().ofCharsNotSatisfy(filter).strip(str);
- *  result = new Stripper().ofCodePoint("\uD83D\uDD6E").strip(str);
- *  result = new Stripper().ofCodePoint("\uD83D\uDD6E").fromAnySide().isStrippable(str);
- * }</pre>
+ * <p>此类提供了灵活的字符串剥离功能，支持从字符串的开始、结束或两端剥离指定的字符、
+ * Unicode 代码点或满足特定条件的字符，特别适用于处理字符串的空白字符和格式化需求。</p>
  *
- * @author Haixing Hu
+ * <p>使用示例：</p>
+ * <pre><code>
+ * // 剥离空白字符（默认从两端剥离）
+ * String result = new Stripper().ofBlank().strip("  hello world  ");
+ * // 结果: "hello world"
+ *
+ * // 剥离空白字符（仅从开始）
+ * String result = new Stripper().ofBlank().fromStart().strip("  hello world  ");
+ * // 结果: "hello world  "
+ *
+ * // 剥离空白字符（仅从结束）
+ * String result = new Stripper().ofBlank().fromEnd().strip("  hello world  ");
+ * // 结果: "  hello world"
+ *
+ * // 剥离指定字符
+ * String result = new Stripper().ofChar('*').strip("***hello***");
+ * // 结果: "hello"
+ *
+ * // 剥离字符数组中的任意字符
+ * String result = new Stripper().ofCharsIn('*', '#', '@').strip("##*hello*##");
+ * // 结果: "hello"
+ *
+ * // 剥离不在指定字符集中的字符
+ * String result = new Stripper().ofCharsNotIn('a', 'b', 'c').strip("xyzabcxyz");
+ * // 结果: "abc"
+ *
+ * // 剥离满足条件的字符（如数字）
+ * String result = new Stripper().ofCharsSatisfy(Character::isDigit)
+ *                              .strip("123hello456");
+ * // 结果: "hello"
+ *
+ * // 剥离 Unicode 代码点
+ * String result = new Stripper().ofCodePoint(0x1F600) // 😀 表情符号
+ *                              .strip("😀😀hello😀😀");
+ * // 结果: "hello"
+ *
+ * // 测试是否可剥离
+ * boolean canStrip = new Stripper().ofBlank().isStrippable("  hello  ");
+ * // 结果: true
+ *
+ * boolean canStripFromStart = new Stripper().ofChar('*')
+ *                                          .fromStart()
+ *                                          .isStrippable("*hello");
+ * // 结果: true
+ *
+ * // stripToNull - 如果结果为空则返回 null
+ * String result = new Stripper().ofBlank().stripToNull("   ");
+ * // 结果: null
+ *
+ * String result = new Stripper().ofBlank().stripToNull("  hello  ");
+ * // 结果: "hello"
+ *
+ * // stripToEmpty - 如果输入为 null 则返回空字符串
+ * String result = new Stripper().ofBlank().stripToEmpty(null);
+ * // 结果: ""
+ *
+ * // 使用 StringBuilder 输出（避免创建中间字符串）
+ * StringBuilder sb = new StringBuilder();
+ * int stripped = new Stripper().ofChar('*').strip("***hello***", sb);
+ * // sb 内容: "hello", stripped: 6
+ *
+ * // 复杂示例：剥离非字母数字字符
+ * String result = new Stripper().ofCharsNotSatisfy(Character::isLetterOrDigit)
+ *                              .strip("!!!Hello123World!!!");
+ * // 结果: "Hello123World"
+ *
+ * // 仅从任意一侧剥离（用于测试）
+ * boolean hasTargetChar = new Stripper().ofChar('*')
+ *                                      .fromAnySide()
+ *                                      .isStrippable("hello*");
+ * // 结果: true
+ * </code></pre>
+ *
+ * @author 胡海星
  */
 public class Stripper {
 
@@ -82,12 +142,12 @@ public class Stripper {
   }
 
   /**
-   * Strips the specified character.
+   * 剥离指定字符。
    *
    * @param ch
-   *     the specified character to be stripped.
+   *     要剥离的指定字符。
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    */
   public Stripper ofChar(final char ch) {
     this.clearStrategies();
@@ -96,13 +156,12 @@ public class Stripper {
   }
 
   /**
-   * Strips any character not equal to the specified character.
+   * 剥离任何不等于指定字符的字符。
    *
    * @param ch
-   *     the specified character. All characters except this one in the source
-   *     string will be stripped.
+   *     指定字符。源字符串中除此字符以外的所有字符都将被剥离。
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    */
   public Stripper ofCharsNotEqual(final char ch) {
     this.clearStrategies();
@@ -111,13 +170,12 @@ public class Stripper {
   }
 
   /**
-   * Strips any character in the specified array.
+   * 剥离指定数组中的任何字符。
    *
    * @param chars
-   *     the array of characters to be stripped. A {@code null} or empty array
-   *     indicates that no character will be stripped.
+   *     要剥离的字符数组。{@code null} 值或空数组表示不剥离任何字符。
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    */
   public Stripper ofCharsIn(@Nullable final char... chars) {
     this.clearStrategies();
@@ -130,13 +188,12 @@ public class Stripper {
   }
 
   /**
-   * Strips any character in the specified sequence.
+   * 剥离指定序列中的任何字符。
    *
    * @param chars
-   *     the sequence of characters to be stripped. A {@code null} or empty
-   *     sequence indicates that no character will be stripped.
+   *     要剥离的字符序列。{@code null} 值或空序列表示不剥离任何字符。
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    */
   public Stripper ofCharsIn(@Nullable final CharSequence chars) {
     this.clearStrategies();
@@ -149,14 +206,12 @@ public class Stripper {
   }
 
   /**
-   * Strips any character not in the specified array.
+   * 剥离任何不在指定数组中的字符。
    *
    * @param chars
-   *     an array of characters. All characters not in this array will be
-   *     stripped. A {@code null} or empty array indicates that all characters
-   *     in the source string will be stripped.
+   *     字符数组。不在此数组中的所有字符都将被剥离。{@code null} 值或空数组表示剥离源字符串中的所有字符。
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    */
   public Stripper ofCharsNotIn(@Nullable final char... chars) {
     this.clearStrategies();
@@ -169,14 +224,12 @@ public class Stripper {
   }
 
   /**
-   * Strips any character not in the specified sequence.
+   * 剥离任何不在指定序列中的字符。
    *
    * @param chars
-   *     a sequence of characters. All characters not in this sequence will be
-   *     stripped. A {@code null} value or empty sequence indicates that all
-   *     characters in the source string will be stripped.
+   *     字符序列。不在此序列中的所有字符都将被剥离。{@code null} 值或空序列表示剥离源字符串中的所有字符。
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    */
   public Stripper ofCharsNotIn(@Nullable final CharSequence chars) {
     this.clearStrategies();
@@ -189,13 +242,12 @@ public class Stripper {
   }
 
   /**
-   * Strips any character accepted by the specified filter.
+   * 剥离任何被指定过滤器接受的字符。
    *
    * @param filter
-   *     the filter accepting characters to be stripped. A {@code null} value
-   *     indicates that no character will be stripped.
+   *     接受要剥离字符的过滤器。{@code null} 值表示不剥离任何字符。
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    */
   public Stripper ofCharsSatisfy(@Nullable final CharFilter filter) {
     this.clearStrategies();
@@ -208,13 +260,12 @@ public class Stripper {
   }
 
   /**
-   * Strips any character rejected by the specified filter.
+   * 剥离任何被指定过滤器拒绝的字符。
    *
    * @param filter
-   *     the filter rejecting characters to be stripped. A {@code null} value
-   *     indicates that all characters in the source string will be stripped.
+   *     拒绝要剥离字符的过滤器。{@code null} 值表示剥离源字符串中的所有字符。
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    */
   public Stripper ofCharsNotSatisfy(final CharFilter filter) {
     this.clearStrategies();
@@ -227,12 +278,12 @@ public class Stripper {
   }
 
   /**
-   * Strips the specified Unicode code point.
+   * 剥离指定的 Unicode 代码点。
    *
    * @param codePoint
-   *     the specified Unicode code point to be stripped.
+   *     要剥离的指定 Unicode 代码点。
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    */
   public Stripper ofCodePoint(final int codePoint) {
     this.clearStrategies();
@@ -241,14 +292,12 @@ public class Stripper {
   }
 
   /**
-   * Strips the specified Unicode code point.
+   * 剥离指定的 Unicode 代码点。
    *
    * @param codePoint
-   *     a character sequence containing the Unicode character to be stripped.
-   *     A {@code null} or empty value indicates that no Unicode code point will
-   *     be stripped.
+   *     包含要剥离的 Unicode 字符的字符序列。{@code null} 值或空值表示不剥离任何 Unicode 代码点。
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    */
   public Stripper ofCodePoint(@Nullable final CharSequence codePoint) {
     this.clearStrategies();
@@ -261,13 +310,12 @@ public class Stripper {
   }
 
   /**
-   * Strips any Unicode code point not equal to the specified code point.
+   * 剥离任何不等于指定代码点的 Unicode 代码点。
    *
    * @param codePoint
-   *     the code point of a specified Unicode character. All Unicode characters
-   *     except this one in the source string will be stripped.
+   *     指定 Unicode 字符的代码点。源字符串中除此字符以外的所有 Unicode 字符都将被剥离。
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    */
   public Stripper ofCodePointsNotEqual(final int codePoint) {
     this.clearStrategies();
@@ -276,15 +324,13 @@ public class Stripper {
   }
 
   /**
-   * Strips the specified Unicode code point.
+   * 剥离指定的 Unicode 代码点。
    *
    * @param codePoint
-   *     a character sequence containing the specified Unicode character. All
-   *     Unicode code points except the one in the start of this sequence will
-   *     be stripped. A {@code null} value indicates that all Unicode characters
-   *     in the source string will be stripped.
+   *     包含指定 Unicode 字符的字符序列。除此序列开头的代码点以外的所有 Unicode 代码点都将被剥离。
+   *     {@code null} 值表示剥离源字符串中的所有 Unicode 字符。
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    */
   public Stripper ofCodePointNotEqual(@Nullable final CharSequence codePoint) {
     this.clearStrategies();
@@ -297,14 +343,12 @@ public class Stripper {
   }
 
   /**
-   * Strips any Unicode code point in the specified array.
+   * 剥离指定数组中的任何 Unicode 代码点。
    *
    * @param codePoints
-   *     the array of code points of the Unicode characters to be stripped. A
-   *     {@code null} or empty array indicates that no Unicode character will be
-   *     stripped.
+   *     要剥离的 Unicode 字符的代码点数组。{@code null} 值或空数组表示不剥离任何 Unicode 字符。
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    */
   public Stripper ofCodePointsIn(@Nullable final int... codePoints) {
     this.clearStrategies();
@@ -317,14 +361,12 @@ public class Stripper {
   }
 
   /**
-   * Strips any Unicode code point in the specified sequence.
+   * 剥离指定序列中的任何 Unicode 代码点。
    *
    * @param codePoints
-   *     the sequence of code points of Unicode characters to be stripped. A
-   *     {@code null} or empty sequence indicates that no Unicode code point
-   *     will be stripped.
+   *     要剥离的 Unicode 字符的代码点序列。{@code null} 值或空序列表示不剥离任何 Unicode 代码点。
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    */
   public Stripper ofCodePointsIn(@Nullable final CharSequence codePoints) {
     this.clearStrategies();
@@ -337,15 +379,13 @@ public class Stripper {
   }
 
   /**
-   * Strips any Unicode code point not in the specified array.
+   * 剥离任何不在指定数组中的 Unicode 代码点。
    *
    * @param codePoints
-   *     an array of Unicode code points. All Unicode characters whose code
-   *     point not in this array will be stripped. A {@code null} or empty array
-   *     indicates that all Unicode code points in the source string will be
-   *     stripped.
+   *     Unicode 代码点数组。代码点不在此数组中的所有 Unicode 字符都将被剥离。
+   *     {@code null} 值或空数组表示剥离源字符串中的所有 Unicode 代码点。
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    */
   public Stripper ofCodePointsNotIn(@Nullable final int... codePoints) {
     this.clearStrategies();
@@ -358,14 +398,13 @@ public class Stripper {
   }
 
   /**
-   * Strips any Unicode code point not in the specified sequence.
+   * 剥离任何不在指定序列中的 Unicode 代码点。
    *
    * @param codePoints
-   *     a sequence of code points of Unicode characters. All code points not in
-   *     this sequence will be stripped. A {@code null} or empty value indicates
-   *     that all Unicode code points will be stripped.
+   *     Unicode 字符的代码点序列。不在此序列中的所有代码点都将被剥离。
+   *     {@code null} 值或空值表示剥离所有 Unicode 代码点。
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    */
   public Stripper ofCodePointsNotIn(@Nullable final CharSequence codePoints) {
     this.clearStrategies();
@@ -378,13 +417,12 @@ public class Stripper {
   }
 
   /**
-   * Strips any Unicode code point accepted by the specified filter.
+   * 剥离任何被指定过滤器接受的 Unicode 代码点。
    *
    * @param filter
-   *     the filter accepting Unicode code points to be stripped. A {@code null}
-   *     value indicates that no Unicode code point will be stripped.
+   *     接受要剥离的 Unicode 代码点的过滤器。{@code null} 值表示不剥离任何 Unicode 代码点。
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    */
   public Stripper ofCodePointsSatisfy(final CodePointFilter filter) {
     this.clearStrategies();
@@ -397,13 +435,12 @@ public class Stripper {
   }
 
   /**
-   * Strips any Unicode code point rejected by the specified filter.
+   * 剥离任何被指定过滤器拒绝的 Unicode 代码点。
    *
    * @param filter
-   *     the filter rejecting Unicode code points to be stripped. A {@code null}
-   *     value indicates that all Unicode code points will be stripped.
+   *     拒绝要剥离的 Unicode 代码点的过滤器。{@code null} 值表示剥离所有 Unicode 代码点。
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    */
   public Stripper ofCodePointsNotSatisfy(final CodePointFilter filter) {
     this.clearStrategies();
@@ -416,10 +453,10 @@ public class Stripper {
   }
 
   /**
-   * Strips all blank (i.e., non-printable or white spaces) Unicode code points.
+   * 剥离所有空白（即不可打印或空格）Unicode 代码点。
    *
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    * @see ltd.qubit.commons.lang.CharUtils#isBlank(int)
    */
   public Stripper ofBlank() {
@@ -429,10 +466,10 @@ public class Stripper {
   }
 
   /**
-   * Strips all whitespace Unicode code points.
+   * 剥离所有空白字符 Unicode 代码点。
    *
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    * @see Character#isWhitespace(int)
    */
   public Stripper ofWhitespace() {
@@ -442,10 +479,10 @@ public class Stripper {
   }
 
   /**
-   * Strips from the start of the source string.
+   * 从源字符串的开始位置剥离。
    *
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    */
   public Stripper fromStart() {
     this.direction = DIRECTION_START;
@@ -453,10 +490,10 @@ public class Stripper {
   }
 
   /**
-   * Strips from the end of the source string.
+   * 从源字符串的结束位置剥离。
    *
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    */
   public Stripper fromEnd() {
     this.direction = DIRECTION_END;
@@ -464,10 +501,10 @@ public class Stripper {
   }
 
   /**
-   * Strips from both the start and the end of the source string.
+   * 从源字符串的开始和结束位置都剥离。
    *
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    */
   public Stripper fromBothSide() {
     this.direction = DIRECTION_BOTH;
@@ -475,10 +512,10 @@ public class Stripper {
   }
 
   /**
-   * Strips from either the start or the end of the source string.
+   * 从源字符串的开始或结束位置剥离。
    *
    * @return
-   *     the reference to this {@link Stripper} object.
+   *     此 {@link Stripper} 对象的引用。
    */
   public Stripper fromAnySide() {
     this.direction = DIRECTION_ANY;
@@ -486,12 +523,12 @@ public class Stripper {
   }
 
   /**
-   * Strips the target from the specified source string.
+   * 从指定的源字符串中剥离目标。
    *
    * @param str
-   *     the specified source string.
+   *     指定的源字符串。
    * @return
-   *     the stripping result. If {@code str} is {@code null}, returns {@code null}.
+   *     剥离结果。如果 {@code str} 为 {@code null}，返回 {@code null}。
    */
   @Nullable
   public String strip(@Nullable final CharSequence str) {
@@ -515,16 +552,14 @@ public class Stripper {
   }
 
   /**
-   * Strips the target from the specified source string.
+   * 从指定的源字符串中剥离目标。
    *
    * @param str
-   *     the specified source string. If it is {@code null}, this function has
-   *     no effect and returns 0.
+   *     指定的源字符串。如果为 {@code null}，此函数不执行任何操作并返回 0。
    * @param output
-   *     the {@link StringBuilder} where to append the stripping result.
+   *     用于追加剥离结果的 {@link StringBuilder}。
    * @return
-   *     the number of targets stripped. returns {@code null}. If {@code str}
-   *     is {@code null}, this function has no effect and returns 0.
+   *     已剥离目标的数量。如果 {@code str} 为 {@code null}，此函数不执行任何操作并返回 0。
    */
   public int strip(@Nullable final CharSequence str, final StringBuilder output) {
     try {
@@ -535,16 +570,14 @@ public class Stripper {
   }
 
   /**
-   * Strips the target from the specified source string.
+   * 从指定的源字符串中剥离目标。
    *
    * @param str
-   *     the specified source string. If it is {@code null}, this function has
-   *     no effect and returns 0.
+   *     指定的源字符串。如果为 {@code null}，此函数不执行任何操作并返回 0。
    * @param output
-   *     the {@link Appendable} where to append the stripping result.
+   *     用于追加剥离结果的 {@link Appendable}。
    * @return
-   *     the number of targets stripped. returns {@code null}. If {@code str}
-   *     is {@code null}, this function has no effect and returns 0.
+   *     已剥离目标的数量。如果 {@code str} 为 {@code null}，此函数不执行任何操作并返回 0。
    */
   public int strip(@Nullable final CharSequence str, final Appendable output)
       throws IOException {
@@ -568,14 +601,13 @@ public class Stripper {
   }
 
   /**
-   * Strips the target from the specified source string. Returns {@code null} if
-   * the source string is stripped to an empty string.
+   * 从指定的源字符串中剥离目标。如果源字符串被剥离为空字符串则返回 {@code null}。
    *
    * @param str
-   *     the specified source string.
+   *     指定的源字符串。
    * @return
-   *     the stripping result, or {@code null} if {@code str} is tripped to an
-   *     empty string. If {@code str} is {@code null}, returns {@code null}.
+   *     剥离结果，如果 {@code str} 被剥离为空字符串则返回 {@code null}。
+   *     如果 {@code str} 为 {@code null}，返回 {@code null}。
    */
   public String stripToNull(@Nullable final CharSequence str) {
     final String result = strip(str);
@@ -587,13 +619,12 @@ public class Stripper {
   }
 
   /**
-   * Strips the target from the specified source string. Returns an empty string
-   * if the source string is {@code null}.
+   * 从指定的源字符串中剥离目标。如果源字符串为 {@code null} 则返回空字符串。
    *
    * @param str
-   *     the specified source string.
+   *     指定的源字符串。
    * @return
-   *     the stripping result, or an empty string if {@code str} is {@code null}.
+   *     剥离结果，如果 {@code str} 为 {@code null} 则返回空字符串。
    */
   public String stripToEmpty(@Nullable final CharSequence str) {
     final String result = strip(str);
@@ -605,14 +636,12 @@ public class Stripper {
   }
 
   /**
-   * Tests whether the source string is strippable for the specified target in
-   * the specified side.
+   * 测试源字符串在指定侧是否可以剥离指定目标。
    *
    * @param str
-   *     the specified source string.
+   *     指定的源字符串。
    * @return
-   *     whether the source string is strippable for the specified target in the
-   *     specified side.
+   *     源字符串在指定侧是否可以剥离指定目标。
    */
   public boolean isStrippable(@Nullable final CharSequence str) {
     if (str == null || str.length() == 0) {
