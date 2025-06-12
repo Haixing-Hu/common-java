@@ -2233,11 +2233,10 @@ public class StringUtils {
   }
 
   /**
-   * Search a string to find the first occurrence of any character in the given
-   * set of characters.
+   * 在字符串中查找给定字符集合中任意字符的最后出现位置。
    *
-   * <p>A {@code null} string will return {@code -1}. A {@code null} search
-   * string will return {@code -1}.
+   * <p>如果字符串为{@code null}，将返回{@code -1}。如果搜索字符串为{@code null}，
+   * 将返回{@code -1}。
    * <pre>
    * StringUtils.lastIndexOfAnyChar(null, *, *)                 = -1
    * StringUtils.lastIndexOfAnyChar("", *, *)                   = -1
@@ -2252,16 +2251,13 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to check, may be null
+   *     要检查的字符串，可能为null
    * @param searchChars
-   *     the chars to search for, may be null
+   *     要搜索的字符，可能为null
    * @param fromIndex
-   *     the position to start the search from (searching backwards). There is
-   *     no restriction on the value of fromIndex. If it is greater than or equal
-   *     to the length of this string, it has the same effect as if it were equal
-   *     to one less than the length of this string: this entire string may be
-   *     searched. If it is negative, it has the same effect as if it were -1:
-   *     -1 is returned.
+   *     开始搜索的位置（反向搜索）。fromIndex的值没有限制。如果它大于或等于
+   *     此字符串的长度，效果与它等于此字符串长度减一相同：整个字符串都可以被搜索。
+   *     如果为负数，效果与-1相同：返回-1。
    * @return 任意字符的索引，如果没有匹配或输入为null则返回-1
    * @see Searcher
    */
@@ -2960,9 +2956,9 @@ public class StringUtils {
   }
 
   /**
-   * Counts how many times the substring appears in the larger String.
+   * 计算子字符串在较大字符串中出现的次数。
    *
-   * <p>A {@code null} or empty ("") String input returns {@code 0}.
+   * <p>如果输入的字符串为{@code null}或空("")，返回{@code 0}。
    * <pre>
    * StringUtils.countMatches(null, *)       = 0
    * StringUtils.countMatches("", *)         = 0
