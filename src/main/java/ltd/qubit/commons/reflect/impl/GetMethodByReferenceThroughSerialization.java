@@ -14,6 +14,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Method;
 
+import ltd.qubit.commons.lang.ArrayUtils;
 import ltd.qubit.commons.reflect.MethodUtils;
 import ltd.qubit.commons.reflect.ReflectionException;
 
@@ -805,7 +806,7 @@ public class GetMethodByReferenceThroughSerialization {
    */
   public static <T> Method findMethodBySerialization(final Class<T> cls, final VoidMethod0<T> ref) {
     final String methodName = getMethodNameBySerialization(ref);
-    return getMatchingMethod(cls, methodName, new Class<?>[0]);
+    return getMatchingMethod(cls, methodName, ArrayUtils.EMPTY_CLASS_ARRAY);
   }
 
   /**
@@ -826,7 +827,7 @@ public class GetMethodByReferenceThroughSerialization {
    */
   public static <T, R> Method findMethodBySerialization(final Class<T> cls, final NonVoidMethod0<T, R> ref) {
     final String methodName = getMethodNameBySerialization(ref);
-    final Method method = getMatchingMethod(cls, methodName, new Class<?>[0]);
+    final Method method = getMatchingMethod(cls, methodName, ArrayUtils.EMPTY_CLASS_ARRAY);
     if (method == null) {
       throw new IllegalArgumentException("Cannot find the method " + cls.getName() + "." + methodName + "()");
     }
