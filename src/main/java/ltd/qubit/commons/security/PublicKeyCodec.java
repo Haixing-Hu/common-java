@@ -11,9 +11,9 @@ package ltd.qubit.commons.security;
 import java.security.PublicKey;
 
 /**
- * The codec for encoding/decoding between {@link PublicKey} and byte arrays.
+ * 用于在 {@link PublicKey} 和字节数组之间进行编解码的编解码器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface PublicKeyCodec extends PublicKeyEncoder, PublicKeyDecoder {
   //  empty

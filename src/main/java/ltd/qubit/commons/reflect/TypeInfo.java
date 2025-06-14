@@ -30,9 +30,9 @@ import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * Stores the meta information about a type.
+ * 存储类型的元信息。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class TypeInfo {
@@ -43,24 +43,22 @@ public final class TypeInfo {
   private final Map<Type, Class<?>> genericTypeMap = new HashMap<>();
 
   /**
-   * Create a {@link TypeInfo} gathering the meta-information about a type.
+   * 创建一个 {@link TypeInfo} 对象，用于收集类型的元信息。
    *
    * @param type
-   *     a {@link Type} object, which should be either a {@link Class} object or
-   *     a {@link ParameterizedType} object.
+   *     一个 {@link Type} 对象，应该是 {@link Class} 对象或 {@link ParameterizedType} 对象。
    */
   public TypeInfo(final Type type) {
     this(type, null);
   }
 
   /**
-   * Create a {@link TypeInfo} gathering the meta-information about a type.
+   * 创建一个 {@link TypeInfo} 对象，用于收集类型的元信息。
    *
    * @param type
-   *     a {@link Type} object, which should be either a {@link Class} object or
-   *     a {@link ParameterizedType} object.
+   *     一个 {@link Type} 对象，应该是 {@link Class} 对象或 {@link ParameterizedType} 对象。
    * @param subTypeInfo
-   *     the meta-information about the sub-type of the specified type.
+   *     指定类型的子类型的元信息。
    */
   public TypeInfo(final Type type, @Nullable final TypeInfo subTypeInfo) {
     requireNonNull("type", type);
@@ -101,51 +99,67 @@ public final class TypeInfo {
     }
   }
 
+  /**
+   * 获取类型。
+   *
+   * @return 类型。
+   */
   public Class<?> getType() {
     return type;
   }
 
+  /**
+   * 获取类型参数。
+   *
+   * @return 类型参数数组。
+   */
   public Type[] getParameters() {
     return parameters;
   }
 
+  /**
+   * 获取实际类型参数。
+   *
+   * @return 实际类型参数数组。
+   */
   public Type[] getActualArguments() {
     return actualArguments;
   }
 
+  /**
+   * 获取泛型类型映射。
+   *
+   * @return 从泛型类型到实际类型的映射。
+   */
   public Map<Type, Class<?>> getGenericTypeMap() {
     return genericTypeMap;
   }
 
   /**
-   * Resolve the actual type of a generic type.
+   * 解析泛型类型的实际类型。
    *
    * @param genericType
-   *     the generic type, which may be a class, a type variable, a parameterized
-   *     type, or a generic array type.
+   *     泛型类型，可能是类、类型变量、参数化类型或泛型数组类型。
    * @return
-   *     the resolved actual type of the generic type, or {@code Object.class}
-   *     if the generic type cannot be resolved.
+   *     泛型类型的解析后的实际类型，如果泛型类型无法解析则返回 {@code Object.class}。
    * @throws IllegalArgumentException
-   *     if the implementation of the generic type is not supported.
+   *     如果不支持该泛型类型的实现。
    */
   public Class<?> resolveActualType(final Type genericType) {
     return resolveActualType(Object.class, genericType);
   }
 
   /**
-   * Resolve the actual type of a generic type.
+   * 解析泛型类型的实际类型。
    *
    * @param erasureType
-   *     the erasure type of the generic type, i.e., if the generic type is an
-   *     unsolvable type variable, it will be resolved to this erasure type.
+   *     泛型类型的擦除类型，即如果泛型类型是无法解析的类型变量，则将其解析为此擦除类型。
    * @param genericType
-   *     the generic type, which may be a class, a type variable, a parameterized
-   *     type, or a generic array type.
+   *     泛型类型，可能是类、类型变量、参数化类型或泛型数组类型。
    * @return
-   *     the resolved actual type of the generic type.
+   *     泛型类型的解析后的实际类型。
    * @throws IllegalArgumentException
-   *     if the implementation of the generic type is not supported.
+   *     如果不支持该泛型类型的实现。
    */
   public Class<?> resolveActualType(final Class<?> erasureType,
       final Type genericType) {
@@ -173,15 +187,14 @@ public final class TypeInfo {
   }
 
   /**
-   * Resolve the actual types of an array of generic types.
+   * 解析泛型类型数组的实际类型。
    *
    * @param genericTypes
-   *     the array of generic type, whose element may be a class, a type
-   *     variable, a parameterized type, or a generic array type.
+   *     泛型类型数组，其元素可能是类、类型变量、参数化类型或泛型数组类型。
    * @return
-   *     the array of resolved actual types of the array of generic types.
+   *     泛型类型数组的解析后的实际类型数组。
    * @throws IllegalArgumentException
-   *     if the implementation of the generic type is not supported.
+   *     如果不支持某个泛型类型的实现。
    */
   @NotNull
   public Class<?>[] resolveActualTypes(final Type[] genericTypes) {
@@ -196,19 +209,17 @@ public final class TypeInfo {
   }
 
   /**
-   * Resolve the actual types of an array of generic types.
+   * 解析泛型类型数组的实际类型。
    *
    * @param erasureTypes
-   *     the array of erasure types of the generic types, i.e., if a generic
-   *     type is an unsolvable type variable, it will be resolved to the
-   *     corresponding erasure type in this array.
+   *     泛型类型的擦除类型数组，即如果泛型类型是无法解析的类型变量，
+   *     则将其解析为此数组中对应的擦除类型。
    * @param genericTypes
-   *     the array of generic type, whose element may be a class, a type
-   *     variable, a parameterized type, or a generic array type.
+   *     泛型类型数组，其元素可能是类、类型变量、参数化类型或泛型数组类型。
    * @return
-   *     the array of resolved actual types of the array of generic types.
+   *     泛型类型数组的解析后的实际类型数组。
    * @throws IllegalArgumentException
-   *     if the implementation of the generic type is not supported.
+   *     如果不支持某个泛型类型的实现。
    */
   @NotNull
   public Class<?>[] resolveActualTypes(final Class<?>[] erasureTypes,

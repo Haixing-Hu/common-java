@@ -22,7 +22,7 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
 /**
  * Represents the information about a parameter.
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class ParamInfo {
 

@@ -24,25 +24,39 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * The class of objects used to digest messages.
+ * 用于消息摘要的对象类。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see MessageDigest
  * @see DigestAlgorithm
  */
 public class Digester {
 
   /**
-   * The default buffer size to use.
+   * 默认使用的缓冲区大小。
    */
   private static final int BUFFER_SIZE = 16384;
 
+  /**
+   * 摘要算法。
+   */
   private final DigestAlgorithm algorithm;
 
+  /**
+   * 构造一个{@link Digester}。
+   *
+   * @param algorithm
+   *     摘要算法。
+   */
   public Digester(final DigestAlgorithm algorithm) {
     this.algorithm = algorithm;
   }
 
+  /**
+   * 获取摘要算法。
+   *
+   * @return 摘要算法。
+   */
   public DigestAlgorithm getAlgorithm() {
     return algorithm;
   }
@@ -132,17 +146,16 @@ public class Digester {
   /**
    * 对指定的数据消息计算数字摘要。
    * <p>
-   * 此函数会首先将指定的数据进行正则化的 JSON 序列化，然后对序列化后的字符串计算数字摘
-   * 要。
+   * 此函数会首先将指定的数据进行正则化的JSON序列化，然后对序列化后的字符串计算数字摘要。
    *
    * @param <T>
    *     指定的数据的类型。
    * @param data
    *     指定的数据。
    * @param mapper
-   *     用于进行 JSON 序列化的 mapper.
+   *     用于进行JSON序列化的mapper。
    * @return
-   *     对指定的数据的正则化 JSON 表示计算出的数字摘要。
+   *     对指定的数据的正则化JSON表示计算出的数字摘要。
    * @throws DigestMessageException
    *     若计算摘要时发生任何错误。
    * @see JsonMapperUtils#formatNormalized(Object, JsonMapper)

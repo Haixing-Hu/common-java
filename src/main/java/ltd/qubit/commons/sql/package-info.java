@@ -32,6 +32,6 @@
  * method references for type-safe property access, making them suitable for
  * both dynamic and static query building scenarios.</p>
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 package ltd.qubit.commons.sql;

@@ -15,14 +15,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The enumeration of encoding formats of keys.
+ * 密钥编码格式的枚举。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public enum KeyFormat {
 
+  /**
+   * PKCS#8 编码格式，通常用于私钥。
+   */
   PKCS8("PKCS#8"),
 
+  /**
+   * X.509 编码格式，通常用于公钥。
+   */
   X509("X.509");
 
   private static final Map<String, KeyFormat> NAME_MAP = new HashMap<>();

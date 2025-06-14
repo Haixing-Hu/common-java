@@ -22,9 +22,9 @@ import static ltd.qubit.commons.reflect.PropertyUtils.getPropertyNameFromGetter;
 import static ltd.qubit.commons.reflect.PropertyUtils.getPropertyNameFromSetter;
 
 /**
- * Provides functions to handle object graphs.
+ * 提供处理对象图的功能。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class ObjectGraphUtils {
 
@@ -44,18 +44,18 @@ public class ObjectGraphUtils {
   }
 
   /**
-   * Gets the path of a property specified by a getter method.
+   * 获取由getter方法指定的属性的路径。
    *
    * @param <T>
-   *     the type of the object.
+   *     对象的类型。
    * @param <R>
-   *     the type of the property.
+   *     属性的类型。
    * @param type
-   *     the class of the object.
+   *     对象的类。
    * @param getter
-   *     the getter method of the property.
+   *     属性的getter方法。
    * @return
-   *     the path of the property specified by the getter method.
+   *     由getter方法指定的属性的路径。
    */
   @Nullable
   public static <T, R> String getPropertyPath(final Class<T> type,
@@ -65,18 +65,18 @@ public class ObjectGraphUtils {
   }
 
   /**
-   * Gets the path of a property specified by a setter method.
+   * 获取由setter方法指定的属性的路径。
    *
    * @param <T>
-   *     the type of the object.
+   *     对象的类型。
    * @param <R>
-   *     the type of the property.
+   *     属性的类型。
    * @param type
-   *     the class of the object.
+   *     对象的类。
    * @param setter
-   *     the setter method of the property.
+   *     属性的setter方法。
    * @return
-   *     the path of the property specified by the setter method.
+   *     由setter方法指定的属性的路径。
    */
   @Nullable
   public static <T, R> String getPropertyPath(final Class<T> type,
@@ -86,24 +86,22 @@ public class ObjectGraphUtils {
   }
 
   /**
-   * Gets the path of a property specified by a chain of getter methods.
+   * 获取由一串getter方法指定的属性的路径。
    *
    * @param <T>
-   *     the type of the object.
+   *     对象的类型。
    * @param <P1>
-   *     the return type of the first getter, which is the type of the property
-   *     of the original object specified by the first getter.
+   *     第一个getter的返回类型，即原始对象中由第一个getter指定的属性的类型。
    * @param <R>
-   *     the return type of the second getter, which is the type of the property
-   *     of the result of the first getter specified by the second getter.
+   *     第二个getter的返回类型，即由第一个getter的结果中由第二个getter指定的属性的类型。
    * @param type
-   *     the class of the object.
+   *     对象的类。
    * @param g1
-   *     the first getter method, which is the getter of the original object.
+   *     第一个getter方法，即原始对象的getter。
    * @param g2
-   *     the second getter method, which is the getter of the result of the first getter.
+   *     第二个getter方法，即第一个getter结果的getter。
    * @return
-   *     the path of the property specified by the chain of getter methods.
+   *     由一串getter方法指定的属性的路径。
    */
   public static <T, P1, R> String getPropertyPath(final Class<T> type,
       final GetterMethod<T, P1> g1, final GetterMethod<P1, R> g2) {
@@ -126,31 +124,26 @@ public class ObjectGraphUtils {
   }
 
   /**
-   * Gets the path of a property specified by a chain of getter methods.
+   * 获取由一串getter方法指定的属性的路径。
    *
    * @param <T>
-   *     the type of the object.
+   *     对象的类型。
    * @param <P1>
-   *     the return type of the first getter, which is the type of the property
-   *     of the original object specified by the first getter.
+   *     第一个getter的返回类型，即原始对象中由第一个getter指定的属性的类型。
    * @param <P2>
-   *     the return type of the second getter, which is the type of the property
-   *     of the result of the first getter specified by the second getter.
+   *     第二个getter的返回类型，即由第一个getter的结果中由第二个getter指定的属性的类型。
    * @param <R>
-   *     the return type of the third getter, which is the type of the property
-   *     of the result of the second getter specified by the third getter.
+   *     第三个getter的返回类型，即由第二个getter的结果中由第三个getter指定的属性的类型。
    * @param type
-   *     the class of the object.
+   *     对象的类。
    * @param g1
-   *     the first getter method, which is the getter of the original object.
+   *     第一个getter方法，即原始对象的getter。
    * @param g2
-   *     the second getter method, which is the getter of the result of the
-   *     first getter.
+   *     第二个getter方法，即第一个getter结果的getter。
    * @param g3
-   *     the third getter method, which is the getter of the result of the
-   *     second getter.
+   *     第三个getter方法，即第二个getter结果的getter。
    * @return
-   *     the path of the property specified by the chain of getter methods.
+   *     由一串getter方法指定的属性的路径。
    */
   public static <T, P1, P2, R> String getPropertyPath(final Class<T> type,
       final GetterMethod<T, P1> g1, final GetterMethod<P1, P2> g2,
@@ -183,37 +176,30 @@ public class ObjectGraphUtils {
   }
 
   /**
-   * Gets the path of a property specified by a chain of getter methods.
+   * 获取由一串getter方法指定的属性的路径。
    *
    * @param <T>
-   *     the type of the object.
+   *     对象的类型。
    * @param <P1>
-   *     the return type of the first getter, which is the type of the property
-   *     of the original object specified by the first getter.
+   *     第一个getter的返回类型，即原始对象中由第一个getter指定的属性的类型。
    * @param <P2>
-   *     the return type of the second getter, which is the type of the property
-   *     of the result of the first getter specified by the second getter.
+   *     第二个getter的返回类型，即由第一个getter的结果中由第二个getter指定的属性的类型。
    * @param <P3>
-   *     the return type of the third getter, which is the type of the property
-   *     of the result of the second getter specified by the third getter.
+   *     第三个getter的返回类型，即由第二个getter的结果中由第三个getter指定的属性的类型。
    * @param <R>
-   *     the return type of the fourth getter, which is the type of the property
-   *     of the result of the third getter specified by the fourth getter.
+   *     第四个getter的返回类型，即由第三个getter的结果中由第四个getter指定的属性的类型。
    * @param type
-   *     the class of the object.
+   *     对象的类。
    * @param g1
-   *     the first getter method, which is the getter of the original object.
+   *     第一个getter方法，即原始对象的getter。
    * @param g2
-   *     the second getter method, which is the getter of the result of the
-   *     first getter.
+   *     第二个getter方法，即第一个getter结果的getter。
    * @param g3
-   *     the third getter method, which is the getter of the result of the
-   *     second getter.
+   *     第三个getter方法，即第二个getter结果的getter。
    * @param g4
-   *     the fourth getter method, which is the getter of the result of the
-   *     third getter.
+   *     第四个getter方法，即第三个getter结果的getter。
    * @return
-   *     the path of the property specified by the chain of getter methods.
+   *     由一串getter方法指定的属性的路径。
    */
   public static <T, P1, P2, P3, R> String getPropertyPath(final Class<T> type,
       final GetterMethod<T, P1> g1, final GetterMethod<P1, P2> g2,
@@ -255,43 +241,34 @@ public class ObjectGraphUtils {
   }
 
   /**
-   * Gets the path of a property specified by a chain of getter methods.
+   * 获取由一串getter方法指定的属性的路径。
    *
    * @param <T>
-   *     the type of the object.
+   *     对象的类型。
    * @param <P1>
-   *     the return type of the first getter, which is the type of the property
-   *     of the original object specified by the first getter.
+   *     第一个getter的返回类型，即原始对象中由第一个getter指定的属性的类型。
    * @param <P2>
-   *     the return type of the second getter, which is the type of the property
-   *     of the result of the first getter specified by the second getter.
+   *     第二个getter的返回类型，即由第一个getter的结果中由第二个getter指定的属性的类型。
    * @param <P3>
-   *     the return type of the third getter, which is the type of the property
-   *     of the result of the second getter specified by the third getter.
+   *     第三个getter的返回类型，即由第二个getter的结果中由第三个getter指定的属性的类型。
    * @param <P4>
-   *     the return type of the fourth getter, which is the type of the property
-   *     of the result of the third getter specified by the fourth getter.
+   *     第四个getter的返回类型，即由第三个getter的结果中由第四个getter指定的属性的类型。
    * @param <R>
-   *     the return type of the fifth getter, which is the type of the property
-   *     of the result of the third getter specified by the fifth getter.
+   *     第五个getter的返回类型，即由第四个getter的结果中由第五个getter指定的属性的类型。
    * @param type
-   *     the class of the object.
+   *     对象的类。
    * @param g1
-   *     the first getter method, which is the getter of the original object.
+   *     第一个getter方法，即原始对象的getter。
    * @param g2
-   *     the second getter method, which is the getter of the result of the
-   *     first getter.
+   *     第二个getter方法，即第一个getter结果的getter。
    * @param g3
-   *     the third getter method, which is the getter of the result of the
-   *     second getter.
+   *     第三个getter方法，即第二个getter结果的getter。
    * @param g4
-   *     the fourth getter method, which is the getter of the result of the
-   *     third getter.
+   *     第四个getter方法，即第三个getter结果的getter。
    * @param g5
-   *     the fifth getter method, which is the getter of the result of the
-   *     fourth getter.
+   *     第五个getter方法，即第四个getter结果的getter。
    * @return
-   *     the path of the property specified by the chain of getter methods.
+   *     由一串getter方法指定的属性的路径。
    */
   public static <T, P1, P2, P3, P4, R> String getPropertyPath(final Class<T> type,
       final GetterMethod<T, P1> g1, final GetterMethod<P1, P2> g2,
@@ -344,17 +321,14 @@ public class ObjectGraphUtils {
   }
 
   /**
-   * Tests whether the specified class has the property specified in a object
-   * graph path.
+   * 测试指定的类是否具有在对象图路径中指定的属性。
    *
    * @param cls
-   *     the specified class.
+   *     指定的类。
    * @param path
-   *     the specified path in the object graph. The path <b>may</b> contain
-   *     computed properties.
+   *     对象图中的指定路径。该路径<b>可以</b>包含计算属性。
    * @return
-   *     {@code true} if the specified class has the property specified in the
-   *     specified object graph path; {@code false} otherwise.
+   *     如果指定的类具有在指定对象图路径中指定的属性，则返回{@code true}；否则返回{@code false}。
    */
   public static boolean hasProperty(final Class<?> cls, final String path) {
     if (isEmpty(path)) {
@@ -379,19 +353,16 @@ public class ObjectGraphUtils {
   }
 
   /**
-   * Gets the value of a property of the specified object specified by an object
-   * graph path.
+   * 获取由对象图路径指定的指定对象的属性值。
    *
    * @param obj
-   *     the specified object.
+   *     指定的对象。
    * @param path
-   *     the specified path in the object graph. The path <b>may</b> contain
-   *     computed properties.
+   *     对象图中的指定路径。该路径<b>可以</b>包含计算属性。
    * @return
-   *     the value of a property of the specified object specified by the object
-   *     graph path, or {@code null} if any object in the path is {@code null}.
+   *     由对象图路径指定的指定对象的属性值，如果路径中的任何对象为{@code null}，则返回{@code null}。
    * @throws FieldNotExistException
-   *     if there is no such path exist in the object graph.
+   *     如果对象图中不存在这样的路径。
    */
   @Nullable
   public static Object getPropertyValue(@Nullable final Object obj, final String path) {
@@ -438,19 +409,16 @@ public class ObjectGraphUtils {
   }
 
   /**
-   * Gets the type of the property of the specified class specified by an object
-   * graph path.
+   * 获取由对象图路径指定的指定类的属性的类型。
    *
    * @param cls
-   *     the specified class.
+   *     指定的类。
    * @param path
-   *     the specified path in the object graph. The path <b>may</b> contain
-   *     computed properties.
+   *     对象图中的指定路径。该路径<b>可以</b>包含计算属性。
    * @return
-   *     the type of the property of the specified class specified by the object
-   *     graph path.
+   *     由对象图路径指定的指定类的属性的类型。
    * @throws FieldNotExistException
-   *     if there is no such path exist in the object graph.
+   *     如果对象图中不存在这样的路径。
    */
   public static Class<?> getPropertyType(final Class<?> cls, final String path) {
     if (isEmpty(path)) {
@@ -486,24 +454,21 @@ public class ObjectGraphUtils {
   }
 
   /**
-   * Sets the value of a property of the specified object specified by an object
-   * graph path.
+   * 设置由对象图路径指定的指定对象的属性值。
    * <p>
-   * This method will not create intermediate objects if they are {@code null}.
-   * Instead, it will throw a {@link NullPointerException} if any intermediate
-   * object in the path is {@code null}.
+   * 如果中间对象为{@code null}，此方法不会创建中间对象。
+   * 相反，如果路径中的任何中间对象为{@code null}，它将抛出{@link NullPointerException}。
    *
    * @param obj
-   *     the specified object.
+   *     指定的对象。
    * @param path
-   *     the specified path in the object graph. The path <b>must NOT</b> contain
-   *     computed properties.
+   *     对象图中的指定路径。该路径<b>不得</b>包含计算属性。
    * @param value
-   *     the value of a property to be set.
+   *     要设置的属性值。
    * @throws FieldNotExistException
-   *     if there is no such path exist in the object graph.
+   *     如果对象图中不存在这样的路径。
    * @throws NullPointerException
-   *     if any intermediate object in the path is {@code null}.
+   *     如果路径中的任何中间对象为{@code null}。
    * @see #setPropertyValue(Object, String, Object, boolean)
    */
   public static void setPropertyValue(final Object obj, final String path,
@@ -512,28 +477,23 @@ public class ObjectGraphUtils {
   }
 
   /**
-   * Sets the value of a property of the specified object specified by an object
-   * graph path.
+   * 设置由对象图路径指定的指定对象的属性值。
    * <p>
-   * If the argument {@code createIntermediate} is {@code true}, this method will
-   * create intermediate objects if they are {@code null}. Otherwise, it will
-   * throw a {@link NullPointerException} if any intermediate object in the path
-   * is {@code null}.
+   * 如果参数{@code createIntermediate}为{@code true}，此方法将在中间对象为{@code null}时创建它们。
+   * 否则，如果路径中的任何中间对象为{@code null}，它将抛出{@link NullPointerException}。
    *
    * @param obj
-   *     the specified object.
+   *     指定的对象。
    * @param path
-   *     the specified path in the object graph. The path <b>must NOT</b> contain
-   *     computed properties.
+   *     对象图中的指定路径。该路径<b>不得</b>包含计算属性。
    * @param value
-   *     the value of a property to be set.
+   *     要设置的属性值。
    * @param createIntermediate
-   *     whether to create intermediate objects if they are {@code null}.
+   *     是否在中间对象为{@code null}时创建它们。
    * @throws FieldNotExistException
-   *     if there is no such path exist in the object graph.
+   *     如果对象图中不存在这样的路径。
    * @throws NullPointerException
-   *     if the {@code createIntermediate} argument is {@code false} and any
-   *     intermediate object in the path is {@code null}.
+   *     如果{@code createIntermediate}参数为{@code false}且路径中的任何中间对象为{@code null}。
    * @see #setPropertyValue(Object, String, Object)
    */
   public static void setPropertyValue(final Object obj, final String path,

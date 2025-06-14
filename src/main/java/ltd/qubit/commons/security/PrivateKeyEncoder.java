@@ -13,9 +13,9 @@ import java.security.PrivateKey;
 import ltd.qubit.commons.util.codec.Encoder;
 
 /**
- * The interface for encoding {@link PrivateKey}s into byte arrays.
+ * 将 {@link PrivateKey} 编码为字节数组的接口。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface PrivateKeyEncoder extends Encoder<PrivateKey, byte[]> {
   //  empty

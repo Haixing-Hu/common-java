@@ -14,36 +14,35 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The enumeration of algorithms can be specified when generating an instance of
- * {@link KeyFactory}.
+ * 在生成 {@link KeyFactory} 实例时可以指定的算法枚举。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public enum KeyAlgorithm {
   /**
-   * Keys for the Diffie-Hellman KeyAgreement algorithm.
+   * Diffie-Hellman 密钥协商算法的密钥。
    *
-   * Note: key.getAlgorithm() will return "DH" instead of "DiffieHellman".
+   * <p>注意：{@code key.getAlgorithm()} 将返回 "DH" 而不是 "DiffieHellman"。</p>
    */
   DIFFIE_HELLMAN("DiffieHellman"),
 
   /**
-   * Keys for the Digital Signature Algorithm.
+   * 数字签名算法的密钥。
    */
   DSA("DSA"),
 
   /**
-   * Keys for the RSA algorithm (Signature/Cipher).
+   * RSA 算法（签名/加密）的密钥。
    */
   RSA("RSA"),
 
   /**
-   * Keys for the RSASSA-PSS algorithm (Signature).
+   * RSASSA-PSS 算法（签名）的密钥。
    */
   RSASSA_PSS("RSASSA-PSS"),
 
   /**
-   * Keys for the Elliptic Curve algorithm.
+   * 椭圆曲线算法的密钥。
    */
   EC("EC");
 
@@ -56,14 +55,12 @@ public enum KeyAlgorithm {
   }
 
   /**
-   * Gets the key algorithm by its enumerator name or code (i.e., the standard
-   * algorithm name in JDK).
+   * 根据枚举器名称或代码（即 JDK 中的标准算法名称）获取密钥算法。
    *
    * @param nameOrCode
-   *     The name or code of the specified enumerator, ignoring the case.
+   *     指定枚举器的名称或代码，忽略大小写。
    * @return
-   *     The corresponding {@link KeyAlgorithm} enumerator, or {@code null} if
-   *     no such enumerator.
+   *     对应的 {@link KeyAlgorithm} 枚举器，如果没有此类枚举器则返回 {@code null}。
    */
   public static KeyAlgorithm forName(final String nameOrCode) {
     return NAME_MAP.get(nameOrCode.toUpperCase());
@@ -76,24 +73,22 @@ public enum KeyAlgorithm {
   }
 
   /**
-   * Gets the code of this key algorithm, i.e., the standard algorithm name in
-   * the JDK.
+   * 获取此密钥算法的代码，即 JDK 中的标准算法名称。
    *
    * @return
-   *     the code of this key algorithm, i.e., the standard algorithm name in
-   *     the JDK.
+   *     此密钥算法的代码，即 JDK 中的标准算法名称。
    */
   public String code() {
     return code;
   }
 
   /**
-   * Gets the key factory generating keys of this algorithm.
+   * 获取生成此算法密钥的密钥工厂。
    *
    * @return
-   *     the key factory generating keys of this algorithm.
+   *     生成此算法密钥的密钥工厂。
    * @throws NoSuchAlgorithmException
-   *     if this algorithm is not supported by the system.
+   *     如果系统不支持此算法。
    */
   public KeyFactory getKeyFactory() throws NoSuchAlgorithmException {
     return KeyFactory.getInstance(code);

@@ -65,25 +65,21 @@ import static ltd.qubit.commons.reflect.impl.GetMethodByReferenceThroughSerializ
 import static ltd.qubit.commons.reflect.impl.GetRecordMethodByReferenceImpl.findRecordMethod;
 
 /**
- * Provides utility reflection methods focused on methods, originally from
- * Commons BeanUtils. Differences from the BeanUtils version may be noted,
- * especially where similar functionality already existed within Lang.
- * <h2>Known Limitations</h2>
- * <h3>Accessing Public Methods In A Default Access Superclass</h3>
+ * 提供专注于方法的反射工具方法，最初来自 Commons BeanUtils。
+ * 与 BeanUtils 版本的差异可能会被注明，特别是在 Lang 中已经存在类似功能的地方。
  *
- * <p>There is an issue when invoking public methods contained in a default
- * access superclass on JREs prior to 1.4. Reflection locates these methods fine
- * and correctly assigns them as public. However, an
- * {@code IllegalAccessException} is thrown if the method is invoked.
+ * <h2>已知限制</h2>
+ * <h3>在默认访问超类中访问公共方法</h3>
  *
- * <p>{@code MethodUtils} contains a workaround for this situation. It will
- * attempt to call {@code setAccessible} on this method. If this call succeeds,
- * then the method can be invoked as normal. This call will only succeed when
- * the application has sufficient security privileges. If this call fails then
- * the method may fail.
+ * <p>在 JRE 1.4 之前的版本中，当调用包含在默认访问超类中的公共方法时存在问题。
+ * 反射可以正确地定位这些方法并正确地将它们分配为公共方法。但是，如果调用该方法，
+ * 则会抛出 {@code IllegalAccessException}。
  *
- * @author Haixing Hu
- * @since 1.0.0
+ * <p>{@code MethodUtils} 包含针对这种情况的解决方法。它将尝试在此方法上调用
+ * {@code setAccessible}。如果此调用成功，则可以正常调用该方法。此调用仅在应用程序
+ * 具有足够的安全权限时才会成功。如果此调用失败，则该方法可能会失败。
+ *
+ * @author 胡海星
  */
 @SuppressWarnings("overloads")
 @ThreadSafe
@@ -147,17 +143,16 @@ public class MethodUtils {
   }
 
   /**
-   * Gets all methods of a class.
+   * 获取类的所有方法。
    *
    * @param type
-   *     The class on which to get the methods.
+   *     要获取方法的类。
    * @param options
-   *     A bitwise combination of reflection options defined in the {@link
-   *     Option} class. The default value could be {@link Option#DEFAULT}.
-   * @return the array of all specified methods; or an empty array if no such
-   *     method.
+   *     在 {@link Option} 类中定义的反射选项的按位组合。
+   *     默认值可以是 {@link Option#DEFAULT}。
+   * @return 所有指定方法的数组；如果没有此类方法，则返回空数组。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static List<Method> getAllMethods(final Class<?> type, final int options)
       throws ReflectionException {
@@ -224,32 +219,27 @@ public class MethodUtils {
   }
 
   /**
-   * Gets a method of a class that matches the given name and the given
-   * parameter types.
+   * 获取类的匹配给定名称和给定参数类型的方法。
    *
-   * <p>NOTE: if the {@code options} argument contains {@link Option#ANCESTOR}
-   * , and there is more than one method with the specified name and parameter
-   * types declared in the specified class or its ancestor class or its ancestor
-   * interfaces, the function will try to return the method with the shallower
-   * depth; if there are more than one method has the specified name in the same
-   * depth, the function will returns the one with a more precise returned type;
-   * otherwise, the function will throw an {@link AmbiguousMemberException}.
+   * <p>注意：如果 {@code options} 参数包含 {@link Option#ANCESTOR}，
+   * 并且在指定类或其祖先类或其祖先接口中声明了多个具有指定名称和参数类型的方法，
+   * 该函数将尝试返回深度较浅的方法；如果有多个方法在同一深度具有指定名称，
+   * 该函数将返回具有更精确返回类型的方法；否则，该函数将抛出 {@link AmbiguousMemberException}。
    *
    * @param type
-   *     The class on which to get the method.
+   *     要获取方法的类。
    * @param options
-   *     A bitwise combination of reflection options defined in the {@link
-   *     Option} class. The default value could be {@link Option#DEFAULT}.
+   *     在 {@link Option} 类中定义的反射选项的按位组合。
+   *     默认值可以是 {@link Option#DEFAULT}。
    * @param name
-   *     The name of the method to be get.
+   *     要获取的方法的名称。
    * @param paramTypes
-   *     The types of the parameters of the method to be get, or {@code null} or
-   *     an empty array if the method to be get has no parameter.
-   * @return the specified method, or {@code null} if no such field.
+   *     要获取的方法的参数类型，如果要获取的方法没有参数，则为 {@code null} 或空数组。
+   * @return 指定的方法，如果没有此类字段，则返回 {@code null}。
    * @throws AmbiguousMemberException
-   *     if tow or more matching methods found.
+   *     如果找到两个或更多匹配的方法。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static Method getMethod(final Class<?> type, final int options, final String name,
       @Nullable final Class<?>[] paramTypes) throws ReflectionException {
@@ -321,29 +311,24 @@ public class MethodUtils {
   }
 
   /**
-   * Gets a method of a class that matches the given name and the compatible
-   * parameter types.
+   * 获取类的匹配给定名称和兼容参数类型的方法。
    *
-   * <p>NOTE: if the {@code options} argument contains {@link Option#ANCESTOR}
-   * , and there is more than one method with the specified name and parameter
-   * types declared in the specified class or its ancestor class or its ancestor
-   * interfaces, the function will try to return the method with the shallower
-   * depth; if there are more than one method has the specified name in the same
-   * depth, the function will returns the one with a more precise returned type;
-   * otherwise, the function will throw an {@link AmbiguousMemberException}.
+   * <p>注意：如果 {@code options} 参数包含 {@link Option#ANCESTOR}，
+   * 并且在指定类或其祖先类或其祖先接口中声明了多个具有指定名称和参数类型的方法，
+   * 该函数将尝试返回深度较浅的方法；如果有多个方法在同一深度具有指定名称，
+   * 该函数将返回具有更精确返回类型的方法；否则，该函数将抛出 {@link AmbiguousMemberException}。
    *
    * @param type
-   *     The class on which to get the method.
+   *     要获取方法的类。
    * @param name
-   *     The name of the method to be get.
+   *     要获取的方法的名称。
    * @param paramTypes
-   *     The types of the compatible parameters of the method to be get, or an
-   *     empty array if the method to be get has no parameter.
-   * @return the specified method, or {@code null} if no such method.
+   *     要获取的方法的兼容参数类型，如果要获取的方法没有参数，则为空数组。
+   * @return 指定的方法，如果没有此类方法，则返回 {@code null}。
    * @throws AmbiguousMemberException
-   *     if tow or more matching methods found.
+   *     如果找到两个或更多匹配的方法。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   @Nullable
   public static Method getMatchingMethod(final Class<?> type, final String name,
@@ -352,32 +337,27 @@ public class MethodUtils {
   }
 
   /**
-   * Gets a method of a class that matches the given name and the compatible
-   * parameter types.
+   * 获取类的匹配给定名称和兼容参数类型的方法。
    *
-   * <p>NOTE: if the {@code options} argument contains {@link Option#ANCESTOR}
-   * , and there is more than one method with the specified name and parameter
-   * types declared in the specified class or its ancestor class or its ancestor
-   * interfaces, the function will try to return the method with the shallower
-   * depth; if there are more than one method has the specified name in the same
-   * depth, the function will returns the one with a more precise returned type;
-   * otherwise, the function will throw an {@link AmbiguousMemberException}.
+   * <p>注意：如果 {@code options} 参数包含 {@link Option#ANCESTOR}，
+   * 并且在指定类或其祖先类或其祖先接口中声明了多个具有指定名称和参数类型的方法，
+   * 该函数将尝试返回深度较浅的方法；如果有多个方法在同一深度具有指定名称，
+   * 该函数将返回具有更精确返回类型的方法；否则，该函数将抛出 {@link AmbiguousMemberException}。
    *
    * @param type
-   *     The class on which to get the method.
+   *     要获取方法的类。
    * @param options
-   *     A bitwise combination of reflection options defined in the {@link
-   *     Option} class. The default value could be {@link Option#DEFAULT}.
+   *     在 {@link Option} 类中定义的反射选项的按位组合。
+   *     默认值可以是 {@link Option#DEFAULT}。
    * @param name
-   *     The name of the method to be get.
+   *     要获取的方法的名称。
    * @param paramTypes
-   *     The types of the compatible parameters of the method to be gotten, or an
-   *     empty array if the method to be get has no parameter.
-   * @return the specified method, or {@code null} if no such method.
+   *     要获取的方法的兼容参数类型，如果要获取的方法没有参数，则为空数组。
+   * @return 指定的方法，如果没有此类方法，则返回 {@code null}。
    * @throws AmbiguousMemberException
-   *     if tow or more matching methods found.
+   *     如果找到两个或更多匹配的方法。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   @Nullable
   public static Method getMatchingMethod(final Class<?> type, final int options,
@@ -421,25 +401,22 @@ public class MethodUtils {
   }
 
   /**
-   * Gets a method of a class that matches the given name.
+   * 获取类的匹配给定名称的方法。
    *
-   * <p>NOTE: if the {@code options} argument contains {@link Option#ANCESTOR}
-   * , and there is more than one method with the specified name declared in the
-   * specified class or its ancestor class or its ancestor interfaces, the
-   * function will try to return the method with the shallower depth; if there
-   * are more than one method has the specified name in the same depth, the
-   * function will return the one with a more precise returned type; otherwise,
-   * the function will throw an {@link AmbiguousMemberException}.
+   * <p>注意：如果 {@code options} 参数包含 {@link Option#ANCESTOR}，
+   * 并且在指定类或其祖先类或其祖先接口中声明了多个具有指定名称的方法，
+   * 该函数将尝试返回深度较浅的方法；如果有多个方法在同一深度具有指定名称，
+   * 该函数将返回具有更精确返回类型的方法；否则，该函数将抛出 {@link AmbiguousMemberException}。
    *
    * @param type
-   *     The class on which to get the method.
+   *     要获取方法的类。
    * @param name
-   *     The name of the method to be get.
-   * @return the specified method, or {@code null} if no such method.
+   *     要获取的方法的名称。
+   * @return 指定的方法，如果没有此类方法，则返回 {@code null}。
    * @throws AmbiguousMemberException
-   *     if tow or more matching methods found.
+   *     如果找到两个或更多匹配的方法。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   @Nullable
   public static Method getMethodByName(final Class<?> type, final String name)
@@ -448,28 +425,25 @@ public class MethodUtils {
   }
 
   /**
-   * Gets a method of a class that matches the given name.
+   * 获取类的匹配给定名称的方法。
    *
-   * <p>NOTE: if the {@code options} argument contains {@link Option#ANCESTOR}
-   * , and there is more than one method with the specified name declared in the
-   * specified class or its ancestor class or its ancestor interfaces, the
-   * function will try to return the method with the shallower depth; if there
-   * are more than one method has the specified name in the same depth, the
-   * function will return the one with a more precise returned type; otherwise,
-   * the function will throw an {@link AmbiguousMemberException}.
+   * <p>注意：如果 {@code options} 参数包含 {@link Option#ANCESTOR}，
+   * 并且在指定类或其祖先类或其祖先接口中声明了多个具有指定名称的方法，
+   * 该函数将尝试返回深度较浅的方法；如果有多个方法在同一深度具有指定名称，
+   * 该函数将返回具有更精确返回类型的方法；否则，该函数将抛出 {@link AmbiguousMemberException}。
    *
    * @param type
-   *     The class on which to get the method.
+   *     要获取方法的类。
    * @param options
-   *     A bitwise combination of reflection options defined in the {@link
-   *     Option} class. The default value could be {@link Option#DEFAULT}.
+   *     在 {@link Option} 类中定义的反射选项的按位组合。
+   *     默认值可以是 {@link Option#DEFAULT}。
    * @param name
-   *     The name of the method to be get.
-   * @return the specified method, or {@code null} if no such method.
+   *     要获取的方法的名称。
+   * @return 指定的方法，如果没有此类方法，则返回 {@code null}。
    * @throws AmbiguousMemberException
-   *     if tow or more matching methods found.
+   *     如果找到两个或更多匹配的方法。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   @Nullable
   public static Method getMethodByName(final Class<?> type, final int options,
@@ -506,22 +480,19 @@ public class MethodUtils {
   }
 
   /**
-   * Invoke the specified method of a specified object with the specified
-   * arguments.
+   * 使用指定参数调用指定对象的指定方法。
    *
-   * <p>This function simply wrap the IllegalArgumentException to make the
-   * message more instructive.
+   * <p>此函数只是包装 IllegalArgumentException 以使消息更具指导性。
    *
    * @param method
-   *     The method to be invoked.
+   *     要调用的方法。
    * @param object
-   *     An object whose method should be invoked.
+   *     应调用其方法的对象。
    * @param arguments
-   *     The arguments used to invoke the method, which may be {@code null} or
-   *     empty if the method has no arguments.
-   * @return The value returned by the invoked method.
+   *     用于调用方法的参数，如果方法没有参数，则可能为 {@code null} 或空。
+   * @return 被调用方法返回的值。
    * @throws InvokingMethodFailedException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static Object invokeMethod(final Method method, final Object object,
       @Nullable final Object ... arguments) throws InvokingMethodFailedException {
@@ -538,32 +509,27 @@ public class MethodUtils {
   }
 
   /**
-   * Invokes a named method whose parameter types match the given arguments
-   * types.
+   * 调用参数类型与给定参数类型匹配的命名方法。
    *
-   * <p>This method delegates the method search to
-   * {@link #getMatchingMethod(Class, int, String, Class[])}.
+   * <p>此方法将方法搜索委托给 {@link #getMatchingMethod(Class, int, String, Class[])}。
    *
-   * <p>This method supports calls to methods taking primitive parameters via
-   * passing in wrapping classes. So, for example, a {@code Boolean} object
-   * would match a {@code boolean} primitive.
+   * <p>此方法支持通过传入包装类来调用采用原始参数的方法。
+   * 例如，{@code Boolean} 对象将匹配 {@code boolean} 原始类型。
    *
    * @param type
-   *     The class on which to get the method.
+   *     要获取方法的类。
    * @param options
-   *     A bitwise combination of reflection options defined in the {@link
-   *     Option} class. The default value could be {@link Option#DEFAULT}.
+   *     在 {@link Option} 类中定义的反射选项的按位组合。
+   *     默认值可以是 {@link Option#DEFAULT}。
    * @param name
-   *     The name of the method to be get.
+   *     要获取的方法的名称。
    * @param object
-   *     The object on which the method should be called. If the method is a
-   *     static method, this argument could be {@code null}.
+   *     应调用方法的对象。如果方法是静态方法，此参数可以为 {@code null}。
    * @param arguments
-   *     The arguments used to invoke the method. If the method has no argument,
-   *     this argument could be {@code null} or an empty array.
-   * @return The value returned by the invoked method.
+   *     用于调用方法的参数。如果方法没有参数，此参数可以为 {@code null} 或空数组。
+   * @return 被调用方法返回的值。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static Object invokeMethod(final Class<?> type, final int options,
       final String name, final Object object, @Nullable final Object[] arguments)
@@ -580,35 +546,29 @@ public class MethodUtils {
   }
 
   /**
-   * Invokes a named method whose parameter types match the given parameter
-   * types.
+   * 调用参数类型与给定参数类型匹配的命名方法。
    *
-   * <p>This method delegates the method search to
-   * {@link #getMatchingMethod(Class, int, String, Class[])}.
+   * <p>此方法将方法搜索委托给 {@link #getMatchingMethod(Class, int, String, Class[])}。
    *
-   * <p>This method supports calls to methods taking primitive parameters via
-   * passing in wrapping classes. So, for example, a {@code Boolean} object
-   * would match a {@code boolean} primitive.
+   * <p>此方法支持通过传入包装类来调用采用原始参数的方法。
+   * 例如，{@code Boolean} 对象将匹配 {@code boolean} 原始类型。
    *
    * @param type
-   *     The class on which to get the method.
+   *     要获取方法的类。
    * @param options
-   *     A bitwise combination of reflection options defined in the {@link
-   *     Option} class. The default value could be {@link Option#DEFAULT}.
+   *     在 {@link Option} 类中定义的反射选项的按位组合。
+   *     默认值可以是 {@link Option#DEFAULT}。
    * @param name
-   *     The name of the method to be get.
+   *     要获取的方法的名称。
    * @param paramTypes
-   *     The types of the parameters of the method to be get, which could be
-   *     {@code null} or an empty array if the method has no argument.
+   *     要获取的方法的参数类型，如果方法没有参数，则可能为 {@code null} 或空数组。
    * @param object
-   *     The object on which the method should be called. If the method is a
-   *     static method, this argument could be {@code null}.
+   *     应调用方法的对象。如果方法是静态方法，此参数可以为 {@code null}。
    * @param arguments
-   *     The arguments used to invoke the method. If the method has no argument,
-   *     this argument could be {@code null} or an empty array.
-   * @return The value returned by the invoked method.
+   *     用于调用方法的参数。如果方法没有参数，此参数可以为 {@code null} 或空数组。
+   * @return 被调用方法返回的值。
    * @throws ReflectionException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static Object invokeMethod(final Class<?> type, final int options,
       final String name, @Nullable final Class<?>[] paramTypes,
@@ -712,21 +672,21 @@ public class MethodUtils {
   }
 
   /**
-   * Gets the fully qualified name of a method.
+   * 获取方法的完全限定名称。
    *
-   * <p>The fully qualified method name has the following syntax:
+   * <p>完全限定的方法名称具有以下语法：
    * <pre><code>
-   * [fully qualified class name]#[methodName](parameter type list)
+   * [完全限定类名]#[方法名](参数类型列表)
    * </code></pre>
    *
-   * <p>For example,
+   * <p>例如：
    * <pre><code>
    * java.lang.String#substring(int, int)
    * </code></pre>
    *
    * @param method
-   *     the method.
-   * @return the fully qualified name of a method.
+   *     方法。
+   * @return 方法的完全限定名称。
    */
   public static String getFullyQualifiedMethodName(final Method method) {
     final StringBuilder builder = new StringBuilder();
@@ -747,21 +707,21 @@ public class MethodUtils {
   }
 
   /**
-   * Gets the URI of a method.
+   * 获取方法的URI。
    *
-   * <p>The URI of a method has the following syntax:
+   * <p>方法的URI具有以下语法：
    * <pre><code>
-   * method:[fully qualified method name]
+   * method:[完全限定方法名]
    * </code></pre>
    *
-   * <p>For example:
+   * <p>例如：
    * <pre><code>
    * method:java.lang.String#substring(int, int)
    * </code></pre>
    *
    * @param method
-   *     the method.
-   * @return the URI of the method.
+   *     方法。
+   * @return 方法的URI。
    */
   public static URI getMethodUri(final Method method) {
     final String fullyQualifiedName = getFullyQualifiedMethodName(method);
@@ -980,6 +940,22 @@ public class MethodUtils {
     });
   }
 
+  /**
+   * 通过方法引用获取有返回值且有1个参数的方法。
+   *
+   * @param <T>
+   *     类的类型。
+   * @param <R>
+   *     方法返回值的类型。
+   * @param <P1>
+   *     第一个参数的类型。
+   * @param clazz
+   *     要在其中查找方法的类。
+   * @param ref
+   *     方法引用。
+   * @return
+   *     该方法引用对应的方法的{@link Method}对象。
+   */
   @SuppressWarnings("unchecked")
   public static <T, R, P1> Method getMethodByReference(final Class<T> clazz,
       final NonVoidMethod1<T, R, P1> ref) {
@@ -999,6 +975,20 @@ public class MethodUtils {
         });
   }
 
+  /**
+   * 通过方法引用获取有返回值且有1个boolean参数的方法。
+   *
+   * @param <T>
+   *     类的类型。
+   * @param <R>
+   *     方法返回值的类型。
+   * @param clazz
+   *     要在其中查找方法的类。
+   * @param ref
+   *     方法引用。
+   * @return
+   *     该方法引用对应的方法的{@link Method}对象。
+   */
   @SuppressWarnings("unchecked")
   public static <T, R> Method getMethodByReference(final Class<T> clazz,
       final NonVoidMethod1Boolean<T, R> ref) {
@@ -1027,6 +1017,20 @@ public class MethodUtils {
   //       (g) -> findMethod(clazz, (NonVoidMethod1Char<T, R>) g));
   // }
 
+  /**
+   * 通过方法引用获取有返回值且有1个byte参数的方法。
+   *
+   * @param <T>
+   *     类的类型。
+   * @param <R>
+   *     方法返回值的类型。
+   * @param clazz
+   *     要在其中查找方法的类。
+   * @param ref
+   *     方法引用。
+   * @return
+   *     该方法引用对应的方法的{@link Method}对象。
+   */
   @SuppressWarnings("unchecked")
   public static <T, R> Method getMethodByReference(final Class<T> clazz,
       final NonVoidMethod1Byte<T, R> ref) {
@@ -1091,6 +1095,24 @@ public class MethodUtils {
   //       (g) -> findMethod(clazz, (NonVoidMethod1Double<T, R>) g));
   // }
 
+  /**
+   * 通过方法引用获取有返回值且有2个参数的方法。
+   *
+   * @param <T>
+   *     类的类型。
+   * @param <R>
+   *     方法返回值的类型。
+   * @param <P1>
+   *     第一个参数的类型。
+   * @param <P2>
+   *     第二个参数的类型。
+   * @param clazz
+   *     要在其中查找方法的类。
+   * @param ref
+   *     方法引用。
+   * @return
+   *     该方法引用对应的方法的{@link Method}对象。
+   */
   @SuppressWarnings("unchecked")
   public static <T, R, P1, P2> Method getMethodByReference(final Class<T> clazz,
       final NonVoidMethod2<T, R, P1, P2> ref) {
@@ -1110,6 +1132,26 @@ public class MethodUtils {
     });
   }
 
+  /**
+   * 通过方法引用获取有返回值且有3个参数的方法。
+   *
+   * @param <T>
+   *     类的类型。
+   * @param <R>
+   *     方法返回值的类型。
+   * @param <P1>
+   *     第一个参数的类型。
+   * @param <P2>
+   *     第二个参数的类型。
+   * @param <P3>
+   *     第三个参数的类型。
+   * @param clazz
+   *     要在其中查找方法的类。
+   * @param ref
+   *     方法引用。
+   * @return
+   *     该方法引用对应的方法的{@link Method}对象。
+   */
   @SuppressWarnings("unchecked")
   public static <T, R, P1, P2, P3> Method getMethodByReference(final Class<T> clazz,
       final NonVoidMethod3<T, R, P1, P2, P3> ref) {
@@ -1129,6 +1171,28 @@ public class MethodUtils {
     });
   }
 
+  /**
+   * 通过方法引用获取有返回值且有4个参数的方法。
+   *
+   * @param <T>
+   *     类的类型。
+   * @param <R>
+   *     方法返回值的类型。
+   * @param <P1>
+   *     第一个参数的类型。
+   * @param <P2>
+   *     第二个参数的类型。
+   * @param <P3>
+   *     第三个参数的类型。
+   * @param <P4>
+   *     第四个参数的类型。
+   * @param clazz
+   *     要在其中查找方法的类。
+   * @param ref
+   *     方法引用。
+   * @return
+   *     该方法引用对应的方法的{@link Method}对象。
+   */
   @SuppressWarnings("unchecked")
   public static <T, R, P1, P2, P3, P4> Method getMethodByReference(final Class<T> clazz,
       final NonVoidMethod4<T, R, P1, P2, P3, P4> ref) {
@@ -1148,6 +1212,30 @@ public class MethodUtils {
     });
   }
 
+  /**
+   * 通过方法引用获取有返回值且有5个参数的方法。
+   *
+   * @param <T>
+   *     类的类型。
+   * @param <R>
+   *     方法返回值的类型。
+   * @param <P1>
+   *     第一个参数的类型。
+   * @param <P2>
+   *     第二个参数的类型。
+   * @param <P3>
+   *     第三个参数的类型。
+   * @param <P4>
+   *     第四个参数的类型。
+   * @param <P5>
+   *     第五个参数的类型。
+   * @param clazz
+   *     要在其中查找方法的类。
+   * @param ref
+   *     方法引用。
+   * @return
+   *     该方法引用对应的方法的{@link Method}对象。
+   */
   @SuppressWarnings("unchecked")
   public static <T, R, P1, P2, P3, P4, P5> Method getMethodByReference(final Class<T> clazz,
       final NonVoidMethod5<T, R, P1, P2, P3, P4, P5> ref) {
@@ -1167,6 +1255,32 @@ public class MethodUtils {
     });
   }
 
+  /**
+   * 通过方法引用获取有返回值且有6个参数的方法。
+   *
+   * @param <T>
+   *     类的类型。
+   * @param <R>
+   *     方法返回值的类型。
+   * @param <P1>
+   *     第一个参数的类型。
+   * @param <P2>
+   *     第二个参数的类型。
+   * @param <P3>
+   *     第三个参数的类型。
+   * @param <P4>
+   *     第四个参数的类型。
+   * @param <P5>
+   *     第五个参数的类型。
+   * @param <P6>
+   *     第六个参数的类型。
+   * @param clazz
+   *     要在其中查找方法的类。
+   * @param ref
+   *     方法引用。
+   * @return
+   *     该方法引用对应的方法的{@link Method}对象。
+   */
   @SuppressWarnings("unchecked")
   public static <T, R, P1, P2, P3, P4, P5, P6> Method getMethodByReference(final Class<T> clazz,
       final NonVoidMethod6<T, R, P1, P2, P3, P4, P5, P6> ref) {
@@ -1186,6 +1300,34 @@ public class MethodUtils {
     });
   }
 
+  /**
+   * 通过方法引用获取有返回值且有7个参数的方法。
+   *
+   * @param <T>
+   *     类的类型。
+   * @param <R>
+   *     方法返回值的类型。
+   * @param <P1>
+   *     第一个参数的类型。
+   * @param <P2>
+   *     第二个参数的类型。
+   * @param <P3>
+   *     第三个参数的类型。
+   * @param <P4>
+   *     第四个参数的类型。
+   * @param <P5>
+   *     第五个参数的类型。
+   * @param <P6>
+   *     第六个参数的类型。
+   * @param <P7>
+   *     第七个参数的类型。
+   * @param clazz
+   *     要在其中查找方法的类。
+   * @param ref
+   *     方法引用。
+   * @return
+   *     该方法引用对应的方法的{@link Method}对象。
+   */
   @SuppressWarnings("unchecked")
   public static <T, R, P1, P2, P3, P4, P5, P6, P7> Method getMethodByReference(final Class<T> clazz,
       final NonVoidMethod7<T, R, P1, P2, P3, P4, P5, P6, P7> ref) {
@@ -1205,6 +1347,36 @@ public class MethodUtils {
     });
   }
 
+  /**
+   * 通过方法引用获取有返回值且有8个参数的方法。
+   *
+   * @param <T>
+   *     类的类型。
+   * @param <R>
+   *     方法返回值的类型。
+   * @param <P1>
+   *     第一个参数的类型。
+   * @param <P2>
+   *     第二个参数的类型。
+   * @param <P3>
+   *     第三个参数的类型。
+   * @param <P4>
+   *     第四个参数的类型。
+   * @param <P5>
+   *     第五个参数的类型。
+   * @param <P6>
+   *     第六个参数的类型。
+   * @param <P7>
+   *     第七个参数的类型。
+   * @param <P8>
+   *     第八个参数的类型。
+   * @param clazz
+   *     要在其中查找方法的类。
+   * @param ref
+   *     方法引用。
+   * @return
+   *     该方法引用对应的方法的{@link Method}对象。
+   */
   @SuppressWarnings("unchecked")
   public static <T, R, P1, P2, P3, P4, P5, P6, P7, P8> Method getMethodByReference(
       final Class<T> clazz, final NonVoidMethod8<T, R, P1, P2, P3, P4, P5, P6, P7, P8> ref) {
@@ -1224,6 +1396,38 @@ public class MethodUtils {
     });
   }
 
+  /**
+   * 通过方法引用获取有返回值且有9个参数的方法。
+   *
+   * @param <T>
+   *     类的类型。
+   * @param <R>
+   *     方法返回值的类型。
+   * @param <P1>
+   *     第一个参数的类型。
+   * @param <P2>
+   *     第二个参数的类型。
+   * @param <P3>
+   *     第三个参数的类型。
+   * @param <P4>
+   *     第四个参数的类型。
+   * @param <P5>
+   *     第五个参数的类型。
+   * @param <P6>
+   *     第六个参数的类型。
+   * @param <P7>
+   *     第七个参数的类型。
+   * @param <P8>
+   *     第八个参数的类型。
+   * @param <P9>
+   *     第九个参数的类型。
+   * @param clazz
+   *     要在其中查找方法的类。
+   * @param ref
+   *     方法引用。
+   * @return
+   *     该方法引用对应的方法的{@link Method}对象。
+   */
   @SuppressWarnings("unchecked")
   public static <T, R, P1, P2, P3, P4, P5, P6, P7, P8, P9> Method getMethodByReference(
       final Class<T> clazz, final NonVoidMethod9<T, R, P1, P2, P3, P4, P5, P6, P7, P8, P9> ref) {
@@ -1312,6 +1516,20 @@ public class MethodUtils {
     });
   }
 
+  /**
+   * 通过方法引用获取无返回值且有1个参数的方法。
+   *
+   * @param <T>
+   *     类的类型。
+   * @param <P1>
+   *     第一个参数的类型。
+   * @param clazz
+   *     要在其中查找方法的类。
+   * @param ref
+   *     方法引用。
+   * @return
+   *     该方法引用对应的方法的{@link Method}对象。
+   */
   @SuppressWarnings("unchecked")
   public static <T, P1> Method getMethodByReference(final Class<T> clazz,
       final VoidMethod1<T, P1> ref) {
@@ -1334,6 +1552,18 @@ public class MethodUtils {
     });
   }
 
+  /**
+   * 通过方法引用获取无返回值且有1个boolean参数的方法。
+   *
+   * @param <T>
+   *     类的类型。
+   * @param clazz
+   *     要在其中查找方法的类。
+   * @param ref
+   *     方法引用。
+   * @return
+   *     该方法引用对应的方法的{@link Method}对象。
+   */
   @SuppressWarnings("unchecked")
   public static <T> Method getMethodByReference(final Class<T> clazz,
       final VoidMethod1Boolean<T> ref) {
@@ -1365,6 +1595,18 @@ public class MethodUtils {
   //       (g) -> findMethod(clazz, (VoidMethod1Char<T>) g));
   // }
 
+  /**
+   * 通过方法引用获取无返回值且有1个byte参数的方法。
+   *
+   * @param <T>
+   *     类的类型。
+   * @param clazz
+   *     要在其中查找方法的类。
+   * @param ref
+   *     方法引用。
+   * @return
+   *     该方法引用对应的方法的{@link Method}对象。
+   */
   @SuppressWarnings("unchecked")
   public static <T> Method getMethodByReference(final Class<T> clazz,
       final VoidMethod1Byte<T> ref) {
@@ -1432,6 +1674,22 @@ public class MethodUtils {
   //       (g) -> findMethod(clazz, (VoidMethod1Double<T>) g));
   // }
 
+  /**
+   * 通过方法引用获取无返回值且有2个参数的方法。
+   *
+   * @param <T>
+   *     类的类型。
+   * @param <P1>
+   *     第一个参数的类型。
+   * @param <P2>
+   *     第二个参数的类型。
+   * @param clazz
+   *     要在其中查找方法的类。
+   * @param ref
+   *     方法引用。
+   * @return
+   *     该方法引用对应的方法的{@link Method}对象。
+   */
   @SuppressWarnings("unchecked")
   public static <T, P1, P2> Method getMethodByReference(final Class<T> clazz,
       final VoidMethod2<T, P1, P2> ref) {
@@ -1454,6 +1712,24 @@ public class MethodUtils {
     });
   }
 
+  /**
+   * 通过方法引用获取无返回值且有3个参数的方法。
+   *
+   * @param <T>
+   *     类的类型。
+   * @param <P1>
+   *     第一个参数的类型。
+   * @param <P2>
+   *     第二个参数的类型。
+   * @param <P3>
+   *     第三个参数的类型。
+   * @param clazz
+   *     要在其中查找方法的类。
+   * @param ref
+   *     方法引用。
+   * @return
+   *     该方法引用对应的方法的{@link Method}对象。
+   */
   @SuppressWarnings("unchecked")
   public static <T, P1, P2, P3> Method getMethodByReference(final Class<T> clazz,
       final VoidMethod3<T, P1, P2, P3> ref) {
@@ -1476,6 +1752,26 @@ public class MethodUtils {
     });
   }
 
+  /**
+   * 通过方法引用获取无返回值且有4个参数的方法。
+   *
+   * @param <T>
+   *     类的类型。
+   * @param <P1>
+   *     第一个参数的类型。
+   * @param <P2>
+   *     第二个参数的类型。
+   * @param <P3>
+   *     第三个参数的类型。
+   * @param <P4>
+   *     第四个参数的类型。
+   * @param clazz
+   *     要在其中查找方法的类。
+   * @param ref
+   *     方法引用。
+   * @return
+   *     该方法引用对应的方法的{@link Method}对象。
+   */
   @SuppressWarnings("unchecked")
   public static <T, P1, P2, P3, P4> Method getMethodByReference(final Class<T> clazz,
       final VoidMethod4<T, P1, P2, P3, P4> ref) {
@@ -1498,6 +1794,28 @@ public class MethodUtils {
     });
   }
 
+  /**
+   * 通过方法引用获取无返回值且有5个参数的方法。
+   *
+   * @param <T>
+   *     类的类型。
+   * @param <P1>
+   *     第一个参数的类型。
+   * @param <P2>
+   *     第二个参数的类型。
+   * @param <P3>
+   *     第三个参数的类型。
+   * @param <P4>
+   *     第四个参数的类型。
+   * @param <P5>
+   *     第五个参数的类型。
+   * @param clazz
+   *     要在其中查找方法的类。
+   * @param ref
+   *     方法引用。
+   * @return
+   *     该方法引用对应的方法的{@link Method}对象。
+   */
   @SuppressWarnings("unchecked")
   public static <T, P1, P2, P3, P4, P5> Method getMethodByReference(final Class<T> clazz,
       final VoidMethod5<T, P1, P2, P3, P4, P5> ref) {
@@ -1520,6 +1838,30 @@ public class MethodUtils {
     });
   }
 
+  /**
+   * 通过方法引用获取无返回值且有6个参数的方法。
+   *
+   * @param <T>
+   *     类的类型。
+   * @param <P1>
+   *     第一个参数的类型。
+   * @param <P2>
+   *     第二个参数的类型。
+   * @param <P3>
+   *     第三个参数的类型。
+   * @param <P4>
+   *     第四个参数的类型。
+   * @param <P5>
+   *     第五个参数的类型。
+   * @param <P6>
+   *     第六个参数的类型。
+   * @param clazz
+   *     要在其中查找方法的类。
+   * @param ref
+   *     方法引用。
+   * @return
+   *     该方法引用对应的方法的{@link Method}对象。
+   */
   @SuppressWarnings("unchecked")
   public static <T, P1, P2, P3, P4, P5, P6> Method getMethodByReference(final Class<T> clazz,
       final VoidMethod6<T, P1, P2, P3, P4, P5, P6> ref) {
@@ -1542,6 +1884,32 @@ public class MethodUtils {
     });
   }
 
+  /**
+   * 通过方法引用获取无返回值且有7个参数的方法。
+   *
+   * @param <T>
+   *     类的类型。
+   * @param <P1>
+   *     第一个参数的类型。
+   * @param <P2>
+   *     第二个参数的类型。
+   * @param <P3>
+   *     第三个参数的类型。
+   * @param <P4>
+   *     第四个参数的类型。
+   * @param <P5>
+   *     第五个参数的类型。
+   * @param <P6>
+   *     第六个参数的类型。
+   * @param <P7>
+   *     第七个参数的类型。
+   * @param clazz
+   *     要在其中查找方法的类。
+   * @param ref
+   *     方法引用。
+   * @return
+   *     该方法引用对应的方法的{@link Method}对象。
+   */
   @SuppressWarnings("unchecked")
   public static <T, P1, P2, P3, P4, P5, P6, P7> Method getMethodByReference(final Class<T> clazz,
       final VoidMethod7<T, P1, P2, P3, P4, P5, P6, P7> ref) {
@@ -1564,6 +1932,34 @@ public class MethodUtils {
     });
   }
 
+  /**
+   * 通过方法引用获取无返回值且有8个参数的方法。
+   *
+   * @param <T>
+   *     类的类型。
+   * @param <P1>
+   *     第一个参数的类型。
+   * @param <P2>
+   *     第二个参数的类型。
+   * @param <P3>
+   *     第三个参数的类型。
+   * @param <P4>
+   *     第四个参数的类型。
+   * @param <P5>
+   *     第五个参数的类型。
+   * @param <P6>
+   *     第六个参数的类型。
+   * @param <P7>
+   *     第七个参数的类型。
+   * @param <P8>
+   *     第八个参数的类型。
+   * @param clazz
+   *     要在其中查找方法的类。
+   * @param ref
+   *     方法引用。
+   * @return
+   *     该方法引用对应的方法的{@link Method}对象。
+   */
   @SuppressWarnings("unchecked")
   public static <T, P1, P2, P3, P4, P5, P6, P7, P8> Method getMethodByReference(
       final Class<T> clazz, final VoidMethod8<T, P1, P2, P3, P4, P5, P6, P7, P8> ref) {
@@ -1586,6 +1982,36 @@ public class MethodUtils {
     });
   }
 
+  /**
+   * 通过方法引用获取无返回值且有9个参数的方法。
+   *
+   * @param <T>
+   *     类的类型。
+   * @param <P1>
+   *     第一个参数的类型。
+   * @param <P2>
+   *     第二个参数的类型。
+   * @param <P3>
+   *     第三个参数的类型。
+   * @param <P4>
+   *     第四个参数的类型。
+   * @param <P5>
+   *     第五个参数的类型。
+   * @param <P6>
+   *     第六个参数的类型。
+   * @param <P7>
+   *     第七个参数的类型。
+   * @param <P8>
+   *     第八个参数的类型。
+   * @param <P9>
+   *     第九个参数的类型。
+   * @param clazz
+   *     要在其中查找方法的类。
+   * @param ref
+   *     方法引用。
+   * @return
+   *     该方法引用对应的方法的{@link Method}对象。
+   */
   @SuppressWarnings("unchecked")
   public static <T, P1, P2, P3, P4, P5, P6, P7, P8, P9> Method getMethodByReference(
       final Class<T> clazz, final VoidMethod9<T, P1, P2, P3, P4, P5, P6, P7, P8, P9> ref) {

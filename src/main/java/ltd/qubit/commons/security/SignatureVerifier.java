@@ -36,18 +36,37 @@ import static ltd.qubit.commons.io.IoUtils.BUFFER_SIZE;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * The class of objects used to verify digital signature of messages.
+ * 用于验证消息数字签名的对象类。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see Signature
  * @see SignatureAlgorithm
  */
 public class SignatureVerifier {
 
+  /**
+   * 日志记录器。
+   */
   private final transient Logger logger = LoggerFactory.getLogger(this.getClass());
+
+  /**
+   * 签名算法。
+   */
   private final SignatureAlgorithm algorithm;
+
+  /**
+   * 签名引擎。
+   */
   private final transient Signature engine;
 
+  /**
+   * 构造一个数字签名验证器。
+   *
+   * @param algorithm
+   *     用于验证签名的算法。
+   * @throws VerifySignatureException
+   *     如果指定的算法不受支持。
+   */
   public SignatureVerifier(final SignatureAlgorithm algorithm)
       throws VerifySignatureException {
     this.algorithm = requireNonNull("algorithm", algorithm);
@@ -58,24 +77,28 @@ public class SignatureVerifier {
     }
   }
 
+  /**
+   * 获取此验证器使用的签名算法。
+   *
+   * @return 签名算法。
+   */
   public SignatureAlgorithm getAlgorithm() {
     return algorithm;
   }
 
   /**
-   * Verify the signature of a message.
+   * 验证消息的签名。
    *
    * @param publicKey
-   *     the public key used to verify signature.
+   *     用于验证签名的公钥。
    * @param input
-   *     the input stream of the message whose signature is to be verified. The
-   *     function will <b>NOT</b> close this input stream.
+   *     要验证签名的消息的输入流。该函数<b>不会</b>关闭此输入流。
    * @param signature
-   *     the signature to be verified.
+   *     要验证的签名。
    * @return
-   *     {@code true} if the signature matches; {@code false} otherwise.
+   *     如果签名匹配则返回{@code true}；否则返回{@code false}。
    * @throws VerifySignatureException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public boolean verify(final PublicKey publicKey, final InputStream input,
       final byte[] signature) throws VerifySignatureException {
@@ -100,18 +123,18 @@ public class SignatureVerifier {
   }
 
   /**
-   * Verify the signature of a message.
+   * 验证消息的签名。
    *
    * @param publicKey
-   *     the public key used to verify signature.
+   *     用于验证签名的公钥。
    * @param message
-   *     the byte array of the message whose signature is to be verified.
+   *     要验证签名的消息的字节数组。
    * @param signature
-   *     the signature to be verified.
+   *     要验证的签名。
    * @return
-   *     {@code true} if the signature matches; {@code false} otherwise.
+   *     如果签名匹配则返回{@code true}；否则返回{@code false}。
    * @throws VerifySignatureException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public boolean verify(final PublicKey publicKey, final byte[] message,
       final byte[] signature) throws VerifySignatureException {
@@ -128,21 +151,20 @@ public class SignatureVerifier {
   }
 
   /**
-   * Verify the signature of a message.
+   * 验证消息的签名。
    *
    * @param publicKey
-   *     the public key used to verify signature.
+   *     用于验证签名的公钥。
    * @param message
-   *     the string of the message whose signature is to be verified，encoded
-   *     in the specified charset.
+   *     要验证签名的消息字符串，使用指定字符集编码。
    * @param charset
-   *     the charset used to encoding the message.
+   *     用于编码消息的字符集。
    * @param signature
-   *     the signature to be verified.
+   *     要验证的签名。
    * @return
-   *     {@code true} if the signature matches; {@code false} otherwise.
+   *     如果签名匹配则返回{@code true}；否则返回{@code false}。
    * @throws VerifySignatureException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public boolean verify(final PublicKey publicKey, final String message,
       final Charset charset, final byte[] signature) throws VerifySignatureException {
@@ -154,19 +176,18 @@ public class SignatureVerifier {
   }
 
   /**
-   * Verify the signature of a message.
+   * 验证消息的签名。
    *
    * @param publicKey
-   *     the public key used to verify signature.
+   *     用于验证签名的公钥。
    * @param message
-   *     the string of the message whose signature is to be verified，encoded
-   *     in the UTF-8 charset.
+   *     要验证签名的消息字符串，使用UTF-8字符集编码。
    * @param signature
-   *     the signature to be verified.
+   *     要验证的签名。
    * @return
-   *     {@code true} if the signature matches; {@code false} otherwise.
+   *     如果签名匹配则返回{@code true}；否则返回{@code false}。
    * @throws VerifySignatureException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public boolean verify(final PublicKey publicKey, final String message,
       final byte[] signature) throws VerifySignatureException {
@@ -177,21 +198,20 @@ public class SignatureVerifier {
   }
 
   /**
-   * Verify the signature of a message.
+   * 验证消息的签名。
    *
    * @param publicKey
-   *     the public key used to verify signature.
+   *     用于验证签名的公钥。
    * @param data
-   *     the data to be signed, which will be encoded as a normalized JSON string
-   *     and verified.
+   *     要签名的数据，将被编码为规范化JSON字符串并验证。
    * @param mapper
-   *     the JSON mapper used to encode the data to a normalized JSON string.
+   *     用于将数据编码为规范化JSON字符串的JSON映射器。
    * @param signature
-   *     the signature to be verified.
+   *     要验证的签名。
    * @return
-   *     {@code true} if the signature matches; {@code false} otherwise.
+   *     如果签名匹配则返回{@code true}；否则返回{@code false}。
    * @throws VerifySignatureException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public <T> boolean verify(final PublicKey publicKey, final T data,
       final JsonMapper mapper, final byte[] signature)
@@ -204,19 +224,21 @@ public class SignatureVerifier {
   }
 
   /**
-   * Verify the signature of a message.
+   * 验证已签名消息的签名。
    *
+   * @param <T>
+   *     消息中数据的类型。
    * @param publicKey
-   *     the public key used to verify signature.
+   *     用于验证签名的公钥。
    * @param message
-   *     the signed message to be signed. The signature is encoded in the BASE-64
-   *     format and stored in the {@code signature} field of this object.
+   *     要验证的已签名消息。签名应以BASE-64格式编码，
+   *     并存储在此对象的{@code signature}字段中。
    * @param mapper
-   *     the JSON mapper used to encode the data to a normalized JSON string.
+   *     用于将数据编码为规范化JSON字符串的JSON映射器。
    * @return
-   *     {@code true} if the signature matches; {@code false} otherwise.
+   *     如果签名匹配则返回{@code true}；否则返回{@code false}。
    * @throws VerifySignatureException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public <T> boolean verify(final PublicKey publicKey,
       final SignedMessage<T> message, final JsonMapper mapper)
@@ -243,6 +265,25 @@ public class SignatureVerifier {
     return result;
   }
 
+  /**
+   * 验证数据。
+   *
+   * @param <T>
+   *     要验证的数据类型。
+   * @param publicKey
+   *     用于验证签名的公钥。
+   * @param data
+   *     要验证的数据，将被编码为规范化JSON字符串并验证。
+   * @param mapper
+   *     用于将数据编码为规范化JSON字符串的JSON映射器。
+   * @param signature
+   *     要验证的签名。
+   * @return
+   *     如果签名匹配则返回{@code true}；否则返回{@code false}。
+   * @throws VerifySignatureException
+   *     如果发生任何错误。
+   * @see JsonMapperUtils#formatNormalized(Object, JsonMapper)
+   */
   private <T> boolean verifyDataImpl(final PublicKey publicKey, final T data,
       final JsonMapper mapper, final byte[] signature)
       throws VerifySignatureException {
@@ -255,6 +296,7 @@ public class SignatureVerifier {
     return verify(publicKey, json, signature);
   }
 
+  @Override
   public boolean equals(final Object o) {
     if (this == o) {
       return true;
@@ -266,6 +308,7 @@ public class SignatureVerifier {
     return Equality.equals(algorithm, other.algorithm);
   }
 
+  @Override
   public int hashCode() {
     final int multiplier = 7;
     int result = 3;
@@ -273,6 +316,7 @@ public class SignatureVerifier {
     return result;
   }
 
+  @Override
   public String toString() {
     return new ToStringBuilder(this)
         .append("algorithm", algorithm)

@@ -30,18 +30,17 @@ import static ltd.qubit.commons.util.ComparisonOperator.NOT_IN;
 import static ltd.qubit.commons.util.ComparisonOperator.NOT_LIKE;
 
 /**
- * A builder for constructing {@link ComposedCriterion} objects using a fluent API.
+ * 用于构造{@link ComposedCriterion}对象的建造者，使用流式API。
  *
- * <p>This class provides a type-safe and flexible way to build complex query criteria.
- * It supports various comparison operators (equal, not equal, less than, greater than, etc.)
- * and can handle property paths of arbitrary depth. The builder also supports null-safe
- * operations that only add criteria when the provided value is not null.</p>
+ * <p>此类提供了类型安全且灵活的方式来构建复杂的查询条件。
+ * 它支持各种比较操作符（等于、不等于、小于、大于等）
+ * 并且可以处理任意深度的属性路径。建造者还支持空值安全操作，
+ * 只有在提供的值不为null时才添加条件。</p>
  *
- * <p>The builder can work with both direct property paths (specified as strings) and
- * property accessor methods (specified using method references), providing compile-time
- * type safety when needed.</p>
+ * <p>建造者可以同时使用直接属性路径（作为字符串指定）和
+ * 属性访问器方法（使用方法引用指定），在需要时提供编译时类型安全。</p>
  *
- * <p>Example usage:</p>
+ * <p>使用示例：</p>
  * <pre><code>
  *     final Criterion&lt;Device&gt; criterion =
  *         new ComposedCriterionBuilder&lt;&gt;(Device.class, LogicRelation.AND)
@@ -57,13 +56,12 @@ import static ltd.qubit.commons.util.ComparisonOperator.NOT_LIKE;
  *             .build();
  * </code></pre>
  *
- * <p>The builder uses method chaining pattern to provide a clean and readable way to
- * construct complex criteria. For each comparison operation, there are multiple overloaded
- * methods that can accept either property paths as strings or getter method references
- * for type-safe property access.</p>
+ * <p>建造者使用方法链模式提供一种清晰可读的方式来构造复杂条件。
+ * 对于每个比较操作，都有多个重载方法，可以接受字符串形式的属性路径
+ * 或用于类型安全属性访问的getter方法引用。</p>
  *
- * @param <T> The entity type this criterion builder is for.
- * @author Haixing Hu
+ * @param <T> 此条件建造者针对的实体类型。
+ * @author 胡海星
  */
 public class ComposedCriterionBuilder<T> {
 
@@ -72,25 +70,22 @@ public class ComposedCriterionBuilder<T> {
   private final List<SimpleCriterion<T>> criteria;
 
   /**
-   * Constructs a new builder for the given entity class with the default AND
-   * logical relation.
+   * 为给定实体类构造一个新的建造者，使用默认的AND逻辑关系。
    *
    * @param entityClass
-   *      the class of the entity for which this builder creates criteria
+   *      此建造者创建条件针对的实体类
    */
   public ComposedCriterionBuilder(final Class<T> entityClass) {
     this(entityClass, LogicRelation.AND);
   }
 
   /**
-   * Constructs a new builder for the given entity class with the specified
-   * logical relation.
+   * 为给定实体类构造一个新的建造者，使用指定的逻辑关系。
    *
    * @param entityClass
-   *      the class of the entity for which this builder creates criteria
+   *      此建造者创建条件针对的实体类
    * @param relation
-   *      the logical relation (AND/OR) to be used when combining multiple
-   *      criteria
+   *      组合多个条件时使用的逻辑关系（AND/OR）
    */
   public ComposedCriterionBuilder(final Class<T> entityClass, final LogicRelation relation) {
     this.entityClass = requireNonNull("entityClass", entityClass);
@@ -99,13 +94,12 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Constructs a new builder based on an existing composed criterion.
+   * 基于现有的复合条件构造新的建造者。
    *
-   * <p>This constructor can be used to modify an existing criterion by adding
-   * additional conditions.</p>
+   * <p>此构造函数可用于通过添加额外条件来修改现有条件。</p>
    *
    * @param criterion
-   *      the existing composed criterion to base this builder on
+   *      作为此建造者基础的现有复合条件
    */
   public ComposedCriterionBuilder(final ComposedCriterion<T> criterion) {
     this.entityClass = criterion.getEntityClass();
@@ -114,11 +108,11 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if the specified property is null.
+   * 添加一个检查指定属性是否为null的条件。
    *
    * @param path
-   *      the path of the property to check
-   * @return this builder instance for method chaining
+   *      要检查的属性路径
+   * @return 此建造者实例，用于方法链调用
    */
   public ComposedCriterionBuilder<T> isNull(final String path) {
     criteria.add(new SimpleCriterion<>(entityClass, path, EQUAL, null));
@@ -126,13 +120,13 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if the property accessed by the getter method is null.
+   * 添加一个检查通过getter方法访问的属性是否为null的条件。
    *
    * @param <R>
-   *      the return type of the getter method
+   *      getter方法的返回类型
    * @param getter
-   *      the getter method reference to access the property
-   * @return this builder instance for method chaining
+   *      用于访问属性的getter方法引用
+   * @return 此建造者实例，用于方法链调用
    */
   public <R> ComposedCriterionBuilder<T> isNull(final GetterMethod<T, R> getter) {
     final String path = getPropertyPath(entityClass, getter);
@@ -141,18 +135,17 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if a nested property accessed by two getter
-   * methods is null.
+   * 添加一个检查通过两个getter方法访问的嵌套属性是否为null的条件。
    *
    * @param <P>
-   *      the type of the first level property
+   *      第一级属性的类型
    * @param <R>
-   *      the return type of the second getter method
+   *      第二个getter方法的返回类型
    * @param g1
-   *      the first level getter method
+   *      第一级getter方法
    * @param g2
-   *      the second level getter method
-   * @return this builder instance for method chaining
+   *      第二级getter方法
+   * @return 此建造者实例，用于方法链调用
    */
   public <P, R> ComposedCriterionBuilder<T> isNull(final GetterMethod<T, P> g1,
       final GetterMethod<P, R> g2) {
@@ -162,21 +155,21 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if a nested property accessed by three getter methods is null.
+   * 添加一个检查通过三个getter方法访问的嵌套属性是否为null的条件。
    *
    * @param <P1>
-   *      the type of the first level property
+   *      第一级属性的类型
    * @param <P2>
-   *      the type of the second level property
+   *      第二级属性的类型
    * @param <R>
-   *      the return type of the third getter method
+   *      第三个getter方法的返回类型
    * @param g1
-   *      the first level getter method
+   *      第一级getter方法
    * @param g2
-   *      the second level getter method
+   *      第二级getter方法
    * @param g3
-   *      the third level getter method
-   * @return this builder instance for method chaining
+   *      第三级getter方法
+   * @return 此建造者实例，用于方法链调用
    */
   public <P1, P2, R> ComposedCriterionBuilder<T> isNull(final GetterMethod<T, P1> g1,
       final GetterMethod<P1, P2> g2, final GetterMethod<P2, R> g3) {
@@ -186,26 +179,25 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if a nested property accessed by four getter
-   * methods is null.
+   * 添加一个检查通过四个getter方法访问的嵌套属性是否为null的条件。
    *
    * @param <P1>
-   *      the type of the first level property
+   *      第一级属性的类型
    * @param <P2>
-   *      the type of the second level property
+   *      第二级属性的类型
    * @param <P3>
-   *      the type of the third level property
+   *      第三级属性的类型
    * @param <R>
-   *      the return type of the fourth getter method
+   *      第四个getter方法的返回类型
    * @param g1
-   *      the first level getter method
+   *      第一级getter方法
    * @param g2
-   *      the second level getter method
+   *      第二级getter方法
    * @param g3
-   *      the third level getter method
+   *      第三级getter方法
    * @param g4
-   *      the fourth level getter method
-   * @return this builder instance for method chaining
+   *      第四级getter方法
+   * @return 此建造者实例，用于方法链调用
    */
   public <P1, P2, P3, R> ComposedCriterionBuilder<T> isNull(final GetterMethod<T, P1> g1,
       final GetterMethod<P1, P2> g2, final GetterMethod<P2, P3> g3,
@@ -216,30 +208,29 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if a nested property accessed by five getter
-   * methods is null.
+   * 添加一个检查通过五个getter方法访问的嵌套属性是否为null的条件。
    *
    * @param <P1>
-   *      the type of the first level property
+   *      第一级属性的类型
    * @param <P2>
-   *      the type of the second level property
+   *      第二级属性的类型
    * @param <P3>
-   *      the type of the third level property
+   *      第三级属性的类型
    * @param <P4>
-   *      the type of the fourth level property
+   *      第四级属性的类型
    * @param <R>
-   *      the return type of the fifth getter method
+   *      第五个getter方法的返回类型
    * @param g1
-   *      the first level getter method
+   *      第一级getter方法
    * @param g2
-   *      the second level getter method
+   *      第二级getter方法
    * @param g3
-   *      the third level getter method
+   *      第三级getter方法
    * @param g4
-   *      the fourth level getter method
+   *      第四级getter方法
    * @param g5
-   *      the fifth level getter method
-   * @return this builder instance for method chaining
+   *      第五级getter方法
+   * @return 此建造者实例，用于方法链调用
    */
   public <P1, P2, P3, P4, R> ComposedCriterionBuilder<T> isNull(final GetterMethod<T, P1> g1,
       final GetterMethod<P1, P2> g2, final GetterMethod<P2, P3> g3,
@@ -250,11 +241,11 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if the specified property is not null.
+   * 添加一个条件，检查指定的属性是否不为空。
    *
    * @param path
-   *      the path of the property to check
-   * @return this builder instance for method chaining
+   *      要检查的属性路径
+   * @return 此构建器实例，用于方法链式调用
    */
   public ComposedCriterionBuilder<T> isNotNull(final String path) {
     criteria.add(new SimpleCriterion<>(entityClass, path, NOT_EQUAL, null));
@@ -262,13 +253,13 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if the property accessed by the getter method is not null.
+   * 添加一个条件，检查通过 getter 方法访问的属性是否不为空。
    *
    * @param <R>
-   *      the return type of the getter method
+   *      getter 方法的返回类型
    * @param getter
-   *      the getter method reference to access the property
-   * @return this builder instance for method chaining
+   *      用于访问属性的 getter 方法引用
+   * @return 此构建器实例，用于方法链式调用
    */
   public <R> ComposedCriterionBuilder<T> isNotNull(final GetterMethod<T, R> getter) {
     final String path = getPropertyPath(entityClass, getter);
@@ -277,18 +268,17 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if a nested property accessed by two getter
-   * methods is not null.
+   * 添加一个条件，检查通过两个 getter 方法访问的嵌套属性是否不为空。
    *
    * @param <P>
-   *      the type of the first level property
+   *      第一级属性的类型
    * @param <R>
-   *      the return type of the second getter method
+   *      第二个 getter 方法的返回类型
    * @param g1
-   *      the first level getter method
+   *      第一级 getter 方法
    * @param g2
-   *      the second level getter method
-   * @return this builder instance for method chaining
+   *      第二级 getter 方法
+   * @return 此构建器实例，用于方法链式调用
    */
   public <P, R> ComposedCriterionBuilder<T> isNotNull(final GetterMethod<T, P> g1,
       final GetterMethod<P, R> g2) {
@@ -298,22 +288,21 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if a nested property accessed by three getter
-   * methods is not null.
+   * 添加一个条件，检查通过三个 getter 方法访问的嵌套属性是否不为空。
    *
    * @param <P1>
-   *      the type of the first level property
+   *      第一级属性的类型
    * @param <P2>
-   *      the type of the second level property
+   *      第二级属性的类型
    * @param <R>
-   *      the return type of the third getter method
+   *      第三个 getter 方法的返回类型
    * @param g1
-   *      the first level getter method
+   *      第一级 getter 方法
    * @param g2
-   *      the second level getter method
+   *      第二级 getter 方法
    * @param g3
-   *      the third level getter method
-   * @return this builder instance for method chaining
+   *      第三级 getter 方法
+   * @return 此构建器实例，用于方法链式调用
    */
   public <P1, P2, R> ComposedCriterionBuilder<T> isNotNull(final GetterMethod<T, P1> g1,
       final GetterMethod<P1, P2> g2, final GetterMethod<P2, R> g3) {
@@ -323,26 +312,25 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if a nested property accessed by four getter
-   * methods is not null.
+   * 添加一个条件，检查通过四个 getter 方法访问的嵌套属性是否不为空。
    *
    * @param <P1>
-   *      the type of the first level property
+   *      第一级属性的类型
    * @param <P2>
-   *      the type of the second level property
+   *      第二级属性的类型
    * @param <P3>
-   *      the type of the third level property
+   *      第三级属性的类型
    * @param <R>
-   *      the return type of the fourth getter method
+   *      第四个 getter 方法的返回类型
    * @param g1
-   *      the first level getter method
+   *      第一级 getter 方法
    * @param g2
-   *      the second level getter method
+   *      第二级 getter 方法
    * @param g3
-   *      the third level getter method
+   *      第三级 getter 方法
    * @param g4
-   *      the fourth level getter method
-   * @return this builder instance for method chaining
+   *      第四级 getter 方法
+   * @return 此构建器实例，用于方法链式调用
    */
   public <P1, P2, P3, R> ComposedCriterionBuilder<T> isNotNull(final GetterMethod<T, P1> g1,
       final GetterMethod<P1, P2> g2, final GetterMethod<P2, P3> g3,
@@ -353,30 +341,29 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if a nested property accessed by five getter
-   * methods is not null.
+   * 添加一个条件，检查通过五个 getter 方法访问的嵌套属性是否不为空。
    *
    * @param <P1>
-   *      the type of the first level property
+   *      第一级属性的类型
    * @param <P2>
-   *      the type of the second level property
+   *      第二级属性的类型
    * @param <P3>
-   *      the type of the third level property
+   *      第三级属性的类型
    * @param <P4>
-   *      the type of the fourth level property
+   *      第四级属性的类型
    * @param <R>
-   *      the return type of the fifth getter method
+   *      第五个 getter 方法的返回类型
    * @param g1
-   *      the first level getter method
+   *      第一级 getter 方法
    * @param g2
-   *      the second level getter method
+   *      第二级 getter 方法
    * @param g3
-   *      the third level getter method
+   *      第三级 getter 方法
    * @param g4
-   *      the fourth level getter method
+   *      第四级 getter 方法
    * @param g5
-   *      the fifth level getter method
-   * @return this builder instance for method chaining
+   *      第五级 getter 方法
+   * @return 此构建器实例，用于方法链式调用
    */
   public <P1, P2, P3, P4, R> ComposedCriterionBuilder<T> isNotNull(final GetterMethod<T, P1> g1,
       final GetterMethod<P1, P2> g2, final GetterMethod<P2, P3> g3,
@@ -387,17 +374,16 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if the specified property is null or not null
-   * based on the provided flag.
+   * 根据提供的标志，添加一个条件来检查指定的属性是否为空或不为空。
    *
-   * <p>No criterion will be added if the provided flag is {@code null}.</p>
+   * <p>如果提供的标志为 {@code null}，则不会添加任何条件。</p>
    *
    * @param path
-   *      the path of the property to check
+   *      要检查的属性路径
    * @param isNull
-   *      if {@code true}, checks if the property is null; if {@code false},
-   *      checks if the property is not null.
-   * @return this builder instance for method chaining
+   *      如果为 {@code true}，检查属性是否为空；如果为 {@code false}，
+   *      检查属性是否不为空。
+   * @return 此构建器实例，用于方法链式调用
    */
   public ComposedCriterionBuilder<T> requireNull(final String path,
       @Nullable final Boolean isNull) {
@@ -409,19 +395,18 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if the property accessed by the getter method
-   * is null or not null based on the provided flag.
+   * 根据提供的标志，添加一个条件来检查通过 getter 方法访问的属性是否为空或不为空。
    *
-   * <p>No criterion will be added if the provided flag is {@code null}.</p>
+   * <p>如果提供的标志为 {@code null}，则不会添加任何条件。</p>
    *
    * @param <R>
-   *      the return type of the getter method
+   *      getter 方法的返回类型
    * @param getter
-   *      the getter method reference to access the property
+   *      用于访问属性的 getter 方法引用
    * @param isNull
-   *      if {@code true}, checks if the property is null; if {@code false},
-   * checks if the property is not null
-   * @return this builder instance for method chaining
+   *      如果为 {@code true}，检查属性是否为空；如果为 {@code false}，
+   * 检查属性是否不为空
+   * @return 此构建器实例，用于方法链式调用
    */
   public <R> ComposedCriterionBuilder<T> requireNull(final GetterMethod<T, R> getter,
       @Nullable final Boolean isNull) {
@@ -434,23 +419,23 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if a nested property accessed by two getter
-   * methods is null or not null based on the provided flag.
+   * 添加一个条件，检查通过两个getter方法访问的嵌套属性
+   * 是否为null或不为null，基于提供的标志。
    *
-   * <p>No criterion will be added if the provided flag is {@code null}.</p>
+   * <p>如果提供的标志为{@code null}，则不会添加任何条件。</p>
    *
    * @param <P>
-   *      the type of the first level property
+   *      第一级属性的类型
    * @param <R>
-   *      the return type of the second getter method
+   *      第二个getter方法的返回类型
    * @param g1
-   *      the first level getter method
+   *      第一级getter方法
    * @param g2
-   *      the second level getter method
+   *      第二级getter方法
    * @param isNull
-   *      if {@code true}, checks if the property is null; if {@code false},
-   *      checks if the property is not null.
-   * @return this builder instance for method chaining
+   *      如果为{@code true}，检查属性是否为null；如果为{@code false}，
+   *      检查属性是否不为null。
+   * @return 此建造者实例，用于方法链调用
    */
   public <P, R> ComposedCriterionBuilder<T> requireNull(final GetterMethod<T, P> g1,
       final GetterMethod<P, R> g2, @Nullable final Boolean isNull) {
@@ -463,27 +448,27 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if a nested property accessed by three getter
-   * methods is null or not null based on the provided flag.
+   * 添加一个条件，检查通过三个getter方法访问的嵌套属性
+   * 是否为null或不为null，基于提供的标志。
    *
-   * <p>No criterion will be added if the provided flag is {@code null}.</p>
+   * <p>如果提供的标志为{@code null}，则不会添加任何条件。</p>
    *
    * @param <P1>
-   *      the type of the first level property
+   *      第一级属性的类型
    * @param <P2>
-   *      the type of the second level property
+   *      第二级属性的类型
    * @param <R>
-   *      the return type of the third getter method
+   *      第三个getter方法的返回类型
    * @param g1
-   *      the first level getter method
+   *      第一级getter方法
    * @param g2
-   *      the second level getter method
+   *      第二级getter方法
    * @param g3
-   *      the third level getter method
+   *      第三级getter方法
    * @param isNull
-   *      if {@code true}, checks if the property is null; if {@code false},
-   *      checks if the property is not null.
-   * @return this builder instance for method chaining
+   *      如果为{@code true}，检查属性是否为null；如果为{@code false}，
+   *      检查属性是否不为null。
+   * @return 此建造者实例，用于方法链调用
    */
   public <P1, P2, R> ComposedCriterionBuilder<T> requireNull(final GetterMethod<T, P1> g1,
       final GetterMethod<P1, P2> g2, final GetterMethod<P2, R> g3,
@@ -496,31 +481,31 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if a nested property accessed by four getter
-   * methods is null or not null based on the provided flag.
+   * 添加一个条件，检查通过四个getter方法访问的嵌套属性
+   * 是否为null或不为null，基于提供的标志。
    *
-   * <p>No criterion will be added if the provided flag is {@code null}.</p>
+   * <p>如果提供的标志为{@code null}，则不会添加任何条件。</p>
    *
    * @param <P1>
-   *      the type of the first level property
+   *      第一级属性的类型
    * @param <P2>
-   *      the type of the second level property
+   *      第二级属性的类型
    * @param <P3>
-   *      the type of the third level property
+   *      第三级属性的类型
    * @param <R>
-   *      the return type of the fourth getter method
+   *      第四个getter方法的返回类型
    * @param g1
-   *      the first level getter method
+   *      第一级getter方法
    * @param g2
-   *      the second level getter method
+   *      第二级getter方法
    * @param g3
-   *      the third level getter method
+   *      第三级getter方法
    * @param g4
-   *      the fourth level getter method
+   *      第四级getter方法
    * @param isNull
-   *      if {@code true}, checks if the property is null; if {@code false},
-   *      checks if the property is not null.
-   * @return this builder instance for method chaining
+   *      如果为{@code true}，检查属性是否为null；如果为{@code false}，
+   *      检查属性是否不为null。
+   * @return 此建造者实例，用于方法链调用
    */
   public <P1, P2, P3, R> ComposedCriterionBuilder<T> requireNull(final GetterMethod<T, P1> g1,
       final GetterMethod<P1, P2> g2, final GetterMethod<P2, P3> g3,
@@ -533,35 +518,35 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if a nested property accessed by five getter
-   * methods is null or not null based on the provided flag.
+   * 添加一个条件，检查通过五个getter方法访问的嵌套属性
+   * 是否为null或不为null，基于提供的标志。
    *
-   * <p>No criterion will be added if the provided flag is {@code null}.</p>
+   * <p>如果提供的标志为{@code null}，则不会添加任何条件。</p>
    *
    * @param <P1>
-   *      the type of the first level property
+   *      第一级属性的类型
    * @param <P2>
-   *      the type of the second level property
+   *      第二级属性的类型
    * @param <P3>
-   *      the type of the third level property
+   *      第三级属性的类型
    * @param <P4>
-   *      the type of the fourth level property
+   *      第四级属性的类型
    * @param <R>
-   *      the return type of the fifth getter method
+   *      第五个getter方法的返回类型
    * @param g1
-   *      the first level getter method
+   *      第一级getter方法
    * @param g2
-   *      the second level getter method
+   *      第二级getter方法
    * @param g3
-   *      the third level getter method
+   *      第三级getter方法
    * @param g4
-   *      the fourth level getter method
+   *      第四级getter方法
    * @param g5
-   *      the fifth level getter method
+   *      第五级getter方法
    * @param isNull
-   *      if {@code true}, checks if the property is null; if {@code false},
-   *      checks if the property is not null
-   * @return this builder instance for method chaining
+   *      如果为{@code true}，检查属性是否为null；如果为{@code false}，
+   *      检查属性是否不为null
+   * @return 此建造者实例，用于方法链调用
    */
   public <P1, P2, P3, P4, R> ComposedCriterionBuilder<T> requireNull(final GetterMethod<T, P1> g1,
       final GetterMethod<P1, P2> g2, final GetterMethod<P2, P3> g3,
@@ -576,17 +561,16 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if the specified property is not null based on
-   * the provided flag.
+   * 添加一个条件，检查指定属性是否不为null，基于提供的标志。
    *
-   * <p>No criterion will be added if the provided flag is {@code null}.</p>
+   * <p>如果提供的标志为{@code null}，则不会添加任何条件。</p>
    *
    * @param path
-   *      the path of the property to check
+   *      要检查的属性路径
    * @param isNotNull
-   *      if {@code true}, checks if the property is not null; if {@code false},
-   *      checks if the property is null.
-   * @return this builder instance for method chaining
+   *      如果为{@code true}，检查属性是否不为null；如果为{@code false}，
+   *      检查属性是否为null。
+   * @return 此建造者实例，用于方法链调用
    */
   public ComposedCriterionBuilder<T> requireNotNull(final String path,
       @Nullable final Boolean isNotNull) {
@@ -598,19 +582,18 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if the property accessed by the getter method
-   * is not null based on the provided flag.
+   * 添加一个条件，检查通过getter方法访问的属性是否不为null，基于提供的标志。
    *
-   * <p>No criterion will be added if the provided flag is {@code null}.
+   * <p>如果提供的标志为{@code null}，则不会添加任何条件。
    *
    * @param <R>
-   *      the return type of the getter method
+   *      getter方法的返回类型
    * @param getter
-   *      the getter method reference to access the property
+   *      用于访问属性的getter方法引用
    * @param isNotNull
-   *      if {@code true}, checks if the property is not null; if {@code false},
-   *      checks if the property is null
-   * @return this builder instance for method chaining
+   *      如果为{@code true}，检查属性是否不为null；如果为{@code false}，
+   *      检查属性是否为null
+   * @return 此建造者实例，用于方法链调用
    */
   public <R> ComposedCriterionBuilder<T> requireNotNull(final GetterMethod<T, R> getter,
       @Nullable final Boolean isNotNull) {
@@ -623,23 +606,23 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if a nested property accessed by two getter
-   * methods is not null based on the provided flag.
+   * 添加一个条件，检查通过两个getter方法访问的嵌套属性
+   * 是否为非null值（基于提供的标志）。
    *
-   * <p>No criterion will be added if the provided flag is {@code null}.</p>
+   * <p>如果提供的标志为{@code null}，则不会添加任何条件。</p>
    *
    * @param <P>
-   *      the type of the first level property
+   *      第一级属性的类型
    * @param <R>
-   *      the return type of the second getter method
+   *      第二个getter方法的返回类型
    * @param g1
-   *      the first level getter method
+   *      第一级getter方法
    * @param g2
-   *      the second level getter method
+   *      第二级getter方法
    * @param isNotNull
-   *      if {@code true}, checks if the property is not null; if {@code false},
-   *      checks if the property is null.
-   * @return this builder instance for method chaining.
+   *      如果为{@code true}，检查属性是否不为null；如果为{@code false}，
+   *      检查属性是否为null
+   * @return 此建造者实例，用于方法链调用
    */
   public <P, R> ComposedCriterionBuilder<T> requireNotNull(final GetterMethod<T, P> g1,
       final GetterMethod<P, R> g2, @Nullable final Boolean isNotNull) {
@@ -652,27 +635,27 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if a nested property accessed by three getter
-   * methods is not null based on the provided flag.
+   * 添加一个条件，检查通过三个getter方法访问的嵌套属性
+   * 是否为非null值（基于提供的标志）。
    *
-   * <p>No criterion will be added if the provided flag is {@code null}.</p>
+   * <p>如果提供的标志为{@code null}，则不会添加任何条件。</p>
    *
    * @param <P1>
-   *      the type of the first level property
+   *      第一级属性的类型
    * @param <P2>
-   *      the type of the second level property
+   *      第二级属性的类型
    * @param <R>
-   *      the return type of the third getter method
+   *      第三个getter方法的返回类型
    * @param g1
-   *      the first level getter method
+   *      第一级getter方法
    * @param g2
-   *      the second level getter method
+   *      第二级getter方法
    * @param g3
-   *      the third level getter method
+   *      第三级getter方法
    * @param isNotNull
-   *      if {@code true}, checks if the property is not null; if {@code false},
-   *      checks if the property is null.
-   * @return this builder instance for method chaining
+   *      如果为{@code true}，检查属性是否不为null；如果为{@code false}，
+   *      检查属性是否为null
+   * @return 此建造者实例，用于方法链调用
    */
   public <P1, P2, R> ComposedCriterionBuilder<T> requireNotNull(final GetterMethod<T, P1> g1,
       final GetterMethod<P1, P2> g2, final GetterMethod<P2, R> g3,
@@ -686,31 +669,31 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if a nested property accessed by four getter
-   * methods is not null based on the provided flag.
+   * 添加一个条件，检查通过四个getter方法访问的嵌套属性
+   * 是否为非null值（基于提供的标志）。
    *
-   * <p>No criterion will be added if the provided flag is {@code null}.</p>
+   * <p>如果提供的标志为{@code null}，则不会添加任何条件。</p>
    *
    * @param <P1>
-   *      the type of the first level property
+   *      第一级属性的类型
    * @param <P2>
-   *      the type of the second level property
+   *      第二级属性的类型
    * @param <P3>
-   *      the type of the third level property
+   *      第三级属性的类型
    * @param <R>
-   *      the return type of the fourth getter method
+   *      第四个getter方法的返回类型
    * @param g1
-   *      the first level getter method
+   *      第一级getter方法
    * @param g2
-   *      the second level getter method
+   *      第二级getter方法
    * @param g3
-   *      the third level getter method
+   *      第三级getter方法
    * @param g4
-   *      the fourth level getter method
+   *      第四级getter方法
    * @param isNotNull
-   *      if {@code true}, checks if the property is not null; if {@code false},
-   *      checks if the property is null.
-   * @return this builder instance for method chaining
+   *      如果为{@code true}，检查属性是否不为null；如果为{@code false}，
+   *      检查属性是否为null
+   * @return 此建造者实例，用于方法链调用
    */
   public <P1, P2, P3, R> ComposedCriterionBuilder<T> requireNotNull(final GetterMethod<T, P1> g1,
       final GetterMethod<P1, P2> g2, final GetterMethod<P2, P3> g3,
@@ -724,35 +707,35 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if a nested property accessed by five getter
-   * methods is not null based on the provided flag.
+   * 添加一个条件，检查通过五个getter方法访问的嵌套属性
+   * 是否为非null值（基于提供的标志）。
    *
-   * <p>No criterion will be added if the provided flag is {@code null}.</p>
+   * <p>如果提供的标志为{@code null}，则不会添加任何条件。</p>
    *
    * @param <P1>
-   *      the type of the first level property
+   *      第一级属性的类型
    * @param <P2>
-   *      the type of the second level property
+   *      第二级属性的类型
    * @param <P3>
-   *      the type of the third level property
+   *      第三级属性的类型
    * @param <P4>
-   *      the type of the fourth level property
+   *      第四级属性的类型
    * @param <R>
-   *      the return type of the fifth getter method
+   *      第五个getter方法的返回类型
    * @param g1
-   *      the first level getter method
+   *      第一级getter方法
    * @param g2
-   *      the second level getter method
+   *      第二级getter方法
    * @param g3
-   *      the third level getter method
+   *      第三级getter方法
    * @param g4
-   *      the fourth level getter method
+   *      第四级getter方法
    * @param g5
-   *      the fifth level getter method
+   *      第五级getter方法
    * @param isNotNull
-   *      if {@code true}, checks if the property is not null; if {@code false},
-   *      checks if the property is null.
-   * @return this builder instance for method chaining
+   *      如果为{@code true}，检查属性是否不为null；如果为{@code false}，
+   *      检查属性是否为null
+   * @return 此建造者实例，用于方法链调用
    */
   public <P1, P2, P3, P4, R> ComposedCriterionBuilder<T> requireNotNull(final GetterMethod<T, P1> g1,
       final GetterMethod<P1, P2> g2, final GetterMethod<P2, P3> g3,
@@ -767,17 +750,17 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if the specified property equals the given value.
+   * 添加一个条件，检查指定的属性是否等于给定的值。
    *
-   * <p>No criterion will be added if the provided value is {@code null}.</p>
+   * <p>如果提供的值为 {@code null}，则不会添加任何条件。</p>
    *
    * @param <R>
-   *      the type of the value to compare with
+   *      要比较的值的类型
    * @param path
-   *      the path of the property to check
+   *      要检查的属性路径
    * @param value
-   *      the value to compare with, can be {@code null}
-   * @return this builder instance for method chaining
+   *      要比较的值，可以为 {@code null}
+   * @return 此构建器实例，用于方法链式调用
    */
   public <R> ComposedCriterionBuilder<T> equal(final String path, @Nullable final R value) {
     if (value != null) {
@@ -787,18 +770,17 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if the property accessed by the getter method
-   * equals the given value.
+   * 添加一个条件，检查通过 getter 方法访问的属性是否等于给定的值。
    *
-   * <p>No criterion will be added if the provided value is {@code null}.</p>
+   * <p>如果提供的值为 {@code null}，则不会添加任何条件。</p>
    *
    * @param <R>
-   *      the type of the property and value
+   *      属性和值的类型
    * @param getter
-   *      the getter method reference to access the property
+   *      用于访问属性的 getter 方法引用
    * @param value
-   *      the value to compare with, can be {@code null}
-   * @return this builder instance for method chaining
+   *      要比较的值，可以为 {@code null}
+   * @return 此构建器实例，用于方法链式调用
    */
   public <R> ComposedCriterionBuilder<T> equal(final GetterMethod<T, R> getter,
       @Nullable final R value) {
@@ -810,22 +792,21 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if a nested property accessed by two getter
-   * methods equals the given value.
+   * 添加一个条件，检查通过两个 getter 方法访问的嵌套属性是否等于给定的值。
    *
-   * <p>No criterion will be added if the provided value is {@code null}.</p>
+   * <p>如果提供的值为 {@code null}，则不会添加任何条件。</p>
    *
    * @param <P>
-   *      the type of the first level property
+   *      第一级属性的类型
    * @param <R>
-   *      the type of the value to compare with
+   *      要比较的值的类型
    * @param g1
-   *      the first level getter method
+   *      第一级 getter 方法
    * @param g2
-   *      the second level getter method
+   *      第二级 getter 方法
    * @param value
-   *      the value to compare with, can be {@code null}
-   * @return this builder instance for method chaining
+   *      要比较的值，可以为 {@code null}
+   * @return 此构建器实例，用于方法链式调用
    */
   public <P, R> ComposedCriterionBuilder<T> equal(final GetterMethod<T, P> g1,
       final GetterMethod<P, R> g2, @Nullable final R value) {
@@ -837,26 +818,25 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if a nested property accessed by three getter
-   * methods equals the given value.
+   * 添加一个条件，检查通过三个 getter 方法访问的嵌套属性是否等于给定的值。
    *
-   * <p>No criterion will be added if the provided value is {@code null}.</p>
+   * <p>如果提供的值为 {@code null}，则不会添加任何条件。</p>
    *
    * @param <P1>
-   *      the type of the first level property
+   *      第一级属性的类型
    * @param <P2>
-   *      the type of the second level property
+   *      第二级属性的类型
    * @param <R>
-   *      the type of the value to compare with
+   *      要比较的值的类型
    * @param g1
-   *      the first level getter method
+   *      第一级 getter 方法
    * @param g2
-   *      the second level getter method
+   *      第二级 getter 方法
    * @param g3
-   *      the third level getter method
+   *      第三级 getter 方法
    * @param value
-   *      the value to compare with, can be {@code null}
-   * @return this builder instance for method chaining
+   *      要比较的值，可以为 {@code null}
+   * @return 此构建器实例，用于方法链式调用
    */
   public <P1, P2, R> ComposedCriterionBuilder<T> equal(final GetterMethod<T, P1> g1,
       final GetterMethod<P1, P2> g2, final GetterMethod<P2, R> g3,
@@ -869,30 +849,29 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if a nested property accessed by four getter
-   * methods equals the given value.
+   * 添加一个条件，检查通过四个 getter 方法访问的嵌套属性是否等于给定的值。
    *
-   * <p>No criterion will be added if the provided value is {@code null}.</p>
+   * <p>如果提供的值为 {@code null}，则不会添加任何条件。</p>
    *
    * @param <P1>
-   *      the type of the first level property
+   *      第一级属性的类型
    * @param <P2>
-   *      the type of the second level property
+   *      第二级属性的类型
    * @param <P3>
-   *      the type of the third level property
+   *      第三级属性的类型
    * @param <R>
-   *      the type of the value to compare with
+   *      要比较的值的类型
    * @param g1
-   *      the first level getter method
+   *      第一级 getter 方法
    * @param g2
-   *      the second level getter method
+   *      第二级 getter 方法
    * @param g3
-   *      the third level getter method
+   *      第三级 getter 方法
    * @param g4
-   *      the fourth level getter method
+   *      第四级 getter 方法
    * @param value
-   *      the value to compare with, can be {@code null}
-   * @return this builder instance for method chaining
+   *      要比较的值，可以为 {@code null}
+   * @return 此构建器实例，用于方法链式调用
    */
   public <P1, P2, P3, R> ComposedCriterionBuilder<T> equal(final GetterMethod<T, P1> g1,
       final GetterMethod<P1, P2> g2, final GetterMethod<P2, P3> g3,
@@ -905,34 +884,33 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if a nested property accessed by five getter
-   * methods equals the given value.
+   * 添加一个条件，检查通过五个 getter 方法访问的嵌套属性是否等于给定的值。
    *
-   * <p>No criterion will be added if the provided value is {@code null}.</p>
+   * <p>如果提供的值为 {@code null}，则不会添加任何条件。</p>
    *
    * @param <P1>
-   *      the type of the first level property
+   *      第一级属性的类型
    * @param <P2>
-   *      the type of the second level property
+   *      第二级属性的类型
    * @param <P3>
-   *      the type of the third level property
+   *      第三级属性的类型
    * @param <P4>
-   *      the type of the fourth level property
+   *      第四级属性的类型
    * @param <R>
-   *      the type of the value to compare with
+   *      要比较的值的类型
    * @param g1
-   *      the first level getter method
+   *      第一级 getter 方法
    * @param g2
-   *      the second level getter method
+   *      第二级 getter 方法
    * @param g3
-   *      the third level getter method
+   *      第三级 getter 方法
    * @param g4
-   *      the fourth level getter method
+   *      第四级 getter 方法
    * @param g5
-   *      the fifth level getter method
+   *      第五级 getter 方法
    * @param value
-   *      the value to compare with, can be {@code null}
-   * @return this builder instance for method chaining
+   *      要比较的值，可以为 {@code null}
+   * @return 此构建器实例，用于方法链式调用
    */
   public <P1, P2, P3, P4, R> ComposedCriterionBuilder<T> equal(final GetterMethod<T, P1> g1,
       final GetterMethod<P1, P2> g2, final GetterMethod<P2, P3> g3,
@@ -946,18 +924,17 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if the specified property is not equal to the
-   * given value.
+   * 添加一个条件，检查指定的属性是否不等于给定的值。
    *
-   * <p>No criterion will be added if the provided value is {@code null}.</p>
+   * <p>如果提供的值为 {@code null}，则不会添加任何条件。</p>
    *
    * @param <R>
-   *      the type of the value to compare with
+   *      要比较的值的类型
    * @param path
-   *      the path of the property to check
+   *      要检查的属性路径
    * @param value
-   *      the value to compare with, can be {@code null}
-   * @return this builder instance for method chaining
+   *      要比较的值，可以为 {@code null}
+   * @return 此构建器实例，用于方法链式调用
    */
   public <R> ComposedCriterionBuilder<T> notEqual(final String path,
       @Nullable final R value) {
@@ -968,18 +945,17 @@ public class ComposedCriterionBuilder<T> {
   }
 
   /**
-   * Adds a criterion that checks if the property accessed by the getter method
-   * is not equal to the given value.
+   * 添加一个条件，检查通过 getter 方法访问的属性是否不等于给定的值。
    *
-   * <p>No criterion will be added if the provided value is {@code null}.</p>
+   * <p>如果提供的值为 {@code null}，则不会添加任何条件。</p>
    *
    * @param <R>
-   *      the type of the property and value
+   *      属性和值的类型
    * @param getter
-   *      the getter method reference to access the property
+   *      用于访问属性的 getter 方法引用
    * @param value
-   *      the value to compare with, can be {@code null}
-   * @return this builder instance for method chaining
+   *      要比较的值，可以为 {@code null}
+   * @return 此构建器实例，用于方法链式调用
    */
   public <R> ComposedCriterionBuilder<T> notEqual(final GetterMethod<T, R> getter,
       @Nullable final R value) {

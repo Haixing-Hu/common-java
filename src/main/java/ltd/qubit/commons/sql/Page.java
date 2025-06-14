@@ -29,7 +29,7 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
  *
  * @param <E>
  *     the type of entities.
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class Page<E> {

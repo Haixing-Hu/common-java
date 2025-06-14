@@ -18,7 +18,7 @@ import java.sql.SQLException;
  * <p>Implementations of this interface perform the actual work of processing
  * each row but don't need to worry about exception handling.
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see RowMapper
  */
 public interface RowProcessor {

@@ -11,24 +11,23 @@ package ltd.qubit.commons.sql;
 import java.sql.Connection;
 
 /**
- * An interface of the JDBC operations.
+ * JDBC操作的接口。
  *
  * @param <R>
- *     the type of returned value. If the operation has no return value, set
- *     this type parameter to {@link Void} and returns {@code null} in the
- *     {@link #perform(Connection)} function.
- * @author Haixing Hu
+ *     返回值的类型。如果操作没有返回值，请将此类型参数设置为{@link Void}，
+ *     并在{@link #perform(Connection)}函数中返回{@code null}。
+ * @author 胡海星
  */
 public interface JdbcOperation<R> {
 
   /**
-   * Performs a JDBC operation on a given connection.
+   * 在给定连接上执行JDBC操作。
    *
    * @param conn
-   *     a given JDBC connection.
-   * @return the result of operation.
+   *     给定的JDBC连接
+   * @return 操作的结果
    * @throws Exception
-   *     if any error occurred.
+   *     如果发生任何错误
    */
   R perform(Connection conn) throws Exception;
 }

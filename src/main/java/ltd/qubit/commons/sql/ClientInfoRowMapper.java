@@ -14,15 +14,20 @@ import java.sql.SQLException;
 import ltd.qubit.commons.sql.error.UnexpectedColumnValueException;
 
 /**
- * A {@link RowMapper} which maps a row of a {@link ResultSet} to a
- * {@link ClientInfo} object.
+ * 将{@link ResultSet}的行映射到{@link ClientInfo}对象的{@link RowMapper}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class ClientInfoRowMapper implements RowMapper<ClientInfo> {
 
+  /**
+   * 此映射器的单例实例。
+   */
   public static final ClientInfoRowMapper INSTANCE = new ClientInfoRowMapper();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public ClientInfo mapRow(final ResultSet rs, final int rowNumber)
       throws SQLException {

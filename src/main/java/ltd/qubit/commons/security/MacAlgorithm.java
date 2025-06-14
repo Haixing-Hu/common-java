@@ -12,47 +12,40 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The enumeration of Mac (Message Authentication Code) algorithms supported by
- * JDK.
+ * JDK 支持的 MAC（消息认证码）算法的枚举。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html#Mac">Mac Algorithms</a>
  */
 public enum MacAlgorithm {
 
   /**
-   * Key generator for use with the HmacMD5 algorithm with MD5 as the message
-   * digest algorithm.
+   * 用于 HmacMD5 算法的密钥生成器，使用 MD5 作为消息摘要算法。
    */
   Hmac_MD5("HmacMD5", 32, 256, 64),
 
   /**
-   * Keys generator for use with the HmacSHA algorithm with SHA1 as the message
-   * digest algorithm.
+   * 用于 HmacSHA 算法的密钥生成器，使用 SHA1 作为消息摘要算法。
    */
   HMAC_SHA1("HmacSHA1", 32, 256, 64),
 
   /**
-   * Keys generator for use with the HmacSHA algorithm with SHA224 as the message
-   * digest algorithm.
+   * 用于 HmacSHA 算法的密钥生成器，使用 SHA224 作为消息摘要算法。
    */
   HMAC_SHA224("HmacSHA224", 32, 256, 64),
 
   /**
-   * Keys generator for use with the HmacSHA algorithm with SHA256 as the message
-   * digest algorithm.
+   * 用于 HmacSHA 算法的密钥生成器，使用 SHA256 作为消息摘要算法。
    */
   HMAC_SHA256("HmacSHA256", 32, 256, 64),
 
   /**
-   * Keys generator for use with the HmacSHA algorithm with SHA384 as the message
-   * digest algorithm.
+   * 用于 HmacSHA 算法的密钥生成器，使用 SHA384 作为消息摘要算法。
    */
   HMAC_SHA384("HmacSHA384", 32, 256, 64),
 
   /**
-   * Keys generator for use with the HmacSHA algorithm with SHA512 as the message
-   * digest algorithm.
+   * 用于 HmacSHA 算法的密钥生成器，使用 SHA512 作为消息摘要算法。
    */
   HMAC_SHA512("HmacSHA512", 32, 256, 64);
 
@@ -68,6 +61,9 @@ public enum MacAlgorithm {
   //
   //  PBE_WITH_HMAC_SHA512("PBEWithHmacSHA512");
 
+  /**
+   * 算法名称与枚举的映射。
+   */
   private static final Map<String, MacAlgorithm> NAME_MAP = new HashMap<>();
   static {
     for (final MacAlgorithm algorithm: values()) {
@@ -77,24 +73,49 @@ public enum MacAlgorithm {
   }
 
   /**
-   * Gets the algorithm by its enumerator name or code (i.e., the standard name
-   * in JDK).
+   * 根据枚举器名称或代码（即 JDK 中的标准名称）获取算法。
    *
    * @param nameOrCode
-   *     The name or code of the specified algorithm, ignoring the case.
+   *     指定算法的名称或代码，忽略大小写。
    * @return
-   *     The corresponding {@link MacAlgorithm}, or {@code null} if no such
-   *     algorithm.
+   *     对应的 {@link MacAlgorithm}，如果没有此类算法则返回 {@code null}。
    */
   public static MacAlgorithm forName(final String nameOrCode) {
     return NAME_MAP.get(nameOrCode.toUpperCase());
   }
 
+  /**
+   * 算法的代码，即JDK中的标准名称。
+   */
   private final String code;
+
+  /**
+   * 算法允许的最小密钥大小（以位为单位）。
+   */
   private final int minKeySize;
+
+  /**
+   * 算法允许的最大密钥大小（以位为单位）。
+   */
   private final int maxKeySize;
+
+  /**
+   * 算法建议的默认密钥大小（以位为单位）。
+   */
   private final int defaultKeySize;
 
+  /**
+   * 构造一个{@link MacAlgorithm}对象。
+   *
+   * @param code
+   *     算法的代码，即JDK中的标准名称。
+   * @param minKeySize
+   *     算法允许的最小密钥大小（以位为单位）。
+   * @param maxKeySize
+   *     算法允许的最大密钥大小（以位为单位）。
+   * @param defaultKeySize
+   *     算法建议的默认密钥大小（以位为单位）。
+   */
   MacAlgorithm(final String code, final int minKeySize,
       final int maxKeySize, final int defaultKeySize) {
     this.code = code;
@@ -104,40 +125,40 @@ public enum MacAlgorithm {
   }
 
   /**
-   * Gets the code of this algorithm, i.e., the standard name in the JDK.
+   * 获取此算法的代码，即 JDK 中的标准名称。
    *
    * @return
-   *     the code of this algorithm, i.e., the standard name in the JDK.
+   *     此算法的代码，即 JDK 中的标准名称。
    */
   String code() {
     return code;
   }
 
   /**
-   * Gets the minimum key size in bits allowed for this algorithm.
+   * 获取此算法允许的最小密钥大小（以位为单位）。
    *
    * @return
-   *     the minimum key size in bits allowed for this algorithm.
+   *     此算法允许的最小密钥大小（以位为单位）。
    */
   public int minKeySize() {
     return minKeySize;
   }
 
   /**
-   * Gets the maximum key size in bits allowed for this algorithm.
+   * 获取此算法允许的最大密钥大小（以位为单位）。
    *
    * @return
-   *     the maximum key size in bits allowed for this algorithm.
+   *     此算法允许的最大密钥大小（以位为单位）。
    */
   public int maxKeySize() {
     return maxKeySize;
   }
 
   /**
-   * Gets the suggested default key size in bits for this algorithm.
+   * 获取此算法建议的默认密钥大小（以位为单位）。
    *
    * @return
-   *     the suggested default key size in bits for this algorithm.
+   *     此算法建议的默认密钥大小（以位为单位）。
    */
   public int defaultKeySize() {
     return defaultKeySize;

@@ -20,7 +20,7 @@ import java.sql.SQLException;
  * need to concern themselves with {@link SQLException} that may be thrown from
  * operations they attempt.
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface PreparedStatementSetter {
 

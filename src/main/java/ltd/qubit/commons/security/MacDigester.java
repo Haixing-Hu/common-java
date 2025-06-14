@@ -28,47 +28,81 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * The class of objects used to digest messages with Mac (Message Authentication Code).
+ * 用于使用 MAC（消息认证码）计算消息摘要的对象类。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see Mac
  * @see MacAlgorithm
  */
 public class MacDigester {
 
+  /**
+   * PBEWith 前缀。
+   */
   private static final String PBE_WITH_PREFIX = "PBEWith";
 
   /**
-   * The default buffer size to use.
+   * 要使用的默认缓冲区大小。
    */
   private static final int BUFFER_SIZE = 16384;
 
+  /**
+   * 要使用的 MAC 算法。
+   */
   private final MacAlgorithm algorithm;
 
+  /**
+   * 构造一个 MAC 摘要计算器。
+   *
+   * @param algorithm
+   *     MAC 算法。
+   */
   public MacDigester(final MacAlgorithm algorithm) {
     this.algorithm = algorithm;
   }
 
+  /**
+   * 获取 MAC 算法。
+   *
+   * @return
+   *     MAC 算法。
+   */
   public MacAlgorithm getAlgorithm() {
     return algorithm;
   }
 
   /**
-   * Generates a random key used for signing the digest.
+   * 生成用于签名摘要的随机密钥。
    *
    * @return
-   *     a random key used for signing the digest.
+   *     用于签名摘要的随机密钥。
+   * @throws NoSuchAlgorithmException
+   *     如果系统不支持指定的算法。
    */
   public SecretKey generateKey() throws NoSuchAlgorithmException {
     final KeyGenerator generator = getKeyGenerator();
     return generator.generateKey();
   }
 
+  /**
+   * 获取用于生成密钥的 KeyGenerator。
+   *
+   * @return
+   *     用于生成密钥的 KeyGenerator。
+   * @throws NoSuchAlgorithmException
+   *     如果系统不支持指定的算法。
+   */
   private KeyGenerator getKeyGenerator() throws NoSuchAlgorithmException {
     final String name = getKeyGeneratorName();
     return KeyGenerator.getInstance(name);
   }
 
+  /**
+   * 获取用于生成密钥的 KeyGenerator 的名称。
+   *
+   * @return
+   *     用于生成密钥的 KeyGenerator 的名称。
+   */
   private String getKeyGeneratorName() {
     final String code = algorithm.code();
     if (code.startsWith(PBE_WITH_PREFIX)) {

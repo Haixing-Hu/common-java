@@ -13,23 +13,47 @@ import javax.crypto.SecretKey;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * A class used to decode password based cryptographic keys for encryption or
- * decryption.
+ * 用于解码基于密码的加密或解密密码学密钥的类。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class PasswordBasedKeyDecoder {
 
+  /**
+   * 加密算法。
+   */
   private final CryptoAlgorithm algorithm;
 
+  /**
+   * 构造一个基于密码的密钥解码器。
+   *
+   * @param algorithm
+   *     加密算法。
+   */
   public PasswordBasedKeyDecoder(final CryptoAlgorithm algorithm) {
     this.algorithm = requireNonNull("algorithm", algorithm);
   }
 
+  /**
+   * 获取加密算法。
+   *
+   * @return
+   *     加密算法。
+   */
   public CryptoAlgorithm getAlgorithm() {
     return algorithm;
   }
 
+  /**
+   * 根据密码和盐值获取密钥。
+   *
+   * @param password
+   *     密码。
+   * @param slat
+   *     盐值。
+   * @return
+   *     生成的密钥。
+   */
   public SecretKey getKey(final String password, final String slat) {
     return null;
   }

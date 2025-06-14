@@ -14,82 +14,78 @@ import java.util.Map;
 import javax.crypto.KeyGenerator;
 
 /**
- * The enumeration of key generator algorithms.
+ * 密钥生成器算法的枚举。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see KeyGenerator
  * @see <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html#KeyGenerator">KeyGenerator Algorithms</a>
  */
 public enum KeyGeneratorAlgorithm {
 
   /**
-   * Key generator for use with the AES algorithm.
+   * 用于 AES 算法的密钥生成器。
    */
   AES("AES", 128, 256, 256),
 
   /**
-   * Key generator for use with the ARCFOUR (RC4) algorithm.
+   * 用于 ARCFOUR (RC4) 算法的密钥生成器。
    */
   ARCFOUR("ARCFOUR", 40, 1024, 1024),
 
   /**
-   * Key generator for use with the Blowfish algorithm.
+   * 用于 Blowfish 算法的密钥生成器。
    */
   BLOWFISH("Blowfish", 32, 448, 256),
 
   /**
-   * Key generator for use with the DES algorithm.
+   * 用于 DES 算法的密钥生成器。
    */
   DES("DES", 56, 56, 56),
 
   /**
-   * Key generator for use with the DESede (triple-DES) algorithm.
+   * 用于 DESede (三重 DES) 算法的密钥生成器。
    */
   DES_EDE("DESede", 112, 168, 168),
 
   /**
-   * Key generator for use with the HmacMD5 algorithm with MD5 as the message
-   * digest algorithm.
+   * 用于 HmacMD5 算法的密钥生成器，使用 MD5 作为消息摘要算法。
    */
   Hmac_MD5("HmacMD5", 32, 256, 64),
 
   /**
-   * Keys generator for use with the HmacSHA algorithm with SHA1 as the message
-   * digest algorithm.
+   * 用于 HmacSHA 算法的密钥生成器，使用 SHA1 作为消息摘要算法。
    */
   HMAC_SHA1("HmacSHA1", 32, 256, 64),
 
   /**
-   * Keys generator for use with the HmacSHA algorithm with SHA224 as the message
-   * digest algorithm.
+   * 用于 HmacSHA 算法的密钥生成器，使用 SHA224 作为消息摘要算法。
    */
   HMAC_SHA224("HmacSHA224", 32, 256, 64),
 
   /**
-   * Keys generator for use with the HmacSHA algorithm with SHA256 as the message
-   * digest algorithm.
+   * 用于 HmacSHA 算法的密钥生成器，使用 SHA256 作为消息摘要算法。
    */
   HMAC_SHA256("HmacSHA256", 32, 256, 64),
 
   /**
-   * Keys generator for use with the HmacSHA algorithm with SHA384 as the message
-   * digest algorithm.
+   * 用于 HmacSHA 算法的密钥生成器，使用 SHA384 作为消息摘要算法。
    */
   HMAC_SHA384("HmacSHA384", 32, 256, 64),
 
   /**
-   * Keys generator for use with the HmacSHA algorithm with SHA512 as the message
-   * digest algorithm.
+   * 用于 HmacSHA 算法的密钥生成器，使用 SHA512 作为消息摘要算法。
    */
   HMAC_SHA512("HmacSHA512", 32, 256, 64),
 
   /**
-   * Key generator for use with the RC2 algorithm.
+   * 用于 RC2 算法的密钥生成器。
    */
   RC2("RC2", 40, 1024, 256);
 
-  private static final Map<String, KeyGeneratorAlgorithm>
-      NAME_MAP = new HashMap<>();
+  /**
+   * 算法名称与枚举的映射。
+   */
+  private static final Map<String, KeyGeneratorAlgorithm> NAME_MAP = new HashMap<>();
   static {
     for (final KeyGeneratorAlgorithm algorithm: values()) {
       NAME_MAP.put(algorithm.name().toUpperCase(), algorithm);
@@ -98,23 +94,49 @@ public enum KeyGeneratorAlgorithm {
   }
 
   /**
-   * Gets the algorithm by its enumerator name or code (i.e., the standard name in JDK).
+   * 根据枚举器名称或代码（即 JDK 中的标准名称）获取算法。
    *
    * @param nameOrCode
-   *     The name or code of the specified algorithm, ignoring the case.
+   *     指定算法的名称或代码，忽略大小写。
    * @return
-   *     The corresponding {@link KeyGeneratorAlgorithm}, or {@code null} if no
-   *     such algorithm.
+   *     对应的 {@link KeyGeneratorAlgorithm}，如果没有此类算法则返回 {@code null}。
    */
   public static KeyGeneratorAlgorithm forName(final String nameOrCode) {
     return NAME_MAP.get(nameOrCode.toUpperCase());
   }
 
+  /**
+   * 算法的代码，即JDK中的标准名称。
+   */
   private final String code;
+
+  /**
+   * 算法允许的最小密钥大小（以位为单位）。
+   */
   private final int minKeySize;
+
+  /**
+   * 算法允许的最大密钥大小（以位为单位）。
+   */
   private final int maxKeySize;
+
+  /**
+   * 算法建议的默认密钥大小（以位为单位）。
+   */
   private final int defaultKeySize;
 
+  /**
+   * 构造一个{@link KeyGeneratorAlgorithm}对象。
+   *
+   * @param code
+   *     算法的代码，即JDK中的标准名称。
+   * @param minKeySize
+   *     算法允许的最小密钥大小（以位为单位）。
+   * @param maxKeySize
+   *     算法允许的最大密钥大小（以位为单位）。
+   * @param defaultKeySize
+   *     算法建议的默认密钥大小（以位为单位）。
+   */
   KeyGeneratorAlgorithm(final String code, final int minKeySize,
       final int maxKeySize, final int defaultKeySize) {
     this.code = code;
@@ -124,40 +146,40 @@ public enum KeyGeneratorAlgorithm {
   }
 
   /**
-   * Gets the code of this algorithm, i.e., the standard name in the JDK.
+   * 获取此算法的代码，即 JDK 中的标准名称。
    *
    * @return
-   *     the code of this algorithm, i.e., the standard name in the JDK.
+   *     此算法的代码，即 JDK 中的标准名称。
    */
   String code() {
     return code;
   }
 
   /**
-   * Gets the minimum key size in bits allowed for this algorithm.
+   * 获取此算法允许的最小密钥大小（以位为单位）。
    *
    * @return
-   *     the minimum key size in bits allowed for this algorithm.
+   *     此算法允许的最小密钥大小（以位为单位）。
    */
   public int minKeySize() {
     return minKeySize;
   }
 
   /**
-   * Gets the maximum key size in bits allowed for this algorithm.
+   * 获取此算法允许的最大密钥大小（以位为单位）。
    *
    * @return
-   *     the maximum key size in bits allowed for this algorithm.
+   *     此算法允许的最大密钥大小（以位为单位）。
    */
   public int maxKeySize() {
     return maxKeySize;
   }
 
   /**
-   * Gets the suggested default key size in bits for this algorithm.
+   * 获取此算法建议的默认密钥大小（以位为单位）。
    *
    * @return
-   *     the suggested default key size in bits for this algorithm.
+   *     此算法建议的默认密钥大小（以位为单位）。
    */
   public int defaultKeySize() {
     return defaultKeySize;

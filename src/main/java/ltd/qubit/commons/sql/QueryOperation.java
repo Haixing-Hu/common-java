@@ -23,7 +23,7 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
 /**
  * A JDBC operation which performs a simple SQL query.
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class QueryOperation<R> implements JdbcOperation<List<R>> {
 

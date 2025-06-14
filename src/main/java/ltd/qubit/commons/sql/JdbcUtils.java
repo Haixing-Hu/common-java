@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides utilities functions for JDBC operations.
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class JdbcUtils {
 

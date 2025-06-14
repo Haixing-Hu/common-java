@@ -18,7 +18,7 @@ import ltd.qubit.commons.text.tostring.ToStringBuilder;
 /**
  * Stores the sorting conditions.
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class Sort implements Serializable {
 

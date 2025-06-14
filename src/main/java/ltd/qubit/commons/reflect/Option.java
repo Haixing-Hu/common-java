@@ -20,141 +20,121 @@ import java.lang.reflect.Modifier;
 public class Option {
 
   /**
-   * Indicates that the operation is also applied to the members declared in the
-   * ancestor class or ancestor interfaces of the specified class.
+   * 表示该操作也应用于指定类的祖先类或祖先接口中声明的成员。
    */
   public static final int ANCESTOR = 0x0001;
 
   /**
-   * Indicates that the operation is applied to the static members.
+   * 表示该操作应用于静态成员。
    */
   public static final int STATIC = 0x0002;
 
   /**
-   * Indicates that the operation is applied to the non-static members.
+   * 表示该操作应用于非静态成员。
    */
   public static final int NON_STATIC = 0x0004;
 
   /**
-   * Indicates that the operation is applied to the private accessible members.
+   * 表示该操作应用于私有可访问的成员。
    *
-   * <p>Note that a member is private accessible if it satisfies any of the
-   * following conditions:
+   * <p>请注意，如果成员满足以下任何条件，则该成员是私有可访问的：
    * <ul>
-   * <li>It is declared in the specified class as a private member.</li>
-   * <li>It is declared in an ancestor class of the specified class as a private
-   * member.</li>
+   * <li>它在指定类中被声明为私有成员。</li>
+   * <li>它在指定类的祖先类中被声明为私有成员。</li>
    * </ul>
    */
   public static final int PRIVATE = 0x0008;
 
   /**
-   * Indicates that the operation is applied to the package accessible members.
+   * 表示该操作应用于包可访问的成员。
    *
-   * <p>Note that a member is package accessible if it satisfies any of the
-   * following conditions:
+   * <p>请注意，如果成员满足以下任何条件，则该成员是包可访问的：
    * <ul>
-   * <li>It is declared in the specified class as a member without access
-   * modifier.</li>
-   * <li>It is declared in an ancestor class of the specified class as a member
-   * without access modifier.</li>
-   * <li>It is declared in an ancestor class of the specified class as a
-   * non-private member, and the ancestor class is declared without access
-   * modifier.</li>
+   * <li>它在指定类中被声明为没有访问修饰符的成员。</li>
+   * <li>它在指定类的祖先类中被声明为没有访问修饰符的成员。</li>
+   * <li>它在指定类的祖先类中被声明为非私有成员，并且祖先类被声明为没有访问修饰符。</li>
    * </ul>
    */
   public static final int PACKAGE = 0x0010;
 
   /**
-   * Indicates that the operation is applied to the protected accessible
-   * members.
+   * 表示该操作应用于受保护可访问的成员。
    *
-   * <p>Note that a member is protected accessible if it satisfies any of the
-   * following conditions:
+   * <p>请注意，如果成员满足以下任何条件，则该成员是受保护可访问的：
    * <ul>
-   * <li>It is declared in the specified class as a protected member.</li>
-   * <li>It is declared in an ancestor class of the specified class as a
-   * protected member, and the ancestor class is declared with a public
-   * modifier.</li>
+   * <li>它在指定类中被声明为受保护成员。</li>
+   * <li>它在指定类的祖先类中被声明为受保护成员，并且祖先类被声明为公共修饰符。</li>
    * </ul>
    */
   public static final int PROTECTED = 0x0020;
 
   /**
-   * Indicates that the operation is applied to the public accessible members.
+   * 表示该操作应用于公共可访问的成员。
    *
-   * <p>Note that a member is public accessible if it satisfies any of the
-   * following conditions:
+   * <p>请注意，如果成员满足以下任何条件，则该成员是公共可访问的：
    * <ul>
-   * <li>It is declared in the specified class as a public member.</li>
-   * <li>It is declared in an ancestor class of the specified class as a public
-   * member, and the ancestor class is declared with a public modifier.</li>
+   * <li>它在指定类中被声明为公共成员。</li>
+   * <li>它在指定类的祖先类中被声明为公共成员，并且祖先类被声明为公共修饰符。</li>
    * </ul>
    */
   public static final int PUBLIC = 0x0040;
 
   /**
-   * Indicates that the operation will try to utility the serialization
-   * mechanics of Java.
+   * 表示该操作将尝试利用Java的序列化机制。
    *
-   * <p>This option is only useful in the invoking of default constructors.
+   * <p>此选项仅在调用默认构造函数时有用。
    */
   public static final int SERIALIZATION = 0x0080;
 
   /**
-   * Indicates that the operation is applied to the bridge methods.
+   * 表示该操作应用于桥接方法。
    *
    */
   public static final int BRIDGE = 0x0100;
 
   /**
-   * Indicates that the operation is applied to the non-bridge methods.
+   * 表示该操作应用于非桥接方法。
    *
    */
   public static final int NON_BRIDGE = 0x0200;
 
   /**
-   * Indicates that the operation is applied to the native methods.
+   * 表示该操作应用于本地方法。
    */
   public static final int NATIVE = 0x0400;
 
   /**
-   * Indicates that the operation is applied to the non-native methods.
+   * 表示该操作应用于非本地方法。
    */
   public static final int NON_NATIVE = 0x0800;
 
   /**
-   * Indicates that the operation is applied to the private native methods.
+   * 表示该操作应用于私有本地方法。
    */
   public static final int PRIVATE_NATIVE = 0x1000;
 
   /**
-   * Indicates that the operation is applied to the non-private-native methods.
+   * 表示该操作应用于非私有本地方法。
    */
   public static final int NON_PRIVATE_NATIVE = 0x2000;
 
   /**
-   * Indicates that the operation will exclude the overridden members.
+   * 表示该操作将排除被重写的成员。
    *
-   * <p>If two or more members have the same signature, the operation will keep
-   * the one with the shallower depth; if there are more than one member has
-   * the specified signature in the same depth, the operation will returns
-   * the one with a more precised returned type (for methods); otherwise, the
-   * operation will throw an {@link AmbiguousMemberException}.
+   * <p>如果两个或更多成员具有相同的签名，操作将保留深度较浅的那个；
+   * 如果在相同深度中有多个成员具有指定的签名，操作将返回具有更精确返回类型的那个（对于方法）；
+   * 否则，操作将抛出 {@link AmbiguousMemberException}。
    */
   public static final int EXCLUDE_OVERRIDDEN = 0x4000;
 
   /**
-   * Indicates that the operation is applied to private, package, protected,
-   * and public members.
+   * 表示该操作应用于私有、包、受保护和公共成员。
    */
   public static final int ALL_ACCESS = PRIVATE | PACKAGE | PROTECTED | PUBLIC;
 
   /**
-   * Indicates that the operation is applied to all members, including static
-   * members, non-public members, bridge methods, non-bridge methods, native
-   * methods, non-native methods, and those members declared in the ancestor
-   * class or ancestor interfaces of the specified class.
+   * 表示该操作应用于所有成员，包括静态成员、非公共成员、桥接方法、非桥接方法、
+   * 本地方法、非本地方法，以及在指定类的祖先类或祖先接口中声明的那些成员。
    */
   public static final int ALL = ANCESTOR
       | STATIC | NON_STATIC
@@ -165,8 +145,7 @@ public class Option {
       | PRIVATE_NATIVE | NON_PRIVATE_NATIVE;
 
   /**
-   * Indicates that the operation is applied to all members, excluding bridge
-   * methods.
+   * 表示该操作应用于所有成员，但排除桥接方法。
    */
   public static final int ALL_EXCLUDE_BRIDGE = ANCESTOR
       | STATIC | NON_STATIC
@@ -177,8 +156,7 @@ public class Option {
       | PRIVATE_NATIVE | NON_PRIVATE_NATIVE;
 
   /**
-   * Indicates that the operation is applied to all members, excluding private
-   * native methods.
+   * 表示该操作应用于所有成员，但排除私有本地方法。
    */
   public static final int ALL_EXCLUDE_PRIVATE_NATIVE = ANCESTOR
       | STATIC | NON_STATIC
@@ -189,8 +167,7 @@ public class Option {
       | NON_PRIVATE_NATIVE;
 
   /**
-   * Indicates that the operation is applied to all members, excluding bridge
-   * methods and native methods.
+   * 表示该操作应用于所有成员，但排除桥接方法和本地方法。
    */
   public static final int ALL_EXCLUDE_BRIDGE_PRIVATE_NATIVE = ANCESTOR
       | STATIC | NON_STATIC
@@ -201,7 +178,7 @@ public class Option {
       | NON_PRIVATE_NATIVE;
 
   /**
-   * The options for Java bean's getter/setter methods.
+   * Java bean的getter/setter方法选项。
    */
   public static final int BEAN_METHOD = ANCESTOR
       | NON_STATIC
@@ -212,13 +189,12 @@ public class Option {
       | EXCLUDE_OVERRIDDEN;
 
   /**
-   * The options for Java bean's fields.
+   * Java bean的字段选项。
    */
   public static final int BEAN_FIELD = ANCESTOR | NON_STATIC | ALL_ACCESS;
 
   /**
-   * Indicates that the options is applied to static or non-static public members of the
-   * specified class or its super classes/interfaces.
+   * 表示该选项应用于指定类或其超类/接口的静态或非静态公共成员。
    */
   public static final int ANCESTOR_PUBLIC = ANCESTOR
       | STATIC | NON_STATIC
@@ -228,8 +204,7 @@ public class Option {
       | PUBLIC;
 
   /**
-   * The default options, which is only applied to non-static members declared
-   * in the specified class, with all possible accessibility.
+   * 默认选项，仅应用于在指定类中声明的非静态成员，具有所有可能的可访问性。
    */
   public static final int DEFAULT = NON_STATIC
       | NON_BRIDGE
@@ -240,8 +215,7 @@ public class Option {
       | SERIALIZATION;
 
   /**
-   * The default options, which is only applied to non-static members declared
-   * in the specified class, with all possible accessibility.
+   * 默认选项，仅应用于在指定类中声明的非静态成员，具有所有可能的可访问性。
    */
   public static final int DEFAULT_PUBLIC = NON_STATIC
       | NON_BRIDGE
@@ -251,16 +225,15 @@ public class Option {
       | PUBLIC;
 
   /**
-   * Tests whether a member of a class satisfies the specified options.
+   * 测试类的成员是否满足指定的选项。
    *
    * @param type
-   *          a class.
+   *          一个类。
    * @param member
-   *          a member of the class.
+   *          类的成员。
    * @param options
-   *          the options.
-   * @return {@code true} if the member of the class satisfies the options;
-   *         {@code false} otherwise.
+   *          选项。
+   * @return 如果类的成员满足选项，则返回 {@code true}；否则返回 {@code false}。
    */
   public static boolean satisfy(final Class<?> type, final Member member,
       final int options) {
@@ -346,10 +319,10 @@ public class Option {
   }
 
   /**
-   * Converts an options to a string representation.
+   * 将选项转换为字符串表示。
    *
-   * @param options the options.
-   * @return the string representation of the options.
+   * @param options 选项。
+   * @return 选项的字符串表示。
    */
   public static String toString(final int options) {
     final StringBuilder builder = new StringBuilder();

@@ -13,9 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The enumeration of message signature algorithms supported by the JDK.
+ * JDK 支持的消息签名算法的枚举。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see DigestAlgorithm
  * @see AsymmetricCryptoAlgorithm
  * @see Signature
@@ -25,51 +25,44 @@ import java.util.Map;
 public enum SignatureAlgorithm {
 
   /**
-   * The MD2 with RSA Encryption signature algorithm, which uses the MD2 digest
-   * algorithm and RSA to create and verify RSA digital signatures as defined
-   * in PKCS #1.
+   * 使用 MD2 摘要算法和 RSA 加密的签名算法，按 PKCS #1 的定义
+   * 创建和验证 RSA 数字签名。
    */
   MD2_WITH_RSA("MD2withRSA", DigestAlgorithm.MD2, AsymmetricCryptoAlgorithm.RSA),
 
   /**
-   * The MD5 with RSA Encryption signature algorithm, which uses the MD5 digest
-   * algorithm and RSA to create and verify RSA digital signatures as defined
-   * in PKCS #1.
+   * 使用 MD5 摘要算法和 RSA 加密的签名算法，按 PKCS #1 的定义
+   * 创建和验证 RSA 数字签名。
    */
   MD5_WITH_RSA("MD5withRSA", DigestAlgorithm.MD5, AsymmetricCryptoAlgorithm.RSA),
 
   /**
-   * The signature algorithm with SHA-1 and the RSA encryption algorithm as
-   * defined in the OSI Interoperability Workshop, using the padding conventions
-   * described in PKCS #1.
+   * 使用 SHA-1 和 RSA 加密算法的签名算法，按 OSI 互操作性研讨会的定义，
+   * 使用 PKCS #1 中描述的填充约定。
    */
   SHA1_WITH_RSA("SHA1withRSA", DigestAlgorithm.SHA1, AsymmetricCryptoAlgorithm.RSA),
 
   /**
-   * The signature algorithm with SHA-224 and the RSA encryption algorithm as
-   * defined in the OSI Interoperability Workshop, using the padding conventions
-   * described in PKCS #1.
+   * 使用 SHA-224 和 RSA 加密算法的签名算法，按 OSI 互操作性研讨会的定义，
+   * 使用 PKCS #1 中描述的填充约定。
    */
   SHA224_WITH_RSA("SHA224withRSA", DigestAlgorithm.SHA224, AsymmetricCryptoAlgorithm.RSA),
 
   /**
-   * The signature algorithm with SHA-256 and the RSA encryption algorithm as
-   * defined in the OSI Interoperability Workshop, using the padding conventions
-   * described in PKCS #1.
+   * 使用 SHA-256 和 RSA 加密算法的签名算法，按 OSI 互操作性研讨会的定义，
+   * 使用 PKCS #1 中描述的填充约定。
    */
   SHA256_WITH_RSA("SHA256withRSA", DigestAlgorithm.SHA256, AsymmetricCryptoAlgorithm.RSA),
 
   /**
-   * The signature algorithm with SHA-384 and the RSA encryption algorithm as
-   * defined in the OSI Interoperability Workshop, using the padding conventions
-   * described in PKCS #1.
+   * 使用 SHA-384 和 RSA 加密算法的签名算法，按 OSI 互操作性研讨会的定义，
+   * 使用 PKCS #1 中描述的填充约定。
    */
   SHA384_WITH_RSA("SHA384withRSA", DigestAlgorithm.SHA384, AsymmetricCryptoAlgorithm.RSA),
 
   /**
-   * The signature algorithm with SHA-512 and the RSA encryption algorithm as
-   * defined in the OSI Interoperability Workshop, using the padding conventions
-   * described in PKCS #1.
+   * 使用 SHA-512 和 RSA 加密算法的签名算法，按 OSI 互操作性研讨会的定义，
+   * 使用 PKCS #1 中描述的填充约定。
    */
   SHA512_WITH_RSA("SHA512withRSA", DigestAlgorithm.SHA512, AsymmetricCryptoAlgorithm.RSA),
 
@@ -90,20 +83,20 @@ public enum SignatureAlgorithm {
   //      AsymmetricCryptoAlgorithm.RSA),
 
   /**
-   * The DSA signature algorithms that use SHA-1 digest algorithms to create and
-   * verify digital signatures as defined in FIPS PUB 186-4.
+   * 使用 SHA-1 摘要算法创建和验证数字签名的 DSA 签名算法，
+   * 按 FIPS PUB 186-4 的定义。
    */
   SHA1_WITH_DSA("SHA1withDSA", DigestAlgorithm.SHA1, AsymmetricCryptoAlgorithm.DSA),
 
   /**
-   * The DSA signature algorithms that use SHA-224 digest algorithms to create and
-   * verify digital signatures as defined in FIPS PUB 186-4.
+   * 使用 SHA-224 摘要算法创建和验证数字签名的 DSA 签名算法，
+   * 按 FIPS PUB 186-4 的定义。
    */
   SHA224_WITH_DSA("SHA224withDSA", DigestAlgorithm.SHA224, AsymmetricCryptoAlgorithm.DSA),
 
   /**
-   * The DSA signature algorithms that use SHA-256 digest algorithms to create and
-   * verify digital signatures as defined in FIPS PUB 186-4.
+   * 使用 SHA-256 摘要算法创建和验证数字签名的 DSA 签名算法，
+   * 按 FIPS PUB 186-4 的定义。
    */
   SHA256_WITH_DSA("SHA256withDSA", DigestAlgorithm.SHA256, AsymmetricCryptoAlgorithm.DSA),
 
@@ -120,60 +113,63 @@ public enum SignatureAlgorithm {
   //  SHA512_WITH_DSA("SHA512withDSA", DigestAlgorithm.SHA512, AsymmetricCryptoAlgorithm.DSA),
 
   /**
-   * The ECDSA signature algorithms that use SHA-1 digest algorithms to create
-   * and verify digital signatures as defined in ANSI X9.62.
+   * 使用 SHA-1 摘要算法创建和验证数字签名的 ECDSA 签名算法，
+   * 按 ANSI X9.62 的定义。
    *
    * <p>
-   * Note:"ECDSA" is an ambiguous name for the "SHA1withECDSA" algorithm and
-   * should not be used. The formal name "SHA1withECDSA" should be used instead.
+   * 注意："ECDSA" 是 "SHA1withECDSA" 算法的模糊名称，不应使用。
+   * 应使用正式名称 "SHA1withECDSA"。
    * </p>
    */
   SHA1_WITH_ECDSA("SHA1withECDSA", DigestAlgorithm.SHA1, AsymmetricCryptoAlgorithm.EC),
 
   /**
-   * The ECDSA signature algorithms that use SHA-224 digest algorithms to create
-   * and verify digital signatures as defined in ANSI X9.62.
+   * 使用 SHA-224 摘要算法创建和验证数字签名的 ECDSA 签名算法，
+   * 按 ANSI X9.62 的定义。
    *
    * <p>
-   * Note:"ECDSA" is an ambiguous name for the "SHA1withECDSA" algorithm and
-   * should not be used. The formal name "SHA1withECDSA" should be used instead.
+   * 注意："ECDSA" 是 "SHA1withECDSA" 算法的模糊名称，不应使用。
+   * 应使用正式名称 "SHA1withECDSA"。
    * </p>
    */
   SHA224_WITH_ECDSA("SHA224withECDSA", DigestAlgorithm.SHA224, AsymmetricCryptoAlgorithm.EC),
 
   /**
-   * The ECDSA signature algorithms that use SHA-256 digest algorithms to create
-   * and verify digital signatures as defined in ANSI X9.62.
+   * 使用 SHA-256 摘要算法创建和验证数字签名的 ECDSA 签名算法，
+   * 按 ANSI X9.62 的定义。
    *
    * <p>
-   * Note:"ECDSA" is an ambiguous name for the "SHA1withECDSA" algorithm and
-   * should not be used. The formal name "SHA1withECDSA" should be used instead.
+   * 注意："ECDSA" 是 "SHA1withECDSA" 算法的模糊名称，不应使用。
+   * 应使用正式名称 "SHA1withECDSA"。
    * </p>
    */
   SHA256_WITH_ECDSA("SHA256withECDSA", DigestAlgorithm.SHA256, AsymmetricCryptoAlgorithm.EC),
 
   /**
-   * The ECDSA signature algorithms that use SHA-384 digest algorithms to create
-   * and verify digital signatures as defined in ANSI X9.62.
+   * 使用 SHA-384 摘要算法创建和验证数字签名的 ECDSA 签名算法，
+   * 按 ANSI X9.62 的定义。
    *
    * <p>
-   * Note:"ECDSA" is an ambiguous name for the "SHA1withECDSA" algorithm and
-   * should not be used. The formal name "SHA1withECDSA" should be used instead.
+   * 注意："ECDSA" 是 "SHA1withECDSA" 算法的模糊名称，不应使用。
+   * 应使用正式名称 "SHA1withECDSA"。
    * </p>
    */
   SHA384_WITH_ECDSA("SHA384withECDSA", DigestAlgorithm.SHA384, AsymmetricCryptoAlgorithm.EC),
 
   /**
-   * The ECDSA signature algorithms that use SHA-512 digest algorithms to create
-   * and verify digital signatures as defined in ANSI X9.62.
+   * 使用 SHA-512 摘要算法创建和验证数字签名的 ECDSA 签名算法，
+   * 按 ANSI X9.62 的定义。
    *
    * <p>
-   * Note:"ECDSA" is an ambiguous name for the "SHA1withECDSA" algorithm and
-   * should not be used. The formal name "SHA1withECDSA" should be used instead.
+   * 注意："ECDSA" 是 "SHA1withECDSA" 算法的模糊名称，不应使用。
+   * 应使用正式名称 "SHA1withECDSA"。
    * </p>
    */
   SHA512_WITH_ECDSA("SHA512withECDSA", DigestAlgorithm.SHA512, AsymmetricCryptoAlgorithm.EC);
 
+  /**
+   * 签名算法名称与枚举的映射。
+   */
   private static final Map<String, SignatureAlgorithm> NAME_MAP = new HashMap<>();
   static {
     for (final SignatureAlgorithm algorithm: values()) {
@@ -183,23 +179,42 @@ public enum SignatureAlgorithm {
   }
 
   /**
-   * Gets the signature algorithm by its enumerator name or code (i.e., the
-   * standard name in JDK).
+   * 根据枚举名称或编码（即 JDK 中的标准名称）获取签名算法。
    *
    * @param nameOrCode
-   *     The name or code of the specified signature algorithm, ignoring the case.
+   *     指定签名算法的名称或编码，忽略大小写。
    * @return
-   *     The corresponding {@link SignatureAlgorithm}, or {@code null} if no
-   *     such algorithm.
+   *     对应的 {@link SignatureAlgorithm}，如果没有这样的算法则返回 {@code null}。
    */
   public static SignatureAlgorithm forName(final String nameOrCode) {
     return NAME_MAP.get(nameOrCode.toUpperCase());
   }
 
+  /**
+   * 签名算法的编码，即 JDK 中的标准名称。
+   */
   private final String code;
+
+  /**
+   * 签名算法的摘要算法。
+   */
   private final DigestAlgorithm digestAlgorithm;
+
+  /**
+   * 签名算法的非对称加密算法。
+   */
   private final AsymmetricCryptoAlgorithm cryptoAlgorithm;
 
+  /**
+   * 构造一个签名算法。
+   *
+   * @param code
+   *     签名算法的编码，即 JDK 中的标准名称。
+   * @param digestAlgorithm
+   *     签名算法的摘要算法。
+   * @param cryptoAlgorithm
+   *     签名算法的非对称加密算法。
+   */
   SignatureAlgorithm(final String code,
       final DigestAlgorithm digestAlgorithm,
       final AsymmetricCryptoAlgorithm cryptoAlgorithm) {
@@ -209,30 +224,30 @@ public enum SignatureAlgorithm {
   }
 
   /**
-   * Gets the code of this signature algorithm, i.e., the standard name in the JDK.
+   * 获取此签名算法的编码，即 JDK 中的标准名称。
    *
    * @return
-   *     the code of this signature algorithm, i.e., the standard name in the JDK.
+   *     此签名算法的编码，即 JDK 中的标准名称。
    */
   public String code() {
     return code;
   }
 
   /**
-   * Gets the digest algorithm of this signature algorithm.
+   * 获取此签名算法的摘要算法。
    *
    * @return
-   *     the digest algorithm of this signature algorithm.
+   *     此签名算法的摘要算法。
    */
   public DigestAlgorithm digestAlgorithm() {
     return digestAlgorithm;
   }
 
   /**
-   * Gets the asymmetric crypto algorithm of this signature algorithm.
+   * 获取此签名算法的非对称加密算法。
    *
    * @return
-   *     the asymmetric crypto algorithm of this signature algorithm.
+   *     此签名算法的非对称加密算法。
    */
   public AsymmetricCryptoAlgorithm cryptoAlgorithm() {
     return cryptoAlgorithm;

@@ -13,9 +13,9 @@ import java.security.PrivateKey;
 import ltd.qubit.commons.util.codec.Decoder;
 
 /**
- * The interface of decoding {@link PrivateKey} from byte arrays.
+ * 从字节数组解码 {@link PrivateKey} 的接口。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface PrivateKeyDecoder extends Decoder<byte[], PrivateKey> {
   //  empty

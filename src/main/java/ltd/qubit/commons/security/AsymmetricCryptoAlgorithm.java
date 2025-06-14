@@ -14,9 +14,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The enumeration of asymmetric crypto algorithms supported by the JDK.
+ * JDK支持的非对称加密算法的枚举。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see KeyPairGenerator
  * @see KeyFactory
  * @see <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html#KeyPairGenerator">KeyPairGenerator Algorithms</a>
@@ -24,22 +24,22 @@ import java.util.Map;
 public enum AsymmetricCryptoAlgorithm {
 
   /**
-   * The Diffie-Hellman KeyAgreement algorithm.
+   * Diffie-Hellman密钥协商算法。
    */
   DH("DiffieHellman", 512, 1024, 1024),
 
   /**
-   * The Digital Signature Algorithm.
+   * 数字签名算法。
    */
   DSA("DSA", 512, 2048, 1024),
 
   /**
-   * The RSA algorithm.
+   * RSA算法。
    */
   RSA("RSA", 512, 8192, 2048),
 
   /**
-   * The Elliptic Curve algorithm.
+   * 椭圆曲线算法。
    */
   EC("EC", 112, 517, 512);
 
@@ -53,14 +53,12 @@ public enum AsymmetricCryptoAlgorithm {
   }
 
   /**
-   * Gets the lgorithm by its enumerator name or code (i.e., the standard name
-   * in JDK).
+   * 通过枚举名称或代码（即JDK中的标准名称）获取算法。
    *
    * @param nameOrCode
-   *     The name or code of the specified algorithm, ignoring the case.
+   *     指定算法的名称或代码，忽略大小写。
    * @return
-   *     The corresponding {@link AsymmetricCryptoAlgorithm}, or {@code null} if
-   *     no such algorithm.
+   *     对应的{@link AsymmetricCryptoAlgorithm}，如果没有此类算法则返回{@code null}。
    */
   public static AsymmetricCryptoAlgorithm forName(final String nameOrCode) {
     return NAME_MAP.get(nameOrCode.toUpperCase());
@@ -80,40 +78,40 @@ public enum AsymmetricCryptoAlgorithm {
   }
 
   /**
-   * Gets the code of this algorithm, i.e., the standard name in the JDK.
+   * 获取此算法的代码，即JDK中的标准名称。
    *
    * @return
-   *     the code of this algorithm, i.e., the standard name in the JDK.
+   *     此算法的代码，即JDK中的标准名称。
    */
   String code() {
     return code;
   }
 
   /**
-   * Gets the minimum key size in bits allowed for this algorithm.
+   * 获取此算法允许的最小密钥大小（位）。
    *
    * @return
-   *     the minimum key size in bits allowed for this algorithm.
+   *     此算法允许的最小密钥大小（位）。
    */
   public int minKeySize() {
     return minKeySize;
   }
 
   /**
-   * Gets the maximum key size in bits allowed for this algorithm.
+   * 获取此算法允许的最大密钥大小（位）。
    *
    * @return
-   *     the maximum key size in bits allowed for this algorithm.
+   *     此算法允许的最大密钥大小（位）。
    */
   public int maxKeySize() {
     return maxKeySize;
   }
 
   /**
-   * Gets the suggested default key size in bits for this algorithm.
+   * 获取此算法建议的默认密钥大小（位）。
    *
    * @return
-   *     the suggested default key size in bits for this algorithm.
+   *     此算法建议的默认密钥大小（位）。
    */
   public int defaultKeySize() {
     return defaultKeySize;

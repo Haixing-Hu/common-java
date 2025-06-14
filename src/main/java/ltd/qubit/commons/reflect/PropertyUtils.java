@@ -33,9 +33,9 @@ import static ltd.qubit.commons.text.CaseFormat.LOWER_CAMEL;
 import static ltd.qubit.commons.text.CaseFormat.UPPER_CAMEL;
 
 /**
- * Provides utility functions for the Java bean properties.
+ * 提供用于Java Bean属性的工具函数。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public final class PropertyUtils {
@@ -114,15 +114,13 @@ public final class PropertyUtils {
   }
 
   /**
-   * Retrieve the property descriptors for the specified class, introspecting
-   * and caching them the first time a particular bean class is encountered.
+   * 检索指定类的属性描述符，首次遇到特定Bean类时进行内省并缓存。
    *
-   * <p>ODO: this function only get the simple properties and indexed
-   * properties, the supporting for the mapped properties should be added.
+   * <p>注意：此函数仅获取简单属性和索引属性，应添加对映射属性的支持。
    *
    * @param cls
-   *     Bean class for which property descriptors are requested
-   * @return the property descriptors
+   *     请求属性描述符的Bean类
+   * @return 属性描述符
    */
   public static PropertyDescriptor[] getDescriptors(final Class<?> cls) {
     requireNonNull("cls", cls);
@@ -130,20 +128,16 @@ public final class PropertyUtils {
   }
 
   /**
-   * Retrieve the property descriptor for the specified property of the
-   * specified bean, or return {@code null} if there is no such descriptor.
+   * 检索指定Bean的指定属性的属性描述符，如果没有此类描述符则返回{@code null}。
    *
-   * <p>This method resolves indexed and nested property references in the same
-   * manner as other methods in this class, except that if the last (or only)
-   * name element is indexed, the descriptor for the last resolved property
-   * itself is returned.
+   * <p>此方法以与此类中其他方法相同的方式解析索引和嵌套属性引用，
+   * 但如果最后（或唯一）名称元素被索引，则返回最后解析属性本身的描述符。
    *
    * @param cls
-   *     The class of a bean for which a property descriptor is requested.
+   *     请求属性描述符的Bean类。
    * @param name
-   *     Possibly indexed and/or nested name of the property for which a
-   *     property descriptor is requested.
-   * @return the property descriptor.
+   *     可能被索引和/或嵌套的属性名称，用于请求属性描述符。
+   * @return 属性描述符。
    */
   public static PropertyDescriptor getDescriptor(final Class<?> cls,
       final String name) {
@@ -161,14 +155,13 @@ public final class PropertyUtils {
   }
 
   /**
-   * Return an accessible property getter method for this property, if there is
-   * one; otherwise return {@code null}.
+   * 返回此属性的可访问属性getter方法（如果存在）；否则返回{@code null}。
    *
    * @param clazz
-   *     The class of the read method will be invoked on
+   *     将调用读取方法的类
    * @param descriptor
-   *     Property descriptor to return a getter for
-   * @return The read method
+   *     要返回getter的属性描述符
+   * @return 读取方法
    */
   public static Method getReadMethod(final Class<?> clazz,
       final PropertyDescriptor descriptor) {
@@ -178,14 +171,13 @@ public final class PropertyUtils {
   }
 
   /**
-   * Return an accessible property setter method for this property, if there is
-   * one; otherwise return {@code null}.
+   * 返回此属性的可访问属性setter方法（如果存在）；否则返回{@code null}。
    *
    * @param clazz
-   *     The class of the write method will be invoked on.
+   *     将调用写入方法的类。
    * @param descriptor
-   *     Property descriptor to return a setter for
-   * @return The wrute method
+   *     要返回setter的属性描述符
+   * @return 写入方法
    */
   public static Method getWriteMethod(final Class<?> clazz,
       final PropertyDescriptor descriptor) {
@@ -195,22 +187,21 @@ public final class PropertyUtils {
   }
 
   /**
-   * Return the value of the specified simple property of the specified bean,
-   * with no type conversions.
+   * 返回指定Bean的指定简单属性的值，不进行类型转换。
    *
    * @param bean
-   *     Bean whose property is to be extracted
+   *     要提取属性的Bean
    * @param name
-   *     Name of the property to be extracted
-   * @return The property value
+   *     要提取的属性名称
+   * @return 属性值
    * @throws IllegalAccessException
-   *     if the caller does not have access to the property accessor method
+   *     如果调用者没有访问属性访问器方法的权限
    * @throws NullPointerException
-   *     if {@code bean} or {@code name} is null
+   *     如果{@code bean}或{@code name}为null
    * @throws InvocationTargetException
-   *     if the property accessor method throws an exception
+   *     如果属性访问器方法抛出异常
    * @throws NoSuchMethodException
-   *     if an accessor method for this property cannot be found.
+   *     如果找不到此属性的访问器方法。
    */
   public static Object getSimpleProperty(final Object bean, final String name)
       throws IllegalAccessException, NullPointerException,
@@ -233,30 +224,25 @@ public final class PropertyUtils {
   }
 
   /**
-   * Return the Java Class representing the property type of the specified
-   * property, or {@code null} if there is no such property for the specified
-   * bean.
+   * 返回表示指定属性的属性类型的Java类，如果指定Bean没有此类属性则返回{@code null}。
    *
-   * <p>This method follows the same name resolution rules used by {@code
-   * getPropertyDescriptor()}, so if the last element of a name reference is
-   * indexed, the type of the property itself will be returned. If the last (or
-   * only) element has no property with the specified name, {@code null} is
-   * returned.
+   * <p>此方法遵循与{@code getPropertyDescriptor()}使用的相同名称解析规则，
+   * 因此如果名称引用的最后一个元素被索引，则将返回属性本身的类型。
+   * 如果最后（或唯一）元素没有指定名称的属性，则返回{@code null}。
    *
    * @param beanClass
-   *     the class of the bean for which a property descriptor is requested
+   *     请求属性描述符的Bean类
    * @param name
-   *     Possibly indexed and/or nested name of the property for which a
-   *     property descriptor is requested
-   * @return The property type
+   *     可能被索引和/或嵌套的属性名称，用于请求属性描述符
+   * @return 属性类型
    * @throws IllegalAccessException
-   *     if the caller does not have access to the property accessor method
+   *     如果调用者没有访问属性访问器方法的权限
    * @throws NullPointerException
-   *     if {@code bean} or {@code name} is null
+   *     如果{@code bean}或{@code name}为null
    * @throws InvocationTargetException
-   *     if the property accessor method throws an exception
+   *     如果属性访问器方法抛出异常
    * @throws NoSuchMethodException
-   *     if an accessor method for this propety cannot be found
+   *     如果找不到此属性的访问器方法
    */
   public static Class<?> getPropertyType(final Class<?> beanClass,
       final String name)
@@ -274,23 +260,22 @@ public final class PropertyUtils {
   }
 
   /**
-   * Set the value of the specified simple property of the specified bean, with
-   * no type conversions.
+   * 设置指定Bean的指定简单属性的值，不进行类型转换。
    *
    * @param bean
-   *     Bean whose property is to be modified
+   *     要修改属性的Bean
    * @param name
-   *     Name of the property to be modified
+   *     要修改的属性名称
    * @param value
-   *     Value to which the property should be set
+   *     应设置属性的值
    * @throws IllegalAccessException
-   *     if the caller does not have access to the property accessor method
+   *     如果调用者没有访问属性访问器方法的权限
    * @throws NullPointerException
-   *     if {@code bean} or {@code name} is null
+   *     如果{@code bean}或{@code name}为null
    * @throws InvocationTargetException
-   *     if the property accessor method throws an exception
+   *     如果属性访问器方法抛出异常
    * @throws NoSuchMethodException
-   *     if an accessor method for this propety cannot be found
+   *     如果找不到此属性的访问器方法
    */
   public static void setSimpleProperty(final Object bean, final String name,
       final Object value)

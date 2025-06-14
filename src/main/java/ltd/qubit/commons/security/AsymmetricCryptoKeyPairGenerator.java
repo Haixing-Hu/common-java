@@ -20,14 +20,11 @@ import jakarta.validation.constraints.NotNull;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * The class of objects used to generate key pairs for asymmetric crypto
- * algorithms.
+ * 用于生成非对称加密算法密钥对的对象类。
  *
- * <p>This class encapsulates the {@link KeyPairGenerator} to provide
- * convenient
- * methods generating key pairs of the specified algorithm.</p>
+ * <p>此类封装了{@link KeyPairGenerator}，提供便捷的方法来生成指定算法的密钥对。</p>
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see KeyPairGenerator
  */
 public class AsymmetricCryptoKeyPairGenerator {
@@ -38,10 +35,10 @@ public class AsymmetricCryptoKeyPairGenerator {
   private SecureRandomAlgorithm randomAlgorithm;
 
   /**
-   * Constructs a {@link AsymmetricCryptoKeyPairGenerator}.
+   * 构造一个{@link AsymmetricCryptoKeyPairGenerator}。
    *
    * @param cryptoAlgorithm
-   *     the asymmetric crypto algorithm.
+   *     非对称加密算法。
    */
   public AsymmetricCryptoKeyPairGenerator(
       final AsymmetricCryptoAlgorithm cryptoAlgorithm) {
@@ -50,12 +47,12 @@ public class AsymmetricCryptoKeyPairGenerator {
   }
 
   /**
-   * Constructs a {@link AsymmetricCryptoKeyPairGenerator}.
+   * 构造一个{@link AsymmetricCryptoKeyPairGenerator}。
    *
    * @param cryptoAlgorithm
-   *     the asymmetric crypto algorithm.
+   *     非对称加密算法。
    * @param randomAlgorithm
-   *     the secure random algorithm.
+   *     安全随机算法。
    */
   public AsymmetricCryptoKeyPairGenerator(
       final AsymmetricCryptoAlgorithm cryptoAlgorithm,
@@ -65,9 +62,9 @@ public class AsymmetricCryptoKeyPairGenerator {
   }
 
   /**
-   * Gets the asymmetric crypto algorithm of this generator.
+   * 获取此生成器的非对称加密算法。
    *
-   * @return the asymmetric crypto algorithm of this generator.
+   * @return 此生成器的非对称加密算法。
    */
   @NotNull
   public AsymmetricCryptoAlgorithm getCryptoAlgorithm() {
@@ -75,13 +72,11 @@ public class AsymmetricCryptoKeyPairGenerator {
   }
 
   /**
-   * Gets the secure random algorithm.
+   * 获取安全随机算法。
    *
-   * <p>A {@code null} value will cause the generation of key pairs use the
-   * {@link SecureRandom} implementation of the highest-priority installed
-   * provider as the source of randomness.</p>
+   * <p>{@code null}值将导致密钥对生成使用最高优先级已安装提供者的{@link SecureRandom}实现作为随机性源。</p>
    *
-   * @return the secure random algorithm.
+   * @return 安全随机算法。
    */
   @Nullable
   public SecureRandomAlgorithm getRandomAlgorithm() {
@@ -89,12 +84,10 @@ public class AsymmetricCryptoKeyPairGenerator {
   }
 
   /**
-   * Sets the secure random algorithm.
+   * 设置安全随机算法。
    *
    * @param randomAlgorithm
-   *     the new secure random algorithm. A {@code null} value will cause the
-   *     generation of key pairs use the {@link SecureRandom} implementation of
-   *     the highest-priority installed provider as the source of randomness.
+   *     新的安全随机算法。{@code null}值将导致密钥对生成使用最高优先级已安装提供者的{@link SecureRandom}实现作为随机性源。
    */
   public void setRandomAlgorithm(
       @Nullable final SecureRandomAlgorithm randomAlgorithm) {
@@ -102,60 +95,51 @@ public class AsymmetricCryptoKeyPairGenerator {
   }
 
   /**
-   * Gets the minimum allowed size of keys in bits for the asymmetric crypto
-   * algorithm of this generator.
+   * 获取此生成器的非对称加密算法允许的最小密钥大小（位）。
    *
-   * @return the minimum allowed size of keys in bits for the asymmetric crypto
-   *     algorithm of this generator.
+   * @return 此生成器的非对称加密算法允许的最小密钥大小（位）。
    */
   public int getMinKeySize() {
     return cryptoAlgorithm.minKeySize();
   }
 
   /**
-   * Gets the maximum allowed size of keys in bits for the asymmetric crypto
-   * algorithm of this generator.
+   * 获取此生成器的非对称加密算法允许的最大密钥大小（位）。
    *
-   * @return the maximum allowed size of keys in bits for the asymmetric crypto
-   *     algorithm of this generator.
+   * @return 此生成器的非对称加密算法允许的最大密钥大小（位）。
    */
   public int getMaxKeySize() {
     return cryptoAlgorithm.maxKeySize();
   }
 
   /**
-   * Gets the default suggested size of keys in bits for the asymmetric crypto
-   * algorithm of this generator.
+   * 获取此生成器的非对称加密算法的默认建议密钥大小（位）。
    *
-   * @return the default suggested size of keys in bits for the asymmetric
-   *     crypto algorithm of this generator.
+   * @return 此生成器的非对称加密算法的默认建议密钥大小（位）。
    */
   public int getDefaultKeySize() {
     return cryptoAlgorithm.defaultKeySize();
   }
 
   /**
-   * Generates a key pair with the suggested default key-size for this signature
-   * algorithm.
+   * 使用此签名算法的建议默认密钥大小生成密钥对。
    *
-   * @return the generated key pair.
+   * @return 生成的密钥对。
    * @throws NoSuchAlgorithmException
-   *     if the signature algorithm or secure random algorithm is not
-   *     supported.
+   *     如果不支持签名算法或安全随机算法。
    */
   public KeyPair generateKeyPair() throws NoSuchAlgorithmException {
     return generateKeyPair(cryptoAlgorithm.defaultKeySize());
   }
 
   /**
-   * Generates a key pair.
+   * 生成密钥对。
    *
    * @param keySize
-   *     the size of the keys in bits.
-   * @return the generated key pair.
+   *     密钥大小（位）。
+   * @return 生成的密钥对。
    * @throws NoSuchAlgorithmException
-   *     if the signature algorithm or secure random algorithm is not
-   *     supported.
+   *     如果不支持签名算法或安全随机算法。
    */
   public KeyPair generateKeyPair(final int keySize)
       throws NoSuchAlgorithmException {

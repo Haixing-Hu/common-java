@@ -13,9 +13,9 @@ import java.security.PublicKey;
 import ltd.qubit.commons.util.codec.Decoder;
 
 /**
- * The interface of decoding {@link PublicKey} from byte arrays.
+ * 从字节数组解码 {@link PublicKey} 的接口。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface PublicKeyDecoder extends Decoder<byte[], PublicKey> {
   //  empty

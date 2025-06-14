@@ -11,13 +11,19 @@ package ltd.qubit.commons.security;
 import java.security.PublicKey;
 
 /**
- * The {@link PublicKeyCodec} which encode/decode between {@link PublicKey}s and
- * byte arrays in the X.509 format for the specified {@link SignatureAlgorithm}.
+ * 用于指定 {@link SignatureAlgorithm} 的 {@link PublicKeyCodec}，
+ * 在 {@link PublicKey} 和 X.509 格式的字节数组之间进行编码/解码。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class SignaturePublicKeyCodec extends X509PublicKeyCodec {
 
+  /**
+   * 构造一个 {@link SignaturePublicKeyCodec}。
+   *
+   * @param signatureAlgorithm
+   *     签名算法。
+   */
   public SignaturePublicKeyCodec(final SignatureAlgorithm signatureAlgorithm) {
     super(signatureAlgorithm.cryptoAlgorithm());
   }

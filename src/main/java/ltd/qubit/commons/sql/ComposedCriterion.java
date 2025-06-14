@@ -37,12 +37,31 @@ import static ltd.qubit.commons.reflect.ObjectGraphUtils.getPropertyPath;
  */
 public class ComposedCriterion<T> implements Criterion<T> {
 
+  /**
+   * 待过滤的实体的类。
+   */
   private final Class<T> entityClass;
 
-  private final List<SimpleCriterion<T>> criteria;
-
+  /**
+   * 子条件之间的逻辑关系。
+   */
   private final LogicRelation relation;
 
+  /**
+   * 子条件列表。
+   */
+  private final List<SimpleCriterion<T>> criteria;
+
+  /**
+   * 构造一个新的复合条件。
+   *
+   * @param entityClass
+   *     实体类。
+   * @param relation
+   *     子条件之间的逻辑关系。
+   * @param criteria
+   *     子条件列表。
+   */
   public ComposedCriterion(final Class<T> entityClass,
       final LogicRelation relation,
       final List<SimpleCriterion<T>> criteria) {
@@ -51,6 +70,16 @@ public class ComposedCriterion<T> implements Criterion<T> {
     this.criteria = requireNonNull("criteria", criteria);
   }
 
+  /**
+   * 构造一个新的复合条件。
+   *
+   * @param entityClass
+   *     实体类。
+   * @param relation
+   *     逻辑关系。
+   * @param criteria
+   *     子条件数组。
+   */
   @SuppressWarnings("varargs")
   @SafeVarargs
   public ComposedCriterion(final Class<T> entityClass,
@@ -64,24 +93,50 @@ public class ComposedCriterion<T> implements Criterion<T> {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Class<T> getEntityClass() {
     return entityClass;
   }
 
+  /**
+   * 获取逻辑关系。
+   *
+   * @return
+   *     逻辑关系。
+   */
   public LogicRelation getRelation() {
     return relation;
   }
 
+  /**
+   * 获取子条件列表。
+   *
+   * @return
+   *     子条件列表。
+   */
   public List<SimpleCriterion<T>> getCriteria() {
     return criteria;
   }
 
+  /**
+   * 添加一个子条件。
+   *
+   * @param criterion
+   *     要添加的子条件。
+   * @return
+   *     当前复合条件对象，用于链式调用。
+   */
   public ComposedCriterion<T> addCriterion(final SimpleCriterion<T> criterion) {
     criteria.add(requireNonNull("criterion", criterion));
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String toSql() throws SQLSyntaxErrorException {
     final StringBuilder builder = new StringBuilder();
@@ -118,6 +173,9 @@ public class ComposedCriterion<T> implements Criterion<T> {
     return builder.toString();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isValid() {
     if (criteria.isEmpty()) {
@@ -137,6 +195,9 @@ public class ComposedCriterion<T> implements Criterion<T> {
     return true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean accept(final T obj) {
     if (obj == null) {
@@ -201,26 +262,22 @@ public class ComposedCriterion<T> implements Criterion<T> {
   }
 
   /**
-   * Extracts a criterion for a sub-entity from the current criterion.
+   * 从当前条件中提取子实体的条件。
    * <p>
-   * This method is useful when dealing with nested entity properties. It checks
-   * if the current criterion's property path starts with the given sub-entity's
-   * property path. If it does, it creates a new criterion for the sub-entity by
-   * removing the common prefix from the property path.
+   * 此方法在处理嵌套实体属性时很有用。它检查当前条件的属性路径是否以给定子实体的属性路径开头。
+   * 如果是，它通过从属性路径中移除公共前缀来为子实体创建一个新条件。
    * <p>
-   * For example, if the current criterion is "order.customer.name = 'John' AND order.customer.age > 18"
-   * and we want to get a criterion for the Customer entity, this method will return
-   * "name = 'John' AND age > 18".
+   * 例如，如果当前条件是"order.customer.name = 'John' AND order.customer.age > 18"，
+   * 我们想要获取Customer实体的条件，此方法将返回"name = 'John' AND age > 18"。
    *
    * @param <P>
-   *     The type of the sub-entity.
+   *     子实体的类型。
    * @param propertyClass
-   *     The class of the sub-entity.
+   *     子实体的类。
    * @param propertyGetter
-   *     The getter method for the sub-entity property.
+   *     子实体属性的getter方法。
    * @return
-   *     A new criterion for the sub-entity containing all matching criteria, or
-   *     {@code null} if no matching criteria are found.
+   *     包含所有匹配条件的子实体新条件，如果没有找到匹配条件则返回{@code null}。
    */
   @Nullable
   public <P, Q> ComposedCriterion<Q> extractSubEntityCriterion(final Class<Q> propertyClass,
@@ -230,25 +287,22 @@ public class ComposedCriterion<T> implements Criterion<T> {
   }
 
   /**
-   * Extracts a criterion for a sub-entity from the current criterion.
+   * 从当前条件中提取子实体的条件。
    * <p>
-   * This method is useful when dealing with nested entity properties. It checks
-   * if the current criterion's property path starts with the given sub-entity's
-   * property path. If it does, it creates a new criterion for the sub-entity by
-   * removing the common prefix from the property path.
+   * 此方法在处理嵌套实体属性时很有用。它检查当前条件的属性路径是否以给定子实体的属性路径开头。
+   * 如果是，它通过从属性路径中移除公共前缀来为子实体创建一个新条件。
    * <p>
-   * For example, if the current criterion is "order.customer.name = 'John' AND order.customer.age > 18"
-   * and we want to get a criterion for the Customer entity, this method will return
-   * "name = 'John' AND age > 18".
+   * 例如，如果当前条件是"order.customer.name = 'John' AND order.customer.age > 18"，
+   * 我们想要获取Customer实体的条件，此方法将返回"name = 'John' AND age > 18"。
    *
    * @param <P>
-   *     The type of the sub-entity.
+   *     子实体的类型。
    * @param propertyClass
-   *     The class of the sub-entity.
+   *     子实体的类。
    * @param propertyPath
-   *     The property path string for the sub-entity.
+   *     子实体的属性路径字符串。
    * @return
-   *     A new criterion for the sub-entity containing all matching criteria.
+   *     包含所有匹配条件的子实体新条件。
    */
   @Nullable
   public <P> ComposedCriterion<P> extractSubEntityCriterion(final Class<P> propertyClass,
@@ -267,24 +321,24 @@ public class ComposedCriterion<T> implements Criterion<T> {
   }
 
   /**
-   * Excludes criteria matching the sub-entity path and returns the remaining criteria.
+   * 排除匹配子实体路径的条件并返回剩余条件。
    * <p>
-   * This method is the dual of {@link #extractSubEntityCriterion(Class, String)}. It returns
-   * a new criterion containing all criteria that do not match the given sub-entity path.
+   * 此方法是{@link #extractSubEntityCriterion(Class, String)}的对偶方法。它返回
+   * 一个包含所有不匹配给定子实体路径的条件的新条件。
    * <p>
-   * For example, if the current criterion is "order.customer.name = 'John' AND order.customer.age > 18
-   * AND order.status = 'NEW'" and we want to exclude the criteria for the Customer entity,
-   * this method will return "order.status = 'NEW'".
+   * 例如，如果当前条件是"order.customer.name = 'John' AND order.customer.age > 18
+   * AND order.status = 'NEW'"，我们想要排除Customer实体的条件，
+   * 此方法将返回"order.status = 'NEW'"。
    *
    * @param <P>
-   *     The type of the sub-entity.
+   *     子实体的类型。
    * @param propertyClass
-   *     The class of the sub-entity.
+   *     子实体的类。
    * @param propertyGetter
-   *     The getter method for the sub-entity property.
+   *     子实体属性的getter方法。
    * @return
-   *     A new criterion containing all criteria that do not match the sub-entity path,
-   *     or {@code null} if all criteria match the sub-entity path.
+   *     包含所有不匹配子实体路径的条件的新条件，
+   *     如果所有条件都匹配子实体路径则返回{@code null}。
    */
   @Nullable
   public <P, Q> ComposedCriterion<T> excludeSubEntityCriterion(final Class<Q> propertyClass,
@@ -294,24 +348,24 @@ public class ComposedCriterion<T> implements Criterion<T> {
   }
 
   /**
-   * Excludes criteria matching the sub-entity path and returns the remaining criteria.
+   * 排除匹配子实体路径的条件并返回剩余条件。
    * <p>
-   * This method is the dual of {@link #extractSubEntityCriterion(Class, String)}. It returns
-   * a new criterion containing all criteria that do not match the given sub-entity path.
+   * 此方法是{@link #extractSubEntityCriterion(Class, String)}的对偶方法。它返回
+   * 一个包含所有不匹配给定子实体路径的条件的新条件。
    * <p>
-   * For example, if the current criterion is "order.customer.name = 'John' AND order.customer.age > 18
-   * AND order.status = 'NEW'" and we want to exclude the criteria for the Customer entity,
-   * this method will return "order.status = 'NEW'".
+   * 例如，如果当前条件是"order.customer.name = 'John' AND order.customer.age > 18
+   * AND order.status = 'NEW'"，我们想要排除Customer实体的条件，
+   * 此方法将返回"order.status = 'NEW'"。
    *
    * @param <P>
-   *     The type of the sub-entity.
+   *     子实体的类型。
    * @param propertyClass
-   *     The class of the sub-entity.
+   *     子实体的类。
    * @param propertyPath
-   *     The property path string for the sub-entity.
+   *     子实体的属性路径字符串。
    * @return
-   *     A new criterion containing all criteria that do not match the sub-entity path,
-   *     or {@code null} if all criteria match the sub-entity path.
+   *     包含所有不匹配子实体路径的条件的新条件，
+   *     如果所有条件都匹配子实体路径则返回{@code null}。
    */
   @Nullable
   public <P> ComposedCriterion<T> excludeSubEntityCriterion(final Class<P> propertyClass,
@@ -330,26 +384,24 @@ public class ComposedCriterion<T> implements Criterion<T> {
   }
 
   /**
-   * Extracts a criterion for a deeply nested sub-entity from the current criterion.
+   * 从当前条件中提取深度嵌套子实体的条件。
    * <p>
-   * This method is similar to {@link #extractSubEntityCriterion(Class, GetterMethod)} but
-   * supports deeper property paths through multiple getters.
+   * 此方法与{@link #extractSubEntityCriterion(Class, GetterMethod)}类似，但
+   * 支持通过多个getter实现更深的属性路径。
    * <p>
-   * For example, if the current criterion is "order.customer.address.city = 'Beijing'"
-   * and we want to get a criterion for the Address entity, this method will return
-   * "city = 'Beijing'".
+   * 例如，如果当前条件是"order.customer.address.city = 'Beijing'"，
+   * 我们想要获取Address实体的条件，此方法将返回"city = 'Beijing'"。
    *
    * @param <P>
-   *     The type of the sub-entity.
+   *     子实体的类型。
    * @param propertyClass
-   *     The class of the sub-entity.
+   *     子实体的类。
    * @param g1
-   *     The first getter method.
+   *     第一个getter方法。
    * @param g2
-   *     The second getter method.
+   *     第二个getter方法。
    * @return
-   *     A new criterion for the sub-entity containing all matching criteria, or
-   *     {@code null} if no matching criteria are found.
+   *     包含所有匹配条件的子实体新条件，如果没有找到匹配条件则返回{@code null}。
    */
   @Nullable
   public <P, P1, P2> ComposedCriterion<P> extractSubEntityCriterion(
@@ -361,28 +413,26 @@ public class ComposedCriterion<T> implements Criterion<T> {
   }
 
   /**
-   * Extracts a criterion for a deeply nested sub-entity from the current criterion.
+   * 从当前条件中提取深度嵌套子实体的条件。
    * <p>
-   * This method is similar to {@link #extractSubEntityCriterion(Class, GetterMethod)} but
-   * supports deeper property paths through multiple getters.
+   * 此方法与{@link #extractSubEntityCriterion(Class, GetterMethod)}类似，但
+   * 支持通过多个getter实现更深的属性路径。
    * <p>
-   * For example, if the current criterion is "order.customer.address.city.country = 'China'"
-   * and we want to get a criterion for the Country entity, this method will return
-   * "name = 'China'".
+   * 例如，如果当前条件是"order.customer.address.city.country = 'China'"，
+   * 我们想要获取Country实体的条件，此方法将返回"name = 'China'"。
    *
    * @param <P>
-   *     The type of the sub-entity.
+   *     子实体的类型。
    * @param propertyClass
-   *     The class of the sub-entity.
+   *     子实体的类。
    * @param g1
-   *     The first getter method.
+   *     第一个getter方法。
    * @param g2
-   *     The second getter method.
+   *     第二个getter方法。
    * @param g3
-   *     The third getter method.
+   *     第三个getter方法。
    * @return
-   *     A new criterion for the sub-entity containing all matching criteria, or
-   *     {@code null} if no matching criteria are found.
+   *     包含所有匹配条件的子实体新条件，如果没有找到匹配条件则返回{@code null}。
    */
   @Nullable
   public <P, P1, P2, P3> ComposedCriterion<P> extractSubEntityCriterion(
@@ -395,26 +445,26 @@ public class ComposedCriterion<T> implements Criterion<T> {
   }
 
   /**
-   * Excludes criteria matching the deeply nested sub-entity path and returns the remaining criteria.
+   * 排除匹配深度嵌套子实体路径的条件并返回剩余条件。
    * <p>
-   * This method is similar to {@link #excludeSubEntityCriterion(Class, GetterMethod)} but
-   * supports deeper property paths through multiple getters.
+   * 此方法与{@link #excludeSubEntityCriterion(Class, GetterMethod)}类似，但
+   * 支持通过多个getter实现更深的属性路径。
    * <p>
-   * For example, if the current criterion is "order.customer.address.city = 'Beijing'
-   * AND order.status = 'NEW'" and we want to exclude the criteria for the Address entity,
-   * this method will return "order.status = 'NEW'".
+   * 例如，如果当前条件是"order.customer.address.city = 'Beijing'
+   * AND order.status = 'NEW'"，我们想要排除Address实体的条件，
+   * 此方法将返回"order.status = 'NEW'"。
    *
    * @param <P>
-   *     The type of the sub-entity.
+   *     子实体的类型。
    * @param propertyClass
-   *     The class of the sub-entity.
+   *     子实体的类。
    * @param g1
-   *     The first getter method.
+   *     第一个getter方法。
    * @param g2
-   *     The second getter method.
+   *     第二个getter方法。
    * @return
-   *     A new criterion containing all criteria that do not match the sub-entity path,
-   *     or {@code null} if all criteria match the sub-entity path.
+   *     包含所有不匹配子实体路径的条件的新条件，
+   *     如果所有条件都匹配子实体路径则返回{@code null}。
    */
   @Nullable
   public <P, P1, P2> ComposedCriterion<T> excludeSubEntityCriterion(
@@ -426,28 +476,28 @@ public class ComposedCriterion<T> implements Criterion<T> {
   }
 
   /**
-   * Excludes criteria matching the deeply nested sub-entity path and returns the remaining criteria.
+   * 排除匹配深度嵌套子实体路径的条件并返回剩余条件。
    * <p>
-   * This method is similar to {@link #excludeSubEntityCriterion(Class, GetterMethod)} but
-   * supports deeper property paths through multiple getters.
+   * 此方法与{@link #excludeSubEntityCriterion(Class, GetterMethod)}类似，但
+   * 支持通过多个getter实现更深的属性路径。
    * <p>
-   * For example, if the current criterion is "order.customer.address.city.country = 'China'
-   * AND order.status = 'NEW'" and we want to exclude the criteria for the Country entity,
-   * this method will return "order.status = 'NEW'".
+   * 例如，如果当前条件是"order.customer.address.city.country = 'China'
+   * AND order.status = 'NEW'"，我们想要排除Country实体的条件，
+   * 此方法将返回"order.status = 'NEW'"。
    *
    * @param <P>
-   *     The type of the sub-entity.
+   *     子实体的类型。
    * @param propertyClass
-   *     The class of the sub-entity.
+   *     子实体的类。
    * @param g1
-   *     The first getter method.
+   *     第一个getter方法。
    * @param g2
-   *     The second getter method.
+   *     第二个getter方法。
    * @param g3
-   *     The third getter method.
+   *     第三个getter方法。
    * @return
-   *     A new criterion containing all criteria that do not match the sub-entity path,
-   *     or {@code null} if all criteria match the sub-entity path.
+   *     包含所有不匹配子实体路径的条件的新条件，
+   *     如果所有条件都匹配子实体路径则返回{@code null}。
    */
   @Nullable
   public <P, P1, P2, P3> ComposedCriterion<T> excludeSubEntityCriterion(

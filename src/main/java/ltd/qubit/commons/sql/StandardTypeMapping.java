@@ -30,7 +30,7 @@ import static java.util.Map.entry;
 /**
  * Standard mapping between SQL type to Java class.
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/jdbc/getstart/mapping.html">Mapping
  *     SQL and Java Types</a>
  */

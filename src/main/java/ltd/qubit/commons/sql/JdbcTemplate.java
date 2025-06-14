@@ -25,9 +25,9 @@ import static java.sql.ResultSet.TYPE_FORWARD_ONLY;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * A simple template class for performing JDBC operations.
+ * 用于执行JDBC操作的简单模板类。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class JdbcTemplate {
 
@@ -40,7 +40,7 @@ public class JdbcTemplate {
   private int fetchSize;
 
   /**
-   * Constructs a {@link JdbcTemplate} with null data source.
+   * 构造一个数据源为空的{@link JdbcTemplate}。
    */
   public JdbcTemplate() {
     dataSource = null;
@@ -51,10 +51,10 @@ public class JdbcTemplate {
   }
 
   /**
-   * Constructs a {@link JdbcTemplate} with a {@link DataSource}.
+   * 使用{@link DataSource}构造{@link JdbcTemplate}。
    *
    * @param dataSource
-   *     a data source.
+   *     数据源
    */
   public JdbcTemplate(final DataSource dataSource) {
     this.dataSource = requireNonNull("dataSource", dataSource);

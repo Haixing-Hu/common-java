@@ -34,6 +34,7 @@ import static ltd.qubit.commons.lang.StringUtils.isEmpty;
 @Immutable
 public class DecoderDeserializer<T> extends StdDeserializer<T> {
 
+
   private static final long serialVersionUID = 2275892683881205502L;
 
   protected final Decoder<String, T> decoder;

@@ -12,46 +12,49 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The enumeration of SSL context algorithms supported by the JDK.
+ * JDK支持的SSL上下文算法的枚举。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public enum SslContextAlgorithm {
   /**
-   * Supports some version of SSL; may support other versions.
+   * 支持某些版本的SSL；可能支持其他版本。
    */
   SSL("SSL"),
 
   /**
-   * Supports SSL version 2 or later; may support other versions.
+   * 支持SSL版本2或更高版本；可能支持其他版本。
    */
   SSL_V2("SSLv2"),
 
   /**
-   * Supports SSL version 3; may support other versions.
+   * 支持SSL版本3；可能支持其他版本。
    */
   SSL_V3("SSLv3"),
 
   /**
-   * Supports some version of TLS; may support other versions.
+   * 支持某些版本的TLS；可能支持其他版本。
    */
   TLS("TLS"),
 
   /**
-   * Supports RFC 2246: TLS version 1.0 ; may support other versions.
+   * 支持RFC 2246: TLS版本1.0；可能支持其他版本。
    */
   TLS_V1("TLSv1"),
 
   /**
-   * Supports RFC 4346: TLS version 1.1 ; may support other versions.
+   * 支持RFC 4346: TLS版本1.1；可能支持其他版本。
    */
   TLS_V1_1("TLSv1.1"),
 
   /**
-   * Supports RFC 5246: TLS version 1.2 ; may support other versions.
+   * 支持RFC 5246: TLS版本1.2；可能支持其他版本。
    */
   TLS_V1_2("TLSv1.2");
 
+  /**
+   * 名称到SSL上下文算法的映射。
+   */
   private static final Map<String, SslContextAlgorithm> NAME_MAP = new HashMap<>();
   static {
     for (final SslContextAlgorithm algorithm: values()) {
@@ -61,30 +64,37 @@ public enum SslContextAlgorithm {
   }
 
   /**
-   * Gets the SSL context algorithm by its enumerator name or code (i.e., the
-   * standard name in JDK).
+   * 根据枚举名称或代码（即JDK中的标准名称）获取SSL上下文算法。
    *
    * @param nameOrCode
-   *     The name or code of the specified SSL context algorithm, ignoring the case.
+   *     指定SSL上下文算法的名称或代码，忽略大小写。
    * @return
-   *     The corresponding {@link SignatureAlgorithm}, or {@code null} if no
-   *     such algorithm.
+   *     对应的{@link SslContextAlgorithm}，如果没有该算法则返回{@code null}。
    */
   public static SslContextAlgorithm forName(final String nameOrCode) {
     return NAME_MAP.get(nameOrCode.toUpperCase());
   }
 
+  /**
+   * SSL上下文算法的代码。
+   */
   private final String code;
 
+  /**
+   * 构造函数。
+   *
+   * @param code
+   *     SSL上下文算法的代码。
+   */
   SslContextAlgorithm(final String code) {
     this.code = code;
   }
 
   /**
-   * Gets the code of this SSL context algorithm, i.e., the standard name in the JDK.
+   * 获取此SSL上下文算法的代码，即JDK中的标准名称。
    *
    * @return
-   *     the code of this SSL context algorithm, i.e., the standard name in the JDK.
+   *     此SSL上下文算法的代码，即JDK中的标准名称。
    */
   public String code() {
     return code;

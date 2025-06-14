@@ -13,25 +13,26 @@ import java.security.KeyPairGenerator;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * The class of objects used to generate key pairs used by signature
- * algorithms.
+ * 用于生成签名算法使用的密钥对的对象类。
  *
- * <p>This class encapsulates the {@link KeyPairGenerator} to provide
- * convenient
- * methods generating key pairs of the specified signature algorithm.</p>
+ * <p>此类封装了 {@link KeyPairGenerator}，提供了便捷的方法
+ * 来生成指定签名算法的密钥对。</p>
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see KeyPairGenerator
  */
 public class SignatureKeyPairGenerator extends AsymmetricCryptoKeyPairGenerator {
 
+  /**
+   * 签名算法。
+   */
   private final SignatureAlgorithm signatureAlgorithm;
 
   /**
-   * Constructs a {@link SignatureKeyPairGenerator}.
+   * 构造一个 {@link SignatureKeyPairGenerator}。
    *
    * @param signatureAlgorithm
-   *     the signature algorithm.
+   *     签名算法。
    */
   public SignatureKeyPairGenerator(
       final SignatureAlgorithm signatureAlgorithm) {
@@ -40,12 +41,12 @@ public class SignatureKeyPairGenerator extends AsymmetricCryptoKeyPairGenerator 
   }
 
   /**
-   * Constructs a {@link SignatureKeyPairGenerator}.
+   * 构造一个 {@link SignatureKeyPairGenerator}。
    *
    * @param signatureAlgorithm
-   *     the signature algorithm.
+   *     签名算法。
    * @param randomAlgorithm
-   *     the secure random algorithm.
+   *     安全随机算法。
    */
   public SignatureKeyPairGenerator(final SignatureAlgorithm signatureAlgorithm,
       final SecureRandomAlgorithm randomAlgorithm) {
@@ -54,9 +55,9 @@ public class SignatureKeyPairGenerator extends AsymmetricCryptoKeyPairGenerator 
   }
 
   /**
-   * Gets the signature algorithm.
+   * 获取签名算法。
    *
-   * @return the signature algorithm.
+   * @return 签名算法。
    */
   public SignatureAlgorithm getSignatureAlgorithm() {
     return signatureAlgorithm;

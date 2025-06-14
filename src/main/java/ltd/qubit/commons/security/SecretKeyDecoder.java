@@ -13,9 +13,9 @@ import javax.crypto.SecretKey;
 import ltd.qubit.commons.util.codec.Decoder;
 
 /**
- * The interface for decoding {@link SecretKey}s from byte arrays.
+ * 从字节数组解码 {@link SecretKey} 的接口。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface SecretKeyDecoder extends Decoder<byte[], SecretKey> {
   //  empty

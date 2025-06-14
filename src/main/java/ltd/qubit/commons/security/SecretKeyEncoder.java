@@ -13,9 +13,9 @@ import javax.crypto.SecretKey;
 import ltd.qubit.commons.util.codec.Encoder;
 
 /**
- * The interface for encoding {@link SecretKey}s into byte arrays.
+ * 将 {@link SecretKey} 编码为字节数组的接口。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface SecretKeyEncoder extends Encoder<SecretKey, byte[]> {
   //  empty

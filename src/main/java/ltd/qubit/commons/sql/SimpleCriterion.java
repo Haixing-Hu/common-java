@@ -241,6 +241,9 @@ public class SimpleCriterion<T> implements Criterion<T> {
     return compareProperties;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String toSql() throws SQLSyntaxErrorException {
     final StringBuilder builder = new StringBuilder();
@@ -305,6 +308,9 @@ public class SimpleCriterion<T> implements Criterion<T> {
     return builder.toString();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isValid() {
     if (! hasProperty(entityClass, property)) {
@@ -332,6 +338,9 @@ public class SimpleCriterion<T> implements Criterion<T> {
     return isComparable(lhsType, operator, rhsType);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean accept(final T obj) {
     if (obj == null) {
@@ -390,29 +399,27 @@ public class SimpleCriterion<T> implements Criterion<T> {
   }
 
   /**
-   * Extracts a criterion for a sub-entity.
+   * 提取子实体的条件。
    * <p>
-   * If the property path of the current criterion starts with the property path
-   * of the sub-entity, extracts a criterion for the sub-entity.
-   * For example:
+   * 如果当前条件的属性路径以子实体的属性路径为前缀，则提取子实体的条件。
+   * 例如：
    * <ul>
-   *   <li>Current criterion: customer.country.name = "USA"
-   *   <li>Sub-entity path: customer.country
-   *   <li>Result: name = "USA"
+   *   <li>当前条件：customer.country.name = "USA"
+   *   <li>子实体路径：customer.country
+   *   <li>结果：name = "USA"
    * </ul>
    * <p>
-   * If the property path of the current criterion exactly equals the property
-   * path of the sub-entity, returns null.
-   * For example:
+   * 如果当前条件的属性路径与子实体的属性路径完全相同，则返回 null。
+   * 例如：
    * <ul>
-   *   <li>Current criterion: name = "John"
-   *   <li>Sub-entity path: name
-   *   <li>Result: null
+   *   <li>当前条件：name = "John"
+   *   <li>子实体路径：name
+   *   <li>结果：null
    * </ul>
    *
-   * @param subEntityClass the class of the sub-entity
-   * @param propertyPath the property path of the sub-entity
-   * @return the criterion for the sub-entity, or null if there is no sub-path
+   * @param subEntityClass 子实体的类
+   * @param propertyPath   子实体的属性路径
+   * @return 子实体的条件，如果没有子路径则返回 null
    */
   public <S> SimpleCriterion<S> extractSubEntityCriterion(final Class<S> subEntityClass,
       final String propertyPath) {
@@ -431,17 +438,16 @@ public class SimpleCriterion<T> implements Criterion<T> {
   }
 
   /**
-   * Extracts a criterion for a sub-entity from the current criterion.
+   * 从当前条件中提取子实体的条件。
    *
    * @param <P>
-   *     The type of the sub-entity.
+   *     子实体的类型。
    * @param propertyClass
-   *     The class of the sub-entity.
+   *     子实体的类。
    * @param propertyGetter
-   *     The getter method for the sub-entity property.
+   *     子实体属性的getter方法。
    * @return
-   *     A new criterion for the sub-entity containing all matching criteria, or
-   *     {@code null} if no matching criteria are found.
+   *     包含所有匹配条件的新子实体条件对象，若无匹配条件则返回 {@code null}。
    */
   @Nullable
   public <P>
@@ -452,23 +458,22 @@ public class SimpleCriterion<T> implements Criterion<T> {
   }
 
   /**
-   * Extracts a criterion for a sub-entity from the current criterion.
+   * 从当前条件中提取子实体的条件。
    *
    * @param <P>
-   *     The type of the sub-entity.
+   *     子实体的类型。
    * @param <P1>
-   *     The type of the first intermediate property.
+   *     第一个中间属性的类型。
    * @param <P2>
-   *     The type of the second intermediate property.
+   *     第二个中间属性的类型。
    * @param propertyClass
-   *     The class of the sub-entity.
+   *     子实体的类。
    * @param getter1
-   *     The first getter method in the property path.
+   *     属性路径中的第一个getter方法。
    * @param getter2
-   *     The second getter method in the property path.
+   *     属性路径中的第二个getter方法。
    * @return
-   *     A new criterion for the sub-entity containing all matching criteria, or
-   *     {@code null} if no matching criteria are found.
+   *     包含所有匹配条件的新子实体条件对象，若无匹配条件则返回 {@code null}。
    */
   @Nullable
   public <P, P1, P2>
@@ -480,27 +485,26 @@ public class SimpleCriterion<T> implements Criterion<T> {
   }
 
   /**
-   * Extracts a criterion for a sub-entity from the current criterion.
+   * 从当前条件中提取子实体的条件。
    *
    * @param <P>
-   *     The type of the sub-entity.
+   *     子实体的类型。
    * @param <P1>
-   *     The type of the first intermediate property.
+   *     第一个中间属性的类型。
    * @param <P2>
-   *     The type of the second intermediate property.
+   *     第二个中间属性的类型。
    * @param <P3>
-   *     The type of the third intermediate property.
+   *     第三个中间属性的类型。
    * @param propertyClass
-   *     The class of the sub-entity.
+   *     子实体的类。
    * @param getter1
-   *     The first getter method in the property path.
+   *     属性路径中的第一个getter方法。
    * @param getter2
-   *     The second getter method in the property path.
+   *     属性路径中的第二个getter方法。
    * @param getter3
-   *     The third getter method in the property path.
+   *     属性路径中的第三个getter方法。
    * @return
-   *     A new criterion for the sub-entity containing all matching criteria, or
-   *     {@code null} if no matching criteria are found.
+   *     包含所有匹配条件的新子实体条件对象，若无匹配条件则返回 {@code null}。
    */
   @Nullable
   public <P, P1, P2, P3>

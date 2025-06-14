@@ -21,16 +21,34 @@ import java.util.Map;
  */
 public enum SecureRandomAlgorithm {
 
+  /**
+   * 原生随机数算法。
+   */
   NATIVE_PRNG("NativePRNG"),
 
+  /**
+   * 阻塞式原生随机数算法。
+   */
   NATIVE_PRNG_BLOCKING("NativePRNGBlocking"),
 
+  /**
+   * 非阻塞式原生随机数算法。
+   */
   NATIVE_PRNG_NON_BLOCKING("NativePRNGNonBlocking"),
 
+  /**
+   * PKCS#11 随机数算法。
+   */
   PKCS11("PKCS11"),
 
+  /**
+   * SHA-1 随机数算法。
+   */
   SHA1_PRNG("SHA1PRNG"),
 
+  /**
+   * Windows 随机数算法。
+   */
   WINDOWS_PRNG("Windows-PRNG");
 
   private static final Map<String, SecureRandomAlgorithm> NAME_MAP = new HashMap<>();

@@ -20,7 +20,7 @@ import java.sql.SQLException;
  *
  * @param <T>
  *     the type of objects mapped from rows.
- * @author Haixing Hu
+ * @author 胡海星
  */
 @FunctionalInterface
 public interface RowMapper<T> {

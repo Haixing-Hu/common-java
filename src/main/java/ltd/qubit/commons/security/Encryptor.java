@@ -33,36 +33,57 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * A class of object used to encrypt messages.
+ * 用于加密消息的对象类。
  *
- * <p>This class encapsulates the {@link Cipher} class to provide convenient
- * encryption method with default configuration.</p>
+ * <p>此类封装了 {@link Cipher} 类，提供具有默认配置的便捷加密方法。</p>
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see Cipher
  */
 public class Encryptor extends CryptoConfig {
 
+  /**
+   * 构造一个加密器。
+   *
+   * @param algorithm
+   *     加密算法。
+   * @throws NoSuchPaddingException
+   *     如果填充方案不可用。
+   * @throws NoSuchAlgorithmException
+   *     如果加密算法不可用。
+   */
   public Encryptor(final CryptoAlgorithm algorithm)
       throws NoSuchPaddingException, NoSuchAlgorithmException {
     super(algorithm, CryptoMode.NONE, CryptoPadding.NONE);
   }
 
+  /**
+   * 构造一个加密器。
+   *
+   * @param algorithm
+   *     加密算法。
+   * @param mode
+   *     加密模式。
+   * @param padding
+   *     填充方案。
+   * @throws NoSuchPaddingException
+   *     如果填充方案不可用。
+   * @throws NoSuchAlgorithmException
+   *     如果加密算法不可用。
+   */
   public Encryptor(final CryptoAlgorithm algorithm, final CryptoMode mode,
       final CryptoPadding padding) throws NoSuchPaddingException, NoSuchAlgorithmException {
     super(algorithm, mode, padding);
   }
 
   /**
-   * Gets the algorithm parameters used by this encryptor for encrypting messages.
+   * 获取此加密器用于加密消息的算法参数。
    *
    * @return
-   *     the algorithm parameters used by this encryptor for encrypting messages,
-   *     encoded in the primary encoding format for parameters of the algorithm.
-   *     The primary encoding format for parameters is ASN.1, if an ASN.1
-   *     specification for this type of parameters exists.
+   *     此加密器用于加密消息的算法参数，以该算法参数的主要编码格式进行编码。
+   *     参数的主要编码格式是 ASN.1，前提是此类型的参数存在 ASN.1 规范。
    * @throws EncryptException
-   *     if any encryption error occurs.
+   *     如果发生任何加密错误。
    */
   public byte[] getParameters() throws EncryptException {
     final AlgorithmParameters parameters = cipher.getParameters();
@@ -74,16 +95,16 @@ public class Encryptor extends CryptoConfig {
   }
 
   /**
-   * Encrypt the message.
+   * 加密消息。
    *
    * @param key
-   *     the key used to encrypt.
+   *     用于加密的密钥。
    * @param message
-   *     the message to be encrypted.
+   *     要加密的消息。
    * @return
-   *     the encrypted message.
+   *     加密后的消息。
    * @throws EncryptException
-   *     if any encryption error occurs.
+   *     如果发生任何加密错误。
    */
   public byte[] encrypt(final Key key, final byte[] message)
       throws EncryptException {
@@ -99,18 +120,18 @@ public class Encryptor extends CryptoConfig {
   }
 
   /**
-   * Encrypt the message.
+   * 加密消息。
    *
    * @param key
-   *     the key used to encrypt.
+   *     用于加密的密钥。
    * @param message
-   *     the message to be encrypted.
+   *     要加密的消息。
    * @param charset
-   *     the charset encoding the message.
+   *     消息的字符集编码。
    * @return
-   *     the encrypted message.
+   *     加密后的消息。
    * @throws EncryptException
-   *     if any encryption error occurs.
+   *     如果发生任何加密错误。
    */
   public byte[] encrypt(final Key key, final String message, final Charset charset)
       throws EncryptException {
@@ -121,16 +142,16 @@ public class Encryptor extends CryptoConfig {
   }
 
   /**
-   * Encrypt the message.
+   * 加密消息。
    *
    * @param key
-   *     the key used to encrypt.
+   *     用于加密的密钥。
    * @param message
-   *     the message to be encrypted, which is encoded with UTF_8.
+   *     要加密的消息，使用 UTF-8 编码。
    * @return
-   *     the encrypted message.
+   *     加密后的消息。
    * @throws EncryptException
-   *     if any encryption error occurs.
+   *     如果发生任何加密错误。
    */
   public byte[] encrypt(final Key key, final String message)
       throws EncryptException {
@@ -140,22 +161,20 @@ public class Encryptor extends CryptoConfig {
   }
 
   /**
-   * Encrypt the specified data.
+   * 加密指定的数据。
    *
    * @param <T>
-   *     the type of the data to be encrypted.
+   *     要加密的数据类型。
    * @param key
-   *     the key used to encrypt.
+   *     用于加密的密钥。
    * @param data
-   *     the data to be encrypted, which will be encoded as normalized JSON string
-   *     and then be encrypted.
+   *     要加密的数据，将被编码为标准化的 JSON 字符串，然后进行加密。
    * @param mapper
-   *     the JSON mapper used to encode the specified data into the normalized
-   *     JSON string.
+   *     用于将指定数据编码为标准化 JSON 字符串的 JSON 映射器。
    * @return
-   *     the encrypted data.
+   *     加密后的数据。
    * @throws EncryptException
-   *     if any encryption error occurs.
+   *     如果发生任何加密错误。
    */
   public <T> byte[] encrypt(final Key key, final T data, final JsonMapper mapper)
       throws EncryptException {
@@ -169,18 +188,17 @@ public class Encryptor extends CryptoConfig {
   }
 
   /**
-   * Encrypt a stream of data.
+   * 加密数据流。
    *
    * @param key
-   *     the key used to encrypt.
+   *     用于加密的密钥。
    * @param input
-   *     the specified input stream.
+   *     指定的输入流。
    * @return
-   *     a {@link CipherInputStream}, whose read() methods return data that are
-   *     read in from the underlying {@link InputStream} {@code input} but have
-   *     been encrypted by the specified key.
+   *     一个 {@link CipherInputStream}，其 read() 方法返回从底层 {@link InputStream}
+   *     {@code input} 读取的数据，但已由指定密钥加密。
    * @throws EncryptException
-   *     if any encryption error occurs.
+   *     如果发生任何加密错误。
    */
   public CipherInputStream encrypt(final Key key, final InputStream input)
       throws EncryptException {
@@ -193,18 +211,17 @@ public class Encryptor extends CryptoConfig {
   }
 
   /**
-   * Encrypt data and write to an output stream.
+   * 加密数据并写入输出流。
    *
    * @param key
-   *     the key used to encrypt.
+   *     用于加密的密钥。
    * @param output
-   *     the specified output stream.
+   *     指定的输出流。
    * @return
-   *     a {@link CipherOutputStream}, whose write() methods encrypt data with
-   *     the specified key before writing into the underlying
-   *     {@link OutputStream} {@code output}.
+   *     一个 {@link CipherOutputStream}，其 write() 方法在写入底层
+   *     {@link OutputStream} {@code output} 之前使用指定密钥加密数据。
    * @throws EncryptException
-   *     if any encryption error occurs.
+   *     如果发生任何加密错误。
    */
   public CipherOutputStream encrypt(final Key key, final OutputStream output)
       throws EncryptException {
@@ -216,6 +233,7 @@ public class Encryptor extends CryptoConfig {
     }
   }
 
+  @Override
   public boolean equals(final Object o) {
     if (this == o) {
       return true;
@@ -227,10 +245,12 @@ public class Encryptor extends CryptoConfig {
     return super.equals(other);
   }
 
+  @Override
   public int hashCode() {
     return super.hashCode();
   }
 
+  @Override
   public String toString() {
     return new ToStringBuilder(this)
         .appendSuper(super.toString())

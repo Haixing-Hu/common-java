@@ -23,24 +23,53 @@ import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * The class representing the cryptographic configuration.
+ * 表示加密配置的类。
  *
- * <p>This is the base class for {@link Encryptor} and {@link Decryptor}</p>.
+ * <p>这是{@link Encryptor}和{@link Decryptor}的基类。</p>
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class CryptoConfig {
 
+  /**
+   * 包装后缀。
+   */
   private static final String WRAP_SUFFIX = "Wrap";
 
+  /**
+   * 加密算法。
+   */
   protected final CryptoAlgorithm algorithm;
 
+  /**
+   * 加密模式。
+   */
   protected final CryptoMode mode;
 
+  /**
+   * 填充方式。
+   */
   protected final CryptoPadding padding;
 
+  /**
+   * 加密器。
+   */
   protected final transient Cipher cipher;
 
+  /**
+   * 构造一个{@link CryptoConfig}。
+   *
+   * @param algorithm
+   *     加密算法。
+   * @param mode
+   *     加密模式。
+   * @param padding
+   *     填充方式。
+   * @throws NoSuchPaddingException
+   *     如果不支持指定的填充方式。
+   * @throws NoSuchAlgorithmException
+   *     如果不支持指定的算法。
+   */
   protected CryptoConfig(final CryptoAlgorithm algorithm, final CryptoMode mode,
       final CryptoPadding padding) throws NoSuchPaddingException, NoSuchAlgorithmException {
     this.algorithm = requireNonNull("algorithm", algorithm);
@@ -50,24 +79,38 @@ public class CryptoConfig {
     this.cipher = Cipher.getInstance(cipherName);
   }
 
+  /**
+   * 获取加密算法。
+   *
+   * @return 加密算法。
+   */
   public CryptoAlgorithm getAlgorithm() {
     return algorithm;
   }
 
+  /**
+   * 获取加密模式。
+   *
+   * @return 加密模式。
+   */
   public CryptoMode getMode() {
     return mode;
   }
 
+  /**
+   * 获取填充方式。
+   *
+   * @return 填充方式。
+   */
   public CryptoPadding getPadding() {
     return padding;
   }
 
   /**
-   * Tests whether the cryptographic configuration has cryptographic parameters.
+   * 测试加密配置是否具有加密参数。
    *
    * @return
-   *     {@code true} if the configuration of this decryptor has cryptographic
-   *     parameters; {@code false} otherwise.
+   *     如果此解密器的配置具有加密参数则返回{@code true}；否则返回{@code false}。
    */
   public boolean hasParameters() {
     switch (algorithm) {
@@ -106,18 +149,23 @@ public class CryptoConfig {
   }
 
   /**
-   * Gets the key generator of this algorithm.
+   * 获取此算法的密钥生成器。
    *
    * @return
-   *     the key generator of this algorithm.
+   *     此算法的密钥生成器。
    * @throws NoSuchAlgorithmException
-   *     if this algorithm is not supported by the system.
+   *     如果系统不支持此算法。
    */
   protected KeyGenerator getKeyGenerator() throws NoSuchAlgorithmException {
     final String name = getKeyGeneratorName();
     return KeyGenerator.getInstance(name);
   }
 
+  /**
+   * 获取密钥生成器的名称。
+   *
+   * @return 密钥生成器的名称。
+   */
   protected String getKeyGeneratorName() {
     final String code = algorithm.code();
     if (code.endsWith(WRAP_SUFFIX)) {
@@ -128,19 +176,17 @@ public class CryptoConfig {
   }
 
   /**
-   * Get the opaque cryptographic parameters of this algorithm.
+   * 获取此算法的不透明加密参数。
    *
    * @param parameters
-   *     the cryptographic parameters encoded in the primary encoding format
-   *     for parameters of this algorithm.  The primary encoding format for
-   *     parameters is ASN.1, if an ASN.1 specification for this type of
-   *     parameters exists.
+   *     以此算法参数的主要编码格式编码的加密参数。如果存在此类型参数的ASN.1规范，
+   *     则参数的主要编码格式是ASN.1。
    * @return
-   *     the corresponding opaque cryptographic parameters of this algorithm.
+   *     此算法对应的不透明加密参数。
    * @throws NoSuchAlgorithmException
-   *     if this algorithm is not supported by the system.
+   *     如果系统不支持此算法。
    * @throws IOException
-   *     if any I/O error occurs while decoding the parameters.
+   *     如果在解码参数时发生任何I/O错误。
    */
   protected AlgorithmParameters getAlgorithmParameters(final byte[] parameters)
       throws NoSuchAlgorithmException, IOException {
@@ -151,6 +197,7 @@ public class CryptoConfig {
     return ap;
   }
 
+  @Override
   public boolean equals(final Object o) {
     if (this == o) {
       return true;
@@ -164,6 +211,7 @@ public class CryptoConfig {
         && Equality.equals(padding, other.padding);
   }
 
+  @Override
   public int hashCode() {
     final int multiplier = 7;
     int result = 3;
@@ -173,6 +221,7 @@ public class CryptoConfig {
     return result;
   }
 
+  @Override
   public String toString() {
     return new ToStringBuilder(this)
         .append("algorithm", algorithm)

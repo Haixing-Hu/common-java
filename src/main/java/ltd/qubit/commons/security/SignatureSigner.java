@@ -32,9 +32,9 @@ import static ltd.qubit.commons.io.IoUtils.BUFFER_SIZE;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * The class of objects used to sign digital signature of messages.
+ * 用于对消息进行数字签名的对象类。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see Signature
  * @see SignatureAlgorithm
  */
@@ -43,6 +43,14 @@ public class SignatureSigner {
   private final SignatureAlgorithm algorithm;
   private final transient Signature engine;
 
+  /**
+   * 构造一个 {@link SignatureSigner}。
+   *
+   * @param algorithm
+   *     签名算法。
+   * @throws SignMessageException
+   *     如果指定的签名算法不被支持。
+   */
   public SignatureSigner(final SignatureAlgorithm algorithm)
       throws SignMessageException {
     this.algorithm = requireNonNull("algorithm", algorithm);
@@ -53,22 +61,27 @@ public class SignatureSigner {
     }
   }
 
+  /**
+   * 获取此签名器使用的签名算法。
+   *
+   * @return
+   *     此签名器使用的签名算法。
+   */
   public SignatureAlgorithm getAlgorithm() {
     return algorithm;
   }
 
   /**
-   * Sign the message.
+   * 对消息进行签名。
    *
    * @param privateKey
-   *     the private key used to sign.
+   *     用于签名的私钥。
    * @param input
-   *     the input stream of the message to be signed. Note that this function
-   *     will <b>NOT</b> close this input stream.
+   *     要签名的消息的输入流。注意此函数<b>不会</b>关闭此输入流。
    * @return
-   *     the signature of the message in the input stream.
+   *     输入流中消息的签名。
    * @throws SignMessageException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public byte[] sign(final PrivateKey privateKey, final InputStream input)
       throws SignMessageException {
@@ -92,16 +105,16 @@ public class SignatureSigner {
   }
 
   /**
-   * Sign the message.
+   * 对消息进行签名。
    *
    * @param privateKey
-   *     the private key used to sign.
+   *     用于签名的私钥。
    * @param message
-   *     the byte array of the message to be signed.
+   *     要签名的消息的字节数组。
    * @return
-   *     the signature of the message.
+   *     消息的签名。
    * @throws SignMessageException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public byte[] sign(final PrivateKey privateKey, final byte[] message)
       throws SignMessageException {
@@ -117,18 +130,18 @@ public class SignatureSigner {
   }
 
   /**
-   * Sign the message.
+   * 对消息进行签名。
    *
    * @param privateKey
-   *     the private key used to sign.
+   *     用于签名的私钥。
    * @param message
-   *     the string of the message to be signed, encoded in the specified charset.
+   *     要签名的消息字符串，使用指定字符集编码。
    * @param charset
-   *     the charset used to encoding the message.
+   *     用于编码消息的字符集。
    * @return
-   *     the signature of the message.
+   *     消息的签名。
    * @throws SignMessageException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public byte[] sign(final PrivateKey privateKey, final String message,
       final Charset charset) throws SignMessageException {
@@ -139,16 +152,16 @@ public class SignatureSigner {
   }
 
   /**
-   * Sign the message.
+   * 对消息进行签名。
    *
    * @param privateKey
-   *     the private key used to sign.
+   *     用于签名的私钥。
    * @param message
-   *     the string of the message to be signed, encoded in the UTF-8 charset.
+   *     要签名的消息字符串，使用UTF-8字符集编码。
    * @return
-   *     the signature of the message.
+   *     消息的签名。
    * @throws SignMessageException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public byte[] sign(final PrivateKey privateKey, final String message)
       throws SignMessageException {
@@ -158,21 +171,20 @@ public class SignatureSigner {
   }
 
   /**
-   * Sign the data.
+   * 对数据进行签名。
    *
    * @param <T>
-   *     the type of the data to be signed.
+   *     要签名的数据类型。
    * @param privateKey
-   *     the private key used to sign.
+   *     用于签名的私钥。
    * @param data
-   *     the data to be signed, which will be encoded as a normalized JSON string
-   *     and signed.
+   *     要签名的数据，将被编码为规范化JSON字符串并签名。
    * @param mapper
-   *     the JSON mapper used to encode the data to a normalized JSON string.
+   *     用于将数据编码为规范化JSON字符串的JSON映射器。
    * @return
-   *     the signature of the data.
+   *     数据的签名。
    * @throws SignMessageException
-   *     if any error occurs.
+   *     如果发生任何错误。
    * @see JsonMapperUtils#formatNormalized(Object, JsonMapper)
    */
   public <T> byte[] sign(final PrivateKey privateKey, final T data,
@@ -184,21 +196,21 @@ public class SignatureSigner {
   }
 
   /**
-   * Sign a signed message.
+   * 对已签名消息进行签名。
    *
    * @param <T>
-   *     the type of the data in the message to be signed.
+   *     消息中数据的类型。
    * @param privateKey
-   *     the private key used to sign.
+   *     用于签名的私钥。
    * @param message
-   *     the signed message to be signed. The signature will be encoded in BASE-64
-   *     format and will be set to the {@code signature} field of this object.
+   *     要签名的已签名消息。签名将以BASE-64格式编码，
+   *     并将设置到此对象的{@code signature}字段。
    * @param mapper
-   *     the JSON mapper used to encode the data to a normalized JSON string.
+   *     用于将数据编码为规范化JSON字符串的JSON映射器。
    * @return
-   *     the BASE-64 encoded signature of the data.
+   *     数据的BASE-64编码签名。
    * @throws SignMessageException
-   *     if any error occurs.
+   *     如果发生任何错误。
    * @see JsonMapperUtils#formatNormalized(Object, JsonMapper)
    */
   public <T> String sign(final PrivateKey privateKey,
@@ -215,6 +227,21 @@ public class SignatureSigner {
     return base64Signature;
   }
 
+  /**
+   * 对数据进行签名。
+   *
+   * @param <T>
+   *     要签名的数据类型。
+   * @param privateKey
+   *     用于签名的私钥。
+   * @param data
+   *     要签名的数据，将被编码为规范化JSON字符串并签名。
+   * @param mapper
+   *     用于将数据编码为规范化JSON字符串的JSON映射器。
+   * @return
+   *     数据的签名。
+   * @see JsonMapperUtils#formatNormalized(Object, JsonMapper)
+   */
   private <T> byte[] signDataImpl(final PrivateKey privateKey, final T data,
       final JsonMapper mapper) throws SignMessageException {
     final String json;
@@ -226,6 +253,7 @@ public class SignatureSigner {
     return sign(privateKey, json.getBytes(UTF_8));
   }
 
+  @Override
   public boolean equals(final Object o) {
     if (this == o) {
       return true;
@@ -237,6 +265,7 @@ public class SignatureSigner {
     return Equality.equals(algorithm, other.algorithm);
   }
 
+  @Override
   public int hashCode() {
     final int multiplier = 7;
     int result = 3;
@@ -244,6 +273,7 @@ public class SignatureSigner {
     return result;
   }
 
+  @Override
   public String toString() {
     return new ToStringBuilder(this)
         .append("algorithm", algorithm)

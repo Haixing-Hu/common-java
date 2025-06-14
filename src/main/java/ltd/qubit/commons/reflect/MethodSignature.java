@@ -15,19 +15,41 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * Represents the signature of a method.
+ * 表示方法的签名。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 final class MethodSignature {
+
+  /**
+   * 方法名。
+   */
   public final String name;
+
+  /**
+   * 参数类型数组。
+   */
   public final Class<?>[] parameterTypes;
 
+  /**
+   * 根据方法对象构造方法签名。
+   *
+   * @param method
+   *     方法对象。
+   */
   public MethodSignature(final Method method) {
     this.name = method.getName();
     this.parameterTypes = method.getParameterTypes();
   }
 
+  /**
+   * 根据方法名和参数类型构造方法签名。
+   *
+   * @param name
+   *     方法名。
+   * @param parameterTypes
+   *     参数类型数组。
+   */
   public MethodSignature(final String name, final Class<?>[] parameterTypes) {
     this.name = name;
     this.parameterTypes = parameterTypes;

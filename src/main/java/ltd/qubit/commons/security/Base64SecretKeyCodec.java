@@ -9,7 +9,9 @@
 package ltd.qubit.commons.security;
 
 /**
+ * Base64格式的密钥编解码器。
  *
+ * @author 胡海星
  */
 public class Base64SecretKeyCodec {
 

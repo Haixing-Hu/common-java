@@ -51,7 +51,7 @@ public class UuidUtils {
   }
 
   /**
-   * Format an unsigned long.
+   * 格式化无符号长整数。
    *
    * <p>Copy from mica：https://github.com/lets-mica/mica/blob/master/mica-core/src/main/java/net/dreamlu/mica/core/utils/StringUtil.java#L348
    */

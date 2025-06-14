@@ -9,24 +9,24 @@
 package ltd.qubit.commons.sql;
 
 /**
- * The enumeration of DAO operations.
+ * DAO 操作的枚举。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public enum DaoOperation {
 
   /**
-   * Indicates an add or update operation.
+   * 表示添加或更新操作。
    */
   ADD_OR_UPDATE,
 
   /**
-   * Indicates a deletion operation.
+   * 表示删除操作。
    */
   DELETE,
 
   /**
-   * Indicates an unknown operation.
+   * 表示未知操作。
    */
   UNKNOWN,
 }

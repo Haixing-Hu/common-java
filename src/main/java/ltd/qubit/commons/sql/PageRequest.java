@@ -22,7 +22,7 @@ import static ltd.qubit.commons.lang.Argument.requirePositive;
 /**
  * A {@link PageRequest} encapsulates the pagination requirements of a query.
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class PageRequest {
 

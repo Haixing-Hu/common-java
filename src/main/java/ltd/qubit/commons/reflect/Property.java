@@ -61,14 +61,14 @@ public class Property {
   };
 
   /**
-   * Gets the specified property.
+   * 获取指定的属性。
    *
    * @param ownerClass
-   *     the class object of the owner class of the specified property.
+   *     指定属性的拥有者类的类对象。
    * @param name
-   *     the name of the specified property.
+   *     指定属性的名称。
    * @return
-   *     the specified property.
+   *     指定的属性。
    */
   public static Property of(final Class<?> ownerClass, final String name) {
     final Map<String, Property> map = CACHE.get(ownerClass);
@@ -91,18 +91,18 @@ public class Property {
   // }
 
   /**
-   * Gets the specified property.
+   * 获取指定的属性。
    *
    * @param <T>
-   *     the type of the owner class of the specified property.
+   *     指定属性的拥有者类的类型。
    * @param <R>
-   *     the type of the specified property.
+   *     指定属性的类型。
    * @param ownerClass
-   *     the class object of the owner class of the specified property.
+   *     指定属性的拥有者类的类对象。
    * @param getter
-   *     the method reference to the getter of the specified property.
+   *     指定属性的getter方法引用。
    * @return
-   *     the specified property.
+   *     指定的属性。
    */
   public static <T, R> Property of(final Class<T> ownerClass,
       final GetterMethod<T, R> getter) {
@@ -160,26 +160,26 @@ public class Property {
   private final String referencePath;
 
   /**
-   * Constructs a {@link Property} object.
+   * 构造一个 {@link Property} 对象。
    *
    * @param ownerClass
-   *     the owner class of the bean property.
+   *     bean属性的拥有者类。
    * @param name
-   *     the name of the bean property.
+   *     bean属性的名称。
    */
   private Property(final Class<?> ownerClass, final String name) {
     this(ownerClass, name, FieldUtils.getFieldInfo(ownerClass, Option.BEAN_FIELD, name));
   }
 
   /**
-   * Constructs a {@link Property} object.
+   * 构造一个 {@link Property} 对象。
    *
    * @param ownerClass
-   *     the owner class of the bean property.
+   *     bean属性的拥有者类。
    * @param name
-   *     the name of the bean property.
+   *     bean属性的名称。
    * @param fieldInfo
-   *     the field object of the bean property, which may be null.
+   *     bean属性的字段对象，可能为null。
    */
   private Property(final Class<?> ownerClass, final String name,
       @Nullable final FieldInfo fieldInfo) {
@@ -237,6 +237,16 @@ public class Property {
     }
   }
 
+  /**
+   * 测试此属性是否有指定的注解。
+   *
+   * @param <T>
+   *     注解类型。
+   * @param annotationClass
+   *     指定的注解类。
+   * @return
+   *     如果此属性有指定的注解则返回 {@code true}；否则返回 {@code false}。
+   */
   private <T extends Annotation> boolean hasAnnotation(final Class<T> annotationClass) {
     if (field != null) {
       return field.isAnnotationPresent(annotationClass);
@@ -247,6 +257,16 @@ public class Property {
     }
   }
 
+  /**
+   * 获取此属性的指定注解。
+   *
+   * @param <T>
+   *     注解类型。
+   * @param annotationClass
+   *     指定的注解类。
+   * @return
+   *     此属性的指定注解，如果没有此注解则返回 {@code null}。
+   */
   private <T extends Annotation> T getAnnotation(final Class<T> annotationClass) {
     if (field != null) {
       return field.getAnnotation(annotationClass);
@@ -258,63 +278,60 @@ public class Property {
   }
 
   /**
-   * Gets the owner class of the bean property.
+   * 获取bean属性的拥有者类。
    *
    * @return
-   *     the owner class of the bean property.
+   *     bean属性的拥有者类。
    */
   public Class<?> getOwnerClass() {
     return ownerClass;
   }
 
   /**
-   * Gets the declaring class of the bean property.
+   * 获取bean属性的声明类。
    *
    * @return
-   *     the declaring class of the bean property, may be not the same as the
-   *     owner class.
+   *     bean属性的声明类，可能与拥有者类不同。
    */
   public Class<?> getDeclaringClass() {
     return declaringClass;
   }
 
   /**
-   * Gets the name of the bean property.
+   * 获取bean属性的名称。
    *
    * @return
-   *     the name of the bean property.
+   *     bean属性的名称。
    */
   public String getName() {
     return name;
   }
 
   /**
-   * Gets the fullname of the bean property, i.e., the name in the form of
-   * "Bean.prop".
+   * 获取bean属性的全名，即"Bean.prop"形式的名称。
    *
    * @return
-   *     the fullname of the bean property.
+   *     bean属性的全名。
    */
   public String getFullname() {
     return fullname;
   }
 
   /**
-   * Gets the type of the bean property.
+   * 获取bean属性的类型。
    *
    * @return
-   *     the type of the bean property.
+   *     bean属性的类型。
    */
   public Class<?> getType() {
     return type;
   }
 
   /**
-   * Gets the array of actual type arguments of this bean property.
+   * 获取此bean属性的实际类型参数数组。
    *
    * @return
-   *     the array of actual type arguments  of this bean property, or
-   *     {@code null} if this bean property is not of a parameterized type.
+   *     此bean属性的实际类型参数数组，如果此bean属性不是参数化类型则返回 {@code null}。
    */
   @Nullable
   public final Class<?>[] getActualTypeArguments() {
@@ -322,11 +339,10 @@ public class Property {
   }
 
   /**
-   * Gets the actual component type of this bean property.
+   * 获取此bean属性的实际组件类型。
    *
    * @return
-   *     the actual component type of this bean property, or {@code null} if
-   *     this bean property is not of a generic array type.
+   *     此bean属性的实际组件类型，如果此bean属性不是泛型数组类型则返回 {@code null}。
    */
   @Nullable
   public final Class<?> getActualComponentType() {
@@ -334,66 +350,60 @@ public class Property {
   }
 
   /**
-   * Tests whether the bean property is a public accessible field.
+   * 测试bean属性是否为公共可访问字段。
    *
    * @return
-   *     {@code true} if the bean property is a public accessible field;
-   *     {@code false} otherwise.
+   *     如果bean属性是公共可访问字段则返回 {@code true}；否则返回 {@code false}。
    */
   public boolean isPublicField() {
     return publicField;
   }
 
   /**
-   * Tests whether the bean property is a protected field.
+   * 测试bean属性是否为受保护字段。
    *
    * @return
-   *     {@code true} if the bean property is a protected field; {@code false}
-   *     otherwise.
+   *     如果bean属性是受保护字段则返回 {@code true}；否则返回 {@code false}。
    */
   public boolean isProtectedField() {
     return protectedField;
   }
 
   /**
-   * Tests whether the bean property is a private field.
+   * 测试bean属性是否为私有字段。
    *
    * @return
-   *     {@code true} if the bean property is a private field; {@code false}
-   *     otherwise.
+   *     如果bean属性是私有字段则返回 {@code true}；否则返回 {@code false}。
    */
   public boolean isPrivateField() {
     return privateField;
   }
 
   /**
-   * Tests whether the bean property is a transient field.
+   * 测试bean属性是否为瞬态字段。
    *
    * @return
-   *     {@code true} if the bean property is a transient field; {@code false}
-   *     otherwise.
+   *     如果bean属性是瞬态字段则返回 {@code true}；否则返回 {@code false}。
    */
   public boolean isTransientField() {
     return transientField;
   }
 
   /**
-   * Tests whether the bean property is a final field.
+   * 测试bean属性是否为最终字段。
    *
    * @return
-   *     {@code true} if the bean property is a final field; {@code false}
-   *     otherwise.
+   *     如果bean属性是最终字段则返回 {@code true}；否则返回 {@code false}。
    */
   public boolean isFinalField() {
     return finalField;
   }
 
   /**
-   * Tests whether the bean property is a computed property.
+   * 测试bean属性是否为计算属性。
    *
    * @return
-   *     {@code true} if the bean property is a computed property; {@code false}
-   *     otherwise.
+   *     如果bean属性是计算属性则返回 {@code true}；否则返回 {@code false}。
    * @see #isNonComputed()
    * @see #getComputedDependOn()
    */
@@ -402,11 +412,10 @@ public class Property {
   }
 
   /**
-   * Tests whether the bean property is a non-computed property.
+   * 测试bean属性是否为非计算属性。
    *
    * @return
-   *     {@code true} if the bean property is a non-computed property; {@code false}
-   *     otherwise.
+   *     如果bean属性是非计算属性则返回 {@code true}；否则返回 {@code false}。
    * @see #isComputed()
    * @see #getComputedDependOn()
    */
@@ -415,11 +424,10 @@ public class Property {
   }
 
   /**
-   * Gets the names of fields depending on whom this property is computed.
+   * 获取此属性计算所依赖的字段名称。
    *
    * @return
-   *     the names of fields depending on whom this property is computed, or
-   *     {@code null} if no such fields.
+   *     此属性计算所依赖的字段名称，如果没有此类字段则返回 {@code null}。
    * @see #isComputed()
    */
   @Nullable
@@ -429,77 +437,70 @@ public class Property {
   }
 
   /**
-   * Tests whether the bean property is a readonly property.
+   * 测试bean属性是否为只读属性。
    *
    * @return
-   *     {@code true} if the bean property is a readonly property; {@code false}
-   *     otherwise.
+   *     如果bean属性是只读属性则返回 {@code true}；否则返回 {@code false}。
    */
   public boolean isReadonly() {
     return readonly;
   }
 
   /**
-   * Tests whether the bean property is a property of a primitive type.
+   * 测试bean属性是否为基本类型属性。
    *
    * @return
-   *     {@code true} if the bean property is a property of a primitive type;
-   *     {@code false} otherwise.
+   *     如果bean属性是基本类型属性则返回 {@code true}；否则返回 {@code false}。
    */
   public boolean isPrimitive() {
     return type.isPrimitive();
   }
 
   /**
-   * Tests whether the bean property is a property of an array type.
+   * 测试bean属性是否为数组类型属性。
    *
    * @return
-   *     {@code true} if the bean property is a property of an array type;
-   *     {@code false} otherwise.
+   *     如果bean属性是数组类型属性则返回 {@code true}；否则返回 {@code false}。
    */
   public boolean isArray() {
     return type.isArray();
   }
 
   /**
-   * Tests whether the bean property is a property of a collection type.
+   * 测试bean属性是否为集合类型属性。
    *
    * @return
-   *     {@code true} if the bean property is a property of a collection type;
-   *     {@code false} otherwise.
+   *     如果bean属性是集合类型属性则返回 {@code true}；否则返回 {@code false}。
    */
   public boolean isCollection() {
     return Collection.class.isAssignableFrom(type);
   }
 
   /**
-   * Tests whether the bean property is a property of a map type.
+   * 测试bean属性是否为映射类型属性。
    *
    * @return
-   *     {@code true} if the bean property is a property of a map type;
-   *     {@code false} otherwise.
+   *     如果bean属性是映射类型属性则返回 {@code true}；否则返回 {@code false}。
    */
   public boolean isMap() {
     return Map.class.isAssignableFrom(type);
   }
 
   /**
-   * Tests whether the bean property is a JDK built-in property, i.e., a property
-   * form the JDK built-in classes.
+   * 测试bean属性是否为JDK内置属性，即来自JDK内置类的属性。
    *
    * @return
-   *     whether the bean property is a JDK built-in property.
+   *     bean属性是否为JDK内置属性。
    */
   public boolean isJdkBuiltIn() {
     return ClassUtils.isJdkBuiltIn(declaringClass);
   }
 
   /**
-   * Tests whether the bean property is the unique identifier of the model.
+   * 测试bean属性是否为模型的唯一标识符。
    *
    * @return
-   *     {@code true} if the bean property is the unique identifier of the
-   *     model; {@code false} otherwise.
+   *     如果bean属性是模型的唯一标识符则返回 {@code true}；否则返回 {@code false}。
    * @see #isUnique()
    */
   public boolean isIdentifier() {
@@ -507,12 +508,10 @@ public class Property {
   }
 
   /**
-   * Tests whether the bean property is the auto-generated unique identifier of
-   * the model.
+   * 测试bean属性是否为模型的自动生成唯一标识符。
    *
    * @return
-   *     {@code true} if the bean property is the auto-generated unique
-   *     identifier of the model; {@code false} otherwise.
+   *     如果bean属性是模型的自动生成唯一标识符则返回 {@code true}；否则返回 {@code false}。
    * @see #isUnique()
    */
   public boolean isAutoGeneratedId() {
@@ -521,22 +520,22 @@ public class Property {
   }
 
   /**
-   * Tests whether the bean property is nullable.
+   * 测试bean属性是否可为空。
    *
    * @return
-   *     {@code true} if the bean property is nullable; {@code false} otherwise.
+   *     如果bean属性可为空则返回 {@code true}；否则返回 {@code false}。
    */
   public boolean isNullable() {
     return hasAnnotation(Nullable.class);
   }
 
   /**
-   * Tests whether the bean property is unique.
+   * 测试bean属性是否为唯一的。
    * <p>
-   * <b>NOTE: </b> The ID property is also considered as an unique property.
+   * <b>注意：</b> ID属性也被认为是唯一属性。
    *
    * @return
-   *     {@code true} if the bean property is unique; {@code false} otherwise.
+   *     如果bean属性是唯一的则返回 {@code true}；否则返回 {@code false}。
    * @see #isIdentifier()
    * @see #getUniqueRespectTo()
    */
@@ -545,11 +544,10 @@ public class Property {
   }
 
   /**
-   * Gets the names of fields respect to whom this property is unique.
+   * 获取此属性相对于哪些字段是唯一的字段名称。
    *
    * @return
-   *     the names of fields respect to whom this property is unique, or
-   *     {@code null} if no such fields.
+   *     此属性相对于哪些字段是唯一的字段名称，如果没有此类字段则返回 {@code null}。
    * @see #isUnique()
    */
   @Nullable
@@ -559,13 +557,11 @@ public class Property {
   }
 
   /**
-   * Tests whether this bean property, or the sub-property of this bean property,
-   * is a reference to a property of another model.
+   * 测试此bean属性或此bean属性的子属性是否为对另一个模型属性的引用。
    *
    * @return
-   *     {@code true} if this bean property, or the sub-property of this bean
-   *     property, is a reference to a property of another model; {@code false}
-   *     otherwise.
+   *     如果此bean属性或此bean属性的子属性是对另一个模型属性的引用则返回 {@code true}；
+   *     否则返回 {@code false}。
    * @see #isReferenceExisting()
    * @see #getReferenceEntity()
    * @see #getReferenceProperty()
@@ -576,12 +572,10 @@ public class Property {
   }
 
   /**
-   * Tests whether this bean property is a direct reference to a property of
-   * another model.
+   * 测试此bean属性是否为对另一个模型属性的直接引用。
    *
    * @return
-   *     {@code true} if this bean property is a direct reference to a property
-   *     of another model; {@code false} otherwise.
+   *     如果此bean属性是对另一个模型属性的直接引用则返回 {@code true}；否则返回 {@code false}。
    * @see #isReferenceExisting()
    * @see #getReferenceEntity()
    * @see #getReferenceProperty()
@@ -592,12 +586,10 @@ public class Property {
   }
 
   /**
-   * Tests whether this bean property is an indirect reference to a property of
-   * another model.
+   * 测试此bean属性是否为对另一个模型属性的间接引用。
    *
    * @return
-   *     {@code true} if this bean property is an indirect reference to a
-   *     property of another model; {@code false} otherwise.
+   *     如果此bean属性是对另一个模型属性的间接引用则返回 {@code true}；否则返回 {@code false}。
    * @see #isReferenceExisting()
    * @see #getReferenceEntity()
    * @see #getReferenceProperty()
@@ -608,13 +600,11 @@ public class Property {
   }
 
   /**
-   * Tests whether this bean property is a reference to a property of another
-   * model and the referenced model must exist in the database.
+   * 测试此bean属性是否为对另一个模型属性的引用，且被引用的模型必须存在于数据库中。
    *
    * @return
-   *     {@code true} if this bean property is a reference to a property of
-   *     another model and the referenced model must exist in the database;
-   *     {@code false} otherwise.
+   *     如果此bean属性是对另一个模型属性的引用且被引用的模型必须存在于数据库中则返回 {@code true}；
+   *     否则返回 {@code false}。
    * @see #isReference()
    * @see #getReferenceEntity()
    * @see #getReferenceProperty()
@@ -625,12 +615,11 @@ public class Property {
   }
 
   /**
-   * Tests whether this bean property is a reference to a property of the
-   * referenced entity of another property of this bean.
+   * 测试此bean属性是否为对此bean的另一个属性的被引用实体的属性的引用。
    *
    * @return
-   *     {@code true} if this bean property is a reference to a property of the
-   *     referenced entity of another property of this bean; {@code false} otherwise.
+   *     如果此bean属性是对此bean的另一个属性的被引用实体的属性的引用则返回 {@code true}；
+   *     否则返回 {@code false}。
    * @see #isReference()
    * @see #getReferenceEntity()
    * @see #getReferenceProperty()
@@ -641,11 +630,10 @@ public class Property {
   }
 
   /**
-   * Gets the allowed range of sizes of this property, which is also the width
-   * of the database table column corresponding to the property.
+   * 获取此属性允许的大小范围，这也是与属性对应的数据库表列的宽度。
    *
    * @return
-   *     the allowed range of sizes of this property.
+   *     此属性允许的大小范围。
    */
   public CloseRange<Integer> getSizeRange() {
     final Size size = getAnnotation(Size.class);
@@ -659,10 +647,10 @@ public class Property {
   }
 
   /**
-   * Gets the class of the entity to whose property this property is referenced.
+   * 获取此属性所引用的实体类。
    *
    * @return
-   *     the class of the entity to whose property this property is referenced.
+   *     此属性所引用的实体类。
    * @see #isReference()
    * @see #isReferenceExisting()
    * @see #getReferenceProperty()
@@ -673,15 +661,13 @@ public class Property {
   }
 
   /**
-   * Gets the name of the property of another entity to which this property is
-   * referenced.
+   * 获取此属性所引用的另一个实体的属性名称。
    *
    * @return
-   *     the name of the property of another entity to which this property is
-   *     referenced.
+   *     此属性所引用的另一个实体的属性名称。
    * @see #isReference()
    * @see #isReferenceExisting()
-   * @see #getReferenceProperty()
+   * @see #getReferenceEntity()
    * @see #getReferencePath()
    */
   public String getReferenceProperty() {
@@ -689,12 +675,10 @@ public class Property {
   }
 
   /**
-   * Gets the path of the property of the owner object to which this property is
-   * referenced.
+   * 获取此属性所引用的拥有者对象的属性路径。
    *
    * @return
-   *     the path of the property of the owner object to which this property is
-   *     referenced.
+   *     此属性所引用的拥有者对象的属性路径。
    * @see #isReference()
    * @see #isReferenceExisting()
    * @see #getReferenceEntity()
@@ -705,11 +689,10 @@ public class Property {
   }
 
   /**
-   * Gets the index of the field in a composed key.
+   * 获取字段在组合键中的索引。
    *
    * @return
-   *     the index of the field in a composed key, or {@code null} if there is
-   *     no such index.
+   *     字段在组合键中的索引，如果没有此类索引则返回 {@code null}。
    */
   @Nullable
   public Integer getKeyIndex() {
@@ -718,11 +701,10 @@ public class Property {
   }
 
   /**
-   * Gets the {@link FieldInfo} object this property is corresponding to.
+   * 获取此属性对应的 {@link FieldInfo} 对象。
    *
    * @return
-   *     the {@link FieldInfo} object this property is corresponding to; or
-   *     {@code null} if this property does not correspond to a field.
+   *     此属性对应的 {@link FieldInfo} 对象；如果此属性不对应字段则返回 {@code null}。
    */
   @Nullable
   public FieldInfo getFieldInfo() {
@@ -730,11 +712,10 @@ public class Property {
   }
 
   /**
-   * Gets the {@link Field} object this property is corresponding to.
+   * 获取此属性对应的 {@link Field} 对象。
    *
    * @return
-   *     the {@link Field} object this property is corresponding to; or
-   *     {@code null} if this property does not correspond to a field.
+   *     此属性对应的 {@link Field} 对象；如果此属性不对应字段则返回 {@code null}。
    */
   @Nullable
   public Field getField() {
@@ -742,11 +723,10 @@ public class Property {
   }
 
   /**
-   * Gets the {@link Method} object of the getter of this bean property.
+   * 获取此bean属性的getter的 {@link Method} 对象。
    *
    * @return
-   *     the {@link Method} object of the getter of this bean property, which is
-   *     always not null.
+   *     此bean属性的getter的 {@link Method} 对象，始终不为null。
    */
   @Nullable
   public Method getReadMethod() {
@@ -754,12 +734,10 @@ public class Property {
   }
 
   /**
-   * Gets the {@link Method} object of the setter of this bean property.
+   * 获取此bean属性的setter的 {@link Method} 对象。
    *
    * @return
-   *     the {@link Method} object of the setter of this bean property, which is
-   *     {@code null} if this property has no setter, i.e., it is a readonly
-   *     bean property or a computed bean property.
+   *     此bean属性的setter的 {@link Method} 对象，如果此属性没有setter（即它是只读bean属性或计算bean属性）则返回 {@code null}。
    */
   @Nullable
   public Method getWriteMethod() {
@@ -767,24 +745,24 @@ public class Property {
   }
 
   /**
-   * Gets the full qualified name of this bean property.
+   * 获取此bean属性的完全限定名。
    *
    * @return
-   *      the full qualified name of this bean property.
+   *      此bean属性的完全限定名。
    */
   public String getFullQualifiedName() {
     return ClassUtils.getFullCanonicalName(ownerClass) + "." + name;
   }
 
   /**
-   * Gets the value of this bean property of the specified object.
+   * 获取指定对象的此bean属性的值。
    *
    * @param owner
-   *     a specified object.
+   *     指定的对象。
    * @return
-   *     the value of this bean property of the specified object.
+   *     指定对象的此bean属性的值。
    * @throws ReflectionException
-   *     if any reflection error occurs.
+   *     如果发生任何反射错误。
    */
   public Object getValue(final Object owner) {
     if (readMethod != null) {
@@ -797,14 +775,14 @@ public class Property {
   }
 
   /**
-   * Sets the value of this bean property of the specified object.
+   * 设置指定对象的此bean属性的值。
    *
    * @param owner
-   *     the specified object.
+   *     指定的对象。
    * @param value
-   *     the specified value.
+   *     指定的值。
    * @throws ReflectionException
-   *     if any reflection error occurs.
+   *     如果发生任何反射错误。
    */
   public void setValue(final Object owner, @Nullable final Object value) {
     if (writeMethod != null) {
@@ -817,12 +795,12 @@ public class Property {
   }
 
   /**
-   * Sets the value of this bean property of the specified object as a string.
+   * 将指定对象的此bean属性的值设置为字符串。
    *
    * @param owner
-   *     the specified object.
+   *     指定的对象。
    * @param stringValue
-   *     the string representation of the value to be set.
+   *     要设置的值的字符串表示。
    *
    */
   public void setValueAsString(final Object owner, @Nullable final String stringValue) {
@@ -835,12 +813,12 @@ public class Property {
   }
 
   /**
-   * Sets the values of this bean property of the specified object as a string.
+   * 将指定对象的此bean属性的值设置为字符串数组。
    *
    * @param owner
-   *     the specified object.
+   *     指定的对象。
    * @param stringValues
-   *     the string representation of the values to be set.
+   *     要设置的值的字符串表示数组。
    */
   public void setValueAsStrings(final Object owner, @Nullable final String[] stringValues) {
     if (!type.isArray()) {

@@ -75,7 +75,7 @@ import static ltd.qubit.commons.text.NumberFormat.DECIMAL_RADIX;
  * <p>An object of {@link TypeInfo} corresponds to a row in the returned
  * {@link ResultSet} of the {@link DatabaseMetaData#getTypeInfo()} function.
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see DatabaseMetaData#getTypeInfo()
  */
 public final class TypeInfo {

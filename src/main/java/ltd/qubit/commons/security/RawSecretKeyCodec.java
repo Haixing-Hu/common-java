@@ -23,19 +23,33 @@ import ltd.qubit.commons.util.codec.DecodingException;
 import ltd.qubit.commons.util.codec.EncodingException;
 
 /**
- * The implementation of {@link SecretKeyCodec} which encode/decode between
- * {@link SecretKey}s and byte arrays in the raw format.
+ * {@link SecretKeyCodec} 的实现，用于在 {@link SecretKey} 和原始格式的字节数组之间进行编解码。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class RawSecretKeyCodec implements SecretKeyCodec {
 
+  /**
+   * 对称加密算法。
+   */
   private final SymmetricCryptoAlgorithm cryptoAlgorithm;
 
+  /**
+   * 构造一个原始格式的密钥编解码器。
+   *
+   * @param cryptoAlgorithm
+   *     对称加密算法。
+   */
   public RawSecretKeyCodec(final SymmetricCryptoAlgorithm cryptoAlgorithm) {
     this.cryptoAlgorithm = cryptoAlgorithm;
   }
 
+  /**
+   * 获取对称加密算法。
+   *
+   * @return
+   *     对称加密算法。
+   */
   public SymmetricCryptoAlgorithm getCryptoAlgorithm() {
     return cryptoAlgorithm;
   }
@@ -84,6 +98,9 @@ public class RawSecretKeyCodec implements SecretKeyCodec {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public SecretKey decode(final byte[] key) throws DecodingException {
     try {
@@ -95,6 +112,9 @@ public class RawSecretKeyCodec implements SecretKeyCodec {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public byte[] encode(final SecretKey key) throws EncodingException {
     try {

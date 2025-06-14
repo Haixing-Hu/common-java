@@ -3355,16 +3355,15 @@ public class StringUtils {
   }
 
   /**
-   * Strips any of the code points accepted by a {@link CodePointFilter} from
-   * the start of a string.
+   * 从字符串开头剥离被{@link CodePointFilter}接受的代码点。
    *
-   * <p>A {@code null} input string returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
-   * <p>If the filter is {@code null}, the original string is returned.
+   * <p>如果过滤器为{@code null}，返回原字符串。
    *
    * @param str
-   *     the string to remove characters from, may be null
+   *     要移除字符的字符串，可能为null
    * @param filter
    *     {@link CodePointFilter}。被此过滤器接受的代码点将从{@code str}的开头剥离。
    *     如果为null，返回原字符串。
@@ -3545,14 +3544,13 @@ public class StringUtils {
   }
 
   /**
-   * Strips any of a set of characters from the end of a string.
+   * 从字符串末尾剥离指定的一组字符。
    *
-   * <p>A {@code null} input String returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
-   * <p>If the stripChars String is {@code null}, it is treated as an empty
-   * string,
-   * and the original string is returned.
+   * <p>如果stripChars字符串为{@code null}，将被视为空字符串，
+   * 返回原字符串。
    * <pre>
    * StringUtils.stripEnd(null, *)          = null
    * StringUtils.stripEnd("", *)            = ""
@@ -3565,7 +3563,7 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to remove characters from, may be null
+   *     要移除字符的字符串，可能为null
    * @param stripChars
    *     要移除的字符，null被视为空字符串，返回原字符串。
    * @param output
@@ -3780,15 +3778,13 @@ public class StringUtils {
   }
 
   /**
-   * Strips whitespace and non-printable characters from the start and end of a
-   * String.
+   * 从字符串的开头和末尾剥离空白字符和不可打印字符。
    *
-   * <p>This is similar to {@link String#trim()} but use
-   * {@link CharUtils#isGraph(int)} to determinate whether a code point is a
-   * printable non-whitespace character.
+   * <p>这类似于{@link String#trim()}，但使用{@link CharUtils#isGraph(int)}
+   * 来确定代码点是否为可打印的非空白字符。
    *
-   * <p>A {@code null} input String returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
    * <pre>
    * StringUtils.strip(null)           = null
@@ -3963,6 +3959,25 @@ public class StringUtils {
         .strip(str);
   }
 
+  /**
+   * 从字符串的两端剥离被CodePointFilter接受的代码点。
+   *
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
+   *
+   * <p>如果过滤器为{@code null}，返回原字符串。
+   *
+   * @param str
+   *     要移除字符的字符串，可能为null。
+   * @param filter
+   *     CodePointFilter。被此过滤器接受的代码点将从{@code str}的两端剥离。
+   *     如果为null，返回原字符串。
+   * @param output
+   *     用于追加结果字符串的输出。
+   * @throws IOException
+   *     如果发生任何I/O错误。
+   * @see Stripper#strip(CharSequence, Appendable)
+   */
   public static void strip(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter, final Appendable output)
       throws IOException {
@@ -3973,10 +3988,10 @@ public class StringUtils {
   }
 
   /**
-   * Strips all whitespace and non-printable characters from a string.
+   * 从字符串中剥离所有空白字符和不可打印字符。
    *
-   * <p>A {@code null} input String returns {@code null}. An empty string ("")
-   * input returns the empty string.
+   * <p>如果输入字符串为{@code null}，返回{@code null}。如果输入为空字符串("")，
+   * 返回空字符串。
    *
    * <pre>
    * StringUtils.stripAll(null)           = null
@@ -3989,7 +4004,7 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to remove characters from, may be null
+   *     要移除字符的字符串，可能为null
    * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}
    * @see Remover#forCodePointsSatisfy(CodePointFilter)
    * @see Remover#removeFrom(CharSequence)
@@ -4207,14 +4222,12 @@ public class StringUtils {
   }
 
   /**
-   * Removes a substring only if it is at the beginning of a source string,
-   * otherwise returns the source string.
+   * 仅当子字符串位于源字符串的开头时才移除它，否则返回源字符串。
    *
-   * <p>The comparison is case-sensitive.</p>
+   * <p>比较是大小写敏感的。</p>
    *
-   * <p>A {@code null} source string will return {@code null}. An empty ("")
-   * source string will return the empty string. A {@code null} search string
-   * will return the source string.</p>
+   * <p>{@code null} 源字符串将返回 {@code null}。空字符串 ("") 源字符串将返回空字符串。
+   * {@code null} 搜索字符串将返回源字符串。</p>
    *
    * <pre><code>
    * StringUtils.removePrefix(null, *)      = null
@@ -4228,11 +4241,10 @@ public class StringUtils {
    * </code></pre>
    *
    * @param str
-   *     the source String to search, may be null
+   *     要搜索的源字符串，可能为 null
    * @param prefix
-   *     the prefix string to search for and remove, may be null.
-   * @return the substring with the string removed if found, {@code null} if
-   *     null string input.
+   *     要搜索和移除的前缀字符串，可能为 null
+   * @return 如果找到则返回移除字符串后的子字符串，如果输入为 null 字符串则返回 {@code null}
    * @see Remover#forPrefix(CharSequence)
    * @see Remover#removeFrom(CharSequence)
    */
@@ -4356,6 +4368,25 @@ public class StringUtils {
         .removeFrom(str);
   }
 
+  /**
+   * 从字符串中同时移除前缀和后缀。
+   *
+   * <p>比较是大小写敏感的。</p>
+   *
+   * <p>{@code null} 源字符串将返回 {@code null}。空字符串 ("") 源字符串将返回空字符串。
+   * {@code null} 前缀或后缀将被忽略。</p>
+   *
+   * @param str
+   *     要搜索的源字符串，可能为 null
+   * @param prefix
+   *     要移除的前缀字符串，可能为 null
+   * @param suffix
+   *     要移除的后缀字符串，可能为 null
+   * @return 如果找到则返回移除前缀和后缀后的字符串，如果输入为 null 字符串则返回 {@code null}
+   * @see Remover#forPrefix(CharSequence)
+   * @see Remover#forSuffix(CharSequence)
+   * @see Remover#removeFrom(CharSequence)
+   */
   public static String removePrefixAndSuffix(@Nullable final CharSequence str,
       final CharSequence prefix, final String suffix) {
     return new Remover()
@@ -4365,6 +4396,27 @@ public class StringUtils {
         .removeFrom(str);
   }
 
+  /**
+   * 从字符串中同时移除前缀和后缀。
+   *
+   * <p>比较可以是大小写敏感或大小写不敏感的，由参数控制。</p>
+   *
+   * <p>{@code null} 源字符串将返回 {@code null}。空字符串 ("") 源字符串将返回空字符串。
+   * {@code null} 前缀或后缀将被忽略。</p>
+   *
+   * @param str
+   *     要搜索的源字符串，可能为 null
+   * @param prefix
+   *     要移除的前缀字符串，可能为 null
+   * @param suffix
+   *     要移除的后缀字符串，可能为 null
+   * @param ignoreCase
+   *     指示比较是否应忽略大小写（大小写不敏感）
+   * @return 如果找到则返回移除前缀和后缀后的字符串，如果输入为 null 字符串则返回 {@code null}
+   * @see Remover#forPrefix(CharSequence)
+   * @see Remover#forSuffix(CharSequence)
+   * @see Remover#removeFrom(CharSequence)
+   */
   public static String removePrefixAndSuffix(@Nullable final CharSequence str,
       final CharSequence prefix, final CharSequence suffix, final boolean ignoreCase) {
     return new Remover()
@@ -4429,11 +4481,9 @@ public class StringUtils {
   }
 
   /**
-   * Removes the occurrences of a Unicode code point from a string.
+   * 从字符串中移除Unicode码点的所有出现。
    *
-   * <p>A {@code null} source string will return {@code null}. An empty ("")
-   * source
-   * string will return the empty string.
+   * <p>{@code null} 源字符串将返回 {@code null}。空字符串 ("") 源字符串将返回空字符串。
    * <pre>
    * StringUtils.removeCodePoint(null, *)       = null
    * StringUtils.removeCodePoint("", *)         = ""
@@ -4442,11 +4492,10 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the source String to search, which may be null.
+   *     要搜索的源字符串，可能为 null
    * @param codePoint
-   *     the Unicode code point to search for and remove.
-   * @return the substring with the char removed if found, {@code null} if null
-   *     String input
+   *     要搜索和移除的Unicode码点
+   * @return 如果找到则返回移除字符后的子字符串，如果输入为 null 字符串则返回 {@code null}
    * @see Remover#removeFrom(CharSequence)
    */
   public static String removeCodePoint(@Nullable final CharSequence str, final int codePoint) {
@@ -4457,11 +4506,9 @@ public class StringUtils {
   }
 
   /**
-   * Removes the occurrences of a Unicode code point from a string.
+   * 从字符串中移除Unicode码点的出现。
    *
-   * <p>A {@code null} source string will return {@code null}. An empty ("")
-   * source
-   * string will return the empty string.
+   * <p>{@code null} 源字符串将返回 {@code null}。空字符串 ("") 源字符串将返回空字符串。
    * <pre>
    * StringUtils.removeCodePoint(null, *, *)       = null
    * StringUtils.removeCodePoint("", *, *)         = ""
@@ -4471,13 +4518,12 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the source String to search, which may be null.
+   *     要搜索的源字符串，可能为 null
    * @param codePoint
-   *     the Unicode code point to search for and remove.
+   *     要搜索和移除的Unicode码点
    * @param max
-   *     the maximum number of characters could be removed; -1 means no limit.
-   * @return the substring with the char removed if found, {@code null} if null
-   *     String input
+   *     可以移除的字符的最大数量；-1 表示无限制
+   * @return 如果找到则返回移除字符后的子字符串，如果输入为 null 字符串则返回 {@code null}
    * @see Remover#removeFrom(CharSequence)
    */
   public static String removeCodePoint(@Nullable final CharSequence str, final int codePoint,
@@ -4488,6 +4534,19 @@ public class StringUtils {
         .removeFrom(str);
   }
 
+  /**
+   * 从字符串中移除满足指定条件的字符。
+   *
+   * <p>{@code null} 源字符串将返回 {@code null}。空字符串 ("") 源字符串将返回空字符串。
+   * {@code null} 字符过滤器将返回原字符串。
+   *
+   * @param str
+   *     要搜索的源字符串，可能为 null
+   * @param filter
+   *     用于确定要移除字符的过滤器，可能为 null
+   * @return 如果找到则返回移除字符后的字符串，如果输入为 null 字符串则返回 {@code null}
+   * @see Remover#removeFrom(CharSequence)
+   */
   public static String removeChar(@Nullable final CharSequence str,
       @Nullable final CharFilter filter) {
     return new Remover()
@@ -4496,6 +4555,21 @@ public class StringUtils {
         .removeFrom(str);
   }
 
+  /**
+   * 从字符串中移除满足指定条件的字符，限制最大移除数量。
+   *
+   * <p>{@code null} 源字符串将返回 {@code null}。空字符串 ("") 源字符串将返回空字符串。
+   * {@code null} 字符过滤器将返回原字符串。
+   *
+   * @param str
+   *     要搜索的源字符串，可能为 null
+   * @param filter
+   *     用于确定要移除字符的过滤器，可能为 null
+   * @param max
+   *     可以移除的字符的最大数量；-1 表示无限制
+   * @return 如果找到则返回移除字符后的字符串，如果输入为 null 字符串则返回 {@code null}
+   * @see Remover#removeFrom(CharSequence)
+   */
   public static String removeChar(@Nullable final CharSequence str,
       @Nullable final CharFilter filter, final int max) {
     return new Remover()
@@ -4571,6 +4645,23 @@ public class StringUtils {
         .applyTo(str);
   }
 
+  /**
+   * 用另一个字符替换字符串中某个字符的所有出现，将结果输出到StringBuilder。
+   *
+   * <p>{@code null} 字符串输入将不进行任何操作。空字符串 ("") 输入将不进行任何操作。
+   *
+   * @param str
+   *     要替换字符的字符串，可能为 null
+   * @param search
+   *     要搜索的字符
+   * @param replacement
+   *     要替换的字符
+   * @param builder
+   *     用于存储结果的StringBuilder，不能为 null
+   * @see Replacer#searchForChar(char)
+   * @see Replacer#replaceWithChar(char)
+   * @see Replacer#applyTo(CharSequence, StringBuilder)
+   */
   public static void replaceChar(@Nullable final CharSequence str, final char search,
       final char replacement, final StringBuilder builder) {
     new Replacer()
@@ -4630,6 +4721,28 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 一次性替换字符串中的多个字符，将结果输出到StringBuilder。
+   *
+   * <p>{@code null} 字符串输入返回0。空字符串 ("") 输入返回0。
+   * null 或空的搜索字符集直接追加原字符串并返回0。
+   *
+   * <p>搜索字符的长度通常应等于替换字符的长度。如果搜索字符更长，则额外的搜索字符将被删除。
+   * 如果搜索字符更短，则额外的替换字符将被忽略。
+   *
+   * @param str
+   *     要替换字符的字符串，可能为 null
+   * @param searchChars
+   *     要搜索的字符集，可能为 null
+   * @param replaceChars
+   *     要替换的字符集，可能为 null
+   * @param builder
+   *     用于存储结果的StringBuilder，不能为 null
+   * @return 替换的字符数量
+   * @see Replacer#searchForChar(char)
+   * @see Replacer#replaceWithChar(char)
+   * @see Replacer#applyTo(CharSequence, StringBuilder)
+   */
   public static int replaceChars(@Nullable final CharSequence str,
       @Nullable final CharSequence searchChars, @Nullable final String replaceChars,
       final StringBuilder builder) {
@@ -4662,9 +4775,8 @@ public class StringUtils {
   }
 
   /**
-   * Replaces a string with another String inside a larger String, for all
-   * occurrences of the search String. A {@code null} reference passed to this
-   * method is a no-op.
+   * 在较大的字符串内用另一个字符串替换字符串，替换搜索字符串的所有出现。
+   * 传递给此方法的 {@code null} 引用是无操作的。
    * <pre>
    * StringUtils.replace(null, *, *, *)         = null
    * StringUtils.replace("", *, *, *)           = ""
@@ -4681,13 +4793,12 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     text to search and replace in, may be null.
+   *     要搜索和替换的文本，可能为 null
    * @param search
-   *     the string to search for, may be null.
+   *     要搜索的字符串，可能为 null
    * @param replacement
-   *     the string to replace it with, may be null.
-   * @return the text with any replacements processed, {@code null} if null
-   *     String input
+   *     要替换的字符串，可能为 null
+   * @return 处理任何替换后的文本，如果输入为 null 字符串则返回 {@code null}
    * @see Replacer#searchForSubstring(CharSequence)
    * @see Replacer#replaceWithString(CharSequence)
    * @see Replacer#applyTo(CharSequence)
@@ -4744,6 +4855,28 @@ public class StringUtils {
         .applyTo(str);
   }
 
+  /**
+   * 在较大的字符串中用另一个字符串替换字符串，将结果输出到StringBuilder。
+   *
+   * <p>传递给此方法的 {@code null} 引用将返回0。
+   *
+   * @param str
+   *     要搜索和替换的文本，可能为 null
+   * @param search
+   *     要搜索的字符串，可能为 null
+   * @param replacement
+   *     要替换的字符串，可能为 null
+   * @param max
+   *     要替换的最大出现次数，或 {@code -1} 表示无限制
+   * @param ignoreCase
+   *     指示比较是否应忽略大小写（大小写不敏感）
+   * @param output
+   *     用于存储结果的StringBuilder，不能为 null
+   * @return 替换的次数
+   * @see Replacer#searchForSubstring(CharSequence)
+   * @see Replacer#replaceWithString(CharSequence)
+   * @see Replacer#applyTo(CharSequence, StringBuilder)
+   */
   public static int replace(@Nullable final CharSequence str,
       @Nullable final CharSequence search, @Nullable final CharSequence replacement,
       final int max, final boolean ignoreCase, final StringBuilder output) {
@@ -4812,6 +4945,26 @@ public class StringUtils {
     }
   }
 
+  /**
+   * 替换另一个字符串中所有出现的字符串，将结果输出到StringBuilder。
+   *
+   * <p>传递给此方法的 {@code null} 引用将返回0，或者如果任何"搜索字符串"或"要替换的字符串"为 null，
+   * 该替换将被忽略。这不会重复。
+   *
+   * @param str
+   *     要搜索和替换的字符串，如果为 null 则返回0
+   * @param searches
+   *     要搜索的字符串，如果为 null 则直接追加原字符串
+   * @param replaces
+   *     要替换的字符串，如果为 null 则直接追加原字符串
+   * @param ignoreCase
+   *     比较字符串时是否忽略大小写
+   * @param builder
+   *     用于存储结果的StringBuilder，不能为 null
+   * @return 替换的次数
+   * @throws IndexOutOfBoundsException
+   *     如果数组的长度不相同（null 是可以的，和/或大小为 0）
+   */
   public static int replaceEach(@Nullable final String str,
       @Nullable final String[] searches, @Nullable final String[] replaces,
       final boolean ignoreCase, final StringBuilder builder) {
@@ -4901,6 +5054,28 @@ public class StringUtils {
     return result;
   }
 
+  /**
+   * 重复替换另一个字符串中所有出现的字符串，将结果输出到StringBuilder。
+   *
+   * <p>传递给此方法的 {@code null} 引用将返回0，或者如果任何"搜索字符串"或"要替换的字符串"为 null，
+   * 该替换将被忽略。这将重复直到无法进行进一步替换。
+   *
+   * <p>注意：这可能导致无限循环，如果替换会创建新的匹配项。
+   *
+   * @param str
+   *     要搜索和替换的字符串，如果为 null 则返回0
+   * @param searches
+   *     要搜索的字符串，如果为 null 则直接追加原字符串
+   * @param replaces
+   *     要替换的字符串，如果为 null 则直接追加原字符串
+   * @param ignoreCase
+   *     比较字符串时是否忽略大小写
+   * @param builder
+   *     用于存储结果的StringBuilder，不能为 null
+   * @return 替换的次数
+   * @throws IndexOutOfBoundsException
+   *     如果数组的长度不相同（null 是可以的，和/或大小为 0）
+   */
   public static int replaceEachRepeatedly(@Nullable final String str,
       @Nullable final String[] searches, @Nullable final String[] replaces,
       final boolean ignoreCase, final StringBuilder builder) {
@@ -5824,11 +5999,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供的元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. Null objects or empty
-   * strings within the array are represented by empty strings.
+   * <p>列表前后不添加分隔符。数组中的null对象或空字符串
+   * 用空字符串表示。
    * <pre>
    * StringUtils.join(*, null)                = null
    * StringUtils.join(*, [])                 = ""
@@ -5837,10 +6011,10 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use
+   *     要使用的分隔符字符
    * @param array
-   *     the array of values to join together, may be null
-   * @return the joined String, {@code null} if null array input
+   *     要连接在一起的值的数组，可能为null
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static String join(final char separator,
@@ -5851,11 +6025,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供的元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. Null objects or empty
-   * strings within the array are represented by empty strings.
+   * <p>列表前后不添加分隔符。数组中的null对象或空字符串
+   * 用空字符串表示。
    * <pre>
    * StringUtils.join(*, null, *, *)         = null
    * StringUtils.join(*, [], *, *)           = ""
@@ -5864,16 +6037,14 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use
+   *     要使用的分隔符字符
    * @param array
-   *     the array of values to join together, may be null
+   *     要连接在一起的值的数组，可能为null
    * @param startIndex
-   *     the first occurrence to start joining from. It is an error to pass in
-   *     an end current past the end of the array.
+   *     开始连接的第一个出现索引。传入超过数组末尾的结束位置是错误的
    * @param endIndex
-   *     the index to stop joining from (exclusive). It is an error to pass in
-   *     an end current past the end of the array.
-   * @return the joined String, {@code null} if null array input
+   *     停止连接的索引（不包含）。传入超过数组末尾的结束位置是错误的
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static String join(final char separator,
@@ -5970,28 +6141,24 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供的元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. Null objects or empty
-   * strings within the array are represented by empty strings.
+   * <p>列表前后不添加分隔符。数组中的null对象或空字符串
+   * 用空字符串表示。
    *
-   * <p>See the examples here: {@link #join(char, Object[])}.
+   * <p>示例请参见：{@link #join(char, Object[])}。
    *
    * @param <T>
-   *     the type of elements to be joined.
+   *     要连接的元素类型
    * @param separator
-   *     the separator character to use
+   *     要使用的分隔符字符
    * @param array
-   *     the array of values to join together, may be null
+   *     要连接在一起的值的数组，可能为null
    * @param startIndex
-   *     the first occurrence to start joining from. If it is less than zero, it
-   *     is treated as zero.
+   *     开始连接的第一个出现索引。如果小于零，则视为零
    * @param endIndex
-   *     the index to stop joining from (exclusive). If it is greater than the
-   *     length of the {@code array}, it is treated as the length of the {@code
-   *     array}.
-   * @return the joined String, {@code null} if null array input
+   *     停止连接的索引（不包含）。如果大于{@code array}的长度，则视为{@code array}的长度
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static <T> String join(final char separator,
@@ -6079,13 +6246,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供的元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. A {@code null} separator
-   * is
-   * the same as an empty String (""). Null objects or empty strings within the
-   * array are represented by empty strings.
+   * <p>列表前后不添加分隔符。{@code null} 分隔符与空字符串 ("") 相同。
+   * 数组中的null对象或空字符串用空字符串表示。
    * <pre>
    * StringUtils.join(*, null, *, *)                = null
    * StringUtils.join(*, [], *, *)                  = ""
@@ -6097,17 +6261,14 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use, null treated as an empty string.
+   *     要使用的分隔符字符，null被视为空字符串
    * @param array
-   *     the array of values to join together, may be null
+   *     要连接在一起的值的数组，可能为null
    * @param startIndex
-   *     the first occurrence to start joining from. If it is less than zero, it
-   *     is treated as zero.
+   *     开始连接的第一个出现索引。如果小于零，则视为零
    * @param endIndex
-   *     the index to stop joining from (exclusive). If it is greater than the
-   *     length of the {@code array}, it is treated as the length of the {@code
-   *     array}.
-   * @return the joined String, {@code null} if null array input
+   *     停止连接的索引（不包含）。如果大于{@code array}的长度，则视为{@code array}的长度
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static String join(@Nullable final String separator,
@@ -6118,13 +6279,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供的元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. A {@code null} separator
-   * is
-   * the same as an empty String (""). Null objects or empty strings within the
-   * array are represented by empty strings.
+   * <p>列表前后不添加分隔符。{@code null} 分隔符与空字符串 ("") 相同。
+   * 数组中的null对象或空字符串用空字符串表示。
    * <pre>
    * StringUtils.join(*, null)                = null
    * StringUtils.join(*, [])                  = ""
@@ -6136,10 +6294,10 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use, null treated as an empty string.
+   *     要使用的分隔符字符，null被视为空字符串
    * @param array
-   *     the array of values to join together, may be null
-   * @return the joined String, {@code null} if null array input
+   *     要连接在一起的值的数组，可能为null
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static String join(@Nullable final String separator,
@@ -6150,13 +6308,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. A {@code null} separator
-   * is
-   * the same as an empty String (""). Null objects or empty strings within the
-   * array are represented by empty strings.
+   * <p>列表前后不添加分隔符。{@code null} 分隔符与空字符串("")相同。
+   * 数组中的null对象或空字符串用空字符串表示。
    * <pre>
    * StringUtils.join(*, null, *, *)                = null
    * StringUtils.join(*, [], *, *)                  = ""
@@ -6168,17 +6323,15 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use, null treated as an empty string.
+   *     要使用的分隔符字符，null被视为空字符串
    * @param array
-   *     the array of values to join together, may be null
+   *     要连接的值数组，可能为null
    * @param startIndex
-   *     the first occurrence to start joining from. If it is less than zero, it
-   *     is treated as zero.
+   *     开始连接的第一个索引。如果小于零，则视为零
    * @param endIndex
-   *     the index to stop joining from (exclusive). If it is greater than the
-   *     length of the {@code array}, it is treated as the length of the {@code
-   *     array}.
-   * @return the joined String, {@code null} if null array input
+   *     停止连接的索引（不包含）。如果大于{@code array}的长度，
+   *     则视为{@code array}的长度
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static String join(@Nullable final String separator,
@@ -6189,13 +6342,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. A {@code null} separator
-   * is
-   * the same as an empty String (""). Null objects or empty strings within the
-   * array are represented by empty strings.
+   * <p>列表前后不添加分隔符。{@code null} 分隔符与空字符串("")相同。
+   * 数组中的null对象或空字符串用空字符串表示。
    * <pre>
    * StringUtils.join(*, null)                = null
    * StringUtils.join(*, [])                  = ""
@@ -6207,10 +6357,10 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use, null treated as an empty string.
+   *     要使用的分隔符字符，null被视为空字符串
    * @param array
-   *     the array of values to join together, may be null
-   * @return the joined String, {@code null} if null array input
+   *     要连接的值数组，可能为null
+   * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
    */
   public static String join(@Nullable final String separator,
@@ -6221,13 +6371,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. A {@code null} separator
-   * is
-   * the same as an empty String (""). Null objects or empty strings within the
-   * array are represented by empty strings.
+   * <p>列表前后不添加分隔符。{@code null} 分隔符与空字符串("")相同。
+   * 数组中的null对象或空字符串用空字符串表示。
    * <pre>
    * StringUtils.join(*, null, *, *)                = null
    * StringUtils.join(*, [], *, *)                  = ""
@@ -6239,17 +6386,15 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use, null treated as an empty string.
+   *     要使用的分隔符，null被视为空字符串
    * @param array
-   *     the array of values to join together, may be null
+   *     要连接的值数组，可能为null
    * @param startIndex
-   *     the first occurrence to start joining from. If it is less than zero, it
-   *     is treated as zero.
+   *     开始连接的第一个位置。如果小于零，则视为零
    * @param endIndex
-   *     the index to stop joining from (exclusive). If it is greater than the
-   *     length of the {@code array}, it is treated as the length of the {@code
-   *     array}.
-   * @return the joined String, {@code null} if null array input
+   *     停止连接的索引（不包括）。如果大于{@code array}的长度，
+   *     则视为{@code array}的长度
+   * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
    */
   public static String join(@Nullable final String separator,
@@ -6260,13 +6405,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. A {@code null} separator
-   * is
-   * the same as an empty String (""). Null objects or empty strings within the
-   * array are represented by empty strings.
+   * <p>列表前后不添加分隔符。{@code null} 分隔符与空字符串("")相同。
+   * 数组中的null对象或空字符串用空字符串表示。
    * <pre>
    * StringUtils.join(*, null)                = null
    * StringUtils.join(*, [])                  = ""
@@ -6278,10 +6420,10 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use, null treated as an empty string.
+   *     要使用的分隔符，null被视为空字符串
    * @param array
-   *     the array of values to join together, may be null
-   * @return the joined String, {@code null} if null array input
+   *     要连接的值数组，可能为null
+   * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
    */
   public static String join(@Nullable final String separator,
@@ -6292,13 +6434,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. A {@code null} separator
-   * is
-   * the same as an empty String (""). Null objects or empty strings within the
-   * array are represented by empty strings.
+   * <p>列表前后不添加分隔符。{@code null} 分隔符与空字符串("")相同。
+   * 数组中的null对象或空字符串用空字符串表示。
    * <pre>
    * StringUtils.join(*, null, *, *)                = null
    * StringUtils.join(*, [], *, *)                  = ""
@@ -6310,17 +6449,15 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use, null treated as an empty string.
+   *     要使用的分隔符，null被视为空字符串
    * @param array
-   *     the array of values to join together, may be null
+   *     要连接的值数组，可能为null
    * @param startIndex
-   *     the first occurrence to start joining from. If it is less than zero, it
-   *     is treated as zero.
+   *     开始连接的第一个位置。如果小于零，则视为零
    * @param endIndex
-   *     the index to stop joining from (exclusive). If it is greater than the
-   *     length of the {@code array}, it is treated as the length of the {@code
-   *     array}.
-   * @return the joined String, {@code null} if null array input
+   *     停止连接的索引（不包括）。如果大于{@code array}的长度，
+   *     则视为{@code array}的长度
+   * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
    */
   public static String join(@Nullable final String separator,
@@ -6331,13 +6468,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. A {@code null} separator
-   * is
-   * the same as an empty String (""). Null objects or empty strings within the
-   * array are represented by empty strings.
+   * <p>列表前后不添加分隔符。{@code null} 分隔符与空字符串("")相同。
+   * 数组中的null对象或空字符串用空字符串表示。
    * <pre>
    * StringUtils.join(*, null)                = null
    * StringUtils.join(*, [])                  = ""
@@ -6349,10 +6483,10 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use, null treated as an empty string.
+   *     要使用的分隔符，null被视为空字符串
    * @param array
-   *     the array of values to join together, may be null
-   * @return the joined String, {@code null} if null array input
+   *     要连接的值数组，可能为null
+   * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
    */
   public static String join(@Nullable final String separator,
@@ -6363,13 +6497,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. A {@code null} separator
-   * is
-   * the same as an empty String (""). Null objects or empty strings within the
-   * array are represented by empty strings.
+   * <p>列表前后不添加分隔符。{@code null} 分隔符与空字符串("")相同。
+   * 数组中的null对象或空字符串用空字符串表示。
    * <pre>
    * StringUtils.join(*, null, *, *)                = null
    * StringUtils.join(*, [], *, *)                  = ""
@@ -6381,17 +6512,15 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use, null treated as an empty string.
+   *     要使用的分隔符，null被视为空字符串
    * @param array
-   *     the array of values to join together, may be null
+   *     要连接的值数组，可能为null
    * @param startIndex
-   *     the first occurrence to start joining from. If it is less than zero, it
-   *     is treated as zero.
+   *     开始连接的第一个位置。如果小于零，则视为零
    * @param endIndex
-   *     the index to stop joining from (exclusive). If it is greater than the
-   *     length of the {@code array}, it is treated as the length of the {@code
-   *     array}.
-   * @return the joined String, {@code null} if null array input
+   *     停止连接的索引（不包括）。如果大于{@code array}的长度，
+   *     则视为{@code array}的长度
+   * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
    */
   public static String join(@Nullable final String separator,
@@ -6402,13 +6531,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. A {@code null} separator
-   * is
-   * the same as an empty String (""). Null objects or empty strings within the
-   * array are represented by empty strings.
+   * <p>列表前后不添加分隔符。{@code null} 分隔符与空字符串("")相同。
+   * 数组中的null对象或空字符串用空字符串表示。
    * <pre>
    * StringUtils.join(*, null)                = null
    * StringUtils.join(*, [])                  = ""
@@ -6420,10 +6546,10 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use, null treated as an empty string.
+   *     要使用的分隔符，null被视为空字符串
    * @param array
-   *     the array of values to join together, may be null
-   * @return the joined String, {@code null} if null array input
+   *     要连接的值数组，可能为null
+   * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
    */
   public static String join(@Nullable final String separator,
@@ -6434,13 +6560,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. A {@code null} separator
-   * is
-   * the same as an empty String (""). Null objects or empty strings within the
-   * array are represented by empty strings.
+   * <p>列表前后不添加分隔符。{@code null} 分隔符与空字符串("")相同。
+   * 数组中的null对象或空字符串用空字符串表示。
    * <pre>
    * StringUtils.join(*, null, *, *)                = null
    * StringUtils.join(*, [], *, *)                  = ""
@@ -6452,17 +6575,15 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use, null treated as an empty string.
+   *     要使用的分隔符，null被视为空字符串
    * @param array
-   *     the array of values to join together, may be null
+   *     要连接的值数组，可能为null
    * @param startIndex
-   *     the first occurrence to start joining from. If it is less than zero, it
-   *     is treated as zero.
+   *     开始连接的第一个位置。如果小于零，则视为零
    * @param endIndex
-   *     the index to stop joining from (exclusive). If it is greater than the
-   *     length of the {@code array}, it is treated as the length of the {@code
-   *     array}.
-   * @return the joined String, {@code null} if null array input
+   *     停止连接的索引（不包括）。如果大于{@code array}的长度，
+   *     则视为{@code array}的长度
+   * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
    */
   public static String join(@Nullable final String separator,
@@ -6473,13 +6594,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. A {@code null} separator
-   * is
-   * the same as an empty String (""). Null objects or empty strings within the
-   * array are represented by empty strings.
+   * <p>列表前后不添加分隔符。{@code null} 分隔符与空字符串("")相同。
+   * 数组中的null对象或空字符串用空字符串表示。
    * <pre>
    * StringUtils.join(*, null)                = null
    * StringUtils.join(*, [])                  = ""
@@ -6491,10 +6609,10 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use, null treated as an empty string.
+   *     要使用的分隔符，null被视为空字符串
    * @param array
-   *     the array of values to join together, may be null
-   * @return the joined String, {@code null} if null array input
+   *     要连接的值数组，可能为null
+   * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
    */
   public static String join(@Nullable final String separator,
@@ -6505,13 +6623,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. A {@code null} separator
-   * is
-   * the same as an empty String (""). Null objects or empty strings within the
-   * array are represented by empty strings.
+   * <p>列表前后不添加分隔符。{@code null} 分隔符与空字符串("")相同。
+   * 数组中的null对象或空字符串用空字符串表示。
    * <pre>
    * StringUtils.join(*, null, *, *)                = null
    * StringUtils.join(*, [], *, *)                  = ""
@@ -6523,17 +6638,15 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use, null treated as an empty string.
+   *     要使用的分隔符，null被视为空字符串
    * @param array
-   *     the array of values to join together, may be null
+   *     要连接的值数组，可能为null
    * @param startIndex
-   *     the first occurrence to start joining from. If it is less than zero, it
-   *     is treated as zero.
+   *     开始连接的第一个位置。如果小于零，则视为零
    * @param endIndex
-   *     the index to stop joining from (exclusive). If it is greater than the
-   *     length of the {@code array}, it is treated as the length of the {@code
-   *     array}.
-   * @return the joined String, {@code null} if null array input
+   *     停止连接的索引（不包括）。如果大于{@code array}的长度，
+   *     则视为{@code array}的长度
+   * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
    */
   public static String join(@Nullable final String separator,
@@ -6544,13 +6657,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. A {@code null} separator
-   * is
-   * the same as an empty String (""). Null objects or empty strings within the
-   * array are represented by empty strings.
+   * <p>列表前后不添加分隔符。{@code null} 分隔符与空字符串("")相同。
+   * 数组中的null对象或空字符串用空字符串表示。
    * <pre>
    * StringUtils.join(*, null)                = null
    * StringUtils.join(*, [])                  = ""
@@ -6562,10 +6672,10 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use, null treated as an empty string.
+   *     要使用的分隔符，null被视为空字符串
    * @param array
-   *     the array of values to join together, may be null
-   * @return the joined String, {@code null} if null array input
+   *     要连接的值数组，可能为null
+   * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
    */
   public static String join(@Nullable final String separator,
@@ -6576,13 +6686,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. A {@code null} separator
-   * is
-   * the same as an empty String (""). Null objects or empty strings within the
-   * array are represented by empty strings.
+   * <p>列表前后不添加分隔符。{@code null} 分隔符与空字符串("")相同。
+   * 数组中的null对象或空字符串用空字符串表示。
    * <pre>
    * StringUtils.join(*, null, *, *)                = null
    * StringUtils.join(*, [], *, *)                  = ""
@@ -6594,17 +6701,15 @@ public class StringUtils {
    * </pre>
    *
    * @param separator
-   *     the separator character to use, null treated as an empty string.
+   *     要使用的分隔符，null被视为空字符串
    * @param array
-   *     the array of values to join together, may be null
+   *     要连接的值数组，可能为null
    * @param startIndex
-   *     the first occurrence to start joining from. If it is less than zero, it
-   *     is treated as zero.
+   *     开始连接的第一个位置。如果小于零，则视为零
    * @param endIndex
-   *     the index to stop joining from (exclusive). If it is greater than the
-   *     length of the {@code array}, it is treated as the length of the {@code
-   *     array}.
-   * @return the joined String, {@code null} if null array input
+   *     停止连接的索引（不包括）。如果大于{@code array}的长度，
+   *     则视为{@code array}的长度
+   * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
    */
   public static String join(@Nullable final String separator,
@@ -6615,13 +6720,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. A {@code null} separator
-   * is
-   * the same as an empty String (""). Null objects or empty strings within the
-   * array are represented by empty strings.
+   * <p>列表前后不添加分隔符。{@code null} 分隔符与空字符串("")相同。
+   * 数组中的null对象或空字符串用空字符串表示。
    * <pre>
    * StringUtils.join(*, null)                = null
    * StringUtils.join(*, [])                  = ""
@@ -6633,12 +6735,12 @@ public class StringUtils {
    * </pre>
    *
    * @param <T>
-   *     the type of elements to be joined.
+   *     要连接的元素类型
    * @param separator
-   *     the separator character to use, null treated as an empty string.
+   *     要使用的分隔符，null被视为空字符串
    * @param array
-   *     the array of values to join together, may be null
-   * @return the joined String, {@code null} if null array input
+   *     要连接的值数组，可能为null
+   * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
    */
   public static <T> String join(@Nullable final String separator,
@@ -6649,13 +6751,10 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided array into a single String containing
-   * the provided list of elements.
+   * 将提供的数组元素连接成包含提供元素列表的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. A {@code null} separator
-   * is
-   * the same as an empty String (""). Null objects or empty strings within the
-   * array are represented by empty strings.
+   * <p>列表前后不添加分隔符。{@code null} 分隔符与空字符串("")相同。
+   * 数组中的null对象或空字符串用空字符串表示。
    * <pre>
    * StringUtils.join(*, null, *, *)                = null
    * StringUtils.join(*, [], *, *)                  = ""
@@ -6667,19 +6766,17 @@ public class StringUtils {
    * </pre>
    *
    * @param <T>
-   *     the type of elements to be joined.
+   *     要连接的元素类型
    * @param separator
-   *     the separator character to use, null treated as an empty string.
+   *     要使用的分隔符，null被视为空字符串
    * @param array
-   *     the array of values to join together, may be null
+   *     要连接的值数组，可能为null
    * @param startIndex
-   *     the first index to start joining from. If it is less than zero, it is
-   *     treated as zero.
+   *     开始连接的第一个索引。如果小于零，则视为零
    * @param endIndex
-   *     the index to stop joining from (exclusive). If it is greater than the
-   *     length of the {@code array}, it is treated as the length of the {@code
-   *     array}.
-   * @return the joined String, {@code null} if null array input
+   *     停止连接的索引（不包括）。如果大于{@code array}的长度，
+   *     则视为{@code array}的长度
+   * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
    */
   public static <T> String join(@Nullable final String separator,
@@ -6690,22 +6787,19 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided {@code Iterator} into a single String
-   * containing the provided elements.
+   * 将提供的{@code Iterator}元素连接成包含提供元素的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. A {@code null} separator
-   * is
-   * the same as an empty String ("").
+   * <p>列表前后不添加分隔符。{@code null} 分隔符与空字符串("")相同。
    *
-   * <p>See the examples here: {@link #join(String, Object[])}.
+   * <p>示例请参考：{@link #join(String, Object[])}。
    *
    * @param <T>
-   *     the type of elements to be joined.
+   *     要连接的元素类型
    * @param separator
-   *     the separator character to use, null treated as ""
+   *     要使用的分隔符字符，null被视为""
    * @param iterator
-   *     the {@code Iterator} of values to join together, may be null
-   * @return the joined String, {@code null} if null iterator input
+   *     要连接的值{@code Iterator}，可能为null
+   * @return 连接后的字符串，如果输入iterator为null则返回{@code null}
    * @see Joiner
    */
   public static <T> String join(@Nullable final String separator,
@@ -6716,22 +6810,19 @@ public class StringUtils {
   }
 
   /**
-   * Joins the elements of the provided {@code Iterable} into a single String
-   * containing the provided elements.
+   * 将提供的{@code Iterable}元素连接成包含提供元素的单个字符串。
    *
-   * <p>No delimiter is added before or after the list. A {@code null} separator
-   * is
-   * the same as an empty String ("").
+   * <p>列表前后不添加分隔符。{@code null} 分隔符与空字符串("")相同。
    *
-   * <p>See the examples here: {@link #join(String, Object[])}.
+   * <p>示例请参考：{@link #join(String, Object[])}。
    *
    * @param <T>
-   *     the type of elements to be joined.
+   *     要连接的元素类型
    * @param separator
-   *     the separator character to use, null treated as ""
+   *     要使用的分隔符字符，null被视为""
    * @param iterable
-   *     the {@code Iterable} of values to join together, may be null
-   * @return the joined String, {@code null} if null iterator input
+   *     要连接的值{@code Iterable}，可能为null
+   * @return 连接后的字符串，如果输入iterator为null则返回{@code null}
    * @see Joiner
    */
   public static <T> String join(@Nullable final String separator,
@@ -6742,16 +6833,14 @@ public class StringUtils {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by the
-   * specified character. This is an alternative to using StringTokenizer.
+   * 将提供的字符串分割为子字符串列表，由指定字符分隔。这是使用StringTokenizer的替代方案。
    *
-   * <p>The separator is not included in the returned String array. Adjacent
-   * separators are treated as one separator. For more control over the split
-   * use the StrTokenizer class.
+   * <p>分隔符不包含在返回的字符串数组中。相邻的分隔符被视为一个分隔符。
+   * 要对分割有更多控制，请使用StrTokenizer类。
    *
-   * <p>A {@code null} input String returns {@code null}.
+   * <p>{@code null} 输入字符串返回 {@code null}。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    * StringUtils.split(null, *)         = null
    * StringUtils.split("", *)           = null
@@ -6762,13 +6851,11 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to split. If it is null, clear the result (if it is not
-   *     {@code null}) and return the result.
+   *     要分割的字符串。如果为null，清空结果（如果不为{@code null}）并返回结果
    * @param separator
-   *     the character used as the delimiter
-   * @return a new linked list of string stores the split sub-strings. Note that
-   *     the returned list may be empty if the splitting result has no substring.
-   *     The returned list will never be {@code null}.
+   *     用作分隔符的字符
+   * @return 存储分割子字符串的新链表。注意如果分割结果没有子字符串，返回的列表可能为空。
+   *     返回的列表永远不会为{@code null}
    * @see SplitOption
    * @see Splitter
    */
@@ -6787,16 +6874,14 @@ public class StringUtils {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by the
-   * specified character. This is an alternative to using StringTokenizer.
+   * 将提供的字符串根据指定字符分割成子字符串列表。这是使用StringTokenizer的替代方案。
    *
-   * <p>The separator is not included in the returned String array. Adjacent
-   * separators are treated as one separator. For more control over the split
-   * use the StrTokenizer class.
+   * <p>分隔符不包含在返回的字符串数组中。相邻的分隔符被视为一个分隔符。
+   * 如需对分割进行更多控制，请使用StrTokenizer类。
    *
-   * <p>A {@code null} input String returns {@code null}.
+   * <p>如果输入字符串为{@code null}，则返回{@code null}。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    * StringUtils.split(null, *, null)         = null
    * StringUtils.split("", *, null)           = null
@@ -6807,15 +6892,13 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to splited. If it is null, clear the result (if it is not
-   *     {@code null}) and return the result.
+   *     要分割的字符串。如果为null，则清空结果（如果结果不为{@code null}）并返回结果。
    * @param separator
-   *     the character used as the delimiter
+   *     用作分隔符的字符
    * @param options
-   *     a bitwise mask of combination of {@link SplitOption}.
-   * @return a new linked list of string stores the split sub-strings. Note that
-   *     the returned list may be empty if the splitting result has no substring.
-   *     The returned list will never be {@code null}.
+   *     {@link SplitOption}组合的位掩码。
+   * @return 存储分割后子字符串的新链表。注意如果分割结果没有子字符串，
+   *     返回的列表可能为空。返回的列表永远不会为{@code null}。
    * @see SplitOption
    * @see Splitter
    */
@@ -6829,16 +6912,14 @@ public class StringUtils {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by the
-   * specified character. This is an alternative to using StringTokenizer.
+   * 将提供的字符串根据指定字符分割成子字符串列表。这是使用StringTokenizer的替代方案。
    *
-   * <p>The separator is not included in the returned String array. Adjacent
-   * separators are treated as one separator. For more control over the split
-   * use the StrTokenizer class.
+   * <p>分隔符不包含在返回的字符串数组中。相邻的分隔符被视为一个分隔符。
+   * 如需对分割进行更多控制，请使用StrTokenizer类。
    *
-   * <p>A {@code null} input String returns {@code null}.
+   * <p>如果输入字符串为{@code null}，则返回{@code null}。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    * StringUtils.split(null, *, null, null)         = null
    * StringUtils.split("", *, null, null)           = null
@@ -6849,23 +6930,20 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to splited. If it is null, clear the result (if it is not
-   *     {@code null}) and return the result.
+   *     要分割的字符串。如果为null，则清空结果（如果结果不为{@code null}）并返回结果。
    * @param separator
-   *     the character used as the delimiter
+   *     用作分隔符的字符
    * @param options
-   *     a bitwise mask of combination of {@link SplitOption}.
+   *     {@link SplitOption}组合的位掩码。
    * @param list
-   *     the string list where to append the split sub-strings. If it is null,
-   *     the function will create a new list of strings. Not that if this
-   *     argument is not {@code null}, it will <b>NOT</b> be cleared by this
-   *     function. Instead, the splitting result will be append to this list.
-   * @return an list of splitted strings. If the argument result is not {@code
-   *     null}, the function will append the split sub-strings in that argument
-   *     and return that argument; otherwise, a new list of string is created
-   *     and stores the split sub-strings and is returned. Note that the
-   *     returned list may be empty if the splitting result has no substring.
-   *     The returned list will never be {@code null}.
+   *     用于追加分割后子字符串的字符串列表。如果为null，
+   *     函数将创建一个新的字符串列表。注意如果此参数不为{@code null}，
+   *     此函数将<b>不会</b>清空它。相反，分割结果将追加到此列表中。
+   * @return 分割后的字符串列表。如果参数result不为{@code null}，
+   *     函数将在该参数中追加分割后的子字符串并返回该参数；否则，
+   *     将创建一个新的字符串列表并存储分割后的子字符串并返回。
+   *     注意如果分割结果没有子字符串，返回的列表可能为空。
+   *     返回的列表永远不会为{@code null}。
    * @see SplitOption
    */
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
@@ -6879,17 +6957,14 @@ public class StringUtils {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by the
-   * characters of a specified string. This is an alternative to using
-   * StringTokenizer.
+   * 将提供的字符串根据指定字符串的字符分割成子字符串列表。这是使用StringTokenizer的替代方案。
    *
-   * <p>The separator is not included in the returned String array. Adjacent
-   * separators are treated as one separator. For more control over the split
-   * use the StrTokenizer class.
+   * <p>分隔符不包含在返回的字符串数组中。相邻的分隔符被视为一个分隔符。
+   * 如需对分割进行更多控制，请使用StrTokenizer类。
    *
-   * <p>A {@code null} input String returns {@code null}.
+   * <p>如果输入字符串为{@code null}，则返回{@code null}。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    * StringUtils.split(null, *)            = null
    * StringUtils.split("", *)              = null
@@ -6900,17 +6975,14 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to splited. If it is null, clear the result (if it is not
-   *     {@code null}) and return the result.
+   *     要分割的字符串。如果为null，则清空结果（如果结果不为{@code null}）并返回结果。
    * @param separatorChars
-   *     the characters used as the delimiters. If it is null or empty string,
-   *     the string is not splited and the function will return a list
-   *     containing the original string.
+   *     用作分隔符的字符。如果为null或空字符串，
+   *     则不分割字符串，函数将返回包含原始字符串的列表。
    * @param options
-   *     a bitwise mask of combination of {@link SplitOption}.
-   * @return a new linked list of string stores the split sub-strings. Note that
-   *     the returned list may be empty if the splitting result has no substring.
-   *     The returned list will never be {@code null}.
+   *     {@link SplitOption}组合的位掩码。
+   * @return 存储分割后子字符串的新链表。注意如果分割结果没有子字符串，
+   *     返回的列表可能为空。返回的列表永远不会为{@code null}。
    * @see SplitOption
    */
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
@@ -6923,17 +6995,14 @@ public class StringUtils {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by the
-   * characters of a specified string. This is an alternative to using
-   * StringTokenizer.
+   * 将提供的字符串根据指定字符串的字符分割成子字符串列表。这是使用StringTokenizer的替代方案。
    *
-   * <p>The separator is not included in the returned String array. Adjacent
-   * separators are treated as one separator. For more control over the split
-   * use the StrTokenizer class.
+   * <p>分隔符不包含在返回的字符串数组中。相邻的分隔符被视为一个分隔符。
+   * 如需对分割进行更多控制，请使用StrTokenizer类。
    *
-   * <p>A {@code null} input String returns {@code null}.
+   * <p>如果输入字符串为{@code null}，则返回{@code null}。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    * StringUtils.split(null, *, null, null)            = null
    * StringUtils.split("", *, null, null)              = null
@@ -6944,8 +7013,7 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to splited. If it is null, clear the result (if it is not
-   *     {@code null}) and return the result.
+   *     要分割的字符串。如果为null，则清空结果（如果结果不为{@code null}）并返回结果。
    * @param separatorChars
    *     the characters used as the delimiters. If it is null or empty string,
    *     the string is not splited and the function will return a list
@@ -6953,14 +7021,11 @@ public class StringUtils {
    * @param options
    *     a bitwise mask of combination of {@link SplitOption}.
    * @param result
-   *     the string list where to store the split sub-strings. If it is null,
-   *     the function will create a new list of strings.
-   * @return an list of splitted strings. If the argument result is not {@code
-   *     null}, the function will store the split sub-strings in that argument
-   *     and return that argument; otherwise, a new linked list of string is
-   *     created and stores the split sub-strings and is returned. Note that the
-   *     returned list may be empty if the splitting result has no substring.
-   *     The returned list will never be {@code null}.
+   *     存储分割子字符串的字符串列表。如果为null，函数将创建新的字符串列表。
+   * @return 分割后的字符串列表。如果参数result不为{@code null}，
+   *     函数将在该参数中存储分割的子字符串并返回该参数；否则，
+   *     创建新的链表存储分割的子字符串并返回。注意返回的列表可能为空，
+   *     如果分割结果没有子字符串。返回的列表永远不会为{@code null}。
    * @see SplitOption
    */
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
@@ -6974,17 +7039,15 @@ public class StringUtils {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by the
-   * characters of a specified array. This is an alternative to using
-   * StringTokenizer.
+   * 将提供的字符串分割成子字符串列表，通过指定数组的字符分隔。
+   * 这是使用StringTokenizer的替代方案。
    *
-   * <p>The separator is not included in the returned String array. Adjacent
-   * separators are treated as one separator. For more control over the split
-   * use the StrTokenizer class.
+   * <p>分隔符不包含在返回的字符串数组中。相邻的分隔符被视为一个分隔符。
+   * 要更好地控制分割，请使用StrTokenizer类。
    *
-   * <p>A {@code null} input String returns {@code null}.
+   * <p>{@code null} 输入字符串返回 {@code null}。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    * StringUtils.split(null, *)                  = null
    * StringUtils.split("", *)                    = null
@@ -6995,18 +7058,14 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to splited. If it is null, clear the result (if it is not
-   *     {@code null}) and return the result.
+   *     要分割的字符串。如果为null，则清除结果（如果不为{@code null}）并返回结果。
    * @param separatorChars
-   *     the characters used as the delimiters. If it is null or empty string,
-   *     the string is not splited and the function will return a list
-   *     containing the original string.
+   *     用作分隔符的字符数组。如果为null或空字符串，则不分割字符串，
+   *     函数将返回包含原始字符串的列表。
    * @param options
-   *     a bitwise mask of combination of {@link SplitOption}.
-   *     the function will create a new list of strings.
-   * @return  a new linked list of string stores the split sub-strings. Note that
-   *     the returned list may be empty if the splitting result has no substring.
-   *     The returned list will never be {@code null}.
+   *     {@link SplitOption} 组合的位掩码。
+   * @return 存储分割子字符串的新链表。注意返回的列表可能为空，
+   *     如果分割结果没有子字符串。返回的列表永远不会为{@code null}。
    * @see SplitOption
    */
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
@@ -7019,17 +7078,15 @@ public class StringUtils {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by the
-   * characters of a specified array. This is an alternative to using
-   * StringTokenizer.
+   * 将提供的字符串分割成子字符串列表，通过指定数组的字符分隔。
+   * 这是使用StringTokenizer的替代方案。
    *
-   * <p>The separator is not included in the returned String array. Adjacent
-   * separators are treated as one separator. For more control over the split
-   * use the StrTokenizer class.
+   * <p>分隔符不包含在返回的字符串数组中。相邻的分隔符被视为一个分隔符。
+   * 要更好地控制分割，请使用StrTokenizer类。
    *
-   * <p>A {@code null} input String returns {@code null}.
+   * <p>{@code null} 输入字符串返回 {@code null}。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    * StringUtils.split(null, *, null)                  = null
    * StringUtils.split("", *, null)                    = null
@@ -7040,23 +7097,18 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to splited. If it is null, clear the result (if it is not
-   *     {@code null}) and return the result.
+   *     要分割的字符串。如果为null，则清除结果（如果不为 {@code null}）并返回结果
    * @param separatorChars
-   *     the characters used as the delimiters. If it is null or empty string,
-   *     the string is not splited and the function will return a list
-   *     containing the original string.
+   *     用作分隔符的字符数组。如果为null或空字符串，则不分割字符串，
+   *     函数将返回包含原始字符串的列表
    * @param options
-   *     a bitwise mask of combination of {@link SplitOption}.
+   *     {@link SplitOption} 组合的位掩码
    * @param result
-   *     the string list where to store the split sub-strings. If it is null,
-   *     the function will create a new list of strings.
-   * @return an list of splitted strings. If the argument result is not {@code
-   *     null}, the function will store the split sub-strings in that argument
-   *     and return that argument; otherwise, a new linked list of string is
-   *     created and stores the split sub-strings and is returned. Note that the
-   *     returned list may be empty if the splitting result has no substring.
-   *     The returned list will never be {@code null}.
+   *     存储分割子字符串的字符串列表。如果为null，函数将创建新的字符串列表
+   * @return 分割后的字符串列表。如果参数result不为 {@code null}，
+   *     函数将在该参数中存储分割的子字符串并返回该参数；否则，
+   *     创建新的链表存储分割的子字符串并返回。注意返回的列表可能为空，
+   *     如果分割结果没有子字符串。返回的列表永远不会为 {@code null}
    * @see SplitOption
    */
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
@@ -7070,17 +7122,15 @@ public class StringUtils {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by the
-   * characters accepted by a specified CharFilter. This is an alternative to
-   * using StringTokenizer.
+   * 将提供的字符串分割成子字符串列表，通过指定CharFilter接受的字符分隔。
+   * 这是使用StringTokenizer的替代方案。
    *
-   * <p>The separator is not included in the returned String array. Adjacent
-   * separators are treated as one separator. For more control over the split
-   * use the StrTokenizer class.
+   * <p>分隔符不包含在返回的字符串数组中。相邻的分隔符被视为一个分隔符。
+   * 要更好地控制分割，请使用StrTokenizer类。
    *
-   * <p>A {@code null} input String returns {@code null}.
+   * <p>{@code null} 输入字符串返回 {@code null}。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    * StringUtils.split(null, *)         = null
    * StringUtils.split("", *)           = null
@@ -7091,17 +7141,14 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to splited. If it is null, clear the result (if it is not
-   *     {@code null}) and return the result.
+   *     要分割的字符串。如果为null，则清除结果（如果不为 {@code null}）并返回结果
    * @param charFilter
-   *     a filter used to filter characters. The function will split the string
-   *     by all characters accepted by this filter. This argument can't be
-   *     null.
+   *     用于过滤字符的过滤器。函数将通过此过滤器接受的所有字符分割字符串。
+   *     此参数不能为null
    * @param options
-   *     a bitwise mask of combination of {@link SplitOption}.
-   * @return a new linked list of string stores the split sub-strings. Note that
-   *     the returned list may be empty if the splitting result has no substring.
-   *     The returned list will never be {@code null}.
+   *     {@link SplitOption} 组合的位掩码
+   * @return 存储分割子字符串的新链表。注意如果分割结果没有子字符串，
+   *     返回的列表可能为空。返回的列表永远不会为 {@code null}
    * @see SplitOption
    */
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
@@ -7114,17 +7161,15 @@ public class StringUtils {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by the
-   * characters accepted by a specified CharFilter. This is an alternative to
-   * using StringTokenizer.
+   * 将提供的字符串分割成子字符串列表，通过指定CharFilter接受的字符分隔。
+   * 这是使用StringTokenizer的替代方案。
    *
-   * <p>The separator is not included in the returned String array. Adjacent
-   * separators are treated as one separator. For more control over the split
-   * use the StrTokenizer class.
+   * <p>分隔符不包含在返回的字符串数组中。相邻的分隔符被视为一个分隔符。
+   * 要更好地控制分割，请使用StrTokenizer类。
    *
-   * <p>A {@code null} input String returns {@code null}.
+   * <p>{@code null} 输入字符串返回 {@code null}。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    * StringUtils.split(null, *, null)         = null
    * StringUtils.split("", *, null)           = null
@@ -7135,23 +7180,18 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to splited. If it is null, clear the result (if it is not
-   *     {@code null}) and return the result.
+   *     要分割的字符串。如果为null，则清除结果（如果不为 {@code null}）并返回结果
    * @param charFilter
-   *     a filter used to filter characters. The function will split the string
-   *     by all characters accepted by this filter. This argument can't be
-   *     null.
+   *     用于过滤字符的过滤器。函数将通过此过滤器接受的所有字符分割字符串。
+   *     此参数不能为null
    * @param options
-   *     a bitwise mask of combination of {@link SplitOption}.
+   *     {@link SplitOption} 组合的位掩码
    * @param list
-   *     the string list where to store the split sub-strings. If it is null,
-   *     the function will create a new list of strings.
-   * @return an list of splitted strings. If the argument result is not {@code
-   *     null}, the function will store the split sub-strings in that argument
-   *     and return that argument; otherwise, a new linked list of string is
-   *     created and stores the split sub-strings and is returned. Note that the
-   *     returned list may be empty if the splitting result has no substring.
-   *     The returned list will never be {@code null}.
+   *     存储分割子字符串的字符串列表。如果为null，函数将创建新的字符串列表
+   * @return 分割后的字符串列表。如果参数result不为 {@code null}，
+   *     函数将在该参数中存储分割的子字符串并返回该参数；否则，
+   *     创建新的链表存储分割的子字符串并返回。注意返回的列表可能为空，
+   *     如果分割结果没有子字符串。返回的列表永远不会为 {@code null}
    * @see SplitOption
    */
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
@@ -7165,16 +7205,15 @@ public class StringUtils {
   }
 
   /**
-   * Splits the provided string into a list of sub-strings, separated by
-   * whitespaces. This is an alternative to using StringTokenizer.
+   * 将提供的字符串分割成子字符串列表，通过空白字符分隔。
+   * 这是使用StringTokenizer的替代方案。
    *
-   * <p>The separator is not included in the returned String array. Adjacent
-   * separators are treated as one separator. For more control over the split
-   * use the StrTokenizer class.
+   * <p>分隔符不包含在返回的字符串数组中。相邻的分隔符被视为一个分隔符。
+   * 要更好地控制分割，请使用StrTokenizer类。
    *
-   * <p>A {@code null} input String returns {@code null}.
+   * <p>{@code null} 输入字符串返回 {@code null}。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    * StringUtils.split(null)       = null
    * StringUtils.split("")         = null
@@ -7184,11 +7223,9 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to split. If it is null, clear the result (if it is not
-   *     {@code null}) and return the result.
-   * @return a new linked list of string stores the split sub-strings. Note that
-   *     the returned list may be empty if the splitting result has no substring.
-   *     The returned list will never be {@code null}.
+   *     要分割的字符串。如果为null，则清除结果（如果不为 {@code null}）并返回结果
+   * @return 存储分割子字符串的新链表。注意如果分割结果没有子字符串，
+   *     返回的列表可能为空。返回的列表永远不会为 {@code null}
    * @see Splitter
    */
   public static @Nonnull List<String> split(@Nullable final CharSequence str) {
@@ -7197,21 +7234,30 @@ public class StringUtils {
         .split(str);
   }
 
+  /**
+   * 将提供的字符串分割成字符串数组，通过空白字符分隔。
+   *
+   * <p>这是 {@link #split(CharSequence)} 的数组版本。
+   *
+   * @param str
+   *     要分割的字符串，可能为 null
+   * @return 分割后的字符串数组。永远不会为 {@code null}
+   * @see #split(CharSequence)
+   */
   public static @Nonnull String[] splitToArray(@Nullable final CharSequence str) {
     return split(str).toArray(new String[0]);
   }
 
   /**
-   * Splits the provided string into a list of sub-strings, separated by
-   * whitespaces. This is an alternative to using StringTokenizer.
+   * 将提供的字符串分割成子字符串列表，通过空白字符分隔。
+   * 这是使用StringTokenizer的替代方案。
    *
-   * <p>The separator is not included in the returned String array. Adjacent
-   * separators are treated as one separator. For more control over the split
-   * use the StrTokenizer class.
+   * <p>分隔符不包含在返回的字符串数组中。相邻的分隔符被视为一个分隔符。
+   * 要更好地控制分割，请使用StrTokenizer类。
    *
-   * <p>A {@code null} input String returns {@code null}.
+   * <p>{@code null} 输入字符串返回 {@code null}。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    * StringUtils.split(null, null)       = null
    * StringUtils.split("", null)         = null
@@ -7221,17 +7267,13 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to splited. If it is null, clear the result (if it is not
-   *     {@code null}) and return the result.
+   *     要分割的字符串。如果为null，则清除结果（如果不为 {@code null}）并返回结果
    * @param list
-   *     the string list where to store the split sub-strings. If it is null,
-   *     the function will create a new list of strings.
-   * @return an list of splitted strings. If the argument result is not {@code
-   *     null}, the function will store the split sub-strings in that argument
-   *     and return that argument; otherwise, a new linked list of string is
-   *     created and stores the split sub-strings and is returned. Note that the
-   *     returned list may be empty if the splitting result has no substring.
-   *     The returned list will never be {@code null}.
+   *     存储分割子字符串的字符串列表。如果为null，函数将创建新的字符串列表
+   * @return 分割后的字符串列表。如果参数result不为 {@code null}，
+   *     函数将在该参数中存储分割的子字符串并返回该参数；否则，
+   *     创建新的链表存储分割的子字符串并返回。注意返回的列表可能为空，
+   *     如果分割结果没有子字符串。返回的列表永远不会为 {@code null}
    */
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
       @Nullable final List<String> list) {
@@ -7271,12 +7313,10 @@ public class StringUtils {
    *     the string to split, may be {@code null}
    * @param options
    *     a bitwise mask of combination of {@link SplitOption}。
-   * @return an list of splitted strings. If the argument result is not {@code
-   *     null}, the function will store the split sub-strings in that argument
-   *     and return that argument; otherwise, a new list of string is
-   *     created and stores the split sub-strings and is returned. Note that the
-   *     returned list may be empty if the splitting result has no substring.
-   *     The returned list will never be {@code null}.
+   * @return 分割后的字符串列表。如果参数result不为 {@code
+   *     null}，函数将在该参数中存储分割的子字符串并返回该参数；否则，
+   *     创建新的字符串列表存储分割的子字符串并返回。注意返回的列表可能为空，
+   *     如果分割结果没有子字符串。返回的列表永远不会为 {@code null}。
    * @see SplitOption
    * @see Splitter
    */
@@ -7291,17 +7331,14 @@ public class StringUtils {
   }
 
   /**
-   * Splits a string by Character type as returned by {@code
-   * java.lang.Character.getType(char)}. Groups of contiguous characters of the
-   * same type are returned as complete tokens, with the following exception:
+   * 按照 {@code java.lang.Character.getType(char)} 返回的字符类型分割字符串。
+   * 相同类型的连续字符组作为完整的标记返回，但有以下例外：
    *
-   * <p>If {@code camelCase} is {@code true}, the character of type
-   * {@code Character.UPPERCASE_LETTER}, if any, immediately preceding a token
-   * of type {@code Character.LOWERCASE_LETTER} will belong to the following
-   * token rather than to the preceding, if any, {@code Character.UPPERCASE_LETTER}
-   * token.
+   * <p>如果启用驼峰模式，紧邻 {@code Character.LOWERCASE_LETTER} 类型标记
+   * 前面的 {@code Character.UPPERCASE_LETTER} 类型字符（如果有）
+   * 将归属于后面的标记，而不是前面的 {@code Character.UPPERCASE_LETTER} 标记。
    *
-   * <p>Examples:
+   * <p>示例：
    * <pre>
    * StringUtils.splitByCharType(null, *, null)             = null
    * StringUtils.splitByCharType("", *, null)               = null
@@ -7318,18 +7355,15 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to split, may be {@code null}
+   *     要分割的字符串，可能为 {@code null}
    * @param options
-   *     a bitwise mask of combination of {@link SplitOption}。
+   *     {@link SplitOption} 组合的位掩码
    * @param list
-   *     the string list where to store the split sub-strings. If it is null,
-   *     the function will create a new list of strings.
-   * @return a list of split strings. If the argument result is not {@code
-   *     null}, the function will store the split sub-strings in that argument
-   *     and return that argument; otherwise, a new linked list of string is
-   *     created and stores the split sub-strings and is returned. Note that the
-   *     returned list may be empty if the splitting result has no substring.
-   *     The returned list will never be {@code null}.
+   *     存储分割子字符串的字符串列表。如果为null，函数将创建新的字符串列表
+   * @return 分割后的字符串列表。如果参数result不为 {@code null}，
+   *     函数将在该参数中存储分割的子字符串并返回该参数；否则，
+   *     创建新的链表存储分割的子字符串并返回。注意返回的列表可能为空，
+   *     如果分割结果没有子字符串。返回的列表永远不会为 {@code null}
    * @see SplitOption
    */
   public static @Nonnull List<String> splitByCharType(@Nullable final CharSequence str,
@@ -7343,12 +7377,12 @@ public class StringUtils {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by the a
-   * specified sub-string. This is an alternative to using StringTokenizer.
+   * 将提供的字符串分割成子字符串列表，通过指定的子字符串分隔。
+   * 这是使用StringTokenizer的替代方案。
    *
-   * <p>The separator(s) will not be included in the returned String array.
+   * <p>分隔符不会包含在返回的字符串数组中。
    *
-   * <p>A {@code null} input String returns {@code null}.
+   * <p>{@code null} 输入字符串返回 {@code null}。
    * <pre>
    * splitByString(null, *)                             = null
    * splitByString("", *)                               = null
@@ -7357,16 +7391,12 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to split. If it is null, clear the result (if it is not
-   *     {@code null}) and return the result.
+   *     要分割的字符串。如果为null，则清除结果（如果不为 {@code null}）并返回结果
    * @param separator
-   *     the string to be used as the delimiter. If it is null or empty, the
-   *     string is split such that each character become a substring.
-   * @return a new linked list of string stores the split sub-strings. Each
-   *     split substring will be stripped and the empty strings will be
-   *     ignored. Note that the returned list may be empty if the splitting
-   *     result has no non-blank substring. The returned list will never be
-   *     {@code null}.
+   *     用作分隔符的字符串。如果为null或空，则字符串被分割为每个字符都成为一个子字符串
+   * @return 存储分割子字符串的新链表。每个分割的子字符串都会被修剪，空字符串会被忽略。
+   *     注意如果分割结果没有非空白子字符串，返回的列表可能为空。
+   *     返回的列表永远不会为 {@code null}
    * @see Splitter
    */
   public static @Nonnull List<String> splitByString(@Nullable final CharSequence str,
@@ -7378,18 +7408,30 @@ public class StringUtils {
         .split(str);
   }
 
+  /**
+   * 将提供的字符串分割成字符串数组，通过指定的子字符串分隔。
+   *
+   * <p>这是 {@link #splitByString(CharSequence, CharSequence)} 的数组版本。
+   *
+   * @param str
+   *     要分割的字符串，可能为 null
+   * @param separator
+   *     用作分隔符的字符串，可能为 null
+   * @return 分割后的字符串数组。永远不会为 {@code null}
+   * @see #splitByString(CharSequence, CharSequence)
+   */
   public static @Nonnull String[] splitByStringToArray(@Nullable final CharSequence str,
       @Nullable final CharSequence separator) {
     return splitByString(str, separator).toArray(new String[0]);
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by the a
-   * specified sub-string. This is an alternative to using StringTokenizer.
+   * 将提供的字符串分割成子字符串列表，通过指定的子字符串分隔。
+   * 这是使用StringTokenizer的替代方案。
    *
-   * <p>The separator(s) will not be included in the returned String array.
+   * <p>分隔符不会包含在返回的字符串数组中。
    *
-   * <p>A {@code null} input String returns {@code null}.
+   * <p>{@code null} 输入字符串返回 {@code null}。
    * <pre>
    * splitByString(null, *, *, *)                             = null
    * splitByString("", *, *, *)                               = null
@@ -7401,16 +7443,13 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to split. If it is null, clear the result (if it is not
-   *     {@code null}) and return the result.
+   *     要分割的字符串。如果为null，则清除结果（如果不为 {@code null}）并返回结果
    * @param separator
-   *     the string to be used as the delimiter. If it is null or empty, the
-   *     string is split such that each character become a substring.
+   *     用作分隔符的字符串。如果为null或空，则字符串被分割为每个字符都成为一个子字符串
    * @param options
-   *     a bitwise mask of combination of {@link SplitOption}.
-   * @return a new linked list of string stores the split sub-strings. Note that
-   *     the returned list may be empty if the splitting result has no substring.
-   *     The returned list will never be {@code null}.
+   *     {@link SplitOption} 组合的位掩码
+   * @return 存储分割子字符串的新链表。注意如果分割结果没有子字符串，
+   *     返回的列表可能为空。返回的列表永远不会为 {@code null}
    * @see SplitOption
    * @see Splitter
    */
@@ -7424,12 +7463,11 @@ public class StringUtils {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by the a
-   * specified sub-string. This is an alternative to using StringTokenizer.
+   * 将提供的字符串根据指定的子字符串分割成子字符串列表。这是使用StringTokenizer的替代方案。
    *
-   * <p>The separator(s) will not be included in the returned String array.
+   * <p>分隔符不会包含在返回的字符串数组中。
    *
-   * <p>A {@code null} input String returns {@code null}.
+   * <p>{@code null} 输入字符串返回 {@code null}。
    * <pre>
    * splitByString(null, *, *, *, *)                  = null
    * splitByString("", *, *, *, null)                 = null
@@ -7441,22 +7479,17 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to split. If it is null, clear the result (if it is not
-   *     {@code null}) and return the result.
+   *     要分割的字符串。如果为null，清空结果（如果不为{@code null}）并返回结果
    * @param separator
-   *     the string to be used as the delimiter. If it is null or empty, the
-   *     string is split such that each character become a substring.
+   *     用作分隔符的字符串。如果为null或空，字符串被分割为每个字符成为一个子字符串
    * @param options
-   *     a bitwise mask of combination of {@link SplitOption}.
+   *     {@link SplitOption}组合的位掩码
    * @param list
-   *     the string list where to store the split sub-strings. If it is null,
-   *     the function will create a new list of strings.
-   * @return an list of splitted strings. If the argument result is not {@code
-   *     null}, the function will store the split sub-strings in that argument
-   *     and return that argument; otherwise, a new linked list of string is
-   *     created and stores the split sub-strings and is returned. Note that the
-   *     returned list may be empty if the splitting result has no substring.
-   *     The returned list will never be {@code null}.
+   *     存储分割子字符串的字符串列表。如果为null，函数将创建新的字符串列表
+   * @return 分割后的字符串列表。如果参数result不为{@code null}，
+   *     函数将在该参数中存储分割的子字符串并返回该参数；否则，
+   *     创建新的链表存储分割的子字符串并返回。注意返回的列表可能为空，
+   *     如果分割结果没有子字符串。返回的列表永远不会为{@code null}。
    * @see SplitOption
    */
   public static @Nonnull List<String> splitByString(@Nullable final CharSequence str,
@@ -7470,19 +7503,17 @@ public class StringUtils {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by lines.
+   * 将提供的字符串根据行分割成子字符串列表。
    *
-   * <p>The line break may be "\r", "\r\n", or "\n".
+   * <p>换行符可能是"\r"、"\r\n"或"\n"。
    *
-   * <p>A {@code null} input String returns {@code null}.
+   * <p>{@code null} 输入字符串返回 {@code null}。
    *
    * @param str
-   *     the string to split. If it is null, clear the result (if it is not
-   *     {@code null}) and return the result.
-   * @return the list of split strings. Each string in the list will be stripped,
-   *     and the empty strings will be ignored. The returned list may be empty
-   *     if the splitting result has no non-blank substring. The returned list
-   *     will never be {@code null}.
+   *     要分割的字符串。如果为null，清空结果（如果不为{@code null}）并返回结果
+   * @return 分割后的字符串列表。列表中的每个字符串都会被去除空白，
+   *     空字符串将被忽略。如果分割结果没有非空白子字符串，返回的列表可能为空。
+   *     返回的列表永远不会为{@code null}。
    * @see Splitter
    */
   public static @Nonnull List<String> splitLines(@Nullable final CharSequence str) {
@@ -7498,22 +7529,20 @@ public class StringUtils {
   }
 
   /**
-   * Splits the provided string into a list of substrings, separated by lines.
+   * 将提供的字符串根据行分割成子字符串列表。
    *
-   * <p>The line break may be "\r", "\r\n", or "\n".
+   * <p>换行符可能是"\r"、"\r\n"或"\n"。
    *
-   * <p>A {@code null} input String returns {@code null}.
+   * <p>{@code null} 输入字符串返回 {@code null}。
    *
    * @param str
-   *     the string to split. If it is null, clear the result (if it is not
-   *     {@code null}) and return the result.
+   *     要分割的字符串。如果为null，清空结果（如果不为{@code null}）并返回结果
    * @param trim
-   *     whether to trim the split substrings.
+   *     是否去除分割子字符串的空白
    * @param ignoreEmpty
-   *     whether to ignore the empty substring in the returned list.
-   * @return an list of splitted strings. The returned list may be empty if the
-   *     splitting result has no substring. The returned list will never be
-   *     {@code null}.
+   *     是否在返回的列表中忽略空子字符串
+   * @return 分割后的字符串列表。如果分割结果没有子字符串，返回的列表可能为空。
+   *     返回的列表永远不会为{@code null}。
    */
   public static @Nonnull List<String> splitLines(@Nullable final CharSequence str,
       final boolean trim, final boolean ignoreEmpty) {
@@ -7525,12 +7554,10 @@ public class StringUtils {
   }
 
   /**
-   * Overlays part of a string with another String.
+   * 用另一个字符串覆盖字符串的一部分。
    *
-   * <p>A {@code null} string input returns {@code null}. A negative current is
-   * treated as zero. An current greater than the string length is treated as
-   * the string length. The start current is always the smaller of the two
-   * indices.
+   * <p>{@code null} 字符串输入返回 {@code null}。负索引被视为零。
+   * 大于字符串长度的索引被视为字符串长度。起始索引总是两个索引中较小的那个。
    * <pre>
    * StringUtils.overlay(null, *, *, *)            = null
    * StringUtils.overlay("", "abc", 0, 0)          = "abc"
@@ -7546,14 +7573,14 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to do overlaying in, may be null
+   *     要进行覆盖操作的字符串，可能为 null
    * @param overlay
-   *     the string to overlay, may be null
+   *     用于覆盖的字符串，可能为 null
    * @param startIndex
-   *     the position to start overlaying at
+   *     开始覆盖的位置
    * @param endIndex
-   *     the position to stop overlaying before
-   * @return overlayed String, {@code null} if null String input
+   *     停止覆盖的位置（不包含）
+   * @return 覆盖后的字符串，如果输入字符串为 null 则返回 {@code null}
    */
   public static String overlay(@Nullable final String str,
       @Nullable final String overlay, final int startIndex, final int endIndex) {
@@ -7792,13 +7819,12 @@ public class StringUtils {
    * </pre>
    *
    * @param str
-   *     the string to pad out, may be null
+   *     要填充的字符串，可能为 null
    * @param size
-   *     the size to pad to
+   *     要填充到的大小
    * @param padChar
-   *     the character to pad with
-   * @return left padded String or original String if no padding is necessary,
-   *     {@code null} if null String input
+   *     用于填充的字符
+   * @return 左填充的字符串，如果不需要填充则返回原始字符串，如果输入字符串为 null 则返回 {@code null}
    */
   public static String leftPad(@Nullable final String str, final int size,
       final char padChar) {
@@ -8007,10 +8033,9 @@ public class StringUtils {
   }
 
   /**
-   * Capitalizes a string changing the first letter to title case as per {@link
-   * Character#toTitleCase(char)}. No other letters are changed.
+   * 根据 {@link Character#toTitleCase(char)} 将字符串的首字母转换为标题大小写。其他字母不变。
    *
-   * <p>A {@code null} input String returns {@code null}.
+   * <p>{@code null} 输入字符串返回 {@code null}。
    * <pre>
    * StringUtils.capitalize(null)  = null
    * StringUtils.capitalize("")    = ""
@@ -8018,12 +8043,11 @@ public class StringUtils {
    * StringUtils.capitalize("cAt") = "CAt"
    * </pre>
    *
-   * <p>FIXME: the implementation is not perfect for all langauges. Need a more
-   * prefect implementation.
+   * <p>FIXME: 该实现对所有语言都不完美。需要更完善的实现。
    *
    * @param str
-   *     the string to capitalize, may be null
-   * @return the capitalized String, {@code null} if null String input
+   *     要首字母大写的字符串，可能为 null
+   * @return 首字母大写的字符串，如果输入字符串为 null 则返回 {@code null}
    * @see #uncapitalize(String)
    */
   public static String capitalize(@Nullable final String str) {
@@ -8223,21 +8247,20 @@ public class StringUtils {
   private static final int MIN_ABBREV_WIDTH_WITH_OFFSET = ELLIPSES_LENGTH + MIN_ABBREV_WIDTH;
 
   /**
-   * Truncate the string to get a prefix string of the specified length.
+   * 截断字符串以获取指定长度的前缀字符串。
    *
-   * <p>This function is similar to the function String.substring(0, length),
-   * except that the function ensure the result string is always a valid Unicode
-   * string, i.e., no incomplete code unit sequence at the end of the result
-   * string.
+   * <p>此函数类似于 String.substring(0, length) 函数，
+   * 但该函数确保结果字符串始终是有效的 Unicode 字符串，
+   * 即结果字符串末尾没有不完整的代码单元序列。
    *
    * @param str
-   *     the string to be truncated, which could be {@code null}.
+   *     要截断的字符串，可能为{@code null}
    * @param length
-   *     the length of the result string.
-   * @return a prefix of str shorter than length, which consists a valid Unicode
-   *     string. A null string will returns a {@code null}.
+   *     结果字符串的长度
+   * @return str的前缀，短于length，由有效的Unicode字符串组成。
+   *     null字符串将返回{@code null}
    * @throws IllegalArgumentException
-   *     if <code>length &lt; 0</code>.
+   *     如果<code>length &lt; 0</code>
    */
   public static String truncateUtf16(@Nullable final String str,
       final int length) {
@@ -8435,8 +8458,8 @@ public class StringUtils {
    * @param leftQuote
    *     the left quotation mark.
    * @param rightQuote
-   *     the right quotation mark.
-   * @return the quoted string, with its original content escaped.
+   *     右引号
+   * @return 引用的字符串，其原始内容已转义
    */
   public static String quote(final String str, final char escapeChar,
       final char leftQuote, final char rightQuote) {
@@ -8641,18 +8664,17 @@ public class StringUtils {
   }
 
   /**
-   * Tests whether a character in a escaped string is escaped.
+   * 测试转义字符串中的字符是否被转义。
    *
    * @param str
-   *     an escaped string.
+   *     转义字符串。
    * @param escapeChar
-   *     the character used to escape itself and other characters.
+   *     用于转义自身和其他字符的字符。
    * @param index
-   *     the index of a character in the escaped string.
-   * @return {@code true} if the character at the specified index in the escaped
-   *     string is escaped by the escaping character; {@code false} otherwise.
+   *     转义字符串中字符的索引。
+   * @return 如果转义字符串中指定索引处的字符被转义字符转义，则返回 {@code true}；否则返回 {@code false}。
    * @throws IndexOutOfBoundsException
-   *     if {@code index} is out of the bounds of {@code str}.
+   *     如果 {@code index} 超出 {@code str} 的边界。
    */
   public static boolean isEscaped(final String str, final char escapeChar,
       final int index) {

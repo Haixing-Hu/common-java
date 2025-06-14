@@ -11,9 +11,9 @@ package ltd.qubit.commons.security;
 import javax.crypto.SecretKey;
 
 /**
- * The codec for encoding/decoding between {@link SecretKey} and byte arrays.
+ * 用于在 {@link SecretKey} 和字节数组之间进行编解码的编解码器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public interface SecretKeyCodec extends SecretKeyEncoder, SecretKeyDecoder {
   //  empty

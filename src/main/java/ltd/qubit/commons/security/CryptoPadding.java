@@ -12,72 +12,64 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The enumeration of crypto padding schema supported by the JDK.
+ * JDK支持的加密填充模式枚举。
  * <p>
- * There are two major types of ciphers: block and stream. Block ciphers process
- * entire blocks at a time, usually many bytes in length. If there is not enough
- * data to make a complete input block, the data must be padded: that is, before
- * encryption, dummy bytes must be added to make a multiple of the cipher's
- * block size. These bytes are then stripped off during the decryption phase.
- * The padding can either be done by the application, or by initializing a
- * cipher to use a padding type such as "PKCS5PADDING". In contrast, stream
- * ciphers process incoming data one small unit (typically a byte or even a bit)
- * at a time. This allows for ciphers to process an arbitrary amount of data
- * without padding.
+ * 有两种主要类型的密码：分组密码和流密码。分组密码一次处理整个块，通常长度为许多字节。
+ * 如果没有足够的数据构成完整的输入块，则必须填充数据：即在加密之前，
+ * 必须添加虚拟字节以构成密码块大小的倍数。然后在解密阶段删除这些字节。
+ * 填充可以由应用程序完成，也可以通过将密码初始化为使用填充类型（如"PKCS5PADDING"）来完成。
+ * 相比之下，流密码一次处理传入数据的一个小单位（通常是一个字节甚至一个位）。
+ * 这允许密码处理任意数量的数据而无需填充。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/crypto/CryptoSpec.html#Cipher">Stream vs. Block Ciphers</a>
  */
 public enum CryptoPadding {
 
   /**
-   * No padding.
+   * 无填充。
    */
   NONE("NoPadding"),
 
   /**
-   * This padding for block ciphers is described in 5.2 Block Encryption
-   * Algorithms in the W3C's "XML Encryption Syntax and Processing" document.
+   * 此分组密码填充在W3C的"XML加密语法和处理"文档的5.2分组加密算法中描述。
    */
   ISO_10126("ISO10126Padding"),
 
   /**
-   * The padding scheme described in PKCS #1 v2.2, used with the RSA algorithm.
+   * PKCS #1 v2.2中描述的填充方案，与RSA算法一起使用。
    */
   PKCS1("PKCS1Padding"),
 
   /**
-   * The padding scheme described in PKCS #5: Password-Based Cryptography
-   * Specification, version 2.1.
+   * PKCS #5：基于密码的加密规范2.1版中描述的填充方案。
    */
   PKCS5("PKCS5Padding"),
 
   /**
-   * The padding scheme defined in the SSL Protocol Version 3.0, November 18,
-   * 1996, section 5.2.3.2 (CBC block cipher).
+   * SSL协议版本3.0（1996年11月18日）第5.2.3.2节（CBC分组密码）中定义的填充方案。
    * <p>
-   * The size of an instance of a GenericBlockCipher must be a multiple of the
-   * block cipher's block length.
+   * GenericBlockCipher实例的大小必须是分组密码块长度的倍数。
    * <p>
-   * The padding length, which is always present, contributes to the padding,
-   * which implies that if:
+   * 总是存在的填充长度有助于填充，这意味着如果：
    *
    * <pre><code>
    * sizeof(content) + sizeof(MAC) % block_length = 0,
    * </code></pre>
    *
    * <p>
-   * padding has to be (block_length - 1) bytes long, because of the existence
-   * of padding_length.
+   * 由于padding_length的存在，填充必须是（block_length - 1）字节长。
    * <p>
-   * This makes the padding scheme similar (but not quite) to PKCS5Padding,
-   * where the padding length is encoded in the padding (and ranges from 1 to
-   * block_length). With the SSL scheme, the sizeof(padding) is encoded in the
-   * always present padding_length and therefore ranges from 0 to
-   * block_length-1.
+   * 这使得填充方案类似于（但不完全是）PKCS5Padding，
+   * 其中填充长度在填充中编码（范围从1到block_length）。
+   * 使用SSL方案，sizeof(padding)在总是存在的padding_length中编码，
+   * 因此范围从0到block_length-1。
    */
   SSL3("SSL3Padding");
 
+  /**
+   * 加密填充模式名称与枚举的映射。
+   */
   private static final Map<String, CryptoPadding> NAME_MAP = new HashMap<>();
   static {
     for (final CryptoPadding padding: values()) {
@@ -87,32 +79,37 @@ public enum CryptoPadding {
   }
 
   /**
-   * Gets the crypto padding schema by its enumerator name or code (i.e., the
-   * standard name in JDK).
+   * 通过枚举名称或代码（即JDK中的标准名称）获取加密填充模式。
    *
    * @param nameOrCode
-   *     The name or code of the specified crypto padding schema, ignoring the case.
+   *     指定加密填充模式的名称或代码，忽略大小写。
    * @return
-   *     The corresponding {@link CryptoPadding}, or {@code null} if no such
-   *     padding schema.
+   *     对应的{@link CryptoPadding}，如果没有此类填充模式则返回{@code null}。
    */
   public static CryptoPadding forName(final String nameOrCode) {
     return NAME_MAP.get(nameOrCode.toUpperCase());
   }
 
+  /**
+   * 加密填充模式的代码，即JDK中的标准名称。
+   */
   private final String code;
 
+  /**
+   * 构造一个{@link CryptoPadding}对象。
+   *
+   * @param code
+   *     加密填充模式的代码，即JDK中的标准名称。
+   */
   CryptoPadding(final String code) {
     this.code = code;
   }
 
   /**
-   * Gets the code of this crypto padding schema, i.e., the standard name in
-   * the JDK.
+   * 获取此加密填充模式的代码，即JDK中的标准名称。
    *
    * @return
-   *     the code of this crypto padding schema, i.e., the standard name in
-   *     the JDK.
+   *     此加密填充模式的代码，即JDK中的标准名称。
    */
   String code() {
     return code;

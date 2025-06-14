@@ -34,45 +34,77 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * A class of objects used to decrypt messages.
+ * 用于解密消息的对象类。
 
- * <p>This class encapsulates the {@link Cipher} class to provide convenient
- * decryption method with default configuration.</p>
+ * <p>此类封装了{@link Cipher}类，以提供带有默认配置的便捷解密方法。</p>
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see Cipher
  */
 public class Decryptor extends CryptoConfig {
 
+  /**
+   * 加密参数。
+   */
   @Nullable
   private transient byte[] parameters;
 
+  /**
+   * 构造一个{@link Decryptor}。
+   *
+   * @param algorithm
+   *     加密算法。
+   * @throws NoSuchPaddingException
+   *     如果不支持指定的填充方式。
+   * @throws NoSuchAlgorithmException
+   *     如果不支持指定的算法。
+   */
   public Decryptor(final CryptoAlgorithm algorithm)
       throws NoSuchPaddingException, NoSuchAlgorithmException {
     super(algorithm, CryptoMode.NONE, CryptoPadding.NONE);
   }
 
+  /**
+   * 构造一个{@link Decryptor}。
+   *
+   * @param algorithm
+   *     加密算法。
+   * @param mode
+   *     加密模式。
+   * @param padding
+   *     填充方式。
+   * @throws NoSuchPaddingException
+   *     如果不支持指定的填充方式。
+   * @throws NoSuchAlgorithmException
+   *     如果不支持指定的算法。
+   */
   public Decryptor(final CryptoAlgorithm algorithm, final CryptoMode mode,
       final CryptoPadding padding) throws NoSuchPaddingException, NoSuchAlgorithmException {
     super(algorithm, mode, padding);
   }
 
   /**
-   * Sets encoded cryptographic parameters used to decrypt the message.
+   * 设置用于解密消息的编码加密参数。
    *
    * @param parameters
-   *     the cryptographic parameters used to decrypt the message, which
-   *     must be the same as the encoded cryptographic parameters get from the
-   *     {@link Encryptor} after encrypting the message. A {@code null} value
-   *     indicates no parameters required. The parameters are encoded in the
-   *     primary encoding format for parameters of the algorithm. The primary
-   *     encoding format for parameters is ASN.1, if an ASN.1 specification for
-   *     this type of parameters exists.
+   *     用于解密消息的加密参数，必须与加密消息后从{@link Encryptor}获取的编码加密参数相同。
+   *     {@code null}值表示不需要参数。参数以算法参数的主要编码格式编码。
+   *     如果存在此类型参数的ASN.1规范，则参数的主要编码格式是ASN.1。
    */
   public void setParameters(@Nullable final byte[] parameters) {
     this.parameters = parameters;
   }
 
+  /**
+   * 初始化密码器。
+   *
+   * @param key
+   *     用于解密的密钥。
+   * @throws GeneralSecurityException
+   *     如果发生安全错误。
+   * @throws IOException
+   *     如果发生I/O错误。
+   */
   private void initCipher(final Key key) throws GeneralSecurityException, IOException {
     if (parameters == null) {
       cipher.init(Cipher.DECRYPT_MODE, key);
@@ -83,16 +115,16 @@ public class Decryptor extends CryptoConfig {
   }
 
   /**
-   * Decrypt the message.
+   * 解密消息。
    *
    * @param key
-   *     the key used to decrypt.
+   *     用于解密的密钥。
    * @param message
-   *     the message to be decrypted.
+   *     要解密的消息。
    * @return
-   *     the decrypted message.
+   *     解密后的消息。
    * @throws DecryptException
-   *     if any decryption error occurs.
+   *     如果发生任何解密错误。
    */
   public byte[] decrypt(final Key key, final byte[] message)
       throws DecryptException {
@@ -108,18 +140,18 @@ public class Decryptor extends CryptoConfig {
   }
 
   /**
-   * Decrypt the message.
+   * 解密消息。
    *
    * @param key
-   *     the key used to decrypt.
+   *     用于解密的密钥。
    * @param message
-   *     the message to be decrypted.
+   *     要解密的消息。
    * @param charset
-   *     the charset encoding the message.
+   *     编码消息的字符集。
    * @return
-   *     the decrypted message.
+   *     解密后的消息。
    * @throws DecryptException
-   *     if any decryption error occurs.
+   *     如果发生任何解密错误。
    */
   public byte[] decrypt(final Key key, final String message, final Charset charset)
       throws DecryptException {
@@ -130,16 +162,16 @@ public class Decryptor extends CryptoConfig {
   }
 
   /**
-   * Decrypt the message.
+   * 解密消息。
    *
    * @param key
-   *     the key used to decrypt.
+   *     用于解密的密钥。
    * @param message
-   *     the message to be decrypted, which is encoded with UTF_8.
+   *     要解密的消息，使用UTF_8编码。
    * @return
-   *     the decrypted message.
+   *     解密后的消息。
    * @throws DecryptException
-   *     if any decryption error occurs.
+   *     如果发生任何解密错误。
    */
   public byte[] decrypt(final Key key, final String message)
       throws DecryptException {
@@ -149,22 +181,20 @@ public class Decryptor extends CryptoConfig {
   }
 
   /**
-   * Decrypt the specified data.
+   * 解密指定的数据。
    *
    * @param <T>
-   *     the type of the data to be decrypted.
+   *     要解密的数据类型。
    * @param key
-   *     the key used to decrypt.
+   *     用于解密的密钥。
    * @param data
-   *     the data to be decrypted, which will be encoded as normalized JSON string
-   *     and then be decrypted.
+   *     要解密的数据，将被编码为标准化JSON字符串然后解密。
    * @param mapper
-   *     the JSON mapper used to encode the specified data into the normalized
-   *     JSON string.
+   *     用于将指定数据编码为标准化JSON字符串的JSON映射器。
    * @return
-   *     the decrypted data.
+   *     解密后的数据。
    * @throws DecryptException
-   *     if any decryption error occurs.
+   *     如果发生任何解密错误。
    */
   public <T> byte[] decrypt(final Key key, final T data, final JsonMapper mapper)
       throws DecryptException {
@@ -178,18 +208,17 @@ public class Decryptor extends CryptoConfig {
   }
 
   /**
-   * Decrypt a stream of data.
+   * 解密数据流。
    *
    * @param key
-   *     the key used to decrypt.
+   *     用于解密的密钥。
    * @param input
-   *     the specified input stream.
+   *     指定的输入流。
    * @return
-   *     a {@link CipherInputStream}, whose read() methods return data that are
-   *     read in from the underlying {@link InputStream} {@code input} but have
-   *     been decrypted by the specified key.
+   *     一个{@link CipherInputStream}，其read()方法返回从底层{@link InputStream} {@code input}
+   *     读取但已用指定密钥解密的数据。
    * @throws DecryptException
-   *     if any decryption error occurs.
+   *     如果发生任何解密错误。
    */
   public CipherInputStream decrypt(final Key key, final InputStream input)
       throws DecryptException {
@@ -204,18 +233,17 @@ public class Decryptor extends CryptoConfig {
   }
 
   /**
-   * Decrypt data and write to an output stream.
+   * 解密数据并写入输出流。
    *
    * @param key
-   *     the key used to decrypt.
+   *     用于解密的密钥。
    * @param output
-   *     the specified output stream.
+   *     指定的输出流。
    * @return
-   *     a {@link CipherOutputStream}, whose write() methods decrypt data with
-   *     the specified key before writing into the underlying
-   *     {@link OutputStream} {@code output}.
+   *     一个{@link CipherOutputStream}，其write()方法在写入底层{@link OutputStream} {@code output}
+   *     之前用指定密钥解密数据。
    * @throws DecryptException
-   *     if any decryption error occurs.
+   *     如果发生任何解密错误。
    */
   public CipherOutputStream decrypt(final Key key, final OutputStream output)
       throws DecryptException {
@@ -229,6 +257,7 @@ public class Decryptor extends CryptoConfig {
     }
   }
 
+  @Override
   public boolean equals(final Object o) {
     if (this == o) {
       return true;
@@ -240,10 +269,12 @@ public class Decryptor extends CryptoConfig {
     return super.equals(other);
   }
 
+  @Override
   public int hashCode() {
     return super.hashCode();
   }
 
+  @Override
   public String toString() {
     return new ToStringBuilder(this)
         .appendSuper(super.toString())

@@ -11,13 +11,19 @@ package ltd.qubit.commons.security;
 import java.security.PrivateKey;
 
 /**
- * The {@link PrivateKeyCodec} which encode/decode between {@link PrivateKey}s and
- * byte arrays in the PKCS#8 format for the specified {@link SignatureAlgorithm}.
+ * 用于指定 {@link SignatureAlgorithm} 的 {@link PrivateKeyCodec}，
+ * 在 {@link PrivateKey} 和 PKCS#8 格式的字节数组之间进行编码/解码。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class SignaturePrivateKeyCodec extends Pkcs8PrivateKeyCodec {
 
+  /**
+   * 构造一个 {@link SignaturePrivateKeyCodec}。
+   *
+   * @param signatureAlgorithm
+   *     签名算法。
+   */
   public SignaturePrivateKeyCodec(final SignatureAlgorithm signatureAlgorithm) {
     super(signatureAlgorithm.cryptoAlgorithm());
   }
