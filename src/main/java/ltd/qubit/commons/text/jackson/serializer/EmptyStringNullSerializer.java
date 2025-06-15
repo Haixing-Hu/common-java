@@ -17,12 +17,15 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import ltd.qubit.commons.lang.StringUtils;
 
 /**
- * A serializer which serialize null values to empty strings.
+ * 将null值序列化为空字符串的序列化器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class EmptyStringNullSerializer extends JsonSerializer<Object> {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final Object value, final JsonGenerator generator,
           final SerializerProvider provider) throws IOException {

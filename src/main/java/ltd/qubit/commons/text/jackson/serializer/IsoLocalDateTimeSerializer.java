@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
+import java.io.Serial;
 import java.time.LocalDateTime;
 
 import javax.annotation.concurrent.Immutable;
@@ -15,18 +16,24 @@ import javax.annotation.concurrent.Immutable;
 import ltd.qubit.commons.util.codec.IsoLocalDateTimeCodec;
 
 /**
- * The JACKSON serializer of a {@link LocalDateTime} object, in the ISO-8601
- * format of "yyyy-mm-dd HH:mm:ss".
+ * {@link LocalDateTime}对象的Jackson序列化器，使用ISO-8601格式"yyyy-MM-dd HH:mm:ss"。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public class IsoLocalDateTimeSerializer extends LocalDateTimeSerializer {
 
+  @Serial
   private static final long serialVersionUID = -1860496449765162843L;
 
+  /**
+   * IsoLocalDateTimeSerializer的单例实例。
+   */
   public static final IsoLocalDateTimeSerializer INSTANCE = new IsoLocalDateTimeSerializer();
 
+  /**
+   * 构造一个新的IsoLocalDateTimeSerializer实例。
+   */
   public IsoLocalDateTimeSerializer() {
     super(new IsoLocalDateTimeCodec());
   }

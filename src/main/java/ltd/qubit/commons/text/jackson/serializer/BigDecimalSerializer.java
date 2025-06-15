@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
+import java.io.Serial;
 import java.math.BigDecimal;
 
 import javax.annotation.concurrent.Immutable;
@@ -24,26 +25,44 @@ import ltd.qubit.commons.annotation.Scale;
 import ltd.qubit.commons.util.codec.BigDecimalCodec;
 
 /**
- * The JACKSON serializer of a {@link BigDecimal} object.
+ * {@link BigDecimal}对象的Jackson序列化器。
+ * <p>
+ * 该序列化器支持通过注解配置精度、舍入模式和货币格式等属性。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public class BigDecimalSerializer extends EncoderSerializer<BigDecimal>
     implements ContextualSerializer {
 
+  @Serial
   private static final long serialVersionUID = 7812000100733188757L;
 
+  /**
+   * BigDecimalSerializer的单例实例。
+   */
   public static final BigDecimalSerializer INSTANCE = new BigDecimalSerializer();
 
+  /**
+   * 构造一个默认的BigDecimalSerializer实例。
+   */
   public BigDecimalSerializer() {
     this(new BigDecimalCodec());
   }
 
+  /**
+   * 构造一个使用指定编解码器的BigDecimalSerializer实例。
+   *
+   * @param codec
+   *     BigDecimal编解码器。
+   */
   public BigDecimalSerializer(final BigDecimalCodec codec) {
     super(BigDecimal.class, codec, JsonGenerator::writeRawValue);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonSerializer<?> createContextual(final SerializerProvider prov,
       final BeanProperty property) {

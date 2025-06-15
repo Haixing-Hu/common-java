@@ -22,26 +22,39 @@ import ltd.qubit.commons.util.codec.EncodingException;
 
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
+/**
+ * 基于编码器的Jackson序列化器基类。
+ *
+ * @param <T>
+ *     要序列化的值的类型。
+ * @author 胡海星
+ */
 public class EncoderSerializer<T> extends StdSerializer<T> {
 
   @Serial
   private static final long serialVersionUID = 44431662165308463L;
 
+  /**
+   * 值的编码器。
+   */
   protected final Encoder<T, String> encoder;
+
+  /**
+   * JSON生成器的写入方法引用。
+   */
   protected final WriteMethodReference<JsonGenerator> writeMethod;
 
   /**
-   * Construct a {@link EncoderSerializer}.
+   * 构造一个{@link EncoderSerializer}实例。
    *
    * @param valueClass
-   *     the class object of the values to be serialized.
+   *     要序列化的值的类对象。
    * @param encoder
-   *     the encoder of the values to be serialized.
+   *     要序列化的值的编码器。
    * @param writeMethod
-   *     the reference to the method of the {@link JsonGenerator} to write
-   *     the encoded value. The reference may be {@link JsonGenerator#writeString(String)}
-   *     or {@link JsonGenerator#writeRawValue(String)}, depending on the
-   *     implementation.
+   *     {@link JsonGenerator}写入编码值的方法引用。
+   *     该引用可以是{@link JsonGenerator#writeString(String)}
+   *     或{@link JsonGenerator#writeRawValue(String)}，取决于具体实现。
    */
   protected EncoderSerializer(final Class<T> valueClass,
       final Encoder<T, String> encoder,
@@ -51,6 +64,9 @@ public class EncoderSerializer<T> extends StdSerializer<T> {
     this.writeMethod = requireNonNull("writeMethod", writeMethod);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final T value, final JsonGenerator generator,
       final SerializerProvider provider) throws IOException {

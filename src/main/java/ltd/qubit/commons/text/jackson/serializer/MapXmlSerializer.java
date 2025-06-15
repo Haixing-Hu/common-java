@@ -9,6 +9,7 @@
 package ltd.qubit.commons.text.jackson.serializer;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -20,15 +21,28 @@ import static ltd.qubit.commons.text.jackson.deserializer.MapXmlDeserializer.KEY
 import static ltd.qubit.commons.text.jackson.deserializer.MapXmlDeserializer.VALUE_FIELD_NAME;
 
 /**
- * 用于以 XML 格式序列化 {@link Map} 对象的 {@link JsonSerializer}。
+ * 用于以XML格式序列化{@link Map}对象的{@link JsonSerializer}。
  *
  * @author 胡海星
  */
 @SuppressWarnings("rawtypes")
 public class MapXmlSerializer extends JsonSerializer<Map> {
 
+  /**
+   * MapXmlSerializer的单例实例。
+   */
   public static final MapXmlSerializer INSTANCE = new MapXmlSerializer();
 
+  /**
+   * 构造一个新的MapXmlSerializer实例。
+   */
+  public MapXmlSerializer() {
+    // 默认构造函数
+  }
+
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final Map map, final JsonGenerator gen,
       final SerializerProvider serializers) throws IOException {

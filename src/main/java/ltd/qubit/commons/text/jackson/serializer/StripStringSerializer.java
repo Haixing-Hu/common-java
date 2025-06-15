@@ -9,6 +9,7 @@
 package ltd.qubit.commons.text.jackson.serializer;
 
 import java.io.IOException;
+import java.io.Serial;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -17,20 +18,30 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import ltd.qubit.commons.text.Stripper;
 
 /**
- * The serializer of String class for XML serializations.
+ * 用于XML序列化的String类序列化器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class StripStringSerializer extends StdSerializer<String> {
 
+  @Serial
   private static final long serialVersionUID = 6987148423553149459L;
 
+  /**
+   * StripStringSerializer的单例实例。
+   */
   public static final StripStringSerializer INSTANCE = new StripStringSerializer();
 
+  /**
+   * 构造一个StripStringSerializer实例。
+   */
   public StripStringSerializer() {
     super(String.class);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final String value, final JsonGenerator generator,
       final SerializerProvider provider) throws IOException {

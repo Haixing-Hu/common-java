@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
+import java.io.Serial;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 
 import ltd.qubit.commons.util.codec.AlphabetBooleanCodec;
@@ -20,8 +22,12 @@ import ltd.qubit.commons.util.codec.AlphabetBooleanCodec;
  */
 public class AlphabetBooleanSerializer extends BooleanSerializer {
 
+  @Serial
   private static final long serialVersionUID = 8751943405872666130L;
 
+  /**
+   * 构造一个AlphabetBooleanSerializer实例。
+   */
   public AlphabetBooleanSerializer() {
     super(new AlphabetBooleanCodec(), JsonGenerator::writeString);
   }

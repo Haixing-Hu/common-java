@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.serializer;
 
+import java.io.Serial;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 
 import ltd.qubit.commons.util.codec.IntegralBooleanCodec;
@@ -20,8 +22,12 @@ import ltd.qubit.commons.util.codec.IntegralBooleanCodec;
  */
 public class IntegralBooleanSerializer extends BooleanSerializer {
 
+  @Serial
   private static final long serialVersionUID = 8682174067747568247L;
 
+  /**
+   * 构造一个新的IntegralBooleanSerializer实例。
+   */
   public IntegralBooleanSerializer() {
     super(new IntegralBooleanCodec(), JsonGenerator::writeRawValue);
   }
