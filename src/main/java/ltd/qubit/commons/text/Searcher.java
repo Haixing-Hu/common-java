@@ -58,73 +58,369 @@ import static ltd.qubit.commons.text.impl.SearcherImpl.startsWithSubstring;
  * 用于在字符串中搜索的类。
  *
  * <p>此类提供了灵活的字符串搜索功能，支持搜索字符、Unicode 代码点、子字符串等，
- * 并提供多种搜索选项如忽略大小写、指定搜索范围等。</p>
+ * 并提供多种搜索选项如忽略大小写、指定搜索范围等。特别适用于复杂的文本处理、
+ * 数据解析和字符串匹配场景。</p>
  *
- * <p>使用示例：</p>
- * <pre><code>
+ * <h3>基本字符搜索</h3>
+ * <pre>{@code
  * // 搜索单个字符
- * int index = new Searcher().forChar('a').findFirstIndexIn("hello world");
- * boolean contains = new Searcher().forChar('o').isContainedIn("hello");
- * int count = new Searcher().forChar('l').countMatchesIn("hello");
+ * int index = new Searcher().forChar('o').findFirstIndexIn("hello world");
+ * // 结果: 4
  *
- * // 搜索字符数组中的任意字符
+ * boolean contains = new Searcher().forChar('o').isContainedIn("hello");
+ * // 结果: true
+ *
+ * int count = new Searcher().forChar('l').countMatchesIn("hello world");
+ * // 结果: 3
+ * }</pre>
+ *
+ * <h3>字符集合搜索</h3>
+ * <pre>{@code
+ * // 搜索字符数组中的任意字符（元音字母）
  * int index = new Searcher().forCharsIn('a', 'e', 'i', 'o', 'u')
  *                          .findFirstIndexIn("hello world");
+ * // 结果: 1 (找到 'e')
  *
+ * // 搜索字符串中的任意字符
+ * int index = new Searcher().forCharsIn("aeiou")
+ *                          .findFirstIndexIn("hello world");
+ * // 结果: 1
+ *
+ * // 搜索不在指定字符集中的字符（辅音字母）
+ * int index = new Searcher().forCharsNotIn("aeiou ")
+ *                          .findFirstIndexIn("hello world");
+ * // 结果: 0 (找到 'h')
+ *
+ * // 搜索除指定字符外的所有字符
+ * int index = new Searcher().forCharsNotEqual(' ')
+ *                          .findFirstIndexIn(" hello");
+ * // 结果: 1 (找到 'h')
+ * }</pre>
+ *
+ * <h3>基于条件的字符搜索</h3>
+ * <pre>{@code
+ * // 搜索数字字符
+ * int index = new Searcher().forCharsSatisfy(Character::isDigit)
+ *                          .findFirstIndexIn("abc123def");
+ * // 结果: 3
+ *
+ * // 搜索非字母字符
+ * int index = new Searcher().forCharsNotSatisfy(Character::isLetter)
+ *                          .findFirstIndexIn("hello, world!");
+ * // 结果: 5 (找到 ',')
+ *
+ * // 使用自定义字符过滤器
+ * CharFilter upperCaseFilter = Character::isUpperCase;
+ * int index = new Searcher().forCharsSatisfy(upperCaseFilter)
+ *                          .findFirstIndexIn("Hello World");
+ * // 结果: 0 (找到 'H')
+ * }</pre>
+ *
+ * <h3>Unicode 代码点搜索</h3>
+ * <pre>{@code
+ * // 搜索指定 Unicode 代码点（表情符号）
+ * int index = new Searcher().forCodePoint(0x1F600) // 😀
+ *                          .findFirstIndexIn("Hello 😀 World");
+ * // 结果: 6
+ *
+ * // 搜索字符序列中的代码点
+ * int index = new Searcher().forCodePoint("😀")
+ *                          .findFirstIndexIn("Hello 😀 World");
+ * // 结果: 6
+ *
+ * // 搜索代码点数组中的任意代码点
+ * int[] emojiCodePoints = {0x1F600, 0x1F601, 0x1F602}; // 😀😁😂
+ * int index = new Searcher().forCodePointsIn(emojiCodePoints)
+ *                          .findFirstIndexIn("Text 😁 here");
+ * // 结果: 5
+ *
+ * // 搜索不等于指定代码点的代码点
+ * int index = new Searcher().forCodePointsNotEqual('a')
+ *                          .findFirstIndexIn("aaaabc");
+ * // 结果: 4 (找到 'b')
+ * }</pre>
+ *
+ * <h3>子字符串搜索</h3>
+ * <pre>{@code
  * // 搜索子字符串
- * int index = new Searcher().forSubstring("world").findFirstIndexIn("hello world");
- * boolean startsWith = new Searcher().forSubstring("hello").isAtStartOf("hello world");
- * boolean endsWith = new Searcher().forSubstring("world").isAtEndOf("hello world");
- *
- * // 搜索多个子字符串中的任意一个
- * int index = new Searcher().forSubstringsIn("cat", "dog", "bird")
- *                          .findFirstIndexIn("I have a cat");
+ * int index = new Searcher().forSubstring("world")
+ *                          .findFirstIndexIn("hello world");
+ * // 结果: 6
  *
  * // 忽略大小写搜索
  * int index = new Searcher().forSubstring("WORLD")
  *                          .ignoreCase(true)
  *                          .findFirstIndexIn("hello world");
+ * // 结果: 6
  *
- * // 指定搜索范围
+ * // 搜索多个子字符串中的任意一个
+ * int index = new Searcher().forSubstringsIn("cat", "dog", "bird")
+ *                          .findFirstIndexIn("I have a cat");
+ * // 结果: 9
+ *
+ * // 大小写不敏感的多子字符串搜索
+ * int index = new Searcher().forSubstringsIn("CAT", "DOG")
+ *                          .ignoreCase(true)
+ *                          .findFirstIndexIn("I have a cat");
+ * // 结果: 9
+ * }</pre>
+ *
+ * <h3>搜索范围控制</h3>
+ * <pre>{@code
+ * // 从指定位置开始搜索
  * int index = new Searcher().forChar('l')
  *                          .startFrom(3)
- *                          .endBefore(8)
  *                          .findFirstIndexIn("hello world");
+ * // 结果: 3 (跳过前面的 'l')
+ *
+ * // 在指定范围内搜索
+ * int index = new Searcher().forChar('l')
+ *                          .startFrom(1)
+ *                          .endBefore(4)
+ *                          .findFirstIndexIn("hello world");
+ * // 结果: 2
+ *
+ * // 组合范围限制
+ * int[] occurrences = new Searcher().forChar('l')
+ *                                  .startFrom(2)
+ *                                  .endBefore(10)
+ *                                  .getOccurrencesIn("hello world");
+ * // 结果: [2, 3, 9]
+ * }</pre>
+ *
+ * <h3>查找方法</h3>
+ * <pre>{@code
+ * String text = "hello world hello";
+ *
+ * // 查找第一个匹配位置
+ * int first = new Searcher().forSubstring("hello")
+ *                          .findFirstIndexIn(text);
+ * // 结果: 0
+ *
+ * // 查找最后一个匹配位置
+ * int last = new Searcher().forSubstring("hello")
+ *                         .findLastIndexIn(text);
+ * // 结果: 12
+ *
+ * // 计算匹配次数
+ * int count = new Searcher().forSubstring("hello")
+ *                          .countMatchesIn(text);
+ * // 结果: 2
  *
  * // 获取所有匹配位置
- * int[] occurrences = new Searcher().forChar('l').getOccurrencesIn("hello world");
+ * int[] occurrences = new Searcher().forSubstring("hello")
+ *                                  .getOccurrencesIn(text);
+ * // 结果: [0, 12]
+ * }</pre>
  *
- * // 使用字符过滤器搜索
- * int index = new Searcher().forCharsSatisfy(Character::isDigit)
- *                          .findFirstIndexIn("abc123def");
+ * <h3>字符串开头/结尾检测</h3>
+ * <pre>{@code
+ * // 检测是否以指定内容开头
+ * boolean startsWith = new Searcher().forSubstring("hello")
+ *                                   .isAtStartOf("hello world");
+ * // 结果: true
  *
- * // 搜索 Unicode 代码点
- * int index = new Searcher().forCodePoint(0x1F600) // 😀 表情符号
- *                          .findFirstIndexIn("Hello 😀 World");
- * </code></pre>
+ * // 检测是否以指定内容结尾
+ * boolean endsWith = new Searcher().forSubstring("world")
+ *                                 .isAtEndOf("hello world");
+ * // 结果: true
+ *
+ * // 检测是否以指定内容开头或结尾
+ * boolean startsOrEnds = new Searcher().forChar('h')
+ *                                     .isAtStartOrEndOf("hello");
+ * // 结果: true (开头有 'h')
+ *
+ * // 检测是否既以指定内容开头又以其结尾
+ * boolean startsAndEnds = new Searcher().forChar('h')
+ *                                      .isAtStartAndEndOf("hellogh");
+ * // 结果: true
+ *
+ * // 忽略大小写的开头检测
+ * boolean startsWith = new Searcher().forSubstring("HELLO")
+ *                                   .ignoreCase(true)
+ *                                   .isAtStartOf("hello world");
+ * // 结果: true
+ * }</pre>
+ *
+ * <h3>实用方法</h3>
+ * <pre>{@code
+ * // 测试是否包含
+ * boolean contains = new Searcher().forChar('o')
+ *                                 .isContainedIn("hello");
+ * // 结果: true
+ *
+ * // 测试是否不包含
+ * boolean notContains = new Searcher().forChar('x')
+ *                                    .isNotContainedIn("hello");
+ * // 结果: true
+ *
+ * // 使用IntList收集匹配位置（避免数组拷贝）
+ * IntList positions = new IntArrayList();
+ * new Searcher().forChar('l').getOccurrencesIn("hello world", positions);
+ * // positions 内容: [2, 3, 9]
+ * }</pre>
+ *
+ * <h3>复杂搜索示例</h3>
+ * <pre>{@code
+ * // 在HTML标签中搜索属性
+ * String html = "<div class='container' id='main'>";
+ * int classAttr = new Searcher().forSubstring("class=")
+ *                              .ignoreCase(true)
+ *                              .findFirstIndexIn(html);
+ * // 结果: 5
+ *
+ * // 搜索URL中的协议部分
+ * String url = "https://www.example.com/path";
+ * boolean hasHttps = new Searcher().forSubstring("https://")
+ *                                 .isAtStartOf(url);
+ * // 结果: true
+ *
+ * // 在日志文件中搜索错误级别
+ * String log = "[2023-01-01] ERROR: Something went wrong";
+ * int errorPos = new Searcher().forSubstringsIn("ERROR", "WARN", "FATAL")
+ *                             .findFirstIndexIn(log);
+ * // 结果: 12
+ *
+ * // 搜索文本中的特殊字符
+ * String text = "Price: $29.99 (discount 10%)";
+ * int[] specialChars = new Searcher().forCharsIn("$()%")
+ *                                   .getOccurrencesIn(text);
+ * // 结果: [7, 14, 24, 26]
+ * }</pre>
+ *
+ * <h3>链式调用示例</h3>
+ * <pre>{@code
+ * // 复杂的链式搜索配置
+ * int result = new Searcher()
+ *     .forSubstringsIn("error", "warning", "exception")
+ *     .ignoreCase(true)
+ *     .startFrom(10)
+ *     .endBefore(100)
+ *     .findFirstIndexIn(logMessage);
+ *
+ * // 组合多种条件
+ * boolean hasIssue = new Searcher()
+ *     .forCharsSatisfy(ch -> ch == '!' || ch == '?')
+ *     .isContainedIn(userInput);
+ * }</pre>
+ *
+ * <h3>支持的搜索目标</h3>
+ * <ul>
+ *   <li><strong>单字符</strong>：{@code forChar(char)} - 搜索指定字符</li>
+ *   <li><strong>字符集合</strong>：{@code forCharsIn(char...)} - 搜索数组中的任意字符</li>
+ *   <li><strong>字符排除</strong>：{@code forCharsNotIn(char...)} - 搜索不在数组中的字符</li>
+ *   <li><strong>条件字符</strong>：{@code forCharsSatisfy(CharFilter)} - 搜索满足条件的字符</li>
+ *   <li><strong>Unicode代码点</strong>：{@code forCodePoint(int)} - 搜索指定代码点</li>
+ *   <li><strong>子字符串</strong>：{@code forSubstring(CharSequence)} - 搜索子字符串</li>
+ *   <li><strong>多子字符串</strong>：{@code forSubstringsIn(CharSequence...)} - 搜索多个子字符串之一</li>
+ * </ul>
+ *
+ * <h3>支持的搜索选项</h3>
+ * <ul>
+ *   <li><strong>搜索范围</strong>：{@code startFrom(int)} 和 {@code endBefore(int)} - 限制搜索范围</li>
+ *   <li><strong>忽略大小写</strong>：{@code ignoreCase(boolean)} - 子字符串搜索时忽略大小写</li>
+ * </ul>
+ *
+ * <h3>支持的查找方法</h3>
+ * <ul>
+ *   <li><strong>索引查找</strong>：{@code findFirstIndexIn()}, {@code findLastIndexIn()} - 查找匹配位置</li>
+ *   <li><strong>包含测试</strong>：{@code isContainedIn()}, {@code isNotContainedIn()} - 测试是否包含</li>
+ *   <li><strong>计数</strong>：{@code countMatchesIn()} - 统计匹配次数</li>
+ *   <li><strong>位置获取</strong>：{@code getOccurrencesIn()} - 获取所有匹配位置</li>
+ *   <li><strong>边界检测</strong>：{@code isAtStartOf()}, {@code isAtEndOf()} - 检测开头/结尾</li>
+ * </ul>
+ *
+ * <h3>注意事项</h3>
+ * <ul>
+ *   <li>输入字符串为{@code null}时，搜索方法通常返回-1或false</li>
+ *   <li>搜索范围必须有效：{@code startIndex < endIndex}</li>
+ *   <li>{@code ignoreCase()}选项仅对子字符串搜索有效</li>
+ *   <li>字符过滤器和代码点过滤器不能同时使用，后设置的会覆盖前者</li>
+ *   <li>所有配置方法都返回当前实例，支持链式调用</li>
+ *   <li>Unicode代码点搜索可以正确处理代理对(surrogate pairs)</li>
+ * </ul>
  *
  * @author 胡海星
+ * @see ltd.qubit.commons.util.filter.character.CharFilter
+ * @see ltd.qubit.commons.util.filter.codepoint.CodePointFilter
+ * @see ltd.qubit.commons.datastructure.list.primitive.IntList
+ * @see String#indexOf(String)
+ * @see String#contains(CharSequence)
  */
 public class Searcher {
 
+  /**
+   * 搜索目标类型枚举。
+   */
   private enum Target {
+    /** 单个字符搜索 */
     CHAR,
+    /** Unicode 代码点搜索 */
     CODE_POINT,
+    /** 单个子字符串搜索 */
     SUBSTRING,
+    /** 多个子字符串搜索 */
     SUBSTRINGS,
   }
 
+  /**
+   * 字符过滤器，用于字符搜索。
+   */
   private CharFilter charFilter;
+
+  /**
+   * Unicode 代码点过滤器，用于代码点搜索。
+   */
   private CodePointFilter codePointFilter;
+
+  /**
+   * 要搜索的子字符串。
+   */
   private CharSequence substring;
+
+  /**
+   * 要搜索的子字符串数组。
+   */
   private CharSequence[] substrings;
+
+  /**
+   * 搜索的起始索引（包含）。
+   */
   private int startIndex = 0;
+
+  /**
+   * 搜索的结束索引（不包含）。
+   */
   private int endIndex = Integer.MAX_VALUE;
+
+  /**
+   * 是否忽略大小写（仅适用于子字符串搜索）。
+   */
   private boolean ignoreCase = false;
+
+  /**
+   * 当前搜索目标类型。
+   */
   private Target target = null;
 
+  /**
+   * 构造一个新的 {@link Searcher} 实例。
+   *
+   * <p>默认配置：</p>
+   * <ul>
+   *   <li>搜索范围：整个字符串（从0到字符串末尾）</li>
+   *   <li>大小写敏感：是</li>
+   *   <li>搜索目标：未设置（需要调用 {@code forXxx} 方法设置）</li>
+   * </ul>
+   */
   public Searcher() {}
 
+  /**
+   * 清除所有搜索策略设置。
+   *
+   * <p>此方法重置所有与搜索目标相关的状态，包括字符过滤器、
+   * 代码点过滤器、子字符串和目标类型。搜索范围和大小写设置保持不变。</p>
+   */
   private void clearStrategies() {
     charFilter = null;
     codePointFilter = null;

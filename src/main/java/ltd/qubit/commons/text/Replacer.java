@@ -45,10 +45,11 @@ import static ltd.qubit.commons.text.impl.ReplacerImpl.replaceSubstring;
  * 用于替换字符串中内容的类。
  *
  * <p>此类提供了灵活强大的字符串替换功能，支持替换字符、Unicode 代码点、子字符串等，
- * 并提供多种替换选项如忽略大小写、限制替换次数、指定替换范围等。</p>
+ * 并提供多种替换选项如忽略大小写、限制替换次数、指定替换范围等。适用于文本处理、
+ * 数据清理、格式转换等多种场景。</p>
  *
- * <p>使用示例：</p>
- * <pre><code>
+ * <h3>基本字符替换</h3>
+ * <pre>{@code
  * // 替换单个字符
  * String result = new Replacer().searchForChar('o')
  *                              .replaceWithChar('0')
@@ -61,12 +62,79 @@ import static ltd.qubit.commons.text.impl.ReplacerImpl.replaceSubstring;
  *                              .applyTo("hello world");
  * // 结果: "h*ll* w*rld"
  *
+ * // 替换字符序列中的字符
+ * String result = new Replacer().searchForCharsIn("aeiou")
+ *                              .replaceWithChar('*')
+ *                              .applyTo("hello world");
+ * // 结果: "h*ll* w*rld"
+ * }</pre>
+ *
+ * <h3>字符保留和排除策略</h3>
+ * <pre>{@code
+ * // 替换不等于指定字符的所有字符
+ * String result = new Replacer().searchForCharNotEqual('a')
+ *                              .replaceWithChar('*')
+ *                              .applyTo("banana");
+ * // 结果: "a*a*a*"
+ *
+ * // 替换不在指定字符集中的字符
+ * String result = new Replacer().searchForCharsNotIn('a', 'b', 'c')
+ *                              .replaceWithChar('*')
+ *                              .applyTo("abc123def");
+ * // 结果: "abc***abc"
+ * }</pre>
+ *
+ * <h3>基于条件的字符替换</h3>
+ * <pre>{@code
  * // 替换满足条件的字符（如数字）
  * String result = new Replacer().searchForCharsSatisfy(Character::isDigit)
  *                              .replaceWithChar('X')
  *                              .applyTo("abc123def456");
  * // 结果: "abcXXXdefXXX"
  *
+ * // 替换不满足条件的字符（保留字母）
+ * String result = new Replacer().searchForCharsNotSatisfy(Character::isLetter)
+ *                              .replaceWithChar('_')
+ *                              .applyTo("Hello, World! 123");
+ * // 结果: "Hello__World____"
+ *
+ * // 使用自定义过滤器
+ * CharFilter punctuationFilter = ch -> ".,!?;:".indexOf(ch) >= 0;
+ * String result = new Replacer().searchForCharsSatisfy(punctuationFilter)
+ *                              .replaceWithChar(' ')
+ *                              .applyTo("Hello, World!");
+ * // 结果: "Hello  World "
+ * }</pre>
+ *
+ * <h3>Unicode 代码点替换</h3>
+ * <pre>{@code
+ * // 替换指定 Unicode 代码点（表情符号）
+ * String result = new Replacer().searchForCodePoint(0x1F600) // 😀
+ *                              .replaceWithString(":)")
+ *                              .applyTo("Hello 😀 World");
+ * // 结果: "Hello :) World"
+ *
+ * // 替换多个 Unicode 代码点
+ * String result = new Replacer().searchForCodePointsIn(0x1F600, 0x1F601, 0x1F602)
+ *                              .replaceWithString("[emoji]")
+ *                              .applyTo("😀Hello😁World😂");
+ * // 结果: "[emoji]Hello[emoji]World[emoji]"
+ *
+ * // 替换字符序列中的代码点
+ * String result = new Replacer().searchForCodePointsIn("😀😁😂")
+ *                              .replaceWithString("😊")
+ *                              .applyTo("😀Hello😁World😂");
+ * // 结果: "😊Hello😊World😊"
+ *
+ * // 替换不等于指定代码点的字符
+ * String result = new Replacer().searchForCodePointNotEqual('a')
+ *                              .replaceWithCodePoint('*')
+ *                              .applyTo("banana");
+ * // 结果: "a*a*a*"
+ * }</pre>
+ *
+ * <h3>子字符串替换</h3>
+ * <pre>{@code
  * // 替换子字符串
  * String result = new Replacer().searchForSubstring("world")
  *                              .replaceWithString("Java")
@@ -79,14 +147,10 @@ import static ltd.qubit.commons.text.impl.ReplacerImpl.replaceSubstring;
  *                              .replaceWithString("Java")
  *                              .applyTo("Hello world!");
  * // 结果: "Hello Java!"
+ * }</pre>
  *
- * // 限制替换次数
- * String result = new Replacer().searchForChar('l')
- *                              .replaceWithChar('L')
- *                              .limit(2)
- *                              .applyTo("hello world");
- * // 结果: "heLLo world"
- *
+ * <h3>替换范围控制</h3>
+ * <pre>{@code
  * // 指定替换范围
  * String result = new Replacer().searchForChar('l')
  *                              .replaceWithChar('L')
@@ -95,59 +159,238 @@ import static ltd.qubit.commons.text.impl.ReplacerImpl.replaceSubstring;
  *                              .applyTo("hello world");
  * // 结果: "helLo world"
  *
+ * // 组合范围和数量限制
+ * String result = new Replacer().searchForChar('a')
+ *                              .replaceWithChar('A')
+ *                              .startFrom(1)
+ *                              .endBefore(5)
+ *                              .limit(2)
+ *                              .applyTo("banana");
+ * // 结果: "bAnAna"
+ * }</pre>
+ *
+ * <h3>替换数量限制</h3>
+ * <pre>{@code
+ * // 限制替换次数
+ * String result = new Replacer().searchForChar('l')
+ *                              .replaceWithChar('L')
+ *                              .limit(2)
+ *                              .applyTo("hello world");
+ * // 结果: "heLLo world"
+ *
+ * // 无限制替换
+ * String result = new Replacer().searchForChar('l')
+ *                              .replaceWithChar('L')
+ *                              .limit(-1)  // 或不调用limit()
+ *                              .applyTo("hello world");
+ * // 结果: "heLLo worLd"
+ * }</pre>
+ *
+ * <h3>移除操作（替换为空）</h3>
+ * <pre>{@code
  * // 移除字符（替换为空字符串）
  * String result = new Replacer().searchForCharsIn(' ', '\t', '\n')
  *                              .replaceWithString("")
  *                              .applyTo("hello world");
  * // 结果: "helloworld"
  *
- * // 替换 Unicode 代码点（表情符号）
- * String result = new Replacer().searchForCodePoint(0x1F600) // 😀
- *                              .replaceWithString(":)")
- *                              .applyTo("Hello 😀 World");
- * // 结果: "Hello :) World"
+ * // 移除数字
+ * String result = new Replacer().searchForCharsSatisfy(Character::isDigit)
+ *                              .replaceWithString("")
+ *                              .applyTo("abc123def456");
+ * // 结果: "abcdef"
+ * }</pre>
  *
- * // 链式操作多次替换
- * String result = new Replacer().searchForChar('a')
- *                              .replaceWithChar('A')
- *                              .applyTo("banana");
- * result = new Replacer().searchForChar('n')
- *                       .replaceWithChar('N')
- *                       .applyTo(result);
- * // 结果: "bANANA"
- *
+ * <h3>性能优化：直接输出到Appendable</h3>
+ * <pre>{@code
  * // 使用 StringBuilder 输出（避免创建中间字符串）
  * StringBuilder sb = new StringBuilder();
  * int count = new Replacer().searchForChar('o')
  *                          .replaceWithChar('0')
  *                          .applyTo("hello world", sb);
  * // sb 内容: "hell0 w0rld", count: 2
- * </code></pre>
+ *
+ * // 输出到任意 Appendable
+ * StringWriter writer = new StringWriter();
+ * int count = new Replacer().searchForSubstring("test")
+ *                          .replaceWithString("demo")
+ *                          .applyTo("test string", writer);
+ * // writer 内容: "demo string", count: 1
+ * }</pre>
+ *
+ * <h3>链式调用示例</h3>
+ * <pre>{@code
+ * // 复杂的链式调用
+ * String result = new Replacer()
+ *     .searchForCharsSatisfy(Character::isDigit)
+ *     .replaceWithChar('X')
+ *     .startFrom(0)
+ *     .endBefore(50)
+ *     .limit(5)
+ *     .applyTo("abc123def456ghi789");
+ * // 结果: "abcXXXdefXXghi789"
+ *
+ * // 多步替换
+ * String text = "Hello, World! 123";
+ * text = new Replacer().searchForCharsSatisfy(Character::isPunctuation)
+ *                     .replaceWithChar(' ')
+ *                     .applyTo(text);
+ * text = new Replacer().searchForCharsSatisfy(Character::isDigit)
+ *                     .replaceWithString("")
+ *                     .applyTo(text);
+ * // 结果: "Hello  World   "
+ * }</pre>
+ *
+ * <h3>支持的搜索策略</h3>
+ * <ul>
+ *   <li><strong>单字符</strong>：{@code searchForChar(char)} - 搜索指定字符</li>
+ *   <li><strong>字符集合</strong>：{@code searchForCharsIn(char...)} - 搜索数组中的任意字符</li>
+ *   <li><strong>字符排除</strong>：{@code searchForCharsNotIn(char...)} - 搜索不在数组中的字符</li>
+ *   <li><strong>条件过滤</strong>：{@code searchForCharsSatisfy(CharFilter)} - 搜索满足条件的字符</li>
+ *   <li><strong>Unicode代码点</strong>：{@code searchForCodePoint(int)} - 搜索指定代码点</li>
+ *   <li><strong>子字符串</strong>：{@code searchForSubstring(CharSequence)} - 搜索子字符串</li>
+ * </ul>
+ *
+ * <h3>支持的替换类型</h3>
+ * <ul>
+ *   <li><strong>字符替换</strong>：{@code replaceWithChar(char)} - 用字符替换</li>
+ *   <li><strong>代码点替换</strong>：{@code replaceWithCodePoint(int)} - 用Unicode代码点替换</li>
+ *   <li><strong>字符串替换</strong>：{@code replaceWithString(CharSequence)} - 用字符串替换</li>
+ * </ul>
+ *
+ * <h3>支持的配置选项</h3>
+ * <ul>
+ *   <li><strong>范围控制</strong>：{@code startFrom(int)}, {@code endBefore(int)} - 指定替换范围</li>
+ *   <li><strong>大小写</strong>：{@code ignoreCase(boolean)} - 忽略大小写比较</li>
+ *   <li><strong>数量限制</strong>：{@code limit(int)} - 限制替换的最大数量</li>
+ * </ul>
+ *
+ * <h3>特殊情况处理</h3>
+ * <pre>{@code
+ * // 处理 null 输入
+ * String result = new Replacer().searchForChar('a')
+ *                              .replaceWithChar('A')
+ *                              .applyTo(null);
+ * // 结果: null
+ *
+ * // 处理空字符串
+ * String result = new Replacer().searchForChar('a')
+ *                              .replaceWithChar('A')
+ *                              .applyTo("");
+ * // 结果: ""
+ *
+ * // 无匹配内容
+ * String result = new Replacer().searchForChar('z')
+ *                              .replaceWithChar('Z')
+ *                              .applyTo("hello");
+ * // 结果: "hello"
+ * }</pre>
+ *
+ * <h3>注意事项</h3>
+ * <ul>
+ *   <li>输入字符串为{@code null}时，{@code applyTo()}方法返回{@code null}</li>
+ *   <li>输入字符串为空时，{@code applyTo()}方法返回空字符串</li>
+ *   <li>搜索策略是互斥的，后设置的策略会覆盖前面的策略</li>
+ *   <li>必须同时设置搜索策略和替换内容才能进行替换操作</li>
+ *   <li>范围索引超出字符串长度时会自动调整到有效范围</li>
+ *   <li>所有配置方法都返回当前实例，支持链式调用</li>
+ * </ul>
  *
  * @author 胡海星
+ * @see ltd.qubit.commons.util.filter.character.CharFilter
+ * @see ltd.qubit.commons.util.filter.codepoint.CodePointFilter
+ * @see ltd.qubit.commons.text.Searcher
+ * @see ltd.qubit.commons.text.Remover
  */
 public class Replacer {
 
+  /**
+   * 替换模式枚举，定义不同的搜索策略类型。
+   */
   private enum Mode {
+    /** 字符替换模式 */
     CHAR,
+    /** Unicode 代码点替换模式 */
     CODE_POINT,
+    /** 子字符串替换模式 */
     SUBSTRING,
+    /** 多个子字符串替换模式（保留用于未来扩展） */
     SUBSTRINGS,
   }
 
+  /**
+   * 当前替换模式，默认为子字符串模式。
+   */
   private Mode mode = Mode.SUBSTRING;
+
+  /**
+   * 字符过滤器，用于字符替换操作。
+   */
   private CharFilter charFilter;
+
+  /**
+   * Unicode 代码点过滤器，用于代码点替换操作。
+   */
   private CodePointFilter codePointFilter;
+
+  /**
+   * 要搜索的子字符串，默认为空字符串。
+   */
   private CharSequence substring = EMPTY;
+
+  /**
+   * 要搜索的子字符串数组（保留用于未来扩展），默认为空数组。
+   */
   private CharSequence[] substrings = EMPTY_STRING_ARRAY;
+
+  /**
+   * 用于替换的内容。
+   */
   private CharSequence replacement;
+
+  /**
+   * 替换操作的起始索引（包含），默认为 0。
+   */
   private int startIndex = 0;
+
+  /**
+   * 替换操作的结束索引（不包含），默认为 {@link Integer#MAX_VALUE}。
+   */
   private int endIndex = Integer.MAX_VALUE;
+
+  /**
+   * 替换操作的最大数量限制，默认为 {@link Integer#MAX_VALUE}（无限制）。
+   */
   private int limit = Integer.MAX_VALUE;
+
+  /**
+   * 是否忽略大小写进行比较，默认为 {@code false}。
+   * 仅适用于子字符串替换操作。
+   */
   private boolean ignoreCase = false;
 
+  /**
+   * 构造一个新的 {@link Replacer} 实例。
+   *
+   * <p>默认配置：</p>
+   * <ul>
+   *   <li>替换模式：子字符串模式（{@link Mode#SUBSTRING}）</li>
+   *   <li>搜索策略：未设置（需要调用 {@code searchForXxx} 方法设置）</li>
+   *   <li>替换内容：未设置（需要调用 {@code replaceWithXxx} 方法设置）</li>
+   *   <li>替换范围：整个字符串（{@code startIndex=0}, {@code endIndex=MAX_VALUE}）</li>
+   *   <li>大小写敏感：区分大小写（{@code ignoreCase=false}）</li>
+   *   <li>数量限制：无限制（{@code limit=MAX_VALUE}）</li>
+   * </ul>
+   */
   public Replacer() {}
 
+  /**
+   * 清除所有搜索策略设置。
+   *
+   * <p>此方法重置替换模式为子字符串模式，并清除所有搜索策略相关的字段，
+   * 但保持其他配置（如范围、大小写、数量限制、替换内容）不变。
+   * 调用此方法后需要重新设置搜索策略。</p>
+   */
   private void clearStrategies() {
     this.mode = Mode.SUBSTRING;
     this.charFilter = null;

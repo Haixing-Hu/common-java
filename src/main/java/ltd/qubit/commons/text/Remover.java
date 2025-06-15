@@ -45,10 +45,11 @@ import static ltd.qubit.commons.text.impl.RemoverImpl.removeSuffix;
  * 用于从字符串中移除内容的类。
  *
  * <p>此类提供了灵活的字符串内容移除功能，支持移除指定的字符、Unicode 代码点、
- * 子字符串、前缀、后缀或满足特定条件的字符，并可配置移除范围、大小写敏感性和数量限制。</p>
+ * 子字符串、前缀、后缀或满足特定条件的字符。支持配置移除范围、大小写敏感性、
+ * 数量限制等高级选项，适用于各种文本处理和数据清理场景。</p>
  *
- * <p>使用示例：</p>
- * <pre><code>
+ * <h3>基本字符移除</h3>
+ * <pre>{@code
  * // 移除指定字符
  * String result = new Remover().forChar('*').removeFrom("a*b*c*d");
  * // 结果: "abcd"
@@ -57,24 +58,79 @@ import static ltd.qubit.commons.text.impl.RemoverImpl.removeSuffix;
  * String result = new Remover().forCharsIn('*', '#', '@').removeFrom("a*b#c@d");
  * // 结果: "abcd"
  *
+ * // 移除字符序列中的字符
+ * String result = new Remover().forCharsIn("aeiou").removeFrom("Hello World");
+ * // 结果: "Hll Wrld"
+ * }</pre>
+ *
+ * <h3>字符保留策略</h3>
+ * <pre>{@code
  * // 移除不在指定字符集中的字符（保留指定字符）
  * String result = new Remover().forCharsNotIn('a', 'b', 'c').removeFrom("a1b2c3");
  * // 结果: "abc"
  *
+ * // 移除所有不等于指定字符的字符
+ * String result = new Remover().forCharsNotEqual('a').removeFrom("banana");
+ * // 结果: "aaa"
+ * }</pre>
+ *
+ * <h3>基于条件的字符移除</h3>
+ * <pre>{@code
  * // 移除满足条件的字符（如数字）
  * String result = new Remover().forCharsSatisfy(Character::isDigit)
  *                              .removeFrom("abc123def456");
  * // 结果: "abcdef"
  *
- * // 移除 Unicode 代码点（表情符号）
+ * // 移除不满足条件的字符（保留字母和空格）
+ * String result = new Remover().forCharsNotSatisfy(ch -> Character.isLetter(ch) || ch == ' ')
+ *                              .removeFrom("Hello, World! 123");
+ * // 结果: "Hello World "
+ *
+ * // 使用自定义过滤器
+ * CharFilter punctuationFilter = ch -> ".,!?;:".indexOf(ch) >= 0;
+ * String result = new Remover().forCharsSatisfy(punctuationFilter)
+ *                              .removeFrom("Hello, World!");
+ * // 结果: "Hello World"
+ * }</pre>
+ *
+ * <h3>Unicode 代码点移除</h3>
+ * <pre>{@code
+ * // 移除指定 Unicode 代码点（表情符号）
  * String result = new Remover().forCodePoint(0x1F600) // 😀
  *                              .removeFrom("Hello😀World😀");
  * // 结果: "HelloWorld"
  *
+ * // 移除多个 Unicode 代码点
+ * String result = new Remover().forCodePointsIn(0x1F600, 0x1F601, 0x1F602)
+ *                              .removeFrom("😀Hello😁World😂");
+ * // 结果: "HelloWorld"
+ *
+ * // 移除字符序列中的代码点
+ * String result = new Remover().forCodePointsIn("😀😁😂")
+ *                              .removeFrom("😀Hello😁World😂");
+ * // 结果: "HelloWorld"
+ *
+ * // 移除不等于指定代码点的字符
+ * String result = new Remover().forCodePointNotEqual('a')
+ *                              .removeFrom("banana");
+ * // 结果: "aaa"
+ * }</pre>
+ *
+ * <h3>子字符串移除</h3>
+ * <pre>{@code
  * // 移除子字符串
  * String result = new Remover().forSubstring("test").removeFrom("This is a test string test");
  * // 结果: "This is a  string "
  *
+ * // 忽略大小写移除
+ * String result = new Remover().forSubstring("HELLO")
+ *                              .ignoreCase(true)
+ *                              .removeFrom("hello world Hello");
+ * // 结果: " world "
+ * }</pre>
+ *
+ * <h3>前缀和后缀移除</h3>
+ * <pre>{@code
  * // 移除前缀
  * String result = new Remover().forPrefix("Hello ").removeFrom("Hello World");
  * // 结果: "World"
@@ -87,18 +143,15 @@ import static ltd.qubit.commons.text.impl.RemoverImpl.removeSuffix;
  * String result = new Remover().forPrefix("(").forSuffix(")").removeFrom("(content)");
  * // 结果: "content"
  *
- * // 忽略大小写移除
- * String result = new Remover().forSubstring("HELLO")
+ * // 忽略大小写移除前缀后缀
+ * String result = new Remover().forPrefix("HTTP://")
  *                              .ignoreCase(true)
- *                              .removeFrom("hello world Hello");
- * // 结果: " world "
+ *                              .removeFrom("http://example.com");
+ * // 结果: "example.com"
+ * }</pre>
  *
- * // 限制移除数量
- * String result = new Remover().forChar('a')
- *                              .limit(2)
- *                              .removeFrom("banana");
- * // 结果: "bana"
- *
+ * <h3>移除范围控制</h3>
+ * <pre>{@code
  * // 指定移除范围
  * String result = new Remover().forChar('a')
  *                              .startFrom(2)
@@ -112,56 +165,178 @@ import static ltd.qubit.commons.text.impl.RemoverImpl.removeSuffix;
  *                              .endBefore(20)
  *                              .removeFrom("This test is a test case");
  * // 结果: "This test is a  case"
+ * }</pre>
  *
+ * <h3>移除数量限制</h3>
+ * <pre>{@code
+ * // 限制移除数量
+ * String result = new Remover().forChar('a')
+ *                              .limit(2)
+ *                              .removeFrom("banana");
+ * // 结果: "bana"
+ *
+ * // 组合范围和数量限制
+ * String result = new Remover().forChar(' ')
+ *                              .startFrom(1)
+ *                              .endBefore(10)
+ *                              .limit(3)
+ *                              .removeFrom(" a b c d e f ");
+ * // 结果: " abcdef "
+ * }</pre>
+ *
+ * <h3>性能优化：直接输出到Appendable</h3>
+ * <pre>{@code
  * // 使用 StringBuilder 输出（避免创建中间字符串）
  * StringBuilder sb = new StringBuilder();
  * int removed = new Remover().forChar('*').removeFrom("a*b*c*", sb);
  * // sb 内容: "abc", removed: 3
  *
- * // 复杂示例：移除非字母字符，保留空格
- * String result = new Remover().forCharsNotSatisfy(ch -> Character.isLetter(ch) || ch == ' ')
- *                              .removeFrom("Hello, World! 123");
- * // 结果: "Hello World "
+ * // 输出到任意 Appendable
+ * StringWriter writer = new StringWriter();
+ * int removed = new Remover().forSubstring("test").removeFrom("test string", writer);
+ * // writer 内容: " string", removed: 1
+ * }</pre>
  *
- * // 移除多个 Unicode 代码点
- * String result = new Remover().forCodePointsIn(0x1F600, 0x1F601, 0x1F602)
- *                              .removeFrom("😀Hello😁World😂");
- * // 结果: "HelloWorld"
- *
- * // 链式操作示例
+ * <h3>链式调用示例</h3>
+ * <pre>{@code
+ * // 复杂的链式调用
  * String result = new Remover()
- *     .forChar(' ')           // 移除空格
- *     .startFrom(1)           // 从索引1开始
- *     .endBefore(10)          // 到索引10结束
- *     .limit(3)               // 最多移除3个
- *     .removeFrom(" a b c d e f ");
- * // 结果: " abcdef "
+ *     .forCharsNotSatisfy(Character::isLetterOrDigit)
+ *     .startFrom(0)
+ *     .endBefore(50)
+ *     .limit(10)
+ *     .removeFrom("Hello, World! 123 @#$%");
+ * // 结果: "HelloWorld123"
  *
+ * // 组合多种配置
+ * String cleaned = new Remover()
+ *     .forCharsIn(" \t\n\r")
+ *     .limit(5)
+ *     .removeFrom(userInput);
+ * }</pre>
+ *
+ * <h3>支持的移除策略</h3>
+ * <ul>
+ *   <li><strong>单字符</strong>：{@code forChar(char)} - 移除指定字符</li>
+ *   <li><strong>字符集合</strong>：{@code forCharsIn(char...)} - 移除数组中的任意字符</li>
+ *   <li><strong>字符排除</strong>：{@code forCharsNotIn(char...)} - 移除不在数组中的字符</li>
+ *   <li><strong>条件过滤</strong>：{@code forCharsSatisfy(CharFilter)} - 移除满足条件的字符</li>
+ *   <li><strong>Unicode代码点</strong>：{@code forCodePoint(int)} - 移除指定代码点</li>
+ *   <li><strong>子字符串</strong>：{@code forSubstring(CharSequence)} - 移除子字符串</li>
+ *   <li><strong>前缀</strong>：{@code forPrefix(CharSequence)} - 移除前缀</li>
+ *   <li><strong>后缀</strong>：{@code forSuffix(CharSequence)} - 移除后缀</li>
+ * </ul>
+ *
+ * <h3>支持的配置选项</h3>
+ * <ul>
+ *   <li><strong>范围控制</strong>：{@code startFrom(int)}, {@code endBefore(int)} - 指定移除范围</li>
+ *   <li><strong>大小写</strong>：{@code ignoreCase(boolean)} - 忽略大小写比较</li>
+ *   <li><strong>数量限制</strong>：{@code limit(int)} - 限制移除的最大数量</li>
+ * </ul>
+ *
+ * <h3>特殊情况处理</h3>
+ * <pre>{@code
  * // 处理 null 输入
  * String result = new Remover().forChar('a').removeFrom(null);
  * // 结果: null
  *
- * // 移除字符序列中的字符
- * String result = new Remover().forCharsIn("aeiou").removeFrom("Hello World");
- * // 结果: "Hll Wrld"
- * </code></pre>
+ * // 处理空字符串
+ * String result = new Remover().forChar('a').removeFrom("");
+ * // 结果: ""
+ *
+ * // 无匹配内容
+ * String result = new Remover().forChar('z').removeFrom("hello");
+ * // 结果: "hello"
+ * }</pre>
+ *
+ * <h3>注意事项</h3>
+ * <ul>
+ *   <li>输入字符串为{@code null}时，{@code removeFrom()}方法返回{@code null}</li>
+ *   <li>输入字符串为空时，{@code removeFrom()}方法返回空字符串</li>
+ *   <li>移除策略是互斥的，后设置的策略会覆盖前面的策略</li>
+ *   <li>前缀和后缀可以同时设置，但不能与其他移除策略同时使用</li>
+ *   <li>范围索引超出字符串长度时会自动调整到有效范围</li>
+ *   <li>所有配置方法都返回当前实例，支持链式调用</li>
+ * </ul>
  *
  * @author 胡海星
+ * @see ltd.qubit.commons.util.filter.character.CharFilter
+ * @see ltd.qubit.commons.util.filter.codepoint.CodePointFilter
+ * @see ltd.qubit.commons.text.Searcher
+ * @see ltd.qubit.commons.text.Stripper
  */
 public class Remover {
 
+  /**
+   * 字符过滤器，用于字符移除操作。
+   */
   private CharFilter charFilter;
+
+  /**
+   * Unicode 代码点过滤器，用于代码点移除操作。
+   */
   private CodePointFilter codePointFilter;
+
+  /**
+   * 要移除的子字符串。
+   */
   private CharSequence substring;
+
+  /**
+   * 要移除的前缀字符串。
+   */
   private CharSequence prefix;
+
+  /**
+   * 要移除的后缀字符串。
+   */
   private CharSequence suffix;
+
+  /**
+   * 移除操作的起始索引（包含）。
+   * 默认值为 0，表示从字符串开头开始。
+   */
   private int startIndex = 0;
+
+  /**
+   * 移除操作的结束索引（不包含）。
+   * 默认值为 {@link Integer#MAX_VALUE}，表示到字符串末尾。
+   */
   private int endIndex = Integer.MAX_VALUE;
+
+  /**
+   * 是否忽略大小写进行比较。
+   * 默认值为 {@code false}，表示区分大小写。
+   * 仅适用于子字符串、前缀和后缀的移除操作。
+   */
   private boolean ignoreCase = false;
+
+  /**
+   * 移除操作的最大数量限制。
+   * 默认值为 {@link Integer#MAX_VALUE}，表示无限制。
+   */
   private int limit = Integer.MAX_VALUE;
 
+  /**
+   * 构造一个新的 {@link Remover} 实例。
+   *
+   * <p>默认配置：</p>
+   * <ul>
+   *   <li>移除策略：未设置（需要调用 {@code forXxx} 方法设置）</li>
+   *   <li>移除范围：整个字符串（{@code startIndex=0}, {@code endIndex=MAX_VALUE}）</li>
+   *   <li>大小写敏感：区分大小写（{@code ignoreCase=false}）</li>
+   *   <li>数量限制：无限制（{@code limit=MAX_VALUE}）</li>
+   * </ul>
+   */
   public Remover() {}
 
+  /**
+   * 清除所有移除策略设置。
+   *
+   * <p>此方法重置所有移除策略相关的字段为 {@code null}，
+   * 但保持其他配置（如范围、大小写、数量限制）不变。
+   * 调用此方法后需要重新设置移除策略。</p>
+   */
   private void clearStrategies() {
     this.charFilter = null;
     this.codePointFilter = null;

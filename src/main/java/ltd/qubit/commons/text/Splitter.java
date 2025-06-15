@@ -49,169 +49,344 @@ import static ltd.qubit.commons.text.impl.SplitterImpl.splitLines;
 /**
  * 用于分割字符串的类。
  *
- * <p>此类提供了灵活的字符串分割功能，支持按字符、Unicode 代码点、子字符串、字符类型、
- * 换行符等多种方式分割字符串，并可配置是否剥离空白、忽略空字符串、忽略大小写等选项。</p>
+ * <p>此类提供了灵活强大的字符串分割功能，支持按字符、Unicode 代码点、子字符串、
+ * 字符类型、换行符等多种方式分割字符串，并可配置是否剥离空白、忽略空字符串、
+ * 忽略大小写等选项。适用于CSV解析、路径处理、文本分析、数据提取等多种场景。</p>
  *
- * <p>使用示例：</p>
- * <pre><code>
+ * <h3>基本字符分割</h3>
+ * <pre>{@code
  * // 按单个字符分割
- * List&lt;String&gt; result = new Splitter().byChar(',').split("a,b,c");
+ * List<String> result = new Splitter().byChar(',').split("a,b,c");
  * // 结果: ["a", "b", "c"]
  *
- * // 按字符数组分割，剥离空白并忽略空字符串
- * List&lt;String&gt; result = new Splitter()
- *     .byCharsIn(',', ';', ' ')
- *     .strip(true)
- *     .ignoreEmpty(true)
- *     .split("a, b ; c   ; ; d");
+ * // 按字符数组分割
+ * List<String> result = new Splitter().byCharsIn(',', ';', '|').split("a,b;c|d");
  * // 结果: ["a", "b", "c", "d"]
  *
  * // 按字符序列分割
- * List&lt;String&gt; result = new Splitter().byCharsIn(",.;").split("a,b.c;d");
+ * List<String> result = new Splitter().byCharsIn(",.;").split("a,b.c;d");
  * // 结果: ["a", "b", "c", "d"]
+ * }</pre>
  *
+ * <h3>字符保留和排除策略</h3>
+ * <pre>{@code
+ * // 按不等于指定字符的字符分割
+ * List<String> result = new Splitter().byCharNotEqual('a').split("banana");
+ * // 结果: ["", "a", "", "a", "", "a"]
+ *
+ * // 按不在指定字符集中的字符分割
+ * List<String> result = new Splitter().byCharsNotIn('a', 'b', 'c')
+ *                                    .ignoreEmpty(true)
+ *                                    .split("abc123def");
+ * // 结果: ["abc", "def"]
+ * }</pre>
+ *
+ * <h3>基于条件的字符分割</h3>
+ * <pre>{@code
  * // 按条件分割（如按数字分割）
- * List&lt;String&gt; result = new Splitter()
- *     .byCharsSatisfy(Character::isDigit)
- *     .split("abc123def456ghi");
- * // 结果: ["abc", "", "", "def", "", "", "ghi"]
+ * List<String> result = new Splitter().byCharsSatisfy(Character::isDigit)
+ *                                    .ignoreEmpty(true)
+ *                                    .split("abc123def456ghi");
+ * // 结果: ["abc", "def", "ghi"]
  *
+ * // 按不满足条件的字符分割（保留字母数字）
+ * List<String> result = new Splitter().byCharsNotSatisfy(Character::isLetterOrDigit)
+ *                                    .ignoreEmpty(true)
+ *                                    .split("Hello, World! 123");
+ * // 结果: ["Hello", "World", "123"]
+ *
+ * // 使用自定义过滤器
+ * CharFilter punctuationFilter = ch -> ".,!?;:".indexOf(ch) >= 0;
+ * List<String> result = new Splitter().byCharsSatisfy(punctuationFilter)
+ *                                    .ignoreEmpty(true)
+ *                                    .split("Hello, World!");
+ * // 结果: ["Hello", " World"]
+ * }</pre>
+ *
+ * <h3>Unicode 代码点分割</h3>
+ * <pre>{@code
  * // 按 Unicode 代码点分割（表情符号）
- * List&lt;String&gt; result = new Splitter()
- *     .byCodePoint(0x1F600) // 😀
- *     .split("Hello😀World😀Test");
+ * List<String> result = new Splitter().byCodePoint(0x1F600) // 😀
+ *                                    .split("Hello😀World😀Test");
  * // 结果: ["Hello", "World", "Test"]
  *
+ * // 按多个 Unicode 代码点分割
+ * List<String> result = new Splitter().byCodePointsIn(0x1F600, 0x1F601, 0x1F602)
+ *                                    .split("😀Hello😁World😂");
+ * // 结果: ["", "Hello", "World", ""]
+ *
+ * // 按字符序列中的代码点分割
+ * List<String> result = new Splitter().byCodePointsIn("😀😁😂")
+ *                                    .ignoreEmpty(true)
+ *                                    .split("😀Hello😁World😂");
+ * // 结果: ["Hello", "World"]
+ * }</pre>
+ *
+ * <h3>子字符串分割</h3>
+ * <pre>{@code
  * // 按子字符串分割
- * List&lt;String&gt; result = new Splitter()
- *     .bySubstring("and")
- *     .split("cats and dogs and birds");
+ * List<String> result = new Splitter().bySubstring("and")
+ *                                    .split("cats and dogs and birds");
  * // 结果: ["cats ", " dogs ", " birds"]
  *
  * // 按子字符串分割（忽略大小写）
- * List&lt;String&gt; result = new Splitter()
- *     .bySubstring("AND")
- *     .ignoreCase(true)
- *     .split("cats and dogs AND birds");
+ * List<String> result = new Splitter().bySubstring("AND")
+ *                                    .ignoreCase(true)
+ *                                    .split("cats and dogs AND birds");
  * // 结果: ["cats ", " dogs ", " birds"]
+ * }</pre>
  *
+ * <h3>空白字符分割</h3>
+ * <pre>{@code
  * // 按空白字符分割
- * List&lt;String&gt; result = new Splitter().byWhitespaces().split("a  b\tc\nd");
+ * List<String> result = new Splitter().byWhitespaces().split("a  b\tc\nd");
  * // 结果: ["a", "b", "c", "d"]
  *
  * // 按空白字符分割（包括不可打印字符）
- * List&lt;String&gt; result = new Splitter().byBlanks().split("a\u007Fb\u007F c");
+ * List<String> result = new Splitter().byBlanks().split("a\u007Fb\u007F c");
  * // 结果: ["a", "b", "c"]
+ * }</pre>
  *
+ * <h3>字符类型分割</h3>
+ * <pre>{@code
  * // 按字符类型分割
- * List&lt;String&gt; result = new Splitter().byCharTypes().split("abc123def");
+ * List<String> result = new Splitter().byCharTypes().split("abc123def");
  * // 结果: ["abc", "123", "def"]
  *
  * // 按字符类型分割（驼峰命名法）
- * List&lt;String&gt; result = new Splitter()
- *     .byCharTypes()
- *     .camelCase(true)
- *     .split("fooBarBaz");
+ * List<String> result = new Splitter().byCharTypes()
+ *                                    .camelCase(true)
+ *                                    .split("fooBarBaz");
  * // 结果: ["foo", "Bar", "Baz"]
  *
+ * // 复杂驼峰命名法示例
+ * List<String> result = new Splitter().byCharTypes()
+ *                                    .camelCase(true)
+ *                                    .split("XMLHttpRequest");
+ * // 结果: ["XML", "Http", "Request"]
+ * }</pre>
+ *
+ * <h3>特殊分割模式</h3>
+ * <pre>{@code
  * // 按换行符分割
- * List&lt;String&gt; result = new Splitter().toLines().split("line1\nline2\r\nline3");
+ * List<String> result = new Splitter().toLines().split("line1\nline2\r\nline3");
  * // 结果: ["line1", "line2", "line3"]
  *
  * // 分割为单个字符
- * List&lt;String&gt; result = new Splitter().toChars().split("abc");
+ * List<String> result = new Splitter().toChars().split("abc");
  * // 结果: ["a", "b", "c"]
  *
  * // 分割为 Unicode 代码点
- * List&lt;String&gt; result = new Splitter().toCodePoints().split("a😀b");
+ * List<String> result = new Splitter().toCodePoints().split("a😀b");
  * // 结果: ["a", "😀", "b"]
+ * }</pre>
  *
- * // 复杂示例：CSV 解析
- * List&lt;String&gt; result = new Splitter()
- *     .byChar(',')
- *     .strip(true)           // 剥离每个字段的空白
- *     .ignoreEmpty(false)    // 保留空字段
- *     .split("name, age, , city");
+ * <h3>结果处理选项</h3>
+ * <pre>{@code
+ * // 剥离空白并忽略空字符串
+ * List<String> result = new Splitter().byCharsIn(',', ';', ' ')
+ *                                    .strip(true)
+ *                                    .ignoreEmpty(true)
+ *                                    .split("a, b ; c   ; ; d");
+ * // 结果: ["a", "b", "c", "d"]
+ *
+ * // 保留空字段（CSV解析）
+ * List<String> result = new Splitter().byChar(',')
+ *                                    .strip(true)
+ *                                    .ignoreEmpty(false)
+ *                                    .split("name, age, , city");
  * // 结果: ["name", "age", "", "city"]
+ * }</pre>
  *
- * // 复杂示例：路径分割
- * List&lt;String&gt; result = new Splitter()
- *     .byCharsIn('/', '\\')  // 支持不同操作系统的路径分隔符
- *     .ignoreEmpty(true)     // 忽略连续分隔符产生的空字符串
- *     .split("/home//user/documents/");
+ * <h3>实际应用示例</h3>
+ * <pre>{@code
+ * // CSV 解析
+ * List<String> fields = new Splitter().byChar(',')
+ *                                    .strip(true)
+ *                                    .split("John Doe, 30, Engineer, New York");
+ * // 结果: ["John Doe", "30", "Engineer", "New York"]
+ *
+ * // 路径分割（跨平台）
+ * List<String> pathParts = new Splitter().byCharsIn('/', '\\')
+ *                                       .ignoreEmpty(true)
+ *                                       .split("/home//user/documents/");
  * // 结果: ["home", "user", "documents"]
  *
- * // 复杂示例：标签解析
- * List&lt;String&gt; result = new Splitter()
- *     .byCharsIn(',', ';', '|')
- *     .strip(true)
- *     .ignoreEmpty(true)
- *     .split("tag1, tag2; tag3 | tag4 ;;; tag5");
+ * // 标签解析
+ * List<String> tags = new Splitter().byCharsIn(',', ';', '|')
+ *                                  .strip(true)
+ *                                  .ignoreEmpty(true)
+ *                                  .split("tag1, tag2; tag3 | tag4 ;;; tag5");
  * // 结果: ["tag1", "tag2", "tag3", "tag4", "tag5"]
  *
+ * // 单词分割
+ * List<String> words = new Splitter().byCharsSatisfy(Character::isWhitespace)
+ *                                   .ignoreEmpty(true)
+ *                                   .split("  hello   world  \n  test  ");
+ * // 结果: ["hello", "world", "test"]
+ * }</pre>
+ *
+ * <h3>列表操作</h3>
+ * <pre>{@code
  * // 使用现有列表追加结果
- * List&lt;String&gt; existingList = new ArrayList&lt;&gt;();
+ * List<String> existingList = new ArrayList<>();
  * existingList.add("prefix");
- * List&lt;String&gt; result = new Splitter()
- *     .byChar(',')
- *     .split("a,b,c", existingList);
+ * List<String> result = new Splitter().byChar(',')
+ *                                    .split("a,b,c", existingList);
  * // 结果: ["prefix", "a", "b", "c"]
  *
+ * // 创建新列表
+ * List<String> result = new Splitter().byChar(',').split("a,b,c");
+ * // 结果: ["a", "b", "c"]
+ * }</pre>
+ *
+ * <h3>支持的分割策略</h3>
+ * <ul>
+ *   <li><strong>单字符</strong>：{@code byChar(char)} - 按指定字符分割</li>
+ *   <li><strong>字符集合</strong>：{@code byCharsIn(char...)} - 按数组中的任意字符分割</li>
+ *   <li><strong>字符排除</strong>：{@code byCharsNotIn(char...)} - 按不在数组中的字符分割</li>
+ *   <li><strong>条件过滤</strong>：{@code byCharsSatisfy(CharFilter)} - 按满足条件的字符分割</li>
+ *   <li><strong>Unicode代码点</strong>：{@code byCodePoint(int)} - 按指定代码点分割</li>
+ *   <li><strong>子字符串</strong>：{@code bySubstring(CharSequence)} - 按子字符串分割</li>
+ *   <li><strong>空白字符</strong>：{@code byWhitespaces()}, {@code byBlanks()} - 按空白字符分割</li>
+ *   <li><strong>字符类型</strong>：{@code byCharTypes()} - 按字符类型分割</li>
+ *   <li><strong>特殊模式</strong>：{@code toLines()}, {@code toChars()}, {@code toCodePoints()} - 特殊分割</li>
+ * </ul>
+ *
+ * <h3>支持的配置选项</h3>
+ * <ul>
+ *   <li><strong>结果处理</strong>：{@code strip(boolean)} - 剥离分割结果的空白</li>
+ *   <li><strong>空值处理</strong>：{@code ignoreEmpty(boolean)} - 忽略空字符串结果</li>
+ *   <li><strong>大小写</strong>：{@code ignoreCase(boolean)} - 忽略大小写比较</li>
+ *   <li><strong>驼峰处理</strong>：{@code camelCase(boolean)} - 驼峰命名法处理</li>
+ * </ul>
+ *
+ * <h3>特殊情况处理</h3>
+ * <pre>{@code
  * // 处理 null 输入
- * List&lt;String&gt; result = new Splitter().byChar(',').split(null);
+ * List<String> result = new Splitter().byChar(',').split(null);
  * // 结果: []
  *
  * // 处理空字符串
- * List&lt;String&gt; result = new Splitter().byChar(',').split("");
+ * List<String> result = new Splitter().byChar(',').split("");
  * // 结果: [""]
  *
- * List&lt;String&gt; result = new Splitter()
- *     .byChar(',')
- *     .ignoreEmpty(true)
- *     .split("");
+ * List<String> result = new Splitter().byChar(',')
+ *                                    .ignoreEmpty(true)
+ *                                    .split("");
  * // 结果: []
  *
- * // 链式配置示例
- * List&lt;String&gt; result = new Splitter()
- *     .byCharsIn(" \t\n")    // 按空白字符分割
- *     .strip(true)           // 剥离结果
- *     .ignoreEmpty(true)     // 忽略空字符串
- *     .split("  hello   world  \n  test  ");
- * // 结果: ["hello", "world", "test"]
- * </code></pre>
+ * // 无分隔符匹配
+ * List<String> result = new Splitter().byChar(',').split("abc");
+ * // 结果: ["abc"]
+ * }</pre>
+ *
+ * <h3>注意事项</h3>
+ * <ul>
+ *   <li>输入字符串为{@code null}时，{@code split()}方法返回空列表</li>
+ *   <li>分割策略是互斥的，后设置的策略会覆盖前面的策略</li>
+ *   <li>{@code strip()}选项会对每个分割结果进行空白剥离</li>
+ *   <li>{@code ignoreEmpty()}选项会从结果中移除空字符串</li>
+ *   <li>{@code ignoreCase()}选项仅适用于子字符串分割</li>
+ *   <li>{@code camelCase()}选项仅适用于字符类型分割</li>
+ *   <li>所有配置方法都返回当前实例，支持链式调用</li>
+ * </ul>
  *
  * @author 胡海星
+ * @see ltd.qubit.commons.util.filter.character.CharFilter
+ * @see ltd.qubit.commons.util.filter.codepoint.CodePointFilter
+ * @see ltd.qubit.commons.text.Searcher
+ * @see ltd.qubit.commons.text.Joiner
  */
 public class Splitter {
 
+  /**
+   * 字符过滤器，用于字符分割操作。
+   */
   private CharFilter byCharFilter;
 
+  /**
+   * Unicode 代码点过滤器，用于代码点分割操作。
+   */
   private CodePointFilter byCodePointFilter;
 
+  /**
+   * 要用作分隔符的子字符串。
+   */
   private CharSequence bySubstring;
 
+  /**
+   * 是否按换行符分割，默认为 {@code false}。
+   */
   private boolean toLines;
 
+  /**
+   * 是否按空白字符分割，默认为 {@code false}。
+   */
   private boolean byWhitespace;
 
+  /**
+   * 是否按空白字符（包括不可打印字符）分割，默认为 {@code false}。
+   */
   private boolean byBlanks;
 
+  /**
+   * 是否按字符类型分割，默认为 {@code false}。
+   */
   private boolean byCharType;
 
+  /**
+   * 是否分割为单个字符，默认为 {@code false}。
+   */
   private boolean toChars;
 
+  /**
+   * 是否分割为 Unicode 代码点，默认为 {@code false}。
+   */
   private boolean toCodePoints;
 
+  /**
+   * 是否剥离分割结果的空白字符，默认为 {@code false}。
+   */
   private boolean strip;
 
+  /**
+   * 是否忽略空字符串结果，默认为 {@code false}。
+   */
   private boolean ignoreEmpty;
 
+  /**
+   * 是否忽略大小写进行比较，默认为 {@code false}。
+   * 仅适用于子字符串分割操作。
+   */
   private boolean ignoreCase;
 
+  /**
+   * 是否使用驼峰命名法策略，默认为 {@code false}。
+   * 仅适用于字符类型分割操作。
+   */
   private boolean camelCase;
 
+  /**
+   * 构造一个新的 {@link Splitter} 实例。
+   *
+   * <p>默认配置：</p>
+   * <ul>
+   *   <li>分割策略：未设置（需要调用 {@code byXxx} 或 {@code toXxx} 方法设置）</li>
+   *   <li>结果处理：不剥离空白（{@code strip=false}）</li>
+   *   <li>空值处理：保留空字符串（{@code ignoreEmpty=false}）</li>
+   *   <li>大小写敏感：区分大小写（{@code ignoreCase=false}）</li>
+   *   <li>驼峰处理：不使用驼峰策略（{@code camelCase=false}）</li>
+   * </ul>
+   */
   public Splitter() {}
 
+  /**
+   * 清除所有分割策略设置。
+   *
+   * <p>此方法重置所有分割策略相关的字段为默认值，但保持其他配置
+   * （如剥离、忽略空值、大小写、驼峰等选项）不变。调用此方法后需要重新设置分割策略。</p>
+   */
   private void clearStrategies() {
     this.byCharFilter = null;
     this.byCodePointFilter = null;
