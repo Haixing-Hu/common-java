@@ -9,24 +9,25 @@
 package ltd.qubit.commons.text;
 
 /**
- * A generic interface for parsers.
+ * 解析器的通用接口。
  *
  * @param <INPUT>
- *     the type of the parsing input.
+ *     解析输入的类型。
  * @param <OUTPUT>
- *     the type of the parsing output.
- * @author Haixing Hu
+ *     解析输出的类型。
+ * @author 胡海星
  */
 public interface Parser<INPUT, OUTPUT> {
 
   /**
-   * Parses an input to an output.
+   * 将输入解析为输出。
    *
    * @param input
-   *     the input object to be parsed.
-   * @return the output object as the parsing result.
+   *     要解析的输入对象。
+   * @return
+   *     作为解析结果的输出对象。
    * @throws ParsingException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   OUTPUT parse(INPUT input) throws ParsingException;
 }

@@ -20,24 +20,22 @@ import static ltd.qubit.commons.text.NumberFormat.OCTAL_RADIX;
 import static ltd.qubit.commons.text.ParseOptions.DEFAULT_KEEP_BLANKS;
 
 /**
- * Provides function for parsing text.
+ * 提供解析文本的功能。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class ParseUtils {
 
   /**
-   * Skips the leading whitespace and non-printable characters of a string,
-   * returns the first current of graph character.
+   * 跳过字符串开头的空白和不可打印字符，返回第一个图形字符的位置。
    *
    * @param pos
-   *     a {@link ParsingPosition} object indicate the current position in the
-   *     character sequence to be parsed; after calling this function, the index
-   *     of the position would be changed.
+   *     {@link ParsingPosition} 对象，指示字符序列中的当前解析位置；
+   *     调用此函数后，位置的索引将被改变。
    * @param str
-   *     a character sequence.
+   *     字符序列。
    * @param endIndex
-   *     the skipping end at this current.
+   *     跳过操作在此位置结束。
    */
   public static void skipBlanks(final ParsingPosition pos,
       final CharSequence str, final int endIndex) {
@@ -57,17 +55,15 @@ public final class ParseUtils {
   }
 
   /**
-   * Skips the leading non-blank characters of a string, returns the first
-   * current of blank character.
+   * 跳过字符串开头的非空白字符，返回第一个空白字符的位置。
    *
    * @param pos
-   *     a {@link ParsingPosition} object indicate the current position in the
-   *     character sequence to be parsed; after calling this function, the index
-   *     of the position would be changed.
+   *     {@link ParsingPosition} 对象，指示字符序列中的当前解析位置；
+   *     调用此函数后，位置的索引将被改变。
    * @param str
-   *     a character sequence.
+   *     字符序列。
    * @param endIndex
-   *     the skipping end at this current.
+   *     跳过操作在此位置结束。
    */
   public static void skipNonBlanks(final ParsingPosition pos,
       final CharSequence str, final int endIndex) {
@@ -126,21 +122,20 @@ public final class ParseUtils {
   //  }
 
   /**
-   * Skips the optional prefix.
+   * 跳过可选的前缀。
    *
    * @param pos
-   *     a {@link ParsingPosition} object indicate the current position in the
-   *     character sequence to be parsed; after calling this function, if the
-   *     prefix is successfully skipped, this position will be set to the
-   *     position after skipping the prefix; otherwise, this position will not
-   *     be changed.
+   *     {@link ParsingPosition} 对象，指示字符序列中的当前解析位置；
+   *     调用此函数后，如果前缀成功跳过，此位置将设置为跳过前缀后的位置；
+   *     否则，此位置不会改变。
    * @param str
-   *     a character sequence.
+   *     字符序列。
    * @param endIndex
-   *     the skipping end at this current.
+   *     跳过操作在此位置结束。
    * @param prefix
-   *     the optional prefix to be skipped.
-   * @return true if the prefix successfully skipped; false otherwise.
+   *     要跳过的可选前缀。
+   * @return
+   *     如果前缀成功跳过则返回 {@code true}；否则返回 {@code false}。
    */
   public static boolean skipPrefix(final ParsingPosition pos,
       final CharSequence str, final int endIndex, final String prefix) {
@@ -159,29 +154,24 @@ public final class ParseUtils {
   }
 
   /**
-   * Gets the sign of the number to be parsed. After calling this function, the
-   * current.value may be forwarded to skip the possible sign symbol.
+   * 获取要解析的数字的符号。调用此函数后，当前位置可能会向前移动以跳过可能的符号字符。
    *
-   * <p><b>IMPORTANT NOTE:</b> this function does not check the validity of the
-   * arguments, therefore, the caller MUST make sure that the arguments are
-   * valid.
+   * <p><b>重要提示：</b>此函数不检查参数的有效性，因此，调用者必须确保参数有效。
    *
    * @param pos
-   *     a {@link ParsingPosition} object indicate the current position in the
-   *     character sequence to be parsed; after calling this function, the index
-   *     of the position would be changed.
+   *     {@link ParsingPosition} 对象，指示字符序列中的当前解析位置；
+   *     调用此函数后，位置的索引将被改变。
    * @param str
-   *     a character sequence.
+   *     字符序列。
    * @param endIndex
-   *     the end current of the character sequence. It must satisfies that 0
-   *     &le; current.value &le; endIndex &le; str.length(); The whole text
-   *     segment is within the range [current.value, endIndex) of input.
+   *     字符序列的结束位置。必须满足 0 ≤ current.value ≤ endIndex ≤ str.length()；
+   *     整个文本段在输入的 [current.value, endIndex) 范围内。
    * @param positiveSign
-   *     the character of the positive sign symbol.
+   *     正号符号的字符。
    * @param negativeSign
-   *     the character of the negative sign symbol.
-   * @return -1 if the input character sequence has a negative sign; +1
-   *     otherwise.
+   *     负号符号的字符。
+   * @return
+   *     如果输入字符序列有负号则返回 -1；否则返回 +1。
    */
   public static int getSign(final ParsingPosition pos, final CharSequence str,
       final int endIndex, final char positiveSign, final char negativeSign) {
@@ -201,30 +191,24 @@ public final class ParseUtils {
   }
 
   /**
-   * Gets the radix of the number to be parsed. After calling this function,
-   * this.index may be forwarded to skip the possible radix prefix in the input
-   * text segment.
+   * 获取要解析的数字的进制。调用此函数后，位置的索引可能会向前移动以跳过输入文本段中可能的进制前缀。
    *
-   * <p><b>IMPORTANT NOTE:</b> this function does not check the validity of the
-   * arguments, therefore, the caller MUST make sure that the arguments are
-   * valid.
+   * <p><b>重要提示：</b>此函数不检查参数的有效性，因此，调用者必须确保参数有效。
    *
    * @param pos
-   *     a {@link ParsingPosition} object indicate the current position in the
-   *     character sequence to be parsed; after calling this function, the index
-   *     of the position would be changed.
+   *     {@link ParsingPosition} 对象，指示字符序列中的当前解析位置；
+   *     调用此函数后，位置的索引将被改变。
    * @param str
-   *     a character sequence.
+   *     字符序列。
    * @param endIndex
-   *     the end current of the character sequence. It must satisfies that 0
-   *     &le; current.value &le; endIndex &le; str.length(); The whole text
-   *     segment is within the range [current.value, endIndex) of input.
+   *     字符序列的结束位置。必须满足 0 ≤ current.value ≤ endIndex ≤ str.length()；
+   *     整个文本段在输入的 [current.value, endIndex) 范围内。
    * @param flags
-   *     the combination of the format flags of the number to be parsed.
+   *     要解析的数字的格式标志的组合。
    * @param defaultRadix
-   *     the default radix used if the number to be parsed does not specify the
-   *     radix nor has the radix prefix.
-   * @return the radix of the number to be parsed.
+   *     如果要解析的数字没有指定进制且没有进制前缀时使用的默认进制。
+   * @return
+   *     要解析的数字的进制。
    */
   public static int getRadix(final ParsingPosition pos, final CharSequence str,
       final int endIndex, final int flags, final int defaultRadix) {
@@ -297,53 +281,43 @@ public final class ParseUtils {
   }
 
   /**
-   * Parse an unsigned int value in a special radix (2, 4, 8, or 16).
+   * 解析特殊进制（2、4、8或16）的无符号 int 值。
    *
-   * <p>Since Java has no unsigned integral type, the returned value is still
-   * signed int, but the overflow condition is modified for the unsigned int.
+   * <p>由于 Java 没有无符号整数类型，返回值仍然是有符号 int，但溢出条件针对无符号 int 进行了修改。
    *
-   * <p>After calling this function, the {@code pos.index} is set to the
-   * position where the parsing stopped.
+   * <p>调用此函数后，{@code pos.index} 被设置为解析停止的位置。
    *
-   * <p>If an error occurs during the parsing, the {@code pos.errorCode} is set
-   * to the error code, and the {@code pos.errorIndex} is set to the position
-   * where the error occurs; otherwise, {@code pos.errorCode} is set to
-   * {@link ErrorCode#NONE} and {@code pos.errorIndex} is set to {@code -1}.
+   * <p>如果解析过程中发生错误，{@code pos.errorCode} 被设置为错误代码，
+   * {@code pos.errorIndex} 被设置为发生错误的位置；否则，{@code pos.errorCode}
+   * 被设置为 {@link ErrorCode#NONE}，{@code pos.errorIndex} 被设置为 {@code -1}。
    *
-   * <p>Note that this function does NOT skip the leading whitespace, nor does
-   * it get the radix prefix and sign. In order to do that, call
-   * {@link #skipNonBlanks(ParsingPosition, CharSequence, int)},
-   * {@link #getRadix(ParsingPosition, CharSequence, int, int, int)} and
-   * {@link #getSign(ParsingPosition, CharSequence, int, char, char)}
-   * before calling this function.
+   * <p>注意，此函数不会跳过前导空白字符，也不会获取进制前缀和符号。
+   * 为了做到这些，请在调用此函数之前调用
+   * {@link #skipNonBlanks(ParsingPosition, CharSequence, int)}、
+   * {@link #getRadix(ParsingPosition, CharSequence, int, int, int)} 和
+   * {@link #getSign(ParsingPosition, CharSequence, int, char, char)}。
    *
-   * <p><b>IMPORTANT NOTE:</b> this function does not check the validity of the
-   * arguments, therefore, the caller MUST make sure that the arguments are
-   * valid.
+   * <p><b>重要提示：</b>此函数不检查参数的有效性，因此，调用者必须确保参数有效。
    *
    * @param pos
-   *     a {@link ParsingPosition} object indicate the current position in the
-   *     character sequence to be parsed; after calling this function, the index
-   *     of the position would be changed.
+   *     {@link ParsingPosition} 对象，指示字符序列中的当前解析位置；
+   *     调用此函数后，位置的索引将被改变。
    * @param str
-   *     the text segment. It can't be null.
+   *     文本段。不能为 null。
    * @param endIndex
-   *     the end current of the text segment. It must satisfies that 0 &le;
-   *     this.index &le; endIndex &le; input.length(); The whole text segment is
-   *     within the range [this.index, endIndex) of input.
+   *     文本段的结束位置。必须满足 0 ≤ this.index ≤ endIndex ≤ input.length()；
+   *     整个文本段在输入的 [this.index, endIndex) 范围内。
    * @param sign
-   *     the sign of the integer to be parsed.
+   *     要解析的整数的符号。
    * @param radix
-   *     the radix of the integral value to be parsed. It must be one of 2, 8,
-   *     or 16.
+   *     要解析的整数值的进制。必须是 2、8 或 16 之一。
    * @param maxValue
-   *     the maximum allowed value of the number to be parsed. Note that this
-   *     value is treated as an unsigned int.
+   *     要解析的数字的最大允许值。注意此值被视为无符号 int。
    * @param maxDigits
-   *     the maximum number of digits could be parsed.
-   * @return the int value parsed by this function. If this.errorCode is set to
-   *     ParseError.EMPTY, 0 is returned; If this.errorCode is set to
-   *     ParseError.OVERFLOW, the maxValue is returned.
+   *     可以解析的最大位数。
+   * @return
+   *     此函数解析的 int 值。如果 this.errorCode 被设置为 ParseError.EMPTY，
+   *     返回 0；如果 this.errorCode 被设置为 ParseError.OVERFLOW，返回 maxValue。
    * @see #skipNonBlanks(ParsingPosition, CharSequence, int)
    * @see #getRadix(ParsingPosition, CharSequence, int, int, int)
    * @see #getSign(ParsingPosition, CharSequence, int, char, char)
@@ -417,50 +391,41 @@ public final class ParseUtils {
   }
 
   /**
-   * Parse an unsigned long value in a special radix (2, 4, 8, or 16).
+   * 解析特殊进制（2、4、8或16）的无符号 long 值。
    *
-   * <p>Since Java has no unsigned integral type, the returned value is still
-   * signed long, but the overflow condition is modified for the unsigned long.
+   * <p>由于 Java 没有无符号整数类型，返回值仍然是有符号 long，但溢出条件针对无符号 long 进行了修改。
    *
-   * <p>After calling this function, the {@code pos.index} is set to the
-   * position where the parsing stopped.
+   * <p>调用此函数后，{@code pos.index} 被设置为解析停止的位置。
    *
-   * <p>If an error occurs during the parsing, the {@code pos.errorCode} is set
-   * to the error code, and the {@code pos.errorIndex} is set to the position
-   * where the error occurs; otherwise, {@code pos.errorCode} is set to
-   * {@link ErrorCode#NONE} and {@code pos.errorIndex} is set to {@code -1}.
+   * <p>如果解析过程中发生错误，{@code pos.errorCode} 被设置为错误代码，
+   * {@code pos.errorIndex} 被设置为发生错误的位置；否则，{@code pos.errorCode}
+   * 被设置为 {@link ErrorCode#NONE}，{@code pos.errorIndex} 被设置为 {@code -1}。
    *
-   * <p>Note that this function does NOT skip the leading whitespace, nor does
-   * it get the radix prefix and sign. In order to do that, call
-   * {@link #skipNonBlanks(ParsingPosition, CharSequence, int)},
-   * {@link #getRadix(ParsingPosition, CharSequence, int, int, int)} and
-   * {@link #getSign(ParsingPosition, CharSequence, int, char, char)}
-   * before calling this function.
+   * <p>注意，此函数不会跳过前导空白字符，也不会获取进制前缀和符号。
+   * 为了做到这些，请在调用此函数之前调用
+   * {@link #skipNonBlanks(ParsingPosition, CharSequence, int)}、
+   * {@link #getRadix(ParsingPosition, CharSequence, int, int, int)} 和
+   * {@link #getSign(ParsingPosition, CharSequence, int, char, char)}。
    *
-   * <p><b>IMPORTANT NOTE:</b> this function does not check the validity of the
-   * arguments, therefore, the caller MUST make sure that the arguments are
-   * valid.
+   * <p><b>重要提示：</b>此函数不检查参数的有效性，因此，调用者必须确保参数有效。
    *
    * @param pos
-   *     a {@link ParsingPosition} object indicate the current position in the
-   *     character sequence to be parsed; after calling this function, the index
-   *     of the position would be changed.
+   *     {@link ParsingPosition} 对象，指示字符序列中的当前解析位置；
+   *     调用此函数后，位置的索引将被改变。
    * @param str
-   *     the text segment. It can't be null.
+   *     文本段。不能为 null。
    * @param endIndex
-   *     the end current of the text segment. It must satisfies that 0 &le;
-   *     this.index &le; endIndex &le; input.length(); The whole text segment is
-   *     within the range [this.index, endIndex) of input.
+   *     文本段的结束位置。必须满足 0 ≤ this.index ≤ endIndex ≤ input.length()；
+   *     整个文本段在输入的 [this.index, endIndex) 范围内。
    * @param sign
-   *     the pre-parsed sign of the parsed value.
+   *     解析值的预解析符号。
    * @param radix
-   *     the radix of the integral value to be parsed. It must be one of 2, 8,
-   *     or 16.
+   *     要解析的整数值的进制。必须是 2、8 或 16 之一。
    * @param maxDigits
-   *     the maximum number of digits could be parsed.
-   * @return the long value parsed by this function. If this.errorCode is set to
-   *     ParseError.EMPTY, 0 is returned; If this.errorCode is set to
-   *     ParseError.OVERFLOW, the UNSIGNED_LONG_MAX is returned.
+   *     可以解析的最大位数。
+   * @return
+   *     此函数解析的 long 值。如果 this.errorCode 被设置为 ParseError.EMPTY，
+   *     返回 0；如果 this.errorCode 被设置为 ParseError.OVERFLOW，返回 UNSIGNED_LONG_MAX。
    * @see #skipNonBlanks(ParsingPosition, CharSequence, int)
    * @see #getRadix(ParsingPosition, CharSequence, int, int, int)
    * @see #getSign(ParsingPosition, CharSequence, int, char, char)
@@ -535,53 +500,43 @@ public final class ParseUtils {
   }
 
   /**
-   * Parse an signed int value in a decimal radix.
+   * 解析十进制的有符号 int 值。
    *
-   * <p>After calling this function, the {@code pos.index} is set to the
-   * position where the parsing stopped.
+   * <p>调用此函数后，{@code pos.index} 被设置为解析停止的位置。
    *
-   * <p>If an error occurs during the parsing, the {@code pos.errorCode} is set
-   * to the error code, and the {@code pos.errorIndex} is set to the position
-   * where the error occurs; otherwise, {@code pos.errorCode} is set to
-   * {@link ErrorCode#NONE} and {@code pos.errorIndex} is set to {@code -1}.
+   * <p>如果解析过程中发生错误，{@code pos.errorCode} 被设置为错误代码，
+   * {@code pos.errorIndex} 被设置为发生错误的位置；否则，{@code pos.errorCode}
+   * 被设置为 {@link ErrorCode#NONE}，{@code pos.errorIndex} 被设置为 {@code -1}。
    *
-   * <p>Note that this function does NOT skip the leading whitespace, nor does
-   * it get the radix prefix and sign. In order to do that, call
-   * {@link #skipNonBlanks(ParsingPosition, CharSequence, int)},
-   * {@link #getRadix(ParsingPosition, CharSequence, int, int, int)} and
-   * {@link #getSign(ParsingPosition, CharSequence, int, char, char)}
-   * before calling this function.
+   * <p>注意，此函数不会跳过前导空白字符，也不会获取进制前缀和符号。
+   * 为了做到这些，请在调用此函数之前调用
+   * {@link #skipNonBlanks(ParsingPosition, CharSequence, int)}、
+   * {@link #getRadix(ParsingPosition, CharSequence, int, int, int)} 和
+   * {@link #getSign(ParsingPosition, CharSequence, int, char, char)}。
    *
-   * <p><b>IMPORTANT NOTE:</b> this function does not check the validity of the
-   * arguments, therefore, the caller MUST make sure that the arguments are
-   * valid.
+   * <p><b>重要提示：</b>此函数不检查参数的有效性，因此，调用者必须确保参数有效。
    *
-   * <p>TODO: add support to digit grouping.
+   * <p>TODO: 添加对数字分组的支持。
    *
    * @param pos
-   *     a {@link ParsingPosition} object indicate the current position in the
-   *     character sequence to be parsed; after calling this function, the index
-   *     of the position would be changed.
+   *     {@link ParsingPosition} 对象，指示字符序列中的当前解析位置；
+   *     调用此函数后，位置的索引将被改变。
    * @param str
-   *     the text segment. It can't be null.
+   *     文本段。不能为 null。
    * @param endIndex
-   *     the end current of the text segment. It must satisfies that 0 &le;
-   *     this.index &le; endIndex &le; input.length(); The whole text segment is
-   *     within the range [this.index, endIndex) of input.
+   *     文本段的结束位置。必须满足 0 ≤ this.index ≤ endIndex ≤ input.length()；
+   *     整个文本段在输入的 [this.index, endIndex) 范围内。
    * @param sign
-   *     the sign of the integral value to be parsed. A negative value indicate
-   *     the value to be parsed is a negative value, otherwise the value to be
-   *     parsed is a positive value.
+   *     要解析的整数值的符号。负值表示要解析的值是负值，否则要解析的值是正值。
    * @param maxValue
-   *     the maximum allowed value of the number to be parsed. Note that this
-   *     value is treated as a signed int, and the minimum allowed value of the
-   *     number to be parsed is (- maxValue - 1).
+   *     要解析的数字的最大允许值。注意此值被视为有符号 int，
+   *     要解析的数字的最小允许值是 (- maxValue - 1)。
    * @param maxDigits
-   *     the maximum number of digits could be parsed.
-   * @return the integral value parsed by this function. If this.errorCode is
-   *     ParseError.EMPTY, returned value is 0; If this.errorCode is
-   *     ParseError.OVERFLOW, returned value is maxValue if sign &ge; 0, or (-
-   *     maxValue - 1) if sign &lt; 0.
+   *     可以解析的最大位数。
+   * @return
+   *     此函数解析的整数值。如果 this.errorCode 是 ParseError.EMPTY，
+   *     返回值是 0；如果 this.errorCode 是 ParseError.OVERFLOW，
+   *     返回值是 maxValue（如果 sign ≥ 0），或 (- maxValue - 1)（如果 sign < 0）。
    * @see #skipNonBlanks(ParsingPosition, CharSequence, int)
    * @see #getRadix(ParsingPosition, CharSequence, int, int, int)
    * @see #getSign(ParsingPosition, CharSequence, int, char, char)
@@ -666,47 +621,38 @@ public final class ParseUtils {
   }
 
   /**
-   * Parse an signed long value in a decimal radix.
+   * 解析十进制的有符号 long 值。
    *
-   * <p>After calling this function, the {@code pos.index} is set to the
-   * position where the parsing stopped.
+   * <p>调用此函数后，{@code pos.index} 被设置为解析停止的位置。
    *
-   * <p>If an error occurs during the parsing, the {@code pos.errorCode} is set
-   * to the error code, and the {@code pos.errorIndex} is set to the position
-   * where the error occurs; otherwise, {@code pos.errorCode} is set to
-   * {@link ErrorCode#NONE} and {@code pos.errorIndex} is set to {@code -1}.
+   * <p>如果解析过程中发生错误，{@code pos.errorCode} 被设置为错误代码，
+   * {@code pos.errorIndex} 被设置为发生错误的位置；否则，{@code pos.errorCode}
+   * 被设置为 {@link ErrorCode#NONE}，{@code pos.errorIndex} 被设置为 {@code -1}。
    *
-   * <p>Note that this function does NOT skip the leading whitespace, nor does
-   * it get the radix prefix and sign. In order to do that, call
-   * {@link #skipNonBlanks(ParsingPosition, CharSequence, int)},
-   * {@link #getRadix(ParsingPosition, CharSequence, int, int, int)} and
-   * {@link #getSign(ParsingPosition, CharSequence, int, char, char)}
-   * before calling this function.
+   * <p>注意，此函数不会跳过前导空白字符，也不会获取进制前缀和符号。
+   * 为了做到这些，请在调用此函数之前调用
+   * {@link #skipNonBlanks(ParsingPosition, CharSequence, int)}、
+   * {@link #getRadix(ParsingPosition, CharSequence, int, int, int)} 和
+   * {@link #getSign(ParsingPosition, CharSequence, int, char, char)}。
    *
-   * <p><b>IMPORTANT NOTE:</b> this function does not check the validity of the
-   * arguments, therefore, the caller MUST make sure that the arguments are
-   * valid.
+   * <p><b>重要提示：</b>此函数不检查参数的有效性，因此，调用者必须确保参数有效。
    *
    * @param pos
-   *     a {@link ParsingPosition} object indicate the current position in the
-   *     character sequence to be parsed; after calling this function, the index
-   *     of the position would be changed.
+   *     {@link ParsingPosition} 对象，指示字符序列中的当前解析位置；
+   *     调用此函数后，位置的索引将被改变。
    * @param str
-   *     the text segment. It can't be null.
+   *     文本段。不能为 null。
    * @param endIndex
-   *     the end current of the text segment. It must satisfies that 0 &le;
-   *     this.index &le; endIndex &le; input.length(); The whole text segment is
-   *     within the range [this.index, endIndex) of input.
+   *     文本段的结束位置。必须满足 0 ≤ this.index ≤ endIndex ≤ input.length()；
+   *     整个文本段在输入的 [this.index, endIndex) 范围内。
    * @param sign
-   *     the sign of the integral value to be parsed. A negative value indicate
-   *     the value to be parsed is a negative value, otherwise the value to be
-   *     parsed is a positive value.
+   *     要解析的整数值的符号。负值表示要解析的值是负值，否则要解析的值是正值。
    * @param maxDigits
-   *     the maximum number of digits could be parsed.
-   * @return the integral value parsed by this function. If this.errorCode is
-   *     ParseError.EMPTY, returned value is 0; If this.errorCode is
-   *     ParseError.OVERFLOW, returned value is Long.MAX_VALUE if sign &ge; 0,
-   *     or Long.MIN_VALUE if sign &lt; 0.
+   *     可以解析的最大位数。
+   * @return
+   *     此函数解析的整数值。如果 this.errorCode 是 ParseError.EMPTY，
+   *     返回值是 0；如果 this.errorCode 是 ParseError.OVERFLOW，
+   *     返回值是 Long.MAX_VALUE（如果 sign ≥ 0），或 Long.MIN_VALUE（如果 sign < 0）。
    * @see #skipNonBlanks(ParsingPosition, CharSequence, int)
    * @see #getRadix(ParsingPosition, CharSequence, int, int, int)
    * @see #getSign(ParsingPosition, CharSequence, int, char, char)
@@ -784,20 +730,20 @@ public final class ParseUtils {
   }
 
   /**
-   * Parses a char value.
+   * 解析 char 值。
    *
    * @param pos
-   *     a {@link ParsingPosition} object indicate the current position in the
-   *     character sequence to be parsed; after calling this function, the index
-   *     of the position would be changed, and if any error occurs during the
-   *     parsing, the error code of this object will also be set.
+   *     {@link ParsingPosition} 对象，指示字符序列中的当前解析位置；
+   *     调用此函数后，位置的索引将被改变，如果解析过程中发生任何错误，
+   *     此对象的错误代码也将被设置。
    * @param str
-   *     the text segment to be parsed.
+   *     要解析的文本段。
    * @param endIndex
-   *     the end current of the text segment.
+   *     文本段的结束位置。
    * @param options
-   *     the parsing options.
-   * @return the parsed value.
+   *     解析选项。
+   * @return
+   *     解析的值。
    */
   public static char parseChar(final ParsingPosition pos,
       final CharSequence str,
@@ -820,22 +766,22 @@ public final class ParseUtils {
   }
 
   /**
-   * Parses a boolean value.
+   * 解析 char 值。
    *
    * @param str
-   *     the text segment to be parsed.
+   *     要解析的文本段。
    * @param startIndex
-   *     the start current of the text segment.
+   *     文本段的开始位置。
    * @param endIndex
-   *     the end current of the text segment.
+   *     文本段的结束位置。
    * @param options
-   *     the parse options.
-   * @return the parsed value.
+   *     解析选项。
+   * @return
+   *     解析的值。
    * @throws TextParseException
-   *     if any error occurs during parsing.
+   *     如果解析过程中发生任何错误。
    * @throws IndexOutOfBoundsException
-   *     if startIndex &lt; 0 or startIndex &gt; endIndex or endIndex &gt;
-   *     str.length().
+   *     如果 startIndex < 0 或 startIndex > endIndex 或 endIndex > str.length()。
    */
   public static char parseChar(final CharSequence str, final int startIndex,
       final int endIndex, final ParseOptions options)
@@ -849,20 +795,20 @@ public final class ParseUtils {
   }
 
   /**
-   * Parses a boolean value.
+   * 解析 char 值。
    *
    * @param str
-   *     the text segment to be parsed.
+   *     要解析的文本段。
    * @param startIndex
-   *     the start current of the text segment.
+   *     文本段的开始位置。
    * @param endIndex
-   *     the end current of the text segment.
-   * @return the parsed value.
+   *     文本段的结束位置。
+   * @return
+   *     解析的值。
    * @throws TextParseException
-   *     if any error occurs during parsing.
+   *     如果解析过程中发生任何错误。
    * @throws IndexOutOfBoundsException
-   *     if startIndex &lt; 0 or startIndex &gt; endIndex or endIndex &gt;
-   *     str.length().
+   *     如果 startIndex < 0 或 startIndex > endIndex 或 endIndex > str.length()。
    */
   public static char parseChar(final CharSequence str, final int startIndex,
       final int endIndex) throws TextParseException {
@@ -876,13 +822,14 @@ public final class ParseUtils {
   }
 
   /**
-   * Parses a char value.
+   * 解析 char 值。
    *
    * @param str
-   *     the text segment to be parsed.
-   * @return the parsed value.
+   *     要解析的文本段。
+   * @return
+   *     解析的值。
    * @throws TextParseException
-   *     if any error occurs during parsing.
+   *     如果解析过程中发生任何错误。
    */
   public static char parseChar(final CharSequence str)
       throws TextParseException {

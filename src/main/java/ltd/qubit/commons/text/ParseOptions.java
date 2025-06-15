@@ -14,33 +14,43 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * A {@link ParseOptions} object stores the options for parsing text.
+ * {@link ParseOptions} 对象存储解析文本的选项。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class ParseOptions implements Serializable {
 
+  /** @serial */
   private static final long serialVersionUID = 1340148038313182446L;
 
+  /**
+   * 默认的格式标志。
+   */
   public static final int DEFAULT_FLAGS = FormatFlag.DEFAULT;
 
+  /**
+   * 默认的进制。
+   */
   public static final int DEFAULT_RADIX = 10;
 
+  /**
+   * 默认的最大数字位数。
+   */
   public static final int DEFAULT_MAX_DIGITS = Integer.MAX_VALUE;
 
   /**
-   * The default parse options.
+   * 默认的解析选项。
    */
   public static final ParseOptions DEFAULT = new UnmodifiableParseOptions();
 
   /**
-   * The default parse options keeping the blanks.
+   * 保留空白字符的默认解析选项。
    */
   public static final ParseOptions DEFAULT_KEEP_BLANKS = new UnmodifiableParseOptions(
       FormatFlag.DEFAULT | FormatFlag.KEEP_BLANKS);
 
   /**
-   * The parse options for hex byte.
+   * 十六进制字节的解析选项。
    */
   public static final ParseOptions HEX_BYTE = new UnmodifiableParseOptions(
       ((FormatFlag.DEFAULT & (~FormatFlag.RADIX_MASK)) | FormatFlag.HEX), 16, 2);
@@ -49,77 +59,175 @@ public class ParseOptions implements Serializable {
   protected int defaultRadix;
   protected int maxDigits;
 
+  /**
+   * 构造一个使用默认值的解析选项对象。
+   */
   public ParseOptions() {
     flags = DEFAULT_FLAGS;
     defaultRadix = DEFAULT_RADIX;
     maxDigits = DEFAULT_MAX_DIGITS;
   }
 
+  /**
+   * 构造一个指定格式标志的解析选项对象。
+   *
+   * @param flags
+   *     格式标志。
+   */
   public ParseOptions(final int flags) {
     this.flags = flags;
     defaultRadix = DEFAULT_RADIX;
     maxDigits = DEFAULT_MAX_DIGITS;
   }
 
+  /**
+   * 构造一个指定格式标志和默认进制的解析选项对象。
+   *
+   * @param flags
+   *     格式标志。
+   * @param defaultRadix
+   *     默认进制。
+   */
   public ParseOptions(final int flags, final int defaultRadix) {
     this.flags = flags;
     this.defaultRadix = defaultRadix;
     maxDigits = DEFAULT_MAX_DIGITS;
   }
 
+  /**
+   * 构造一个指定格式标志、默认进制和最大数字位数的解析选项对象。
+   *
+   * @param flags
+   *     格式标志。
+   * @param defaultRadix
+   *     默认进制。
+   * @param maxDigits
+   *     最大数字位数。
+   */
   public ParseOptions(final int flags, final int defaultRadix, final int maxDigits) {
     this.flags = flags;
     this.defaultRadix = defaultRadix;
     this.maxDigits = maxDigits;
   }
 
+  /**
+   * 构造一个复制指定解析选项的对象。
+   *
+   * @param other
+   *     要复制的解析选项。
+   */
   public ParseOptions(final ParseOptions other) {
     flags = other.flags;
     defaultRadix = other.defaultRadix;
     maxDigits = other.maxDigits;
   }
 
+  /**
+   * 获取格式标志。
+   *
+   * @return
+   *     格式标志。
+   */
   public final int getFlags() {
     return flags;
   }
 
+  /**
+   * 设置格式标志。
+   *
+   * @param flags
+   *     新的格式标志。
+   */
   public void setFlags(final int flags) {
     this.flags = flags;
   }
 
+  /**
+   * 添加格式标志。
+   *
+   * @param flags
+   *     要添加的格式标志。
+   */
   public void addFlags(final int flags) {
     this.flags |= flags;
   }
 
+  /**
+   * 在指定掩码下添加格式标志。
+   *
+   * @param flags
+   *     要添加的格式标志。
+   * @param mask
+   *     掩码。
+   */
   public void addFlags(final int flags, final int mask) {
     this.flags &= (~mask);
     this.flags |= flags;
   }
 
+  /**
+   * 获取默认进制。
+   *
+   * @return
+   *     默认进制。
+   */
   public final int getDefaultRadix() {
     return defaultRadix;
   }
 
+  /**
+   * 设置默认进制。
+   *
+   * @param defaultRadix
+   *     新的默认进制。
+   */
   public void setDefaultRadix(final int defaultRadix) {
     this.defaultRadix = defaultRadix;
   }
 
+  /**
+   * 获取最大数字位数。
+   *
+   * @return
+   *     最大数字位数。
+   */
   public final int getMaxDigits() {
     return maxDigits;
   }
 
+  /**
+   * 设置最大数字位数。
+   *
+   * @param maxDigits
+   *     新的最大数字位数。
+   */
   public void setMaxDigits(final int maxDigits) {
     this.maxDigits = maxDigits;
   }
 
+  /**
+   * 重置最大数字位数为默认值。
+   */
   public void resetMaxDigits() {
     maxDigits = DEFAULT_MAX_DIGITS;
   }
 
+  /**
+   * 判断是否启用布尔值字母表示。
+   *
+   * @return
+   *     如果启用布尔值字母表示则返回 {@code true}，否则返回 {@code false}。
+   */
   public final boolean isBoolAlpha() {
     return (flags & FormatFlag.BOOL_ALPHA) != 0;
   }
 
+  /**
+   * 设置是否启用布尔值字母表示。
+   *
+   * @param value
+   *     如果为 {@code true} 则启用布尔值字母表示，否则禁用。
+   */
   public void setBoolAlpha(final boolean value) {
     if (value) {
       flags |= FormatFlag.BOOL_ALPHA;
@@ -128,10 +236,22 @@ public class ParseOptions implements Serializable {
     }
   }
 
+  /**
+   * 判断是否启用数字分组。
+   *
+   * @return
+   *     如果启用数字分组则返回 {@code true}，否则返回 {@code false}。
+   */
   public final boolean isGrouping() {
     return (flags & FormatFlag.GROUPING) != 0;
   }
 
+  /**
+   * 设置是否启用数字分组。
+   *
+   * @param value
+   *     如果为 {@code true} 则启用数字分组，否则禁用。
+   */
   public void setGrouping(final boolean value) {
     if (value) {
       flags |= FormatFlag.GROUPING;
@@ -140,10 +260,22 @@ public class ParseOptions implements Serializable {
     }
   }
 
+  /**
+   * 判断是否保留空白字符。
+   *
+   * @return
+   *     如果保留空白字符则返回 {@code true}，否则返回 {@code false}。
+   */
   public final boolean isKeepBlank() {
     return (flags & FormatFlag.KEEP_BLANKS) != 0;
   }
 
+  /**
+   * 设置是否保留空白字符。
+   *
+   * @param value
+   *     如果为 {@code true} 则保留空白字符，否则不保留。
+   */
   public void setKeepBlank(final boolean value) {
     if (value) {
       flags |= FormatFlag.KEEP_BLANKS;
@@ -152,10 +284,22 @@ public class ParseOptions implements Serializable {
     }
   }
 
+  /**
+   * 判断是否使用二进制格式。
+   *
+   * @return
+   *     如果使用二进制格式则返回 {@code true}，否则返回 {@code false}。
+   */
   public final boolean isBinary() {
     return (flags & FormatFlag.BINARY) != 0;
   }
 
+  /**
+   * 设置是否使用二进制格式。
+   *
+   * @param value
+   *     如果为 {@code true} 则使用二进制格式，否则不使用。
+   */
   public void setBinary(final boolean value) {
     if (value) {
       // clear all other radix options
@@ -167,10 +311,22 @@ public class ParseOptions implements Serializable {
     }
   }
 
+  /**
+   * 判断是否使用八进制格式。
+   *
+   * @return
+   *     如果使用八进制格式则返回 {@code true}，否则返回 {@code false}。
+   */
   public final boolean isOctal() {
     return (flags & FormatFlag.OCTAL) != 0;
   }
 
+  /**
+   * 设置是否使用八进制格式。
+   *
+   * @param value
+   *     如果为 {@code true} 则使用八进制格式，否则不使用。
+   */
   public void setOctal(final boolean value) {
     if (value) {
       // clear all other radix options
@@ -182,10 +338,22 @@ public class ParseOptions implements Serializable {
     }
   }
 
+  /**
+   * 判断是否使用十进制格式。
+   *
+   * @return
+   *     如果使用十进制格式则返回 {@code true}，否则返回 {@code false}。
+   */
   public final boolean isDecimal() {
     return (flags & FormatFlag.DECIMAL) != 0;
   }
 
+  /**
+   * 设置是否使用十进制格式。
+   *
+   * @param value
+   *     如果为 {@code true} 则使用十进制格式，否则不使用。
+   */
   public void setDecimal(final boolean value) {
     if (value) {
       // clear all other radix options
@@ -197,10 +365,22 @@ public class ParseOptions implements Serializable {
     }
   }
 
+  /**
+   * 判断是否使用十六进制格式。
+   *
+   * @return
+   *     如果使用十六进制格式则返回 {@code true}，否则返回 {@code false}。
+   */
   public final boolean isHex() {
     return (flags & FormatFlag.HEX) != 0;
   }
 
+  /**
+   * 设置是否使用十六进制格式。
+   *
+   * @param value
+   *     如果为 {@code true} 则使用十六进制格式，否则不使用。
+   */
   public void setHex(final boolean value) {
     if (value) {
       // clear all other radix options
@@ -212,15 +392,30 @@ public class ParseOptions implements Serializable {
     }
   }
 
+  /**
+   * 清除所有进制选项。
+   */
   public void clearRadixOptions() {
     // clear all other radix options
     flags &= (~FormatFlag.RADIX_MASK);
   }
 
+  /**
+   * 判断是否使用定点数格式。
+   *
+   * @return
+   *     如果使用定点数格式则返回 {@code true}，否则返回 {@code false}。
+   */
   public final boolean isFixPoint() {
     return (flags & FormatFlag.FIXED_POINT) != 0;
   }
 
+  /**
+   * 设置是否使用定点数格式。
+   *
+   * @param value
+   *     如果为 {@code true} 则使用定点数格式，否则不使用。
+   */
   public void setFixPoint(final boolean value) {
     if (value) {
       // clear all other real options
@@ -232,10 +427,22 @@ public class ParseOptions implements Serializable {
     }
   }
 
+  /**
+   * 判断是否使用科学计数法格式。
+   *
+   * @return
+   *     如果使用科学计数法格式则返回 {@code true}，否则返回 {@code false}。
+   */
   public final boolean isScientific() {
     return (flags & FormatFlag.SCIENTIFIC) != 0;
   }
 
+  /**
+   * 设置是否使用科学计数法格式。
+   *
+   * @param value
+   *     如果为 {@code true} 则使用科学计数法格式，否则不使用。
+   */
   public void setScientific(final boolean value) {
     if (value) {
       // clear all other real options
@@ -247,10 +454,22 @@ public class ParseOptions implements Serializable {
     }
   }
 
+  /**
+   * 判断是否使用通用格式。
+   *
+   * @return
+   *     如果使用通用格式则返回 {@code true}，否则返回 {@code false}。
+   */
   public final boolean isGeneral() {
     return (flags & FormatFlag.SHORT_REAL) != 0;
   }
 
+  /**
+   * 设置是否使用通用格式。
+   *
+   * @param value
+   *     如果为 {@code true} 则使用通用格式，否则不使用。
+   */
   public void setGeneral(final boolean value) {
     if (value) {
       // clear all other real options
@@ -262,11 +481,17 @@ public class ParseOptions implements Serializable {
     }
   }
 
+  /**
+   * 清除所有实数格式选项。
+   */
   public void clearRealOptions() {
     // clear all other real options
     flags &= (~FormatFlag.REAL_MASK);
   }
 
+  /**
+   * 重置此对象为默认值。
+   */
   public void reset() {
     flags = DEFAULT_FLAGS;
     defaultRadix = DEFAULT_RADIX;

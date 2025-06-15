@@ -26,17 +26,25 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.text.NumberFormat.HEX_RADIX;
 
 /**
- * A {@link NumberFormatSymbols} object is used to store the symbols for
- * formatting and parsing numbers.
+ * {@link NumberFormatSymbols} 对象用于存储数字格式化和解析的符号。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class NumberFormatSymbols implements Assignable<NumberFormatSymbols> {
 
+  /**
+   * 默认的小写数字字符数组。
+   */
   public static final char[] DEFAULT_LOWERCASE_DIGITS     =  CharUtils.LOWERCASE_DIGITS;
 
+  /**
+   * 默认的大写数字字符数组。
+   */
   public static final char[] DEFAULT_UPPERCASE_DIGITS     =  CharUtils.UPPERCASE_DIGITS;
 
+  /**
+   * 默认的小写进制前缀数组。
+   */
   public static final String[] DEFAULT_LOWERCASE_RADIX_PREFIXES = {
     /* 0 */  null,
     /* 1 */  null,
@@ -57,6 +65,9 @@ public final class NumberFormatSymbols implements Assignable<NumberFormatSymbols
     /* 16 */ "0x",
   };
 
+  /**
+   * 默认的大写进制前缀数组。
+   */
   public static final String[] DEFAULT_UPPERCASE_RADIX_PREFIXES = {
     /* 0 */  null,
     /* 1 */  null,
@@ -77,33 +88,77 @@ public final class NumberFormatSymbols implements Assignable<NumberFormatSymbols
     /* 16 */ "0X",
   };
 
+  /**
+   * 默认的正号字符。
+   */
   public static final char DEFAULT_POSITIVE_SIGN = '+';
 
+  /**
+   * 默认的负号字符。
+   */
   public static final char DEFAULT_NEGATIVE_SIGN = '-';
 
+  /**
+   * 默认的小数分隔符字符。
+   */
   public static final char DEFAULT_RADIX_SEPARATOR = '.';
 
+  /**
+   * 默认的分组分隔符字符。
+   */
   public static final char DEFAULT_GROUPING_SEPARATOR = ',';
 
+  /**
+   * 默认的指数分隔符字符串。
+   */
   public static final String DEFAULT_EXPONENT_SEPARATOR = "E";
 
+  /**
+   * 默认的百分号符号字符。
+   */
   public static final char DEFAULT_PERCENT_SYMBOL = '%';
 
+  /**
+   * 默认的千分号符号字符。
+   */
   public static final char DEFAULT_PERMILLE_SYMBOL = '‰';
 
+  /**
+   * 默认的货币符号字符串。
+   */
   public static final String DEFAULT_CURRENCY_SYMBOL = "$";
 
+  /**
+   * 默认的货币小数分隔符字符。
+   */
   public static final char DEFAULT_MONETARY_RADIX_SEPARATOR = '.';
 
+  /**
+   * 默认的货币分组分隔符字符。
+   */
   public static final char DEFAULT_MONETARY_GROUPING_SEPARATOR = ',';
 
+  /**
+   * 默认的无穷大符号字符串。
+   */
   public static final String DEFAULT_INFINITY_SYMBOL = "∞";
 
+  /**
+   * 默认的NaN符号字符串。
+   */
   public static final String DEFAULT_NAN_SYMBOL = "NaN.";
 
   @GuardedBy("NumberFormatSymbols.class")
   private static final Map<Locale, DecimalFormatSymbols> symbolsCache = new HashMap<>();
 
+  /**
+   * 获取指定语言环境的缓存的十进制格式符号。
+   *
+   * @param locale
+   *     指定的语言环境。
+   * @return
+   *     指定语言环境的十进制格式符号。
+   */
   private static synchronized DecimalFormatSymbols getCachedSymbols(final Locale locale) {
     requireNonNull("locale", locale);
     DecimalFormatSymbols symbols = symbolsCache.get(locale);
@@ -131,14 +186,26 @@ public final class NumberFormatSymbols implements Assignable<NumberFormatSymbols
   private char monetaryRadixSeparator;
   private char monetaryGroupingSeparator;
 
+  /**
+   * 构造一个新的数字格式符号对象，使用默认值初始化。
+   */
   public NumberFormatSymbols() {
     reset();
   }
 
+  /**
+   * 构造一个新的数字格式符号对象，使用指定语言环境的符号初始化。
+   *
+   * @param locale
+   *     指定的语言环境。
+   */
   public NumberFormatSymbols(final Locale locale) {
     reset(locale);
   }
 
+  /**
+   * 重置此对象为默认值。
+   */
   public void reset() {
     lowercaseDigits = DEFAULT_LOWERCASE_DIGITS;
     uppercaseDigits = DEFAULT_UPPERCASE_DIGITS;
@@ -158,6 +225,12 @@ public final class NumberFormatSymbols implements Assignable<NumberFormatSymbols
     monetaryGroupingSeparator = DEFAULT_MONETARY_GROUPING_SEPARATOR;
   }
 
+  /**
+   * 重置此对象为指定语言环境的符号。
+   *
+   * @param locale
+   *     指定的语言环境。
+   */
   public void reset(final Locale locale) {
     final DecimalFormatSymbols symbols = getCachedSymbols(locale);
     if (symbols == null) {
@@ -186,143 +259,351 @@ public final class NumberFormatSymbols implements Assignable<NumberFormatSymbols
     }
   }
 
+  /**
+   * 获取小写数字字符数组。
+   *
+   * @return
+   *     小写数字字符数组。
+   */
   public char[] getLowercaseDigits() {
     return lowercaseDigits;
   }
 
+  /**
+   * 设置小写数字字符数组。
+   *
+   * @param lowercaseDigits
+   *     新的小写数字字符数组，长度必须至少为16。
+   */
   public void setLowercaseDigits(final char[] lowercaseDigits) {
     this.lowercaseDigits = requireLengthAtLeast("lowercaseDigits",
         lowercaseDigits, HEX_RADIX);
   }
 
+  /**
+   * 获取大写数字字符数组。
+   *
+   * @return
+   *     大写数字字符数组。
+   */
   public char[] getUppercaseDigits() {
     return uppercaseDigits;
   }
 
+  /**
+   * 设置大写数字字符数组。
+   *
+   * @param uppercaseDigits
+   *     新的大写数字字符数组，长度必须至少为16。
+   */
   public void setUppercaseDigits(final char[] uppercaseDigits) {
     this.uppercaseDigits = requireLengthAtLeast("uppercaseDigits",
         uppercaseDigits, HEX_RADIX);
   }
 
+  /**
+   * 根据指定的大小写模式获取数字字符数组。
+   *
+   * @param uppercase
+   *     是否使用大写字符。
+   * @return
+   *     相应的数字字符数组。
+   */
   public char[] getDigits(final boolean uppercase) {
     return (uppercase ? uppercaseDigits : lowercaseDigits);
   }
 
+  /**
+   * 获取小写进制前缀数组。
+   *
+   * @return
+   *     小写进制前缀数组。
+   */
   public String[] getLowercaseRadixPrefixes() {
     return lowercaseRadixPrefixes;
   }
 
+  /**
+   * 设置小写进制前缀数组。
+   *
+   * @param lowercaseRadixPrefixes
+   *     新的小写进制前缀数组，长度必须至少为16。
+   */
   public void setLowercaseRadixPrefixes(final String[] lowercaseRadixPrefixes) {
     this.lowercaseRadixPrefixes = requireLengthAtLeast("lowercaseRadixPrefixes",
         lowercaseRadixPrefixes, HEX_RADIX);
   }
 
+  /**
+   * 获取大写进制前缀数组。
+   *
+   * @return
+   *     大写进制前缀数组。
+   */
   public String[] getUppercaseRadixPrefixes() {
     return uppercaseRadixPrefixes;
   }
 
+  /**
+   * 设置大写进制前缀数组。
+   *
+   * @param uppercaseRadixPrefixes
+   *     新的大写进制前缀数组，长度必须至少为16。
+   */
   public void setUppercaseRadixPrefixes(final String[] uppercaseRadixPrefixes) {
     this.uppercaseRadixPrefixes = requireLengthAtLeast("uppercaseRadixPrefixes",
         uppercaseRadixPrefixes, HEX_RADIX);
   }
 
+  /**
+   * 根据指定的大小写模式获取进制前缀数组。
+   *
+   * @param uppercase
+   *     是否使用大写字符。
+   * @return
+   *     相应的进制前缀数组。
+   */
   public String[] getRadixPrefixes(final boolean uppercase) {
     return (uppercase ? uppercaseRadixPrefixes : lowercaseRadixPrefixes);
   }
 
+  /**
+   * 获取正号字符。
+   *
+   * @return
+   *     正号字符。
+   */
   public char getPositiveSign() {
     return positiveSign;
   }
 
+  /**
+   * 设置正号字符。
+   *
+   * @param positiveSign
+   *     新的正号字符。
+   */
   public void setPositiveSign(final char positiveSign) {
     this.positiveSign = positiveSign;
   }
 
+  /**
+   * 获取负号字符。
+   *
+   * @return
+   *     负号字符。
+   */
   public char getNegativeSign() {
     return negativeSign;
   }
 
+  /**
+   * 设置负号字符。
+   *
+   * @param negativeSign
+   *     新的负号字符。
+   */
   public void setNegativeSign(final char negativeSign) {
     this.negativeSign = negativeSign;
   }
 
+  /**
+   * 获取小数分隔符字符。
+   *
+   * @return
+   *     小数分隔符字符。
+   */
   public char getRadixSeparator() {
     return radixSeparator;
   }
 
+  /**
+   * 设置小数分隔符字符。
+   *
+   * @param radixSeparator
+   *     新的小数分隔符字符。
+   */
   public void setRadixSeparator(final char radixSeparator) {
     this.radixSeparator = radixSeparator;
   }
 
+  /**
+   * 获取分组分隔符字符。
+   *
+   * @return
+   *     分组分隔符字符。
+   */
   public char getGroupingSeparator() {
     return groupingSeparator;
   }
 
+  /**
+   * 设置分组分隔符字符。
+   *
+   * @param groupingSeparator
+   *     新的分组分隔符字符。
+   */
   public void setGroupingSeparator(final char groupingSeparator) {
     this.groupingSeparator = groupingSeparator;
   }
 
+  /**
+   * 获取指数分隔符字符串。
+   *
+   * @return
+   *     指数分隔符字符串。
+   */
   public String getExponentSeparator() {
     return exponentSeparator;
   }
 
+  /**
+   * 设置指数分隔符字符串。
+   *
+   * @param exponentSeparator
+   *     新的指数分隔符字符串，不能为null。
+   */
   public void setExponentSeparator(final String exponentSeparator) {
     this.exponentSeparator = requireNonNull("exponentSeparator",
         exponentSeparator);
   }
 
+  /**
+   * 获取百分号符号字符。
+   *
+   * @return
+   *     百分号符号字符。
+   */
   public char getPercentSymbol() {
     return percentSymbol;
   }
 
+  /**
+   * 设置百分号符号字符。
+   *
+   * @param percentSymbol
+   *     新的百分号符号字符。
+   */
   public void setPercentSymbol(final char percentSymbol) {
     this.percentSymbol = percentSymbol;
   }
 
+  /**
+   * 获取千分号符号字符。
+   *
+   * @return
+   *     千分号符号字符。
+   */
   public char getPermilleSymbol() {
     return permilleSymbol;
   }
 
+  /**
+   * 设置千分号符号字符。
+   *
+   * @param permilleSymbol
+   *     新的千分号符号字符。
+   */
   public void setPermilleSymbol(final char permilleSymbol) {
     this.permilleSymbol = permilleSymbol;
   }
 
+  /**
+   * 获取无穷大符号字符串。
+   *
+   * @return
+   *     无穷大符号字符串。
+   */
   public String getInfinitySymbol() {
     return infinitySymbol;
   }
 
+  /**
+   * 设置无穷大符号字符串。
+   *
+   * @param infinitySymbol
+   *     新的无穷大符号字符串，不能为null。
+   */
   public void setInfinitySymbol(final String infinitySymbol) {
     this.infinitySymbol = requireNonNull("infinitySymbol", infinitySymbol);
   }
 
+  /**
+   * 获取NaN符号字符串。
+   *
+   * @return
+   *     NaN符号字符串。
+   */
   public String getNanSymbol() {
     return nanSymbol;
   }
 
+  /**
+   * 设置NaN符号字符串。
+   *
+   * @param nanSymbol
+   *     新的NaN符号字符串，不能为null。
+   */
   public void setNanSymbol(final String nanSymbol) {
     this.nanSymbol = requireNonNull("nanSymbol", nanSymbol);
   }
 
+  /**
+   * 获取货币符号字符串。
+   *
+   * @return
+   *     货币符号字符串。
+   */
   public String getCurrencySymbol() {
     return currencySymbol;
   }
 
+  /**
+   * 设置货币符号字符串。
+   *
+   * @param currencySymbol
+   *     新的货币符号字符串，不能为null。
+   */
   public void setCurrencySymbol(final String currencySymbol) {
     this.currencySymbol = requireNonNull("currencySymbol", currencySymbol);
   }
 
+  /**
+   * 获取货币小数分隔符字符。
+   *
+   * @return
+   *     货币小数分隔符字符。
+   */
   public char getMonetaryRadixSeparator() {
     return monetaryRadixSeparator;
   }
 
+  /**
+   * 设置货币小数分隔符字符。
+   *
+   * @param monetaryRadixSeparator
+   *     新的货币小数分隔符字符。
+   */
   public void setMonetaryRadixSeparator(final char monetaryRadixSeparator) {
     this.monetaryRadixSeparator = monetaryRadixSeparator;
   }
 
+  /**
+   * 获取货币分组分隔符字符。
+   *
+   * @return
+   *     货币分组分隔符字符。
+   */
   public char getMonetaryGroupingSeparator() {
     return monetaryGroupingSeparator;
   }
 
+  /**
+   * 设置货币分组分隔符字符。
+   *
+   * @param monetaryGroupingSeparator
+   *     新的货币分组分隔符字符。
+   */
   public void setMonetaryGroupingSeparator(final char monetaryGroupingSeparator) {
     this.monetaryGroupingSeparator = monetaryGroupingSeparator;
   }
