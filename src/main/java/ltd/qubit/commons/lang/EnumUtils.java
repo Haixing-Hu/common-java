@@ -79,13 +79,13 @@ public class EnumUtils {
     final E[] enumValues = enumClass.getEnumConstants();
     if (ignoreCase) {
       for (final E enumValue : enumValues) {
-        if (StringUtils.equalsIgnoreCase(enumName, enumValue.name())) {
+        if (Equality.equalsIgnoreCase(enumName, enumValue.name())) {
           return enumValue;
         }
       }
     } else {
       for (final E enumValue : enumValues) {
-        if (StringUtils.equals(enumName, enumValue.name())) {
+        if (Equality.equals(enumName, enumValue.name())) {
           return enumValue;
         }
       }
