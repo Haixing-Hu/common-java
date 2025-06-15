@@ -863,7 +863,9 @@ public class StringUtils {
    * @return 如果字符串相等（区分大小写）或都为{@code null}则返回{@code true}
    * @see String#equals(Object)
    * @see String#equalsIgnoreCase(String)
+   * @deprecated 建议使用 {@link Euqality#equals} 实现相同功能。
    */
+  @Deprecated
   public static boolean equals(@Nullable final CharSequence str1,
       @Nullable final CharSequence str2) {
     return Equality.equals(str1, str2);
@@ -884,7 +886,9 @@ public class StringUtils {
    * @return 如果字符串相等（区分大小写）或都为{@code null}则返回{@code true}
    * @see String#equals(Object)
    * @see String#equalsIgnoreCase(String)
+   * @deprecated 建议使用 {@link Euqality#equals} 和 {@link Euqality#equalsIgnoreCase} 实现相同功能。
    */
+  @Deprecated
   public static boolean equals(@Nullable final CharSequence str1,
       @Nullable final CharSequence str2, final boolean ignoreCase) {
     if (ignoreCase) {
@@ -917,7 +921,9 @@ public class StringUtils {
    * @return 如果字符串相等（不区分大小写）或都为{@code null}则返回{@code true}
    * @see String#equals(Object)
    * @see String#equalsIgnoreCase(String)
+   * @deprecated 建议使用 {@link Euqality#equalsIgnoreCase} 实现相同功能。
    */
+  @Deprecated
   public static boolean equalsIgnoreCase(@Nullable final CharSequence str1, @Nullable final CharSequence str2) {
     return Equality.equalsIgnoreCase(str1, str2);
   }
@@ -941,6 +947,7 @@ public class StringUtils {
    *     指定的字符（Unicode代码点）。
    * @return
    *     如果字符序列以指定的代码点开始则返回{@code true}；否则返回{@code false}。
+   * @see Searcher#forChar(char)
    * @see Searcher#isAtStartOf(CharSequence)
    */
   public static boolean startsWithChar(@Nullable final CharSequence str, final int ch) {
@@ -960,7 +967,9 @@ public class StringUtils {
    *     如果字符序列以被{@link CharFilter}接受的字符开始则返回{@code true}；否则返回{@code false}。
    *     如果字符序列或过滤器为null，返回{@code false}。
    * @see Searcher#isAtStartOf(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean startsWithChar(@Nullable final CharSequence str,
       @Nullable final CharFilter filter) {
     return new Searcher()
@@ -979,7 +988,9 @@ public class StringUtils {
    *     如果字符序列以被{@link CodePointFilter}接受的代码点开始则返回{@code true}；否则返回{@code false}。
    *     如果字符序列或过滤器为null，返回{@code false}。
    * @see Searcher#isAtStartOf(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean startsWithChar(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter) {
     return new Searcher()
@@ -1013,7 +1024,9 @@ public class StringUtils {
    * @return 如果{@code str}以{@code prefix}开始（区分大小写模式）或都为{@code null}则返回{@code true}
    * @see String#startsWith(String)
    * @see Searcher#isAtStartOf(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean startsWith(@Nullable final CharSequence str,
       @Nullable final CharSequence prefix) {
     return new Searcher()
@@ -1048,7 +1061,9 @@ public class StringUtils {
    * @return 如果字符串以前缀开始（不区分大小写模式）或都为{@code null}则返回{@code true}
    * @see String#startsWith(String)
    * @see Searcher#isAtStartOf(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean startsWithIgnoreCase(@Nullable final CharSequence str,
       @Nullable final CharSequence prefix) {
     return new Searcher()
@@ -1077,7 +1092,9 @@ public class StringUtils {
    * @return
    *     如果字符序列以指定的代码点结束则返回{@code true}；否则返回false。
    * @see Searcher#isAtEndOf(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean endsWithChar(@Nullable final CharSequence str, final int ch) {
     return new Searcher()
         .forCodePoint(ch)
@@ -1095,7 +1112,9 @@ public class StringUtils {
    *     如果字符序列以被{@link CharFilter}接受的字符结束则返回{@code true}；否则返回{@code false}。
    *     如果字符序列或过滤器为null，返回{@code false}。
    * @see Searcher#isAtEndOf(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean endsWithChar(@Nullable final CharSequence str,
       @Nullable final CharFilter filter) {
     return new Searcher()
@@ -1114,7 +1133,9 @@ public class StringUtils {
    *     如果字符序列以被{@link CodePointFilter}接受的代码点结束则返回{@code true}；否则返回{@code false}。
    *     如果字符序列或过滤器为null，返回{@code false}。
    * @see Searcher#isAtEndOf(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean endsWithChar(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter) {
     return new Searcher()
@@ -1148,7 +1169,9 @@ public class StringUtils {
    * @return 如果字符串以后缀结束（区分大小写模式）或都为{@code null}则返回{@code true}
    * @see String#endsWith(String)
    * @see Searcher#isAtEndOf(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean endsWith(@Nullable final CharSequence str,
       @Nullable final CharSequence suffix) {
     return new Searcher()
@@ -1184,7 +1207,9 @@ public class StringUtils {
    * @return 如果字符串以后缀结束（不区分大小写模式）或都为{@code null}则返回{@code true}
    * @see String#endsWith(String)
    * @see Searcher#isAtEndOf(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean endsWithIgnoreCase(@Nullable final CharSequence str,
       @Nullable final CharSequence suffix) {
     return new Searcher()
@@ -1203,7 +1228,9 @@ public class StringUtils {
    * @return 如果字符串以指定的代码点开始或结束则返回{@code true}；否则返回{@code false}。
    *     如果字符串为null或空，返回false。
    * @see Searcher#isAtStartOrEndOf(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean startsOrEndsWithChar(@Nullable final CharSequence str,
       final int ch) {
     return new Searcher()
@@ -1221,7 +1248,9 @@ public class StringUtils {
    * @return 如果字符串以满足指定{@link CharFilter}的字符开始或结束则返回{@code true}；否则返回{@code false}。
    *     如果字符串为null或空，或者过滤器为null，返回false。
    * @see Searcher#isAtStartOrEndOf(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean startsOrEndsWithChar(@Nullable final CharSequence str,
       @Nullable final CharFilter filter) {
     return new Searcher()
@@ -1239,7 +1268,9 @@ public class StringUtils {
    * @return 如果字符串以满足指定{@link CodePointFilter}的代码点开始或结束则返回{@code true}；否则返回{@code false}。
    *     如果字符串为null或空，或者过滤器为null，返回false。
    * @see Searcher#isAtStartOrEndOf(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean startsOrEndsWithChar(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter) {
     return new Searcher()
@@ -1257,7 +1288,9 @@ public class StringUtils {
    * @return 如果字符串以指定的代码点开始并结束则返回{@code true}；否则返回{@code false}。
    *     如果字符串为null或空，返回false。
    * @see Searcher#isAtStartAndEndOf(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean startsAndEndsWithChar(@Nullable final CharSequence str,
       final int ch) {
     return new Searcher()
@@ -1275,7 +1308,9 @@ public class StringUtils {
    * @return 如果字符串以满足指定{@link CharFilter}的字符开始并结束则返回{@code true}；否则返回{@code false}。
    *     如果字符串为null或空，或者过滤器为null，返回false。
    * @see Searcher#isAtStartAndEndOf(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean startsAndEndsWithChar(@Nullable final CharSequence str,
       @Nullable final CharFilter filter) {
     return new Searcher()
@@ -1294,7 +1329,9 @@ public class StringUtils {
    *     如果字符串以满足指定{@link CodePointFilter}的代码点开始并结束则返回
    *     {@code true}；否则返回{@code false}。如果字符串为null或空，或者过滤器为null，返回false。
    * @see Searcher#isAtStartAndEndOf(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean startsAndEndsWithChar(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter) {
     return new Searcher()
@@ -1637,7 +1674,9 @@ public class StringUtils {
    *     如果大于字符串的长度，则效果与等于字符串长度相同：返回-1。
    * @return 搜索字符的第一次出现位置，如果没有匹配或字符串输入为{@code null}则返回-1
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int indexOfChar(@Nullable final CharSequence str,
       final char ch, final int startIndex) {
     return new Searcher()
@@ -1670,7 +1709,9 @@ public class StringUtils {
    *     结束搜索的位置。
    * @return 搜索字符的第一次出现位置，如果没有匹配或字符串输入为{@code null}则返回-1。
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int indexOfChar(@Nullable final CharSequence str,
       final char ch, final int startIndex, final int endIndex) {
     return new Searcher()
@@ -1695,7 +1736,9 @@ public class StringUtils {
    * @return 字符串{@code str}中从{@code startIndex}开始满足{@code filter}条件的
    *     第一个字符的位置；如果没有这样的字符则返回-1。
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int indexOfChar(@Nullable final CharSequence str,
       @Nullable final CharFilter filter, final int startIndex) {
     return new Searcher()
@@ -1723,7 +1766,9 @@ public class StringUtils {
    *     如果{@code str}为{@code null}或空，返回-1。如果{@code [startIndex, endIndex)}
    *     不是字符串{@code str}的有效范围，返回-1。如果{@code filter}为{@code null}，返回-1。
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int indexOfChar(@Nullable final CharSequence str,
       @Nullable final CharFilter filter, final int startIndex,
       final int endIndex) {
@@ -1757,7 +1802,9 @@ public class StringUtils {
    *     如果大于字符串的长度，则效果与等于字符串长度相同：返回-1。
    * @return 搜索Unicode码点的第一次出现位置，如果没有匹配或字符串输入为{@code null}则返回-1
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int indexOfCodePoint(@Nullable final CharSequence str,
       final int codePoint, final int startIndex) {
     return new Searcher()
@@ -1790,7 +1837,9 @@ public class StringUtils {
    *     结束搜索的位置。
    * @return 搜索Unicode码点的第一次出现位置，如果没有匹配或字符串输入为{@code null}则返回-1。
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int indexOfCodePoint(@Nullable final CharSequence str,
       final int codePoint, final int startIndex, final int endIndex) {
     return new Searcher()
@@ -1814,7 +1863,9 @@ public class StringUtils {
    *     如果没有这样的字符则返回-1。如果{@code str}为{@code null}或空，返回-1。
    *     如果{@code filter}为{@code null}，返回-1。
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int indexOfCodePoint(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter) {
     return new Searcher()
@@ -1839,7 +1890,9 @@ public class StringUtils {
    *     如果{@code str}为{@code null}或空，返回-1。如果{@code [startIndex, str.length())}
    *     不是字符串{@code str}的有效范围，返回-1。如果{@code filter}为{@code null}，返回-1。
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int indexOfCodePoint(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter, final int startIndex) {
     return new Searcher()
@@ -1867,7 +1920,9 @@ public class StringUtils {
    *     如果{@code str}为{@code null}或空，返回-1。如果{@code [startIndex, endIndex)}
    *     不是字符串{@code str}的有效范围，返回-1。如果{@code filter}为{@code null}，返回-1。
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int indexOfCodePoint(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter, final int startIndex,
       final int endIndex) {
@@ -1906,7 +1961,9 @@ public class StringUtils {
    *     如果大于字符串的长度，则效果与等于字符串长度相同：返回-1。
    * @return 任意字符的索引，如果没有匹配或输入为null则返回-1
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int indexOfAnyChar(@Nullable final CharSequence str,
       @Nullable final char[] chars, final int startIndex) {
     return new Searcher()
@@ -1942,7 +1999,9 @@ public class StringUtils {
    *     如果大于字符串的长度，则效果与等于字符串长度相同：返回-1。
    * @return 任意字符的索引，如果没有匹配或输入为null则返回-1
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int indexOfAnyChar(@Nullable final CharSequence str,
       @Nullable final CharSequence chars, final int startIndex) {
     return new Searcher()
@@ -1979,7 +2038,9 @@ public class StringUtils {
    *     如果大于字符串的长度，则效果与等于字符串长度相同：返回-1。
    * @return 任意字符的索引，如果没有匹配或输入为null则返回-1
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int indexOfAnyCharBut(@Nullable final CharSequence str,
       @Nullable final char[] searchChars, final int fromIndex) {
     return new Searcher()
@@ -2016,7 +2077,9 @@ public class StringUtils {
    *     如果大于字符串的长度，则效果与等于字符串长度相同：返回-1。
    * @return 任意字符的索引，如果没有匹配或输入为null则返回-1
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int indexOfAnyCharBut(@Nullable final CharSequence str,
       @Nullable final CharSequence searchChars, final int fromIndex) {
     return new Searcher()
@@ -2060,7 +2123,9 @@ public class StringUtils {
    *     比较字符串时是否忽略大小写。
    * @return 搜索字符串的第一次出现位置，如果没有匹配或{@code null}字符串输入则返回-1
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int indexOf(@Nullable final CharSequence str,
       @Nullable final CharSequence search, final int fromIndex,
       final boolean ignoreCase) {
@@ -2103,7 +2168,9 @@ public class StringUtils {
    *     比较字符串时是否忽略大小写。
    * @return str中任意searchStrs的第一次出现位置，如果没有匹配则返回-1
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int indexOfAny(@Nullable final CharSequence str,
       @Nullable final String[] searches, final int fromIndex,
       final boolean ignoreCase) {
@@ -2141,7 +2208,9 @@ public class StringUtils {
    *     如果为负数，效果与-1相同：返回-1。
    * @return 搜索字符的最后出现位置，如果没有匹配或{@code null}字符串输入则返回-1
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int lastIndexOfChar(@Nullable final CharSequence str,
       final char ch, final int fromIndex) {
     return new Searcher()
@@ -2162,7 +2231,9 @@ public class StringUtils {
    *     一个{@link CharFilter}指定要搜索的字符条件。
    * @return 字符串{@code str}中被{@code filter}接受的字符的最后出现位置。
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int lastIndexOfChar(@Nullable final CharSequence str,
       @Nullable final CharFilter filter) {
     return new Searcher()
@@ -2186,7 +2257,9 @@ public class StringUtils {
    *     如果为负数，效果与-1相同：返回-1。
    * @return 字符串{@code str}中从{@code fromIndex}开始被{@code filter}接受的字符的最后出现位置。
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int lastIndexOfChar(@Nullable final CharSequence str,
       @Nullable final CharFilter filter, final int fromIndex) {
     return new Searcher()
@@ -2223,7 +2296,9 @@ public class StringUtils {
    *     如果为负数，效果与-1相同：返回-1。
    * @return 任意字符的索引，如果没有匹配或输入为null则返回-1
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int lastIndexOfAnyChar(@Nullable final CharSequence str,
       @Nullable final char[] searchChars, final int fromIndex) {
     return new Searcher()
@@ -2260,7 +2335,9 @@ public class StringUtils {
    *     如果为负数，效果与-1相同：返回-1。
    * @return 任意字符的索引，如果没有匹配或输入为null则返回-1
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int lastIndexOfAnyChar(@Nullable final CharSequence str,
       @Nullable final String searchChars, final int fromIndex) {
     return new Searcher()
@@ -2298,7 +2375,9 @@ public class StringUtils {
    *     如果为负数，效果与-1相同：返回-1。
    * @return 任意字符的索引，如果没有匹配或输入为null则返回-1
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int lastIndexOfAnyCharBut(@Nullable final CharSequence str,
       @Nullable final char[] searchChars, final int fromIndex) {
     return new Searcher()
@@ -2336,7 +2415,9 @@ public class StringUtils {
    *     如果为负数，效果与-1相同：返回-1。
    * @return 任意字符的索引，如果没有匹配或输入为null则返回-1
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int lastIndexOfAnyCharBut(@Nullable final CharSequence str,
       @Nullable final CharSequence searchChars, final int fromIndex) {
     return new Searcher()
@@ -2375,7 +2456,9 @@ public class StringUtils {
    *     比较字符串时是否忽略大小写。
    * @return 搜索字符串的第一次出现位置，如果没有匹配或{@code null}字符串输入则返回-1
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int lastIndexOf(@Nullable final CharSequence str,
       @Nullable final CharSequence search, final int fromIndex,
       final boolean ignoreCase) {
@@ -2418,7 +2501,9 @@ public class StringUtils {
    *     比较字符串时是否忽略大小写。
    * @return 任意字符串的最后一次出现位置，如果没有匹配则返回-1
    * @see Searcher
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int lastIndexOfAny(@Nullable final String str,
       @Nullable final CharSequence[] searches, final int fromIndex,
       final boolean ignoreCase) {
@@ -2439,7 +2524,9 @@ public class StringUtils {
    * @return 如果{@code str}不为{@code null}且包含{@code ch}则返回{@code true}；
    *     否则返回{@code false}。
    * @see Searcher#isContainedIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean containsChar(@Nullable final CharSequence str, final char ch) {
     return new Searcher()
         .forChar(ch)
@@ -2458,7 +2545,9 @@ public class StringUtils {
    * @return 如果{@code str}不为{@code null}且包含{@code ch}则返回{@code true}；
    *     否则返回{@code false}。
    * @see Searcher#isContainedIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean containsChar(@Nullable final CharSequence str,
       final char ch, final int startIndex) {
     return new Searcher()
@@ -2477,7 +2566,9 @@ public class StringUtils {
    * @return 如果{@code str}不为{@code null}且包含{@code codePoint}则返回{@code true}；
    *     否则返回{@code false}。
    * @see Searcher#isContainedIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean containsCodePoint(@Nullable final CharSequence str,
       final int codePoint) {
     return new Searcher()
@@ -2497,7 +2588,9 @@ public class StringUtils {
    * @return 如果{@code str}不为{@code null}且包含{@code codePoint}则返回{@code true}；
    *     否则返回{@code false}。
    * @see Searcher#isContainedIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean containsCodePoint(@Nullable final CharSequence str,
       final int codePoint, final int startIndex) {
     return new Searcher()
@@ -2517,7 +2610,9 @@ public class StringUtils {
    *     否则返回{@code false}。如果指定字符串为null或空，返回false。
    * @see Searcher#forCharsNotEqual(char)
    * @see Searcher#isNotContainedIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean containsOnly(@Nullable final CharSequence str, final char ch) {
     if (str == null) {
       return false;
@@ -2537,7 +2632,9 @@ public class StringUtils {
    *     指定的Unicode代码点。
    * @return 如果指定字符串只包含指定的Unicode代码点则返回{@code true}；
    *     否则返回{@code false}。如果指定字符串为null或空，返回false。
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean containsOnly(@Nullable final CharSequence str,
       final int codePoint) {
     if (str == null) {
@@ -2560,7 +2657,9 @@ public class StringUtils {
    *     否则返回{@code false}。如果字符串为null，返回false。如果字符串为空，返回true。
    * @see Searcher#forCharsNotSatisfy(CharFilter)
    * @see Searcher#isNotContainedIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean containsOnly(@Nullable final CharSequence str,
       final CharFilter filter) {
     if (str == null) {
@@ -2585,7 +2684,9 @@ public class StringUtils {
    *     否则返回{@code false}。如果字符串为null，返回false。如果字符串为空，返回true。
    * @see Searcher#forCharsNotSatisfy(CharFilter)
    * @see Searcher#isNotContainedIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean containsOnly(@Nullable final CharSequence str,
       final CodePointFilter filter) {
     if (str == null) {
@@ -2621,7 +2722,9 @@ public class StringUtils {
    * @return 如果只包含有效字符且非null，则返回{@code true}
    * @see Searcher#forCharsNotIn(char[])}
    * @see Searcher#isNotContainedIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean containsOnly(@Nullable final CharSequence str,
       @Nullable final char[] validChars) {
     if (str == null) {
@@ -2657,7 +2760,9 @@ public class StringUtils {
    * @return 如果只包含有效字符且非null，则返回{@code true}
    * @see Searcher#forCharsNotIn(CharSequence)
    * @see Searcher#isNotContainedIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean containsOnly(@Nullable final CharSequence str,
       @Nullable final CharSequence validChars) {
     if (str == null) {
@@ -2682,7 +2787,9 @@ public class StringUtils {
    *     否则返回{@code false}。如果字符串为null，返回true。如果字符串为空，返回true。
    * @see Searcher#forCharsSatisfy(CharFilter)
    * @see Searcher#isNotContainedIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean containsNone(@Nullable final CharSequence str,
       final CharFilter filter) {
     return new Searcher()
@@ -2701,7 +2808,9 @@ public class StringUtils {
    *     否则返回{@code false}。如果字符串为null，返回true。如果字符串为空，返回true。
    * @see Searcher#forCodePointsSatisfy(CodePointFilter)
    * @see Searcher#isNotContainedIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean containsNone(@Nullable final CharSequence str,
       final CodePointFilter filter) {
     return new Searcher()
@@ -2721,7 +2830,9 @@ public class StringUtils {
    *     如果字符串为空，返回true。
    * @see Searcher#forCodePoint(int)
    * @see Searcher#isNotContainedIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean containsNone(@Nullable final CharSequence str, final int codePoint) {
     return new Searcher()
         .forCodePoint(codePoint)
@@ -2751,7 +2862,9 @@ public class StringUtils {
    *     如果指定字符串不包含任何无效字符，则返回{@code true}。
    * @see Searcher#forCharsIn(char...)
    * @see Searcher#isNotContainedIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean containsNone(@Nullable final CharSequence str,
       @Nullable final char[] invalidChars) {
     return new Searcher()
@@ -2782,7 +2895,9 @@ public class StringUtils {
    *     如果指定字符串不包含任何无效字符，则返回{@code true}。
    * @see Searcher#forCharsIn(CharSequence)
    * @see Searcher#isNotContainedIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean containsNone(@Nullable final CharSequence str,
       @Nullable final CharSequence invalidChars) {
     return new Searcher()
@@ -2802,7 +2917,9 @@ public class StringUtils {
    *    否则返回{@code false}。如果字符串为null或空，返回{@code false}。
    * @see Searcher#forCharsSatisfy(CharFilter)
    * @see Searcher#isContainedIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean containsAny(@Nullable final CharSequence str,
       final CharFilter filter) {
     return new Searcher()
@@ -2822,7 +2939,9 @@ public class StringUtils {
    *     否则返回{@code false}。如果字符串为null或空，返回{@code false}。
    * @see Searcher#forCodePointsSatisfy(CodePointFilter)
    * @see Searcher#isContainedIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean containsAny(@Nullable final CharSequence str,
       final CodePointFilter filter) {
     return new Searcher()
@@ -2842,7 +2961,9 @@ public class StringUtils {
    *    否则返回{@code false}。如果字符串为null或空，返回{@code false}。
    * @see Searcher#forCodePoint(int)
    * @see Searcher#isContainedIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean containsAny(@Nullable final CharSequence str,
       final int codePoint) {
     return new Searcher()
@@ -2874,7 +2995,9 @@ public class StringUtils {
    *     如果字符串为null或空，返回{@code false}。
    * @see Searcher#forCharsIn(char...)
    * @see Searcher#isContainedIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean containsAny(@Nullable final CharSequence str,
       @Nullable final char[] validChars) {
     return new Searcher()
@@ -2906,7 +3029,9 @@ public class StringUtils {
    *     如果字符串为null或空，返回{@code false}。
    * @see Searcher#forCharsIn(CharSequence)
    * @see Searcher#isContainedIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static boolean containsAny(@Nullable final CharSequence str,
       @Nullable final CharSequence validChars) {
     return new Searcher()
@@ -2928,7 +3053,9 @@ public class StringUtils {
    *     将创建一个新的{@link IntArrayList}来保存结果并返回。
    * @return 整数列表，包含子字符串在字符串中出现的所有索引。
    * @see Searcher#getOccurrencesIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static IntList getOccurrences(@Nullable final CharSequence str,
       @Nullable final CharSequence substr, final boolean ignoreCase,
       @Nullable final IntList list) {
@@ -2947,7 +3074,9 @@ public class StringUtils {
    *     要计数的字符的代码点。
    * @return 字符ch在字符串str中的出现次数，如果str为null则返回0。
    * @see Searcher#countMatchesIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int countMatches(@Nullable final CharSequence str,
       final int codePoint) {
     return new Searcher()
@@ -2975,7 +3104,9 @@ public class StringUtils {
    *     要计数的子字符串，可能为null
    * @return 出现次数，如果任一字符串为{@code null}则返回0
    * @see Searcher#countMatchesIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int countMatches(@Nullable final CharSequence str,
       @Nullable final CharSequence substr) {
     return new Searcher()
@@ -3006,7 +3137,9 @@ public class StringUtils {
    *     比较字符串时是否忽略大小写。
    * @return 出现次数，如果任一字符串为{@code null}则返回0
    * @see Searcher#countMatchesIn(CharSequence)
+   * @deprecated 建议直接使用 {@link Searcher} 实现相同功能
    */
+  @Deprecated
   public static int countMatches(@Nullable final CharSequence str,
       @Nullable final CharSequence substr, final boolean ignoreCase) {
     return new Searcher()
@@ -3025,7 +3158,9 @@ public class StringUtils {
    *     即字符序列的开头是非图形字符；否则返回{@code false}。
    * @see CharUtils#isGraph(int)
    * @see Stripper#isStrippable(CharSequence)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static boolean isStartStrippable(final CharSequence str) {
     return new Stripper()
         .ofBlank()
@@ -3043,7 +3178,9 @@ public class StringUtils {
    *     即字符序列的末尾是非图形字符；否则返回{@code false}。
    * @see CharUtils#isGraph(int)
    * @see Stripper#isStrippable(CharSequence)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static boolean isEndStrippable(final CharSequence str) {
     return new Stripper()
         .ofBlank()
@@ -3061,7 +3198,9 @@ public class StringUtils {
    *     或末尾是非图形字符；否则返回{@code false}。
    * @see CharUtils#isGraph(int)
    * @see Stripper#isStrippable(CharSequence)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static boolean isStrippable(final CharSequence str) {
     return new Stripper()
         .ofBlank()
@@ -3092,7 +3231,9 @@ public class StringUtils {
    *     要移除字符的字符串，可能为null
    * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}
    * @see Stripper#strip(CharSequence)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static String stripStart(@Nullable final CharSequence str) {
     return new Stripper()
         .ofBlank()
@@ -3126,7 +3267,9 @@ public class StringUtils {
    * @throws IOException
    *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static void stripStart(@Nullable final CharSequence str,
       final Appendable output) throws IOException {
     new Stripper()
@@ -3157,7 +3300,9 @@ public class StringUtils {
    *     要移除的字符。
    * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}
    * @see Stripper#strip(CharSequence)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static String stripStart(@Nullable final CharSequence str,
       final char stripChar) {
     return new Stripper()
@@ -3191,7 +3336,9 @@ public class StringUtils {
    * @throws IOException
    *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static void stripStart(@Nullable final CharSequence str,
       final char stripChar, final Appendable output) throws IOException {
     new Stripper()
@@ -3227,7 +3374,9 @@ public class StringUtils {
    *     要移除的字符，null被视为空字符串，返回原字符串。
    * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}
    * @see Stripper#strip(CharSequence)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static String stripStart(@Nullable final CharSequence str,
       @Nullable final CharSequence stripChars) {
     return new Stripper()
@@ -3266,7 +3415,9 @@ public class StringUtils {
    * @throws IOException
    *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static void stripStart(@Nullable final CharSequence str,
       @Nullable final CharSequence stripChars, final Appendable output)
       throws IOException {
@@ -3292,7 +3443,9 @@ public class StringUtils {
    * @return
    *     剥离后的字符串，如果{@code str}为{@code null}则返回{@code null}。
    * @see Stripper#strip(CharSequence)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static String stripStart(@Nullable final CharSequence str,
       @Nullable final CharFilter filter) {
     return new Stripper()
@@ -3319,7 +3472,9 @@ public class StringUtils {
    * @throws IOException
    *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static void stripStart(@Nullable final CharSequence str,
       @Nullable final CharFilter filter, final Appendable output)
       throws IOException {
@@ -3345,7 +3500,9 @@ public class StringUtils {
    * @return
    *     剥离后的字符串，如果{@code str}为{@code null}则返回{@code null}。
    * @see Stripper#strip(CharSequence)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static String stripStart(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter) {
     return new Stripper()
@@ -3372,7 +3529,9 @@ public class StringUtils {
    * @throws IOException
    *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static void stripStart(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter, final Appendable output)
       throws IOException {
@@ -3404,7 +3563,9 @@ public class StringUtils {
    *     要移除字符的字符串，可能为null
    * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}
    * @see Stripper#strip(CharSequence)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static String stripEnd(@Nullable final CharSequence str) {
     return new Stripper()
         .ofBlank()
@@ -3437,7 +3598,9 @@ public class StringUtils {
    * @throws IOException
    *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static void stripEnd(@Nullable final CharSequence str,
       final Appendable output) throws IOException {
     new Stripper()
@@ -3467,7 +3630,9 @@ public class StringUtils {
    *     要移除的字符。
    * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}。
    * @see Stripper#strip(CharSequence)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static String stripEnd(@Nullable final CharSequence str,
       final char stripChar) {
     return new Stripper()
@@ -3500,7 +3665,9 @@ public class StringUtils {
    * @throws IOException
    *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static void stripEnd(@Nullable final CharSequence str,
       final char stripChar, final Appendable output) throws IOException {
     new Stripper()
@@ -3534,7 +3701,9 @@ public class StringUtils {
    *     要移除的字符，null被视为空字符串，返回原字符串。
    * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}
    * @see Stripper#strip(CharSequence)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static String stripEnd(@Nullable final CharSequence str,
       @Nullable final CharSequence stripChars) {
     return new Stripper()
@@ -3571,7 +3740,9 @@ public class StringUtils {
    * @throws IOException
    *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static void stripEnd(@Nullable final CharSequence str,
       @Nullable final CharSequence stripChars, final StringBuilder output) {
     new Stripper()
@@ -3595,7 +3766,9 @@ public class StringUtils {
    *     如果为null，返回原字符串。
    * @return 剥离后的字符串，如果{@code str}为{@code null}则返回{@code null}
    * @see Stripper#strip(CharSequence)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static String stripEnd(@Nullable final CharSequence str,
       @Nullable final CharFilter filter) {
     return new Stripper()
@@ -3622,7 +3795,9 @@ public class StringUtils {
    * @throws IOException
    *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static void stripEnd(@Nullable final CharSequence str,
       @Nullable final CharFilter filter, final StringBuilder output) {
     new Stripper()
@@ -3646,7 +3821,9 @@ public class StringUtils {
    *     如果为null，返回原字符串。
    * @return 剥离后的字符串，如果{@code str}为{@code null}则返回{@code null}
    * @see Stripper#strip(CharSequence)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static String stripEnd(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter) {
     return new Stripper()
@@ -3673,7 +3850,9 @@ public class StringUtils {
    * @throws IOException
    *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static void stripEnd(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter, final StringBuilder output) {
     new Stripper()
@@ -3706,7 +3885,9 @@ public class StringUtils {
    *     要移除字符的字符串，可能为null
    * @return 剥离后的字符串，如果输入字符串被剥离为空字符串则返回{@code null}。
    * @see Stripper#stripToNull(CharSequence)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static String stripToNull(@Nullable final CharSequence str) {
     return new Stripper()
         .ofBlank()
@@ -3737,7 +3918,9 @@ public class StringUtils {
    *     要移除字符的字符串，可能为null
    * @return 剥离后的字符串，如果输入字符串被剥离为空字符串则返回空字符串。
    * @see Stripper#stripToEmpty(CharSequence)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static String stripToEmpty(@Nullable final CharSequence str) {
     return new Stripper()
         .ofBlank()
@@ -3769,7 +3952,9 @@ public class StringUtils {
    * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}
    * @see Stripper#strip(CharSequence)
    * @see String#strip()
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static String strip(@Nullable final CharSequence str) {
     return new Stripper()
         .ofBlank()
@@ -3804,7 +3989,9 @@ public class StringUtils {
    *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
    * @see String#strip()
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static void strip(@Nullable final CharSequence str,
       final Appendable output) throws IOException {
     new Stripper()
@@ -3837,7 +4024,9 @@ public class StringUtils {
    *     要移除的字符；如果为null或空，返回原字符串。
    * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}
    * @see Stripper#strip(CharSequence)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static String strip(@Nullable final CharSequence str,
       @Nullable final CharSequence stripChars) {
     return new Stripper()
@@ -3873,7 +4062,9 @@ public class StringUtils {
    * @throws IOException
    *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static void strip(@Nullable final CharSequence str,
       @Nullable final CharSequence stripChars, final Appendable output)
       throws IOException {
@@ -3898,7 +4089,9 @@ public class StringUtils {
    *     如果为null，返回原字符串。
    * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}
    * @see Stripper#strip(CharSequence)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static String strip(@Nullable final CharSequence str,
       @Nullable final CharFilter filter) {
     return new Stripper()
@@ -3925,7 +4118,9 @@ public class StringUtils {
    * @throws IOException
    *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static void strip(@Nullable final CharSequence str,
       @Nullable final CharFilter filter, final Appendable output)
       throws IOException {
@@ -3950,7 +4145,9 @@ public class StringUtils {
    *     如果为null，返回原字符串。
    * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}
    * @see Stripper#strip(CharSequence)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static String strip(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter) {
     return new Stripper()
@@ -3977,7 +4174,9 @@ public class StringUtils {
    * @throws IOException
    *     如果发生任何I/O错误。
    * @see Stripper#strip(CharSequence, Appendable)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static void strip(@Nullable final CharSequence str,
       @Nullable final CodePointFilter filter, final Appendable output)
       throws IOException {
@@ -4008,7 +4207,9 @@ public class StringUtils {
    * @return 剥离后的字符串，如果输入字符串为null则返回{@code null}
    * @see Remover#forCodePointsSatisfy(CodePointFilter)
    * @see Remover#removeFrom(CharSequence)
+   * @deprecated 建议使用 {@link Stripper} 实现相同功能。
    */
+  @Deprecated
   public static String stripAll(@Nullable final CharSequence str) {
     return new Remover()
         .forCodePointsSatisfy(BlankCodePointFilter.INSTANCE)
@@ -4247,7 +4448,9 @@ public class StringUtils {
    * @return 如果找到则返回移除字符串后的子字符串，如果输入为 null 字符串则返回 {@code null}
    * @see Remover#forPrefix(CharSequence)
    * @see Remover#removeFrom(CharSequence)
+   * @deprecated 请使用 {@link Remover} 类来实现字符串移除功能
    */
+  @Deprecated
   public static String removePrefix(@Nullable final CharSequence str,
       @Nullable final CharSequence prefix) {
     return new Remover()
@@ -4284,7 +4487,9 @@ public class StringUtils {
    * @return 如果找到则返回移除字符串后的子字符串，如果输入为 null 字符串则返回 {@code null}
    * @see Remover#forPrefix(CharSequence)
    * @see Remover#removeFrom(CharSequence)
+   * @deprecated 请使用 {@link Remover} 类来实现字符串移除功能
    */
+  @Deprecated
   public static String removePrefix(@Nullable final CharSequence str,
       @Nullable final CharSequence prefix, final boolean ignoreCase) {
     return new Remover()
@@ -4321,7 +4526,9 @@ public class StringUtils {
    * @return 如果找到则返回移除字符串后的子字符串，如果输入为 null 字符串则返回 {@code null}
    * @see Remover#forSuffix(CharSequence)
    * @see Remover#removeFrom(CharSequence)
+   * @deprecated 请使用 {@link Remover} 类来实现字符串移除功能
    */
+  @Deprecated
   public static String removeSuffix(@Nullable final CharSequence str,
       @Nullable final CharSequence suffix) {
     return new Remover()
@@ -4359,7 +4566,9 @@ public class StringUtils {
    * @return 如果找到则返回移除字符串后的子字符串，如果输入为 null 字符串则返回 {@code null}
    * @see Remover#forSuffix(CharSequence)
    * @see Remover#removeFrom(CharSequence)
+   * @deprecated 请使用 {@link Remover} 类来实现字符串移除功能
    */
+  @Deprecated
   public static String removeSuffix(@Nullable final CharSequence str,
       @Nullable final CharSequence suffix, final boolean ignoreCase) {
     return new Remover()
@@ -4386,7 +4595,9 @@ public class StringUtils {
    * @see Remover#forPrefix(CharSequence)
    * @see Remover#forSuffix(CharSequence)
    * @see Remover#removeFrom(CharSequence)
+   * @deprecated 请使用 {@link Remover} 类来实现字符串移除功能
    */
+  @Deprecated
   public static String removePrefixAndSuffix(@Nullable final CharSequence str,
       final CharSequence prefix, final String suffix) {
     return new Remover()
@@ -4416,7 +4627,9 @@ public class StringUtils {
    * @see Remover#forPrefix(CharSequence)
    * @see Remover#forSuffix(CharSequence)
    * @see Remover#removeFrom(CharSequence)
+   * @deprecated 请使用 {@link Remover} 类来实现字符串移除功能
    */
+  @Deprecated
   public static String removePrefixAndSuffix(@Nullable final CharSequence str,
       final CharSequence prefix, final CharSequence suffix, final boolean ignoreCase) {
     return new Remover()
@@ -4443,7 +4656,9 @@ public class StringUtils {
    *     要搜索和移除的字符
    * @return 如果找到则返回移除字符后的子字符串，如果输入为 null 字符串则返回 {@code null}
    * @see Remover#removeFrom(CharSequence)
+   * @deprecated 请使用 {@link Remover} 类来实现字符串移除功能
    */
+  @Deprecated
   public static String removeChar(@Nullable final CharSequence str, final char ch) {
     return new Remover()
         .forChar(ch)
@@ -4471,7 +4686,9 @@ public class StringUtils {
    *     可以移除的字符的最大数量；-1 表示无限制
    * @return 如果找到则返回移除字符后的子字符串，如果输入为 null 字符串则返回 {@code null}
    * @see Remover#removeFrom(CharSequence)
+   * @deprecated 请使用 {@link Remover} 类来实现字符串移除功能
    */
+  @Deprecated
   public static String removeChar(@Nullable final CharSequence str, final char ch,
       final int max) {
     return new Remover()
@@ -4497,7 +4714,9 @@ public class StringUtils {
    *     要搜索和移除的Unicode码点
    * @return 如果找到则返回移除字符后的子字符串，如果输入为 null 字符串则返回 {@code null}
    * @see Remover#removeFrom(CharSequence)
+   * @deprecated 请使用 {@link Remover} 类来实现字符串移除功能
    */
+  @Deprecated
   public static String removeCodePoint(@Nullable final CharSequence str, final int codePoint) {
     return new Remover()
         .forCodePoint(codePoint)
@@ -4525,7 +4744,9 @@ public class StringUtils {
    *     可以移除的字符的最大数量；-1 表示无限制
    * @return 如果找到则返回移除字符后的子字符串，如果输入为 null 字符串则返回 {@code null}
    * @see Remover#removeFrom(CharSequence)
+   * @deprecated 请使用 {@link Remover} 类来实现字符串移除功能
    */
+  @Deprecated
   public static String removeCodePoint(@Nullable final CharSequence str, final int codePoint,
       final int max) {
     return new Remover()
@@ -4546,7 +4767,9 @@ public class StringUtils {
    *     用于确定要移除字符的过滤器，可能为 null
    * @return 如果找到则返回移除字符后的字符串，如果输入为 null 字符串则返回 {@code null}
    * @see Remover#removeFrom(CharSequence)
+   * @deprecated 请使用 {@link Remover} 类来实现字符串移除功能
    */
+  @Deprecated
   public static String removeChar(@Nullable final CharSequence str,
       @Nullable final CharFilter filter) {
     return new Remover()
@@ -4569,7 +4792,9 @@ public class StringUtils {
    *     可以移除的字符的最大数量；-1 表示无限制
    * @return 如果找到则返回移除字符后的字符串，如果输入为 null 字符串则返回 {@code null}
    * @see Remover#removeFrom(CharSequence)
+   * @deprecated 请使用 {@link Remover} 类来实现字符串移除功能
    */
+  @Deprecated
   public static String removeChar(@Nullable final CharSequence str,
       @Nullable final CharFilter filter, final int max) {
     return new Remover()
@@ -4605,7 +4830,9 @@ public class StringUtils {
    *     指示比较是否应忽略大小写（大小写不敏感）
    * @return 如果找到则返回移除字符串后的子字符串，如果输入为 null 字符串则返回 {@code null}
    * @see Remover#removeFrom(CharSequence)
+   * @deprecated 请使用 {@link Remover} 类来实现字符串移除功能
    */
+  @Deprecated
   public static String removeSubstring(@Nullable final CharSequence str,
       @Nullable final CharSequence remove, final int max, final boolean ignoreCase) {
     return new Remover()
@@ -4636,7 +4863,9 @@ public class StringUtils {
    * @see Replacer#searchForChar(char)
    * @see Replacer#replaceWithChar(char)
    * @see Replacer#applyTo(CharSequence)
+   * @deprecated 建议使用 {@link Replacer} 实现
    */
+  @Deprecated
   public static String replaceChar(@Nullable final CharSequence str,
       final char search, final char replacement) {
     return new Replacer()
@@ -4661,7 +4890,9 @@ public class StringUtils {
    * @see Replacer#searchForChar(char)
    * @see Replacer#replaceWithChar(char)
    * @see Replacer#applyTo(CharSequence, StringBuilder)
+   * @deprecated 建议使用 {@link Replacer} 实现
    */
+  @Deprecated
   public static void replaceChar(@Nullable final CharSequence str, final char search,
       final char replacement, final StringBuilder builder) {
     new Replacer()
@@ -4700,7 +4931,9 @@ public class StringUtils {
    * @see Replacer#searchForChar(char)
    * @see Replacer#replaceWithChar(char)
    * @see Replacer#applyTo(CharSequence)
+   * @deprecated 建议使用 {@link Replacer} 实现
    */
+  @Deprecated
   @Nullable
   public static String replaceChars(@Nullable final CharSequence str,
       @Nullable final CharSequence searchChars, @Nullable final String replaceChars) {
@@ -4742,7 +4975,9 @@ public class StringUtils {
    * @see Replacer#searchForChar(char)
    * @see Replacer#replaceWithChar(char)
    * @see Replacer#applyTo(CharSequence, StringBuilder)
+   * @deprecated 建议使用 {@link Replacer} 实现
    */
+  @Deprecated
   public static int replaceChars(@Nullable final CharSequence str,
       @Nullable final CharSequence searchChars, @Nullable final String replaceChars,
       final StringBuilder builder) {
@@ -4802,7 +5037,9 @@ public class StringUtils {
    * @see Replacer#searchForSubstring(CharSequence)
    * @see Replacer#replaceWithString(CharSequence)
    * @see Replacer#applyTo(CharSequence)
+   * @deprecated 建议使用 {@link Replacer} 实现
    */
+  @Deprecated
   public static String replace(@Nullable final CharSequence str,
       @Nullable final CharSequence search, @Nullable final CharSequence replacement) {
     return new Replacer()
@@ -4843,7 +5080,9 @@ public class StringUtils {
    * @see Replacer#searchForSubstring(CharSequence)
    * @see Replacer#replaceWithString(CharSequence)
    * @see Replacer#applyTo(CharSequence)
+   * @deprecated 建议使用 {@link Replacer} 实现
    */
+  @Deprecated
   public static String replace(@Nullable final CharSequence str,
       @Nullable final CharSequence search, @Nullable final CharSequence replacement,
       final int max, final boolean ignoreCase) {
@@ -4876,7 +5115,9 @@ public class StringUtils {
    * @see Replacer#searchForSubstring(CharSequence)
    * @see Replacer#replaceWithString(CharSequence)
    * @see Replacer#applyTo(CharSequence, StringBuilder)
+   * @deprecated 建议使用 {@link Replacer} 实现
    */
+  @Deprecated
   public static int replace(@Nullable final CharSequence str,
       @Nullable final CharSequence search, @Nullable final CharSequence replacement,
       final int max, final boolean ignoreCase, final StringBuilder output) {
@@ -5681,7 +5922,9 @@ public class StringUtils {
    *     要连接在一起的值的数组，可能为null
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(final char separator,
       @Nullable final boolean[] array) {
     return new Joiner(separator)
@@ -5711,7 +5954,9 @@ public class StringUtils {
    *     停止连接的索引（不包含）。传入超过数组末尾的结束位置是错误的
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(final char separator, @Nullable final boolean[] array,
       final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -5737,7 +5982,9 @@ public class StringUtils {
    *     要连接在一起的值的数组，可能为null
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(final char separator,
       @Nullable final char[] array) {
     return new Joiner(separator)
@@ -5767,7 +6014,9 @@ public class StringUtils {
    *     停止连接的索引（不包含）。传入超过数组末尾的结束位置是错误的
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(final char separator, @Nullable final char[] array,
       final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -5793,7 +6042,9 @@ public class StringUtils {
    *     要使用的分隔符字符
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(final char separator,
       @Nullable final byte[] array) {
     return new Joiner(separator)
@@ -5823,7 +6074,9 @@ public class StringUtils {
    *     停止连接的索引（不包含）。传入超过数组末尾的结束位置是错误的
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(final char separator, @Nullable final byte[] array,
       final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -5849,7 +6102,9 @@ public class StringUtils {
    *     要连接在一起的值的数组，可能为null
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(final char separator,
       @Nullable final short[] array) {
     return new Joiner(separator)
@@ -5879,7 +6134,9 @@ public class StringUtils {
    *     停止连接的索引（不包含）。传入超过数组末尾的结束位置是错误的
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(final char separator,
       @Nullable final short[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -5905,7 +6162,9 @@ public class StringUtils {
    *     要连接在一起的值的数组，可能为null
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(final char separator, @Nullable final int[] array) {
     return new Joiner(separator)
         .addAll(array)
@@ -5934,7 +6193,9 @@ public class StringUtils {
    *     停止连接的索引（不包含）。传入超过数组末尾的结束位置是错误的
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(final char separator, @Nullable final int[] array,
       final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -5960,7 +6221,9 @@ public class StringUtils {
    *     要连接在一起的值的数组，可能为null
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(final char separator,
       @Nullable final long[] array) {
     return new Joiner(separator)
@@ -5990,7 +6253,9 @@ public class StringUtils {
    *     停止连接的索引（不包含）。传入超过数组末尾的结束位置是错误的
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(final char separator, @Nullable final long[] array,
       final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6016,7 +6281,9 @@ public class StringUtils {
    *     要连接在一起的值的数组，可能为null
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(final char separator,
       @Nullable final float[] array) {
     return new Joiner(separator)
@@ -6046,7 +6313,9 @@ public class StringUtils {
    *     停止连接的索引（不包含）。传入超过数组末尾的结束位置是错误的
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(final char separator,
       @Nullable final float[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6072,7 +6341,9 @@ public class StringUtils {
    *     要连接在一起的值的数组，可能为null
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(final char separator,
       @Nullable final double[] array) {
     return new Joiner(separator)
@@ -6102,7 +6373,9 @@ public class StringUtils {
    *     停止连接的索引（不包含）。传入超过数组末尾的结束位置是错误的
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(final char separator,
       @Nullable final double[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6132,7 +6405,9 @@ public class StringUtils {
    *     要连接在一起的值的数组，可能为null
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static <T> String join(final char separator,
       @Nullable final T[] array) {
     return new Joiner(separator)
@@ -6160,7 +6435,9 @@ public class StringUtils {
    *     停止连接的索引（不包含）。如果大于{@code array}的长度，则视为{@code array}的长度
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static <T> String join(final char separator,
       @Nullable final T[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6184,7 +6461,9 @@ public class StringUtils {
    *     要连接在一起的值的{@code Iterator}，可能为null
    * @return 连接的字符串，如果迭代器输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static <T> String join(final char separator,
       @Nullable final Iterator<T> iterator) {
     return new Joiner(separator)
@@ -6208,7 +6487,9 @@ public class StringUtils {
    *     要连接在一起的值的{@code Iterable}，可能为null
    * @return 连接的字符串，如果迭代器输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static <T> String join(final char separator,
       @Nullable final Iterable<T> iterable) {
     return new Joiner(separator)
@@ -6237,7 +6518,9 @@ public class StringUtils {
    *     要连接在一起的值的数组，可能为null
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final boolean[] array) {
     return new Joiner(separator)
@@ -6270,7 +6553,9 @@ public class StringUtils {
    *     停止连接的索引（不包含）。如果大于{@code array}的长度，则视为{@code array}的长度
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final boolean[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6299,7 +6584,9 @@ public class StringUtils {
    *     要连接在一起的值的数组，可能为null
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final char[] array) {
     return new Joiner(separator)
@@ -6333,7 +6620,9 @@ public class StringUtils {
    *     则视为{@code array}的长度
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final char[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6362,7 +6651,9 @@ public class StringUtils {
    *     要连接的值数组，可能为null
    * @return 连接的字符串，如果数组输入为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final byte[] array) {
     return new Joiner(separator)
@@ -6396,7 +6687,9 @@ public class StringUtils {
    *     则视为{@code array}的长度
    * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final byte[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6425,7 +6718,9 @@ public class StringUtils {
    *     要连接的值数组，可能为null
    * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final short[] array) {
     return new Joiner(separator)
@@ -6459,7 +6754,9 @@ public class StringUtils {
    *     则视为{@code array}的长度
    * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final short[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6488,7 +6785,9 @@ public class StringUtils {
    *     要连接的值数组，可能为null
    * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final int[] array) {
     return new Joiner(separator)
@@ -6522,7 +6821,9 @@ public class StringUtils {
    *     则视为{@code array}的长度
    * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final int[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6551,7 +6852,9 @@ public class StringUtils {
    *     要连接的值数组，可能为null
    * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final long[] array) {
     return new Joiner(separator)
@@ -6585,7 +6888,9 @@ public class StringUtils {
    *     则视为{@code array}的长度
    * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final long[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6614,7 +6919,9 @@ public class StringUtils {
    *     要连接的值数组，可能为null
    * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final float[] array) {
     return new Joiner(separator)
@@ -6648,7 +6955,9 @@ public class StringUtils {
    *     则视为{@code array}的长度
    * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final float[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6677,7 +6986,9 @@ public class StringUtils {
    *     要连接的值数组，可能为null
    * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final double[] array) {
     return new Joiner(separator)
@@ -6711,7 +7022,9 @@ public class StringUtils {
    *     则视为{@code array}的长度
    * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static String join(@Nullable final String separator,
       @Nullable final double[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6742,7 +7055,9 @@ public class StringUtils {
    *     要连接的值数组，可能为null
    * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static <T> String join(@Nullable final String separator,
       @Nullable final T[] array) {
     return new Joiner(separator)
@@ -6778,7 +7093,9 @@ public class StringUtils {
    *     则视为{@code array}的长度
    * @return 连接后的字符串，如果输入数组为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static <T> String join(@Nullable final String separator,
       @Nullable final T[] array, final int startIndex, final int endIndex) {
     return new Joiner(separator)
@@ -6801,7 +7118,9 @@ public class StringUtils {
    *     要连接的值{@code Iterator}，可能为null
    * @return 连接后的字符串，如果输入iterator为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static <T> String join(@Nullable final String separator,
       @Nullable final Iterator<T> iterator) {
     return new Joiner(separator)
@@ -6824,7 +7143,9 @@ public class StringUtils {
    *     要连接的值{@code Iterable}，可能为null
    * @return 连接后的字符串，如果输入iterator为null则返回{@code null}
    * @see Joiner
+   * @deprecated 此方法已过时，建议使用 {@link Joiner} 类实现相同功能
    */
+  @Deprecated
   public static <T> String join(@Nullable final String separator,
       @Nullable final Iterable<T> iterable) {
     return new Joiner(separator)
@@ -6857,8 +7178,11 @@ public class StringUtils {
    * @return 存储分割子字符串的新链表。注意如果分割结果没有子字符串，返回的列表可能为空。
    *     返回的列表永远不会为{@code null}
    * @see SplitOption
+   * @deprecated 此方法已弃用，请使用 {@link Splitter} 类实现类似功能。
+   *     例如：{@code new Splitter().byChar(separator).strip(true).ignoreEmpty(true).split(str)}
    * @see Splitter
    */
+  @Deprecated
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
       final char separator) {
     return new Splitter()
@@ -6868,6 +7192,22 @@ public class StringUtils {
         .split(str);
   }
 
+  /**
+   * 将提供的字符串根据指定字符分割成字符串数组。
+   *
+   * <p>这是 {@link #split(CharSequence, char)} 的数组版本。
+   *
+   * @param str
+   *     要分割的字符串，可能为 null
+   * @param separator
+   *     用作分隔符的字符
+   * @return 分割后的字符串数组。永远不会为 {@code null}
+   * @deprecated 此方法已弃用，请使用 {@link Splitter} 类实现类似功能。
+   *     例如：{@code new Splitter().byChar(separator).strip(true).ignoreEmpty(true).split(str).toArray(new String[0])}
+   * @see #split(CharSequence, char)
+   * @see Splitter
+   */
+  @Deprecated
   public static @Nonnull String[] splitToArray(@Nullable final CharSequence str,
       final char separator) {
     return split(str, separator).toArray(new String[0]);
@@ -6899,9 +7239,12 @@ public class StringUtils {
    *     {@link SplitOption}组合的位掩码。
    * @return 存储分割后子字符串的新链表。注意如果分割结果没有子字符串，
    *     返回的列表可能为空。返回的列表永远不会为{@code null}。
+   * @deprecated 此方法已弃用，请使用 {@link Splitter} 类实现类似功能。
+   *     例如：{@code new Splitter().byChar(separator).strip((options & TRIM) != 0).ignoreEmpty((options & IGNORE_EMPTY) != 0).split(str)}
    * @see SplitOption
    * @see Splitter
    */
+  @Deprecated
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
       final char separator, final int options) {
     return new Splitter()
@@ -6944,8 +7287,11 @@ public class StringUtils {
    *     将创建一个新的字符串列表并存储分割后的子字符串并返回。
    *     注意如果分割结果没有子字符串，返回的列表可能为空。
    *     返回的列表永远不会为{@code null}。
+   * @deprecated 此方法已弃用，请使用 {@link Splitter} 类实现类似功能。
+   *     例如：{@code new Splitter().byChar(separator).strip((options & TRIM) != 0).ignoreEmpty((options & IGNORE_EMPTY) != 0).split(str, list)}
    * @see SplitOption
    */
+  @Deprecated
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
       final char separator, final int options,
       @Nullable final List<String> list) {
@@ -6983,8 +7329,11 @@ public class StringUtils {
    *     {@link SplitOption}组合的位掩码。
    * @return 存储分割后子字符串的新链表。注意如果分割结果没有子字符串，
    *     返回的列表可能为空。返回的列表永远不会为{@code null}。
+   * @deprecated 此方法已弃用，请使用 {@link Splitter} 类实现类似功能。
+   *     例如：{@code new Splitter().byCodePointsIn(separatorChars).strip((options & TRIM) != 0).ignoreEmpty((options & IGNORE_EMPTY) != 0).split(str)}
    * @see SplitOption
    */
+  @Deprecated
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
       @Nullable final CharSequence separatorChars, final int options) {
     return new Splitter()
@@ -7026,8 +7375,11 @@ public class StringUtils {
    *     函数将在该参数中存储分割的子字符串并返回该参数；否则，
    *     创建新的链表存储分割的子字符串并返回。注意返回的列表可能为空，
    *     如果分割结果没有子字符串。返回的列表永远不会为{@code null}。
+   * @deprecated 此方法已弃用，请使用 {@link Splitter} 类实现类似功能。
+   *     例如：{@code new Splitter().byCodePointsIn(separatorChars).strip((options & TRIM) != 0).ignoreEmpty((options & IGNORE_EMPTY) != 0).split(str, result)}
    * @see SplitOption
    */
+  @Deprecated
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
       @Nullable final CharSequence separatorChars, final int options,
       @Nullable final List<String> result) {
@@ -7066,8 +7418,11 @@ public class StringUtils {
    *     {@link SplitOption} 组合的位掩码。
    * @return 存储分割子字符串的新链表。注意返回的列表可能为空，
    *     如果分割结果没有子字符串。返回的列表永远不会为{@code null}。
+   * @deprecated 此方法已弃用，请使用 {@link Splitter} 类实现类似功能。
+   *     例如：{@code new Splitter().byCharsIn(separatorChars).strip((options & TRIM) != 0).ignoreEmpty((options & IGNORE_EMPTY) != 0).split(str)}
    * @see SplitOption
    */
+  @Deprecated
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
       @Nullable final char[] separatorChars, final int options) {
     return new Splitter()
@@ -7109,8 +7464,11 @@ public class StringUtils {
    *     函数将在该参数中存储分割的子字符串并返回该参数；否则，
    *     创建新的链表存储分割的子字符串并返回。注意返回的列表可能为空，
    *     如果分割结果没有子字符串。返回的列表永远不会为 {@code null}
+   * @deprecated 此方法已弃用，请使用 {@link Splitter} 类实现类似功能。
+   *     例如：{@code new Splitter().byCharsIn(separatorChars).strip((options & TRIM) != 0).ignoreEmpty((options & IGNORE_EMPTY) != 0).split(str, result)}
    * @see SplitOption
    */
+  @Deprecated
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
       @Nullable final char[] separatorChars, final int options,
       @Nullable final List<String> result) {
@@ -7149,8 +7507,11 @@ public class StringUtils {
    *     {@link SplitOption} 组合的位掩码
    * @return 存储分割子字符串的新链表。注意如果分割结果没有子字符串，
    *     返回的列表可能为空。返回的列表永远不会为 {@code null}
+   * @deprecated 此方法已弃用，请使用 {@link Splitter} 类实现类似功能。
+   *     例如：{@code new Splitter().byCharsSatisfy(charFilter).strip((options & TRIM) != 0).ignoreEmpty((options & IGNORE_EMPTY) != 0).split(str)}
    * @see SplitOption
    */
+  @Deprecated
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
       final CharFilter charFilter, final int options) {
     return new Splitter()
@@ -7192,8 +7553,11 @@ public class StringUtils {
    *     函数将在该参数中存储分割的子字符串并返回该参数；否则，
    *     创建新的链表存储分割的子字符串并返回。注意返回的列表可能为空，
    *     如果分割结果没有子字符串。返回的列表永远不会为 {@code null}
+   * @deprecated 此方法已弃用，请使用 {@link Splitter} 类实现类似功能。
+   *     例如：{@code new Splitter().byCharsSatisfy(charFilter).strip((options & TRIM) != 0).ignoreEmpty((options & IGNORE_EMPTY) != 0).split(str, list)}
    * @see SplitOption
    */
+  @Deprecated
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
       final CharFilter charFilter, final int options,
       @Nullable final List<String> list) {
@@ -7226,8 +7590,11 @@ public class StringUtils {
    *     要分割的字符串。如果为null，则清除结果（如果不为 {@code null}）并返回结果
    * @return 存储分割子字符串的新链表。注意如果分割结果没有子字符串，
    *     返回的列表可能为空。返回的列表永远不会为 {@code null}
+   * @deprecated 此方法已弃用，请使用 {@link Splitter} 类实现类似功能。
+   *     例如：{@code new Splitter().byWhitespaces().split(str)}
    * @see Splitter
    */
+  @Deprecated
   public static @Nonnull List<String> split(@Nullable final CharSequence str) {
     return new Splitter()
         .byWhitespaces()
@@ -7242,8 +7609,11 @@ public class StringUtils {
    * @param str
    *     要分割的字符串，可能为 null
    * @return 分割后的字符串数组。永远不会为 {@code null}
+   * @deprecated 此方法已弃用，请使用 {@link Splitter} 类实现类似功能。
+   *     例如：{@code new Splitter().byWhitespaces().split(str).toArray(new String[0])}
    * @see #split(CharSequence)
    */
+  @Deprecated
   public static @Nonnull String[] splitToArray(@Nullable final CharSequence str) {
     return split(str).toArray(new String[0]);
   }
@@ -7274,7 +7644,11 @@ public class StringUtils {
    *     函数将在该参数中存储分割的子字符串并返回该参数；否则，
    *     创建新的链表存储分割的子字符串并返回。注意返回的列表可能为空，
    *     如果分割结果没有子字符串。返回的列表永远不会为 {@code null}
+   * @deprecated 该方法已废弃，请使用 {@link Splitter} 类代替。
+   *     示例：{@code new Splitter().byWhitespaces().split(str, list)}
+   * @see Splitter
    */
+  @Deprecated
   public static @Nonnull List<String> split(@Nullable final CharSequence str,
       @Nullable final List<String> list) {
     return new Splitter()
@@ -7317,9 +7691,12 @@ public class StringUtils {
    *     null}，函数将在该参数中存储分割的子字符串并返回该参数；否则，
    *     创建新的字符串列表存储分割的子字符串并返回。注意返回的列表可能为空，
    *     如果分割结果没有子字符串。返回的列表永远不会为 {@code null}。
+   * @deprecated 该方法已废弃，请使用 {@link Splitter} 类代替。
+   *     示例：{@code new Splitter().byCharTypes().strip(true).ignoreEmpty(true).camelCase(true).split(str)}
    * @see SplitOption
    * @see Splitter
    */
+  @Deprecated
   public static @Nonnull List<String> splitByCharType(@Nullable final CharSequence str,
       final int options) {
     return new Splitter()
@@ -7364,8 +7741,12 @@ public class StringUtils {
    *     函数将在该参数中存储分割的子字符串并返回该参数；否则，
    *     创建新的链表存储分割的子字符串并返回。注意返回的列表可能为空，
    *     如果分割结果没有子字符串。返回的列表永远不会为 {@code null}
+   * @deprecated 该方法已废弃，请使用 {@link Splitter} 类代替。
+   *     示例：{@code new Splitter().byCharTypes().split(str, list)}
    * @see SplitOption
+   * @see Splitter
    */
+  @Deprecated
   public static @Nonnull List<String> splitByCharType(@Nullable final CharSequence str,
       final int options, @Nullable final List<String> list) {
     return new Splitter()
@@ -7397,8 +7778,11 @@ public class StringUtils {
    * @return 存储分割子字符串的新链表。每个分割的子字符串都会被修剪，空字符串会被忽略。
    *     注意如果分割结果没有非空白子字符串，返回的列表可能为空。
    *     返回的列表永远不会为 {@code null}
+   * @deprecated 该方法已废弃，请使用 {@link Splitter} 类代替。
+   *     示例：{@code new Splitter().bySubstring(separator).strip(true).ignoreEmpty(true).split(str)}
    * @see Splitter
    */
+  @Deprecated
   public static @Nonnull List<String> splitByString(@Nullable final CharSequence str,
       @Nullable final CharSequence separator) {
     return new Splitter()
@@ -7418,8 +7802,12 @@ public class StringUtils {
    * @param separator
    *     用作分隔符的字符串，可能为 null
    * @return 分割后的字符串数组。永远不会为 {@code null}
+   * @deprecated 该方法已废弃，请使用 {@link Splitter} 类代替。
+   *     示例：{@code new Splitter().bySubstring(separator).splitToArray(str)}
    * @see #splitByString(CharSequence, CharSequence)
+   * @see Splitter
    */
+  @Deprecated
   public static @Nonnull String[] splitByStringToArray(@Nullable final CharSequence str,
       @Nullable final CharSequence separator) {
     return splitByString(str, separator).toArray(new String[0]);
@@ -7450,9 +7838,12 @@ public class StringUtils {
    *     {@link SplitOption} 组合的位掩码
    * @return 存储分割子字符串的新链表。注意如果分割结果没有子字符串，
    *     返回的列表可能为空。返回的列表永远不会为 {@code null}
+   * @deprecated 该方法已废弃，请使用 {@link Splitter} 类代替。
+   *     示例：{@code new Splitter().bySubstring(separator).strip((options & TRIM) != 0).ignoreEmpty((options & IGNORE_EMPTY) != 0).split(str)}
    * @see SplitOption
    * @see Splitter
    */
+  @Deprecated
   public static @Nonnull List<String> splitByString(@Nullable final CharSequence str,
       @Nullable final CharSequence separator, final int options) {
     return new Splitter()
@@ -7490,8 +7881,12 @@ public class StringUtils {
    *     函数将在该参数中存储分割的子字符串并返回该参数；否则，
    *     创建新的链表存储分割的子字符串并返回。注意返回的列表可能为空，
    *     如果分割结果没有子字符串。返回的列表永远不会为{@code null}。
+   * @deprecated 该方法已废弃，请使用 {@link Splitter} 类代替。
+   *     示例：{@code new Splitter().bySubstring(separator).split(str, list)}
    * @see SplitOption
+   * @see Splitter
    */
+  @Deprecated
   public static @Nonnull List<String> splitByString(@Nullable final CharSequence str,
       @Nullable final CharSequence separator, final int options,
       @Nullable final List<String> list) {
@@ -7514,8 +7909,11 @@ public class StringUtils {
    * @return 分割后的字符串列表。列表中的每个字符串都会被去除空白，
    *     空字符串将被忽略。如果分割结果没有非空白子字符串，返回的列表可能为空。
    *     返回的列表永远不会为{@code null}。
+   * @deprecated 该方法已废弃，请使用 {@link Splitter} 类代替。
+   *     示例：{@code new Splitter().toLines().strip(true).ignoreEmpty(true).split(str)}
    * @see Splitter
    */
+  @Deprecated
   public static @Nonnull List<String> splitLines(@Nullable final CharSequence str) {
     return new Splitter()
         .toLines()
@@ -7524,6 +7922,20 @@ public class StringUtils {
         .split(str);
   }
 
+  /**
+   * 将提供的字符串根据行分割成字符串数组。
+   *
+   * <p>这是 {@link #splitLines(CharSequence)} 的数组版本。
+   *
+   * @param str
+   *     要分割的字符串，可能为 null
+   * @return 分割后的字符串数组。永远不会为 {@code null}
+   * @deprecated 该方法已废弃，请使用 {@link Splitter} 类代替。
+   *     示例：{@code new Splitter().toLines().splitToArray(str)}
+   * @see #splitLines(CharSequence)
+   * @see Splitter
+   */
+  @Deprecated
   public static @Nonnull String[] splitLinesToArray(@Nullable final CharSequence str) {
     return splitLines(str).toArray(new String[0]);
   }
@@ -7543,7 +7955,11 @@ public class StringUtils {
    *     是否在返回的列表中忽略空子字符串
    * @return 分割后的字符串列表。如果分割结果没有子字符串，返回的列表可能为空。
    *     返回的列表永远不会为{@code null}。
+   * @deprecated 该方法已废弃，请使用 {@link Splitter} 类代替。
+   *     示例：{@code new Splitter().toLines().strip(trim).ignoreEmpty(ignoreEmpty).split(str)}
+   * @see Splitter
    */
+  @Deprecated
   public static @Nonnull List<String> splitLines(@Nullable final CharSequence str,
       final boolean trim, final boolean ignoreEmpty) {
     return new Splitter()
@@ -9980,19 +10396,16 @@ public class StringUtils {
    * @return
    *     指定字符序列中Unicode代码点的列表。如果指定的字符序列为null或空，
    *     则返回空列表
+   * @deprecated 该方法已废弃，请使用字符串遍历或专门的Unicode处理工具代替。
+   *     示例：使用 {@link String#codePoints()} 或手动迭代处理代码点
    */
+  @Deprecated
   public static IntList splitCodePoints(@Nullable final CharSequence str) {
     final IntList result = new IntArrayList();
     if (str == null || str.length() == 0) {
       return result;
     }
-    final int n = str.length();
-    int count;
-    for (int i = 0; i < n; i += count) {
-      final int codePoint = Character.codePointAt(str, i);
-      count = Character.charCount(codePoint);
-      result.add(codePoint);
-    }
+    str.toString().codePoints().forEach(result::add);
     return result;
   }
 
@@ -10004,9 +10417,15 @@ public class StringUtils {
    * @return
    *     指定字符序列中Unicode代码点的数组。如果指定的字符序列为null或空，
    *     则返回空数组
+   * @deprecated 该方法已废弃，请使用字符串遍历或专门的Unicode处理工具代替。
+   *     示例：使用 {@link String#codePoints()}.toArray() 或手动迭代处理代码点
    */
+  @Deprecated
   public static int[] splitCodePointsToArray(@Nullable final CharSequence str) {
-    return splitCodePoints(str).toArray();
+    if (str == null || str.length() == 0) {
+      return new int[0];
+    }
+    return str.toString().codePoints().toArray();
   }
 
   /**
@@ -10144,7 +10563,9 @@ public class StringUtils {
    *     要从每行中移除的前缀，可能为null或空
    * @return
    *     每行都移除了指定前缀的字符串，如果输入或前缀为null或空则返回原字符串
+   * @deprecated 请使用 {@link Remover} 类来实现字符串移除功能
    */
+  @Deprecated
   public static String removePrefixFromEachLine(final String input, final String prefix) {
     if (input == null || prefix == null || prefix.isEmpty()) {
       return input; // If input or prefix is null or empty, return the original string
