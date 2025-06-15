@@ -15,14 +15,28 @@ import ltd.qubit.commons.util.filter.character.CharFilter;
 import ltd.qubit.commons.util.filter.codepoint.CodePointFilter;
 
 /**
- * The class provides functions for implementing the {@link Searcher} class.
- * It is intended to be used internally.
+ * 该类提供用于实现 {@link Searcher} 类的函数。
+ * 它仅供内部使用。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @SuppressWarnings("overloads")
 public class SearcherImpl {
 
+  /**
+   * 在字符序列中查找第一个匹配指定字符过滤器的字符。
+   *
+   * @param str
+   *     要搜索的字符序列。
+   * @param start
+   *     搜索的起始位置（包含）。
+   * @param end
+   *     搜索的结束位置（不包含）。
+   * @param filter
+   *     字符过滤器。
+   * @return
+   *     第一个匹配字符的索引；如果未找到则返回 {@code end}。
+   */
   public static int firstIndexOf(final CharSequence str, final int start,
       final int end, final CharFilter filter) {
     assert (str != null
@@ -39,6 +53,20 @@ public class SearcherImpl {
     return end;
   }
 
+  /**
+   * 在字符序列中查找第一个匹配指定代码点过滤器的代码点。
+   *
+   * @param str
+   *     要搜索的字符序列。
+   * @param start
+   *     搜索的起始位置（包含）。
+   * @param end
+   *     搜索的结束位置（不包含）。
+   * @param filter
+   *     代码点过滤器。
+   * @return
+   *     第一个匹配代码点的索引；如果未找到则返回 {@code end}。
+   */
   public static int firstIndexOf(final CharSequence str, final int start,
       final int end, final CodePointFilter filter) {
     assert (str != null
@@ -57,6 +85,22 @@ public class SearcherImpl {
     return end;
   }
 
+  /**
+   * 在字符序列中查找指定子字符串的第一个匹配位置。
+   *
+   * @param str
+   *     要搜索的字符序列。
+   * @param start
+   *     搜索的起始位置（包含）。
+   * @param end
+   *     搜索的结束位置（不包含）。
+   * @param substring
+   *     要查找的子字符串。
+   * @param ignoreCase
+   *     是否忽略大小写。
+   * @return
+   *     第一个匹配的索引；如果未找到则返回 {@code end}。
+   */
   public static int firstIndexOf(final CharSequence str, final int start,
       final int end, final CharSequence substring, final boolean ignoreCase) {
     assert (str != null
@@ -89,6 +133,22 @@ public class SearcherImpl {
     return end; // not found
   }
 
+  /**
+   * 在字符序列中查找任意指定子字符串的第一个匹配位置。
+   *
+   * @param str
+   *     要搜索的字符序列。
+   * @param start
+   *     搜索的起始位置（包含）。
+   * @param end
+   *     搜索的结束位置（不包含）。
+   * @param substrings
+   *     要查找的子字符串数组。
+   * @param ignoreCase
+   *     是否忽略大小写。
+   * @return
+   *     第一个匹配的索引；如果未找到则返回 {@code end}。
+   */
   public static int firstIndexOfAnySubstring(final CharSequence str,
       final int start, final int end, final CharSequence[] substrings,
       final boolean ignoreCase) {
@@ -112,6 +172,18 @@ public class SearcherImpl {
     return result;
   }
 
+  /**
+   * 检查字符序列在指定位置是否匹配给定的子字符串（区分大小写）。
+   *
+   * @param str
+   *     要检查的字符序列。
+   * @param startIndex
+   *     开始匹配的位置。
+   * @param substring
+   *     要匹配的子字符串。
+   * @return
+   *     如果匹配则返回 {@code true}；否则返回 {@code false}。
+   */
   public static boolean matchCaseSensitive(final CharSequence str,
       final int startIndex, final CharSequence substring) {
     final int endIndex = startIndex + substring.length();
@@ -125,6 +197,18 @@ public class SearcherImpl {
     return true;
   }
 
+  /**
+   * 检查字符序列在指定位置是否匹配给定的子字符串（忽略大小写）。
+   *
+   * @param str
+   *     要检查的字符序列。
+   * @param startIndex
+   *     开始匹配的位置。
+   * @param substring
+   *     要匹配的子字符串。
+   * @return
+   *     如果匹配则返回 {@code true}；否则返回 {@code false}。
+   */
   public static boolean matchIgnoreCase(final CharSequence str,
       final int startIndex, final CharSequence substring) {
     final int endIndex = startIndex + substring.length();
@@ -133,6 +217,20 @@ public class SearcherImpl {
     return s1.regionMatches(true, 0, s2, 0, s2.length());
   }
 
+  /**
+   * 在字符序列中查找最后一个匹配指定字符过滤器的字符。
+   *
+   * @param str
+   *     要搜索的字符序列。
+   * @param start
+   *     搜索的起始位置（包含）。
+   * @param end
+   *     搜索的结束位置（不包含）。
+   * @param filter
+   *     字符过滤器。
+   * @return
+   *     最后一个匹配字符的索引；如果未找到则返回 {@code start - 1}。
+   */
   public static int lastIndexOf(final CharSequence str, final int start,
       final int end, final CharFilter filter) {
     assert (str != null
@@ -149,6 +247,20 @@ public class SearcherImpl {
     return start - 1;
   }
 
+  /**
+   * 在字符序列中查找最后一个匹配指定代码点过滤器的代码点。
+   *
+   * @param str
+   *     要搜索的字符序列。
+   * @param start
+   *     搜索的起始位置（包含）。
+   * @param end
+   *     搜索的结束位置（不包含）。
+   * @param filter
+   *     代码点过滤器。
+   * @return
+   *     最后一个匹配代码点的索引；如果未找到则返回 {@code start - 1}。
+   */
   public static int lastIndexOf(final CharSequence str, final int start,
       final int end, final CodePointFilter filter) {
     assert (str != null
@@ -167,6 +279,22 @@ public class SearcherImpl {
     return start - 1;
   }
 
+  /**
+   * 在字符序列中查找指定子字符串的最后一个匹配位置。
+   *
+   * @param str
+   *     要搜索的字符序列。
+   * @param start
+   *     搜索的起始位置（包含）。
+   * @param end
+   *     搜索的结束位置（不包含）。
+   * @param substring
+   *     要查找的子字符串。
+   * @param ignoreCase
+   *     是否忽略大小写。
+   * @return
+   *     最后一个匹配的索引；如果未找到则返回 {@code start - 1}。
+   */
   public static int lastIndexOf(final CharSequence str, final int start,
       final int end, final CharSequence substring, final boolean ignoreCase) {
     assert (str != null
@@ -199,6 +327,22 @@ public class SearcherImpl {
     return start - 1; // not found
   }
 
+  /**
+   * 在字符序列中查找任意指定子字符串的最后一个匹配位置。
+   *
+   * @param str
+   *     要搜索的字符序列。
+   * @param start
+   *     搜索的起始位置（包含）。
+   * @param end
+   *     搜索的结束位置（不包含）。
+   * @param substrings
+   *     要查找的子字符串数组。
+   * @param ignoreCase
+   *     是否忽略大小写。
+   * @return
+   *     最后一个匹配的索引；如果未找到则返回 {@code start - 1}。
+   */
   public static int lastIndexOfAnySubstring(final CharSequence str, final int start,
       final int end, final CharSequence[] substrings, final boolean ignoreCase) {
     assert (str != null
@@ -218,6 +362,20 @@ public class SearcherImpl {
     return result;
   }
 
+  /**
+   * 在字符序列中查找最后一个匹配指定字符过滤器的字符之后的位置。
+   *
+   * @param str
+   *     要搜索的字符序列。
+   * @param start
+   *     搜索的起始位置（包含）。
+   * @param end
+   *     搜索的结束位置（不包含）。
+   * @param filter
+   *     字符过滤器。
+   * @return
+   *     最后一个匹配字符之后的位置；如果未找到则返回 {@code start}。
+   */
   public static int afterLastIndexOf(final CharSequence str, final int start,
       final int end, final CharFilter filter) {
     assert (str != null
@@ -234,6 +392,20 @@ public class SearcherImpl {
     return start;
   }
 
+  /**
+   * 在字符序列中查找最后一个匹配指定代码点过滤器的代码点之后的位置。
+   *
+   * @param str
+   *     要搜索的字符序列。
+   * @param start
+   *     搜索的起始位置（包含）。
+   * @param end
+   *     搜索的结束位置（不包含）。
+   * @param filter
+   *     代码点过滤器。
+   * @return
+   *     最后一个匹配代码点之后的位置；如果未找到则返回 {@code start}。
+   */
   public static int afterLastIndexOf(final CharSequence str, final int start,
       final int end, final CodePointFilter filter) {
     assert (str != null
@@ -252,6 +424,20 @@ public class SearcherImpl {
     return start;
   }
 
+  /**
+   * 统计字符序列中匹配指定字符过滤器的字符数量。
+   *
+   * @param str
+   *     要搜索的字符序列。
+   * @param start
+   *     搜索的起始位置（包含）。
+   * @param end
+   *     搜索的结束位置（不包含）。
+   * @param filter
+   *     字符过滤器。
+   * @return
+   *     匹配的字符数量。
+   */
   public static int countMatchesOfChar(final CharSequence str, final int start,
       final int end, final CharFilter filter) {
     assert (str != null
@@ -269,6 +455,20 @@ public class SearcherImpl {
     return count;
   }
 
+  /**
+   * 统计字符序列中匹配指定代码点过滤器的代码点数量。
+   *
+   * @param str
+   *     要搜索的字符序列。
+   * @param start
+   *     搜索的起始位置（包含）。
+   * @param end
+   *     搜索的结束位置（不包含）。
+   * @param filter
+   *     代码点过滤器。
+   * @return
+   *     匹配的代码点数量。
+   */
   public static int countMatchesOfCodePoint(final CharSequence str,
       final int start, final int end, final CodePointFilter filter) {
     assert (str != null
@@ -288,6 +488,22 @@ public class SearcherImpl {
     return count;
   }
 
+  /**
+   * 统计字符序列中指定子字符串的出现次数。
+   *
+   * @param str
+   *     要搜索的字符序列。
+   * @param start
+   *     搜索的起始位置（包含）。
+   * @param end
+   *     搜索的结束位置（不包含）。
+   * @param substring
+   *     要查找的子字符串。
+   * @param ignoreCase
+   *     是否忽略大小写。
+   * @return
+   *     子字符串的出现次数。
+   */
   public static int countMatchesOfSubstring(final CharSequence str,
       final int start, final int end, final CharSequence substring,
       final boolean ignoreCase) {
@@ -328,6 +544,22 @@ public class SearcherImpl {
     return count;
   }
 
+  /**
+   * 统计字符序列中任意指定子字符串的总出现次数。
+   *
+   * @param str
+   *     要搜索的字符序列。
+   * @param start
+   *     搜索的起始位置（包含）。
+   * @param end
+   *     搜索的结束位置（不包含）。
+   * @param substrings
+   *     要查找的子字符串数组。
+   * @param ignoreCase
+   *     是否忽略大小写。
+   * @return
+   *     所有子字符串的总出现次数。
+   */
   public static int countMatchesOfAnySubstring(final CharSequence str,
       final int start, final int end, final CharSequence[] substrings,
       final boolean ignoreCase) {
@@ -343,6 +575,20 @@ public class SearcherImpl {
     return count;
   }
 
+  /**
+   * 检查字符序列是否以匹配指定字符过滤器的字符开头。
+   *
+   * @param str
+   *     要检查的字符序列。
+   * @param start
+   *     检查的起始位置（包含）。
+   * @param end
+   *     检查的结束位置（不包含）。
+   * @param filter
+   *     字符过滤器。
+   * @return
+   *     如果以匹配的字符开头则返回 {@code true}；否则返回 {@code false}。
+   */
   public static boolean startsWithChar(final CharSequence str, final int start,
       final int end, final CharFilter filter) {
     assert (str != null
@@ -357,6 +603,20 @@ public class SearcherImpl {
     return filter.accept(ch);
   }
 
+  /**
+   * 检查字符序列是否以匹配指定代码点过滤器的代码点开头。
+   *
+   * @param str
+   *     要检查的字符序列。
+   * @param start
+   *     检查的起始位置（包含）。
+   * @param end
+   *     检查的结束位置（不包含）。
+   * @param filter
+   *     代码点过滤器。
+   * @return
+   *     如果以匹配的代码点开头则返回 {@code true}；否则返回 {@code false}。
+   */
   public static boolean startsWithCodePoint(final CharSequence str,
       final int start, final int end, final CodePointFilter filter) {
     assert (str != null
@@ -380,6 +640,22 @@ public class SearcherImpl {
     }
   }
 
+  /**
+   * 检查字符序列是否以指定的子字符串开头。
+   *
+   * @param str
+   *     要检查的字符序列。
+   * @param start
+   *     检查的起始位置（包含）。
+   * @param end
+   *     检查的结束位置（不包含）。
+   * @param substring
+   *     要匹配的子字符串。
+   * @param ignoreCase
+   *     是否忽略大小写。
+   * @return
+   *     如果以指定子字符串开头则返回 {@code true}；否则返回 {@code false}。
+   */
   public static boolean startsWithSubstring(final CharSequence str,
       final int start, final int end, final CharSequence substring,
       final boolean ignoreCase) {
@@ -407,6 +683,22 @@ public class SearcherImpl {
     }
   }
 
+  /**
+   * 检查字符序列是否以任意指定的子字符串开头。
+   *
+   * @param str
+   *     要检查的字符序列。
+   * @param start
+   *     检查的起始位置（包含）。
+   * @param end
+   *     检查的结束位置（不包含）。
+   * @param substrings
+   *     要匹配的子字符串数组。
+   * @param ignoreCase
+   *     是否忽略大小写。
+   * @return
+   *     如果以任意指定子字符串开头则返回 {@code true}；否则返回 {@code false}。
+   */
   public static boolean startsWithAnySubstring(final CharSequence str,
       final int start, final int end, final CharSequence[] substrings,
       final boolean ignoreCase) {
@@ -427,6 +719,20 @@ public class SearcherImpl {
     return false;
   }
 
+  /**
+   * 检查字符序列是否以匹配指定字符过滤器的字符结尾。
+   *
+   * @param str
+   *     要检查的字符序列。
+   * @param start
+   *     检查的起始位置（包含）。
+   * @param end
+   *     检查的结束位置（不包含）。
+   * @param filter
+   *     字符过滤器。
+   * @return
+   *     如果以匹配的字符结尾则返回 {@code true}；否则返回 {@code false}。
+   */
   public static boolean endsWithChar(final CharSequence str, final int start,
       final int end, final CharFilter filter) {
     assert (str != null
@@ -441,6 +747,20 @@ public class SearcherImpl {
     return filter.accept(ch);
   }
 
+  /**
+   * 检查字符序列是否以匹配指定代码点过滤器的代码点结尾。
+   *
+   * @param str
+   *     要检查的字符序列。
+   * @param start
+   *     检查的起始位置（包含）。
+   * @param end
+   *     检查的结束位置（不包含）。
+   * @param filter
+   *     代码点过滤器。
+   * @return
+   *     如果以匹配的代码点结尾则返回 {@code true}；否则返回 {@code false}。
+   */
   public static boolean endsWithCodePoint(final CharSequence str,
       final int start, final int end, final CodePointFilter filter) {
     assert (str != null
@@ -464,6 +784,22 @@ public class SearcherImpl {
     }
   }
 
+  /**
+   * 检查字符序列是否以指定的子字符串结尾。
+   *
+   * @param str
+   *     要检查的字符序列。
+   * @param start
+   *     检查的起始位置（包含）。
+   * @param end
+   *     检查的结束位置（不包含）。
+   * @param substring
+   *     要匹配的子字符串。
+   * @param ignoreCase
+   *     是否忽略大小写。
+   * @return
+   *     如果以指定子字符串结尾则返回 {@code true}；否则返回 {@code false}。
+   */
   public static boolean endsWithSubstring(final CharSequence str,
       final int start, final int end, final CharSequence substring,
       final boolean ignoreCase) {
@@ -491,6 +827,22 @@ public class SearcherImpl {
     }
   }
 
+  /**
+   * 检查字符序列是否以任意指定的子字符串结尾。
+   *
+   * @param str
+   *     要检查的字符序列。
+   * @param start
+   *     检查的起始位置（包含）。
+   * @param end
+   *     检查的结束位置（不包含）。
+   * @param substrings
+   *     要匹配的子字符串数组。
+   * @param ignoreCase
+   *     是否忽略大小写。
+   * @return
+   *     如果以任意指定子字符串结尾则返回 {@code true}；否则返回 {@code false}。
+   */
   public static boolean endsWithAnySubstring(final CharSequence str,
       final int start, final int end, final CharSequence[] substrings,
       final boolean ignoreCase) {
@@ -511,6 +863,20 @@ public class SearcherImpl {
     return false;
   }
 
+  /**
+   * 获取字符序列中所有匹配指定字符过滤器的字符位置。
+   *
+   * @param str
+   *     要搜索的字符序列。
+   * @param start
+   *     搜索的起始位置（包含）。
+   * @param end
+   *     搜索的结束位置（不包含）。
+   * @param filter
+   *     字符过滤器。
+   * @param result
+   *     用于存储匹配位置的整数列表。
+   */
   public static void getOccurrencesOfChar(final CharSequence str,
       final int start, final int end, final CharFilter filter,
       final IntList result) {
@@ -527,6 +893,20 @@ public class SearcherImpl {
     }
   }
 
+  /**
+   * 获取字符序列中所有匹配指定代码点过滤器的代码点位置。
+   *
+   * @param str
+   *     要搜索的字符序列。
+   * @param start
+   *     搜索的起始位置（包含）。
+   * @param end
+   *     搜索的结束位置（不包含）。
+   * @param filter
+   *     代码点过滤器。
+   * @param result
+   *     用于存储匹配位置的整数列表。
+   */
   public static void getOccurrencesOfCodePoint(final CharSequence str,
       final int start, final int end, final CodePointFilter filter,
       final IntList result) {
@@ -545,6 +925,22 @@ public class SearcherImpl {
     }
   }
 
+  /**
+   * 获取字符序列中指定子字符串的所有出现位置。
+   *
+   * @param str
+   *     要搜索的字符序列。
+   * @param start
+   *     搜索的起始位置（包含）。
+   * @param end
+   *     搜索的结束位置（不包含）。
+   * @param substring
+   *     要查找的子字符串。
+   * @param ignoreCase
+   *     是否忽略大小写。
+   * @param result
+   *     用于存储匹配位置的整数列表。
+   */
   public static void getOccurrencesOfSubstring(final CharSequence str,
       final int start, final int end, final CharSequence substring,
       final boolean ignoreCase, final IntList result) {
@@ -586,6 +982,22 @@ public class SearcherImpl {
     }
   }
 
+  /**
+   * 获取字符序列中任意指定子字符串的所有出现位置。
+   *
+   * @param str
+   *     要搜索的字符序列。
+   * @param start
+   *     搜索的起始位置（包含）。
+   * @param end
+   *     搜索的结束位置（不包含）。
+   * @param substrings
+   *     要查找的子字符串数组。
+   * @param ignoreCase
+   *     是否忽略大小写。
+   * @param result
+   *     用于存储匹配位置的整数列表。
+   */
   public static void getOccurrencesOfAnySubstring(final CharSequence str,
       final int start, final int end, final CharSequence[] substrings,
       final boolean ignoreCase, final IntList result) {

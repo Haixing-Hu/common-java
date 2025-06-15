@@ -23,13 +23,29 @@ import static ltd.qubit.commons.lang.StringUtils.isEmpty;
 import static ltd.qubit.commons.text.impl.SearcherImpl.firstIndexOf;
 
 /**
- * The class provides functions for implementing the {@link Splitter} class.
- * It is intended to be used internally.
+ * 该类提供用于实现 {@link Splitter} 类的函数。
+ * 它仅供内部使用。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class SplitterImpl {
 
+  /**
+   * 按照匹配指定字符过滤器的字符分割字符序列。
+   *
+   * @param str
+   *     要分割的字符序列。
+   * @param filter
+   *     字符过滤器。
+   * @param strip
+   *     是否去除子字符串的前后空白。
+   * @param ignoreEmpty
+   *     是否忽略空的子字符串。
+   * @param result
+   *     用于存储分割结果的字符串列表。
+   * @return
+   *     包含分割结果的字符串列表。
+   */
   public static List<String> splitByChar(@Nullable final CharSequence str,
       final CharFilter filter, final boolean strip, final boolean ignoreEmpty,
       final List<String> result) {
@@ -52,6 +68,22 @@ public class SplitterImpl {
     return result;
   }
 
+  /**
+   * 按照匹配指定代码点过滤器的代码点分割字符序列。
+   *
+   * @param str
+   *     要分割的字符序列。
+   * @param filter
+   *     代码点过滤器。
+   * @param strip
+   *     是否去除子字符串的前后空白。
+   * @param ignoreEmpty
+   *     是否忽略空的子字符串。
+   * @param result
+   *     用于存储分割结果的字符串列表。
+   * @return
+   *     包含分割结果的字符串列表。
+   */
   public static List<String> splitByCodePoint(@Nullable final CharSequence str,
       final CodePointFilter filter, final boolean strip, final boolean ignoreEmpty,
       final List<String> result) {
@@ -76,6 +108,24 @@ public class SplitterImpl {
     return result;
   }
 
+  /**
+   * 按照指定的分隔符子字符串分割字符序列。
+   *
+   * @param str
+   *     要分割的字符序列。
+   * @param separator
+   *     分隔符子字符串。
+   * @param strip
+   *     是否去除子字符串的前后空白。
+   * @param ignoreEmpty
+   *     是否忽略空的子字符串。
+   * @param ignoreCase
+   *     是否忽略大小写。
+   * @param result
+   *     用于存储分割结果的字符串列表。
+   * @return
+   *     包含分割结果的字符串列表。
+   */
   public static List<String> splitBySubstring(@Nullable final CharSequence str,
       final CharSequence separator, final boolean strip,
       final boolean ignoreEmpty, final boolean ignoreCase,
@@ -92,6 +142,20 @@ public class SplitterImpl {
     }
   }
 
+  /**
+   * 将字符序列按每个字符进行分割。
+   *
+   * @param str
+   *     要分割的字符序列。
+   * @param strip
+   *     是否去除子字符串的前后空白。
+   * @param ignoreEmpty
+   *     是否忽略空的子字符串。
+   * @param result
+   *     用于存储分割结果的字符串列表。
+   * @return
+   *     包含分割结果的字符串列表。
+   */
   public static List<String> splitEachChar(@Nullable final CharSequence str,
       final boolean strip, final boolean ignoreEmpty, final List<String> result) {
     if (isEmpty(str)) {
@@ -112,6 +176,20 @@ public class SplitterImpl {
     return result;
   }
 
+  /**
+   * 将字符序列按每个代码点进行分割。
+   *
+   * @param str
+   *     要分割的字符序列。
+   * @param strip
+   *     是否去除子字符串的前后空白。
+   * @param ignoreEmpty
+   *     是否忽略空的子字符串。
+   * @param result
+   *     用于存储分割结果的字符串列表。
+   * @return
+   *     包含分割结果的字符串列表。
+   */
   public static List<String> splitEachCodePoint(@Nullable final CharSequence str,
       final boolean strip, final boolean ignoreEmpty, final List<String> result) {
     if (isEmpty(str)) {
@@ -135,6 +213,24 @@ public class SplitterImpl {
     return result;
   }
 
+  /**
+   * 按照指定的分隔符子字符串分割字符序列的内部实现。
+   *
+   * @param str
+   *     要分割的字符序列。
+   * @param separator
+   *     分隔符子字符串。
+   * @param strip
+   *     是否去除子字符串的前后空白。
+   * @param ignoreEmpty
+   *     是否忽略空的子字符串。
+   * @param ignoreCase
+   *     是否忽略大小写。
+   * @param result
+   *     用于存储分割结果的字符串列表。
+   * @return
+   *     包含分割结果的字符串列表。
+   */
   private static List<String> splitBySubstringImpl(final CharSequence str,
       final CharSequence separator, final boolean strip, final boolean ignoreEmpty,
       final boolean ignoreCase, final List<String> result) {
@@ -149,6 +245,20 @@ public class SplitterImpl {
     return result;
   }
 
+  /**
+   * 按行分割字符序列。
+   *
+   * @param str
+   *     要分割的字符序列。
+   * @param strip
+   *     是否去除子字符串的前后空白。
+   * @param ignoreEmpty
+   *     是否忽略空的子字符串。
+   * @param result
+   *     用于存储分割结果的字符串列表。
+   * @return
+   *     包含分割结果的字符串列表。
+   */
   public static List<String> splitLines(final CharSequence str,
       final boolean strip, final boolean ignoreEmpty, final List<String> result) {
     if (isEmpty(str)) {
@@ -176,6 +286,22 @@ public class SplitterImpl {
     return result;
   }
 
+  /**
+   * 按字符类型分割字符序列。
+   *
+   * @param str
+   *     要分割的字符序列。
+   * @param strip
+   *     是否去除子字符串的前后空白。
+   * @param ignoreEmpty
+   *     是否忽略空的子字符串。
+   * @param camelCase
+   *     是否考虑驼峰命名法。
+   * @param result
+   *     用于存储分割结果的字符串列表。
+   * @return
+   *     包含分割结果的字符串列表。
+   */
   public static List<String> splitByCharType(final CharSequence str,
       final boolean strip, final boolean ignoreEmpty, final boolean camelCase,
       final List<String> result) {
@@ -232,6 +358,18 @@ public class SplitterImpl {
     return result;
   }
 
+  /**
+   * 处理空字符串的分割。
+   *
+   * @param str
+   *     空字符序列。
+   * @param ignoreEmpty
+   *     是否忽略空的子字符串。
+   * @param result
+   *     用于存储分割结果的字符串列表。
+   * @return
+   *     包含分割结果的字符串列表。
+   */
   public static List<String> splitEmptyString(final CharSequence str,
       final boolean ignoreEmpty, final List<String> result) {
     if (str == null) {
@@ -243,6 +381,22 @@ public class SplitterImpl {
     return result;
   }
 
+  /**
+   * 尝试添加子字符串到结果列表中。
+   *
+   * @param str
+   *     原始字符序列。
+   * @param start
+   *     子字符串的起始位置（包含）。
+   * @param end
+   *     子字符串的结束位置（不包含）。
+   * @param strip
+   *     是否去除子字符串的前后空白。
+   * @param ignoreEmpty
+   *     是否忽略空的子字符串。
+   * @param result
+   *     用于存储分割结果的字符串列表。
+   */
   private static void tryAddSubstring(final CharSequence str, final int start,
       final int end, final boolean strip, final boolean ignoreEmpty,
       final List<String> result) {

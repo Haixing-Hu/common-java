@@ -19,13 +19,33 @@ import static ltd.qubit.commons.text.impl.SearcherImpl.matchCaseSensitive;
 import static ltd.qubit.commons.text.impl.SearcherImpl.matchIgnoreCase;
 
 /**
- * The class provides functions for implementing the {@link Remover} class.
- * It is intended to be used internally.
+ * 该类提供用于实现 {@link Remover} 类的函数。
+ * 它仅供内部使用。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class RemoverImpl {
 
+  /**
+   * 从字符序列中移除匹配指定字符过滤器的字符。
+   *
+   * @param str
+   *     要处理的字符序列。
+   * @param start
+   *     要处理的起始位置（包含）。
+   * @param end
+   *     要处理的结束位置（不包含）。
+   * @param filter
+   *     字符过滤器。
+   * @param limit
+   *     最多移除的字符数量。
+   * @param output
+   *     结果输出的 {@link Appendable} 对象。
+   * @return
+   *     实际移除的字符数量。
+   * @throws IOException
+   *     如果输出时发生I/O错误。
+   */
   public static int removeChar(final CharSequence str, final int start, final int end,
       final CharFilter filter, final int limit, final Appendable output)
       throws IOException {
@@ -50,6 +70,26 @@ public class RemoverImpl {
     return count;
   }
 
+  /**
+   * 从字符序列中移除匹配指定码点过滤器的码点。
+   *
+   * @param str
+   *     要处理的字符序列。
+   * @param start
+   *     要处理的起始位置（包含）。
+   * @param end
+   *     要处理的结束位置（不包含）。
+   * @param filter
+   *     码点过滤器。
+   * @param limit
+   *     最多移除的码点数量。
+   * @param output
+   *     结果输出的 {@link Appendable} 对象。
+   * @return
+   *     实际移除的码点数量。
+   * @throws IOException
+   *     如果输出时发生I/O错误。
+   */
   public static int removeCodePoint(final CharSequence str, final int start,
       final int end, final CodePointFilter filter, final int limit,
       final Appendable output) throws IOException {
@@ -75,6 +115,28 @@ public class RemoverImpl {
     return count;
   }
 
+  /**
+   * 从字符序列中移除指定的子字符串。
+   *
+   * @param str
+   *     要处理的字符序列。
+   * @param start
+   *     要处理的起始位置（包含）。
+   * @param end
+   *     要处理的结束位置（不包含）。
+   * @param substring
+   *     要移除的子字符串。
+   * @param ignoreCase
+   *     是否忽略大小写。
+   * @param limit
+   *     最多移除的子字符串数量。
+   * @param output
+   *     结果输出的 {@link Appendable} 对象。
+   * @return
+   *     实际移除的子字符串数量。
+   * @throws IOException
+   *     如果输出时发生I/O错误。
+   */
   public static int removeSubstring(final CharSequence str, final int start,
       final int end, final CharSequence substring, final boolean ignoreCase,
       final int limit, final Appendable output) throws IOException {
@@ -101,6 +163,26 @@ public class RemoverImpl {
     return count;
   }
 
+  /**
+   * 从字符序列中移除指定的前缀。
+   *
+   * @param str
+   *     要处理的字符序列。
+   * @param start
+   *     要处理的起始位置（包含）。
+   * @param end
+   *     要处理的结束位置（不包含）。
+   * @param prefix
+   *     要移除的前缀。
+   * @param ignoreCase
+   *     是否忽略大小写。
+   * @param output
+   *     结果输出的 {@link Appendable} 对象。
+   * @return
+   *     实际移除的前缀数量（0 或 1）。
+   * @throws IOException
+   *     如果输出时发生I/O错误。
+   */
   public static int removePrefix(final CharSequence str, final int start, final int end,
       final CharSequence prefix, final boolean ignoreCase, final Appendable output)
       throws IOException {
@@ -132,6 +214,26 @@ public class RemoverImpl {
     }
   }
 
+  /**
+   * 从字符序列中移除指定的后缀。
+   *
+   * @param str
+   *     要处理的字符序列。
+   * @param start
+   *     要处理的起始位置（包含）。
+   * @param end
+   *     要处理的结束位置（不包含）。
+   * @param suffix
+   *     要移除的后缀。
+   * @param ignoreCase
+   *     是否忽略大小写。
+   * @param output
+   *     结果输出的 {@link Appendable} 对象。
+   * @return
+   *     实际移除的后缀数量（0 或 1）。
+   * @throws IOException
+   *     如果输出时发生I/O错误。
+   */
   public static int removeSuffix(final CharSequence str, final int start, final int end,
       final CharSequence suffix, final boolean ignoreCase, final Appendable output)
       throws IOException {
@@ -164,6 +266,28 @@ public class RemoverImpl {
     }
   }
 
+  /**
+   * 从字符序列中移除指定的前缀和后缀。
+   *
+   * @param str
+   *     要处理的字符序列。
+   * @param start
+   *     要处理的起始位置（包含）。
+   * @param end
+   *     要处理的结束位置（不包含）。
+   * @param prefix
+   *     要移除的前缀。
+   * @param suffix
+   *     要移除的后缀。
+   * @param ignoreCase
+   *     是否忽略大小写。
+   * @param output
+   *     结果输出的 {@link Appendable} 对象。
+   * @return
+   *     实际移除的前缀和后缀数量之和（0、1 或 2）。
+   * @throws IOException
+   *     如果输出时发生I/O错误。
+   */
   public static int removePrefixAndSuffix(final CharSequence str, final int start,
       final int end, final CharSequence prefix, final CharSequence suffix,
       final boolean ignoreCase, final Appendable output)
