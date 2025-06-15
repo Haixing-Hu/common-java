@@ -548,13 +548,6 @@ public class Quoter {
     return result;
   }
 
-  /**
-   * 返回此 Quoter 实例的字符串表示。
-   *
-   * <p>字符串包含当前配置的所有属性值，包括左引号、右引号、转义字符和是否启用转义功能。
-   *
-   * @return 此实例的字符串表示。
-   */
   @Override
   public String toString() {
     return new ToStringBuilder(this)
