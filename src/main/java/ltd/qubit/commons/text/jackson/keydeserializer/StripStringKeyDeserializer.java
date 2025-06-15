@@ -20,9 +20,9 @@ import com.fasterxml.jackson.databind.KeyDeserializer;
 import ltd.qubit.commons.text.Stripper;
 
 /**
- * The deserializer of String class for XML serializations.
+ * 用于 XML 序列化的字符串类键反序列化器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public class StripStringKeyDeserializer extends KeyDeserializer implements Serializable {
@@ -30,10 +30,19 @@ public class StripStringKeyDeserializer extends KeyDeserializer implements Seria
   @Serial
   private static final long serialVersionUID = -2775703888645453983L;
 
+  /**
+   * 默认实例。
+   */
   public static final StripStringKeyDeserializer INSTANCE = new StripStringKeyDeserializer();
 
+  /**
+   * 构造一个 {@link StripStringKeyDeserializer}。
+   */
   public StripStringKeyDeserializer() {}
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Object deserializeKey(final String key, final DeserializationContext ctxt) throws IOException {
     return new Stripper().strip(key);

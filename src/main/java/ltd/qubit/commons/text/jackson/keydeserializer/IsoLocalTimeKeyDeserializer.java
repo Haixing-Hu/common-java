@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.keydeserializer;
 
+import java.io.Serial;
 import java.time.LocalTime;
 
 import javax.annotation.concurrent.Immutable;
@@ -15,18 +16,25 @@ import javax.annotation.concurrent.Immutable;
 import ltd.qubit.commons.util.codec.IsoLocalTimeCodec;
 
 /**
- * The JACKSON key deserializer of a {@link LocalTime} object, in the ISO-8601
- * format of "HH:mm:ss".
+ * {@link LocalTime} 对象的 JACKSON 键反序列化器，使用 ISO-8601 格式
+ * "HH:mm:ss"。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public class IsoLocalTimeKeyDeserializer extends LocalTimeKeyDeserializer {
 
+  @Serial
   private static final long serialVersionUID = -4386919975438873483L;
 
+  /**
+   * 默认实例。
+   */
   public static final IsoLocalTimeKeyDeserializer INSTANCE = new IsoLocalTimeKeyDeserializer();
 
+  /**
+   * 构造一个 {@link IsoLocalTimeKeyDeserializer}。
+   */
   public IsoLocalTimeKeyDeserializer() {
     super(new IsoLocalTimeCodec());
   }

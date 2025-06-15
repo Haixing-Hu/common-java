@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.keydeserializer;
 
+import java.io.Serial;
 import java.time.LocalDate;
 
 import javax.annotation.concurrent.Immutable;
@@ -15,15 +16,22 @@ import javax.annotation.concurrent.Immutable;
 import ltd.qubit.commons.util.codec.Decoder;
 
 /**
- * The JACKSON key deserializer of a {@link LocalDate} object.
+ * {@link LocalDate} 对象的 JACKSON 键反序列化器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public class LocalDateKeyDeserializer extends DecoderKeyDeserializer<LocalDate> {
 
+  @Serial
   private static final long serialVersionUID = 5679718569124837426L;
 
+  /**
+   * 构造一个使用指定解码器的 {@link LocalDateKeyDeserializer}。
+   *
+   * @param decoder
+   *     字符串到 LocalDate 的解码器。
+   */
   public LocalDateKeyDeserializer(final Decoder<String, LocalDate> decoder) {
     super(LocalDate.class, decoder);
   }

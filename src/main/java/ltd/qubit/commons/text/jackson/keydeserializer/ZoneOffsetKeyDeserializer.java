@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.keydeserializer;
 
+import java.io.Serial;
 import java.time.ZoneOffset;
 
 import javax.annotation.concurrent.Immutable;
@@ -15,17 +16,24 @@ import javax.annotation.concurrent.Immutable;
 import ltd.qubit.commons.util.codec.ZoneOffsetCodec;
 
 /**
- * The JACKSON key deserializer of a {@link ZoneOffset} object.
+ * {@link ZoneOffset} 对象的 JACKSON 键反序列化器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public class ZoneOffsetKeyDeserializer extends DecoderKeyDeserializer<ZoneOffset> {
 
+  @Serial
   private static final long serialVersionUID = 2457561833385507287L;
 
+  /**
+   * 默认实例。
+   */
   public static final ZoneOffsetKeyDeserializer INSTANCE = new ZoneOffsetKeyDeserializer();
 
+  /**
+   * 构造一个 {@link ZoneOffsetKeyDeserializer}。
+   */
   public ZoneOffsetKeyDeserializer() {
     super(ZoneOffset.class, ZoneOffsetCodec.INSTANCE);
   }

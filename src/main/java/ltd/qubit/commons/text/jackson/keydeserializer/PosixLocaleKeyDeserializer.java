@@ -8,7 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.keydeserializer;
 
-
+import java.io.Serial;
 import java.util.Locale;
 
 import javax.annotation.concurrent.Immutable;
@@ -16,17 +16,24 @@ import javax.annotation.concurrent.Immutable;
 import ltd.qubit.commons.util.codec.PosixLocaleCodec;
 
 /**
- * The JACKSON key deserializer of a {@link Locale} object.
+ * {@link Locale} 对象的 JACKSON 键反序列化器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public class PosixLocaleKeyDeserializer extends DecoderKeyDeserializer<Locale> {
 
+  @Serial
   private static final long serialVersionUID = -4310833323826743748L;
 
+  /**
+   * 默认实例。
+   */
   public static final PosixLocaleKeyDeserializer INSTANCE = new PosixLocaleKeyDeserializer();
 
+  /**
+   * 构造一个 {@link PosixLocaleKeyDeserializer}。
+   */
   public PosixLocaleKeyDeserializer() {
     super(Locale.class, PosixLocaleCodec.INSTANCE);
   }
