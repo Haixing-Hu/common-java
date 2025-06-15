@@ -83,14 +83,24 @@ import static ltd.qubit.commons.text.jackson.PropertyNameUtils.newXmlWrapperElem
 import static ltd.qubit.commons.text.jackson.PropertyNameUtils.translateName;
 
 /**
- * Provide JACKSON ObjectMapper related utilities.
+ * 提供 JACKSON ObjectMapper 相关工具方法。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class JacksonUtils {
 
   private JacksonUtils() {}
 
+  /**
+   * 获取根包装器名称。
+   *
+   * @param mapper
+   *     指定的对象映射器。
+   * @param type
+   *     指定的类型。
+   * @return
+   *     根包装器的属性名称。
+   */
   @Nonnull
   public static PropertyName getRootWrapperName(final ObjectMapper mapper,
       final Class<?> type) {
@@ -100,6 +110,16 @@ public class JacksonUtils {
     return new PropertyName(name);
   }
 
+  /**
+   * 获取根名称。
+   *
+   * @param mapper
+   *     指定的对象映射器。
+   * @param type
+   *     指定的类型。
+   * @return
+   *     根的属性名称。
+   */
   @Nonnull
   public static PropertyName getRootName(final ObjectMapper mapper, final Class<?> type) {
     if (mapper instanceof XmlMapper) {
@@ -111,6 +131,16 @@ public class JacksonUtils {
     }
   }
 
+  /**
+   * 获取 XML 根名称。
+   *
+   * @param namingStrategy
+   *     指定的属性命名策略。
+   * @param type
+   *     指定的类型。
+   * @return
+   *     XML 根的属性名称。
+   */
   @Nonnull
   public static PropertyName getXmlRootName(final PropertyNamingStrategy namingStrategy,
       final Class<?> type) {
@@ -131,6 +161,16 @@ public class JacksonUtils {
     return newXmlElementName(namingStrategy, type.getSimpleName());
   }
 
+  /**
+   * 获取 JSON 根名称。
+   *
+   * @param namingStrategy
+   *     指定的属性命名策略。
+   * @param type
+   *     指定的类型。
+   * @return
+   *     JSON 根的属性名称。
+   */
   @Nonnull
   public static PropertyName getJsonRootName(final PropertyNamingStrategy namingStrategy,
       final Class<?> type) {
@@ -144,6 +184,16 @@ public class JacksonUtils {
     return newJsonPropertyName(namingStrategy, type.getSimpleName());
   }
 
+  /**
+   * 获取属性名称。
+   *
+   * @param mapper
+   *     指定的对象映射器。
+   * @param field
+   *     指定的字段。
+   * @return
+   *     属性名称。
+   */
   @Nonnull
   public static PropertyName getPropertyName(final ObjectMapper mapper, final Field field) {
     if (mapper instanceof XmlMapper) {
@@ -155,6 +205,16 @@ public class JacksonUtils {
     }
   }
 
+  /**
+   * 获取属性名称。
+   *
+   * @param mapper
+   *     指定的对象映射器。
+   * @param method
+   *     指定的方法。
+   * @return
+   *     属性名称。
+   */
   @Nonnull
   public static PropertyName getPropertyName(final ObjectMapper mapper, final Method method) {
     if (mapper instanceof XmlMapper) {
@@ -166,6 +226,16 @@ public class JacksonUtils {
     }
   }
 
+  /**
+   * 获取 XML 属性名称。
+   *
+   * @param namingStrategy
+   *     指定的属性命名策略。
+   * @param field
+   *     指定的字段。
+   * @return
+   *     XML 属性名称。
+   */
   @Nonnull
   public static PropertyName getXmlPropertyName(final PropertyNamingStrategy namingStrategy,
       final Field field) {
@@ -176,6 +246,16 @@ public class JacksonUtils {
         (a) -> FieldUtils.getAnnotation(field, a));
   }
 
+  /**
+   * 获取 XML 属性名称。
+   *
+   * @param namingStrategy
+   *     指定的属性命名策略。
+   * @param method
+   *     指定的方法。
+   * @return
+   *     XML 属性名称，如果方法不是 setter 方法则返回 {@code null}。
+   */
   @Nullable
   public static PropertyName getXmlPropertyName(final PropertyNamingStrategy namingStrategy,
       final Method method) {
@@ -214,6 +294,16 @@ public class JacksonUtils {
     }
   }
 
+  /**
+   * 获取 JSON 属性名称。
+   *
+   * @param namingStrategy
+   *     指定的属性命名策略。
+   * @param field
+   *     指定的字段。
+   * @return
+   *     JSON 属性名称。
+   */
   @Nonnull
   public static PropertyName getJsonPropertyName(final PropertyNamingStrategy namingStrategy,
       final Field field) {
@@ -224,6 +314,16 @@ public class JacksonUtils {
         (a) -> FieldUtils.getAnnotation(field, a));
   }
 
+  /**
+   * 获取 JSON 属性名称。
+   *
+   * @param namingStrategy
+   *     指定的属性命名策略。
+   * @param method
+   *     指定的方法。
+   * @return
+   *     JSON 属性名称，如果方法不是 setter 方法则返回 {@code null}。
+   */
   @Nullable
   public static PropertyName getJsonPropertyName(final PropertyNamingStrategy namingStrategy,
       final Method method) {
@@ -250,6 +350,16 @@ public class JacksonUtils {
     return newJsonPropertyName(namingStrategy, name);
   }
 
+  /**
+   * 获取包装器属性名称。
+   *
+   * @param mapper
+   *     指定的对象映射器。
+   * @param field
+   *     指定的字段。
+   * @return
+   *     包装器属性名称。
+   */
   @Nonnull
   public static PropertyName getWrapperPropertyName(final ObjectMapper mapper,
       final Field field) {
@@ -262,6 +372,16 @@ public class JacksonUtils {
     }
   }
 
+  /**
+   * 获取包装器属性名称。
+   *
+   * @param mapper
+   *     指定的对象映射器。
+   * @param method
+   *     指定的方法。
+   * @return
+   *     包装器属性名称。
+   */
   @Nonnull
   public static PropertyName getWrapperPropertyName(final ObjectMapper mapper,
       final Method method) {
@@ -274,6 +394,16 @@ public class JacksonUtils {
     }
   }
 
+  /**
+   * 获取 XML 包装器属性名称。
+   *
+   * @param namingStrategy
+   *     指定的属性命名策略。
+   * @param field
+   *     指定的字段。
+   * @return
+   *     XML 包装器属性名称。
+   */
   @Nonnull
   public static PropertyName getXmlWrapperPropertyName(final PropertyNamingStrategy namingStrategy,
       final Field field) {
@@ -284,6 +414,16 @@ public class JacksonUtils {
         (a) -> FieldUtils.getAnnotation(field, a));
   }
 
+  /**
+   * 获取 XML 包装器属性名称。
+   *
+   * @param namingStrategy
+   *     指定的属性命名策略。
+   * @param method
+   *     指定的方法。
+   * @return
+   *     XML 包装器属性名称，如果方法不是 setter 方法则返回 {@code null}。
+   */
   @Nullable
   public static PropertyName getXmlWrapperPropertyName(final PropertyNamingStrategy namingStrategy,
       final Method method) {
@@ -324,12 +464,32 @@ public class JacksonUtils {
     return newXmlWrapperElementName(namingStrategy, name);
   }
 
+  /**
+   * 获取 JSON 包装器属性名称。
+   *
+   * @param namingStrategy
+   *     指定的属性命名策略。
+   * @param field
+   *     指定的字段。
+   * @return
+   *     JSON 包装器属性名称。
+   */
   @Nonnull
   public static PropertyName getJsonWrapperPropertyName(final PropertyNamingStrategy namingStrategy,
       final Field field) {
     return getJsonWrapperPropertyNameImpl(namingStrategy, field.getName());
   }
 
+  /**
+   * 获取 JSON 包装器属性名称。
+   *
+   * @param namingStrategy
+   *     指定的属性命名策略。
+   * @param method
+   *     指定的方法。
+   * @return
+   *     JSON 包装器属性名称，如果方法不是 setter 方法则返回 {@code null}。
+   */
   @Nullable
   public static PropertyName getJsonWrapperPropertyName(final PropertyNamingStrategy namingStrategy,
       final Method method) {
@@ -348,6 +508,16 @@ public class JacksonUtils {
     return new PropertyName(translateName);
   }
 
+  /**
+   * 获取被包装的属性名称。
+   *
+   * @param mapper
+   *     指定的对象映射器。
+   * @param field
+   *     指定的字段。
+   * @return
+   *     被包装的属性名称。
+   */
   @Nonnull
   public static PropertyName getWrappedPropertyName(final ObjectMapper mapper,
       final Field field) {
@@ -360,6 +530,16 @@ public class JacksonUtils {
     }
   }
 
+  /**
+   * 获取被包装的属性名称。
+   *
+   * @param mapper
+   *     指定的对象映射器。
+   * @param method
+   *     指定的方法。
+   * @return
+   *     被包装的属性名称，如果方法不是 setter 方法则返回 {@code null}。
+   */
   @Nullable
   public static PropertyName getWrappedPropertyName(final ObjectMapper mapper,
       final Method method) {
@@ -372,6 +552,16 @@ public class JacksonUtils {
     }
   }
 
+  /**
+   * 获取 XML 被包装的属性名称。
+   *
+   * @param namingStrategy
+   *     指定的属性命名策略。
+   * @param field
+   *     指定的字段。
+   * @return
+   *     XML 被包装的属性名称。
+   */
   @Nonnull
   public static PropertyName getXmlWrappedPropertyName(final PropertyNamingStrategy namingStrategy,
       final Field field) {
@@ -382,6 +572,16 @@ public class JacksonUtils {
         (a) -> FieldUtils.getAnnotation(field, a));
   }
 
+  /**
+   * 获取 XML 被包装的属性名称。
+   *
+   * @param namingStrategy
+   *     指定的属性命名策略。
+   * @param method
+   *     指定的方法。
+   * @return
+   *     XML 被包装的属性名称，如果方法不是 setter 方法则返回 {@code null}。
+   */
   @Nullable
   public static PropertyName getXmlWrappedPropertyName(final PropertyNamingStrategy namingStrategy,
       final Method method) {
@@ -430,6 +630,16 @@ public class JacksonUtils {
     return newXmlWrappedElementName(namingStrategy, name);
   }
 
+  /**
+   * 获取 JSON 被包装的属性名称。
+   *
+   * @param namingStrategy
+   *     指定的属性命名策略。
+   * @param field
+   *     指定的字段。
+   * @return
+   *     JSON 被包装的属性名称。
+   */
   @Nonnull
   public static PropertyName getJsonWrappedPropertyName(final PropertyNamingStrategy namingStrategy,
       final Field field) {
@@ -440,6 +650,16 @@ public class JacksonUtils {
         (a) -> FieldUtils.getAnnotation(field, a));
   }
 
+  /**
+   * 获取 JSON 被包装的属性名称。
+   *
+   * @param namingStrategy
+   *     指定的属性命名策略。
+   * @param method
+   *     指定的方法。
+   * @return
+   *     JSON 被包装的属性名称，如果方法不是 setter 方法则返回 {@code null}。
+   */
   @Nullable
   public static PropertyName getJsonWrappedPropertyName(final PropertyNamingStrategy namingStrategy,
       final Method method) {
@@ -466,6 +686,22 @@ public class JacksonUtils {
     return newJsonWrappedPropertyName(namingStrategy, name);
   }
 
+  /**
+   * 使用 XML 适配器序列化字段值。
+   *
+   * @param mapper
+   *     指定的对象映射器。
+   * @param annotation
+   *     指定的 {@link XmlJavaTypeAdapter} 注解。
+   * @param field
+   *     指定的字段。
+   * @param fieldValue
+   *     指定的字段值。
+   * @return
+   *     序列化后的字符串。
+   * @throws Exception
+   *     如果序列化过程中发生错误。
+   */
   @SuppressWarnings("rawtypes")
   public static String serializeWithAdapter(final ObjectMapper mapper,
       final XmlJavaTypeAdapter annotation, final Field field, final Object fieldValue)
@@ -475,6 +711,22 @@ public class JacksonUtils {
     return serializeWithAdapter(mapper, adapter, field, fieldValue);
   }
 
+  /**
+   * 使用 XML 适配器序列化字段值。
+   *
+   * @param mapper
+   *     指定的对象映射器。
+   * @param adapter
+   *     指定的 {@link XmlAdapter} 适配器。
+   * @param field
+   *     指定的字段，可以为 {@code null}。
+   * @param fieldValue
+   *     指定的字段值。
+   * @return
+   *     序列化后的字符串。
+   * @throws Exception
+   *     如果序列化过程中发生错误。
+   */
   @SuppressWarnings({"rawtypes", "unchecked"})
   public static String serializeWithAdapter(final ObjectMapper mapper,
       final XmlAdapter adapter, @Nullable final Field field, final Object fieldValue)
@@ -482,6 +734,22 @@ public class JacksonUtils {
     return (String) adapter.marshal(fieldValue);
   }
 
+  /**
+   * 使用 JSON 序列化器序列化字段值。
+   *
+   * @param mapper
+   *     指定的对象映射器。
+   * @param annotation
+   *     指定的 {@link JsonSerialize} 注解。
+   * @param field
+   *     指定的字段，可以为 {@code null}。
+   * @param fieldValue
+   *     指定的字段值。
+   * @return
+   *     序列化后的字符串。
+   * @throws IOException
+   *     如果序列化过程中发生 I/O 错误。
+   */
   @SuppressWarnings("rawtypes")
   public static String serializeWithSerializer(final ObjectMapper mapper,
       final JsonSerialize annotation, @Nullable final Field field, final Object fieldValue)
@@ -501,6 +769,22 @@ public class JacksonUtils {
   private static final String TEMP_TAG_START = "<" + TEMP_TAG_NAME + ">";
   private static final String TEMP_TAG_END = "</" + TEMP_TAG_NAME + ">";
 
+  /**
+   * 使用 JSON 序列化器序列化字段值（用于 XML 映射器）。
+   *
+   * @param mapper
+   *     指定的 XML 映射器。
+   * @param serializer
+   *     指定的 JSON 序列化器。
+   * @param field
+   *     指定的字段，可以为 {@code null}。
+   * @param fieldValue
+   *     指定的字段值。
+   * @return
+   *     序列化后的字符串。
+   * @throws IOException
+   *     如果序列化过程中发生 I/O 错误。
+   */
   @SuppressWarnings({"rawtypes", "unchecked"})
   public static String serializeWithSerializer(final XmlMapper mapper,
       final JsonSerializer serializer, @Nullable final Field field,
@@ -530,6 +814,22 @@ public class JacksonUtils {
         .removeFrom(str);
   }
 
+  /**
+   * 使用 JSON 序列化器序列化字段值（用于 JSON 映射器）。
+   *
+   * @param mapper
+   *     指定的 JSON 映射器。
+   * @param serializer
+   *     指定的 JSON 序列化器。
+   * @param field
+   *     指定的字段，可以为 {@code null}。
+   * @param fieldValue
+   *     指定的字段值。
+   * @return
+   *     序列化后的字符串。
+   * @throws IOException
+   *     如果序列化过程中发生 I/O 错误。
+   */
   @SuppressWarnings({"rawtypes", "unchecked"})
   public static String serializeWithSerializer(final JsonMapper mapper,
       final JsonSerializer serializer, @Nullable final Field field,
@@ -551,6 +851,18 @@ public class JacksonUtils {
     return writer.toString();
   }
 
+  /**
+   * 获取注解字段。
+   *
+   * @param mapper
+   *     指定的对象映射器。
+   * @param operation
+   *     指定的操作类型。
+   * @param field
+   *     指定的字段。
+   * @return
+   *     注解字段对象。
+   */
   public static AnnotatedField getAnnotatedField(final ObjectMapper mapper,
       final Operation operation, final Field field) {
     // algorithm comes from
@@ -566,6 +878,18 @@ public class JacksonUtils {
     return new AnnotatedField(annotatedClass, field, annotations);
   }
 
+  /**
+   * 获取注解方法。
+   *
+   * @param mapper
+   *     指定的对象映射器。
+   * @param operation
+   *     指定的操作类型。
+   * @param method
+   *     指定的方法。
+   * @return
+   *     注解方法对象。
+   */
   public static AnnotatedMethod getAnnotatedMethod(final ObjectMapper mapper,
       final Operation operation, final Method method) {
     final MapperConfig<?> config = operation.getConfig(mapper);
@@ -635,6 +959,18 @@ public class JacksonUtils {
     //  TODO
   }
 
+  /**
+   * 获取属性元数据。
+   *
+   * @param mapper
+   *     指定的对象映射器。
+   * @param operation
+   *     指定的操作类型。
+   * @param field
+   *     指定的注解字段。
+   * @return
+   *     属性元数据。
+   */
   public static PropertyMetadata getMetadata(final ObjectMapper mapper,
       final Operation operation, final AnnotatedField field) {
     // the algorithm comes from
@@ -781,6 +1117,21 @@ public class JacksonUtils {
     return member.getType().getRawClass();
   }
 
+  /**
+   * 确保当前 token 为指定的 token。
+   *
+   * <p>此方法检查 JSON 解析器的当前 token 是否与预期的 token 相匹配。
+   * 如果不匹配，则抛出 {@link IllegalStateException} 异常。</p>
+   *
+   * @param jp
+   *     指定的 JSON 解析器。
+   * @param expectedToken
+   *     期望的 JSON token。
+   * @throws IOException
+   *     如果解析过程中发生 I/O 错误。
+   * @throws IllegalStateException
+   *     如果当前 token 与期望的 token 不匹配。
+   */
   public static void ensureCurrentToken(final JsonParser jp, final JsonToken expectedToken)
       throws IOException {
     final JsonToken token = jp.currentToken();
@@ -790,6 +1141,21 @@ public class JacksonUtils {
     }
   }
 
+  /**
+   * 确保下一个 token 为指定的 token。
+   *
+   * <p>此方法移动到 JSON 解析器的下一个 token 并检查该 token 是否与预期的 token 相匹配。
+   * 如果不匹配，则抛出 {@link IllegalStateException} 异常。</p>
+   *
+   * @param jp
+   *     指定的 JSON 解析器。
+   * @param expectedToken
+   *     期望的 JSON token。
+   * @throws IOException
+   *     如果解析过程中发生 I/O 错误。
+   * @throws IllegalStateException
+   *     如果下一个 token 与期望的 token 不匹配。
+   */
   public static void ensureNextToken(final JsonParser jp, final JsonToken expectedToken)
       throws IOException {
     final JsonToken token = jp.nextToken();
@@ -799,9 +1165,24 @@ public class JacksonUtils {
     }
   }
 
+  /**
+   * 确保当前字段名为指定的名称。
+   *
+   * <p>此方法检查 JSON 解析器的当前字段名是否与预期的字段名相匹配。
+   * 如果不匹配，则抛出 {@link IllegalStateException} 异常。</p>
+   *
+   * @param jp
+   *     指定的 JSON 解析器。
+   * @param expectedName
+   *     期望的字段名。
+   * @throws IOException
+   *     如果解析过程中发生 I/O 错误。
+   * @throws IllegalStateException
+   *     如果当前字段名与期望的字段名不匹配。
+   */
   public static void ensureCurrentName(final JsonParser jp, final String expectedName)
       throws IOException {
-    final String fieldName = jp.getCurrentName();
+    final String fieldName = jp.currentName();
     if (!fieldName.equals(expectedName)) {
       throw new IllegalStateException("Expected field name '" + expectedName
           + "', got: " + fieldName);

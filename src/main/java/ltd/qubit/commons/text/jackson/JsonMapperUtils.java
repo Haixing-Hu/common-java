@@ -44,6 +44,15 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 import static ltd.qubit.commons.lang.StringUtils.addPrefixToEachLine;
 
+/**
+ * 提供JSON映射器相关的实用方法。
+ *
+ * <p>此类提供了一系列静态方法，用于解析JSON数据为Java对象、将Java对象格式化为JSON字符串等操作。
+ * 支持从文件、URL、输入流、读取器和字符串等多种数据源解析JSON，
+ * 以及将对象格式化为普通或美化的JSON字符串。</p>
+ *
+ * @author 胡海星
+ */
 public class JsonMapperUtils {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(JsonMapperUtils.class);
@@ -294,11 +303,41 @@ public class JsonMapperUtils {
     }
   }
 
+  /**
+   * 从JSON文件解析指定类型的对象列表。
+   *
+   * @param <T>
+   *     列表元素的类型。
+   * @param file
+   *     指定的JSON文件。
+   * @param cls
+   *     列表元素的类对象。
+   * @return
+   *     解析出的对象列表。
+   * @throws IOException
+   *     若发生任何解析错误或I/O错误。
+   */
   public static <T> List<T> parseList(final File file, final Class<T> cls)
       throws IOException {
     return parseList(file, cls, new CustomizedJsonMapper());
   }
 
+  /**
+   * 从JSON文件解析指定类型的对象列表。
+   *
+   * @param <T>
+   *     列表元素的类型。
+   * @param file
+   *     指定的JSON文件。
+   * @param cls
+   *     列表元素的类对象。
+   * @param mapper
+   *     用于进行JSON反序列化的mapper。
+   * @return
+   *     解析出的对象列表。
+   * @throws IOException
+   *     若发生任何解析错误或I/O错误。
+   */
   public static <T> List<T> parseList(final File file, final Class<T> cls,
       final JsonMapper mapper) throws IOException {
     try (final InputStream in = new FileInputStream(file)) {
@@ -306,11 +345,41 @@ public class JsonMapperUtils {
     }
   }
 
+  /**
+   * 从JSON资源URL解析指定类型的对象列表。
+   *
+   * @param <T>
+   *     列表元素的类型。
+   * @param url
+   *     指定的JSON资源URL。
+   * @param cls
+   *     列表元素的类对象。
+   * @return
+   *     解析出的对象列表。
+   * @throws IOException
+   *     若发生任何解析错误或I/O错误。
+   */
   public static <T> List<T> parseList(final URL url, final Class<T> cls)
       throws IOException {
     return parseList(url, cls, new CustomizedJsonMapper());
   }
 
+  /**
+   * 从JSON资源URL解析指定类型的对象列表。
+   *
+   * @param <T>
+   *     列表元素的类型。
+   * @param url
+   *     指定的JSON资源URL。
+   * @param cls
+   *     列表元素的类对象。
+   * @param mapper
+   *     用于进行JSON反序列化的mapper。
+   * @return
+   *     解析出的对象列表。
+   * @throws IOException
+   *     若发生任何解析错误或I/O错误。
+   */
   public static <T> List<T> parseList(final URL url, final Class<T> cls,
       final JsonMapper mapper) throws IOException {
     try (final InputStream in = url.openStream()) {
@@ -318,22 +387,82 @@ public class JsonMapperUtils {
     }
   }
 
+  /**
+   * 从JSON输入流解析指定类型的对象列表。
+   *
+   * @param <T>
+   *     列表元素的类型。
+   * @param in
+   *     指定的JSON输入流。
+   * @param cls
+   *     列表元素的类对象。
+   * @return
+   *     解析出的对象列表。
+   * @throws IOException
+   *     若发生任何解析错误或I/O错误。
+   */
   public static <T> List<T> parseList(final InputStream in, final Class<T> cls)
       throws IOException {
     return parseList(in, cls, new CustomizedJsonMapper());
   }
 
+  /**
+   * 从JSON输入流解析指定类型的对象列表。
+   *
+   * @param <T>
+   *     列表元素的类型。
+   * @param in
+   *     指定的JSON输入流。
+   * @param cls
+   *     列表元素的类对象。
+   * @param mapper
+   *     用于进行JSON反序列化的mapper。
+   * @return
+   *     解析出的对象列表。
+   * @throws IOException
+   *     若发生任何解析错误或I/O错误。
+   */
   public static <T> List<T> parseList(final InputStream in, final Class<T> cls,
       final JsonMapper mapper) throws IOException {
     final InputStreamReader reader = new InputStreamReader(in, UTF_8);
     return parseList(reader, cls, mapper);
   }
 
+  /**
+   * 从JSON读取器解析指定类型的对象列表。
+   *
+   * @param <T>
+   *     列表元素的类型。
+   * @param reader
+   *     指定的JSON读取器。
+   * @param cls
+   *     列表元素的类对象。
+   * @return
+   *     解析出的对象列表。
+   * @throws IOException
+   *     若发生任何解析错误或I/O错误。
+   */
   public static <T> List<T> parseList(final Reader reader, final Class<T> cls)
       throws IOException {
     return parseList(reader, cls, new CustomizedJsonMapper());
   }
 
+  /**
+   * 从JSON读取器解析指定类型的对象列表。
+   *
+   * @param <T>
+   *     列表元素的类型。
+   * @param reader
+   *     指定的JSON读取器。
+   * @param cls
+   *     列表元素的类对象。
+   * @param mapper
+   *     用于进行JSON反序列化的mapper。
+   * @return
+   *     解析出的对象列表。
+   * @throws IOException
+   *     若发生任何解析错误或I/O错误。
+   */
   public static <T> List<T> parseList(final Reader reader, final Class<T> cls,
       final JsonMapper mapper) throws IOException {
     final TypeFactory factory = mapper.getTypeFactory();
@@ -341,11 +470,41 @@ public class JsonMapperUtils {
     return mapper.readValue(reader, listType);
   }
 
+  /**
+   * 从JSON字符串解析指定类型的对象列表。
+   *
+   * @param <T>
+   *     列表元素的类型。
+   * @param json
+   *     指定的JSON字符串。
+   * @param cls
+   *     列表元素的类对象。
+   * @return
+   *     解析出的对象列表。
+   * @throws JsonProcessingException
+   *     若发生任何解析错误。
+   */
   public static <T> List<T> parseList(final String json, final Class<T> cls)
       throws JsonProcessingException {
     return parseList(json, cls, new CustomizedJsonMapper());
   }
 
+  /**
+   * 从JSON字符串解析指定类型的对象列表。
+   *
+   * @param <T>
+   *     列表元素的类型。
+   * @param json
+   *     指定的JSON字符串。
+   * @param cls
+   *     列表元素的类对象。
+   * @param mapper
+   *     用于进行JSON反序列化的mapper。
+   * @return
+   *     解析出的对象列表。
+   * @throws JsonProcessingException
+   *     若发生任何解析错误。
+   */
   public static <T> List<T> parseList(final String json, final Class<T> cls,
       final JsonMapper mapper) throws JsonProcessingException {
     final TypeFactory factory = mapper.getTypeFactory();
@@ -353,10 +512,36 @@ public class JsonMapperUtils {
     return mapper.readValue(json, listType);
   }
 
+  /**
+   * 从JSON读取器解析指定类型的对象列表。
+   *
+   * @param <T>
+   *     列表元素的类型。
+   * @param reader
+   *     指定的JSON读取器。
+   * @param cls
+   *     列表元素的类对象。
+   * @return
+   *     解析出的对象列表；若出错则返回{@code null}。
+   */
   public static <T> List<T> parseListNoThrow(final Reader reader, final Class<T> cls) {
     return parseListNoThrow(reader, cls, new CustomizedJsonMapper());
   }
 
+  /**
+   * 从JSON读取器解析指定类型的对象列表。
+   *
+   * @param <T>
+   *     列表元素的类型。
+   * @param reader
+   *     指定的JSON读取器。
+   * @param cls
+   *     列表元素的类对象。
+   * @param mapper
+   *     用于进行JSON反序列化的mapper。
+   * @return
+   *     解析出的对象列表；若出错则返回{@code null}。
+   */
   public static <T> List<T> parseListNoThrow(final Reader reader, final Class<T> cls,
       final JsonMapper mapper) {
     try {
@@ -368,10 +553,36 @@ public class JsonMapperUtils {
     }
   }
 
+  /**
+   * 从JSON字符串解析指定类型的对象列表。
+   *
+   * @param <T>
+   *     列表元素的类型。
+   * @param json
+   *     指定的JSON字符串。
+   * @param cls
+   *     列表元素的类对象。
+   * @return
+   *     解析出的对象列表；若出错则返回{@code null}。
+   */
   public static <T> List<T> parseListNoThrow(final String json, final Class<T> cls) {
     return parseListNoThrow(json, cls, new CustomizedJsonMapper());
   }
 
+  /**
+   * 从JSON字符串解析指定类型的对象列表。
+   *
+   * @param <T>
+   *     列表元素的类型。
+   * @param json
+   *     指定的JSON字符串。
+   * @param cls
+   *     列表元素的类对象。
+   * @param mapper
+   *     用于进行JSON反序列化的mapper。
+   * @return
+   *     解析出的对象列表；若出错则返回{@code null}。
+   */
   public static <T> List<T> parseListNoThrow(final String json, final Class<T> cls,
       final JsonMapper mapper) {
     try {
@@ -800,16 +1011,58 @@ public class JsonMapperUtils {
     }
   }
 
+  /**
+   * 将指定的列表格式化为JSON字符串。
+   *
+   * @param <T>
+   *     列表元素的类型。
+   * @param list
+   *     待序列化的列表。
+   * @return
+   *     该列表的JSON字符形式。
+   * @throws JsonProcessingException
+   *     若发生JSON序列化错误。
+   */
   public static <T> String formatList(final List<T> list)
       throws JsonProcessingException {
     return formatList(list, new CustomizedJsonMapper());
   }
 
+  /**
+   * 将指定的列表格式化为JSON字符串。
+   *
+   * @param <T>
+   *     列表元素的类型。
+   * @param list
+   *     待序列化的列表。
+   * @param mapper
+   *     用于进行JSON序列化的mapper。
+   * @return
+   *     该列表的JSON字符形式。
+   * @throws JsonProcessingException
+   *     若发生JSON序列化错误。
+   */
   public static <T> String formatList(final List<T> list, final JsonMapper mapper)
       throws JsonProcessingException {
     return mapper.writeValueAsString(list);
   }
 
+  /**
+   * 将指定的列表格式化为JSON字符串并输出到指定的输出流。
+   *
+   * @param <T>
+   *     列表元素的类型。
+   * @param list
+   *     待序列化的列表。
+   * @param mapper
+   *     用于进行JSON序列化的mapper。
+   * @param output
+   *     输出流。
+   * @return
+   *     输出流参数本身。
+   * @throws IOException
+   *     若发生JSON序列化错误或I/O错误。
+   */
   public static <T> Writer formatList(final List<T> list, final JsonMapper mapper,
       final Writer output) throws IOException {
     outputJsonArrayOpenTag(output);
@@ -832,6 +1085,16 @@ public class JsonMapperUtils {
   }
 
 
+  /**
+   * 将指定的列表格式化为JSON字符串。
+   *
+   * @param <T>
+   *     列表元素的类型。
+   * @param list
+   *     待序列化的列表。
+   * @return
+   *     该列表的JSON字符形式；若出错则返回{@code null}。
+   */
   @Nullable
   public static <T> String formatListNoThrow(final List<T> list) {
     try {
@@ -842,6 +1105,18 @@ public class JsonMapperUtils {
     }
   }
 
+  /**
+   * 将指定的列表格式化为JSON字符串。
+   *
+   * @param <T>
+   *     列表元素的类型。
+   * @param list
+   *     待序列化的列表。
+   * @param mapper
+   *     用于进行JSON序列化的mapper。
+   * @return
+   *     该列表的JSON字符形式；若出错则返回{@code null}。
+   */
   @Nullable
   public static <T> String formatListNoThrow(final List<T> list, final JsonMapper mapper) {
     try {
