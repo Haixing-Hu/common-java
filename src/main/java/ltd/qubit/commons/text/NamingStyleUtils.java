@@ -12,6 +12,8 @@ import static ltd.qubit.commons.lang.StringUtils.isEmpty;
 
 /**
  * 提供命名风格转换相关函数。
+ *
+ * @author 胡海星
  */
 public class NamingStyleUtils {
 

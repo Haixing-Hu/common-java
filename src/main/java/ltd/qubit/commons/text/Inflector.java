@@ -14,52 +14,76 @@ import java.util.Set;
 import java.util.regex.Matcher;
 
 /**
- * Transforms words to singular, plural, humanized (human readable), underscore,
- * camel case, or ordinal form. This is inspired by the
- * <a href="http://api.rubyonrails.org/classes/Inflector.html">Inflector</a> class
- * in <a href="http://www.rubyonrails.org">Ruby on Rails</a>, which is
- * distributed under the
- * <a href="http://wiki.rubyonrails.org/rails/pages/License">Rails license</a>.
+ * 英语单词变形器，将单词转换为单数、复数、人类可读格式、下划线、驼峰命名或序数形式。
+ * <p>
+ * 此类灵感来源于<a href="http://api.rubyonrails.org/classes/Inflector.html">Ruby on Rails</a>
+ * 中的<a href="http://www.rubyonrails.org">Inflector类</a>，该类基于
+ * <a href="http://wiki.rubyonrails.org/rails/pages/License">Rails许可证</a>分发。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class Inflector {
 
+  /**
+   * 全局单例实例。
+   */
   protected static final Inflector INSTANCE = new Inflector();
 
+  /**
+   * 获取单例实例。
+   *
+   * @return 单例实例
+   */
   public static Inflector getInstance() {
     return INSTANCE;
   }
 
+  /**
+   * 复数变形规则列表。
+   */
   private final LinkedList<Rule> plurals = new LinkedList<>();
 
+  /**
+   * 单数变形规则列表。
+   */
   private final LinkedList<Rule> singulars = new LinkedList<>();
 
   /**
-   * The lowercase words that are to be excluded and not processed. This map
-   * can be modified by the users via {@link #getUncountables()}.
+   * 不可数单词集合，这些小写单词将被排除且不被处理。
+   * 用户可以通过{@link #getUncountables()}方法修改此集合。
    */
   private final Set<String> uncountables = new HashSet<>();
 
+  /**
+   * 构造一个新的单词变形器实例。
+   */
   public Inflector() {
     initialize();
   }
 
+  /**
+   * 根据现有的单词变形器创建一个拷贝。
+   *
+   * @param original 原始的单词变形器实例
+   */
   protected Inflector(final Inflector original) {
     this.plurals.addAll(original.plurals);
     this.singulars.addAll(original.singulars);
     this.uncountables.addAll(original.uncountables);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Inflector clone() {
     return new Inflector(this);
   }
 
   /**
-   * Returns the plural form of the word in the string.
+   * 返回字符串中单词的复数形式。
    *
-   * <p>Examples:</p>
+   * <p>示例：</p>
    * <pre><code>
    *   inflector.pluralize(&quot;post&quot;)               #=&gt; &quot;posts&quot;
    *   inflector.pluralize(&quot;octopus&quot;)            #=&gt; &quot;octopi&quot;
@@ -69,14 +93,11 @@ public class Inflector {
    *   inflector.pluralize(&quot;CamelOctopus&quot;)       #=&gt; &quot;CamelOctopi&quot;
    * </code></pre>
    *
-   * <p>Note that if the {@link Object#toString()} is called on the supplied
-   * object, so this method works for non-strings, too.</p>
+   * <p>注意：对所提供的对象调用{@link Object#toString()}方法，
+   * 因此此方法也适用于非字符串类型。</p>
    *
-   * @param word
-   *     the word that is to be pluralized.
-   * @return
-   *     the pluralized form of the word, or the word itself if it could not be
-   *     pluralized.
+   * @param word 要转换为复数的单词
+   * @return 单词的复数形式，如果无法复数化则返回原单词
    * @see #singularize(String)
    */
   public String pluralize(final String word) {
@@ -99,6 +120,14 @@ public class Inflector {
     return wordStr;
   }
 
+  /**
+   * 根据数量返回单词的复数或单数形式。
+   * 当数量为1或-1时返回原单词，否则返回复数形式。
+   *
+   * @param word 要处理的单词
+   * @param count 数量
+   * @return 根据数量处理后的单词形式
+   */
   public String pluralize(final String word, final int count) {
     if (word == null) {
       return null;
@@ -110,9 +139,9 @@ public class Inflector {
   }
 
   /**
-   * Returns the singular form of the word in the string.
+   * 返回字符串中单词的单数形式。
    *
-   * <p>Examples:</p>
+   * <p>示例：</p>
    * <pre><code>
    *   inflector.singularize(&quot;posts&quot;)             #=&gt; &quot;post&quot;
    *   inflector.singularize(&quot;octopi&quot;)            #=&gt; &quot;octopus&quot;
@@ -122,14 +151,11 @@ public class Inflector {
    *   inflector.singularize(&quot;CamelOctopi&quot;)       #=&gt; &quot;CamelOctopus&quot;
    * </code></pre>
    *
-   * <p>Note that if the {@link Object#toString()} is called on the supplied
-   * object, so this method works for non-strings, too.</p>
+   * <p>注意：对所提供的对象调用{@link Object#toString()}方法，
+   * 因此此方法也适用于非字符串类型。</p>
    *
-   * @param word
-   *     the word that is to be pluralized.
-   * @return
-   *     the pluralized form of the word, or the word itself if it could not be
-   *     pluralized.
+   * @param word 要转换为单数的单词
+   * @return 单词的单数形式，如果无法单数化则返回原单词
    * @see #pluralize(String)
    */
   public String singularize(final String word) {
@@ -153,12 +179,11 @@ public class Inflector {
   }
 
   /**
-   * Converts strings to lowerCamelCase.
+   * 将字符串转换为小驼峰命名法（lowerCamelCase）。
    *
-   * <p>This method will also use any extra delimiter characters to identify
-   * word boundaries.</p>
+   * <p>此方法还会使用任何额外的分隔符字符来识别单词边界。</p>
    *
-   * <p>Examples:</p>
+   * <p>示例：</p>
    * <pre><code>
    *   inflector.lowerCamelCase(&quot;active_record&quot;)       #=&gt; &quot;activeRecord&quot;
    *   inflector.lowerCamelCase(&quot;first_name&quot;)          #=&gt; &quot;firstName&quot;
@@ -166,12 +191,9 @@ public class Inflector {
    *   inflector.lowerCamelCase(&quot;the-first_name&quot;,'-')  #=&gt; &quot;theFirstName&quot;
    * </code></pre>
    *
-   * @param lowerCaseAndUnderscoredWord
-   *     the word that is to be converted to camel case.
-   * @param delimiterChars
-   *     optional characters that are used to delimit word boundaries.
-   * @return
-   *     the lower camel case version of the word.
+   * @param lowerCaseAndUnderscoredWord 要转换为驼峰命名的小写下划线单词
+   * @param delimiterChars 可选的分隔符字符，用于分隔单词边界
+   * @return 小驼峰命名版本的单词
    * @see #underscore(String, char[])
    * @see #camelCase(String, boolean, char[])
    * @see #upperCamelCase(String, char[])
@@ -182,23 +204,20 @@ public class Inflector {
   }
 
   /**
-   * Converts strings to UpperCamelCase. This method will also use any extra
-   * delimiter characters to identify word boundaries.
+   * 将字符串转换为大驼峰命名法（UpperCamelCase）。
+   * 此方法还会使用任何额外的分隔符字符来识别单词边界。
    *
-   * <p>Examples:</p>
+   * <p>示例：</p>
    * <pre><code>
-   *   inflector.upperCamelCase(&quot;active_record&quot;)       #=&gt; &quot;SctiveRecord&quot;
+   *   inflector.upperCamelCase(&quot;active_record&quot;)       #=&gt; &quot;ActiveRecord&quot;
    *   inflector.upperCamelCase(&quot;first_name&quot;)          #=&gt; &quot;FirstName&quot;
    *   inflector.upperCamelCase(&quot;name&quot;)                #=&gt; &quot;Name&quot;
-   *   inflector.lowerCamelCase(&quot;the-first_name&quot;,'-')  #=&gt; &quot;TheFirstName&quot;
+   *   inflector.upperCamelCase(&quot;the-first_name&quot;,'-')  #=&gt; &quot;TheFirstName&quot;
    * </code></pre>
    *
-   * @param lowerCaseAndUnderscoredWord
-   *     the word that is to be converted to camel case.
-   * @param delimiterChars
-   *     optional characters that are used to delimit word boundaries.
-   * @return
-   *     the upper camel case version of the word.
+   * @param lowerCaseAndUnderscoredWord 要转换为驼峰命名的小写下划线单词
+   * @param delimiterChars 可选的分隔符字符，用于分隔单词边界
+   * @return 大驼峰命名版本的单词
    * @see #underscore(String, char[])
    * @see #camelCase(String, boolean, char[])
    * @see #lowerCamelCase(String, char[])
@@ -209,13 +228,12 @@ public class Inflector {
   }
 
   /**
-   * By default, this method converts strings to UpperCamelCase.
+   * 默认情况下，此方法将字符串转换为大驼峰命名法（UpperCamelCase）。
    *
-   * <p>If the {@code uppercaseFirstLetter} argument to false, then this method
-   * produces lowerCamelCase. This method will also use any extra delimiter
-   * characters to identify word boundaries.</p>
+   * <p>如果将{@code uppercaseFirstLetter}参数设置为false，则此方法产生小驼峰命名法。
+   * 此方法还会使用任何额外的分隔符字符来识别单词边界。</p>
    *
-   * <p>Examples:</p>
+   * <p>示例：</p>
    * <pre><code>
    *   inflector.camelCase(&quot;active_record&quot;,false)    #=&gt; &quot;activeRecord&quot;
    *   inflector.camelCase(&quot;active_record&quot;,true)     #=&gt; &quot;ActiveRecord&quot;
@@ -225,15 +243,10 @@ public class Inflector {
    *   inflector.camelCase(&quot;name&quot;,true)              #=&gt; &quot;Name&quot;
    * </code></pre>
    *
-   * @param lowerCaseAndUnderscoredWord
-   *     the word that is to be converted to camel case.
-   * @param uppercaseFirstLetter
-   *     true if the first character is to be uppercased, or false if the first
-   *     character is to be owercased.
-   * @param delimiterChars
-   *     optional characters that are used to delimit word boundaries.
-   * @return
-   *     the camel case version of the word.
+   * @param lowerCaseAndUnderscoredWord 要转换为驼峰命名的小写下划线单词
+   * @param uppercaseFirstLetter 如果第一个字符要大写则为true，如果第一个字符要小写则为false
+   * @param delimiterChars 可选的分隔符字符，用于分隔单词边界
+   * @return 驼峰命名版本的单词
    * @see #underscore(String, char[])
    * @see #upperCamelCase(String, char[])
    * @see #lowerCamelCase(String, char[])
@@ -267,12 +280,10 @@ public class Inflector {
   }
 
   /**
-   * Makes an underscored form from the expression in the string (the reverse
-   * of the {@link #camelCase(String, boolean, char[]) camelCase} method.
-   * Also changes any characters that match the supplied delimiters into
-   * underscore.
+   * 从字符串中的表达式生成下划线形式（{@link #camelCase(String, boolean, char[]) camelCase}方法的逆向操作）。
+   * 还会将匹配所提供分隔符的任何字符更改为下划线。
    *
-   * <p>Examples:</p>
+   * <p>示例：</p>
    * <pre><code>
    *   inflector.underscore(&quot;activeRecord&quot;)     #=&gt; &quot;active_record&quot;
    *   inflector.underscore(&quot;ActiveRecord&quot;)     #=&gt; &quot;active_record&quot;
@@ -282,14 +293,9 @@ public class Inflector {
    *   inflector.underscore(&quot;The.firstName&quot;)    #=&gt; &quot;the_first_name&quot;
    * </code></pre>
    *
-   * @param camelCaseWord
-   *     the camel-cased word that is to be converted.
-   * @param delimiterChars
-   *     optional characters that are used to delimit word boundaries
-   *     (beyond capitalization).
-   * @return
-   *     a lower-cased version of the input, with separate words delimited by
-   *     the underscore character.
+   * @param camelCaseWord 要转换的驼峰命名单词
+   * @param delimiterChars 可选的分隔符字符，用于分隔单词边界（除了大小写）
+   * @return 输入的小写版本，用下划线字符分隔单词
    */
   public String underscore(final String camelCaseWord,
       final char... delimiterChars) {
@@ -312,14 +318,10 @@ public class Inflector {
   }
 
   /**
-   * Returns a copy of the input with the first character converted to
-   * uppercase and the remainder to lowercase.
+   * 返回输入字符串的副本，第一个字符转换为大写，其余字符转换为小写。
    *
-   * @param words
-   *     the word to be capitalized
-   * @return
-   *     the string with the first character capitalized and the remaining
-   *     characters lowercased
+   * @param words 要首字母大写的单词
+   * @return 第一个字符大写，其余字符小写的字符串
    */
   public String capitalize(final String words) {
     if (words == null) {
@@ -337,24 +339,19 @@ public class Inflector {
   }
 
   /**
-   * Capitalizes the first word and turns underscores into spaces and strips
-   * trailing "_id" and any supplied removable tokens.
+   * 将第一个单词首字母大写，将下划线转换为空格，并删除尾随的"_id"和任何提供的可移除标记。
    *
-   * <p>Like {@link #titleCase(String, String[])}, this is meant for creating
-   * pretty output.</p>
+   * <p>与{@link #titleCase(String, String[])}类似，此方法用于创建美观的输出。</p>
    *
-   * <p>Examples:</p>
+   * <p>示例：</p>
    * <pre><code>
    *   inflector.humanize(&quot;employee_salary&quot;)       #=&gt; &quot;Employee salary&quot;
    *   inflector.humanize(&quot;author_id&quot;)             #=&gt; &quot;Author&quot;
    * </code></pre>
    *
-   * @param lowerCaseAndUnderscoredWords
-   *     the input to be humanized.
-   * @param removableTokens
-   *     optional array of tokens that are to be removed.
-   * @return
-   *     the humanized string.
+   * @param lowerCaseAndUnderscoredWords 要人性化的输入
+   * @param removableTokens 可选的要移除的标记数组
+   * @return 人性化的字符串
    * @see #titleCase(String, String[])
    */
   public String humanize(final String lowerCaseAndUnderscoredWords,
@@ -378,27 +375,21 @@ public class Inflector {
     return capitalize(result);
   }
 
-  // stop checkstyle: LineLength
   /**
-   * Capitalizes all the words and replaces some characters in the string to
-   * create a nicer looking title.
+   * 将所有单词首字母大写，并替换字符串中的某些字符以创建更美观的标题。
    *
-   * <p>Underscores are changed to spaces, a trailing "_id" is removed, and any
-   * of the supplied tokens are removed. Like {@link #humanize(String, String[])},
-   * this is meant for creating pretty output.</p>
+   * <p>下划线被转换为空格，尾随的"_id"被移除，任何提供的标记都被移除。
+   * 与{@link #humanize(String, String[])}类似，此方法用于创建美观的输出。</p>
    *
-   * <p>Examples:</p>
+   * <p>示例：</p>
    * <pre><code>
    *   inflector.titleCase(&quot;man from the boondocks&quot;) #=&gt; &quot;Man From The Boondocks&quot;
    *   inflector.titleCase(&quot;x-men: the last stand&quot;)  #=&gt; &quot;X Men: The Last Stand&quot;
    * </code></pre>
    *
-   * @param words
-   *     the input to be turned into title case.
-   * @param removableTokens
-   *     optional array of tokens that are to be removed.
-   * @return
-   *     the title-case version of the supplied words.
+   * @param words 要转换为标题格式的输入
+   * @param removableTokens 可选的要移除的标记数组
+   * @return 标题格式的字符串
    */
   public String titleCase(final String words,
       final String... removableTokens) {
@@ -406,16 +397,12 @@ public class Inflector {
     result = replaceAllWithUppercase(result, "\\b([a-z])", 1); // change first char of each word to uppercase
     return result;
   }
-  // resume checkstyle: LineLength
 
   /**
-   * Turns a non-negative number into an ordinal string used to denote the
-   * position in an ordered sequence, such as 1st, 2nd, 3rd, 4th.
+   * 将非负数转换为序数字符串，用于表示有序序列中的位置，如1st、2nd、3rd、4th。
    *
-   * @param number
-   *     the non-negative number.
-   * @return
-   *     the string with the number and ordinal suffix.
+   * @param number 非负数
+   * @return 包含数字和序数后缀的字符串
    */
   public String ordinalize(final int number) {
     // stop checkstyle: MagicNumber
@@ -438,14 +425,11 @@ public class Inflector {
   }
 
   /**
-   * Determine whether the supplied word is considered uncountable by the
-   * {@link #pluralize(String) pluralize} and
-   * {@link #singularize(String) singularize} methods.
+   * 确定所提供的单词是否被{@link #pluralize(String) pluralize}和
+   * {@link #singularize(String) singularize}方法视为不可数。
    *
-   * @param word
-   *     the word.
-   * @return
-   *     true if the plural and singular forms of the word are the same.
+   * @param word 单词
+   * @return 如果单词的复数和单数形式相同则返回true
    */
   public boolean isUncountable(final String word) {
     if (word == null) {
@@ -456,26 +440,43 @@ public class Inflector {
   }
 
   /**
-   * Get the set of words that are not processed by the Inflector.
-   * The resulting map is directly modifiable.
+   * 获取不被变形器处理的单词集合。
+   * 返回的集合可以直接修改。
    *
-   * @return
-   *     the set of uncountable words.
+   * @return 不可数单词的集合
    */
   public Set<String> getUncountables() {
     return uncountables;
   }
 
+  /**
+   * 添加复数变形规则。
+   *
+   * @param rule 正则表达式规则
+   * @param replacement 替换字符串
+   */
   public void addPluralize(final String rule, final String replacement) {
     final Rule pluralizeRule = new Rule(rule, replacement);
     this.plurals.addFirst(pluralizeRule);
   }
 
+  /**
+   * 添加单数变形规则。
+   *
+   * @param rule 正则表达式规则
+   * @param replacement 替换字符串
+   */
   public void addSingularize(final String rule, final String replacement) {
     final Rule singularizeRule = new Rule(rule, replacement);
     this.singulars.addFirst(singularizeRule);
   }
 
+  /**
+   * 添加不规则单复数变形规则。
+   *
+   * @param singular 单数形式
+   * @param plural 复数形式
+   */
   public void addIrregular(final String singular, final String plural) {
     final String singularRemainder = singular.length() > 1 ? singular.substring(1) : "";
     final String pluralRemainder = plural.length() > 1 ? plural.substring(1) : "";
@@ -485,6 +486,11 @@ public class Inflector {
         "$1" + singularRemainder);
   }
 
+  /**
+   * 添加不可数单词。
+   *
+   * @param words 要添加的不可数单词数组
+   */
   public void addUncountable(final String... words) {
     if (words == null || words.length == 0) {
       return;
@@ -497,25 +503,17 @@ public class Inflector {
   }
 
   /**
-   * Utility method to replace all occurrences given by the specific
-   * backreference with its uppercased form, and remove all other backreferences.
+   * 工具方法，用指定后向引用的大写形式替换所有出现的内容，并移除所有其他后向引用。
    *
-   * <p>The Java {@link Pattern regular expression processing} does not use the
-   * preprocessing directives <code>\l</code>, <code>&#92;u</code>,
-   * <code>\L</code>, and <code>\U</code>. If so, such directives could be used
-   * in the replacement string to uppercase or lowercase the backreferences.
-   * For example, <code>\L1</code> would lowercase the first backreference, and
-   * <code>&#92;u3</code> would uppercase the 3rd backreference.</p>
+   * <p>Java的{@link java.util.regex.Pattern 正则表达式处理}不使用预处理指令
+   * <code>\l</code>、<code>&#92;u</code>、<code>\L</code>和<code>\U</code>。
+   * 如果支持，这些指令可以在替换字符串中用于大写或小写后向引用。
+   * 例如，<code>\L1</code>会将第一个后向引用小写，<code>&#92;u3</code>会将第3个后向引用大写。</p>
    *
-   * @param input
-   *     the input string.
-   * @param regex
-   *     the regular expression.
-   * @param groupNumberToUppercase
-   *     indicate whether to group number to uppercase.
-   * @return
-   *     the input string with the appropriate characters converted to
-   *     upper-case.
+   * @param input 输入字符串
+   * @param regex 正则表达式
+   * @param groupNumberToUppercase 要大写的组号
+   * @return 将适当字符转换为大写的输入字符串
    */
   protected static String replaceAllWithUppercase(final String input,
       final String regex, final int groupNumberToUppercase) {
@@ -532,7 +530,7 @@ public class Inflector {
   }
 
   /**
-   * Completely remove all rules within this inflector.
+   * 完全移除此变形器中的所有规则。
    */
   public void clear() {
     this.uncountables.clear();
@@ -540,7 +538,9 @@ public class Inflector {
     this.singulars.clear();
   }
 
-  // stop checkstyle: LineLength
+  /**
+   * 初始化默认的变形规则。
+   */
   protected void initialize() {
     final Inflector inflect = this;
     inflect.addPluralize("$", "s");
@@ -610,14 +610,33 @@ public class Inflector {
 
     inflect.addUncountable("equipment", "information", "rice", "money", "species", "series", "fish", "sheep");
   }
-  // resume checkstyle: LineLength
 
+  /**
+   * 变形规则内部类。
+   */
   private static class Rule {
 
+    /**
+     * 正则表达式字符串。
+     */
     protected final String expression;
+
+    /**
+     * 编译后的正则表达式模式。
+     */
     protected final java.util.regex.Pattern pattern;
+
+    /**
+     * 替换字符串。
+     */
     protected final String replacement;
 
+    /**
+     * 构造变形规则。
+     *
+     * @param expression 正则表达式
+     * @param replacement 替换字符串
+     */
     protected Rule(final String expression, final String replacement) {
       this.expression = expression;
       this.replacement = replacement != null ? replacement : "";
@@ -626,14 +645,10 @@ public class Inflector {
     }
 
     /**
-     * Apply the rule against the input string, returning the modified string
-     * or null if the rule didn't apply (and no modifications were made).
+     * 对输入字符串应用规则，返回修改后的字符串，如果规则不适用则返回null（没有进行修改）。
      *
-     * @param input
-     *     the input string.
-     * @return
-     *     the modified string if this rule applied, or null if the input
-     *     was not modified by this rule.
+     * @param input 输入字符串
+     * @return 如果此规则适用则返回修改后的字符串，如果输入未被此规则修改则返回null
      */
     protected String apply(final String input) {
       final Matcher matcher = this.pattern.matcher(input);
@@ -643,11 +658,17 @@ public class Inflector {
       return matcher.replaceAll(this.replacement);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
       return expression.hashCode();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(final Object obj) {
       if (obj == this) {
@@ -660,6 +681,9 @@ public class Inflector {
       return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
       return expression + ", " + replacement;

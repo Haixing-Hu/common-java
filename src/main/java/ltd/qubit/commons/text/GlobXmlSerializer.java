@@ -21,9 +21,9 @@ import ltd.qubit.commons.text.xml.XmlSerializationException;
 import ltd.qubit.commons.text.xml.XmlUtils;
 
 /**
- * The {@link XmlSerializer} for the {@link Glob} class.
+ * {@link Glob} 类的 {@link XmlSerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class GlobXmlSerializer implements XmlSerializer {
@@ -31,13 +31,22 @@ public final class GlobXmlSerializer implements XmlSerializer {
   public static final String ROOT_NODE = "glob";
   public static final String FLAGS_ATTRIBUTE = "flags";
 
+  /**
+   * 单例实例。
+   */
   public static final GlobXmlSerializer INSTANCE = new GlobXmlSerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String getRootNodeName() {
     return ROOT_NODE;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Glob deserialize(final Element root) throws XmlException {
     DomUtils.checkNode(root, ROOT_NODE);
@@ -47,6 +56,9 @@ public final class GlobXmlSerializer implements XmlSerializer {
     return new Glob(pattern, flags);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Element serialize(final Document doc, final Object obj)
       throws XmlException {

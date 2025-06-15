@@ -29,24 +29,23 @@ import ltd.qubit.commons.text.tostring.ToStringBuilder;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * The class of the filename glob patterns.
+ * 文件名 glob 模式的类。
  *
- * <p>The glob pattern syntax obey the rule at <a href="http://www.jedit.org/users-guide/globs.html">Globs</a>.
+ * <p>glob 模式语法遵循 <a href="http://www.jedit.org/users-guide/globs.html">Globs</a> 规则。
  *
- * <p>The following character sequences have special meaning within a glob pattern:
+ * <p>在 glob 模式中，以下字符序列具有特殊含义：
  *
  * <ul>
- * <li>? matches any one character</li>
- * <li>* matches any number of characters</li>
- * <li>{!glob} Matches anything that does not match glob</li>
- * <li>{a,b,c} matches any one of a, b or c</li>
- * <li>[abc] matches any character in the set a, b or c</li>
- * <li>[^abc] matches any character not in the set a, b or c</li>
- * <li>[a-z] matches any character in the range a to z, inclusive. A leading or
- * trailing dash will be interpreted literally</li>
+ * <li>? 匹配任意一个字符</li>
+ * <li>* 匹配任意数量的字符</li>
+ * <li>{!glob} 匹配任何不匹配 glob 的内容</li>
+ * <li>{a,b,c} 匹配 a、b 或 c 中的任意一个</li>
+ * <li>[abc] 匹配集合 a、b 或 c 中的任意字符</li>
+ * <li>[^abc] 匹配不在集合 a、b 或 c 中的任意字符</li>
+ * <li>[a-z] 匹配范围 a 到 z 中的任意字符（包含边界）。前导或尾随短划线将被按字面意思解释</li>
  * </ul>
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @NotThreadSafe
 public class Glob implements Serializable, CloneableEx<Glob>, Assignable<Glob> {
@@ -67,13 +66,12 @@ public class Glob implements Serializable, CloneableEx<Glob>, Assignable<Glob> {
   }
 
   /**
-   * Tests whether the specified string is a glob pattern.
+   * 测试指定的字符串是否为 glob 模式。
    *
    * @param str
-   *     the string to be tested.
+   *     要测试的字符串。
    * @return
-   *     {@code true} if the specified string is a glob pattern; {@code false}
-   *     otherwise.
+   *     如果指定的字符串是 glob 模式则返回 {@code true}；否则返回 {@code false}。
    */
   public static boolean isGlob(final String str) {
     if (str == null) {
@@ -106,47 +104,44 @@ public class Glob implements Serializable, CloneableEx<Glob>, Assignable<Glob> {
   }
 
   /**
-   * Converts a Unix-style filename glob to a regular expression.
+   * 将 Unix 风格的文件名 glob 转换为正则表达式。
    *
-   * <p>Since we use java.util.regex patterns to implement globs, this means that
-   * in addition to the above, a number of “character class metacharacters” may
-   * be used. Keep in mind, their usefulness is limited since the regex
-   * quantifier metacharacters (asterisk, questionmark, and curly brackets) are
-   * redefined to mean something else in filename glob language, and the regex
-   * quantifiers are not available in glob language.
+   * <p>由于我们使用 java.util.regex 模式来实现 glob，这意味着除了上述内容之外，
+   * 还可以使用一些"字符类元字符"。请记住，它们的用处有限，因为正则表达式量词元字符
+   * （星号、问号和花括号）在文件名 glob 语言中被重新定义为其他含义，
+   * 而正则表达式量词在 glob 语言中不可用。
    *
    * <ul>
-   * <li>\w matches any alphanumeric character or underscore</li>
-   * <li>\s matches a space or horizontal tab</li>
-   * <li>\S matches a printable non-whitespace.</li>
-   * <li>\d matches a decimal digit</li>
+   * <li>\w 匹配任何字母数字字符或下划线</li>
+   * <li>\s 匹配空格或水平制表符</li>
+   * <li>\S 匹配可打印的非空白字符。</li>
+   * <li>\d 匹配十进制数字</li>
    * </ul>
    *
    *
-   * <p>Here are some examples of glob patterns:
+   * <p>以下是一些 glob 模式的示例：
    *
    * <ul>
-   * <li>"*" - all files.</li>
-   * <li>"*.java" - all files whose names end with ".java".</li>
-   * <li>"*.[ch]" - all files whose names end with either ".c" or ".h".</li>
-   * <li>"*.{c,cpp,h,hpp,cxx,hxx}" - all C or C++ files.</li>
-   * <li>"[^#]*" - all files whose names do not start with "#".</li>
+   * <li>"*" - 所有文件。</li>
+   * <li>"*.java" - 所有名称以 ".java" 结尾的文件。</li>
+   * <li>"*.[ch]" - 所有名称以 ".c" 或 ".h" 结尾的文件。</li>
+   * <li>"*.{c,cpp,h,hpp,cxx,hxx}" - 所有 C 或 C++ 文件。</li>
+   * <li>"[^#]*" - 所有名称不以 "#" 开头的文件。</li>
    * </ul>
    *
    *
-   * <p>This function makes the following conversion:
+   * <p>此函数进行以下转换：
    *
    * <ul>
-   * <li>"?" becomes "."</li>
-   * <li>"*" becomes ".*"</li>
-   * <li>"{aa,bb}" becomes "(aa|bb)"</li>
-   * <li>all other special meta-characters in regular expressions are escaped.</li>
+   * <li>"?" 变成 "."</li>
+   * <li>"*" 变成 ".*"</li>
+   * <li>"{aa,bb}" 变成 "(aa|bb)"</li>
+   * <li>正则表达式中的所有其他特殊元字符都被转义。</li>
    * </ul>
    *
    * @param glob
-   *          the Unix-style filename glob pattern
-   * @return the string representation of the regular expression converted from
-   *        this glob.
+   *          Unix 风格的文件名 glob 模式
+   * @return 从该 glob 转换的正则表达式的字符串表示。
    */
   public static String toRegex(final String glob) {
     final Stack<Object> state = new Stack<>();
@@ -222,6 +217,9 @@ public class Glob implements Serializable, CloneableEx<Glob>, Assignable<Glob> {
   protected int flags;
   protected transient Matcher matcher;
 
+  /**
+   * 构造一个默认的 Glob 对象。
+   */
   public Glob() {
     pattern = StringUtils.EMPTY;
     flags = DEFAULT_FLAGS;
@@ -229,10 +227,10 @@ public class Glob implements Serializable, CloneableEx<Glob>, Assignable<Glob> {
   }
 
   /**
-   * Construct a case-insensitive glob pattern object.
+   * 构造一个不区分大小写的 glob 模式对象。
    *
    * @param pattern
-   *          the string of glob pattern.
+   *          glob 模式的字符串。
    */
   public Glob(final String pattern) {
     this.pattern = requireNonNull("pattern", pattern);
@@ -241,16 +239,16 @@ public class Glob implements Serializable, CloneableEx<Glob>, Assignable<Glob> {
   }
 
   /**
-   * Construct a glob pattern object.
+   * 构造一个 glob 模式对象。
    *
    * @param pattern
-   *          the string of glob pattern.
+   *          glob 模式的字符串。
    * @param flags
-   *          the match flags, a bit mask that may include
-   *          Pattern.CASE_INSENSITIVE, Pattern.MULTILINE, Pattern.DOTALL,
-   *          Pattern.UNICODE_CASE, Pattern.CANON_EQ, Pattern.UNIX_LINES,
-   *          Pattern.LITERAL and Pattern.COMMENTS. Where Pattern is the
-   *          java.util.regex.Pattern class.
+   *          匹配标志，一个位掩码，可能包括
+   *          Pattern.CASE_INSENSITIVE、Pattern.MULTILINE、Pattern.DOTALL、
+   *          Pattern.UNICODE_CASE、Pattern.CANON_EQ、Pattern.UNIX_LINES、
+   *          Pattern.LITERAL 和 Pattern.COMMENTS。其中 Pattern 是
+   *          java.util.regex.Pattern 类。
    */
   public Glob(final String pattern, final int flags) {
     this.pattern = requireNonNull("pattern", pattern);
@@ -258,30 +256,67 @@ public class Glob implements Serializable, CloneableEx<Glob>, Assignable<Glob> {
     matcher = null;
   }
 
+  /**
+   * 获取匹配标志。
+   *
+   * @return 匹配标志。
+   */
   public int getFlags() {
     return flags;
   }
 
+  /**
+   * 设置匹配标志。
+   *
+   * @param flags
+   *          匹配标志。
+   */
   public void setFlags(final int flags) {
     this.flags = flags;
     matcher = null;
   }
 
+  /**
+   * 获取 glob 模式字符串。
+   *
+   * @return glob 模式字符串。
+   */
   public String getPattern() {
     return pattern;
   }
 
+  /**
+   * 设置 glob 模式字符串。
+   *
+   * @param pattern
+   *          glob 模式字符串。
+   */
   public void setPattern(final String pattern) {
     this.pattern = requireNonNull("pattern", pattern);
     matcher = null;
   }
 
+  /**
+   * 设置 glob 模式字符串和匹配标志。
+   *
+   * @param pattern
+   *          glob 模式字符串。
+   * @param flags
+   *          匹配标志。
+   */
   public void set(final String pattern, final int flags) {
     this.pattern = requireNonNull("pattern", pattern);
     this.flags = flags;
     matcher = null;
   }
 
+  /**
+   * 测试字符串是否匹配此 glob 模式。
+   *
+   * @param str
+   *          要测试的字符串。
+   * @return 如果字符串匹配此 glob 模式则返回 {@code true}；否则返回 {@code false}。
+   */
   public boolean matches(final String str) {
     if (str == null) {
       return false;
@@ -296,6 +331,9 @@ public class Glob implements Serializable, CloneableEx<Glob>, Assignable<Glob> {
     return matcher.reset(str).matches();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void assign(final Glob that) {
     if (this != that) {
@@ -314,6 +352,9 @@ public class Glob implements Serializable, CloneableEx<Glob>, Assignable<Glob> {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Glob cloneEx() {
     final Glob result = new Glob();

@@ -246,6 +246,11 @@ public final class Ascii {
   public static final char SINGLE_QUOTE                 = '\'';
 
   /**
+   * ASCII反引号字符（grave accent）。
+   */
+  public static final char BACK_QUOTE                  = '`';
+
+  /**
    * ASCII逗号字符。
    */
   public static final char COMMA                        = ',';

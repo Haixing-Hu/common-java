@@ -25,15 +25,21 @@ import static ltd.qubit.commons.io.InputUtils.readNullMark;
 import static ltd.qubit.commons.io.InputUtils.readString;
 
 /**
- * The {@link BinarySerializer} for the {@link Glob} class.
+ * {@link Glob} 类的{@link BinarySerializer}实现。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class GlobBinarySerializer implements BinarySerializer {
 
+  /**
+   * 单例实例。
+   */
   public static final GlobBinarySerializer INSTANCE = new GlobBinarySerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Glob deserialize(final InputStream in, final boolean allowNull)
       throws IOException {
@@ -50,6 +56,9 @@ public final class GlobBinarySerializer implements BinarySerializer {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final OutputStream out, @Nullable final Object obj)
       throws IOException {
