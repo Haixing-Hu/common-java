@@ -11,232 +11,203 @@ package ltd.qubit.commons.text;
 import javax.annotation.concurrent.ThreadSafe;
 
 /**
- * This class defines the constants of formatting flags.
+ * 此类定义格式化标志的常量。
  * <p>
- * These constants can be combined with bitwise or.
+ * 这些常量可以使用按位或进行组合。
  * </p>
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public final class FormatFlag {
 
   /**
-   * Reads or writes boolean elements as alphabetic strings (true and false).
+   * 将布尔元素读取或写入为字母字符串（true和false）。
    */
   public static final int BOOL_ALPHA = 0x00000001;
 
   /**
-   * Writes integral values preceded by their corresponding numeric radix
-   * prefix.
+   * 写入整数值时在前面加上相应的数字基数前缀。
    */
   public static final int SHOW_RADIX = 0x00000002;
 
   /**
-   * Writes real values including always the decimal separator.
+   * 写入实数值时总是包含小数分隔符。
    */
   public static final int SHOW_POINT = 0x00000004;
 
   /**
-   * Writes non-negative numerical values preceded by a plus sign (+). This
-   * option conflicts with the {@link #SHOW_SPACE} option.
+   * 写入非负数值时在前面加上加号（+）。
+   * 此选项与{@link #SHOW_SPACE}选项冲突。
    */
   public static final int SHOW_POSITIVE = 0x00000008;
 
   /**
-   * Writes non-negative numerical values preceded by a single space.
+   * 写入非负数值时在前面加上单个空格。
    *
-   * <p>This option conflicts with the {@link #SHOW_POSITIVE} option.
+   * <p>此选项与{@link #SHOW_POSITIVE}选项冲突。
    */
   public static final int SHOW_SPACE = 0x00000010;
 
   /**
-   * If the integral values is printed with their corresponding numeric radix
-   * prefix preceded, the radix prefix should be printed in its uppercase
-   * mapping.
+   * 如果整数值与相应的数字基数前缀一起打印，则基数前缀应以其大写映射打印。
    */
   public static final int UPPERCASE_RADIX_PREFIX = 0x00000020;
 
   /**
-   * If the real values is printed in scientific notation, the exponential
-   * symbol should be printed in its uppercase mapping.
+   * 如果实数值以科学记数法打印，则指数符号应以其大写映射打印。
    */
   public static final int UPPERCASE_EXPONENT = 0x00000040;
 
   /**
-   * Uses the grouping when reading or writing decimal integers.
+   * 读取或写入十进制整数时使用分组。
    */
   public static final int GROUPING = 0x00000080;
 
   /**
-   * Do NOT skip leading white spaces on certain input operations, and do NOT
-   * stop reading when another white space is encountered.
+   * 在某些输入操作中不跳过前导空白字符，并且在遇到另一个空白字符时不停止读取。
    *
-   * <p>Note that by default, all parsing routines skip the leading white spaces,
-   * and stop reading when another white space is encountered. If this flag is
-   * presented, the parsing routine will NOT skip the leading white space, and
-   * will NOT stop reading when another white space is encountered.
+   * <p>注意，默认情况下，所有解析例程都跳过前导空白字符，并在遇到另一个空白字符时停止读取。
+   * 如果设置了此标志，解析例程将不跳过前导空白字符，并且在遇到另一个空白字符时不会停止读取。
    */
   public static final int KEEP_BLANKS = 0x00000100;
 
   /**
-   * Writes uppercase letters in certain insertion operations.
+   * 在某些插入操作中写入大写字母。
    *
-   * <p>If is option is presented, the output of hexadecimal numbers will also use
-   * the uppercase letter of digits.
+   * <p>如果设置了此选项，十六进制数的输出也将使用大写字母数字。
    */
   public static final int UPPERCASE = 0x00000200;
 
   /**
-   * Writes lowercase letters in certain insertion operations.
+   * 在某些插入操作中写入小写字母。
    *
-   * <p>If is option is presented, the output of hexadecimal numbers will also use
-   * the lowercase letter of digits.
+   * <p>如果设置了此选项，十六进制数的输出也将使用小写字母数字。
    */
   public static final int LOWERCASE = 0x00000400;
 
   /**
-   * Writes titlecase letters in certain insertion operations.
+   * 在某些插入操作中写入标题大小写字母。
    */
   public static final int TITLECASE = 0x00000800;
 
   /**
-   * Reads or writes integral values using binary radix format. A binary integer
-   * literal would have a prefix of "0b". For example, "0b101011101" represents
-   * the decimal number 349.
+   * 使用二进制基数格式读取或写入整数值。二进制整数字面量将具有"0b"前缀。
+   * 例如，"0b101011101"表示十进制数349。
    *
-   * <p>This option conflicts with the {@link #OCTAL}, {@link #DECIMAL}, and
-   * {@link #HEX} options.
+   * <p>此选项与{@link #OCTAL}、{@link #DECIMAL}和{@link #HEX}选项冲突。
    */
   public static final int BINARY = 0x00001000;
 
   /**
-   * Reads or writes integral values using octal radix format.A binary integer
-   * literal would have a prefix of "0". For example, "0127" represents the
-   * decimal number 87.
+   * 使用八进制基数格式读取或写入整数值。八进制整数字面量将具有"0"前缀。
+   * 例如，"0127"表示十进制数87。
    *
-   * <p>This option conflicts with the {@link #BINARY}, {@link #DECIMAL}, and
-   * {@link #HEX} option.
+   * <p>此选项与{@link #BINARY}、{@link #DECIMAL}和{@link #HEX}选项冲突。
    */
   public static final int OCTAL = 0x00002000;
 
   /**
-   * Reads or writes integral values using decimal radix format. This is the
-   * default base setting.
+   * 使用十进制基数格式读取或写入整数值。这是默认的基数设置。
    *
-   * <p>This option conflicts with the {@link #BINARY}, {@link #OCTAL}, and
-   * {@link #HEX} option.
+   * <p>此选项与{@link #BINARY}、{@link #OCTAL}和{@link #HEX}选项冲突。
    */
   public static final int DECIMAL = 0x00004000;
 
   /**
-   * Reads or writes integral values using hexadecimal radix format.
+   * 使用十六进制基数格式读取或写入整数值。
    *
-   * <p>A hexadecimal integer literal would have a prefix of "0x". For example,
-   * "0x3F2A" represents the decimal number 16170.
+   * <p>十六进制整数字面量将具有"0x"前缀。例如，"0x3F2A"表示十进制数16170。
    *
-   * <p>This option conflicts with the {@link #BINARY}, {@link #OCTAL}, and
-   * {@link #DECIMAL} option.
+   * <p>此选项与{@link #BINARY}、{@link #OCTAL}和{@link #DECIMAL}选项冲突。
    */
   public static final int HEX = 0x00008000;
 
   /**
-   * Reads or writes real values in fixed-point notation.
+   * 以定点记数法读取或写入实数值。
    *
-   * <p>This option conflicts with the {@link #SCIENTIFIC}, {@link #SHORT_REAL}
-   * options.
+   * <p>此选项与{@link #SCIENTIFIC}、{@link #SHORT_REAL}选项冲突。
    */
   public static final int FIXED_POINT = 0x00010000;
 
   /**
-   * Reads or writes real values in scientific notation.
+   * 以科学记数法读取或写入实数值。
    *
-   * <p>This option conflicts with the {@link #FIXED_POINT}, {@link #SHORT_REAL}
-   * options.
+   * <p>此选项与{@link #FIXED_POINT}、{@link #SHORT_REAL}选项冲突。
    */
   public static final int SCIENTIFIC = 0x00020000;
 
   /**
-   * Writes real values in the the shorter form of fixed point or scientific
-   * notation. This is the default real format setting.
+   * 以定点记数法或科学记数法的较短形式写入实数值。这是默认的实数格式设置。
    *
-   * <p>This option conflicts with the {@link #FIXED_POINT}, {@link #SCIENTIFIC}
-   * options.
+   * <p>此选项与{@link #FIXED_POINT}、{@link #SCIENTIFIC}选项冲突。
    */
   public static final int SHORT_REAL = 0x00040000;
 
   /**
-   * The formated object is aligned to the left, i.e., the output is padded to
-   * the field width appending fill characters at the end.
+   * 格式化的对象左对齐，即输出在字段宽度上填充，在末尾追加填充字符。
    *
-   * <p>This option conflicts with the {@link #ALIGN_RIGHT}, {@link #ALIGN_CENTER}
-   * options.
+   * <p>此选项与{@link #ALIGN_RIGHT}、{@link #ALIGN_CENTER}选项冲突。
    */
   public static final int ALIGN_LEFT = 0x00080000;
 
   /**
-   * The formated object is aligned to the left, i.e., the output is padded to
-   * the field width appending fill characters at the beginning. This is the
-   * default alignment setting.
+   * 格式化的对象右对齐，即输出在字段宽度上填充，在开头追加填充字符。这是默认的对齐设置。
    *
-   * <p>This option conflicts with the {@link #ALIGN_LEFT}, {@link #ALIGN_CENTER}
-   * options.
+   * <p>此选项与{@link #ALIGN_LEFT}、{@link #ALIGN_CENTER}选项冲突。
    */
   public static final int ALIGN_RIGHT = 0x00100000;
 
   /**
-   * The formated object is aligned to the center, i.e., the output is padded to
-   * the field width appending fill characters at the both ends. It makes the
-   * center of the formated object align to the center of the specified width of
-   * field.
+   * 格式化的对象居中对齐，即输出在字段宽度上填充，在两端追加填充字符。
+   * 它使格式化对象的中心与指定字段宽度的中心对齐。
    *
-   * <p>This option conflicts with the {@link #ALIGN_LEFT}, {@link #ALIGN_RIGHT}
-   * options.
+   * <p>此选项与{@link #ALIGN_LEFT}、{@link #ALIGN_RIGHT}选项冲突。
    */
   public static final int ALIGN_CENTER = 0x00200000;
 
   /**
-   * The mask of all case related fields.
+   * 所有大小写相关字段的掩码。
    */
   public static final int CASE_MASK = (UPPERCASE | LOWERCASE | TITLECASE);
 
   /**
-   * The default case field.
+   * 默认大小写格式。
    */
   public static final int DEFAULT_CASE = UPPERCASE;
 
   /**
-   * The mask of all radix related fields.
+   * 所有基数相关字段的掩码。
    */
   public static final int RADIX_MASK = (BINARY | OCTAL | DECIMAL | HEX);
 
   /**
-   * The default radix field.
+   * 默认基数格式。
    */
   public static final int DEFAULT_RADIX = DECIMAL;
 
   /**
-   * The mask of all real format related fields.
+   * 所有实数格式相关字段的掩码。
    */
   public static final int REAL_MASK = (FIXED_POINT | SCIENTIFIC | SHORT_REAL);
 
   /**
-   * The default real format field.
+   * 默认实数格式。
    */
   public static final int DEFAULT_REAL = SHORT_REAL;
 
   /**
-   * The mask of all align related fields.
+   * 所有对齐相关字段的掩码。
    */
   public static final int ALIGN_MASK = (ALIGN_LEFT | ALIGN_RIGHT | ALIGN_CENTER);
 
   /**
-   * The default align field.
+   * 默认对齐格式。
    */
   public static final int DEFAULT_ALIGN = ALIGN_RIGHT;
 
   /**
-   * The default format flags.
+   * 默认格式标志。
    */
   public static final int DEFAULT = (BOOL_ALPHA | SHOW_RADIX | SHOW_POINT
       | DEFAULT_CASE | DEFAULT_REAL | DEFAULT_ALIGN);

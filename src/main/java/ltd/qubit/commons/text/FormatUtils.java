@@ -14,12 +14,21 @@ import static ltd.qubit.commons.text.NumberFormat.HEX_RADIX;
 import static ltd.qubit.commons.text.NumberFormat.OCTAL_RADIX;
 
 /**
- * Provides the utility functions for formatting text.
+ * 提供格式化文本的工具函数。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public final class FormatUtils {
 
+  /**
+   * 根据格式标志获取数字字符数组。
+   *
+   * @param flags
+   *          格式标志。
+   * @param symbols
+   *          数字格式符号。
+   * @return 数字字符数组。
+   */
   public static char[] getDigits(final FormatFlags flags,
       final NumberFormatSymbols symbols) {
     if (flags.isUppercase()) {
@@ -29,6 +38,23 @@ public final class FormatUtils {
     }
   }
 
+  /**
+   * 将特殊进制（2、8、16进制）的整数值从后向前放入缓冲区。
+   *
+   * @param value
+   *          要格式化的整数值。
+   * @param radix
+   *          进制（必须是2、8或16）。
+   * @param precision
+   *          精度。
+   * @param digits
+   *          数字字符数组。
+   * @param buffer
+   *          字符缓冲区。
+   * @param startIndex
+   *          起始索引。
+   * @return 实际的起始索引。
+   */
   public static int putSpecialRadixIntBackward(final int value, final int radix,
       final int precision, final char[] digits, final char[] buffer,
       final int startIndex) {
@@ -59,6 +85,23 @@ public final class FormatUtils {
     return start;
   }
 
+  /**
+   * 将特殊进制（2、8、16进制）的长整数值从后向前放入缓冲区。
+   *
+   * @param value
+   *          要格式化的长整数值。
+   * @param radix
+   *          进制（必须是2、8或16）。
+   * @param precision
+   *          精度。
+   * @param digits
+   *          数字字符数组。
+   * @param buffer
+   *          字符缓冲区。
+   * @param startIndex
+   *          起始索引。
+   * @return 实际的起始索引。
+   */
   public static int putSpecialRadixLongBackward(final long value, final int radix,
       final int precision, final char[] digits, final char[] buffer,
       final int startIndex) {
@@ -90,10 +133,28 @@ public final class FormatUtils {
     return start;
   }
 
+  /**
+   * Integer.MIN_VALUE 的绝对值各位数字。
+   */
   private static final int[] INT_MIN_ABS = {
       2, 1, 4, 7, 4, 8, 3, 6, 4, 8,
   };
 
+  /**
+   * 将十进制整数的绝对值从后向前放入缓冲区。
+   *
+   * @param value
+   *          要格式化的整数值。
+   * @param precision
+   *          精度。
+   * @param digits
+   *          数字字符数组。
+   * @param buffer
+   *          字符缓冲区。
+   * @param startIndex
+   *          起始索引。
+   * @return 实际的起始索引。
+   */
   public static int putDecimalIntAbsBackward(final int value, final int precision,
       final char[] digits, final char[] buffer, final int startIndex) {
     int start = startIndex;
@@ -127,10 +188,28 @@ public final class FormatUtils {
     return start;
   }
 
+  /**
+   * Long.MIN_VALUE 的绝对值各位数字。
+   */
   private static final int[] LONG_MIN_ABS = {
       9, 2, 2, 3, 3, 7, 2, 0, 3, 6, 8, 5, 4, 7, 7, 5, 8, 0, 8,
   };
 
+  /**
+   * 将十进制长整数的绝对值从后向前放入缓冲区。
+   *
+   * @param value
+   *          要格式化的长整数值。
+   * @param precision
+   *          精度。
+   * @param digits
+   *          数字字符数组。
+   * @param buffer
+   *          字符缓冲区。
+   * @param startIndex
+   *          起始索引。
+   * @return 实际的起始索引。
+   */
   public static int putDecimalLongAbsBackward(final long value, final int precision,
       final char[] digits, final char[] buffer, final int startIndex) {
     int start = startIndex;
@@ -164,6 +243,19 @@ public final class FormatUtils {
     return start;
   }
 
+  /**
+   * 将进制前缀从后向前放入缓冲区。
+   *
+   * @param radix
+   *          进制。
+   * @param radixPrefixes
+   *          进制前缀数组。
+   * @param buffer
+   *          字符缓冲区。
+   * @param startIndex
+   *          起始索引。
+   * @return 实际的起始索引。
+   */
   public static int putRadixPrefixBackward(final int radix,
       final String[] radixPrefixes, final char[] buffer, final int startIndex) {
     final String prefix = radixPrefixes[radix];
@@ -178,6 +270,23 @@ public final class FormatUtils {
     return start;
   }
 
+  /**
+   * 将整数从后向前放入缓冲区。
+   *
+   * @param signedValue
+   *          有符号整数值。
+   * @param unsignedValue
+   *          无符号整数值。
+   * @param options
+   *          数字格式选项。
+   * @param symbols
+   *          数字格式符号。
+   * @param buffer
+   *          字符缓冲区。
+   * @param startIndex
+   *          起始索引。
+   * @return 实际的起始索引。
+   */
   public static int putIntBackward(final int signedValue,
       final int unsignedValue, final NumberFormatOptions options,
       final NumberFormatSymbols symbols, final char[] buffer, final int startIndex) {
@@ -216,6 +325,21 @@ public final class FormatUtils {
     return start;
   }
 
+  /**
+   * 将长整数从后向前放入缓冲区。
+   *
+   * @param value
+   *          长整数值。
+   * @param options
+   *          数字格式选项。
+   * @param symbols
+   *          数字格式符号。
+   * @param buffer
+   *          字符缓冲区。
+   * @param startIndex
+   *          起始索引。
+   * @return 实际的起始索引。
+   */
   public static int putLongBackward(final long value,
       final NumberFormatOptions options, final NumberFormatSymbols symbols,
       final char[] buffer, final int startIndex) {
@@ -255,6 +379,25 @@ public final class FormatUtils {
     return start;
   }
 
+  /**
+   * 将格式化结果写入输出并处理对齐和填充。
+   *
+   * @param flags
+   *          格式标志。
+   * @param width
+   *          输出宽度。
+   * @param fill
+   *          填充字符。
+   * @param buffer
+   *          字符缓冲区。
+   * @param startIndex
+   *          起始索引。
+   * @param endIndex
+   *          结束索引。
+   * @param output
+   *          输出字符串构建器。
+   * @return 实际输出的字符数。
+   */
   public static int putFormatResult(final int flags, final int width,
       final int fill, final char[] buffer, final int startIndex,
       final int endIndex, final StringBuilder output) {

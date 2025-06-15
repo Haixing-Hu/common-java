@@ -9,22 +9,22 @@
 package ltd.qubit.commons.text;
 
 /**
- * A generic interface for formatters.
+ * 格式化器的通用接口。
  *
  * @param <INPUT>
- *          the type of the formatting input.
+ *          格式化输入的类型。
  * @param <OUTPUT>
- *          the type of the formatting output.
- * @author Haixing Hu
+ *          格式化输出的类型。
+ * @author 胡海星
  */
 public interface Formatter<INPUT, OUTPUT> {
 
   /**
-   * Formats an input to an output.
+   * 将输入格式化为输出。
    *
    * @param input
-   *          the input object to be formatted.
-   * @return the output object as the formatting result.
+   *          要格式化的输入对象。
+   * @return 格式化结果的输出对象。
    */
   OUTPUT format(INPUT input);
 }
