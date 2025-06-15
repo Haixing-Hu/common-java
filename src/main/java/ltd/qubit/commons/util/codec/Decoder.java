@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.util.codec;
 
+import java.io.Serializable;
+
 import javax.annotation.Nullable;
 
 /**
@@ -19,7 +21,7 @@ import javax.annotation.Nullable;
  *     要解码到的目标对象的类型。
  * @author 胡海星
  */
-public interface Decoder<FROM, TO> {
+public interface Decoder<FROM, TO> extends Serializable {
 
   /**
    * 将一个对象解码为另一个对象。
