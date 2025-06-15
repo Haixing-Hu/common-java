@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
+import java.io.Serial;
 import java.math.BigDecimal;
 
 import javax.annotation.concurrent.Immutable;
@@ -23,26 +24,41 @@ import ltd.qubit.commons.annotation.Scale;
 import ltd.qubit.commons.util.codec.BigDecimalCodec;
 
 /**
- * The JACKSON deserializer of a {@link BigDecimal} object.
+ * {@link BigDecimal}对象的Jackson反序列化器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public class BigDecimalDeserializer extends DecoderDeserializer<BigDecimal>
     implements ContextualDeserializer {
 
+  @Serial
   private static final long serialVersionUID = -1826416153857761383L;
 
+  /**
+   * 单例实例。
+   */
   public static final BigDecimalDeserializer INSTANCE = new BigDecimalDeserializer();
 
+  /**
+   * 构造BigDecimal反序列化器。
+   */
   public BigDecimalDeserializer() {
     super(BigDecimal.class, new BigDecimalCodec());
   }
 
+  /**
+   * 使用指定编解码器构造BigDecimal反序列化器。
+   *
+   * @param codec BigDecimal编解码器
+   */
   public BigDecimalDeserializer(final BigDecimalCodec codec) {
     super(BigDecimal.class, codec);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonDeserializer<?> createContextual(final DeserializationContext context,
       final BeanProperty property) {

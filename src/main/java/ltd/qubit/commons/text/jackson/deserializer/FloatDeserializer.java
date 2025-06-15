@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
+import java.io.Serial;
+
 import javax.annotation.concurrent.Immutable;
 
 import com.fasterxml.jackson.databind.BeanProperty;
@@ -19,30 +21,49 @@ import ltd.qubit.commons.annotation.Scale;
 import ltd.qubit.commons.util.codec.FloatCodec;
 
 /**
- * The JACKSON deserializer of a {@link Float} object.
+ * {@link Float} 对象的 JACKSON 反序列化器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public class FloatDeserializer extends DecoderDeserializer<Float>
     implements ContextualDeserializer {
 
+  @Serial
   private static final long serialVersionUID = 1072489984259176326L;
 
   public static final FloatDeserializer INSTANCE = new FloatDeserializer();
 
+  /**
+   * 构造一个 {@link FloatDeserializer} 对象。
+   */
   public FloatDeserializer() {
     super(Float.class, new FloatCodec());
   }
 
+  /**
+   * 构造一个 {@link FloatDeserializer} 对象。
+   *
+   * @param precision
+   *     指定的精度。
+   */
   public FloatDeserializer(final int precision) {
     super(Float.class, new FloatCodec(precision));
   }
 
+  /**
+   * 构造一个 {@link FloatDeserializer} 对象。
+   *
+   * @param codec
+   *     指定的编解码器。
+   */
   public FloatDeserializer(final FloatCodec codec) {
     super(Float.class, codec);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonDeserializer<?> createContextual(final DeserializationContext context,
       final BeanProperty property) {

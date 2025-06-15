@@ -21,11 +21,20 @@ import ltd.qubit.commons.util.codec.AlphabetBooleanCodec;
 @Immutable
 public class AlphabetBooleanDeserializer extends BooleanDeserializer {
 
+  /**
+   * 序列化版本号。
+   */
   private static final long serialVersionUID = -991903202758631427L;
 
+  /**
+   * 单例实例。
+   */
   public static final AlphabetBooleanDeserializer INSTANCE =
       new AlphabetBooleanDeserializer();
 
+  /**
+   * 构造字母布尔反序列化器。
+   */
   public AlphabetBooleanDeserializer() {
     super(new AlphabetBooleanCodec());
   }

@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
+import java.io.Serial;
 import java.time.LocalDate;
 
 import javax.annotation.concurrent.Immutable;
@@ -23,11 +24,18 @@ import ltd.qubit.commons.util.codec.CompactDateCodec;
 @Immutable
 public class CompactDateDeserializer extends LocalDateDeserializer {
 
+  @Serial
   private static final long serialVersionUID = -3048975391564949515L;
 
+  /**
+   * 单例实例。
+   */
   public static final CompactDateDeserializer INSTANCE =
       new CompactDateDeserializer();
 
+  /**
+   * 构造紧凑日期反序列化器。
+   */
   public CompactDateDeserializer() {
     super(new CompactDateCodec());
   }

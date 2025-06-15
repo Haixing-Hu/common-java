@@ -27,25 +27,51 @@ import static ltd.qubit.commons.text.jackson.JacksonUtils.ensureCurrentName;
 import static ltd.qubit.commons.text.jackson.JacksonUtils.ensureNextToken;
 
 /**
- * The {@link JsonDeserializer} for deserializing {@link Map} objects in XML format.
+ * 用于反序列化 XML 格式的 {@link Map} 对象的 {@link JsonDeserializer}。
  * <p>
- * FIXME: there is bugs
+ * FIXME: 存在 bugs
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @SuppressWarnings("rawtypes")
 public class MapXmlDeserializer extends JsonDeserializer<Map> implements ContextualDeserializer {
 
+  /**
+   * 条目字段名称。
+   */
   public static final String ENTRY_FIELD_NAME = "entry";
 
+  /**
+   * 键字段名称。
+   */
   public static final String KEY_FIELD_NAME = "key";
 
+  /**
+   * 值字段名称。
+   */
   public static final String VALUE_FIELD_NAME = "value";
 
+  /**
+   * Map 类型。
+   */
   private final JavaType mapType;
+
+  /**
+   * 键类型。
+   */
   private final JavaType keyType;
+
+  /**
+   * 值类型。
+   */
   private final JavaType valueType;
 
+  /**
+   * 构造一个 {@link MapXmlDeserializer} 对象。
+   *
+   * @param mapType
+   *     指定的 Map 类型。
+   */
   public MapXmlDeserializer(final JavaType mapType) {
     this.mapType = mapType;
     if (mapType != null) {
@@ -57,6 +83,9 @@ public class MapXmlDeserializer extends JsonDeserializer<Map> implements Context
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @SuppressWarnings({"rawtypes", "unchecked"})
   @Override
   public Map deserialize(final JsonParser jp, final DeserializationContext context)
@@ -96,6 +125,9 @@ public class MapXmlDeserializer extends JsonDeserializer<Map> implements Context
     return map;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonDeserializer<?> createContextual(final DeserializationContext context,
       final BeanProperty property) throws JsonMappingException {

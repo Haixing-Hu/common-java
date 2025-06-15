@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
+import java.io.Serial;
+
 import javax.annotation.concurrent.Immutable;
 
 import ltd.qubit.commons.util.codec.StandardBooleanCodec;
@@ -21,11 +23,18 @@ import ltd.qubit.commons.util.codec.StandardBooleanCodec;
 @Immutable
 public class StandardDeserializer extends BooleanDeserializer {
 
+  @Serial
   private static final long serialVersionUID = -991903202758631427L;
 
+  /**
+   * 单例实例。
+   */
   public static final StandardDeserializer INSTANCE =
       new StandardDeserializer();
 
+  /**
+   * 构造一个 {@link StandardDeserializer} 对象。
+   */
   public StandardDeserializer() {
     super(new StandardBooleanCodec());
   }

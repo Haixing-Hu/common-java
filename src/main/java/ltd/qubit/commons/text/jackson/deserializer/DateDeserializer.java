@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
+import java.io.Serial;
 import java.util.Date;
 
 import javax.annotation.concurrent.Immutable;
@@ -15,15 +16,22 @@ import javax.annotation.concurrent.Immutable;
 import ltd.qubit.commons.util.codec.Decoder;
 
 /**
- * The JACKSON deserializer of a {@link Date} object.
+ * {@link Date}对象的Jackson反序列化器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public class DateDeserializer extends DecoderDeserializer<Date> {
 
+  @Serial
   private static final long serialVersionUID = 6425216688398047328L;
 
+  /**
+   * 构造Date反序列化器。
+   *
+   * @param decoder
+   *     用于解码的解码器。
+   */
   public DateDeserializer(final Decoder<String, Date> decoder) {
     super(Date.class, decoder);
   }

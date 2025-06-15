@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson.deserializer;
 
+import java.io.Serial;
 import java.time.OffsetTime;
 
 import javax.annotation.concurrent.Immutable;
@@ -15,18 +16,24 @@ import javax.annotation.concurrent.Immutable;
 import ltd.qubit.commons.util.codec.IsoOffsetTimeCodec;
 
 /**
- * The JACKSON deserializer of a {@link OffsetTime} object, in the ISO-8601
- * format.
+ * {@link OffsetTime} 对象的 JACKSON 反序列化器，采用 ISO-8601 格式。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public class IsoOffsetTimeDeserializer extends OffsetTimeDeserializer {
 
+  @Serial
   private static final long serialVersionUID = -2608618436291577502L;
 
+  /**
+   * 单例实例。
+   */
   public static final IsoOffsetTimeDeserializer INSTANCE = new IsoOffsetTimeDeserializer();
 
+  /**
+   * 构造一个 {@link IsoOffsetTimeDeserializer} 对象。
+   */
   public IsoOffsetTimeDeserializer() {
     super(IsoOffsetTimeCodec.INSTANCE);
   }

@@ -9,6 +9,7 @@
 package ltd.qubit.commons.text.jackson.deserializer;
 
 import java.io.IOException;
+import java.io.Serial;
 
 import javax.annotation.concurrent.Immutable;
 
@@ -25,26 +26,40 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.lang.StringUtils.isEmpty;
 
 /**
- * The JACKSON deserializer which use a decoder to decode string to the
- * specified value.
+ * 使用解码器将字符串解码为指定值的Jackson反序列化器。
  *
  * @param <T>
- *     the type of values to be deserialized.
+ *     要反序列化的值的类型。
+ * @author 胡海星
  */
 @Immutable
 public class DecoderDeserializer<T> extends StdDeserializer<T> {
 
-
+  @Serial
   private static final long serialVersionUID = 2275892683881205502L;
 
+  /**
+   * 用于解码的解码器。
+   */
   protected final Decoder<String, T> decoder;
 
+  /**
+   * 构造解码器反序列化器。
+   *
+   * @param valueClass
+   *     值的类。
+   * @param decoder
+   *     用于解码的解码器。
+   */
   protected DecoderDeserializer(final Class<T> valueClass,
       final Decoder<String, T> decoder) {
     super(valueClass);
     this.decoder = requireNonNull("decoder", decoder);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public T deserialize(final JsonParser parser,
       final DeserializationContext context) throws IOException {
