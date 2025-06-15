@@ -20,32 +20,36 @@ import static ltd.qubit.commons.lang.Argument.requireNonNegative;
 import static ltd.qubit.commons.lang.Argument.requirePositive;
 
 /**
- * A {@link PageRequest} encapsulates the pagination requirements of a query.
+ * {@link PageRequest} 封装了查询的分页要求。
  *
  * @author 胡海星
  */
 public final class PageRequest {
 
   /**
-   * The default page size.
+   * 默认的页面大小。
    */
   public static final int DEFAULT_PAGE_SIZE = 10;
 
+  /**
+   * 页面索引。
+   */
   private int pageIndex;
 
+  /**
+   * 页面大小。
+   */
   private int pageSize;
 
   /**
-   * Creates a {@link PageRequest} with the specified or default page index and
-   * page size.
+   * 使用指定的或默认的页面索引和页面大小创建 {@link PageRequest}。
    *
    * @param params
-   *     the parameters of the page request.
+   *     分页请求的参数。
    * @return
-   *     a {@link PageRequest} with the specified or default page index and page
-   *     size. If {@link params#isRequestAll()} is {@code true}, then this
-   *     function will return {@code null}, indicating that all entities should
-   *     be returned.
+   *     具有指定的或默认的页面索引和页面大小的 {@link PageRequest}。
+   *     如果 {@link params#isRequestAll()} 为 {@code true}，则此函数将返回 {@code null}，
+   *     表示应返回所有实体。
    */
   @Nullable
   public static PageRequest create(final WithPageRequestParams params) {
@@ -56,17 +60,14 @@ public final class PageRequest {
   }
 
   /**
-   * Creates a {@link PageRequest}.
+   * 创建一个 {@link PageRequest}。
    *
    * @param pageIndex
-   *     the page index, or {@code null} to use the default value. The default
-   *     value is {@code 0}.
+   *     页面索引，或 {@code null} 使用默认值。默认值为 {@code 0}。
    * @param pageSize
-   *     the page size, or {@code null} to use the default value. The default
-   *     value is {@value #DEFAULT_PAGE_SIZE}.
+   *     页面大小，或 {@code null} 使用默认值。默认值为 {@value #DEFAULT_PAGE_SIZE}。
    * @return
-   *     a {@link PageRequest} with the specified or default page index and page
-   *     size.
+   *     具有指定的或默认的页面索引和页面大小的 {@link PageRequest}。
    */
   public static PageRequest create(@Nullable final Integer pageIndex,
       @Nullable final Integer pageSize) {
@@ -82,10 +83,9 @@ public final class PageRequest {
   }
 
   /**
-   * Constructs a {@link PageRequest} requesting the page contains all values.
+   * 构造一个请求包含所有值的页面的 {@link PageRequest}。
    *
-   * <p>The pages are indexed from 0, and the page size is set to
-   * {@link #DEFAULT_PAGE_SIZE}.
+   * <p>页面从 0 开始索引，页面大小设置为 {@link #DEFAULT_PAGE_SIZE}。
    */
   public PageRequest() {
     pageIndex = 0;
@@ -93,14 +93,14 @@ public final class PageRequest {
   }
 
   /**
-   * Constructs a {@link PageRequest} requesting the first page.
+   * 构造一个请求第一页的 {@link PageRequest}。
    *
-   * <p>The pages are indexed from 0.
+   * <p>页面从 0 开始索引。
    *
    * @param pageSize
-   *     the number of entities of each page, which must be greater than zero.
+   *     每页的实体数量，必须大于零。
    * @throws IllegalArgumentException
-   *     if the {@code pageSize} is less than or equal to zero.
+   *     如果 {@code pageSize} 小于或等于零。
    */
   public PageRequest(final int pageSize) {
     pageIndex = 0;
@@ -108,18 +108,16 @@ public final class PageRequest {
   }
 
   /**
-   * Constructs a {@link PageRequest}.
+   * 构造一个 {@link PageRequest}。
    *
-   * <p>The pages are numbered from 0.
+   * <p>页面从 0 开始编号。
    *
    * @param pageIndex
-   *     the index of the page required to be returned in this query request,
-   *     which must be greater than or equal to zero.
+   *     此查询请求中要求返回的页面索引，必须大于或等于零。
    * @param pageSize
-   *     the number of entities of each page, which must be greater than zero.
+   *     每页的实体数量，必须大于零。
    * @throws IllegalArgumentException
-   *     if the {@code pageIndex} is less than zero or the {@code pageSize} is
-   *     less than or equal to zero.
+   *     如果 {@code pageIndex} 小于零或 {@code pageSize} 小于或等于零。
    */
   public PageRequest(final int pageIndex, final int pageSize) {
     this.pageIndex = requireNonNegative("pageIndex", pageIndex);
@@ -127,98 +125,92 @@ public final class PageRequest {
   }
 
   /**
-   * Gets the page index.
+   * 获取页面索引。
    *
-   * <p>The page index is the index of the page required to be returned in this
-   * query request.
+   * <p>页面索引是此查询请求中要求返回的页面索引。
    *
-   * @return the page index.
+   * @return 页面索引。
    */
   public int getPageIndex() {
     return pageIndex;
   }
 
   /**
-   * Sets the page index.
+   * 设置页面索引。
    *
-   * <p>The page index is the index of the page required to be returned in this
-   * query request.
+   * <p>页面索引是此查询请求中要求返回的页面索引。
    *
    * @param pageIndex
-   *     the new page index.
+   *     新的页面索引。
    */
   public void setPageIndex(final int pageIndex) {
     this.pageIndex = pageIndex;
   }
 
   /**
-   * Gets the page size.
+   * 获取页面大小。
    *
-   * <p>The page size is number of entities of each page.
+   * <p>页面大小是每页的实体数量。
    *
-   * @return the page size.
+   * @return 页面大小。
    */
   public int getPageSize() {
     return pageSize;
   }
 
   /**
-   * Sets the page size.
+   * 设置页面大小。
    *
-   * <p>The page size is number of entities of each page.
+   * <p>页面大小是每页的实体数量。
    *
    * @param pageSize
-   *     the new page size.
+   *     新的页面大小。
    */
   public void setPageSize(final int pageSize) {
     this.pageSize = pageSize;
   }
 
   /**
-   * Calculates the total number of pages.
+   * 计算总页数。
    *
    * @param totalCount
-   *     the total number of entities.
-   * @return the total number of pages for displaying the entities.
+   *     实体的总数。
+   * @return 显示实体的总页数。
    */
   public long getTotalPages(final long totalCount) {
     return (totalCount / pageSize) + ((totalCount % pageSize) == 0 ? 0 : 1);
   }
 
   /**
-   * Tests whether the result of this page request is empty.
+   * 测试此分页请求的结果是否为空。
    *
    * @param totalCount
-   *     the total number of entities.
-   * @return {@code true} if the result of this page request is empty respects
-   *     to the specified number of entities; {@code false} otherwise.
+   *     实体的总数。
+   * @return 如果此分页请求的结果相对于指定的实体数量为空则返回 {@code true}；否则返回 {@code false}。
    */
   public boolean isEmpty(final long totalCount) {
     return pageIndex >= getTotalPages(totalCount);
   }
 
   /**
-   * Calculates the index of the first entity satisfied this page request.
+   * 计算满足此分页请求的第一个实体的索引。
    *
-   * <p><b>NOTE:</b> before calling this function, the caller <b>MUST</b> make
-   * sure
-   * that the multiplication will never overflows. That is, this request does
-   * not exceed the maximum number of entities.
+   * <p><b>注意：</b> 在调用此函数之前，调用者<b>必须</b>确保乘法永远不会溢出。
+   * 也就是说，此请求不超过实体的最大数量。
    *
-   * @return the index of the first entity satisfied this page request.
+   * @return 满足此分页请求的第一个实体的索引。
    */
   public long getOffset() {
     return (long) pageIndex * (long) pageSize;
   }
 
   /**
-   * Gets the next page request.
+   * 获取下一个分页请求。
    * <p>
-   * This function will create a new page request with the page index increased
-   * by one. It is different from {@link #toNext()} which will modify this page
-   * request directly.
+   * 此函数将创建一个页面索引增加一的新分页请求。这与 {@link #toNext()} 不同，
+   * 后者直接修改此分页请求。
    *
-   * @return the next page request.
+   * @return 下一个分页请求。
    * @see #toNext()
    */
   public PageRequest next() {
@@ -226,11 +218,10 @@ public final class PageRequest {
   }
 
   /**
-   * Moves this page request the next page request.
+   * 将此分页请求移动到下一个分页请求。
    * <p>
-   * This function will increase the page index of this page request by one.
-   * It is different from {@link #next()} which will create a new page request
-   * with the page index increased by one.
+   * 此函数将使此分页请求的页面索引增加一。这与 {@link #next()} 不同，
+   * 后者创建一个页面索引增加一的新分页请求。
    *
    * @see #next()
    */
@@ -239,26 +230,26 @@ public final class PageRequest {
   }
 
   /**
-   * Gets the page of entities corresponds to this page request.
+   * 获取与此分页请求对应的实体页面。
    *
    * @param <T>
-   *     the type of the elements hold in the page.
+   *     页面中持有的元素类型。
    * @param totalCount
-   *     the total number of entities.
+   *     实体的总数。
    * @param content
-   *     the list of entities corresponds to this page request.
-   * @return the page of entities corresponds to this page request.
+   *     与此分页请求对应的实体列表。
+   * @return 与此分页请求对应的实体页面。
    */
   public <T> Page<T> getPage(final long totalCount, final List<T> content) {
     return new Page<>(totalCount, getTotalPages(totalCount), this, content);
   }
 
   /**
-   * Gets an empty page of entities corresponds to this page request.
+   * 获取与此分页请求对应的空实体页面。
    *
    * @param <T>
-   *     the type of the elements hold in the page.
-   * @return an empty page of entities corresponds to this page request.
+   *     页面中持有的元素类型。
+   * @return 与此分页请求对应的空实体页面。
    */
   public <T> Page<T> getEmptyPage() {
     final List<T> content = Collections.emptyList();

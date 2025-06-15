@@ -12,26 +12,21 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
- * This interface sets values on a {@link PreparedStatement}, for each of a
- * number of updates in a batch using the same SQL.
+ * 此接口在 {@link PreparedStatement} 上设置值，用于使用相同 SQL 在批处理中的多次更新。
  *
- * <p>Implementations are responsible for setting any necessary parameters. SQL
- * with placeholders will already have been supplied. Implementations do not
- * need to concern themselves with {@link SQLException} that may be thrown from
- * operations they attempt.
+ * <p>实现类负责设置任何必要的参数。带有占位符的 SQL 已经被提供。实现类不需要关心它们尝试的操作可能抛出的 {@link SQLException}。
  *
  * @author 胡海星
  */
 public interface PreparedStatementSetter {
 
   /**
-   * Set parameter values on the given {@link PreparedStatement}.
+   * 在给定的 {@link PreparedStatement} 上设置参数值。
    *
    * @param ps
-   *     the {@link PreparedStatement} to invoke setter methods on.
+   *     要调用设置器方法的 {@link PreparedStatement}。
    * @throws SQLException
-   *     if a SQLException is encountered (i.e. there is no need to catch
-   *     SQLException)
+   *     如果遇到 SQLException（即不需要捕获 SQLException）
    */
   void setValues(PreparedStatement ps) throws SQLException;
 

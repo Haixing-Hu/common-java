@@ -70,16 +70,19 @@ import static ltd.qubit.commons.lang.Argument.requireNonNull;
 import static ltd.qubit.commons.text.NumberFormat.DECIMAL_RADIX;
 
 /**
- * Stores the information about a type in the database.
+ * 存储数据库中类型的信息。
  *
- * <p>An object of {@link TypeInfo} corresponds to a row in the returned
- * {@link ResultSet} of the {@link DatabaseMetaData#getTypeInfo()} function.
+ * <p>{@link TypeInfo}的对象对应于{@link DatabaseMetaData#getTypeInfo()}函数返回的
+ * {@link ResultSet}中的一行。
  *
  * @author 胡海星
  * @see DatabaseMetaData#getTypeInfo()
  */
 public final class TypeInfo {
 
+  /**
+   * 数据类型枚举数组。
+   */
   public static final int[] DATA_TYPE_ENUM = {
       ARRAY,
       BIGINT,
@@ -118,12 +121,18 @@ public final class TypeInfo {
       VARCHAR,
   };
 
+  /**
+   * 可空性枚举数组。
+   */
   public static final short[] NULLABLE_ENUM = {
       typeNoNulls,
       typeNullable,
       typeNullableUnknown,
   };
 
+  /**
+   * 可搜索性枚举数组。
+   */
   public static final short[] SEARCHABLE_ENUM = {
       typePredNone,
       typePredChar,
@@ -131,61 +140,189 @@ public final class TypeInfo {
       typeSearchable,
   };
 
+  /**
+   * 类型名称字段名。
+   */
   public static final String TYPE_NAME = "TYPE_NAME";
 
+  /**
+   * 数据类型字段名。
+   */
   public static final String DATA_TYPE = "DATA_TYPE";
 
+  /**
+   * 精度字段名。
+   */
   public static final String PRECISION = "PRECISION";
 
+  /**
+   * 字面值前缀字段名。
+   */
   public static final String LITERAL_PREFIX = "LITERAL_PREFIX";
 
+  /**
+   * 字面值后缀字段名。
+   */
   public static final String LITERAL_SUFFIX = "LITERAL_SUFFIX";
 
+  /**
+   * 创建参数字段名。
+   */
   public static final String CREATE_PARAMS = "CREATE_PARAMS";
 
+  /**
+   * 可空性字段名。
+   */
   public static final String NULLABLE = "NULLABLE";
 
+  /**
+   * 大小写敏感字段名。
+   */
   public static final String CASE_SENSITIVE = "CASE_SENSITIVE";
 
+  /**
+   * 可搜索性字段名。
+   */
   public static final String SEARCHABLE = "SEARCHABLE";
 
+  /**
+   * 无符号属性字段名。
+   */
   public static final String UNSIGNED_ATTRIBUTE = "UNSIGNED_ATTRIBUTE";
 
+  /**
+   * 固定精度和小数位数字段名。
+   */
   public static final String FIXED_PREC_SCALE = "FIXED_PREC_SCALE";
 
+  /**
+   * 自动增长字段名。
+   */
   public static final String AUTO_INCREMENT = "AUTO_INCREMENT";
 
+  /**
+   * 本地类型名称字段名。
+   */
   public static final String LOCAL_TYPE_NAME = "LOCAL_TYPE_NAME";
 
+  /**
+   * 最小小数位数字段名。
+   */
   public static final String MINIMUM_SCALE = "MINIMUM_SCALE";
 
+  /**
+   * 最大小数位数字段名。
+   */
   public static final String MAXIMUM_SCALE = "MAXIMUM_SCALE";
 
+  /**
+   * SQL数据类型字段名。
+   */
   public static final String SQL_DATA_TYPE = "SQL_DATA_TYPE";
 
+  /**
+   * SQL日期时间子类型字段名。
+   */
   public static final String SQL_DATETIME_SUB = "SQL_DATETIME_SUB";
 
+  /**
+   * 数值精度基数字段名。
+   */
   public static final String NUM_PREC_RADIX = "NUM_PREC_RADIX";
 
+  /**
+   * 类型名称。
+   */
   private String typeName;
+
+  /**
+   * 数据类型。
+   */
   private int dataType;
+
+  /**
+   * 精度。
+   */
   private int precision;
+
+  /**
+   * 字面值前缀。
+   */
   private String literalPrefix;
+
+  /**
+   * 字面值后缀。
+   */
   private String literalSuffix;
+
+  /**
+   * 创建参数。
+   */
   private String createParams;
+
+  /**
+   * 可空性。
+   */
   private short nullable;
+
+  /**
+   * 是否大小写敏感。
+   */
   private boolean caseSensitive;
+
+  /**
+   * 可搜索性。
+   */
   private short searchable;
+
+  /**
+   * 是否为无符号属性。
+   */
   private boolean unsignedAttribute;
+
+  /**
+   * 是否为固定精度和小数位数。
+   */
   private boolean fixedPrecScale;
+
+  /**
+   * 是否自动增长。
+   */
   private boolean autoIncrement;
+
+  /**
+   * 本地类型名称。
+   */
   private String localTypeName;
+
+  /**
+   * 最小小数位数。
+   */
   private short minimumScale;
+
+  /**
+   * 最大小数位数。
+   */
   private short maximumScale;
+
+  /**
+   * SQL数据类型。
+   */
   private int sqlDataType;
+
+  /**
+   * SQL日期时间子类型。
+   */
   private int sqlDatetimeSub;
+
+  /**
+   * 数值精度基数。
+   */
   private int numPrecRadix;
 
+  /**
+   * 创建一个默认的类型信息对象。
+   */
   public TypeInfo() {
     typeName = StringUtils.EMPTY;
     dataType = OTHER;
@@ -207,6 +344,14 @@ public final class TypeInfo {
     numPrecRadix = DECIMAL_RADIX;
   }
 
+  /**
+   * 从ResultSet构造类型信息对象。
+   *
+   * @param rs
+   *     包含类型信息的ResultSet。
+   * @throws SQLException
+   *     如果从ResultSet读取数据时发生SQL异常。
+   */
   public TypeInfo(final ResultSet rs) throws SQLException {
     typeName = rs.getString("TYPE_NAME");
     dataType = rs.getInt("DATA_TYPE");
@@ -246,6 +391,12 @@ public final class TypeInfo {
     }
   }
 
+  /**
+   * 获取类型名称。
+   *
+   * @return
+   *     类型名称。
+   */
   public String getTypeName() {
     return typeName;
   }
@@ -254,6 +405,12 @@ public final class TypeInfo {
     this.typeName = requireNonNull("typeName", typeName);
   }
 
+  /**
+   * 获取数据类型。
+   *
+   * @return
+   *     数据类型。
+   */
   public int getDataType() {
     return dataType;
   }
@@ -262,6 +419,12 @@ public final class TypeInfo {
     this.dataType = requireInEnum("dataType", dataType, DATA_TYPE_ENUM);
   }
 
+  /**
+   * 获取精度。
+   *
+   * @return
+   *     精度。
+   */
   public int getPrecision() {
     return precision;
   }
@@ -270,6 +433,12 @@ public final class TypeInfo {
     this.precision = requireGreaterEqual("precision", precision, "zero", 0);
   }
 
+  /**
+   * 获取字面值前缀。
+   *
+   * @return
+   *     字面值前缀。
+   */
   public String getLiteralPrefix() {
     return literalPrefix;
   }
@@ -278,6 +447,12 @@ public final class TypeInfo {
     this.literalPrefix = literalPrefix;
   }
 
+  /**
+   * 获取字面值后缀。
+   *
+   * @return
+   *     字面值后缀。
+   */
   public String getLiteralSuffix() {
     return literalSuffix;
   }
@@ -286,6 +461,12 @@ public final class TypeInfo {
     this.literalSuffix = literalSuffix;
   }
 
+  /**
+   * 获取创建参数。
+   *
+   * @return
+   *     创建参数。
+   */
   public String getCreateParams() {
     return createParams;
   }
@@ -294,6 +475,12 @@ public final class TypeInfo {
     this.createParams = createParams;
   }
 
+  /**
+   * 获取可空性。
+   *
+   * @return
+   *     可空性。
+   */
   public short getNullable() {
     return nullable;
   }
@@ -302,6 +489,12 @@ public final class TypeInfo {
     this.nullable = requireInEnum("nullable", nullable, NULLABLE_ENUM);
   }
 
+  /**
+   * 判断是否大小写敏感。
+   *
+   * @return
+   *     如果大小写敏感则返回{@code true}，否则返回{@code false}。
+   */
   public boolean isCaseSensitive() {
     return caseSensitive;
   }
@@ -310,6 +503,12 @@ public final class TypeInfo {
     this.caseSensitive = caseSensitive;
   }
 
+  /**
+   * 获取可搜索性。
+   *
+   * @return
+   *     可搜索性。
+   */
   public short getSearchable() {
     return searchable;
   }
@@ -318,6 +517,12 @@ public final class TypeInfo {
     this.searchable = requireInEnum("searchable", searchable, SEARCHABLE_ENUM);
   }
 
+  /**
+   * 判断是否为无符号属性。
+   *
+   * @return
+   *     如果为无符号属性则返回{@code true}，否则返回{@code false}。
+   */
   public boolean isUnsignedAttribute() {
     return unsignedAttribute;
   }
@@ -326,6 +531,12 @@ public final class TypeInfo {
     this.unsignedAttribute = unsignedAttribute;
   }
 
+  /**
+   * 判断是否为固定精度和小数位数。
+   *
+   * @return
+   *     如果为固定精度和小数位数则返回{@code true}，否则返回{@code false}。
+   */
   public boolean isFixedPrecScale() {
     return fixedPrecScale;
   }
@@ -334,6 +545,12 @@ public final class TypeInfo {
     this.fixedPrecScale = fixedPrecScale;
   }
 
+  /**
+   * 判断是否自动增长。
+   *
+   * @return
+   *     如果自动增长则返回{@code true}，否则返回{@code false}。
+   */
   public boolean isAutoIncrement() {
     return autoIncrement;
   }
@@ -342,6 +559,12 @@ public final class TypeInfo {
     this.autoIncrement = autoIncrement;
   }
 
+  /**
+   * 获取本地类型名称。
+   *
+   * @return
+   *     本地类型名称。
+   */
   public String getLocalTypeName() {
     return localTypeName;
   }
@@ -350,6 +573,12 @@ public final class TypeInfo {
     this.localTypeName = localTypeName;
   }
 
+  /**
+   * 获取最小小数位数。
+   *
+   * @return
+   *     最小小数位数。
+   */
   public short getMinimumScale() {
     return minimumScale;
   }
@@ -359,6 +588,12 @@ public final class TypeInfo {
         "zero", (short) 0);
   }
 
+  /**
+   * 获取最大小数位数。
+   *
+   * @return
+   *     最大小数位数。
+   */
   public short getMaximumScale() {
     return maximumScale;
   }
@@ -368,6 +603,12 @@ public final class TypeInfo {
         "zero", (short) 0);
   }
 
+  /**
+   * 获取SQL数据类型。
+   *
+   * @return
+   *     SQL数据类型。
+   */
   public int getSqlDataType() {
     return sqlDataType;
   }
@@ -376,6 +617,12 @@ public final class TypeInfo {
     this.sqlDataType = sqlDataType;
   }
 
+  /**
+   * 获取SQL日期时间子类型。
+   *
+   * @return
+   *     SQL日期时间子类型。
+   */
   public int getSqlDatetimeSub() {
     return sqlDatetimeSub;
   }
@@ -384,13 +631,18 @@ public final class TypeInfo {
     this.sqlDatetimeSub = sqlDatetimeSub;
   }
 
+  /**
+   * 获取数值精度基数。
+   *
+   * @return
+   *     数值精度基数。
+   */
   public int getNumPrecRadix() {
     return numPrecRadix;
   }
 
   void setNumPrecRadix(final int numPrecRadix) {
-    this.numPrecRadix = requireGreaterEqual("numPrecRadix", numPrecRadix,
-        "zero", 0);
+    this.numPrecRadix = requireGreaterEqual("numPrecRadix", numPrecRadix,"zero", 0);
   }
 
   @Override

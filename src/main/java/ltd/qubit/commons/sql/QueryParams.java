@@ -101,6 +101,12 @@ public abstract class QueryParams<T> implements WithPageRequestParams, WithSortR
     return pageIndex;
   }
 
+  /**
+   * 设置分页的索引。
+   *
+   * @param pageIndex
+   *     分页的索引，从0开始编号。若为{@code null}则默认0。
+   */
   public void setPageIndex(@Nullable final Integer pageIndex) {
     this.pageIndex = pageIndex;
   }
@@ -111,6 +117,14 @@ public abstract class QueryParams<T> implements WithPageRequestParams, WithSortR
     return pageSize;
   }
 
+  /**
+   * 设置分页中每页记录数目。
+   *
+   * @param pageSize
+   *     分页中每页记录数目。若为{@code null}，当{@code pageIndex}也为{@code null}时则等价
+   *     于无穷大，即在一页中返回所有指定数据列表；否则，将使用默认分页大小，其值为
+   *     {@value PageRequest#DEFAULT_PAGE_SIZE}。
+   */
   public void setPageSize(@Nullable final Integer pageSize) {
     this.pageSize = pageSize;
   }
@@ -120,6 +134,12 @@ public abstract class QueryParams<T> implements WithPageRequestParams, WithSortR
     return requestAll;
   }
 
+  /**
+   * 设置是否请求所有数据。
+   *
+   * @param requestAll
+   *     是否请求所有数据。若为{@code true}，则忽略{@code pageIndex}和{@code pageSize}。
+   */
   public void setRequestAll(final boolean requestAll) {
     this.requestAll = requestAll;
   }
@@ -130,6 +150,12 @@ public abstract class QueryParams<T> implements WithPageRequestParams, WithSortR
     return sortField;
   }
 
+  /**
+   * 设置用于排序的属性名称。
+   *
+   * @param sortField
+   *     用于排序的属性名称（CamelCase形式）。若为{@code null}则使用默认排序。
+   */
   public void setSortField(@Nullable final String sortField) {
     this.sortField = sortField;
   }
@@ -140,6 +166,12 @@ public abstract class QueryParams<T> implements WithPageRequestParams, WithSortR
     return sortOrder;
   }
 
+  /**
+   * 设置排序顺序。
+   *
+   * @param sortOrder
+   *     指定是正序还是倒序。若为{@code null}则使用默认值。
+   */
   public void setSortOrder(@Nullable final SortOrder sortOrder) {
     this.sortOrder = sortOrder;
   }
@@ -150,6 +182,12 @@ public abstract class QueryParams<T> implements WithPageRequestParams, WithSortR
     return nullSortOption;
   }
 
+  /**
+   * 设置空值排序选项。
+   *
+   * @param nullSortOption
+   *     指定空值排序选项。若为{@code null}则使用默认值。
+   */
   public void setNullSortOption(@Nullable final NullSortOption nullSortOption) {
     this.nullSortOption = nullSortOption;
   }

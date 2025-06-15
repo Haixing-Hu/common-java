@@ -9,13 +9,19 @@
 package ltd.qubit.commons.sql;
 
 /**
- * The enumeration of soring order.
+ * 排序顺序的枚举。
  *
- * @author Haixng Hu
+ * @author 胡海星
  */
 public enum SortOrder {
 
+  /**
+   * 升序排列。
+   */
   ASC,
 
+  /**
+   * 降序排列。
+   */
   DESC,
 }

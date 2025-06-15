@@ -26,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides utilities functions for JDBC operations.
+ * 提供 JDBC 操作的实用工具函数。
  *
  * @author 胡海星
  */
@@ -35,12 +35,12 @@ public final class JdbcUtils {
   private static final Logger LOGGER = LoggerFactory.getLogger(JdbcUtils.class);
 
   /**
-   * Closes a {@link Connection} quietly without throwing any exception.
+   * 静默关闭一个 {@link Connection}，不抛出任何异常。
    *
-   * <p>The thrown exceptions will be logged.
+   * <p>抛出的异常将被记录到日志中。
    *
    * @param conn
-   *     a {@link Connection}, which could be null.
+   *     一个 {@link Connection}，可以为 null。
    */
   public static void closeQuietly(@Nullable final Connection conn) {
     if (conn != null) {
@@ -57,12 +57,12 @@ public final class JdbcUtils {
   }
 
   /**
-   * Closes a {@link Statement} quietly without throwing any exception.
+   * 静默关闭一个 {@link Statement}，不抛出任何异常。
    *
-   * <p>The thrown exceptions will be logged.
+   * <p>抛出的异常将被记录到日志中。
    *
    * @param stmt
-   *     a {@link Statement}, which could be null.
+   *     一个 {@link Statement}，可以为 null。
    */
   public static void closeQuietly(@Nullable final Statement stmt) {
     if (stmt != null) {
@@ -81,12 +81,12 @@ public final class JdbcUtils {
   }
 
   /**
-   * Closes a {@link ResultSet} quietly without throwing any exception.
+   * 静默关闭一个 {@link ResultSet}，不抛出任何异常。
    *
-   * <p>The thrown exceptions will be logged.
+   * <p>抛出的异常将被记录到日志中。
    *
    * @param rs
-   *     a {@link ResultSet}, which could be null.
+   *     一个 {@link ResultSet}，可以为 null。
    */
   public static void closeQuietly(@Nullable final ResultSet rs) {
     if (rs != null) {
@@ -105,13 +105,12 @@ public final class JdbcUtils {
   }
 
   /**
-   * Rollback the transaction of a {@link Connection} without throwing any
-   * exception.
+   * 静默回滚 {@link Connection} 的事务，不抛出任何异常。
    *
-   * <p>The thrown exceptions will be logged.
+   * <p>抛出的异常将被记录到日志中。
    *
    * @param conn
-   *     a {@link Connection}, which could be null.
+   *     一个 {@link Connection}，可以为 null。
    */
   public static void rollbackQuietly(@Nullable final Connection conn) {
     if (conn != null) {
@@ -128,22 +127,19 @@ public final class JdbcUtils {
   }
 
   /**
-   * Maps a {@link ResultSet} to a list of objects.
+   * 将 {@link ResultSet} 映射到对象列表。
    *
-   * <p><b>NOTE:</b> After calling this function, the result set will be closed
-   * even if any error occurred.
+   * <p><b>注意：</b> 调用此函数后，即使发生任何错误，结果集也会被关闭。
    *
    * @param <T>
-   *     the type of objects mapped from rows.
+   *     从行映射的对象类型。
    * @param rs
-   *     a {@link ResultSet}. After calling this function, this result set will
-   *     be closed, even if any error occurred.
+   *     一个 {@link ResultSet}。调用此函数后，即使发生任何错误，此结果集也会被关闭。
    * @param mapper
-   *     a {@link RowMapper}.
-   * @return a list of objects as the mapping result of the rows of the result
-   *     set.
+   *     一个 {@link RowMapper}。
+   * @return 作为结果集行映射结果的对象列表。
    * @throws SQLException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public static <T> List<T> mapToList(final ResultSet rs,
       final RowMapper<T> mapper) throws SQLException {
@@ -162,27 +158,22 @@ public final class JdbcUtils {
   }
 
   /**
-   * Maps a {@link ResultSet} to a single object.
+   * 将 {@link ResultSet} 映射到单个对象。
    *
-   * <p><b>NOTE:</b> if there is more than one row in the result set, this
-   * function
-   * only consider the first row. if there is no row in the result set, this
-   * function simply returns null.
+   * <p><b>注意：</b> 如果结果集中有多行，此函数只考虑第一行。如果结果集中没有行，
+   * 此函数简单地返回 null。
    *
-   * <p><b>NOTE:</b> After calling this function, the result set will be closed
-   * even if any error occurred.
+   * <p><b>注意：</b> 调用此函数后，即使发生任何错误，结果集也会被关闭。
    *
    * @param <T>
-   *     the type of objects mapped from rows.
+   *     从行映射的对象类型。
    * @param rs
-   *     a {@link ResultSet}. After calling this function, this result set will
-   *     be closed, even if any error occurred.
+   *     一个 {@link ResultSet}。调用此函数后，即使发生任何错误，此结果集也会被关闭。
    * @param mapper
-   *     a {@link RowMapper}.
-   * @return the mapping result of the first row of the result set, or null if
-   *     the result set has no row.
+   *     一个 {@link RowMapper}。
+   * @return 结果集第一行的映射结果，如果结果集没有行则返回 null。
    * @throws SQLException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public static <T> T mapToObject(final ResultSet rs, final RowMapper<T> mapper)
       throws SQLException {
@@ -199,18 +190,16 @@ public final class JdbcUtils {
   }
 
   /**
-   * Process each row of a {@link ResultSet}.
+   * 处理 {@link ResultSet} 的每一行。
    *
-   * <p><b>NOTE:</b> After calling this function, the result set will be closed
-   * even if any error occurred.
+   * <p><b>注意：</b> 调用此函数后，即使发生任何错误，结果集也会被关闭。
    *
    * @param rs
-   *     a {@link ResultSet}. After calling this function, this result set will
-   *     be closed, even if any error occurred.
+   *     一个 {@link ResultSet}。调用此函数后，即使发生任何错误，此结果集也会被关闭。
    * @param processor
-   *     a {@link RowProcessor}.
+   *     一个 {@link RowProcessor}。
    * @throws SQLException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public static void processRow(final ResultSet rs,
       final RowProcessor processor)
@@ -227,13 +216,13 @@ public final class JdbcUtils {
   }
 
   /**
-   * Gets the supported client information from a database metadata.
+   * 从数据库元数据获取支持的客户端信息。
    *
    * @param metadata
-   *     a database metadata.
-   * @return a map mapping the name to the {@link ClientInfo}.
+   *     数据库元数据。
+   * @return 名称到 {@link ClientInfo} 的映射表。
    * @throws SQLException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public static Map<String, ClientInfo> getSupportedClientInfos(
       final DatabaseMetaData metadata) throws SQLException {
@@ -252,13 +241,13 @@ public final class JdbcUtils {
   }
 
   /**
-   * Gets the type information from a database metadata.
+   * 从数据库元数据获取类型信息。
    *
    * @param metadata
-   *     a database metadata.
-   * @return a map mapping the SQL type value to the {@link TypeInfo}.
+   *     数据库元数据。
+   * @return SQL 类型值到 {@link TypeInfo} 的映射表。
    * @throws SQLException
-   *     if any error occurs.
+   *     如果发生任何错误。
    */
   public static Map<Integer, TypeInfo> getTypeInfos(
       final DatabaseMetaData metadata) throws SQLException {
@@ -276,28 +265,22 @@ public final class JdbcUtils {
   }
 
   /**
-   * Performs a JDBC operation in a transaction.
+   * 在事务中执行 JDBC 操作。
    *
-   * <p>This is a template method used to simplify the exception catching of
-   * JDBC
-   * transactions.
+   * <p>这是一个模板方法，用于简化 JDBC 事务的异常处理。
    *
-   * <p><b>NOTE:</b> After calling this function, the connection will be closed
-   * even if any error occurred.
+   * <p><b>注意：</b> 调用此函数后，即使发生任何错误，连接也会被关闭。
    *
    * @param <R>
-   *     the type of returned value of the operation. If the operation has no
-   *     return value, set this type parameter to {@link Void} and returns
-   *     {@code null} in the {@link JdbcOperation#perform(Connection)}
-   *     function.
+   *     操作返回值的类型。如果操作没有返回值，将此类型参数设置为 {@link Void}
+   *     并在 {@link JdbcOperation#perform(Connection)} 函数中返回 {@code null}。
    * @param conn
-   *     an opened JDBC connection. After calling this function, this connection
-   *     will be closed even if any error occurred.
+   *     一个已打开的 JDBC 连接。调用此函数后，即使发生任何错误，此连接也会被关闭。
    * @param operation
-   *     the operation to be performed.
-   * @return the returned value of the operation.
+   *     要执行的操作。
+   * @return 操作的返回值。
    * @throws SQLException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static <R> R transaction(final Connection conn,
       final JdbcOperation<R> operation) throws SQLException {
@@ -318,22 +301,21 @@ public final class JdbcUtils {
   }
 
   /**
-   * Executes a query and create an object list from the query result.
+   * 执行查询并从查询结果创建对象列表。
    *
-   * <p><b>NOTE:</b> After calling this function, the JDBC connection will
-   * <b>NOT</b> be closed.
+   * <p><b>注意：</b> 调用此函数后，JDBC 连接将<b>不会</b>被关闭。
    *
    * @param <T>
-   *     the type of objects mapped from rows.
+   *     从行映射的对象类型。
    * @param conn
-   *     an opened JDBC connection.
+   *     一个已打开的 JDBC 连接。
    * @param sql
-   *     a simple SQL statement for the query.
+   *     查询的简单 SQL 语句。
    * @param rowMapper
-   *     a row mapper used to map each row of a result set to an object.
-   * @return the list of object created from the result of the query.
+   *     用于将结果集的每一行映射到对象的行映射器。
+   * @return 从查询结果创建的对象列表。
    * @throws SQLException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static <T> List<T> queryList(final Connection conn, final String sql,
       final RowMapper<T> rowMapper) throws SQLException {
@@ -347,24 +329,23 @@ public final class JdbcUtils {
   }
 
   /**
-   * Executes a query and create an object list from the query result.
+   * 执行查询并从查询结果创建对象列表。
    *
-   * <p><b>NOTE:</b> After calling this function, the JDBC connection will
-   * <b>NOT</b> be closed.
+   * <p><b>注意：</b> 调用此函数后，JDBC 连接将<b>不会</b>被关闭。
    *
    * @param <T>
-   *     the type of objects mapped from rows.
+   *     从行映射的对象类型。
    * @param conn
-   *     an opened JDBC connection.
+   *     一个已打开的 JDBC 连接。
    * @param preparedSql
-   *     a prepared SQL statement for the query.
+   *     查询的预准备 SQL 语句。
    * @param setter
-   *     a setter used to set the parameter of the prepared SQL statement.
+   *     用于设置预准备 SQL 语句参数的设置器。
    * @param rowMapper
-   *     a row mapper used to map each row of a result set to an object.
-   * @return the list of object created from the result of the query.
+   *     用于将结果集的每一行映射到对象的行映射器。
+   * @return 从查询结果创建的对象列表。
    * @throws SQLException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static <T> List<T> queryList(final Connection conn,
       final String preparedSql, final PreparedStatementSetter setter,
@@ -380,23 +361,21 @@ public final class JdbcUtils {
   }
 
   /**
-   * Executes a query and create an object from the query result.
+   * 执行查询并从查询结果创建对象。
    *
-   * <p><b>NOTE:</b> After calling this function, the JDBC connection will
-   * <b>NOT</b> be closed.
+   * <p><b>注意：</b> 调用此函数后，JDBC 连接将<b>不会</b>被关闭。
    *
    * @param <T>
-   *     the type of objects mapped from rows.
+   *     从行映射的对象类型。
    * @param conn
-   *     an opened JDBC connection.
+   *     一个已打开的 JDBC 连接。
    * @param sql
-   *     a simple SQL statement for the query.
+   *     查询的简单 SQL 语句。
    * @param rowMapper
-   *     a row mapper used to map each row of a result set to an object.
-   * @return an object created from the first row of the result of the query; or
-   *     null if the query has no result.
+   *     用于将结果集的每一行映射到对象的行映射器。
+   * @return 从查询结果的第一行创建的对象；如果查询没有结果则返回 null。
    * @throws SQLException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static <T> T queryObject(final Connection conn, final String sql,
       final RowMapper<T> rowMapper) throws SQLException {
@@ -410,25 +389,23 @@ public final class JdbcUtils {
   }
 
   /**
-   * Executes a query and create an object from the query result.
+   * 执行查询并从查询结果创建对象。
    *
-   * <p><b>NOTE:</b> After calling this function, the JDBC connection will
-   * <b>NOT</b> be closed.
+   * <p><b>注意：</b> 调用此函数后，JDBC 连接将<b>不会</b>被关闭。
    *
    * @param <T>
-   *     the type of objects mapped from rows.
+   *     从行映射的对象类型。
    * @param conn
-   *     an opened JDBC connection.
+   *     一个已打开的 JDBC 连接。
    * @param preparedSql
-   *     a prepared SQL statement for the query.
+   *     查询的预准备 SQL 语句。
    * @param setter
-   *     a setter used to set the parameters of the prepared SQL statement.
+   *     用于设置预准备 SQL 语句参数的设置器。
    * @param rowMapper
-   *     a row mapper used to map each row of a result set to an object.
-   * @return an object created from the first row of the result of the query; or
-   *     null if the query has no result.
+   *     用于将结果集的每一行映射到对象的行映射器。
+   * @return 从查询结果的第一行创建的对象；如果查询没有结果则返回 null。
    * @throws SQLException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static <T> T queryObject(final Connection conn,
       final String preparedSql, final PreparedStatementSetter setter,
@@ -444,17 +421,15 @@ public final class JdbcUtils {
   }
 
   /**
-   * Executes an update. <b>NOTE:</b> After calling this function, the JDBC
-   * connection will <b>NOT</b> be closed.
+   * 执行更新操作。<b>注意：</b> 调用此函数后，JDBC 连接将<b>不会</b>被关闭。
    *
    * @param conn
-   *     an opened JDBC connection.
+   *     一个已打开的 JDBC 连接。
    * @param sql
-   *     a simple SQL statement, which must be an SQL Data Manipulation Language
-   *     (DML) statement, such as INSERT, UPDATE or DELETE; or an SQL statement
-   *     that returns nothing, such as a DDL statement.
+   *     一个简单的 SQL 语句，必须是 SQL 数据操作语言 (DML) 语句，
+   *     如 INSERT、UPDATE 或 DELETE；或不返回任何内容的 SQL 语句，如 DDL 语句。
    * @throws SQLException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static void update(final Connection conn, final String sql)
       throws SQLException {
@@ -467,19 +442,17 @@ public final class JdbcUtils {
   }
 
   /**
-   * Executes an update. <b>NOTE:</b> After calling this function, the JDBC
-   * connection will <b>NOT</b> be closed.
+   * 执行更新操作。<b>注意：</b> 调用此函数后，JDBC 连接将<b>不会</b>被关闭。
    *
    * @param conn
-   *     an opened JDBC connection.
+   *     一个已打开的 JDBC 连接。
    * @param preparedSql
-   *     a prepared SQL statement, which must be an SQL Data Manipulation
-   *     Language (DML) statement, such as INSERT, UPDATE or DELETE; or an SQL
-   *     statement that returns nothing, such as a DDL statement.
+   *     一个预准备的 SQL 语句，必须是 SQL 数据操作语言 (DML) 语句，
+   *     如 INSERT、UPDATE 或 DELETE；或不返回任何内容的 SQL 语句，如 DDL 语句。
    * @param setter
-   *     a setter used to set the parameters of the prepared SQL statement.
+   *     用于设置预准备 SQL 语句参数的设置器。
    * @throws SQLException
-   *     if any error occurred.
+   *     如果发生任何错误。
    */
   public static void update(final Connection conn, final String preparedSql,
       final PreparedStatementSetter setter) throws SQLException {
@@ -493,12 +466,12 @@ public final class JdbcUtils {
   }
 
   /**
-   * Gets the name of the database opened by a {@link DataSource}.
+   * 获取由 {@link DataSource} 打开的数据库名称。
    *
    * @param dataSource
-   *     a {@link DataSource}.
+   *     一个 {@link DataSource}。
    * @return
-   *     the name of the database opened by the data source.
+   *     由数据源打开的数据库名称。
    */
   public static String getDatabaseName(final DataSource dataSource) throws SQLException {
     try {
@@ -545,12 +518,12 @@ public final class JdbcUtils {
 
 
   /**
-   * Gets the host of the database opened by a {@link DataSource}.
+   * 获取由 {@link DataSource} 打开的数据库主机名。
    *
    * @param dataSource
-   *     a {@link DataSource}.
+   *     一个 {@link DataSource}。
    * @return
-   *     the host of the database opened by the data source.
+   *     由数据源打开的数据库主机名。
    */
   public static String getDatabaseHost(final DataSource dataSource) throws SQLException {
     try {
@@ -596,12 +569,12 @@ public final class JdbcUtils {
   }
 
   /**
-   * Tests whether the database supports WITH RECURSIVE CTE.
+   * 测试数据库是否支持 WITH RECURSIVE CTE。
    *
    * @param dataSource
-   *    a {@link DataSource}.
+   *    一个 {@link DataSource}。
    * @return
-   *    {@code true} if the database supports WITH RECURSIVE CTE; {@code false} otherwise.
+   *    如果数据库支持 WITH RECURSIVE CTE 则返回 {@code true}；否则返回 {@code false}。
    */
   public static boolean supportsWithRecursiveCTE(final DataSource dataSource) {
     final String query = "WITH RECURSIVE test AS (SELECT 1 AS n UNION ALL SELECT n+1 FROM test WHERE n < 2) SELECT * FROM test;";

@@ -16,7 +16,7 @@ import ltd.qubit.commons.lang.Hash;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * Stores the sorting conditions.
+ * 存储排序条件。
  *
  * @author 胡海星
  */
@@ -25,21 +25,52 @@ public class Sort implements Serializable {
   @Serial
   private static final long serialVersionUID = -1666296704696820914L;
 
+  /**
+   * 排序字段。
+   */
   private String field;
+
+  /**
+   * 排序顺序。
+   */
   private SortOrder order;
 
+  /**
+   * 获取排序字段。
+   *
+   * @return
+   *     排序字段。
+   */
   public final String getField() {
     return field;
   }
 
+  /**
+   * 设置排序字段。
+   *
+   * @param field
+   *     排序字段。
+   */
   public final void setField(final String field) {
     this.field = field;
   }
 
+  /**
+   * 获取排序顺序。
+   *
+   * @return
+   *     排序顺序。
+   */
   public final SortOrder getOrder() {
     return order;
   }
 
+  /**
+   * 设置排序顺序。
+   *
+   * @param order
+   *     排序顺序。
+   */
   public final void setOrder(final SortOrder order) {
     this.order = order;
   }

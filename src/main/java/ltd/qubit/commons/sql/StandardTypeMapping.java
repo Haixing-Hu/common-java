@@ -28,7 +28,7 @@ import ltd.qubit.commons.sql.error.UnsupportedSqlTypeException;
 import static java.util.Map.entry;
 
 /**
- * Standard mapping between SQL type to Java class.
+ * SQL类型与Java类之间的标准映射。
  *
  * @author 胡海星
  * @see <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/jdbc/getstart/mapping.html">Mapping
@@ -37,7 +37,7 @@ import static java.util.Map.entry;
 public final class StandardTypeMapping {
 
   /**
-   * The array of all allowed SQL types.
+   * 所有允许的SQL类型的数组。
    */
   public static final int[] SQL_TYPES = {
       Types.ARRAY,
@@ -78,6 +78,9 @@ public final class StandardTypeMapping {
       Types.VARCHAR,
   };
 
+  /**
+   * SQL类型到Java类的映射表。
+   */
   private static final Map<Integer, ClassKey> SQL_TO_JAVA_MAP =
       Map.ofEntries(
           entry(Types.CHAR, new ClassKey(String.class)),
@@ -108,6 +111,9 @@ public final class StandardTypeMapping {
           entry(Types.STRUCT, new ClassKey(java.sql.Struct.class))
       );
 
+  /**
+   * Java类到SQL类型的映射表。
+   */
   private static final Map<ClassKey, Integer> JAVA_TO_SQL_MAP =
       Map.ofEntries(
           entry(new ClassKey(String.class), Types.VARCHAR),
@@ -134,6 +140,9 @@ public final class StandardTypeMapping {
           entry(new ClassKey(java.sql.Struct.class), Types.STRUCT)
       );
 
+  /**
+   * SQL类型到名称的映射表。
+   */
   private static final Map<Integer, String> SQL_NAME_MAP =
       Map.ofEntries(
           entry(Types.ARRAY, "ARRAY"),
@@ -174,6 +183,16 @@ public final class StandardTypeMapping {
           entry(Types.VARCHAR, "VARCHAR")
       );
 
+  /**
+   * 获取指定SQL类型的名称。
+   *
+   * @param sqlType
+   *     SQL类型。
+   * @return
+   *     指定SQL类型的名称。
+   * @throws UnsupportedSqlTypeException
+   *     如果指定的SQL类型不受支持。
+   */
   public static String getName(final int sqlType)
       throws UnsupportedSqlTypeException {
     final String result = SQL_NAME_MAP.get(sqlType);
@@ -183,6 +202,16 @@ public final class StandardTypeMapping {
     return result;
   }
 
+  /**
+   * 获取指定SQL类型对应的Java类型。
+   *
+   * @param sqlType
+   *     SQL类型。
+   * @return
+   *     指定SQL类型对应的Java类型。
+   * @throws UnsupportedSqlTypeException
+   *     如果指定的SQL类型不受支持。
+   */
   public static Class<?> getJavaType(final int sqlType)
       throws UnsupportedSqlTypeException {
     // FIXME: support the special types: Ref, Array, Struct, etc.
@@ -193,6 +222,16 @@ public final class StandardTypeMapping {
     return cls.getActualClass();
   }
 
+  /**
+   * 获取指定Java类型对应的SQL类型。
+   *
+   * @param javaType
+   *     Java类型。
+   * @return
+   *     指定Java类型对应的SQL类型。
+   * @throws UnsupportedJavaTypeException
+   *     如果指定的Java类型不受支持。
+   */
   public static int getSqlType(final Class<?> javaType)
       throws UnsupportedJavaTypeException {
     // FIXME: support the special types: Ref, Array, Struct, etc.

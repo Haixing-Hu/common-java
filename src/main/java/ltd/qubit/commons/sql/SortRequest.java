@@ -337,15 +337,45 @@ public class SortRequest<T> implements Serializable {
     return create(entityClass, property, defaultProperty, order, defaultSortOrder, nullSortOption);
   }
 
+  /**
+   * 创建一个排序请求。
+   *
+   * @param entityClass
+   *     待排序的实体的类。
+   * @param property
+   *     排序依据的属性路径。
+   */
   public SortRequest(final Class<T> entityClass, final String property) {
     this(entityClass, property, SortOrder.ASC);
   }
 
+  /**
+   * 创建一个排序请求。
+   *
+   * @param entityClass
+   *     待排序的实体的类。
+   * @param property
+   *     排序依据的属性路径。
+   * @param order
+   *     排序顺序。
+   */
   public SortRequest(final Class<T> entityClass, final String property,
       final SortOrder order) {
     this(entityClass, property, order, NullSortOption.NULL_FIRST);
   }
 
+  /**
+   * 创建一个排序请求。
+   *
+   * @param entityClass
+   *     待排序的实体的类。
+   * @param property
+   *     排序依据的属性路径。
+   * @param order
+   *     排序顺序。
+   * @param nullSortOption
+   *     对NULL值的排序策略。
+   */
   public SortRequest(final Class<T> entityClass, final String property,
       final SortOrder order, final NullSortOption nullSortOption) {
     this.entityClass = requireNonNull("entityClass", entityClass);
@@ -354,15 +384,51 @@ public class SortRequest<T> implements Serializable {
     this.nullSortOption = requireNonNull("nullSortOption", nullSortOption);
   }
 
+  /**
+   * 创建一个排序请求。
+   *
+   * @param <R>
+   *     属性类型。
+   * @param entityClass
+   *     待排序的实体的类。
+   * @param getter
+   *     属性的getter方法。
+   */
   public <R> SortRequest(final Class<T> entityClass, final GetterMethod<T, R> getter) {
     this(entityClass, getFieldName(entityClass, getter), SortOrder.ASC);
   }
 
+  /**
+   * 创建一个排序请求。
+   *
+   * @param <R>
+   *     属性类型。
+   * @param entityClass
+   *     待排序的实体的类。
+   * @param getter
+   *     属性的getter方法。
+   * @param order
+   *     排序顺序。
+   */
   public <R> SortRequest(final Class<T> entityClass, final GetterMethod<T, R> getter,
       final SortOrder order) {
     this(entityClass, getFieldName(entityClass, getter), order);
   }
 
+  /**
+   * 创建一个排序请求。
+   *
+   * @param <R>
+   *     属性类型。
+   * @param entityClass
+   *     待排序的实体的类。
+   * @param getter
+   *     属性的getter方法。
+   * @param order
+   *     排序顺序。
+   * @param nullSortOption
+   *     对NULL值的排序策略。
+   */
   public <R> SortRequest(final Class<T> entityClass, final GetterMethod<T, R> getter,
       final SortOrder order, final NullSortOption nullSortOption) {
     this(entityClass, getFieldName(entityClass, getter), order, nullSortOption);

@@ -24,30 +24,28 @@ import static ltd.qubit.commons.lang.Argument.requireNonNegative;
 import static ltd.qubit.commons.lang.Argument.requireNonNull;
 
 /**
- * A {@link Page} is a sublist of a list of objects. It allows gain information
- * about the position of it in the containing entire list.
+ * {@link Page} 是对象列表的一个子列表。它允许获取该子列表在包含的整个列表中的位置信息。
  *
  * @param <E>
- *     the type of entities.
+ *     实体的类型。
  * @author 胡海星
  */
 @Immutable
 public final class Page<E> {
 
   /**
-   * Create a page.
+   * 创建一个分页对象。
    *
    * @param <E>
-   *     the type of elements in the page.
+   *     分页中元素的类型。
    * @param pageRequest
-   *     the specified page request, which may be {@code null}, indicates a page
-   *     with unlimited page size.
+   *     指定的分页请求，可以为 {@code null}，表示无限制页面大小的分页。
    * @param totalCount
-   *     total number of results satisfying the query criterion.
+   *     满足查询条件的结果总数。
    * @param content
-   *     the list of query results.
+   *     查询结果的列表。
    * @return
-   *     the page of query results.
+   *     查询结果的分页对象。
    */
   @Nonnull
   public static <E> Page<E> create(@Nullable final PageRequest pageRequest,
@@ -60,16 +58,34 @@ public final class Page<E> {
     }
   }
 
+  /**
+   * 查询结果中实体的总数，可能是一个估计值。
+   */
   private final long totalCount;
 
+  /**
+   * 根据指定的分页请求估计的查询结果总页数。
+   */
   private final long totalPages;
 
+  /**
+   * 页面索引。
+   */
   private final int pageIndex;
 
+  /**
+   * 页面大小。
+   */
   private final int pageSize;
 
+  /**
+   * 此页中查询结果的内容。
+   */
   private final List<E> content;
 
+  /**
+   * 构造一个空的 {@link Page}。
+   */
   public Page() {
     totalCount = 0;
     totalPages = 0;
@@ -79,10 +95,10 @@ public final class Page<E> {
   }
 
   /**
-   * Constructs an empty {@link Page}.
+   * 构造一个空的 {@link Page}，页码索引和页面大小按照指定的分页请求设置，内容为空。
    *
    * @param pageRequest
-   *     the pagination requirements of the query.
+   *     查询的分页要求。
    */
   public Page(final PageRequest pageRequest) {
     this(0, 0, pageRequest.getPageIndex(), pageRequest.getPageSize(),
@@ -90,18 +106,16 @@ public final class Page<E> {
   }
 
   /**
-   * Constructs a {@link Page}.
+   * 构造一个 {@link Page}。
    *
    * @param totalCount
-   *     the total number of entities in the query result, which may be an
-   *     estimation. It must be non-negative.
+   *     查询结果中实体的总数，可能是一个估计值。必须是非负数。
    * @param totalPages
-   *     the estimated total number of pages in the query result, according to
-   *     the specified page pageRequest. It must be non-negative.
+   *     根据指定的分页请求估计的查询结果总页数。必须是非负数。
    * @param pageRequest
-   *     the pagination requirements of the query.
+   *     查询的分页要求。
    * @param content
-   *     the content of the query result in this page.
+   *     此页中查询结果的内容。
    */
   public Page(final long totalCount, final long totalPages,
       final PageRequest pageRequest, final List<E> content) {
@@ -110,20 +124,18 @@ public final class Page<E> {
   }
 
   /**
-   * Constructs a {@link Page}.
+   * 构造一个 {@link Page}。
    *
    * @param totalCount
-   *     the total number of entities in the query result, which may be an
-   *     estimation. It must be non-negative.
+   *     查询结果中实体的总数，可能是一个估计值。必须是非负数。
    * @param totalPages
-   *     the estimated total number of pages in the query result, according to
-   *     the specified page pageRequest. It must be non-negative.
+   *     根据指定的分页请求估计的查询结果总页数。必须是非负数。
    * @param pageIndex
-   *     the index of the page.
+   *     页面的索引。
    * @param pageSize
-   *     the size of the page.
+   *     页面的大小。
    * @param content
-   *     the content of the query result in this page.
+   *     此页中查询结果的内容。
    */
   public Page(final long totalCount, final long totalPages,
       final int pageIndex, final int pageSize, final List<E> content) {
@@ -135,15 +147,14 @@ public final class Page<E> {
   }
 
   /**
-   * Constructs a {@link Page}.
+   * 构造一个 {@link Page}。
    *
    * @param <T>
-   *     the type of content of the other page.
+   *     另一个分页的内容类型。
    * @param page
-   *     another page object whose configuration will be copied to the new
-   *     page.
+   *     另一个分页对象，其配置将被复制到新分页中。
    * @param content
-   *     the content of the query result in this page.
+   *     此页中查询结果的内容。
    */
   public <T> Page(final Page<T> page, final List<E> content) {
     this(page.getTotalCount(), page.getTotalPages(), page.getPageIndex(),
@@ -152,16 +163,14 @@ public final class Page<E> {
 
 
   /**
-   * Constructs a {@link Page}.
+   * 构造一个 {@link Page}。
    *
    * @param <T>
-   *     the type of content of the other page.
+   *     另一个分页的内容类型。
    * @param page
-   *     another page object whose configuration will be copied to the new
-   *     page.
+   *     另一个分页对象，其配置将被复制到新分页中。
    * @param mapper
-   *     the function to map the content of the other page to the content of
-   *     this page.
+   *     将另一个分页的内容映射到此分页内容的函数。
    */
   public <T> Page(final Page<T> page, final Function<T, E> mapper) {
     this(page.getTotalCount(), page.getTotalPages(), page.getPageIndex(),
@@ -169,76 +178,70 @@ public final class Page<E> {
   }
 
   /**
-   * Tests whether the content of this page is empty.
+   * 测试此页的内容是否为空。
    *
    * @return
-   *     {@code true} if the content of this page is empty; {@code false}
-   *     otherwise.
+   *     如果此页的内容为空则返回 {@code true}；否则返回 {@code false}。
    */
   public boolean isEmpty() {
     return content.isEmpty();
   }
 
   /**
-   * Gets the number of entities in the content of this page.
+   * 获取此页内容中的实体数量。
    *
    * @return
-   *     the number of entities in the content of this page.
+   *     此页内容中的实体数量。
    */
   public int size() {
     return content.size();
   }
 
   /**
-   * Gets the total number of entities in the query result, which may be an
-   * estimation.
+   * 获取查询结果中实体的总数，可能是一个估计值。
    *
    * @return
-   *     the total number of entities in the query result, which may be an
-   *     estimation.
+   *     查询结果中实体的总数，可能是一个估计值。
    */
   public long getTotalCount() {
     return totalCount;
   }
 
   /**
-   * Gets the estimated total number of pages in the query result, according to
-   * the specified page pageRequest.
+   * 根据指定的分页请求获取查询结果中估计的总页数。
    *
    * @return
-   *     the estimated total number of pages in the query result, according
-   *     to the specified page pageRequest.
+   *     根据指定的分页请求估计的查询结果总页数。
    */
   public long getTotalPages() {
     return totalPages;
   }
 
   /**
-   * Gets the index of page.
+   * 获取页面索引。
    *
    * @return
-   *     the index of page.
+   *     页面索引。
    */
   public int getPageIndex() {
     return pageIndex;
   }
 
   /**
-   * Gets the size of page.
+   * 获取页面大小。
    *
    * @return
-   *     the size of page.
+   *     页面大小。
    */
   public int getPageSize() {
     return pageSize;
   }
 
   /**
-   * Gets the content of the query result in this page.
+   * 获取此页中查询结果的内容。
    *
    * @return
-   *     the content of the query result in this page; or an empty list if
-   *     there is no content.
+   *     此页中查询结果的内容；如果没有内容则返回空列表。
    */
   @Nonnull
   public List<E> getContent() {
