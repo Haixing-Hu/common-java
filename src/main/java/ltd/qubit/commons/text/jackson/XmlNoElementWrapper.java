@@ -14,10 +14,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation is used to specify that a property should not use element
- * wrapper.
+ * 此注解用于指定属性不应使用元素包装器。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.METHOD})

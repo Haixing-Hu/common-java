@@ -8,6 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.jackson;
 
+import java.io.Serial;
+
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import com.fasterxml.jackson.databind.PropertyName;
@@ -25,7 +27,7 @@ import static ltd.qubit.commons.text.jackson.JacksonUtils.getXmlWrappedPropertyN
 import static ltd.qubit.commons.text.jackson.JacksonUtils.getXmlWrapperPropertyName;
 
 /**
- * 此 {@link AnnotationIntrospector} 用于根据指定的命名策略转换根元素名称，并且自动处理
+ * 此{@link AnnotationIntrospector}用于根据指定的命名策略转换根元素名称，并且自动处理
  * 集合类属性内部元素名称。
  *
  * @author 胡海星
@@ -33,6 +35,7 @@ import static ltd.qubit.commons.text.jackson.JacksonUtils.getXmlWrapperPropertyN
 public class XmlNameConversionIntrospector extends AnnotationIntrospector
     implements AnnotationIntrospector.XmlExtensions {
 
+  @Serial
   private static final long serialVersionUID = 6574159265535613840L;
 
   private final static String MARKER_FOR_DEFAULT = "##default";

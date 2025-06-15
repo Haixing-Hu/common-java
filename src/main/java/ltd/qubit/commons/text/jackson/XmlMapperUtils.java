@@ -42,6 +42,11 @@ import static ltd.qubit.commons.text.jackson.CustomizeJacksonUtils.getNormalized
 import static ltd.qubit.commons.text.jackson.JacksonUtils.getRootName;
 import static ltd.qubit.commons.text.jackson.JacksonUtils.getRootWrapperName;
 
+/**
+ * XML映射器工具类，提供XML序列化和反序列化的便捷方法。
+ *
+ * @author 胡海星
+ */
 public class XmlMapperUtils {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(XmlMapperUtils.class);
