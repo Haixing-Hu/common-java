@@ -19,8 +19,31 @@ import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator.Feature;
 
+/**
+ * Jackson映射器定制化工具类。
+ *
+ * <p>此类提供了一系列静态方法来定制化Jackson {@link ObjectMapper}的行为，
+ * 包括序列化和反序列化特性的配置、可见性设置、以及正则化配置等。</p>
+ *
+ * @author 胡海星
+ */
 public class CustomizeJacksonUtils {
 
+  /**
+   * 定制化ObjectMapper的特性配置。
+   *
+   * <p>此方法会配置ObjectMapper的序列化和反序列化特性，包括：
+   * <ul>
+   * <li>序列化特性：失败处理、异常包装、日期时间格式、枚举序列化等</li>
+   * <li>反序列化特性：类型验证、异常处理、数据类型转换等</li>
+   * <li>XML特性：如果是XmlMapper，会禁用XML声明输出</li>
+   * <li>可见性设置：仅通过字段进行序列化，忽略getter/setter</li>
+   * <li>包含策略：仅序列化非空字段</li>
+   * </ul>
+   * </p>
+   *
+   * @param mapper 要定制化的ObjectMapper实例
+   */
   public static void customizeFeature(final ObjectMapper mapper) {
     // 设置序列化时的特性
     mapper.disable(SerializationFeature.CLOSE_CLOSEABLE);
@@ -88,10 +111,30 @@ public class CustomizeJacksonUtils {
     mapper.setSerializationInclusion(Include.NON_NULL);
   }
 
+  /**
+   * 获取ObjectMapper的正则化序列化配置。
+   *
+   * @param mapper 要获取配置的ObjectMapper
+   * @return 正则化的序列化配置
+   */
   public static SerializationConfig getNormalizedConfig(final ObjectMapper mapper) {
     return getNormalizedConfig(mapper.getSerializationConfig());
   }
 
+  /**
+   * 获取正则化的序列化配置。
+   *
+   * <p>正则化配置会：
+   * <ul>
+   * <li>启用属性按字典序排序</li>
+   * <li>启用Map条目按键的字典序排序</li>
+   * <li>禁用美化打印输出</li>
+   * </ul>
+   * 这确保了序列化结果的一致性和可重现性。</p>
+   *
+   * @param config 要正则化的序列化配置
+   * @return 正则化后的序列化配置
+   */
   public static SerializationConfig getNormalizedConfig(final SerializationConfig config) {
     // 注意：一但 XmlMapper 对象进行过序列化或反序列化，其 MapperFeature 就不能修改
     // （修改后也无效）。因此我们需要 clone 一个新的 XmlMapper

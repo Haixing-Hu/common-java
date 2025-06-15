@@ -34,13 +34,43 @@ import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonObjectFormatVisitor
  * @author 胡海星
  */
 public class BasicBeanProperty implements BeanProperty {
+  /**
+   * 对应的字段。
+   */
   private final Field field;
+
+  /**
+   * 字段的Java类型。
+   */
   private final JavaType type;
+
+  /**
+   * 属性名称。
+   */
   private final PropertyName name;
+
+  /**
+   * 包装器属性名称。
+   */
   private final PropertyName wrapperName;
+
+  /**
+   * 注解字段。
+   */
   private final AnnotatedField member;
+
+  /**
+   * 属性元数据。
+   */
   private final PropertyMetadata metadata;
 
+  /**
+   * 构造一个基本的Bean属性。
+   *
+   * @param mapper 对象映射器
+   * @param operation 操作类型
+   * @param field 字段对象
+   */
   public BasicBeanProperty(final ObjectMapper mapper, final Operation operation,
       final Field field) {
     final MapperConfig<?> config = operation.getConfig(mapper);
@@ -57,60 +87,98 @@ public class BasicBeanProperty implements BeanProperty {
     metadata = JacksonUtils.getMetadata(mapper, operation, member);
   }
 
+  /**
+   * 获取对应的字段。
+   *
+   * @return 字段对象
+   */
   public Field getField() {
     return field;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String getName() {
     return name.getSimpleName();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public PropertyName getFullName() {
     return name;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JavaType getType() {
     return type;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public PropertyName getWrapperName() {
     return wrapperName;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public PropertyMetadata getMetadata() {
     return metadata;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isRequired() {
     return metadata.isRequired();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isVirtual() {
     return false;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AnnotatedField getMember() {
     return member;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public <A extends Annotation> A getAnnotation(final Class<A> acls) {
     return (member == null ? null : member.getAnnotation(acls));
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public <A extends Annotation> A getContextAnnotation(final Class<A> acls) {
     return null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @SuppressWarnings("deprecation")
   @Override
   public Value findFormatOverrides(final AnnotationIntrospector introspector) {
@@ -123,6 +191,9 @@ public class BasicBeanProperty implements BeanProperty {
     return EMPTY_FORMAT;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Value findPropertyFormat(final MapperConfig<?> config,
       final Class<?> baseType) {
@@ -138,6 +209,9 @@ public class BasicBeanProperty implements BeanProperty {
     return value.withOverrides(v);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonInclude.Value findPropertyInclusion(final MapperConfig<?> config,
       final Class<?> baseType) {
@@ -153,11 +227,17 @@ public class BasicBeanProperty implements BeanProperty {
     return value.withOverrides(v);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public List<PropertyName> findAliases(final MapperConfig<?> config) {
     return Collections.emptyList();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void depositSchemaProperty(final JsonObjectFormatVisitor objectVisitor,
       final SerializerProvider provider) throws JsonMappingException {

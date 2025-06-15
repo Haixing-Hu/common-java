@@ -37,38 +37,82 @@ import static ltd.qubit.commons.text.jackson.CustomizeJacksonUtils.customizeFeat
 import static ltd.qubit.commons.text.jackson.CustomizeJacksonUtils.getNormalizedConfig;
 
 /**
- * 自定义的 Jackson XmlMapper。
+ * 自定义的Jackson XmlMapper。
+ *
+ * <p>此类扩展了Jackson的{@link XmlMapper}，提供了额外的XML处理功能和定制化配置：
+ * <ul>
+ * <li>支持自定义命名策略（默认为小写连字符命名）</li>
+ * <li>支持美化打印输出</li>
+ * <li>支持正则化序列化配置</li>
+ * <li>集成XML转义处理</li>
+ * <li>支持Jakarta XML Bind注解</li>
+ * <li>集成JDK8模块和各种自定义模块</li>
+ * </ul>
+ * </p>
  *
  * @author 胡海星
  */
 public class CustomizedXmlMapper extends XmlMapper {
 
+  /**
+   * 序列化版本号。
+   */
   @Serial
   private static final long serialVersionUID = 2353632581927861218L;
 
+  /**
+   * 默认的命名策略为小写连字符格式。
+   */
   public static final CaseFormat DEFAULT_NAMING_STRATEGY = CaseFormat.LOWER_HYPHEN;
 
+  /**
+   * 创建一个正则化的自定义XML映射器。
+   *
+   * @return 正则化的自定义XML映射器实例
+   */
   public static CustomizedXmlMapper createNormalized() {
     return new CustomizedXmlMapper(true);
   }
 
+  /**
+   * 命名策略。
+   */
   private CaseFormat namingStrategy = DEFAULT_NAMING_STRATEGY;
 
+  /**
+   * 是否启用正则化。
+   */
   private boolean normalized = false;
 
+  /**
+   * 是否启用美化打印。
+   */
   private boolean prettyPrint = true;
 
+  /**
+   * 构造一个默认的自定义XML映射器。
+   */
   public CustomizedXmlMapper() {
     super(getXmlModule());
     init();
   }
 
+  /**
+   * 构造一个自定义XML映射器。
+   *
+   * @param normalized 是否启用正则化
+   */
   public CustomizedXmlMapper(final boolean normalized) {
     super(getXmlModule());
     this.normalized = normalized;
     init();
   }
 
+  /**
+   * 基于另一个自定义XML映射器创建副本。
+   *
+   * @param other 要复制的映射器
+   */
   public CustomizedXmlMapper(final CustomizedXmlMapper other) {
     super(other);
     this.namingStrategy = other.namingStrategy;
@@ -77,12 +121,20 @@ public class CustomizedXmlMapper extends XmlMapper {
     init();
   }
 
+  /**
+   * 获取配置好的Jackson XML模块。
+   *
+   * @return 配置好的XML模块
+   */
   private static JacksonXmlModule getXmlModule() {
     final JacksonXmlModule module = new JacksonXmlModule();
     module.setDefaultUseWrapper(true);
     return module;
   }
 
+  /**
+   * 初始化映射器配置。
+   */
   private void init() {
     customizeFeature(this);
     // 是否 pretty print
@@ -132,20 +184,40 @@ public class CustomizedXmlMapper extends XmlMapper {
     this.registerModule(ForceCreatorDeserializerModule.INSTANCE);
   }
 
+  /**
+   * 判断是否启用了美化打印。
+   *
+   * @return 如果启用了美化打印则返回true
+   */
   public final boolean isPrettyPrint() {
     return prettyPrint;
   }
 
+  /**
+   * 设置是否启用美化打印。
+   *
+   * @param prettyPrint 是否启用美化打印
+   */
   public void setPrettyPrint(final boolean prettyPrint) {
     this.prettyPrint = prettyPrint;
     // 是否 pretty print
     this.configure(SerializationFeature.INDENT_OUTPUT, prettyPrint);
   }
 
+  /**
+   * 判断是否启用了正则化。
+   *
+   * @return 如果启用了正则化则返回true
+   */
   public final boolean isNormalized() {
     return normalized;
   }
 
+  /**
+   * 设置是否启用正则化。
+   *
+   * @param normalized 是否启用正则化
+   */
   public void setNormalized(final boolean normalized) {
     this.normalized = normalized;
     if (normalized) {
@@ -154,10 +226,20 @@ public class CustomizedXmlMapper extends XmlMapper {
     }
   }
 
+  /**
+   * 获取当前的命名策略。
+   *
+   * @return 当前的命名策略
+   */
   public final CaseFormat getNamingStrategy() {
     return namingStrategy;
   }
 
+  /**
+   * 设置命名策略。
+   *
+   * @param namingStrategy 要设置的命名策略
+   */
   public void setNamingStrategy(final CaseFormat namingStrategy) {
     this.namingStrategy = namingStrategy;
     // 设置序列化和反序列化时字段属性命名策略
@@ -165,6 +247,9 @@ public class CustomizedXmlMapper extends XmlMapper {
     // this.nameConversionIntrospector.setNamingStrategy(namingStrategy.toPropertyNamingStrategy());
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public CustomizedXmlMapper copy() {
     return new CustomizedXmlMapper(this);
