@@ -24,23 +24,39 @@ import ltd.qubit.commons.text.xml.XmlException;
 import ltd.qubit.commons.text.xml.XmlSerializationException;
 
 /**
- * The {@link XmlSerializer} for the {@link HyperLink} class.
+ * {@link HyperLink} 类的 {@link XmlSerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public final class HyperLinkXmlSerializer implements XmlSerializer {
 
+  /**
+   * XML 根节点名称。
+   */
   public static final String ROOT_NODE = "hyper-link";
+
+  /**
+   * XML URL 属性名称。
+   */
   public static final String URL_ATTRIBUTE = "url";
 
+  /**
+   * 单例实例。
+   */
   public static final HyperLinkXmlSerializer INSTANCE = new HyperLinkXmlSerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String getRootNodeName() {
     return ROOT_NODE;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HyperLink deserialize(final Element root) throws XmlException {
     DomUtils.checkNode(root, ROOT_NODE);
@@ -55,6 +71,9 @@ public final class HyperLinkXmlSerializer implements XmlSerializer {
     return new HyperLink(url, anchor);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Element serialize(final Document doc, final Object obj) throws XmlException {
     final HyperLink link;

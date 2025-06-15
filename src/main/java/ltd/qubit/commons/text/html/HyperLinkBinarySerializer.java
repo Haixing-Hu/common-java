@@ -25,15 +25,21 @@ import static ltd.qubit.commons.io.InputUtils.readNullMark;
 import static ltd.qubit.commons.io.InputUtils.readString;
 
 /**
- * The {@link BinarySerializer} for the {@link HyperLink} class.
+ * {@link HyperLink} 类的 {@link BinarySerializer}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @ThreadSafe
 public final class HyperLinkBinarySerializer implements BinarySerializer {
 
+  /**
+   * 单例实例。
+   */
   public static final HyperLinkBinarySerializer INSTANCE = new HyperLinkBinarySerializer();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HyperLink deserialize(final InputStream in, final boolean allowNull)
       throws IOException {
@@ -50,6 +56,9 @@ public final class HyperLinkBinarySerializer implements BinarySerializer {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void serialize(final OutputStream out, final Object obj)
       throws IOException {

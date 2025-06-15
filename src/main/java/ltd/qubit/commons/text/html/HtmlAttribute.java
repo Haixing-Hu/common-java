@@ -9,11 +9,11 @@
 package ltd.qubit.commons.text.html;
 
 /**
- * This interface defines the constant of HTML attribute names.
+ * 此接口定义HTML属性名的常量。
  *
- * <p>The name of the constants are of the form {@code ATTR_[uppercase attribute name]}.
+ * <p>常量的名称形式为{@code ATTR_[大写属性名]}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see HtmlTag
  * @see HtmlAttributeValue
  * @see HtmlEvent
@@ -22,780 +22,766 @@ package ltd.qubit.commons.text.html;
 public interface HtmlAttribute {
 
   /**
-   * Specifies a keyboard shortcut to access an element.
+   * 指定访问元素的键盘快捷键。
    *
-   * <p>This is a standard attribute.
+   * <p>这是一个标准属性。
    */
   String ATTR_ACCESSKEY      = "accesskey";
 
   /**
-   * Specifies a class name for an element.
+   * 为元素指定类名。
    *
-   * <p>This is a standard attribute.
+   * <p>这是一个标准属性。
    */
   String ATTR_CLASS          = "class";
 
   /**
-   * Specifies the text direction for the content in an element.
+   * 指定元素中内容的文本方向。
    *
-   * <p>This is a standard attribute.
+   * <p>这是一个标准属性。
    */
   String ATTR_DIR            = "dir";
 
   /**
-   * Specifies a unique id for an element.
+   * 为元素指定唯一的id。
    *
-   * <p>This is a standard attribute.
+   * <p>这是一个标准属性。
    */
   String ATTR_ID             = "id";
 
   /**
-   * Specifies a language code for the content in an element.
+   * 为元素中的内容指定语言代码。
    *
-   * <p>This is a standard attribute.
+   * <p>这是一个标准属性。
    */
   String ATTR_LANG           = "lang";
 
   /**
-   * Specifies an inline style for an element.
+   * 为元素指定内联样式。
    *
-   * <p>This is a standard attribute.
+   * <p>这是一个标准属性。
    */
   String ATTR_STYLE          = "style";
 
   /**
-   * Specifies the tab order of an element.
+   * 指定元素的tab键顺序。
    *
-   * <p>This is a standard attribute.
+   * <p>这是一个标准属性。
    */
   String ATTR_TABINDEX       = "tabindex";
 
   /**
-   * Specifies extra information about an element.
+   * 指定关于元素的额外信息。
    *
-   * <p>This is a standard attribute.
+   * <p>这是一个标准属性。
    */
   String ATTR_TITLE          = "title";
 
   /**
-   * Specifies a language code for the content in an element, in XHTML
-   * documents.
+   * 在XHTML文档中为元素中的内容指定语言代码。
    *
-   * <p>This is a standard attribute.
+   * <p>这是一个标准属性。
    */
   String ATTR_XML_LANG       = "xml:lang";
 
   /**
-   * Specifies the character-set of a linked document.
+   * 指定链接文档的字符集。
    *
-   * <p>Applied to tag {@code a}, {@code link}, {@code script}.
+   * <p>应用于标签 {@code a}、{@code link}、{@code script}。
    */
   String ATTR_CHARSET        = "charset";
 
   /**
-   * Specifies the coordinates of an element.
+   * 指定元素的坐标。
    *
-   * <p>Applied to tag {@code a}, {@code area}.
+   * <p>应用于标签 {@code a}、{@code area}。
    */
   String ATTR_COORDS         = "coords";
 
   /**
-   * Specifies the destination of a link.
+   * 指定链接的目标地址。
    *
-   * <p>Applied to tag {@code a}, {@code area}, {@code base}, {@code link}.
+   * <p>应用于标签 {@code a}、{@code area}、{@code base}、{@code link}。
    */
   String ATTR_HREF           = "href";
 
   /**
-   * Specifies the language of a linked document.
+   * 指定链接文档的语言。
    *
-   * <p>Applied to tag {@code a}, {@code link}.
+   * <p>应用于标签 {@code a}、{@code link}。
    */
   String ATTR_HREFLANG       = "hreflang";
 
   /**
-   * Specifies the name of an element.
+   * 指定元素的名称。
    *
-   * <p>Applied to tag {@code a}, {@code applet}, {@code button},
-   * {@code form}, {@code frame}, {@code iframe},
-   * {@code input}, {@code map}, {@code meta},
-   * {@code object}, {@code param}, {@code select},
-   * {@code textarea}.
+   * <p>应用于标签 {@code a}、{@code applet}、{@code button}、
+   * {@code form}、{@code frame}、{@code iframe}、
+   * {@code input}、{@code map}、{@code meta}、
+   * {@code object}、{@code param}、{@code select}、
+   * {@code textarea}。
    */
   String ATTR_NAME           = "name";
 
   /**
-   * Specifies the relationship between the current document and the linked
-   * document.
+   * 指定当前文档与链接文档之间的关系。
    *
-   * <p>Applied to tag {@code a}, {@code link}.
+   * <p>应用于标签 {@code a}、{@code link}。
    */
   String ATTR_REL            = "rel";
 
   /**
-   * Specifies the relationship between the linked document and the current
-   * document.
+   * 指定链接文档与当前文档之间的关系。
    *
-   * <p>Applied to tag {@code a}, {@code link}.
+   * <p>应用于标签 {@code a}、{@code link}。
    */
   String ATTR_REV            = "rev";
 
   /**
-   * Specifies the shape of an element.
+   * 指定元素的形状。
    *
-   * <p>Applied to tag {@code a}, {@code area}.
+   * <p>应用于标签 {@code a}、{@code area}。
    */
   String ATTR_SHAPE          = "shape";
 
   /**
-   * Specifies where to open the linked page specified in the {@code href}
-   * attribute.
+   * 指定在何处打开 {@code href} 属性中指定的链接页面。
    *
-   * <p>Applied to tag {@code a}, {@code area}, {@code base},
-   * {@code form}, {@code link}.
+   * <p>应用于标签 {@code a}、{@code area}、{@code base}、
+   * {@code form}、{@code link}。
    */
   String ATTR_TARGET         = "target";
 
   /**
-   * Specifies the file name of a Java applet.
+   * 指定 Java 小程序的文件名。
    *
-   * <p>Applied to tag {@code applet}.
+   * <p>应用于标签 {@code applet}。
    */
   String ATTR_CODE           = "code";
 
   /**
-   * Specifies a reference to a serialized representation of an applet.
+   * 指定对小程序序列化表示的引用。
    *
-   * <p>Applied to tag {@code applet}.
+   * <p>应用于标签 {@code applet}。
    */
   String ATTR_OBJECT         = "object";
 
   /**
-   * Specifies the alignment of an element according to surrounding elements.
+   * 指定元素相对于周围元素的对齐方式。
    *
-   * <p>Applied to tag {@code applet}, {@code caption}, {@code col},
-   * {@code colgroup}, {@code div}, {@code h1}, {@code h2},
-   * {@code h3}, {@code h4}, {@code h5}, {@code h6},
-   * {@code hr}, {@code iframe}, {@code img}, {@code input},
-   * {@code legend}, {@code object}, {@code p},
-   * {@code table}, {@code tbody}, {@code td}, {@code tfoot}
-   * , {@code th}, {@code thead}, {@code tr}.
+   * <p>应用于标签 {@code applet}、{@code caption}、{@code col}、
+   * {@code colgroup}、{@code div}、{@code h1}、{@code h2}、
+   * {@code h3}、{@code h4}、{@code h5}、{@code h6}、
+   * {@code hr}、{@code iframe}、{@code img}、{@code input}、
+   * {@code legend}、{@code object}、{@code p}、
+   * {@code table}、{@code tbody}、{@code td}、{@code tfoot}、
+   * {@code th}、{@code thead}、{@code tr}。
    */
   String ATTR_ALIGN          = "align";
 
   /**
-   * Specifies an alternate text for an element.
+   * 指定元素的替代文本。
    *
-   * <p>Applied to tag {@code applet}, {@code area}, {@code img},
-   * {@code input}.
+   * <p>应用于标签 {@code applet}、{@code area}、{@code img}、
+   * {@code input}。
    */
   String ATTR_ALT            = "alt";
 
   /**
-   * Specifies the location of an archive file.
+   * 指定归档文件的位置。
    *
-   * <p>Applied to tag {@code applet}, {@code object}.
+   * <p>应用于标签 {@code applet}、{@code object}。
    */
   String ATTR_ARCHIVE        = "archive";
 
   /**
-   * Specifies a relative base URL for applets/objects specified in the code
-   * attribute.
+   * 为代码属性中指定的小程序/对象指定相对基础URL。
    *
-   * <p>Applied to tag {@code applet}, {@code object}.
+   * <p>应用于标签 {@code applet}、{@code object}。
    */
   String ATTR_CODEBASE       = "codebase";
 
   /**
-   * Specifies the height of an element.
+   * 指定元素的高度。
    *
-   * <p>Applied to tag {@code applet}, {@code iframe}, {@code img},
-   * {@code object}, {@code td}, {@code th}.
+   * <p>应用于标签 {@code applet}、{@code iframe}、{@code img}、
+   * {@code object}、{@code td}、{@code th}。
    */
   String ATTR_HEIGHT         = "height";
 
   /**
-   * Defines the horizontal spacing around an element.
+   * 定义元素周围的水平间距。
    *
-   * <p>Applied to tag {@code applet}, {@code img}, {@code object}.
+   * <p>应用于标签 {@code applet}、{@code img}、{@code object}。
    */
   String ATTR_HSPACE         = "hspace";
 
   /**
-   * Defines the vertical spacing around an element.
+   * 定义元素周围的垂直间距。
    *
-   * <p>Applied to tag {@code applet}, {@code img}, {@code object}.
+   * <p>应用于标签 {@code applet}、{@code img}、{@code object}。
    */
   String ATTR_VSPACE         = "vspace";
 
   /**
-   * Specifies the width of an element.
+   * 指定元素的宽度。
    *
-   * <p>Applied to tag {@code applet}, {@code col}, {@code colgroup},
-   * {@code hr}, {@code iframe}, {@code img},
-   * {@code object}, {@code pre}, {@code table}, {@code td},
-   * {@code th}.
+   * <p>应用于标签 {@code applet}、{@code col}、{@code colgroup}、
+   * {@code hr}、{@code iframe}、{@code img}、
+   * {@code object}、{@code pre}、{@code table}、{@code td}、
+   * {@code th}。
    */
   String ATTR_WIDTH          = "width";
 
   /**
-   * Specifies that an area has no associated link.
+   * 指定某个区域没有关联的链接。
    *
-   * <p>Applied to tag {@code area}.
+   * <p>应用于标签 {@code area}。
    */
   String ATTR_NOHREF         = "nohref";
 
   /**
-   * Specifies the source of a quotation, or specifies a URL to a document which
-   * explains why the text was deleted/inserted/changed.
+   * 指定引文的来源，或指定解释文本被删除/插入/更改原因的文档的URL。
    *
-   * <p>Applied to tag {@code blockquote}, {@code del}, {@code ins},
-   * {@code q}.
+   * <p>应用于标签 {@code blockquote}、{@code del}、{@code ins}、
+   * {@code q}。
    */
   String ATTR_CITE           = "cite";
 
   /**
-   * Specifies the color of an active link in a document.
+   * 指定文档中活动链接的颜色。
    *
-   * <p>Deprecated. Use styles instead.
+   * <p>已弃用，请使用样式代替。
    *
-   * <p>Applied to tag {@code body}.
+   * <p>应用于标签 {@code body}。
    */
   String ATTR_ALINK          = "alink";
 
   /**
-   * Specifies a background image for a document.
+   * 指定文档的背景图像。
    *
-   * <p>Deprecated. Use styles instead.
+   * <p>已弃用，请使用样式代替。
    *
-   * <p>Applied to tag {@code body}.
+   * <p>应用于标签 {@code body}。
    */
   String ATTR_BACKGROUND     = "background";
 
   /**
-   * Specifies the background color of an element.
+   * 指定元素的背景颜色。
    *
-   * <p>Deprecated. Use styles instead.
+   * <p>已弃用，请使用样式代替。
    *
-   * <p>Applied to tag {@code body}, {@code table}, {@code td},
-   * {@code th}, {@code tr}.
+   * <p>应用于标签 {@code body}、{@code table}、{@code td}、
+   * {@code th}、{@code tr}。
    */
   String ATTR_BGCOLOR        = "bgcolor";
 
   /**
-   * Specifies the default color of unvisited links in a document.
+   * 指定文档中未访问链接的默认颜色。
    *
-   * <p>Deprecated. Use styles instead.
+   * <p>已弃用，请使用样式代替。
    *
-   * <p>Applied to tag {@code body}.
+   * <p>应用于标签 {@code body}。
    */
   String ATTR_LINK           = "link";
 
   /**
-   * Specifies the color of the text in a document.
+   * 指定文档中文本的颜色。
    *
-   * <p>Deprecated. Use styles instead.
+   * <p>已弃用，请使用样式代替。
    *
-   * <p>Applied to tag {@code body}.
+   * <p>应用于标签 {@code body}。
    */
   String ATTR_TEXT           = "text";
 
   /**
-   * Specifies the default color of visited links in a document.
+   * 指定文档中已访问链接的默认颜色。
    *
-   * <p>Deprecated. Use styles instead.
+   * <p>已弃用，请使用样式代替。
    *
-   * <p>Applied to tag {@code body}.
+   * <p>应用于标签 {@code body}。
    */
   String ATTR_VLINK          = "vlink";
 
   /**
-   * Specifies that an element should be disabled.
+   * 指定元素应该被禁用。
    *
-   * <p>Applied to tag {@code button}, {@code input},
-   * {@code optgroup}, {@code option}, {@code select},
-   * {@code textarea}.
+   * <p>应用于标签 {@code button}、{@code input}、
+   * {@code optgroup}、{@code option}、{@code select}、
+   * {@code textarea}。
    */
   String ATTR_DISABLED       = "disabled";
 
   /**
-   * Specifies the type of an element.
+   * 指定元素的类型。
    *
-   * <p>Applied to tag {@code button}, {@code input}, {@code li},
-   * {@code link}, {@code object}, {@code ol}, {@code param},
-   * {@code script}, {@code style}, {@code ul}.
+   * <p>应用于标签 {@code button}、{@code input}、{@code li}、
+   * {@code link}、{@code object}、{@code ol}、{@code param}、
+   * {@code script}、{@code style}、{@code ul}。
    */
   String ATTR_TYPE           = "type";
 
   /**
-   * Specifies the underlying value of an element.
+   * 指定元素的基础值。
    *
-   * <p>Applied to tag {@code button}, {@code input}, {@code li},
-   * {@code option}, {@code param}.
+   * <p>应用于标签 {@code button}、{@code input}、{@code li}、
+   * {@code option}、{@code param}。
    */
   String ATTR_VALUE          = "value";
 
   /**
-   * Aligns the content in a cell to a character
+   * 将单元格中的内容与字符对齐。
    *
-   * <p>Applied to tag {@code col}, {@code colgroup}, {@code tbody},
-   * {@code td}, {@code tfoot}, {@code th}, {@code thead},
-   * {@code tr}.
+   * <p>应用于标签 {@code col}、{@code colgroup}、{@code tbody}、
+   * {@code td}、{@code tfoot}、{@code th}、{@code thead}、
+   * {@code tr}。
    */
   String ATTR_CHAR           = "char";
 
   /**
-   * Specifies the number of characters the content will be aligned from the
-   * character specified by the {@code char} attribute.
+   * 指定内容将从 {@code char} 属性指定的字符对齐的字符数。
    *
-   * <p>Applied to tag {@code col}, {@code colgroup}, {@code tbody},
-   * {@code td}, {@code tfoot}, {@code th}, {@code thead},
-   * {@code tr}.
+   * <p>应用于标签 {@code col}、{@code colgroup}、{@code tbody}、
+   * {@code td}、{@code tfoot}、{@code th}、{@code thead}、
+   * {@code tr}。
    */
   String ATTR_CHAROFF        = "charoff";
 
   /**
-   * Specifies the number of columns a table column element should span.
+   * 指定表格列元素应跨越的列数。
    *
-   * <p>Applied to tag {@code col}, {@code colgroup}.
+   * <p>应用于标签 {@code col}、{@code colgroup}。
    */
   String ATTR_SPAN           = "span";
 
   /**
-   * Specifies the vertical alignment of the content related to a table column
-   * element.
+   * 指定与表格列元素相关的内容的垂直对齐。
    *
-   * <p>Applied to tag {@code col}, {@code colgroup}, {@code tbody},
-   * {@code td}, {@code tfoot}, {@code th}, {@code thead},
-   * {@code tr}.
+   * <p>应用于标签 {@code col}、{@code colgroup}、{@code tbody}、
+   * {@code td}、{@code tfoot}、{@code th}、{@code thead}、
+   * {@code tr}。
    */
   String ATTR_VALIGN         = "valign";
 
   /**
-   * Specifies the date and time when the text was deleted/inserted/changed.
+   * 指定文本被删除/插入/更改的日期和时间。
    *
-   * <p>Applied to tag {@code del}, {@code ins}.
+   * <p>应用于标签 {@code del}、{@code ins}。
    */
   String ATTR_DATETIME       = "datetime";
 
   /**
-   * Specifies that the list should render smaller than normal.
+   * 指定列表应该比正常大小更小地呈现。
    *
-   * <p>Deprecated. Use styles instead.
+   * <p>已弃用，请使用样式代替。
    *
-   * <p>Applied to tag {@code dir}, {@code menu}, {@code ol},
-   * {@code ul}.
+   * <p>应用于标签 {@code dir}、{@code menu}、{@code ol}、
+   * {@code ul}。
    */
   String ATTR_COMPACT        = "compact";
 
   /**
-   * Specifies the color of text.
+   * 指定文本的颜色。
    *
-   * <p>Deprecated. Use styles instead.
+   * <p>已弃用，请使用样式代替。
    *
-   * <p>Applied to tag {@code font}.
+   * <p>应用于标签 {@code font}。
    */
   String ATTR_COLOR          = "color";
 
   /**
-   * Specifies the font of text.
+   * 指定文本的字体。
    *
-   * <p>Deprecated. Use styles instead.
+   * <p>已弃用，请使用样式代替。
    *
-   * <p>Applied to tag {@code font}.
+   * <p>应用于标签 {@code font}。
    */
   String ATTR_FACE           = "face";
 
   /**
-   * Specifies the size of an element.
+   * 指定元素的大小。
    *
-   * <p>Deprecated. Use styles instead.
+   * <p>已弃用，请使用样式代替。
    *
-   * <p>Applied to tag {@code font}, {@code hr}, {@code input},
-   * {@code select}.
+   * <p>应用于标签 {@code font}、{@code hr}、{@code input}、
+   * {@code select}。
    */
   String ATTR_SIZE           = "size";
 
   /**
-   * Specifies where to send the form-data when a form is submitted.
+   * 指定提交表单时表单数据的发送地址。
    *
-   * <p>Applied to tag {@code form}.
+   * <p>应用于标签 {@code form}。
    */
   String ATTR_ACTION         = "action";
 
   /**
-   * Specifies the types of files that can be submitted through a file upload.
+   * 指定可以通过文件上传提交的文件类型。
    *
-   * <p>Applied to tag {@code form}, {@code input}.
+   * <p>应用于标签 {@code form}、{@code input}。
    */
   String ATTR_ACCEPT         = "accept";
 
   /**
-   * Specifies the character-sets the server can handle for form-data.
+   * 指定服务器可以处理的表单数据字符集。
    *
-   * <p>Applied to tag {@code form}.
+   * <p>应用于标签 {@code form}。
    */
   String ATTR_ACCEPT_CHARSET = "accept-charset";
 
   /**
-   * Specifies how form-data should be encoded before sending it to a server.
+   * 指定表单数据在发送到服务器之前应如何编码。
    *
-   * <p>Applied to tag {@code form}.
+   * <p>应用于标签 {@code form}。
    */
   String ATTR_ENCTYPE        = "enctype";
 
   /**
-   * Specifies how to send form-data.
+   * 指定如何发送表单数据。
    *
-   * <p>Applied to tag {@code form}.
+   * <p>应用于标签 {@code form}。
    */
   String ATTR_METHOD         = "method";
 
   /**
-   * Specifies whether or not to display a border around a frame.
+   * 指定是否在框架周围显示边框。
    *
-   * <p>Applied to tag {@code frame}, {@code iframe}.
+   * <p>应用于标签 {@code frame}、{@code iframe}。
    */
   String ATTR_FRAMEBORDER    = "frameborder";
 
   /**
-   * Specifies a page that contains a long description of the content of an
-   * element.
+   * 指定包含元素内容长描述的页面。
    *
-   * <p>Applied to tag {@code frame}, {@code iframe}, {@code img}.
+   * <p>应用于标签 {@code frame}、{@code iframe}、{@code img}。
    */
   String ATTR_LONGDESC       = "longdesc";
 
   /**
-   * Specifies the top and bottom margins of a frame.
+   * 指定框架的上下边距。
    *
-   * <p>Applied to tag {@code frame}, {@code iframe}.
+   * <p>应用于标签 {@code frame}、{@code iframe}。
    */
   String ATTR_MARGINHEIGHT   = "marginheight";
 
   /**
-   * Specifies the left and right margins of a frame.
+   * 指定框架的左右边距。
    *
-   * <p>Applied to tag {@code frame}, {@code iframe}.
+   * <p>应用于标签 {@code frame}、{@code iframe}。
    */
   String ATTR_MARGINWIDTH    = "marginwidth";
 
   /**
-   * Specifies that a frame cannot be resized.
+   * 指定框架不能被调整大小。
    *
-   * <p>Applied to tag {@code frame}.
+   * <p>应用于标签 {@code frame}。
    */
   String ATTR_NORESIZE       = "noresize";
 
   /**
-   * Specifies whether or not to display scrolling bars in a frame.
+   * 指定是否在框架中显示滚动条。
    *
-   * <p>Applied to tag {@code frame}, {@code iframe}.
+   * <p>应用于标签 {@code frame}、{@code iframe}。
    */
   String ATTR_SCROLLING      = "scrolling";
 
   /**
-   * Specifies the URL of the content to show in an element.
+   * 指定要在元素中显示的内容的URL。
    *
-   * <p>Applied to tag {@code frame}, {@code iframe}, {@code img},
-   * {@code input}, {@code script}.
+   * <p>应用于标签 {@code frame}、{@code iframe}、{@code img}、
+   * {@code input}、{@code script}。
    */
   String ATTR_SRC            = "src";
 
   /**
-   * Specifies the number and size of columns in an element.
+   * 指定元素中列的数量和大小。
    *
-   * <p>Applied to tag {@code frameset}, {@code textarea}.
+   * <p>应用于标签 {@code frameset}、{@code textarea}。
    */
   String ATTR_COLS           = "cols";
 
   /**
-   * Specifies the number and size of rows in an element.
+   * 指定元素中行的数量和大小。
    *
-   * <p>Applied to tag {@code frameset}, {@code textarea}.
+   * <p>应用于标签 {@code frameset}、{@code textarea}。
    */
   String ATTR_ROWS           = "rows";
 
   /**
-   * Specifies a URL to a document that contains a set of rules. The rules can
-   * be read by browsers to clearly understand the information in the
-   * {@code meta} tag's {@code content} attribute.
+   * 指定包含一组规则的文档的URL。浏览器可以读取这些规则以
+   * 清楚地理解 {@code meta} 标签的 {@code content} 属性中的信息。
    *
-   * <p>Applied to tag {@code head}.
+   * <p>应用于标签 {@code head}。
    */
   String ATTR_PROFILE        = "profile";
 
   /**
-   * Specifies that a {@code hr} element should render in one solid color
-   * (no shaded), instead of a shaded color.
+   * 指定 {@code hr} 元素应以单一实色（无阴影）呈现，
+   * 而不是阴影颜色。
    *
-   * <p>Deprecated. Use styles instead.
+   * <p>已弃用，请使用样式代替。
    *
-   * <p>Applied to tag {@code hr}.
+   * <p>应用于标签 {@code hr}。
    */
   String ATTR_NOSHADE        = "noshade";
 
   /**
-   * Specifies the namespace to use (only for XHTML documents!).
+   * 指定要使用的命名空间（仅适用于XHTML文档！）。
    *
-   * <p>Applied to tag {@code html}.
+   * <p>应用于标签 {@code html}。
    */
   String ATTR_XMLNS          = "xmlns";
 
   /**
-   * Specifies the width of the border around an element.
+   * 指定元素周围边框的宽度。
    *
-   * <p>Deprecated. Use styles instead.
+   * <p>已弃用，请使用样式代替。
    *
-   * <p>Applied to tag {@code img}, {@code object}, {@code table}.
+   * <p>应用于标签 {@code img}、{@code object}、{@code table}。
    */
   String ATTR_BORDER         = "border";
 
   /**
-   * Specifies an image as a server-side image-map
+   * 指定图像为服务器端图像映射。
    *
-   * <p>Applied to tag {@code img}.
+   * <p>应用于标签 {@code img}。
    */
   String ATTR_ISMAP          = "ismap";
 
   /**
-   * Specifies an image as a client-side image-map
+   * 指定图像为客户端图像映射。
    *
-   * <p>Applied to tag {@code img}, {@code object}.
+   * <p>应用于标签 {@code img}、{@code object}。
    */
   String ATTR_USEMAP         = "usemap";
 
   /**
-   * Specifies that an input element should be preselected when the page loads
-   * (for type="checkbox" or type="radio").
+   * 指定输入元素在页面加载时应该被预选
+   * （对于 type="checkbox" 或 type="radio"）。
    *
-   * <p>Applied to tag {@code input}.
+   * <p>应用于标签 {@code input}。
    */
   String ATTR_CHECKED        = "checked";
 
   /**
-   * Specifies the maximum length (in characters) of an input field (for
-   * type="text" or type="password").
+   * 指定输入字段的最大长度（字符数）
+   * （对于 type="text" 或 type="password"）。
    *
-   * <p>Applied to tag {@code input}.
+   * <p>应用于标签 {@code input}。
    */
   String ATTR_MAXLENGTH      = "maxlength";
 
   /**
-   * Specifies that the content of an element should be read-only.
+   * 指定元素的内容应该是只读的。
    *
-   * <p>Applied to tag {@code input}, {@code textarea}.
+   * <p>应用于标签 {@code input}、{@code textarea}。
    */
   String ATTR_READONLY       = "readonly";
 
   /**
-   * Specifies which form element a label is bound to.
+   * 指定标签绑定到哪个表单元素。
    *
-   * <p>Applied to tag {@code label}.
+   * <p>应用于标签 {@code label}。
    */
   String ATTR_FOR            = "for";
 
   /**
-   * Specifies on what device the linked document will be displayed.
+   * 指定链接文档将在什么设备上显示。
    *
-   * <p>Applied to tag {@code link}, {@code style}.
+   * <p>应用于标签 {@code link}、{@code style}。
    */
   String ATTR_MEDIA          = "media";
 
   /**
-   * Specifies the content of the meta information.
+   * 指定元信息的内容。
    *
-   * <p>Applied to tag {@code meta}.
+   * <p>应用于标签 {@code meta}。
    */
   String ATTR_CONTENT        = "content";
 
   /**
-   * Provides an HTTP header for the information in the content attribute.
+   * 为内容属性中的信息提供HTTP头。
    *
-   * <p>Applied to tag {@code meta}.
+   * <p>应用于标签 {@code meta}。
    */
   String ATTR_HTTP_EQUIV     = "http-equiv";
 
   /**
-   * Specifies a scheme to be used to interpret the value of the content
-   * attribute.
+   * 指定用于解释内容属性值的方案。
    *
-   * <p>Applied to tag {@code meta}.
+   * <p>应用于标签 {@code meta}。
    */
   String ATTR_SCHEME         = "scheme";
 
   /**
-   * Defines a class ID value as set in the Windows Registry or a URL.
+   * 定义在Windows注册表中设置的类ID值或URL。
    *
-   * <p>Applied to tag {@code object}.
+   * <p>应用于标签 {@code object}。
    */
   String ATTR_CLASSID        = "classid";
 
   /**
-   * The internet media type of the code referred to by the {@code classid}
-   * attribute.
+   * {@code classid} 属性引用的代码的互联网媒体类型。
    *
-   * <p>Applied to tag {@code object}.
+   * <p>应用于标签 {@code object}。
    */
   String ATTR_CODETYPE       = "codetype";
 
   /**
-   * Defines a URL that refers to the object's data.
+   * 定义引用对象数据的URL。
    *
-   * <p>Applied to tag {@code object}.
+   * <p>应用于标签 {@code object}。
    */
   String ATTR_DATA           = "data";
 
   /**
-   * Defines that the object should only be declared, not created or
-   * instantiated until needed.
+   * 定义对象应该只被声明，而不是在需要之前创建或实例化。
    *
-   * <p>Applied to tag {@code object}.
+   * <p>应用于标签 {@code object}。
    */
   String ATTR_DECLARE        = "declare";
 
   /**
-   * Defines a text to display while the object is loading.
+   * 定义对象加载时显示的文本。
    *
-   * <p>Applied to tag {@code object}.
+   * <p>应用于标签 {@code object}。
    */
   String ATTR_STANDBY        = "standby";
 
   /**
-   * Specifies the start point in a list.
+   * 指定列表中的起始点。
    *
-   * <p>Deprecated. Use styles instead.
+   * <p>已弃用，请使用样式代替。
    *
-   * <p>Applied to tag {@code ol}.
+   * <p>应用于标签 {@code ol}。
    */
   String ATTR_START          = "start";
 
   /**
-   * Specifies a description for a group of options.
+   * 指定选项组的描述。
    *
-   * <p>Applied to tag {@code optgroup}, {@code option}.
+   * <p>应用于标签 {@code optgroup}、{@code option}。
    */
   String ATTR_LABEL          = "label";
 
   /**
-   * Specifies that an option should be selected by default.
+   * 指定选项应该默认被选中。
    *
-   * <p>Applied to tag {@code option}.
+   * <p>应用于标签 {@code option}。
    */
   String ATTR_SELECTED       = "selected";
 
   /**
-   * Specifies the type of the value.
+   * 指定值的类型。
    *
-   * <p>Applied to tag {@code param}.
+   * <p>应用于标签 {@code param}。
    */
   String ATTR_VALUETYPE      = "valuetype";
 
   /**
-   * Specifies that the execution of a script should be deferred (delayed) until
-   * after the page has been loaded.
+   * 指定脚本的执行应该被推迟（延迟）直到页面加载完成。
    *
-   * <p>Applied to tag {@code script}.
+   * <p>应用于标签 {@code script}。
    */
   String ATTR_DEFER          = "defer";
 
   /**
-   * Specifies whether whitespace in code should be preserved.
+   * 指定代码中的空白字符是否应该被保留。
    *
-   * <p>Applied to tag {@code script}.
+   * <p>应用于标签 {@code script}。
    */
   String ATTR_XML_SPACE      = "xml:space";
 
   /**
-   * Specifies that multiple options can be selected.
+   * 指定可以选择多个选项。
    *
-   * <p>Applied to tag {@code select}.
+   * <p>应用于标签 {@code select}。
    */
   String ATTR_MULTIPLE       = "multiple";
 
   /**
-   * Specifies the space between the cell wall and the cell content.
+   * 指定单元格壁和单元格内容之间的空间。
    *
-   * <p>Applied to tag {@code table}.
+   * <p>应用于标签 {@code table}。
    */
   String ATTR_CELLPADDING    = "cellpadding";
 
   /**
-   * Specifies the space between cells.
+   * 指定单元格之间的空间。
    *
-   * <p>Applied to tag {@code table}.
+   * <p>应用于标签 {@code table}。
    */
   String ATTR_CELLSPACING    = "cellspacing";
 
   /**
-   * Specifies which parts of the outside borders that should be visible.
+   * 指定外边框的哪些部分应该可见。
    *
-   * <p>Applied to tag {@code table}.
+   * <p>应用于标签 {@code table}。
    */
   String ATTR_FRAME          = "frame";
 
   /**
-   * Specifies which parts of the inside borders that should be visible.
+   * 指定内边框的哪些部分应该可见。
    *
-   * <p>Applied to tag {@code table}.
+   * <p>应用于标签 {@code table}。
    */
   String ATTR_RULES          = "rules";
 
   /**
-   * Specifies a summary of the content of a table.
+   * 指定表格内容的摘要。
    *
-   * <p>Applied to tag {@code table}.
+   * <p>应用于标签 {@code table}。
    */
   String ATTR_SUMMARY        = "summary";
 
   /**
-   * Specifies an abbreviated version of the content in a cell.
+   * 指定单元格内容的缩写版本。
    *
-   * <p>Applied to tag {@code td}, {@code th}.
+   * <p>应用于标签 {@code td}、{@code th}。
    */
   String ATTR_ABBR           = "abbr";
 
   /**
-   * Categorizes cells.
+   * 对单元格进行分类。
    *
-   * <p>Applied to tag {@code td}, {@code th}.
+   * <p>应用于标签 {@code td}、{@code th}。
    */
   String ATTR_AXIS           = "axis";
 
   /**
-   * Specifies the number of columns a cell should span.
+   * 指定单元格应跨越的列数。
    *
-   * <p>Applied to tag {@code td}, {@code th}.
+   * <p>应用于标签 {@code td}、{@code th}。
    */
   String ATTR_COLSPAN        = "colspan";
 
   /**
-   * Specifies the table headers related to a cell.
+   * 指定与单元格相关的表头。
    *
-   * <p>Applied to tag {@code td}.
+   * <p>应用于标签 {@code td}。
    */
   String ATTR_HEADERS        = "headers";
 
   /**
-   * Specifies that the content inside a cell should not wrap.
+   * 指定单元格内的内容不应换行。
    *
-   * <p>Deprecated. Use styles instead.
+   * <p>已弃用，请使用样式代替。
    *
-   * <p>Applied to tag {@code td}, {@code th}.
+   * <p>应用于标签 {@code td}、{@code th}。
    */
   String ATTR_NOWRAP         = "nowrap";
 
   /**
-   * Sets the number of rows a cell should span.
+   * 设置单元格应跨越的行数。
    *
-   * <p>Applied to tag {@code td}, {@code th}.
+   * <p>应用于标签 {@code td}、{@code th}。
    */
   String ATTR_ROWSPAN        = "rowspan";
 
   /**
-   * Defines a way to associate header cells and data cells in a table.
+   * 定义在表格中关联表头单元格和数据单元格的方法。
    *
-   * <p>Applied to tag {@code td}, {@code th}.
+   * <p>应用于标签 {@code td}、{@code th}。
    */
   String ATTR_SCOPE          = "scope";
 

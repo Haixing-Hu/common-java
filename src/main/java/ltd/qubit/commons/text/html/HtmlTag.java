@@ -13,11 +13,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * This interface defines the constant of HTML tag names.
+ * 此类定义HTML标签名称的常量。
  *
- * <p>The name of the constants are of the form {@code TAG_[uppercase tag name]}.
+ * <p>常量的名称形式为{@code TAG_[大写标签名]}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see HtmlAttribute
  * @see HtmlAttributeValue
  * @see HtmlEvent
@@ -29,609 +29,577 @@ public final class HtmlTag {
   private HtmlTag() {}
 
   /**
-   * Defines an anchor (hyper-link).
+   * 定义锚点（超链接）。
    */
   public static final String TAG_A          = "a";
 
   /**
-   * Defines an abbreviation.
+   * 定义缩写。
    */
   public static final String TAG_ABBR       = "abbr";
 
   /**
-   * Defines an acronym.
+   * 定义首字母缩略词。
    */
   public static final String TAG_ACRONYM    = "acronym";
 
   /**
-   * Defines contact information for the author/owner of a document.
+   * 定义文档作者/所有者的联系信息。
    */
   public static final String TAG_ADDRESS    = "contact";
 
   /**
-   * Deprecated. Defines an embedded applet.
+   * 已弃用。定义嵌入的小程序。
    */
   public static final String TAG_APPLET     = "applet";
 
   /**
-   * Defines an area inside an image-map.
+   * 定义图像映射内的区域。
    */
   public static final String TAG_AREA       = "area";
 
   /**
-   * Defines bold text.
+   * 定义粗体文本。
    */
   public static final String TAG_B          = "b";
 
   /**
-   * Defines a default contact or a default target for all links on a page.
+   * 定义页面上所有链接的默认联系人或默认目标。
    */
   public static final String TAG_BASE       = "base";
 
   /**
-   * Deprecated. Defines a default font, color, or size for the text in a page.
+   * 已弃用。定义页面中文本的默认字体、颜色或大小。
    */
   public static final String TAG_BASEFONT   = "basefont";
 
   /**
-   * Defines the text direction.
+   * 定义文本方向。
    */
   public static final String TAG_BDO        = "bdo";
 
   /**
-   * The {@code bgsound} element is used to play an audio file when the
-   * page loads and has a handful of attributes to control that audio, including
-   * balance, volume, loop and the most important of all, the {@code src}
-   * attribute which refers to the file required.
+   * {@code bgsound} 元素用于在页面加载时播放音频文件，
+   * 并具有一些属性来控制该音频，包括平衡、音量、循环，
+   * 以及最重要的 {@code src} 属性，该属性引用所需的文件。
    */
   public static final String TAG_BGSOUND    = "bgsound";
 
   /**
-   * Defines big text.
+   * 定义大文本。
    */
   public static final String TAG_BIG        = "big";
 
   /**
-   * The blink element is not part of any standard and was originally introduced
-   * by early versions of the Netscape browser. Its sole purpose is to blink
-   * text on and off, and its sole result is the general annoyance to all who
-   * come across it. To say it’s disliked is an understatement. Use this only if
-   * your intention is to have invalid app pages and if you want your audience
-   * to think that they’ve gone back in time, somewhere around the early 90s.
+   * blink元素不是任何标准的一部分，最初由早期版本的Netscape浏览器引入。
+   * 它的唯一目的是使文本闪烁开关，其唯一结果是让所有遇到它的人普遍感到厌烦。
+   * 说它不受欢迎是一种轻描淡写。只有当你的意图是拥有无效的应用页面，
+   * 并且你希望你的观众认为他们已经回到了过去，大约在90年代初的某个时候，
+   * 才使用这个元素。
    */
   public static final String TAG_BLINK      = "blink";
 
   /**
-   * Defines a long quotation.
+   * 定义长引用。
    */
   public static final String TAG_BLOCKQUOTE = "blockquote";
 
   /**
-   * Defines the document's body.
+   * 定义文档的主体。
    */
   public static final String TAG_BODY       = "body";
 
   /**
-   * Defines a single line break.
+   * 定义单行换行。
    */
   public static final String TAG_BR         = "br";
 
   /**
-   * Defines a push button.
+   * 定义按钮。
    */
   public static final String TAG_BUTTON     = "button";
 
   /**
-   * Defines a table caption.
+   * 定义表格标题。
    */
   public static final String TAG_CAPTION    = "caption";
 
   /**
-   * Deprecated. Defines centered text.
+   * 已弃用。定义居中文本。
    */
   public static final String TAG_CENTER     = "center";
 
   /**
-   * Defines a citation.
+   * 定义引文。
    */
   public static final String TAG_CITE       = "cite";
 
   /**
-   * Defines computer code text.
+   * 定义计算机代码文本。
    */
   public static final String TAG_CODE       = "code";
 
   /**
-   * Defines attribute values for one or more columns in a table .
+   * 定义表格中一列或多列的属性值。
    */
   public static final String TAG_COL        = "col";
 
   /**
-   * Defines a group of columns in a table for formatting.
+   * 定义表格中用于格式化的列组。
    */
   public static final String TAG_COLGROUP   = "colgroup";
 
   /**
-   * The comment element is a non-standard and little-supported element that’s
-   * used to add comments to markup. It has just one attribute—data—that points
-   * to a app page that provides further information about the comment. Moving
-   * forward, this element shouldn’t be used. Instead, use the standard HTML
-   * comment syntax of <!-- comment here -->.
+   * comment元素是一个非标准且支持很少的元素，用于向标记添加注释。
+   * 它只有一个属性——data——指向提供有关注释的更多信息的应用页面。
+   * 今后，不应使用此元素。相反，使用标准的HTML注释语法 &lt;!-- comment here --&gt;。
    */
   public static final String TAG_COMMENT    = "comment";
 
   /**
-   * Defines a description of a term in a definition list.
+   * 定义定义列表中术语的描述。
    */
   public static final String TAG_DD         = "dd";
 
   /**
-   * Defines deleted text.
+   * 定义删除的文本。
    */
   public static final String TAG_DEL        = "del";
 
   /**
-   * Defines a definition term.
+   * 定义定义术语。
    */
   public static final String TAG_DFN        = "dfn";
 
   /**
-   * Deprecated. Defines a directory list.
+   * 已弃用。定义目录列表。
    */
   public static final String TAG_DIR        = "dir";
 
   /**
-   * Defines a section in a document.
+   * 定义文档中的节。
    */
   public static final String TAG_DIV        = "div";
 
   /**
-   * Defines a definition list.
+   * 定义定义列表。
    */
   public static final String TAG_DL         = "dl";
 
   /**
-   * Defines a term (an item) in a definition list.
+   * 定义定义列表中的术语（项目）。
    */
   public static final String TAG_DT         = "dt";
 
   /**
-   * Defines emphasized text.
+   * 定义强调文本。
    */
   public static final String TAG_EM         = "em";
 
   /**
-   * {@code embed} is a non-standard but well-supported element that’s used
-   * to embed multimedia content, including media types that mightn’t usually be
-   * natively supported by the browser. It can also be used for embedding media
-   * types that are supported, such as images in .jpg, .gif, or .png format.
+   * {@code embed} 是一个非标准但支持良好的元素，用于嵌入多媒体内容，
+   * 包括可能不被浏览器本机支持的媒体类型。它也可以用于嵌入受支持的媒体
+   * 类型，例如 .jpg、.gif 或 .png 格式的图像。
    */
   public static final String TAG_EMBED      = "embed";
 
   /**
-   * Defines a border around elements in a form.
+   * 定义表格边框。
    */
   public static final String TAG_FIELDSET   = "fieldset";
 
   /**
-   * Deprecated. Defines font, color, and size for text.
+   * 已弃用。定义字体、颜色和文本大小。
    */
   public static final String TAG_FONT       = "font";
 
   /**
-   * Defines an HTML form for user input.
+   * 定义 HTML 表单以获取用户输入。
    */
   public static final String TAG_FORM       = "form";
 
   /**
-   * Defines a window (a frame) in a frameset.
+   * 定义框架集中的窗口（框架）。
    */
   public static final String TAG_FRAME      = "frame";
 
   /**
-   * Defines a set of frames.
+   * 定义框架集。
    */
   public static final String TAG_FRAMESET   = "frameset";
 
   /**
-   * Defines HTML heading 1.
+   * 定义 HTML 标题 1。
    */
   public static final String TAG_H1         = "h1";
 
   /**
-   * Defines HTML heading 2.
+   * 定义 HTML 标题 2。
    */
   public static final String TAG_H2         = "h2";
 
   /**
-   * Defines HTML heading 3.
+   * 定义 HTML 标题 3。
    */
   public static final String TAG_H3         = "h3";
 
   /**
-   * Defines HTML heading 4.
+   * 定义 HTML 标题 4。
    */
   public static final String TAG_H4         = "h4";
 
   /**
-   * Defines HTML heading 5.
+   * 定义 HTML 标题 5。
    */
   public static final String TAG_H5         = "h5";
 
   /**
-   * Defines HTML heading 6.
+   * 定义 HTML 标题 6。
    */
   public static final String TAG_H6         = "h6";
 
   /**
-   * Defines information about the document.
+   * 定义文档信息。
    */
   public static final String TAG_HEAD       = "head";
 
   /**
-   * Defines a horizontal line.
+   * 定义水平线。
    */
   public static final String TAG_HR         = "hr";
 
   /**
-   * Defines an HTML document.
+   * 定义 HTML 文档。
    */
   public static final String TAG_HTML       = "html";
 
   /**
-   * Defines italic text.
+   * 定义斜体文本。
    */
   public static final String TAG_I          = "i";
 
   /**
-   * Defines an inline frame.
+   * 定义内联框架。
    */
   public static final String TAG_IFRAME     = "iframe";
 
   /**
-   * Defines an image.
+   * 定义图像。
    */
   public static final String TAG_IMG        = "img";
 
   /**
-   * Defines an input control.
+   * 定义输入控制。
    */
   public static final String TAG_INPUT      = "input";
 
   /**
-   * Defines inserted text.
+   * 定义插入的文本。
    */
   public static final String TAG_INS        = "ins";
 
   /**
-   * Deprecated. Defines a searchable current related to a document.
+   * 已弃用。定义可搜索的当前相关文档。
    */
   public static final String TAG_ISINDEX    = "isindex";
 
   /**
-   * Defines keyboard text.
+   * 定义键盘文本。
    */
   public static final String TAG_KBD        = "kbd";
 
   /**
-   * Defines a label for an {@code input} element.
+   * 定义 {@code input} 元素的标签。
    */
   public static final String TAG_LABEL      = "label";
 
   /**
-   * Defines a caption for a {@code fieldset} element.
+   * 定义 {@code fieldset} 元素的标题。
    */
   public static final String TAG_LEGEND     = "legend";
 
   /**
-   * Defines a list item.
+   * 定义列表项。
    */
   public static final String TAG_LI         = "li";
 
   /**
-   * Defines the relationship between a document and an external resource.
+   * 定义文档与外部资源的关联。
    */
   public static final String TAG_LINK       = "link";
 
   /**
-   * The marquee element provides a way for browsers to render text that moves
-   * across the page without having to resort to JavaScript techniques. The
-   * marquee is non-standard but enjoys (or possibly suffers from) good browser
-   * support.
+   * marquee 元素提供了一种方法，可以让浏览器渲染移动的文本，
+   * 而无需诉诸 JavaScript 技术。这个 marquee 是非标准的，但享受（或可能遭受）良好的浏览器支持。
    */
   public static final String TAG_MARQUEE    = "marquee";
 
   /**
-   * Defines an image-map.
+   * 定义图像映射。
    */
   public static final String TAG_MAP        = "map";
 
   /**
-   * Deprecated. Defines a menu list.
+   * 已弃用。定义菜单列表。
    */
   public static final String TAG_MENU       = "menu";
 
   /**
-   * Defines metadata about an HTML document.
+   * 定义 HTML 文档的元数据。
    */
   public static final String TAG_META       = "meta";
 
   /**
-   * The nobr element is a proprietary (as in not based on any standard) one
-   * that was used to define sections of text that the browser should not allow
-   * to wrap, regardless of what may happen, for example the user resizing the
-   * window to a small viewport. As it is deprecated - and the effects can be
-   * achieved using CSS - you should not use the element; this is here for
-   * reference only.
+   * nobr 元素是一个专有（即不基于任何标准）元素，用于定义文本部分，
+   * 无论发生什么，浏览器都不应允许这些文本部分换行，例如用户将窗口调整到小视口。
+   * 由于它已弃用，并且效果可以通过 CSS 实现，因此不应使用该元素；此元素仅用于参考。
    */
   public static final String TAG_NOBR       = "nobr";
 
   /**
-   * The {@code noembed} element is used to provide alternative content for
-   * browsers that don’t support the {@code embed} element. It’s not
-   * defined by any standard (it was introduced by early Netscape browsers), and
-   * as such there aren’t any guidelines as to what it may or may not contain.
+   * {@code noembed} 元素用于为不支持 {@code embed} 元素的浏览器提供替代内容。
+   * 它不是由任何标准定义的（它是早期 Netscape 浏览器引入的），因此没有关于它可以包含或不可以包含的指南。
    */
   public static final String TAG_NOEMBED    = "noembed";
 
   /**
-   * Defines an alternate content for users that do not support frames.
+   * 为不支持客户端脚本的浏览器定义替代内容。
    */
   public static final String TAG_NOFRAMES   = "noframes";
 
   /**
-   * Defines an alternate content for users that do not support client-side
-   * scripts.
+   * 为不支持客户端脚本的浏览器定义替代内容。
    */
   public static final String TAG_NOSCRIPT   = "noscript";
 
   /**
-   * Defines an embedded object.
+   * 定义嵌入对象。
    */
   public static final String TAG_OBJECT     = "object";
 
   /**
-   * Defines an ordered list.
+   * 定义有序列表。
    */
   public static final String TAG_OL         = "ol";
 
   /**
-   * Defines a group of related options in a select list.
+   * 定义选择列表中的一组相关选项。
    */
   public static final String TAG_OPTGROUP   = "optgroup";
 
   /**
-   * Defines an option in a select list.
+   * 定义选择列表中的选项。
    */
   public static final String TAG_OPTION     = "option";
 
   /**
-   * Defines a paragraph.
+   * 定义段落。
    */
   public static final String TAG_P          = "p";
 
   /**
-   * Defines a parameter for an object.
+   * 定义对象的参数。
    */
   public static final String TAG_PARAM      = "param";
 
   /**
-   * The plaintext element was originally intended to instruct the browser to
-   * ignore any formatting or HTML markup , such that &lt;p&gt; would appear in
-   * screen as &lt;p&gt; rather than actually create a new paragraph. It is
-   * deprecated and is probably best forgotten entirely.
+   * 纯文本元素最初是为了让浏览器忽略任何格式或 HTML 标记，
+   * 这样 &lt;p&gt; 就会在屏幕上显示为 &lt;p&gt; 而不是实际创建新段落。
+   * 它已弃用，可能最好完全忘记它。
    */
   public static final String TAG_PLAINTEXT  = "plaintext";
 
   /**
-   * Defines preformatted text.
+   * 定义预格式化文本。
    *
    * @see #TAG_XMP
    */
   public static final String TAG_PRE        = "pre";
 
   /**
-   * The rb element is a child element of the ruby element, and is used to
-   * contain the characters that require pronunciation help or are displayed as
-   * a learning aid.
+   * rb 元素是 ruby 元素的子元素，用于包含需要发音帮助或作为学习辅助显示的字符。
    */
   public static final String TAG_RB         = "rb";
 
   /**
-   * The rbc (ruby base container) element groups a collection of rb elements
-   * that will have related annotations in a subsequent rtc container. In the
-   * example shown above, which was taken from the W3C documentation, the rbc
-   * contains four Japanese characters (the more complex kanji symbols), each of
-   * which has its own rb element. Meanwhile, the ruby annotations inside the
-   * related rt elements are written in hiragana syllables (known as furigana
-   * when used for this purpose). Finally, there’s an English annotation that
-   * spans all four of the previous rb and rt elements.
+   * rbc（ruby 基础容器）元素将一组 rb 元素分组，这些元素将在后续 rtc 容器中具有相关注释。
+   * 在上面的示例中，从 W3C 文档中获取的示例中，rbc 包含四个日文字符（更复杂的 kanji 符号），
+   * 每个字符都有自己的 rb 元素。同时，ruby 注释在相关的 rt 元素中以平假名音节（称为 furigana 当用于此目的时）写入。
+   * 最后，有一个英文注释，它跨越所有四个以前的 rb 和 rt 元素。
    */
   public static final String TAG_RBC        = "rbc";
 
   /**
-   * Despite having been defined as far back as 2001, ruby doesn’t enjoy great
-   * support in browsers. For a change, Internet Explorer is ahead of the game
-   * on this one! Created in light of the fact that not all browsers will
-   * understand ruby, the rp element may be used to present content to users who
-   * are viewing the ruby text on a browser that doesn’t understand or support
-   * ruby, but removes that content for browsers that do support ruby. The
-   * content inside the rp element should be an opening or closing parenthesis,
-   * although there’s no definitive rule about which character should be used.
-   * It’s most likely that you’ll use "(",")","[" or "]".
+   * 尽管早在 2001 年就已定义，ruby 在浏览器中的支持度并不高。
+   * 为了改变，Internet Explorer 在这方面领先于游戏！
+   * 鉴于并非所有浏览器都会理解 ruby，rp 元素可能用于向不理解或不支持 ruby 的浏览器用户显示内容，
+   * 但删除该内容以供支持 ruby 的浏览器使用。rp 元素中的内容应该是括号，尽管没有明确的规则规定应该使用哪个字符。
+   * 最有可能的是，你会使用 "(",")","[" or "]".
    */
   public static final String TAG_RP         = "rp";
 
   /**
-   * The rt element is a child element of the ruby element and contains the
-   * annotation that will be displayed to the user on screen, ideally beside or
-   * above the base text (rb) which requires the annotation.
+   * rt 元素是 ruby 元素的子元素，并包含将显示给用户的注释，理想情况下在基本文本（rb）旁边或上方，
+   * 该基本文本需要注释。
    */
   public static final String TAG_RT         = "rt";
 
   /**
-   * The rtc (ruby text container) element groups a collection of rt elements
-   * that hold the annotations related to the contents of the rbc container. The
-   * example above contains four Japanese characters (the more complex Kanji
-   * symbols), each with its own rb element, while the ruby annotations inside
-   * the related rt elements are written in hiragana syllables (known as
-   * furigana when used for this purpose). In the example shown above, which was
-   * taken from the W3C documentation, there are two rtc elements that provide
-   * Japanese and English annotations.
+   * rtc（ruby 文本容器）元素将一组 rt 元素分组，这些元素包含与 rbc 容器中的内容相关的注释。
+   * 上面的示例包含四个日文字符（更复杂的 Kanji 符号），每个字符都有自己的 rb 元素，
+   * 而 ruby 注释在相关的 rt 元素中以平假名音节（称为 furigana 当用于此目的时）写入。
+   * 在上面的示例中，从 W3C 文档中获取的示例中，有两个 rtc 元素，它们提供日语和英语注释。
    */
   public static final String TAG_RTC        = "rtc";
 
   /**
-   * The ruby element provides a mechanism for annotating characters of East
-   * Asian languages (Japanese, Chinese, Korean, and so on). Typically, these
-   * annotations appear in a smaller typeface above or beside the regular text.
+   * ruby 元素提供了一种机制，用于注释东亚语言的字符（日语、中文、韩语等）。
+   * 通常，这些注释出现在常规文本上方或旁边的小字体中。
    */
   public static final String TAG_RUBY       = "ruby";
 
   /**
-   * Defines a short quotation.
+   * 定义短引用。
    */
   public static final String TAG_Q          = "q";
 
   /**
-   * Deprecated. Defines strikethrough text.
+   * 已弃用。定义删除线文本。
    *
    * @see #TAG_STRIKE
    */
   public static final String TAG_S          = "s";
 
   /**
-   * Defines sample computer code.
+   * 定义样本计算机代码。
    */
   public static final String TAG_SAMP       = "samp";
 
   /**
-   * Defines a client-side script.
+   * 定义客户端脚本。
    */
   public static final String TAG_SCRIPT     = "script";
 
   /**
-   * Defines a select list (drop-down list).
+   * 定义选择列表（下拉列表）。
    */
   public static final String TAG_SELECT     = "select";
 
   /**
-   * Defines small text.
+   * 定义小文本。
    */
   public static final String TAG_SMALL      = "small";
 
   /**
-   * Defines a section in a document.
+   * 定义文档中的节。
    */
   public static final String TAG_SPAN       = "span";
 
   /**
-   * Deprecated. Defines strike-through text.
+   * 已弃用。定义删除线文本。
    */
   public static final String TAG_STRIKE     = "strike";
 
   /**
-   * Defines strong text.
+   * 定义强文本。
    */
   public static final String TAG_STRONG     = "strong";
 
   /**
-   * Defines style information for a document.
+   * 定义文档样式信息。
    */
   public static final String TAG_STYLE      = "style";
 
   /**
-   * Defines subscripted text.
+   * 定义下标文本。
    */
   public static final String TAG_SUB        = "sub";
 
   /**
-   * Defines superscripted text.
+   * 定义上标文本。
    */
   public static final String TAG_SUP        = "sup";
 
   /**
-   * Defines a table.
+   * 定义表格。
    */
   public static final String TAG_TABLE      = "table";
 
   /**
-   * Groups the body content in a table.
+   * 对表格体内容进行分组。
    */
   public static final String TAG_TBODY      = "tbody";
 
   /**
-   * Defines a cell in a table.
+   * 定义表格中的单元格。
    */
   public static final String TAG_TD         = "td";
 
   /**
-   * Defines a multi-line text {@code input} control.
+   * 定义多行文本 {@code input} 控制。
    */
   public static final String TAG_TEXTAREA   = "textarea";
 
   /**
-   * Groups the footer content in a table.
+   * 对表格页脚内容进行分组。
    */
   public static final String TAG_TFOOT      = "tfoot";
 
   /**
-   * Defines a header cell in a table.
+   * 定义表格中的标题单元格。
    */
   public static final String TAG_TH         = "th";
 
   /**
-   * Groups the header content in a table.
+   * 对表格标题内容进行分组。
    */
   public static final String TAG_THEAD      = "thead";
 
   /**
-   * Defines the title of a document.
+   * 定义文档标题。
    */
   public static final String TAG_TITLE      = "title";
 
   /**
-   * Defines a row in a table.
+   * 定义表格中的行。
    */
   public static final String TAG_TR         = "tr";
 
   /**
-   * Defines teletype text.
+   * 定义打字机文本。
    */
   public static final String TAG_TT         = "tt";
 
   /**
-   * Deprecated. Defines underlined text.
+   * 已弃用。定义下划线文本。
    */
   public static final String TAG_U          = "u";
 
   /**
-   * Defines an unordered list.
+   * 定义无序列表。
    */
   public static final String TAG_UL         = "ul";
 
   /**
-   * Defines a variable part of a text.
+   * 定义文本的可变部分。
    */
   public static final String TAG_VAR        = "var";
 
   /**
-   * The wbr element’s purpose is to suggest/hint to the browser where within a
-   * word/phrase would be the most appropriate point for it to be broken
-   * (indicated with a hyphen) in the event that the browser viewport or
-   * containing element is reduced in size such that wrapping occurs.
+   * wbr 元素的目的是建议/提示浏览器在单词/短语中哪个点是最合适的点
+   * （用连字符表示），以便在浏览器视口或包含元素缩小尺寸时发生换行。
    */
   public static final String TAG_WBR        = "wbr";
 
   /**
-   * Deprecated. Defines preformatted text.
+   * 已弃用。定义预格式化文本。
    *
    * @see #TAG_PRE
    */
   public static final String TAG_XMP        = "xmp";
 
   /**
-   * The set of structural elements.
+   * 结构元素的集合。
    */
   public static final Set<String> STRUCTURAL_ELEMENTS;
 
@@ -656,7 +624,7 @@ public final class HtmlTag {
   }
 
   /**
-   * The set of head elements.
+   * 头元素的集合。
    */
   public static final Set<String> HEAD_ELEMENTS;
 
@@ -672,7 +640,7 @@ public final class HtmlTag {
   }
 
   /**
-   * The set of list elements.
+   * 列表元素的集合。
    */
   public static final Set<String> LIST_ELEMENTS;
 
@@ -690,7 +658,7 @@ public final class HtmlTag {
   }
 
   /**
-   * The set of text formatting elements.
+   * 文本格式元素的集合。
    */
   public static final Set<String> TEXT_FORMATTING_ELEMENTS;
 
@@ -745,7 +713,7 @@ public final class HtmlTag {
   }
 
   /**
-   * The set of form elements.
+   * 表单元素的集合。
    */
   public static final Set<String> FORM_ELEMENTS;
 
@@ -766,7 +734,7 @@ public final class HtmlTag {
   }
 
   /**
-   * The set of image and media elements.
+   * 图像和媒体元素的集合。
    */
   public static final Set<String> MEDIA_ELEMENTS;
 
@@ -785,7 +753,7 @@ public final class HtmlTag {
   }
 
   /**
-   * The set of table elements.
+   * 表格元素的集合。
    */
   public static final Set<String> TABLE_ELEMENTS;
 
@@ -805,7 +773,7 @@ public final class HtmlTag {
   }
 
   /**
-   * The set of frame and window elements.
+   * 框架和窗口元素的集合。
    */
   public static final Set<String> FRAME_ELEMENTS;
 

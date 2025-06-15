@@ -9,12 +9,11 @@
 package ltd.qubit.commons.text.html;
 
 /**
- * This interface defines the constant of HTML event names.
+ * 此接口定义HTML事件名的常量。
  *
- * <p>The name of the constants are of the form
- * {@code ATTR_[uppercase event attribute name]}.
+ * <p>常量的名称形式为{@code ATTR_[大写事件属性名]}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see HtmlTag
  * @see HtmlAttribute
  * @see HtmlAttributeValue
@@ -23,97 +22,97 @@ package ltd.qubit.commons.text.html;
 public interface HtmlEvent {
 
   /**
-   * Script to be run when a document load.
+   * 文档加载时要运行的脚本。
    */
   String ATTR_ONLOAD      = "onload";
 
   /**
-   * Script to be run when a document unload.
+   * 文档卸载时要运行的脚本。
    */
   String ATTR_ONUNLOAD    = "onunload";
 
   /**
-   * Script to be run when an element loses focus.
+   * 元素失去焦点时要运行的脚本。
    */
   String ATTR_ONBLUR      = "onblur";
 
   /**
-   * Script to be run when an element change.
+   * 元素改变时要运行的脚本。
    */
   String ATTR_ONCHANGE    = "onchange";
 
   /**
-   * Script to be run when an element gets focus.
+   * 元素获得焦点时要运行的脚本。
    */
   String ATTR_ONFOCUS     = "onfocus";
 
   /**
-   * Script to be run when a form is reset.
+   * 表单重置时要运行的脚本。
    */
   String ATTR_ONRESET     = "onreset";
 
   /**
-   * Script to be run when an element is selected.
+   * 元素被选中时要运行的脚本。
    */
   String ATTR_ONSELECT    = "onselect";
 
   /**
-   * Script to be run when a form is submitted.
+   * 表单提交时要运行的脚本。
    */
   String ATTR_ONSUBMIT    = "onsubmit";
 
   /**
-   * Script to be run when loading of an image is interrupted.
+   * 图像加载被中断时要运行的脚本。
    */
   String ATTR_ONABORT     = "onabort";
 
   /**
-   * Script to be run when a key is pressed.
+   * 按键被按下时要运行的脚本。
    */
   String ATTR_ONKEYDOWN   = "onkeydown";
 
   /**
-   * Script to be run when a key is pressed and released.
+   * 按键被按下并释放时要运行的脚本。
    */
   String ATTR_ONKEYPRESS  = "onkeypress";
 
   /**
-   * Script to be run when a key is released.
+   * 按键被释放时要运行的脚本。
    */
   String ATTR_ONKEYUP     = "onkeyup";
 
   /**
-   * Script to be run on a mouse click.
+   * 鼠标点击时要运行的脚本。
    */
   String ATTR_ONCLICK     = "onclick";
 
   /**
-   * Script to be run on a mouse double-click.
+   * 鼠标双击时要运行的脚本。
    */
   String ATTR_ONDBLCLICK  = "ondblclick";
 
   /**
-   * Script to be run when mouse button is pressed.
+   * 鼠标按钮被按下时要运行的脚本。
    */
   String ATTR_ONMOUSEDOWN = "onmousedown";
 
   /**
-   * Script to be run when mouse pointer moves.
+   * 鼠标指针移动时要运行的脚本。
    */
   String ATTR_ONMOUSEMOVE = "onmousemove";
 
   /**
-   * Script to be run when mouse pointer moves out of an element.
+   * 鼠标指针移出元素时要运行的脚本。
    */
   String ATTR_ONMOUSEOUT  = "onmouseout";
 
   /**
-   * Script to be run when mouse pointer moves over an element.
+   * 鼠标指针移过元素时要运行的脚本。
    */
   String ATTR_ONMOUSEOVER = "onmouseover";
 
   /**
-   * Script to be run when mouse button is released.
+   * 鼠标按钮被释放时要运行的脚本。
    */
   String ATTR_ONMOUSEUP   = "onmouseup";
 }

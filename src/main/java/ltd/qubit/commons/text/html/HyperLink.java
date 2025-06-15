@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 package ltd.qubit.commons.text.html;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import javax.annotation.Nullable;
@@ -23,17 +24,25 @@ import ltd.qubit.commons.net.Url;
 import ltd.qubit.commons.text.tostring.ToStringBuilder;
 
 /**
- * The {@link HyperLink} class represents a hyper link in HTML pages.
+ * {@link HyperLink} 类表示 HTML 页面中的超链接。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public final class HyperLink implements Comparable<HyperLink>,
         CloneableEx<HyperLink>, Serializable {
 
+  @Serial
   private static final long serialVersionUID = - 6896074974015880689L;
 
+  /**
+   * XML 根节点名称。
+   */
   public static final String ROOT_NODE = "hyper-link";
+
+  /**
+   * XML URL 属性名称。
+   */
   public static final String URL_ATTRIBUTE = "url";
 
   static {
@@ -44,29 +53,61 @@ public final class HyperLink implements Comparable<HyperLink>,
   private final @Nullable Url url;
   private final @Nullable String anchor;
 
+  /**
+   * 构造一个空的超链接。
+   */
   public HyperLink() {
     url = null;
     anchor = null;
   }
 
+  /**
+   * 构造一个指定 URL 的超链接。
+   *
+   * @param url
+   *     超链接的 URL，可以为 {@code null}。
+   */
   public HyperLink(@Nullable final Url url) {
     this.url = url;
     anchor = null;
   }
 
+  /**
+   * 构造一个指定 URL 和锚点的超链接。
+   *
+   * @param url
+   *     超链接的 URL，可以为 {@code null}。
+   * @param anchor
+   *     超链接的锚点文本，可以为 {@code null}。
+   */
   public HyperLink(@Nullable final Url url, @Nullable final String anchor) {
     this.url = url;
     this.anchor = anchor;
   }
 
+  /**
+   * 获取超链接的 URL。
+   *
+   * @return
+   *     超链接的 URL，可能为 {@code null}。
+   */
   public Url url() {
     return url;
   }
 
+  /**
+   * 获取超链接的锚点文本。
+   *
+   * @return
+   *     超链接的锚点文本，可能为 {@code null}。
+   */
   public String anchor() {
     return anchor;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public HyperLink cloneEx() {
     return new HyperLink(url, anchor);

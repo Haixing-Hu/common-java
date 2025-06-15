@@ -9,11 +9,11 @@
 package ltd.qubit.commons.text.html;
 
 /**
- * This interface defines the constant of HTML attribute values.
+ * 此接口定义HTML属性值的常量。
  *
- * <p>All constant names are of the form: {@code [uppercase attribute value]}.
+ * <p>所有常量名称的形式为：{@code [大写属性值]}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  * @see HtmlTag
  * @see HtmlAttribute
  * @see HtmlEvent
