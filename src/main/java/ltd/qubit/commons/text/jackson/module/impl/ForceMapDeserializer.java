@@ -35,11 +35,33 @@ import com.fasterxml.jackson.databind.jsontype.TypeDeserializer;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
+/**
+ * 强制Map反序列化器，用于处理无法直接实例化的Map类型。
+ * <p>
+ * 该反序列化器通过反射机制尝试创建无法由标准Map反序列化器创建的Map实例，
+ * 特别是那些需要通过特殊构造函数（如接受父类Map作为参数）创建的只读或包装Map。
+ *
+ * @author 胡海星
+ */
 public class ForceMapDeserializer extends MapDeserializer {
 
   @Serial
   private static final long serialVersionUID = -7548120101370175657L;
 
+  /**
+   * 构造一个强制Map反序列化器。
+   *
+   * @param mapType
+   *     Map类型。
+   * @param valueInstantiator
+   *     值实例化器。
+   * @param keyDeserializer
+   *     键反序列化器。
+   * @param valueDeserializer
+   *     值反序列化器。
+   * @param valueTypeDeserializer
+   *     值类型反序列化器。
+   */
   public ForceMapDeserializer(final JavaType mapType,
       final ValueInstantiator valueInstantiator,
       final KeyDeserializer keyDeserializer,
@@ -48,10 +70,32 @@ public class ForceMapDeserializer extends MapDeserializer {
     super(mapType, valueInstantiator, keyDeserializer, valueDeserializer, valueTypeDeserializer);
   }
 
+  /**
+   * 基于已有的Map反序列化器构造强制Map反序列化器。
+   *
+   * @param src
+   *     源Map反序列化器。
+   */
   public ForceMapDeserializer(final MapDeserializer src) {
     super(src);
   }
 
+  /**
+   * 受保护的构造方法，用于创建带有特定参数的强制Map反序列化器。
+   *
+   * @param src
+   *     源Map反序列化器。
+   * @param keyDeserializer
+   *     键反序列化器。
+   * @param valueDeserializer
+   *     值反序列化器。
+   * @param valueTypeDeserializer
+   *     值类型反序列化器。
+   * @param nullValueProvider
+   *     空值提供器。
+   * @param ignorable
+   *     可忽略的字段集合。
+   */
   protected ForceMapDeserializer(final MapDeserializer src,
       final KeyDeserializer keyDeserializer,
       final JsonDeserializer<Object> valueDeserializer,
@@ -62,6 +106,9 @@ public class ForceMapDeserializer extends MapDeserializer {
   }
 
 
+  /**
+   * {@inheritDoc}
+   */
   @SuppressWarnings({"unchecked", "rawtypes"})
   @Override
   public Map<Object, Object> deserialize(final JsonParser parser,
@@ -109,6 +156,9 @@ public class ForceMapDeserializer extends MapDeserializer {
     return super.deserialize(parser, context);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonDeserializer<?> createContextual(final DeserializationContext context,
       final BeanProperty property) throws JsonMappingException {

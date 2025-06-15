@@ -20,29 +20,51 @@ import ltd.qubit.commons.text.jackson.deserializer.DurationDeserializer;
 import ltd.qubit.commons.text.jackson.keydeserializer.DurationKeyDeserializer;
 import ltd.qubit.commons.text.jackson.serializer.DurationSerializer;
 
+/**
+ * Duration类型注册器，用于注册Duration的序列化和反序列化器。
+ * <p>
+ * 该注册器为Duration类型提供了标准的序列化和反序列化处理。
+ *
+ * @author 胡海星
+ */
 @Immutable
 public class DurationTypeRegister implements TypeRegister<Duration> {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Class<Duration> getType() {
     return Duration.class;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonSerializer<Duration> getSerializer() {
     return DurationSerializer.INSTANCE;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonDeserializer<Duration> getDeserializer() {
     return DurationDeserializer.INSTANCE;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonSerializer<Duration> getKeySerializer() {
     return DurationSerializer.INSTANCE;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public KeyDeserializer getKeyDeserializer() {
     return DurationKeyDeserializer.INSTANCE;

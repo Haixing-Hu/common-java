@@ -21,29 +21,51 @@ import ltd.qubit.commons.text.jackson.deserializer.PosixLocaleDeserializer;
 import ltd.qubit.commons.text.jackson.keydeserializer.PosixLocaleKeyDeserializer;
 import ltd.qubit.commons.text.jackson.serializer.PosixLocaleSerializer;
 
+/**
+ * Locale类型注册器，用于注册Locale的POSIX格式序列化和反序列化器。
+ * <p>
+ * 该注册器为Locale类型提供了POSIX格式的序列化和反序列化处理。
+ *
+ * @author 胡海星
+ */
 @Immutable
 public class LocaleTypeRegister implements TypeRegister<Locale> {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Class<Locale> getType() {
     return Locale.class;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonSerializer<Locale> getSerializer() {
     return PosixLocaleSerializer.INSTANCE;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonDeserializer<Locale> getDeserializer() {
     return PosixLocaleDeserializer.INSTANCE;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonSerializer<Locale> getKeySerializer() {
     return PosixLocaleSerializer.INSTANCE;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public KeyDeserializer getKeyDeserializer() {
     return PosixLocaleKeyDeserializer.INSTANCE;

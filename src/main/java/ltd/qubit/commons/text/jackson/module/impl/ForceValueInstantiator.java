@@ -18,12 +18,15 @@ import com.fasterxml.jackson.databind.deser.ValueInstantiator;
 import ltd.qubit.commons.reflect.ConstructorUtils;
 
 /**
- * A Jackson {@link ValueInstantiator} which uses Objenesis to instantiate objects.
+ * 使用 Objenesis 实例化对象的 Jackson {@link ValueInstantiator}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 class ForceValueInstantiator extends ValueInstantiator {
 
+  /**
+   * 实例化器缓存，用于避免重复创建相同类型的实例化器。
+   */
   private static final ClassValue<ForceValueInstantiator> INSTANTIATOR_CACHE =
       new ClassValue<>() {
     @Override
@@ -32,21 +35,43 @@ class ForceValueInstantiator extends ValueInstantiator {
     }
   };
 
+  /**
+   * 获取指定类型的实例化器。
+   *
+   * @param type
+   *     要实例化的类型。
+   * @return 对应的实例化器。
+   */
   public static ForceValueInstantiator getInstance(final Class<?> type) {
     return INSTANTIATOR_CACHE.get(type);
   }
 
+  /**
+   * 要实例化的类型。
+   */
   private final Class<?> type;
 
+  /**
+   * 构造一个强制值实例化器。
+   *
+   * @param type
+   *     要实例化的类型。
+   */
   private ForceValueInstantiator(final Class<?> type) {
     this.type = type;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean canCreateUsingDefault() {
     return true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Object createUsingDefault(final DeserializationContext ctxt) throws IOException {
     return ConstructorUtils.newInstance(type);

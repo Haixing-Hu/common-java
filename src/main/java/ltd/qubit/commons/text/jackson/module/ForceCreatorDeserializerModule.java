@@ -18,24 +18,33 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import ltd.qubit.commons.text.jackson.module.impl.ForceCreatorBeanDeserializerModifier;
 
 /**
- * A Jackson module which uses Objenesis to create objects.
+ * 使用 Objenesis 创建对象的 Jackson 模块。
  * <p>
- * This module is used to create objects using Objenesis when deserializing objects.
+ * 该模块在反序列化对象时使用 Objenesis 来创建对象。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 @Immutable
 public class ForceCreatorDeserializerModule extends SimpleModule {
   @Serial
   private static final long serialVersionUID = 5141940734440493629L;
 
+  /**
+   * 模块的单例实例。
+   */
   public static final ForceCreatorDeserializerModule INSTANCE = new ForceCreatorDeserializerModule();
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String getModuleName() {
     return this.getClass().getSimpleName();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void setupModule(final SetupContext context) {
     super.setupModule(context);

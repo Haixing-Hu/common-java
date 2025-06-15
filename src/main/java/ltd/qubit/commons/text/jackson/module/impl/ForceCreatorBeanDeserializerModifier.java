@@ -18,24 +18,32 @@ import com.fasterxml.jackson.databind.deser.std.MapDeserializer;
 import com.fasterxml.jackson.databind.type.MapType;
 
 /**
- * A {@link BeanDeserializerModifier} that forces the use of Objenesis to create
- * instances of beans that cannot be instantiated by Jackson.
+ * 强制使用 Objenesis 创建 Jackson 无法实例化的 Bean 实例的 {@link BeanDeserializerModifier}。
  * <p>
- * This modifier is used to create a {@link ForceValueInstantiator} for
- * beans that cannot be instantiated by Jackson, such as beans without a default
- * constructor.
+ * 该修改器用于为 Jackson 无法实例化的 Bean（例如没有默认构造函数的 Bean）创建 {@link ForceValueInstantiator}。
  *
- * @author Haixing Hu
+ * @author 胡海星
  */
 public class ForceCreatorBeanDeserializerModifier extends BeanDeserializerModifier {
 
+  /**
+   * 修改器的单例实例。
+   */
   private static final ForceCreatorBeanDeserializerModifier INSTANCE =
       new ForceCreatorBeanDeserializerModifier();
 
+  /**
+   * 获取修改器的单例实例。
+   *
+   * @return 修改器的单例实例。
+   */
   public static ForceCreatorBeanDeserializerModifier getInstance() {
     return INSTANCE;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public BeanDeserializerBuilder updateBuilder(final DeserializationConfig config,
       final BeanDescription beanDesc,
@@ -55,6 +63,9 @@ public class ForceCreatorBeanDeserializerModifier extends BeanDeserializerModifi
     return builder;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonDeserializer<?> modifyMapDeserializer(final DeserializationConfig config,
       final MapType type, final BeanDescription beanDesc,
@@ -62,6 +73,13 @@ public class ForceCreatorBeanDeserializerModifier extends BeanDeserializerModifi
     return new ForceMapDeserializer((MapDeserializer) deserializer);
   }
 
+  /**
+   * 检查是否无法通过标准方式实例化对象。
+   *
+   * @param valueInstantiator
+   *     值实例化器。
+   * @return 如果无法通过标准方式实例化则返回 {@code true}，否则返回 {@code false}。
+   */
   private static boolean isNotPossibleInstantiation(final ValueInstantiator valueInstantiator) {
     return !(valueInstantiator.canCreateUsingDelegate()
         || valueInstantiator.canCreateUsingArrayDelegate()

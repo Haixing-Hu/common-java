@@ -20,29 +20,51 @@ import ltd.qubit.commons.text.jackson.deserializer.IsoInstantDeserializer;
 import ltd.qubit.commons.text.jackson.keydeserializer.IsoInstantKeyDeserializer;
 import ltd.qubit.commons.text.jackson.serializer.IsoInstantSerializer;
 
+/**
+ * Instant类型注册器，用于注册Instant的ISO格式序列化和反序列化器。
+ * <p>
+ * 该注册器为Instant类型提供了ISO 8601格式的序列化和反序列化处理。
+ *
+ * @author 胡海星
+ */
 @Immutable
 public class InstantTypeRegister implements TypeRegister<Instant> {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Class<Instant> getType() {
     return Instant.class;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonSerializer<Instant> getSerializer() {
     return IsoInstantSerializer.INSTANCE;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonDeserializer<Instant> getDeserializer() {
     return IsoInstantDeserializer.INSTANCE;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonSerializer<Instant> getKeySerializer() {
     return IsoInstantSerializer.INSTANCE;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public KeyDeserializer getKeyDeserializer() {
     return IsoInstantKeyDeserializer.INSTANCE;

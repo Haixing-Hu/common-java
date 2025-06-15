@@ -18,29 +18,51 @@ import ltd.qubit.commons.text.jackson.deserializer.FloatDeserializer;
 import ltd.qubit.commons.text.jackson.keydeserializer.FloatKeyDeserializer;
 import ltd.qubit.commons.text.jackson.serializer.FloatSerializer;
 
+/**
+ * Float类型注册器，用于注册Float的序列化和反序列化器。
+ * <p>
+ * 该注册器为Float类型提供了标准的序列化和反序列化处理。
+ *
+ * @author 胡海星
+ */
 @Immutable
 public class FloatTypeRegister implements TypeRegister<Float> {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Class<Float> getType() {
     return Float.class;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonSerializer<Float> getSerializer() {
     return FloatSerializer.INSTANCE;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonDeserializer<Float> getDeserializer() {
     return FloatDeserializer.INSTANCE;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonSerializer<Float> getKeySerializer() {
     return FloatSerializer.INSTANCE;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public KeyDeserializer getKeyDeserializer() {
     return FloatKeyDeserializer.INSTANCE;

@@ -20,29 +20,51 @@ import ltd.qubit.commons.text.jackson.deserializer.YearDeserializer;
 import ltd.qubit.commons.text.jackson.keydeserializer.YearKeyDeserializer;
 import ltd.qubit.commons.text.jackson.serializer.YearSerializer;
 
+/**
+ * Year类型注册器，用于注册Year的序列化和反序列化器。
+ * <p>
+ * 该注册器为Year类型提供了标准的序列化和反序列化处理。
+ *
+ * @author 胡海星
+ */
 @Immutable
 public class YearTypeRegister implements TypeRegister<Year> {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Class<Year> getType() {
     return Year.class;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonSerializer<Year> getSerializer() {
     return YearSerializer.INSTANCE;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonDeserializer<Year> getDeserializer() {
     return YearDeserializer.INSTANCE;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public JsonSerializer<Year> getKeySerializer() {
     return YearSerializer.INSTANCE;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public KeyDeserializer getKeyDeserializer() {
     return YearKeyDeserializer.INSTANCE;
