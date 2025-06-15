@@ -45,6 +45,7 @@ import ltd.qubit.commons.text.CharSequenceCodePointIterator;
 import ltd.qubit.commons.text.DateFormat;
 import ltd.qubit.commons.text.Joiner;
 import ltd.qubit.commons.text.NumberFormat;
+import ltd.qubit.commons.text.Quoter;
 import ltd.qubit.commons.text.Remover;
 import ltd.qubit.commons.text.Replacer;
 import ltd.qubit.commons.text.Searcher;
@@ -792,22 +793,15 @@ public class StringUtils {
    * @return
    *    如果字符串不为{@code null}且被单引号（'）或双引号（"）包围则返回{@code true}；
    *    否则返回{@code false}。
+   * @deprecated 建议使用 {@link Quoter} 实现相同功能。
+   *             例如：{@code new Quoter().withSingleQuotes().isQuoted(str)} 或
+   *             {@code new Quoter().withDoubleQuotes().isQuoted(str)}
    */
+  @Deprecated
   public static boolean isQuoted(@Nullable final CharSequence str) {
-    if (str == null) {
-      return false;
-    }
-    final int len;
-    if ((len = str.length()) < 2) {
-      return false;
-    }
-    final char ch1 = str.charAt(0);
-    if ((ch1 == Ascii.SINGLE_QUOTE) || (ch1 == Ascii.DOUBLE_QUOTE)) {
-      final char ch2 = str.charAt(len - 1);
-      return (ch1 == ch2);
-    } else {
-      return false;
-    }
+    // 使用 Quoter 类实现功能
+    return new Quoter().withSingleQuotes().isQuoted(str) ||
+           new Quoter().withDoubleQuotes().isQuoted(str);
   }
 
   /**
@@ -822,23 +816,14 @@ public class StringUtils {
    * @return
    *     如果字符串不为{@code null}且被左引号和右引号包围则返回{@code true}；
    *     否则返回{@code false}。
+   * @deprecated 建议使用 {@link Quoter} 实现相同功能。
+   *             例如：{@code new Quoter().withQuotes(leftQuote, rightQuote).isQuoted(str)}
    */
+  @Deprecated
   public static boolean isQuoted(@Nullable final CharSequence str,
       final char leftQuote, final char rightQuote) {
-    if (str == null) {
-      return false;
-    }
-    final int n;
-    if ((n = str.length()) < 2) {
-      return false;
-    }
-    final char ch1 = str.charAt(0);
-    if (ch1 == leftQuote) {
-      final char ch2 = str.charAt(n - 1);
-      return (ch2 == rightQuote);
-    } else {
-      return false;
-    }
+    // 使用 Quoter 类实现功能
+    return new Quoter().withQuotes(leftQuote, rightQuote).isQuoted(str);
   }
 
   /**
@@ -8948,12 +8933,17 @@ public class StringUtils {
    * @param rightQuote
    *     右引号
    * @return 引用的字符串，其原始内容已转义
+   * @deprecated 建议使用 {@link Quoter} 实现相同功能。
+   *             例如：{@code new Quoter().withQuotes(leftQuote, rightQuote).withEscape(escapeChar).quote(str)}
    */
+  @Deprecated
   public static String quote(final String str, final char escapeChar,
       final char leftQuote, final char rightQuote) {
-    final StringBuilder builder = new StringBuilder();
-    quote(str, escapeChar, leftQuote, rightQuote, builder);
-    return builder.toString();
+    // 使用 Quoter 类实现功能
+    return new Quoter()
+        .withQuotes(leftQuote, rightQuote)
+        .withEscape(escapeChar)
+        .quote(str);
   }
 
   /**
@@ -8969,14 +8959,18 @@ public class StringUtils {
    *     右引号。
    * @param builder
    *     用于追加引用字符串的字符串构建器，其原始内容已转义。
+   * @deprecated 建议使用 {@link Quoter} 实现相同功能。
+   *             例如：{@code new Quoter().withQuotes(leftQuote, rightQuote).withEscape(escapeChar).quote(str, builder)}
    */
+  @Deprecated
   public static void quote(final String str, final char escapeChar,
       final char leftQuote, final char rightQuote,
       final StringBuilder builder) {
-    final String result = escape(str, escapeChar, leftQuote, rightQuote);
-    builder.append(leftQuote)
-           .append(result)
-           .append(rightQuote);
+    // 使用 Quoter 类实现功能
+    new Quoter()
+        .withQuotes(leftQuote, rightQuote)
+        .withEscape(escapeChar)
+        .quote(str, builder);
   }
 
   /**
@@ -8985,11 +8979,13 @@ public class StringUtils {
    * @param str
    *     要引用的字符串。
    * @return 单引号引用的字符串，其原始内容已转义。
+   * @deprecated 建议使用 {@link Quoter} 实现相同功能。
+   *             例如：{@code new Quoter().withSingleQuotes().quote(str)}
    */
+  @Deprecated
   public static String singleQuote(final String str) {
-    final StringBuilder builder = new StringBuilder();
-    quote(str, '\\', '\'', '\'', builder);
-    return builder.toString();
+    // 使用 Quoter 类实现功能
+    return new Quoter().withSingleQuotes().quote(str);
   }
 
   /**
@@ -8998,11 +8994,13 @@ public class StringUtils {
    * @param str
    *     要引用的字符串。
    * @return 双引号引用的字符串，其原始内容已转义。
+   * @deprecated 建议使用 {@link Quoter} 实现相同功能。
+   *             例如：{@code new Quoter().withDoubleQuotes().quote(str)}
    */
+  @Deprecated
   public static String doubleQuote(final String str) {
-    final StringBuilder builder = new StringBuilder();
-    quote(str, '\\', '"', '"', builder);
-    return builder.toString();
+    // 使用 Quoter 类实现功能
+    return new Quoter().withDoubleQuotes().quote(str);
   }
 
   /**
@@ -9017,15 +9015,17 @@ public class StringUtils {
    * @return 取消引用的字符串，不转义字符串中的字符。
    * @throws IllegalArgumentException
    *     如果字符串没有正确引用。
+   * @deprecated 建议使用 {@link Quoter} 实现相同功能。
+   *             例如：{@code new Quoter().withQuotes(leftQuote, rightQuote).withoutEscape().unquote(str)}
    */
+  @Deprecated
   public static String unquote(final String str, final char leftQuote,
       final char rightQuote) {
-    final int n = str.length();
-    if ((n < 2) || (str.charAt(0) != leftQuote)
-        || (str.charAt(n - 1) != rightQuote)) {
-      throw new IllegalArgumentException("String is not quoted: " + str);
-    }
-    return str.substring(1, n - 1);
+    // 使用 Quoter 类实现功能
+    return new Quoter()
+        .withQuotes(leftQuote, rightQuote)
+        .withoutEscape()
+        .unquote(str);
   }
 
   /**
@@ -9041,14 +9041,17 @@ public class StringUtils {
    *     用于追加取消引用字符串的字符串构建器，**不**转义字符串中的字符。
    * @throws IllegalArgumentException
    *     如果字符串没有正确引用。
+   * @deprecated 建议使用 {@link Quoter} 实现相同功能。
+   *             例如：{@code new Quoter().withQuotes(leftQuote, rightQuote).withoutEscape().unquote(str, builder)}
    */
+  @Deprecated
   public static void unquote(final String str, final char leftQuote,
       final char rightQuote, final StringBuilder builder) {
-    final int n = str.length();
-    if ((n < 2) || (str.charAt(0) != leftQuote) || (str.charAt(n - 1) != rightQuote)) {
-      throw new IllegalArgumentException("String is not quoted: " + str);
-    }
-    builder.append(str, 1, n - 1);
+    // 使用 Quoter 类实现功能
+    new Quoter()
+        .withQuotes(leftQuote, rightQuote)
+        .withoutEscape()
+        .unquote(str, builder);
   }
 
   /**
@@ -9065,12 +9068,17 @@ public class StringUtils {
    * @return 取消引用的字符串，其原始内容已反转义。
    * @throws IllegalArgumentException
    *     如果字符串没有正确引用。
+   * @deprecated 建议使用 {@link Quoter} 实现相同功能。
+   *             例如：{@code new Quoter().withQuotes(leftQuote, rightQuote).withEscape(escapeChar).unquote(str)}
    */
+  @Deprecated
   public static String unquote(final String str, final char escapeChar,
       final char leftQuote, final char rightQuote) {
-    final StringBuilder builder = new StringBuilder(str.length());
-    unquote(str, escapeChar, leftQuote, rightQuote, builder);
-    return builder.toString();
+    // 使用 Quoter 类实现功能
+    return new Quoter()
+        .withQuotes(leftQuote, rightQuote)
+        .withEscape(escapeChar)
+        .unquote(str);
   }
 
   /**
@@ -9088,15 +9096,18 @@ public class StringUtils {
    *     用于追加取消引用字符串的字符串构建器，其原始内容已反转义。
    * @throws IllegalArgumentException
    *     如果字符串没有正确引用。
+   * @deprecated 建议使用 {@link Quoter} 实现相同功能。
+   *             例如：{@code new Quoter().withQuotes(leftQuote, rightQuote).withEscape(escapeChar).unquote(str, builder)}
    */
+  @Deprecated
   public static void unquote(final String str, final char escapeChar,
       final char leftQuote, final char rightQuote,
       final StringBuilder builder) {
-    final int n = str.length();
-    if ((n < 2) || (str.charAt(0) != leftQuote) || (str.charAt(n - 1) != rightQuote)) {
-      throw new IllegalArgumentException("String is not quoted: " + str);
-    }
-    unescape(str.substring(1, n - 1), escapeChar, builder);
+    // 使用 Quoter 类实现功能
+    new Quoter()
+        .withQuotes(leftQuote, rightQuote)
+        .withEscape(escapeChar)
+        .unquote(str, builder);
   }
 
   /**
@@ -9111,18 +9122,17 @@ public class StringUtils {
    * @return 取消引用的字符串，不转义字符串中的字符，如果输入字符串为 {@code null} 则返回 {@code null}。
    * @throws IllegalArgumentException
    *     如果字符串没有正确引用。
+   * @deprecated 建议使用 {@link Quoter} 实现相同功能。
+   *             例如：{@code new Quoter().withQuotes(leftQuote, rightQuote).withoutEscape().unquoteIfNecessary(str)}
    */
+  @Deprecated
   public static String unquoteIfNecessary(@Nullable final String str,
       final char leftQuote, final char rightQuote) {
-    if (str == null) {
-      return null;
-    }
-    final int n = str.length();
-    if ((n >= 2) && (str.charAt(0) == leftQuote) && (str.charAt(n - 1) == rightQuote)) {
-      return str.substring(1, n - 1);
-    } else {
-      return str;
-    }
+    // 使用 Quoter 类实现功能
+    return new Quoter()
+        .withQuotes(leftQuote, rightQuote)
+        .withoutEscape()
+        .unquoteIfNecessary(str);
   }
 
   /**
@@ -9138,17 +9148,17 @@ public class StringUtils {
    *     用于追加取消引用字符串的字符串构建器，不转义字符串中的字符。
    * @throws IllegalArgumentException
    *     如果字符串没有正确引用。
+   * @deprecated 建议使用 {@link Quoter} 实现相同功能。
+   *             例如：{@code new Quoter().withQuotes(leftQuote, rightQuote).withoutEscape().unquoteIfNecessary(str, builder)}
    */
+  @Deprecated
   public static void unquoteIfNecessary(@Nullable final String str,
       final char leftQuote, final char rightQuote, final StringBuilder builder) {
-    if (str != null) {
-      final int n = str.length();
-      if ((n >= 2) && (str.charAt(0) == leftQuote) && (str.charAt(n - 1) == rightQuote)) {
-        builder.append(str, 1, n - 1);
-      } else {
-        builder.append(str);
-      }
-    }
+    // 使用 Quoter 类实现功能
+    new Quoter()
+        .withQuotes(leftQuote, rightQuote)
+        .withoutEscape()
+        .unquoteIfNecessary(str, builder);
   }
 
   /**
